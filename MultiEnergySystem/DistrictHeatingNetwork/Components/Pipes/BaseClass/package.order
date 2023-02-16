@@ -1,0 +1,5 @@
+PartialInsulatedTube
+PlugFlowCore
+DirectionalHeatLossPlugFlow
+TimeDelayPlugFlow
+ThermalInertiaPlugFlow

@@ -1,0 +1,10 @@
+within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
+model ThermalInertiaPlugFlow
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
+equation
+  // No pressure loss
+  inlet.p = outlet.p;
+  // No losses towards the ambient, already computed
+  Q_amb = 0;
+end ThermalInertiaPlugFlow;

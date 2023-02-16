@@ -1,57 +1,57 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model PowerTransferTest "3 tests using Ideal Power Transfer component"
   extends Modelica.Icons.Example;
-  DHN4Control.Components.ExpansionTank psink1 annotation (Placement(visible=
-          true, transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank psink1 annotation (Placement(visible=true,
+        transformation(
         origin={50,20},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sources.IdealMassFlowSource msource1 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource msource1 annotation (Placement(
         visible=true, transformation(
         origin={-90,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Components.BaseClass.PowerTransfer Pt1 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer Pt1 annotation (Placement(
         visible=true, transformation(extent={{-30,-10},{-10,10}}, rotation=0)));
-  DHN4Control.Components.ExpansionTank psink2 annotation (Placement(visible=true,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank psink2 annotation (Placement(visible=true,
         transformation(
         origin={50,-22},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Components.BaseClass.PowerTransfer Pt2 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer Pt2 annotation (Placement(
         visible=true, transformation(
         origin={-20,-40},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sources.IdealMassFlowSource msource2 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource msource2 annotation (Placement(
         visible=true, transformation(
         origin={-90,-40},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor Tsens1 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tsens1 annotation (Placement(
         visible=true, transformation(
         origin={20,0},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor Tsens2 annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tsens2 annotation (
     Placement(visible = true, transformation(origin={20,-40},    extent={{-6,-6},
             {6,6}},                                                                               rotation = 0)));
-  DHN4Control.Sources.IdealMassFlowSource msink(mflownom=-1) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource msink(mflownom=-1) annotation (
       Placement(visible=true, transformation(
         origin={-90,-80},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Components.ExpansionTank psource annotation (Placement(visible=true,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank psource annotation (Placement(visible=true,
         transformation(
         origin={50,-62},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor Tsens3 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tsens3 annotation (Placement(
         visible=true, transformation(
         origin={20,-80},
         extent={{6,-6},{-6,6}},
         rotation=0)));
-  DHN4Control.Components.BaseClass.PowerTransfer Pt3 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer Pt3 annotation (Placement(
         visible=true, transformation(
         origin={-20,-80},
         extent={{-10,10},{10,-10}},

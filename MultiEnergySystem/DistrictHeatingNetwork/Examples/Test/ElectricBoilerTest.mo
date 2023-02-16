@@ -1,47 +1,47 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model ElectricBoilerTest
   extends Modelica.Icons.Example;
-  DHN4Control.Components.ExpansionTank expansionTank annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank annotation (Placement(
         visible=true, transformation(
         origin={60,36},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sources.IdealMassFlowSource sourceHot(mflownom=1, Tnom=352.15)
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource sourceHot(mflownom=1, Tnom=352.15)
     annotation (Placement(visible=true, transformation(
         origin={-60,20},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealMassFlowSensor mflowSensor1 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor mflowSensor1 annotation (Placement(
         visible=true, transformation(
         origin={-30,20},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Sensors.IdealMassFlowSensor mflowSensor2 annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor mflowSensor2 annotation (Placement(
         visible=true, transformation(
         origin={-30,-20},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Components.ExpansionTank expansionTank1 annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank1 annotation (
     Placement(visible = true, transformation(origin={60,-4},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.IdealMassFlowSource sourceCold(mflownom=1, Tnom=338.15)
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource sourceCold(mflownom=1, Tnom=338.15)
     annotation (Placement(visible=true, transformation(
         origin={-60,-20},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor TSensorCold annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor TSensorCold annotation (Placement(
         visible=true, transformation(
         origin={36,-20},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor TSensorWarm annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor TSensorWarm annotation (Placement(
         visible=true, transformation(
         origin={36,20},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Components.Machines.ElectricBoiler eBoilerHot(onOffController(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.ElectricBoiler eBoilerHot(onOffController(
         pre_y_start=true))
     annotation (Placement(transformation(extent={{-6,10},{14,30}})));
-  DHN4Control.Components.Machines.ElectricBoiler eBoilerCold
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.ElectricBoiler eBoilerCold
     annotation (Placement(transformation(extent={{-6,-30},{14,-10}})));
   Modelica.Blocks.Sources.RealExpression TrefBoiler2(y=80)
     annotation (Placement(transformation(extent={{-28,-12},{-12,4}})));

@@ -1,9 +1,9 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model pipePF
   "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (PF) representation inspired by building plug flow model/ Trnsys 31-Type model."
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   import      Modelica.Units.SI;
-  import DHN4Control.Media.{cp,rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   // Flow initial parameters
   parameter SI.MassFlowRate m_flow_nominal = 1 "Nominal mass flow";
   parameter SI.MassFlowRate m_flow_start = 1 "Starting mass flow";
@@ -84,7 +84,7 @@ model pipePF
         origin={-76,-2},
         extent={{-10,-10},{10,10}},
         rotation=180)));
-  DHN4Control.Sensors.IdealMassFlowSensor massFlowSensor annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor massFlowSensor annotation (
     Placement(visible = true, transformation(origin = {-44, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.TimeDelayPlugFlow
     timeDelayPlugFlow(
@@ -106,17 +106,20 @@ equation
   connect(inletHeatLosses.inlet, massFlowSensor.inlet) annotation (
     Line(points = {{-66, -2}, {-54, -2}}, color = {168, 168, 168}));
   connect(inletHeatLosses.outlet, inlet) annotation (
-    Line(points = {{-86, -2}, {-100, -2}}, color = {168, 168, 168}));
+    Line(points={{-86,-2},{-94,-2},{-94,0},{-100,0}},
+                                           color = {168, 168, 168}));
   connect(massFlowSensor.m_flow, timeDelayPlugFlow.m_flow)
-    annotation (Line(points={{-44,7},{-44,27},{-28,27}}, color={0,0,127}));
+    annotation (Line(points={{-44,7},{-44,28.4},{-28.2,28.4}},
+                                                         color={0,0,127}));
   connect(timeDelayPlugFlow.tau, outletHeatLosses.tau) annotation (
-    Line(points = {{-10.7, 28.3}, {11.3, 28.3}, {11.3, -15.7}, {25.3, -15.7}, {25.3, -7.7}}, color = {0, 0, 127}));
+    Line(points={{-10.7,28.3},{11.3,28.3},{11.3,-15.7},{26,-15.7},{26,-8}},                  color = {0, 0, 127}));
   connect(timeDelayPlugFlow.tau_rev, inletHeatLosses.tau) annotation (
-    Line(points = {{-10.5, 20.5}, {-0.5, 20.5}, {-0.5, 10.5}, {-68.5, 10.5}, {-68.5, 4.5}}, color = {0, 0, 127}));
+    Line(points={{-10.5,20.5},{-0.5,20.5},{-0.5,10.5},{-68,10.5},{-68,4}},                  color = {0, 0, 127}));
   connect(outletHeatLosses.outlet, metalInertiaEquivalent.inlet) annotation (
-    Line(points = {{44, -2}, {54, -2}}, color = {168, 168, 168}));
+    Line(points={{44,-2},{54,-2},{54,-12},{64,-12}},
+                                        color = {168, 168, 168}));
   connect(metalInertiaEquivalent.outlet, outlet) annotation (
-    Line(points = {{74, -2}, {92, -2}, {92, -6}}, color = {168, 168, 168}));
+    Line(points={{64,8},{100,8},{100,0}},         color = {168, 168, 168}));
   annotation (
     Diagram(coordinateSystem(extent = {{-120, 40}, {100, -20}})),
     Icon(graphics={  Rectangle(lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 44}, {100, -44}})}));

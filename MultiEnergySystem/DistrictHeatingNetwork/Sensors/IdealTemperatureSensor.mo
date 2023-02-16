@@ -3,7 +3,7 @@ model IdealTemperatureSensor
   "Measure temperature of the flow, returns Celsius [°C] measure"
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialIdealFlowSensor;
-  import DHN4Control.Media.cp;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.cp;
 
   Modelica.Blocks.Interfaces.RealOutput T annotation (
     Placement(visible = true, transformation(origin = {-6, 86}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));

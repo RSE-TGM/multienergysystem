@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Machines;
 model Boiler
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   // User Parameter
   // Control
   parameter Real Kp = 1e3 "Boiler Proportional gain";
@@ -22,7 +22,7 @@ model Boiler
           rotation=0)));
   Modelica.Blocks.Interfaces.RealInput T_Ref annotation (
     Placement(visible = true, transformation(origin = {-102, 30}, extent = {{-14, -14}, {14, 14}}, rotation = 0), iconTransformation(origin = {-80, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  DHN4Control.Controllers.AWPIContinuous gasBoilerPI(Kp = Kp, Ti = Ti, Umax = Pmax, Umin = Pmin)  annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Controllers.AWPIContinuous gasBoilerPI(Kp = Kp, Ti = Ti, Umax = Pmax, Umin = Pmin)  annotation (
     Placement(visible = true, transformation(origin = {-16, 26}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage gasBoilerInnerVolume(
     D=D,
@@ -34,7 +34,7 @@ model Boiler
         origin={40,-2},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor boilerFeedback annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor boilerFeedback annotation (
       Placement(visible=true, transformation(
         origin={74,0},
         extent={{-10,-10},{10,10}},
@@ -42,8 +42,8 @@ model Boiler
 equation
   connect(gasBoilerPI.REF, T_Ref) annotation (
     Line(points = {{-24.6, 29.8}, {-102, 29.8}, {-102, 30}}, color = {0, 0, 127}));
-  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points=
-          {{-7.4,26},{-8.88178e-16,26},{-8.88178e-16,8}}, color={0,0,127}));
+  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-7.4,26},
+          {2,26},{2,8}},                                  color={0,0,127}));
   connect(inlet, heatHX.inlet) annotation (
     Line(points={{-100,0},{-8,0}},         color = {168, 168, 168}));
   connect(boilerFeedback.outlet, outlet) annotation (

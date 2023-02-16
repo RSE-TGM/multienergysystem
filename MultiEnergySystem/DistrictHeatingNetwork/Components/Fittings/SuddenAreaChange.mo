@@ -1,9 +1,9 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Fittings;
 model SuddenAreaChange
   "Model a sudden area change in the fluid flow"
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   import      Modelica.Units.SI;
-  import DHN4Control.Media.{cp, rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
   // Parameters
   parameter SI.Length D_i = 0.1 "Input diameter";
@@ -34,5 +34,5 @@ equation
   inStream(inlet.h_out) = outlet.h_out;
   inStream(outlet.h_out) = inlet.h_out;
 annotation (
-    Icon(graphics = {Rectangle(origin = {-50, 0}, lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-50, 44}, {50, -44}}), Rectangle(origin = {50, -1}, lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-50, 23}, {50, -23}})}));
+    Icon(graphics={  Rectangle(origin = {-50, 0}, lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-50, 44}, {50, -44}}), Rectangle(origin = {50, -1}, lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-50, 23}, {50, -23}})}));
 end SuddenAreaChange;

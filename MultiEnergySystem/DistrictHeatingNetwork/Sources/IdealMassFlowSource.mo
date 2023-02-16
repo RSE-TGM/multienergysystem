@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model IdealMassFlowSource "Generate a fixed mass flow rate at a temperature given from outside"
     //extends DHN4Control.Interfaces.PartialOnePort;
-    import DHN4Control.Media.{cp, rho0};
+    import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
   parameter Boolean allowFlowReversal = false "= false prohibits flow reversal, simplify the equations";
   parameter Boolean use_in_m_flow = false "Use connector input for the nominal flow rate" annotation (
@@ -27,9 +27,9 @@ model IdealMassFlowSource "Generate a fixed mass flow rate at a temperature give
         rotation=0)));
   Modelica.Blocks.Interfaces.RealInput in_T if use_in_T "Temperature" annotation (
       Placement(visible = true, transformation(origin={-24,36},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-98, -80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  DHN4Control.Interfaces.FluidPortOutlet outlet annotation (Placement(
-        transformation(extent={{82,-20},{122,20}}), iconTransformation(extent={
-            {82,-20},{122,20}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
+        transformation(extent={{82,-20},{122,20}}), iconTransformation(extent={{
+            82,-20},{122,20}})));
 protected
   Modelica.Blocks.Interfaces.RealInput in_m_flow_internal;
   Modelica.Blocks.Interfaces.RealInput in_T_internal;

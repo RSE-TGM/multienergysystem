@@ -1,18 +1,18 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model IdealMassFlowPumpsTest
   extends Modelica.Icons.Example;
-  DHN4Control.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=5, Tnom=
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=5, Tnom=
         353.15)                                               annotation (
     Placement(visible = true, transformation(origin={-102,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.ExpansionTank expansionTank annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank annotation (
     Placement(visible = true, transformation(origin={80,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.ExpansionTank expansionTank1 annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank1 annotation (
     Placement(visible = true, transformation(origin={80,14},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.FixedMassFlowPump fixedMassFlowPump annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.FixedMassFlowPump fixedMassFlowPump annotation (
     Placement(visible = true, transformation(                    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.ExpansionTank expansionTank2 annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
     Placement(visible = true, transformation(origin={80,-16},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.VariableMassFlowPump variableMassFlowPump annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.VariableMassFlowPump variableMassFlowPump annotation (
     Placement(visible = true, transformation(origin={0,-30},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Constant variableMassRef(k = 2) annotation (
     Placement(visible = true, transformation(origin={-38,-18},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));

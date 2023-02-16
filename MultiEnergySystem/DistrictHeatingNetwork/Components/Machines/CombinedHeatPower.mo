@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Machines;
 model CombinedHeatPower
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
 
   parameter Modelica.Units.SI.PerUnit eta_electrical = 0.4193 "Average electrical efficiency";
   parameter Modelica.Units.SI.PerUnit eta_thermal = 0.5453 "Average thermal efficiency";
@@ -10,8 +10,8 @@ model CombinedHeatPower
   Modelica.Blocks.Interfaces.RealInput PelectricRef annotation (
     Placement(visible = true, transformation(origin = {-106, 90}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer idealHeatHX
-    "Ideal heat exchanger, setting the total exchanged heat power." annotation
-    (Placement(visible=true, transformation(extent={{-10,-10},{10,10}},
+    "Ideal heat exchanger, setting the total exchanged heat power." annotation (
+     Placement(visible=true, transformation(extent={{-10,-10},{10,10}},
           rotation=0)));
 equation
 

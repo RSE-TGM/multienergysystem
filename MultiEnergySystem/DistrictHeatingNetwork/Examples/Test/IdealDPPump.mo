@@ -1,23 +1,23 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model IdealDPPump
   extends Modelica.Icons.Example;
-  DHN4Control.Components.ExpansionTank sinkLP(p = 399999.9999999999)  annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank sinkLP(p = 399999.9999999999)  annotation (
     Placement(visible = true, transformation(origin = {90, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.FixedDifferentialPressurePump fixedDifferentialPressurePump(Dp=
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.FixedDifferentialPressurePump fixedDifferentialPressurePump(Dp=
         99999.99999999999) annotation (Placement(visible=true, transformation(
         origin={-24,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=5, Tnom=
-        353.15) annotation (Placement(visible=true, transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=5, Tnom=353.15)
+    annotation (Placement(visible=true, transformation(
         origin={-82,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sources.VariableDifferentialPressurePump variableDifferentialPressurePump annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.VariableDifferentialPressurePump variableDifferentialPressurePump annotation (
     Placement(visible = true, transformation(origin = {-22, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.ExpansionTank sinkHP(p = 999999.9999999999) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank sinkHP(p = 999999.9999999999) annotation (
     Placement(visible = true, transformation(origin = {90, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.IdealMassFlowSource idealMassFlowSource1(mflownom=5, Tnom=
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource1(mflownom=5, Tnom=
        353.15)                                                 annotation (
     Placement(visible = true, transformation(origin={-80,-52},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp ramp(duration = 8, height = 8e5, offset = 1e5, startTime = 1)  annotation (

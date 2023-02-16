@@ -1,8 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Loads;
 model FixedReturnPowerLoad
   "Model a power controlled load with controllable fixed return temperature."
-  extends DHN4Control.Interfaces.PartialTwoPort;
-  import DHN4Control.Media.cp;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.cp;
 
   parameter Modelica.Units.SI.Pressure dp_nominale "Pressure drop across the component";
   parameter Real Kv(unit = "m3/h") = 0 "Metri Flow Coefficient ";
@@ -26,9 +26,9 @@ model FixedReturnPowerLoad
         origin={-8,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor loadReturnTemperatureSensor annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor loadReturnTemperatureSensor annotation (
     Placement(visible = true, transformation(origin={24,0},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Controllers.AWPIContinuous aWPIContinuous(
+  MultiEnergySystem.DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous(
     Kp=1,
     Ti=1,
     Umax=1,
@@ -59,7 +59,8 @@ equation
     Line(points={{-130,24},{-106,24},{-106,23.8},{-80.6,23.8}},
                                            color = {0, 0, 127}));
   connect(loadHX.Ptransfer, loadConsumptionRef)
-    annotation (Line(points={{-10,8},{-10,38}}, color={0,0,127}));
+    annotation (Line(points={{-8,8},{-8,24},{-10,24},{-10,38}},
+                                                color={0,0,127}));
   connect(loadReturnTemperatureSensor.T, aWPIContinuous.FeedBack) annotation (
     Line(points={{24,9},{24,12},{-90,12},{-90,17},{-80.6,17}},          color = {0, 0, 127}));
   annotation (

@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model PlugFlowCore
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialInsulatedTube;
-  import DHN4Control.Media.{cp, rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import Modelica.Fluid.Utilities.regSquare;
 
   // Parameter declaration

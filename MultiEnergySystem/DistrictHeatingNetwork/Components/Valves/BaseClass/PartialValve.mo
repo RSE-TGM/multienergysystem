@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass;
 partial model PartialValve
-  extends DHN4Control.Interfaces.PartialTwoPort;
-  import DHN4Control.Media.{cp,rho0};
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regRoot;
 
   parameter Modelica.Units.SI.PerUnit nomOpening = 1 "Nominal valve opening";

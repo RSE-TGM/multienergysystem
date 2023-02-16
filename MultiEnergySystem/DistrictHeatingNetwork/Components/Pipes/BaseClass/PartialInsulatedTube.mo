@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 partial model PartialInsulatedTube
-  extends DHN4Control.Interfaces.PartialTwoPort;
-  import DHN4Control.Media.{cp,rho0};
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   parameter Modelica.Units.SI.Length L "Length";
   parameter Modelica.Units.SI.Length D "Internal diameter";

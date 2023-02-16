@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
 model Stratified1DStorage
-  extends DHN4Control.Interfaces.PartialTwoPort;
-  import DHN4Control.Media.{cp,rho0};
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import      Modelica.Units.SI;
 
   // Parameter
@@ -79,5 +79,5 @@ equation
   tesColdT = Ttilde[N] - 273.15;
 annotation (
     Diagram,
-    Icon(graphics = {Polygon(lineColor = {131, 131, 131}, fillColor = {173, 173, 173}, fillPattern = FillPattern.VerticalCylinder, points = {{-100, 80}, {-40, 100}, {40, 100}, {100, 80}, {100, -60}, {40, -100}, {-40, -100}, {-100, -60}, {-100, -60}, {-100, 80}}), Rectangle(origin = {-97, -80}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-3, 20}, {3, -20}}), Rectangle(origin = {-75, 0}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Rectangle(origin = {75, 0}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Text(origin = {3, 7}, extent = {{-61, 29}, {61, -29}}, textString = "TES"), Rectangle(origin = {97, -80}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-3, 20}, {3, -20}})}));
+    Icon(graphics={  Polygon(lineColor = {131, 131, 131}, fillColor = {173, 173, 173}, fillPattern = FillPattern.VerticalCylinder, points = {{-100, 80}, {-40, 100}, {40, 100}, {100, 80}, {100, -60}, {40, -100}, {-40, -100}, {-100, -60}, {-100, -60}, {-100, 80}}), Rectangle(origin = {-97, -80}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-3, 20}, {3, -20}}), Rectangle(origin = {-75, 0}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Rectangle(origin = {75, 0}, lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Text(origin = {3, 7}, extent = {{-61, 29}, {61, -29}}, textString = "TES"), Rectangle(origin = {97, -80}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-3, 20}, {3, -20}})}));
 end Stratified1DStorage;

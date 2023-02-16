@@ -1,8 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components;
 model ExpansionTank
   "Model an ideal expansion tank, with infinite volume and constant temperature. Fix a pressure at the connected point, independently from the mass flow."
-  extends DHN4Control.Interfaces.PartialOnePort;
-  import DHN4Control.Media.{cp, rho0};
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialOnePort;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   parameter Modelica.Units.SI.Pressure p = 2.5e5 "Imposed pressure";
   parameter Modelica.Units.SI.Temperature T = 338.15 "Temperature inside the expansion tank";
 equation

@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model DirectionalHeatLossPlugFlow
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialInsulatedTube;
-  import DHN4Control.Media.{cp,rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Parameter
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal "Nominal mass flow rate";
@@ -33,5 +33,5 @@ equation
   Q_flow = -Modelica.Media.Air.MoistAir.Utilities.spliceFunction(pos = (T_a_inflow - T_b_outflow) * cp, neg = 0, x = inlet.m_flow, deltax = m_flow_nominal / 1000) * inlet.m_flow;
 
 annotation (
-    Icon(graphics = {Line(origin = {-60, 28.7143}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20), Line(origin = {60, 29.1429}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20), Line(origin = {0, 28.7143}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20)}));
+    Icon(graphics={  Line(origin = {-60, 28.7143}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20), Line(origin = {60, 29.1429}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20), Line(origin = {0, 28.7143}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20)}));
 end DirectionalHeatLossPlugFlow;

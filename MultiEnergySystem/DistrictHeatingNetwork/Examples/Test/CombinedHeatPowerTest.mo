@@ -1,27 +1,27 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model CombinedHeatPowerTest
   extends Modelica.Icons.Example;
-  DHN4Control.Sources.IdealMassFlowSource source(mflownom=1, Tnom=343.15)
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource source(mflownom=1, Tnom=343.15)
     annotation (Placement(visible=true, transformation(
         origin={-44,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Components.ExpansionTank sink annotation (Placement(visible=true,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank sink annotation (Placement(visible=true,
         transformation(
         origin={40,16},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  DHN4Control.Sensors.IdealMassFlowSensor massFlowSensor annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor massFlowSensor annotation (Placement(
         visible=true, transformation(
         origin={-22,0},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Sensors.IdealTemperatureSensor warmStartTSensor annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor warmStartTSensor annotation (
       Placement(visible=true, transformation(
         origin={26,0},
         extent={{-6,-6},{6,6}},
         rotation=0)));
-  DHN4Control.Components.Machines.CombinedHeatPower CHP(eta_electrical=0.4,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.CombinedHeatPower CHP(eta_electrical=0.4,
       eta_thermal=0.5) annotation (Placement(visible=true, transformation(
           extent={{-10,-10},{10,10}}, rotation=0)));
   Modelica.Blocks.Sources.RealExpression TrefCHP(y=10*4186*0.4/0.5)

@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass;
 partial model PartialIdealFlowSensor
   "Partial component of a generic sensor for flow properties"
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
 equation
   // mass balance
   0 = inlet.m_flow + outlet.m_flow;

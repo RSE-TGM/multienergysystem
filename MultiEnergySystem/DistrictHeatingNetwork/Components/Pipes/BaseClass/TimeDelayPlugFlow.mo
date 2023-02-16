@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model TimeDelayPlugFlow
   extends Modelica.Icons.RoundSensor;
-  import DHN4Control.Media.{cp,rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Base tube parameters
   parameter Modelica.Units.SI.Length L "Pipe length";

@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Machines;
 model HeatPump
   "Model a simplified static HeatPump, with a fixed COP"
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
 
   parameter Real COP = 2.5 "Fixed COP Value";
   Modelica.Blocks.Math.Gain heatPumpCOP(k = COP) annotation (
@@ -19,10 +19,10 @@ equation
   connect(heatPumpHX.outlet, outlet) annotation (
     Line(points={{12,0},{100,0}},                color = {168, 168, 168}));
   connect(heatPumpCOP.y, heatPumpHX.Ptransfer) annotation (Line(points={{-39,40},
-          {-8.88178e-16,40},{-8.88178e-16,8}}, color={0,0,127}));
+          {2,40},{2,8}},                       color={0,0,127}));
 
   connect(outlet, outlet) annotation (Line(points={{100,0},{102,0},{102,6},{104,
-          6},{104,-6},{92,-6}}, color={168,168,168}));
+          6},{104,0},{100,0}},  color={168,168,168}));
   connect(inlet, inlet)
     annotation (Line(points={{-100,0},{-100,0}}, color={168,168,168}));
 annotation (

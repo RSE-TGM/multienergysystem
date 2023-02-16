@@ -4,7 +4,7 @@ model pipeFV
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialInsulatedTube;
   import Modelica.Fluid.Utilities.regSquare;
-  import DHN4Control.Media.{cp,rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Flow parameter
   parameter Modelica.Units.SI.PerUnit cf = 0.004 "Costant Fanning friction coefficient";

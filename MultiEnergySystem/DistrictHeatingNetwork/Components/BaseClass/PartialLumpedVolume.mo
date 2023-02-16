@@ -3,7 +3,7 @@ partial model PartialLumpedVolume
   "Partial model of a Lumped volume of water, operated at constant mass with losses to ambient"
   //extends DHN4Control.Interfaces.PartialTwoPort;
   import      Modelica.Units.SI;
-  import DHN4Control.Media.{cp, rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
   // Parameters
   parameter Boolean allowFlowReversal = true "= false prohibits flow reversal, simplify the equations";
@@ -26,7 +26,7 @@ partial model PartialLumpedVolume
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {83, 61}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
 
-  DHN4Control.Interfaces.FluidPortInlet inlet annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (Placement(
       visible=true,
       transformation(
         origin={-100,0},
@@ -36,7 +36,7 @@ partial model PartialLumpedVolume
         origin={0,-100},
         extent={{-18,-18},{18,18}},
         rotation=0)));
-  DHN4Control.Interfaces.FluidPortOutlet outlet annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
       visible=true,
       transformation(
         origin={100,0},

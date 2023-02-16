@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass;
 partial model PartialAbsoluteSensor
-  extends DHN4Control.Interfaces.PartialOnePort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialOnePort;
 equation
   // No flow in or out of the sensor
   inlet.m_flow = 0;

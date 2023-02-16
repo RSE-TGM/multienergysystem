@@ -1,8 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 model PowerTransfer
   "Model a imposed power loss to the fluid, with no pressure loss"
-  extends DHN4Control.Interfaces.PartialTwoPort;
-  import DHN4Control.Media.{cp,rho0};
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   parameter Modelica.Units.SI.MassFlowRate b = 0.001 "Regularization mass flow rate, avoid null division. Try to keep it low in accordance to the expected mass flow.";
 

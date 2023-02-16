@@ -1,26 +1,26 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model PipeTest "Test with 3 differente pipes"
   extends Modelica.Icons.Example;
-  DHN4Control.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=5, Tnom=353.15)
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=5, Tnom=353.15)
                                                               annotation (
     Placement(visible = true, transformation(origin={-70,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.ExpansionTank expansionTank annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank annotation (
     Placement(visible = true, transformation(origin={70,50},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.Pipes.pipeFV oneSec(D = 0.0508, L = 50, N = 1, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, h = 10, lambdaIns = 0.04)  annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV oneSec(D = 0.0508, L = 50, N = 1, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, h = 10, lambdaIns = 0.04)  annotation (
     Placement(visible = true, transformation(origin={0,40},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.Pipes.pipeFV fiftySec(D = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, lambdaIns = 0.04) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySec(D = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, lambdaIns = 0.04) annotation (
     Placement(visible = true, transformation(                    extent={{-10,-10},
             {10,10}},                                                                             rotation = 0)));
-  DHN4Control.Components.ExpansionTank expansionTank1 annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank1 annotation (
     Placement(visible = true, transformation(origin={70,10},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.IdealMassFlowSource idealMassFlowSource1(mflownom=5, Tnom=
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource1(mflownom=5, Tnom=
        353.15)                                                 annotation (
     Placement(visible = true, transformation(origin={-70,0},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.Pipes.pipeFV fiftySecNoTI(D = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, lambdaIns = 0.04, thermalInertia = false) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(D = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, lambdaIns = 0.04, thermalInertia = false) annotation (
     Placement(visible = true, transformation(origin={0,-40},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Components.ExpansionTank expansionTank2 annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
     Placement(visible = true, transformation(origin={70,-30},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DHN4Control.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=5, Tnom=
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=5, Tnom=
        353.15)                                                 annotation (
     Placement(visible = true, transformation(origin={-70,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation

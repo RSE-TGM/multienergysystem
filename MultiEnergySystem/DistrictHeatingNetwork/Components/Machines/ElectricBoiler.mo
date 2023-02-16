@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Machines;
 model ElectricBoiler
   "Model of an electric boiler, controlled through a On Off controller "
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
 
  // Parameters
 
@@ -24,8 +24,7 @@ model ElectricBoiler
     Placement(visible = true, transformation(origin = {-66, 34}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Logical.TriggeredTrapezoid triggeredTrapezoid(amplitude = Pmax, rising = trise) annotation (
     Placement(visible = true, transformation(origin = {-30, 34}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer powerTransfer
-    annotation (Placement(visible=true, transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer powerTransfer  annotation (Placement(visible=true, transformation(
         origin={-12,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -36,7 +35,7 @@ model ElectricBoiler
     Placement(visible = true, transformation(origin = {-112, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-34, 100}, extent = {{-20, -20}, {20, 20}}, rotation = -90)));
 equation
   connect(triggeredTrapezoid.y, powerTransfer.Ptransfer)
-    annotation (Line(points={{-19,34},{-14,34},{-14,8}}, color={0,0,127}));
+    annotation (Line(points={{-19,34},{-12,34},{-12,8}}, color={0,0,127}));
   connect(onOffController.y, triggeredTrapezoid.u) annotation (
     Line(points={{-55,34},{-42,34}},      color = {255, 0, 255}));
   connect(referenceT, onOffController.reference) annotation (

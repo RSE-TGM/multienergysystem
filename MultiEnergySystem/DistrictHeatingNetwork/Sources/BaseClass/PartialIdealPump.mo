@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources.BaseClass;
 partial model PartialIdealPump
   "Partial model of a ideal pump, neglecting the work done on the fluid"
-  extends DHN4Control.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
 equation
   // Mass balance
   inlet.m_flow + outlet.m_flow = 0;

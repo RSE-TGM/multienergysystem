@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model IdealMassFlowSource "Generate a fixed mass flow rate at a temperature given from outside"
-    //extends DHN4Control.Interfaces.PartialOnePort;
-    import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
+
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
   parameter Boolean allowFlowReversal = false "= false prohibits flow reversal, simplify the equations";
   parameter Boolean use_in_m_flow = false "Use connector input for the nominal flow rate" annotation (
@@ -22,11 +22,12 @@ model IdealMassFlowSource "Generate a fixed mass flow rate at a temperature give
         extent={{-20,-20},{20,20}},
         rotation=0),
       iconTransformation(
-        origin={-98,80},
-        extent={{-20,-20},{20,20}},
-        rotation=0)));
+        origin={-50,62},
+        extent={{-10,-10},{10,10}},
+        rotation=-90)));
   Modelica.Blocks.Interfaces.RealInput in_T if use_in_T "Temperature" annotation (
-      Placement(visible = true, transformation(origin={-24,36},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-98, -80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+      Placement(visible = true, transformation(origin={-24,36},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={50,62},      extent={{-10,-10},
+            {10,10}},                                                                                                                                                                       rotation=-90)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
         transformation(extent={{82,-20},{122,20}}), iconTransformation(extent={{
             82,-20},{122,20}})));
@@ -49,5 +50,12 @@ equation
   end if;
 
     annotation (
-      Icon(graphics={  Ellipse(extent = {{-100, 100}, {100, -100}}), Text(origin = {-3, 1}, extent = {{-71, 31}, {71, -31}}, textString = "%name")}));
+      Icon(graphics={                                                Text(origin={0,-100},  extent={{-100,20},
+              {100,-20}},                                                                                                    textString = "%name"),
+                     Rectangle(lineColor = {173, 173, 173}, lineThickness = 3, extent={{-100,58},
+              {100,-62}}),                                                                                                                                                       Polygon(lineColor={135,135,
+              135},                                                                                                                                                                                                   fillColor={0,0,255},
+            fillPattern=FillPattern.Solid,                                                                                                                                                                                                        points={{-20,-20},
+              {60,0},{-20,20},{18,0},{-20,-20}},
+          lineThickness=0.5)}));
 end IdealMassFlowSource;

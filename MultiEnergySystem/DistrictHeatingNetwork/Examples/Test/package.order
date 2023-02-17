@@ -12,3 +12,4 @@ GasBoilerTest
 ElectricBoilerTest
 FixedReturnPowerLoadTest
 CombinedHeatPowerTest
+PumpTestBase

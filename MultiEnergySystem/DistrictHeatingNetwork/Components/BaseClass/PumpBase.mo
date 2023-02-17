@@ -173,7 +173,8 @@ equation
   dp = homotopy(pout-pin, dpnom);
   q = homotopy(m_flow/rhoin, qnom);
 
-  eta = q*(600.85504809 - 144245.141229*q);
+  //eta = q*(600.85504809 - 144245.141229*q);
+  W = ((omega/omeganom)^3*(45*omeganom/omega*q + 0.115))*1000;
   head = 7.38557689*(omega/omeganom)^2 + q*(617.03274734*(omega/omeganom) -545218.57934041*q);
   head = dp / (rhoin * g);
   W = dp*q/eta;

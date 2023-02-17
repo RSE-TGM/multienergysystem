@@ -87,11 +87,11 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(group = "Characteristics"));
   final parameter Modelica.Units.SI.Length D = sqrt(sqrt(qnom^2*psinom*rhonom/(phicnom^2*dpnom)))
    "Nominal diameter";
-  final parameter Modelica.Units.SI.AngularVelocity omeganom = qnom/(phicnom*D^3);
+  parameter Modelica.Units.SI.AngularVelocity omeganom = 2*3.14159*1450/60;
 
 
   //Variables
-  Modelica.Units.SI.MassFlowRate w(start = w_start)
+  Modelica.Units.SI.MassFlowRate m_flow(start = w_start)
    "Mass flow rate";
   Modelica.Units.SI.VolumeFlowRate q(start = w_start / rhonom)
    "Volume flow rate";
@@ -99,13 +99,13 @@ partial model PumpBase "Base model to develop water pump models"
    "Outlet pressure minus inlet pressure";
   Modelica.Units.SI.Length head
    "Pump head";
-  Modelica.Units.SI.Pressure pin
+  Modelica.Units.SI.Pressure pin(start = pin_start)
    "Pressure of entering fluid";
   Modelica.Units.SI.Pressure pout
    "Pressure of outgoing fluid";
-  Modelica.Units.SI.SpecificEnthalpy hin
+  Modelica.Units.SI.SpecificEnthalpy hin(start = h_start)
    "Enthalpy of entering fluid";
-  Modelica.Units.SI.SpecificEnthalpy hout(start = h_start)
+  Modelica.Units.SI.SpecificEnthalpy hout
    "Enthalpy of outgoing fluid";
   //Types.SpecificEnthalpy hiso;
   Modelica.Units.SI.Density rhoin
@@ -124,28 +124,42 @@ partial model PumpBase "Base model to develop water pump models"
    "Heat loss (single pump)";
   Modelica.Units.SI.Efficiency eta
    "Pump efficiency";
-  Modelica.Units.SI.PerUnit phic(start = 0.07, min = 0)
-   "flow coefficient";
-  Modelica.Units.SI.PerUnit psi
-   "work coefficient";
   Modelica.Units.SI.Power Pm
    "mechanical power";
   Modelica.Units.SI.Power Pe
    "electrical power";
-
-
 
   Interfaces.FluidPortInlet inlet annotation (Placement(transformation(extent={{
             -100,0},{-60,40}}), iconTransformation(extent={{-100,0},{-60,40}})));
   Interfaces.FluidPortOutlet outlet annotation (Placement(transformation(extent=
            {{36,58},{76,98}}), iconTransformation(extent={{36,58},{76,98}})));
 
+  Modelica.Blocks.Interfaces.RealInput in_omega if use_in_omega "rad" annotation (
+    Placement(transformation(origin = {-26, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 270),
+        iconTransformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={-40,70})));
+
+protected
+  Modelica.Blocks.Interfaces.RealInput in_omega_int "Internal connector for rotational speed";
+
 equation
+  assert(eta>0, "Efficiency becomes negative", AssertionLevel.error);
+  assert(dp>0, "Flow is in the opposite direction", AssertionLevel.error);
+
+  connect(in_omega, in_omega_int);
+  if not use_in_omega then
+    in_omega_int = omeganom "Rotational speed provided by parameter";
+  end if;
+  omega = in_omega_int "Rotational speed";
 
   pin = inlet.p;
   hin = inStream(inlet.h_out);
+  m_flow = inlet.m_flow;
 
   pout = outlet.p;
+  hout = outlet.h_out;
 
   // Fluid properties
   fluidIn = Medium.setState_phX(pin, hin);
@@ -156,8 +170,24 @@ equation
   rhoout = Medium.density(fluidOut);
   Tout = Medium.temperature(fluidOut);
 
-  dp = pout-pin;
-  q = w/rhoin
+  dp = homotopy(pout-pin, dpnom);
+  q = homotopy(m_flow/rhoin, qnom);
+
+  eta = q*(600.85504809 - 144245.141229*q);
+  head = 7.38557689*(omega/omeganom)^2 + q*(617.03274734*(omega/omeganom) -545218.57934041*q);
+  head = dp / (rhoin * g);
+  W = dp*q/eta;
+
+  // Mass Balance
+  inlet.m_flow + outlet.m_flow = 0;
+  // Energy Balance
+  0 = outlet.m_flow * hout + inlet.m_flow * hin + W - Qloss "Energy balance";
+
+  Pm = W/etamech;
+  Pe = Pm/etaelec;
+
+  inlet.h_out = inStream(outlet.h_out) "Dummy equation for flow reversal";
+
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                      Polygon(fillColor={0,0,255},
             fillPattern=FillPattern.Solid,
@@ -169,10 +199,8 @@ equation
           lineColor={0,0,0}),                                                                                                                                                                                                        Polygon(fillColor = {255, 255, 255}, pattern = LinePattern.None,
             fillPattern =                                                                                                                                                                                                        FillPattern.HorizontalCylinder, points={{-30,52},
               {-30,-8},{48,20},{-30,52}}),                                                                                                                                                                                                        Text(origin={0,39},    extent = {{-100, -99}, {100, -139}}, textString = "%name")}),
-      Diagram(coordinateSystem(preserveAspectRatio=false)));
-
-
-  annotation (Icon(graphics={
+      Diagram(coordinateSystem(preserveAspectRatio=false)),
+              Icon(graphics={
         Polygon(
           points={{-40,-24},{-60,-60},{60,-60},{40,-24},{-40,-24}},
           lineColor={0,0,255},

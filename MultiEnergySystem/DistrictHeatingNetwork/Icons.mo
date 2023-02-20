@@ -35,4 +35,12 @@ package Icons
 
     end SourceW;
   end Water;
+
+  package Generic
+    partial model MetalWall
+      annotation (
+        Icon(graphics={  Rectangle(extent = {{-80, 20}, {80, -20}}, lineColor = {0, 0, 0}, fillColor = {128, 128, 128},
+                fillPattern =                                                                                                         FillPattern.Solid)}));
+    end MetalWall;
+  end Generic;
 end Icons;

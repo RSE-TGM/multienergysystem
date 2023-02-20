@@ -9,8 +9,8 @@ partial model PumpBase "Base model to develop water pump models"
   Medium.ThermodynamicState fluidOut;
 
   //Constants
-  constant Real a[6] = {0.0133, 45.127, -1322.6, 21711, -174787, 503981}
-   "value of coefficient in pump efficiency calculation polynomial";
+  constant Real a[2] = {45000, 115}
+   "value of coefficients for Linear Power Characteristic of pump model";
   constant Real b[4] = {0.7053, 1.325, -0.5132, -401.26}
    "value of coefficient in pump work efficiency calculation polynomial";
   constant Real b1[3] = {0.7063, 1.699, -29.88};
@@ -82,7 +82,7 @@ partial model PumpBase "Base model to develop water pump models"
   final parameter Modelica.Units.SI.PerUnit psinom =  1
    "Nominal work coefficient" annotation (
     Dialog(group = "Characteristics"));
-  final parameter Modelica.Units.SI.Efficiency etanom = ((a[1] + phicnom*(a[2] + phicnom*(a[3] + phicnom*(a[4] + phicnom*(a[5] + phicnom*a[6]))))))*etareg
+  final parameter Modelica.Units.SI.Efficiency etanom = 0.61524695
    "Nominal efficiency" annotation (
     Dialog(group = "Characteristics"));
   final parameter Modelica.Units.SI.Length D = sqrt(sqrt(qnom^2*psinom*rhonom/(phicnom^2*dpnom)))
@@ -173,10 +173,8 @@ equation
   dp = homotopy(pout-pin, dpnom);
   q = homotopy(m_flow/rhoin, qnom);
 
-  //eta = q*(600.85504809 - 144245.141229*q);
-  //W = ((omega/omeganom)^3*(45*omeganom/omega*q + 0.115))*1000;
-  W = (omega/omeganom)^3*Utilities.PowerCharacteristicLinear(45000*omeganom/omega,115,q);
-  head = 7.38557689*(omega/omeganom)^2 + q*(617.03274734*(omega/omeganom) -545218.57934041*q);
+  W = (omega/omeganom)^3*Utilities.PowerCharacteristicLinear(a[1]*omeganom/omega,a[2],q) "Power Characteristic equation";
+  head = 7.38557689*(omega/omeganom)^2 + q*(617.03274734*(omega/omeganom) -545218.57934041*q) "Head Characteristic equation";
   head = dp / (rhoin * g);
   W = dp*q/eta;
 

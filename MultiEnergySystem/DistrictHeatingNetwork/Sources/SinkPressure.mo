@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model SinkPressure "Pressure sink for water/steam flows"
-  extends ThermoPower.Icons.Water.SourceP;
+  extends DistrictHeatingNetwork.Icons.Water.SourceP;
   replaceable package Medium =
       MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater                          constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model"

@@ -3,3 +3,5 @@ FluidPortInlet
 FluidPortOutlet
 PartialTwoPort
 PartialOnePort
+HeatPort
+MultiHeatPort

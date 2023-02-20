@@ -14,7 +14,7 @@ model pipeFV
   final parameter Modelica.Units.SI.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";
 
   // Variables
-  Modelica.Units.SI.MassFlowRate m_flow;
+  Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate across the pipe";
   Modelica.Units.SI.Velocity u;
   Modelica.Units.SI.Temperature Ttilde[N](each start = T_start, each fixed = true, each stateSelect = StateSelect.prefer) "State variable temperatures";
   Modelica.Units.SI.Temperature Twall[N](each start = T_start, each fixed = true, each stateSelect = StateSelect.prefer) "Pipe wall temperature";

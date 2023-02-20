@@ -13,3 +13,4 @@ ElectricBoilerTest
 FixedReturnPowerLoadTest
 CombinedHeatPowerTest
 PumpTestBase
+RoundPipeTest

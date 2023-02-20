@@ -5,7 +5,7 @@ model System
       Evaluate=true,
       Dialog(group="Simulation options"));
 
-  parameter AllamCycle.Choices.Init.Options initOpt=AllamCycle.Choices.Init.Options.steadyState
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt=DistrictHeatingNetwork.Choices.Init.Options.steadyState
     annotation (Dialog(group="Simulation options"));
   // parameter ThermoPower.Choices.System.Dynamics Dynamics=ThermoPower.Choices.System.Dynamics.DynamicFreeInitial;
   parameter Modelica.Units.SI.Pressure p_amb = 101325 "Ambient pressure"

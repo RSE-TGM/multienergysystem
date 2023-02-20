@@ -11,12 +11,15 @@ model round1DFV
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
-      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.IdealHeatTransfer constrainedby
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+                                                                                             constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
 
   // Flow parameter
+  parameter Boolean noInitialPressure = false
+    "Remove initial equation for pressure, to be used in case of solver failure";
   parameter Integer n = 2
     "Number of finite volumes in each pipe";
   parameter Integer nPipes = 2
@@ -36,6 +39,9 @@ model round1DFV
     "Coefficient for the calculation of the pressure loss across the pipe";
   parameter Modelica.Units.SI.Density rho_nom = 997
     "Nominal density of the fluid";
+  parameter Modelica.Units.SI.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
+    "Temperature start value of the fluid" annotation (
+    Dialog(group = "Initialisation"));
 
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho_nom * omega * L / A * u_nom ^ 2
     "Nominal pressure drop";
@@ -61,9 +67,9 @@ model round1DFV
     "Mass flow rate in each volume across the pipe";
   Modelica.Units.SI.Velocity u[n + 1]
     "Velocity in each volume across the pipe";
-  Modelica.Units.SI.Temperature Ttilde[n](each start = T_start, each fixed = true, each stateSelect = StateSelect.prefer)
+  Modelica.Units.SI.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer)
     "State variable temperatures";
-  Modelica.Units.SI.Temperature Twall[n](each start = T_start, each fixed = true, each stateSelect = StateSelect.prefer)
+  Modelica.Units.SI.Temperature Twall[n]
     "Pipe wall temperature";
 //   Modelica.Units.SI.Power Q_int[n]
 //     "Heat dissipation out of each volume into the wall";
@@ -98,14 +104,14 @@ model round1DFV
     Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
     m_flow = m_flow[2:end],
     p = pout,
-    cp = cp[2:end],
+    cp = Medium.specificHeatCapacityCp(fluid[2:end]),
     mu = Medium.dynamicViscosity(fluid[2:end]),
     k = Medium.thermalConductivity(fluid[2:end]),
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
     //each cp = Medium.specificHeatCapacityCp(fluid[1].state),
-//CO2.dynamicViscosity(idealGas.state);
+
   DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
 equation
@@ -116,6 +122,8 @@ equation
     cp[i] = Medium.specificHeatCapacityCp(fluid[i]);
     m_flow[i] = A * u[i]* rho[i];
   end for;
+
+  fluid[1].h = inStream(inlet.h_out);
 
 // Relationships for state variables
   Ttilde = T[2:n + 1];
@@ -131,7 +139,7 @@ equation
      M[i] = Vi * fluid[i + 1].d;
      //w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
      m_flow[i] - m_flow[i + 1] = der(M[i]);
-     rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * (T[i]*m_flow[i] - T[i + 1]*m_flow[i+1]) + wall.Q_flow[i] "Energy balance";
+     rho[i] * Vi * cp[i] * der(Ttilde[i]) = Ttilde[i] * m_flow[i]*(cp[i] - cp[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;
 
   Mtot = sum(M) "Total mass";
@@ -141,26 +149,36 @@ equation
   //inlet.p - outlet.p = rho0 * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
 
 
-//   for i in 1:n loop
-//
-//     T[j] = Medium.temperature(fluidState[j]);
-//     rho[j] = Medium.density(fluidState[j]);
-//     drdp[j] = if Medium.singleState then 0 else Medium.density_derp_h(
-//       fluidState[j]);
-//     drdh[j] = Medium.density_derh_p(fluidState[j]);
-//     u[j] = w/(rho[j]*A);
-//   end for;
 
 // Boundary conditions
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n + 1];
   inlet.p = pin;
   outlet.p = pout;
-  inlet.h_out = Ttilde[1] * cp[1];
-  outlet.h_out = inStream(inlet.h_out);
+  inlet.h_out = 1e5;
+  outlet.h_out = fluid[n+1].h;
   wall.Q_flow = heatTransfer.Q_flow;
   wall.T = Twall;
 
-
+initial equation
+  if initOpt == Choices.Init.Options.steadyState then
+    der(Ttilde) = zeros(n);
+    if not noInitialPressure then
+      der(ptilde) = 0;
+    else
+ //No initial pressure
+    end if;
+  elseif initOpt == Choices.Init.Options.fixedState then
+    for i in 1:n loop
+      fluid[i+1].T = T_start[i+1];
+    end for;
+    if not noInitialPressure then
+      ptilde = pout_start;
+    else
+ //No initial pressure
+    end if;
+  else
+//No initial equations
+  end if;
   annotation ();
 end round1DFV;

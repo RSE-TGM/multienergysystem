@@ -38,9 +38,6 @@ partial model PartialInsulatedTube
   parameter Modelica.Units.SI.Temperature T_ext = 298.15
     "External temperature" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature T_start = 273.15 + 70
-    "Temperature start value of the fluid" annotation (
-    Dialog(group = "Initialisation"));
   parameter Modelica.Units.SI.MassFlowRate m_flow_start
     "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
@@ -62,8 +59,6 @@ partial model PartialInsulatedTube
 
 equation
 
-  // Mass balance
-  inlet.m_flow + outlet.m_flow = 0;
 
   annotation (
     Icon(graphics={  Rectangle(lineColor = {102, 102, 102},fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent={{-100,40},

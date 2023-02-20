@@ -42,5 +42,11 @@ package Icons
         Icon(graphics={  Rectangle(extent = {{-80, 20}, {80, -20}}, lineColor = {0, 0, 0}, fillColor = {128, 128, 128},
                 fillPattern =                                                                                                         FillPattern.Solid)}));
     end MetalWall;
+
+    partial model HeatFlow
+      annotation (
+        Icon(graphics={  Rectangle(extent = {{-80, 20}, {80, -20}}, lineColor = {0, 0, 0}, fillColor = {255, 255, 255},
+                fillPattern =                                                                                                         FillPattern.Forward)}));
+    end HeatFlow;
   end Generic;
 end Icons;

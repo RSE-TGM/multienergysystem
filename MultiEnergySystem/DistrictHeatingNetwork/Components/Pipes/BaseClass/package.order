@@ -3,3 +3,4 @@ PlugFlowCore
 DirectionalHeatLossPlugFlow
 TimeDelayPlugFlow
 ThermalInertiaPlugFlow
+PartialRoundTube

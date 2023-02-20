@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 partial model PumpBase "Base model to develop water pump models"
 
   replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater                          constrainedby
+      MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model"
     annotation(choicesAllMatching = true);
   Medium.ThermodynamicState fluidIn;

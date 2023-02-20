@@ -30,7 +30,7 @@ package BaseClasses
     parameter Modelica.Units.SI.PerUnit epsilon = 0.01
      "Ratio";
 
-    parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom
+    parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom = 1200
       "Nominal value of the heat transfert coefficient";
     parameter Modelica.Units.SI.PerUnit alpha = 0.8
       "Exponent in the flow-dependency law";

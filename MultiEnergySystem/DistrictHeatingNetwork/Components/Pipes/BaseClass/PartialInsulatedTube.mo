@@ -7,33 +7,33 @@ partial model PartialInsulatedTube
 
   parameter Modelica.Units.SI.Length L
     "Length of the tube" annotation (
-    Dialog(tab = "General Data", group = "Pipe"));
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.Length h = 0
     "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
-    Dialog(tab = "General Data", group = "Pipe"));
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.Length dWall = 0.003
     "Thickness of the tube" annotation (
-    Dialog(tab = "General Data", group = "Pipe"));
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.Length dIns = 0.15
     "Insulation thickness" annotation (
-    Dialog(tab = "General Data", group = "Insulation"));
+    Dialog(tab = "Data", group = "Insulation"));
   parameter Modelica.Units.SI.ThermalConductivity lambdaIns = 0.04
     "Thermal conductivity of the insulant material" annotation (
-    Dialog(tab = "General Data", group = "Insulation"));
+    Dialog(tab = "Data", group = "Insulation"));
 
   // Metal Parameter
   parameter Boolean thermalInertia = true
     "if true then account for metal thermal inertia" annotation (
-    Dialog(tab = "Metal properties"));
+    Dialog(tab = "Data", group = "Metal Properties"));
   parameter Modelica.Units.SI.SpecificHeatCapacity cpm = 445
     "Metal specific heat capacity" annotation (
-    Dialog(tab = "Metal properties"));
+    Dialog(tab = "Data", group = "Metal Properties"));
   parameter Modelica.Units.SI.Density rhom = 8000
     "Metal density [g/cm^3], for steel = 8" annotation (
-    Dialog(tab = "Metal properties"));
+    Dialog(tab = "Data", group = "Metal Properties"));
   parameter Modelica.Units.SI.ThermalConductivity lambdaM = 45
     "Metal thermal conductivity; steel = 45" annotation (
-    Dialog(tab = "Metal properties"));
+    Dialog(tab = "Data", group = "Metal Properties"));
 
   parameter Modelica.Units.SI.Temperature T_ext = 298.15
     "External temperature" annotation (

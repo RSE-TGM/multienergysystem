@@ -4,7 +4,7 @@ partial model PartialRoundTube
 
   parameter Modelica.Units.SI.Length Di
     "Internal Diameter of a single tube" annotation (
-    Dialog(tab = "Geometrical Data", group = "Pipe"));
+    Dialog(tab = "Data", group = "Pipe"));
 
   // Compute final parameters assuming the tube has cilindrical shape
   final parameter Modelica.Units.SI.Area A = Modelica.Constants.pi * Di ^ 2 / 4

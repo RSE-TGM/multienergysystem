@@ -21,25 +21,32 @@ model round1DFV
   parameter Boolean noInitialPressure = false
     "Remove initial equation for pressure, to be used in case of solver failure";
   parameter Integer n = 2
-    "Number of finite volumes in each pipe";
+    "Number of finite volumes in each pipe" annotation (
+    Dialog(tab = "Data", group = "Fluid"));
   parameter Integer nPipes = 2
-    "Number of parallel pipes";
+    "Number of parallel pipes" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.PerUnit cf = 0.004
-    "Constant Fanning friction coefficient";
+    "Constant Fanning friction coefficient" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.Velocity u_nom = 1
-    "Nominal fluid velocity";
+    "Nominal fluid velocity" annotation (
+    Dialog(tab = "Data", group = "Fluid"));
   parameter Modelica.Units.SI.PerUnit kc
-    "Corrective factor for heat tranfer";
+    "Corrective factor for heat tranfer" annotation (
+    Dialog(group = "Heat Transfer Model"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle
     "Location of pressure state";
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt
     "Initialisation option" annotation (
-    Dialog(tab = "Initialisation"));
+    Dialog(group = "Initialisation"));
   parameter Real k(unit = "Pa/(kg/s)") = 500
-    "Coefficient for the calculation of the pressure loss across the pipe";
+    "Coefficient for the calculation of the pressure loss across the pipe" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.Density rho_nom = 997
-    "Nominal density of the fluid";
-  parameter Modelica.Units.SI.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
+    "Nominal density of the fluid" annotation (
+    Dialog(tab = "Data", group = "Fluid"));
+  final parameter Modelica.Units.SI.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
     "Temperature start value of the fluid" annotation (
     Dialog(group = "Initialisation"));
 
@@ -52,14 +59,16 @@ model round1DFV
   final parameter Modelica.Units.SI.Area Si = S / n
     "Surface of the wall of each finite volume (for one pipe)";
   parameter Modelica.Units.SI.Area Stot = S * nPipes
-    "Total surface of the wall";
+    "Total surface of the wall" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
   final parameter Modelica.Units.SI.Area Atot = A * nPipes
     "Total internal area of all tubes";
   final parameter Modelica.Units.SI.Volume V = A * L * nPipes
     "Total volume of the fluid in the pipe";
   final parameter Modelica.Units.SI.Volume Vi = V / n
     "Volume of one finite element";
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom = 1500 annotation (
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom = 1500
+    "nominal heat transfer coeffcient" annotation (
     Dialog(group = "Heat Transfer Model"));
 
   outer System system "system object for global defaults";

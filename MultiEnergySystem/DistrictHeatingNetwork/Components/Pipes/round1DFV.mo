@@ -51,7 +51,7 @@ model round1DFV
     "Total surface of the walls of one pipe of the heat exchanger";
   final parameter Modelica.Units.SI.Area Si = S / n
     "Surface of the wall of each finite volume (for one pipe)";
-  final parameter Modelica.Units.SI.Area Stot = S * nPipes
+  parameter Modelica.Units.SI.Area Stot = S * nPipes
     "Total surface of the wall";
   final parameter Modelica.Units.SI.Area Atot = A * nPipes
     "Total internal area of all tubes";
@@ -59,11 +59,15 @@ model round1DFV
     "Total volume of the fluid in the pipe";
   final parameter Modelica.Units.SI.Volume Vi = V / n
     "Volume of one finite element";
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom = 1500 annotation (
+    Dialog(group = "Heat Transfer Model"));
 
   outer System system "system object for global defaults";
 
   // Variables
   Modelica.Units.SI.MassFlowRate m_flow[n + 1]
+    "Mass flow rate in each volume across the pipe";
+  Modelica.Units.SI.VolumeFlowRate q[n + 1]
     "Mass flow rate in each volume across the pipe";
   Modelica.Units.SI.Velocity u[n + 1]
     "Velocity in each volume across the pipe";
@@ -71,9 +75,11 @@ model round1DFV
     "State variable temperatures";
   Modelica.Units.SI.Temperature Twall[n]
     "Pipe wall temperature";
+  Modelica.Units.SI.Power Qtot
+    "Total heat";
 //   Modelica.Units.SI.Power Q_int[n]
 //     "Heat dissipation out of each volume into the wall";
-  Modelica.Units.SI.Temperature T[n + 1]
+  Modelica.Units.SI.Temperature T[n + 1](start = T_start)
     "Volume boundary temperatures";
 //   Modelica.Units.SI.Power Q_ext[n]
 //     "Heat dissipation out of each wall cell to the ambient";
@@ -95,6 +101,7 @@ model round1DFV
   Medium.ThermodynamicState fluid[n + 1];
 
   HeatTransferModel heatTransfer(
+    gamma_nom = gamma_nom,
     n = n,
     nPipes = nPipes,
     Lc = Di,
@@ -121,6 +128,7 @@ equation
     rho[i] = Medium.density(fluid[i]);
     cp[i] = Medium.specificHeatCapacityCp(fluid[i]);
     m_flow[i] = A * u[i]* rho[i];
+    q[i] = m_flow[i]/rho[i];
   end for;
 
   fluid[1].h = inStream(inlet.h_out);
@@ -135,14 +143,17 @@ equation
     ptilde - pout = -k/2*outlet.m_flow;
   end if;
 
+//   pin - pout = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+//   ptilde = pout;
   for i in 1:n loop
      M[i] = Vi * fluid[i + 1].d;
      //w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
-     m_flow[i] - m_flow[i + 1] = der(M[i]);
-     rho[i] * Vi * cp[i] * der(Ttilde[i]) = Ttilde[i] * m_flow[i]*(cp[i] - cp[i+1]) + wall.Q_flow[i] "Energy balance";
+     m_flow[i] - m_flow[i + 1] = 0;
+     rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;
 
   Mtot = sum(M) "Total mass";
+  Qtot = sum(wall.Q_flow) "Total heat";
 
   // Momentum balance
 

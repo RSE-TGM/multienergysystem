@@ -14,3 +14,4 @@ FixedReturnPowerLoadTest
 CombinedHeatPowerTest
 PumpTestBase
 RoundPipeTest
+BPHETest

@@ -95,7 +95,7 @@ model round1DFV
     "Total Mass in the pipe";
   Modelica.Units.SI.SpecificHeatCapacity cp[n+1]
     "Specific heat capacity at each fluid";
-  Modelica.Units.SI.SpecificHeatCapacity rho[n+1]
+  Modelica.Units.SI.Density rho[n+1]
     "Density at each fluid";
 
   Medium.ThermodynamicState fluid[n + 1];

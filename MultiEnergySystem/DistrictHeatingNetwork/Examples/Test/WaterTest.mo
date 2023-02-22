@@ -1,5 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model WaterTest
+  extends Modelica.Icons.Example;
   replaceable package Medium =
       MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater                          constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model";

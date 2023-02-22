@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model BPHETest
-
+  extends Modelica.Icons.Example;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger HX1(Di_cold = 0.023, Di_hot = 0.03, L_cold = 0.96275, L_hot = 0.7073, Stot_cold = 0.5, Stot_hot = 0.5,
     Tin_start_cold=323.15,
@@ -35,7 +35,6 @@ model BPHETest
     Stot_hot=4.5,
     u_nom_cold=6.46,
     hctype_cold=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
-
     Tin_start_cold=293.15,
     Tin_start_hot=301.15,
     Tout_start_cold=298.15,
@@ -63,6 +62,7 @@ model BPHETest
     rhom_hot(displayUnit="g/cm3") = 7990,
     thermalInertia=false)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={83,0},    extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+
   Sources.SourcePressure                                          sourceCold2(
     p0(displayUnit="kPa") = 110000,
     use_T=true,

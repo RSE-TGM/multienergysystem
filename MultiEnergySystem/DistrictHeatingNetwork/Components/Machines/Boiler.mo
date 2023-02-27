@@ -24,7 +24,7 @@ model Boiler
     Placement(visible = true, transformation(origin = {-102, 30}, extent = {{-14, -14}, {14, 14}}, rotation = 0), iconTransformation(origin = {-80, 100}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Controllers.AWPIContinuous gasBoilerPI(Kp = Kp, Ti = Ti, Umax = Pmax, Umin = Pmin)  annotation (
     Placement(visible = true, transformation(origin = {-16, 26}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage gasBoilerInnerVolume(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass gasBoilerInnerVolume(
     D=D,
     T_ext=T_ext,
     T_start=T_start,

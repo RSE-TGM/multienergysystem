@@ -13,7 +13,7 @@ model PlugFlowCoreTest
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PlugFlowCore plugFlowCore(
-    D=0.0508,
+    Di=0.0508,
     L=50,
     T_start(displayUnit="degC") = 338.15) annotation (Placement(visible=true,
         transformation(
@@ -23,7 +23,7 @@ model PlugFlowCoreTest
   MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=
         5, Tnom=353.15)                                                                     annotation (
     Placement(visible = true, transformation(origin={-40,20},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(D = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, lambdaIns = 0.04, thermalInertia = false) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(Di = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, dIns = 0.1, dWall = 0.003, lambdaIns = 0.04, thermalInertia = false) annotation (
     Placement(visible = true, transformation(origin={0,20},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
     Placement(visible = true, transformation(origin={40,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));

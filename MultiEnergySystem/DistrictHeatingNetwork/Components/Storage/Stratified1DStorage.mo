@@ -47,12 +47,12 @@ equation
     M / N * cp * der(Ttilde[k]) = m_flow * cp * (T[k] - T[k + 1]) - Q_amb[k] - Q_cond[k];
     if k == 1 then
       // Heat exchange with the ambient from flat top face
-      Q_amb[k] = (R_flat + R_lateral / R_flat * R_lateral) * (Ttilde[k] - T_ext);
+      Q_amb[k] = (R_flat + R_lateral) / (R_flat * R_lateral) * (Ttilde[k] - T_ext);
       // Heat exchange with 2nd volume
       Q_cond[k] = lambda_w * A / (h / N) * (Ttilde[k] - Ttilde[k + 1]);
     elseif k == N then
       // Heat exchange with ambient
-      Q_amb[k] = (R_flat + R_lateral / R_flat * R_lateral) * (Ttilde[k] - T_ext);
+      Q_amb[k] = (R_flat + R_lateral) / (R_flat * R_lateral) * (Ttilde[k] - T_ext);
       // Heat exchange with N-1th volume
       Q_cond[k] = lambda_w * A / (h / N) * (Ttilde[k - 1] - Ttilde[k]);
     else

@@ -1,15 +1,15 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model DirectionalHeatLossPlugFlow
   extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialInsulatedTube;
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Parameter
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal "Nominal mass flow rate";
-
+  parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
   // Final parameters
-  final parameter Real C = rho0 * Modelica.Constants.pi * (D / 2) ^ 2 * cp "Thermal capacity per unit length of pipe";
-  final parameter Real R = 1 / (lambdaIns * 2 * Modelica.Constants.pi / Modelica.Math.log((D / 2 + dIns) / (D / 2))) "Thermal resistance per unit length from fluid to boundary temperature";
+  final parameter Real C = rho0 * Modelica.Constants.pi * (Di / 2) ^ 2 * cp "Thermal capacity per unit length of pipe";
+  final parameter Real R = 1 / (lambdaIns * 2 * Modelica.Constants.pi / Modelica.Math.log((Di / 2 + dIns) / (Di / 2))) "Thermal resistance per unit length from fluid to boundary temperature";
   final parameter Modelica.Units.SI.Time tau_char = R * C "Characteristic delay time";
 
   // Variables

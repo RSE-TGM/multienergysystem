@@ -2,17 +2,18 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model pipeFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialInsulatedTube;
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Flow parameter
   parameter Modelica.Units.SI.PerUnit cf = 0.004 "Costant Fanning friction coefficient";
   parameter Modelica.Units.SI.Velocity u_nom = 1 "Nominal fluid velocity";
+  parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
   parameter Integer N = 2 "Number of finite volumes";
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho0 * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
   final parameter Modelica.Units.SI.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";
-
+  final parameter Modelica.Units.SI.Volume V = A * L;
   // Variables
   Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate across the pipe";
   Modelica.Units.SI.Velocity u;
@@ -23,6 +24,8 @@ model pipeFV
   Modelica.Units.SI.Power Q_ext[N] "Heat dissipation out of each wall cell to the ambient";
   Modelica.Blocks.Interfaces.RealVectorOutput section_T[N] annotation (
     Placement(visible = true, transformation(origin = {2, 62}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 22}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+
+
 equation
 
   // Mass balance

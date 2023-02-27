@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model pipePF
   "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (PF) representation inspired by building plug flow model/ Trnsys 31-Type model."
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
-  import      Modelica.Units.SI;
+  import Modelica.Units.SI;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   // Flow initial parameters
   parameter SI.MassFlowRate m_flow_nominal = 1 "Nominal mass flow";
@@ -18,7 +18,7 @@ model pipePF
   // Metal Parameter
   parameter Boolean thermalInertia = true "= true account for metal thermal inertia";
   parameter SI.Length dWall = 0.003 "Metal tube thickness";
-  parameter Real rhomcm(unit = "J/(m3.K)") = 3.12e6 "Metal heat capacity per unit volume [J/m^3.K]; steel = 3.12e6";
+  //parameter Real rhomcm(unit = "J/(m3.K)") "Metal heat capacity per unit volume [J/m^3.K]; steel = 3.12e6";
   parameter SI.Density rhom = 7850 "Metal density [kg/m^3], for steel = 7850";
   parameter SI.ThermalConductivity lambdaM = 45 "Thermal conductivity; steel = 45";
   parameter SI.Temperature T_ext = 298.15 "External temperature";
@@ -27,13 +27,13 @@ model pipePF
   // Final
   final parameter Modelica.Units.SI.Area A = Modelica.Constants.pi * D ^ 2 / 4;
   final parameter SI.Velocity u_nom = m_flow_nominal/(rho0*A);
-  final parameter SI.SpecificHeatCapacity cm = rhomcm/rhom;
-  final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((D/2 + dWall)^2 - (D/2)^2) *L*cm*rhom/(cp*rho0) "Volume of water equivalent to the metal";
+  parameter SI.SpecificHeatCapacity cpm;
+  final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((D/2 + dWall)^2 - (D/2)^2) *L*cpm*rhom/(cp*rho0) "Volume of water equivalent to the metal";
   final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*1) "Consider a diameter of 2, compute hight";
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow
     outletHeatLosses(
-    D=D,
+    Di=D,
     L=L,
     T_ext=T_ext,
     T_start=T_start,
@@ -43,14 +43,15 @@ model pipePF
     lambdaIns=lambdaIns,
     lambdaM=lambdaM,
     m_flow_nominal=m_flow_nominal,
-    rhom=rhom,
-    rhomcm=rhomcm) annotation (Placement(visible=true, transformation(
+    rhom=rhom)
+    //rhomcm=rhomcm) 
+    annotation (Placement(visible=true, transformation(
         origin={34,-2},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PlugFlowCore
     plugFlowCore(
-    D=D,
+    Di=D,
     L=L,
     T_ext=T_ext,
     T_start=T_start,
@@ -62,14 +63,14 @@ model pipePF
     lambdaM=lambdaM,
     m_flow_small=m_flow_small,
     rhom=rhom,
-    rhomcm=rhomcm,
+    //rhomcm=rhomcm,
     u_nom=u_nom) annotation (Placement(visible=true, transformation(
         origin={-16,-2},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow
     inletHeatLosses(
-    D=D,
+    Di=D,
     L=L,
     T_ext=T_ext,
     T_start=T_start,
@@ -79,8 +80,9 @@ model pipePF
     lambdaIns=lambdaIns,
     lambdaM=lambdaM,
     m_flow_nominal=m_flow_nominal,
-    rhom=rhom,
-    rhomcm=rhomcm) annotation (Placement(visible=true, transformation(
+    rhom=rhom
+    //rhomcm=rhomcm
+    ) annotation (Placement(visible=true, transformation(
         origin={-76,-2},
         extent={{-10,-10},{10,10}},
         rotation=180)));

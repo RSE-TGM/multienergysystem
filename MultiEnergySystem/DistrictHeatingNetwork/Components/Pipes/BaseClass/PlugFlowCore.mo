@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model PlugFlowCore
   extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialInsulatedTube;
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import Modelica.Fluid.Utilities.regSquare;
 
@@ -9,7 +9,7 @@ model PlugFlowCore
   parameter Modelica.Units.SI.PerUnit cf = 0.004 "Constant Fanning factor";
   parameter Modelica.Units.SI.Velocity u_nom = 1 "Nominal fluid velocity";
   parameter Modelica.Units.SI.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
-
+parameter Modelica.Units.SI.Temperature T_start = 25 + 273.15;
   // Final parameter computation
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho0 * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
   final parameter Modelica.Units.SI.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";

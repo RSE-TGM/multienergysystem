@@ -3,8 +3,6 @@ partial model PartialInsulatedTube
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
-
-
   parameter Modelica.Units.SI.Length L
     "Length of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));

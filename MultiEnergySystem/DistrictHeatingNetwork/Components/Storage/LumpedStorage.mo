@@ -1,26 +1,18 @@
 ﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
-model LumpedStorage
-  "Model a perfectly mixed thermal storage with insulation all around. Output temperature in Celsius [°C]"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
+model LumpedStorage "Model a perfectly mixed thermal storage with insulation all around. Output temperature in Celsius [°C]"
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
+  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   // Insulation parameters
   parameter Modelica.Units.SI.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
   parameter Modelica.Units.SI.Length dIns = 0.15 "Insulation thickness";
-
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
-  final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2)  "Flat Surface of the cylinder";
-
+  final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
 equation
-  // Pressure at the bottom of the tank is increased as Stevino
-  inlet.p - outlet.p = rho0 * h * Modelica.Constants.g_n;
-
-  // Computation of heat loss to ambient
-  Q_amb = 1/(R_lateral+2*R_flat) * (Ttilde - T_ext) "Insulation all around";
-
-annotation (
-    Icon(graphics={  Rectangle(origin = {-97, -80}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-3, 20}, {3, -20}}), Rectangle(origin = {97, -80}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-3, 20}, {3, -20}}), Polygon(lineColor = {131, 131, 131}, fillColor = {173, 173, 173}, fillPattern = FillPattern.VerticalCylinder, points = {{-100, 80}, {-40, 100}, {40, 100}, {100, 80}, {100, -60}, {40, -100}, {-40, -100}, {-100, -60}, {-100, -60}, {-100, 80}}), Text(origin = {3, 7}, extent = {{-61, 29}, {61, -29}}, textString = "TES"), Rectangle(origin={1,72},     lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}},
-          rotation=90),                                                                                                                                                                                                        Rectangle(origin={-1,-72},  lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}},
-          rotation=90)}));
+// Pressure at the bottom of the tank is increased as Stevino
+  inlet.p - outlet.p = rho0*h*Modelica.Constants.g_n;
+// Computation of heat loss to ambient
+  Q_amb = 1/(R_lateral + 2*R_flat)*(Ttilde - T_ext) "Insulation all around";
+  annotation(
+    Icon(graphics = {Rectangle(origin = {76, -120}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-4, 20}, {4, -20}}), Rectangle(origin = {-76, -120}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-4, 20}, {4, -20}}), Text(origin = {0, -160}, extent = {{-100, 20}, {100, -20}}, textString = "%name"), Rectangle(origin = {0, 10}, lineColor = {145, 145, 145}, fillColor = {255, 255, 255}, fillPattern = FillPattern.VerticalCylinder, extent = {{-100, 90}, {100, -90}}), Ellipse(origin = {0, 103}, lineColor = {145, 145, 145}, fillColor = {255, 255, 255}, fillPattern = FillPattern.VerticalCylinder, extent = {{-100, 37}, {100, -37}}), Ellipse(origin = {0, -83}, lineColor = {145, 145, 145}, fillColor = {255, 255, 255}, fillPattern = FillPattern.VerticalCylinder, extent = {{-100, 37}, {100, -37}}), Polygon(origin = {-61, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-11, -14}, {1, 14}, {11, 12}, {-1, -14}, {-1, -14}, {-11, -14}}), Rectangle(origin = {-71, 54}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Rectangle(origin = {-71, -60}, lineColor = {0, 0, 255}, fillColor = {0, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Polygon(origin = {-61, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-11, -14}, {1, 14}, {11, 12}, {-1, -14}, {-1, -14}, {-11, -14}}), Polygon(origin = {73, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-11, -14}, {-21, 12}, {-13, 14}, {-1, -14}, {-1, -14}, {-11, -14}}), Line(origin = {28.0301, -49.6987}, points = {{87.5596, 25}, {-100.44, 27}, {49.5596, 19}, {-100.44, 9}, {51.5596, -1}, {-100.44, -11}, {51.5596, -21}, {-100.44, -29}, {51.5596, -37}, {-100.44, -39}, {89.5596, -41}, {89.5596, -41}}, color = {238, 46, 47}, thickness = 0.75, smooth = Smooth.Bezier), Polygon(origin = {5, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-13, -14}, {-13, 22}, {3, 22}, {3, -14}, {3, -14}, {-13, -14}})}, coordinateSystem(extent = {{-100, -140}, {100, 140}})));
 end LumpedStorage;

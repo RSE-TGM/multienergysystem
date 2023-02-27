@@ -12,6 +12,7 @@ model PowerTransfer
   Modelica.Units.SI.SpecificEnthalpy hout "Outlet specific enthalpy";
   Modelica.Units.SI.Pressure pin "inlet pressure";
   Modelica.Units.SI.Pressure pout "Outlet pressure";
+  Modelica.Units.SI.MassFlowRate m_flow "Mass Flow Rate across the component";
 
   Modelica.Blocks.Interfaces.RealInput Ptransfer
     "if positive, power entering the component/fluid, if negative, power leaving the component/fluid."
@@ -41,6 +42,7 @@ equation
   Tout = hout/cp;
   pin = inlet.p;
   pout = outlet.p;
+  m_flow = inlet.m_flow;
 
 annotation (
     Icon(graphics={  Rectangle(lineColor = {173, 173, 173}, lineThickness = 3, extent = {{-100, 80}, {100, -80}}), Line(origin = {0, -0.81}, points = {{-100, -0.102339}, {-52, -0.102339}, {-30, 39.8977}, {0, -40.1023}, {30, 39.8977}, {54, -0.102339}, {100, -0.102339}}, color = {0, 0, 255}, thickness = 1.75)}));

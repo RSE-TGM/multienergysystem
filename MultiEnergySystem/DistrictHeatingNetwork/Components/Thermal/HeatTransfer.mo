@@ -64,7 +64,7 @@ import AllamCycle.Types;
 
     parameter Modelica.Units.SI.Pressure pnom_ht = p_nom
       "Nominal pressure for heat transfer correlation (single tube)";
-    parameter Types.PerUnit theta = 0.5
+    parameter Modelica.Units.SI.PerUnit theta = 0.5
       "Exponent in the pressure-dependency law";
     Modelica.Units.SI.PerUnit p_over_pnom(start = 1)
       "Ratio between actual and nominap pressure";

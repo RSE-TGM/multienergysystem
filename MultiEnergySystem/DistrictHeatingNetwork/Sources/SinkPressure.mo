@@ -7,11 +7,11 @@ model SinkPressure "Pressure sink for water/steam flows"
     annotation(choicesAllMatching = true);
   type HydraulicResistance = Real (
      final quantity="HydraulicResistance", final unit="Pa/(kg/s)");
-  parameter Medium.AbsolutePressure p0=1.01325e5 "Nominal pressure";
+  parameter SI.Pressure p0=1.01325e5 "Nominal pressure";
   parameter HydraulicResistance R=0 "Hydraulic resistance"
     annotation (Evaluate=true);
   parameter Boolean use_T = false "Use the temperature if true, otherwise use specific enthalpy";
-  parameter Medium.Temperature T = 298.15 "Nominal temperature"
+  parameter SI.Temperature T = 298.15 "Nominal temperature"
     annotation(Dialog(enable = use_T and not use_in_T));
   parameter Medium.SpecificEnthalpy h=1e5 "Nominal specific enthalpy"
     annotation(Dialog(enable = not use_T and not use_in_h));
@@ -25,7 +25,7 @@ model SinkPressure "Pressure sink for water/steam flows"
   parameter Boolean use_in_h = false
     "Use connector input for the specific enthalpy" annotation(Dialog(group="External inputs"), choices(checkBox=true));
   //outer ThermoPower.System system "System wide properties";
-  Medium.AbsolutePressure p "Actual pressure";
+  Medium.AbsolutePressure p(start = p0) "Actual pressure";
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
      Placement(transformation(extent={{-120,-20},{-80,20}}, rotation=0)));
   Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 annotation (Placement(

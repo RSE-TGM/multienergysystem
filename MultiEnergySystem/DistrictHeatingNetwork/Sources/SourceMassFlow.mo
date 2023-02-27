@@ -36,9 +36,9 @@ model SourceMassFlow
           origin={100,-1.33227e-15},
           extent={{-20,-20},{20,20}},
           rotation=0)));
-  SI.MassFlowRate m_flow "Actual mass flow rate";
-  SI.Temperature T "Actual temperature";
-  SI.Pressure p "Actual pressure";
+  SI.MassFlowRate m_flow(start = m_flow0) "Actual mass flow rate";
+  SI.Temperature T(start = T0) "Actual temperature";
+  SI.Pressure p(start = p0) "Actual pressure";
   SI.SpecificEnthalpy h "Actual specific enthalpy";
   Medium.ThermodynamicState fluid;
 protected
@@ -62,7 +62,7 @@ equation
     p = outlet.p;
   end if;
   
-  fluid = Medium.setState_phX(p, h);
+  fluid = Medium.setState_pTX(p, T);
   
   h = outlet.h_out;
   outlet.h_out = Medium.specificEnthalpy_pTX(outlet.p, in_T_internal, fill(0,0));

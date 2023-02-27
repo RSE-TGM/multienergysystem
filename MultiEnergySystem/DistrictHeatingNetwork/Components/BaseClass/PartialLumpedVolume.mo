@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 partial model PartialLumpedVolume
-  "Partial model of a Lumped volume of water, operated at constant mass with losses to ambient"
+  "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
   //extends DHN4Control.Interfaces.PartialTwoPort;
   import      Modelica.Units.SI;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
@@ -13,7 +13,7 @@ partial model PartialLumpedVolume
   parameter SI.Temperature T_ext = 288.15 "Ambient temperature";
 
   final parameter SI.Volume V = Modelica.Constants.pi*h*(D/2)^2 "Volume of water inside the mixing volume";
-  final parameter SI.Mass M = V * rho0 "Mass of water inside the mixing volume";
+  final parameter SI.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
 
 // Variables
   SI.MassFlowRate m_flow "Mass flow rate across the volume";
@@ -21,6 +21,8 @@ partial model PartialLumpedVolume
   SI.Temperature Tin "Temperatue of the water entering/leaving the volume";
   SI.Temperature Tout "Temperatue of the water entering/leaving the volume";
   SI.HeatFlowRate Q_amb "Heat losses to ambient";
+  SI.Pressure pin "Pressure in the lower part of the tank";
+  SI.Pressure pout "Pressure in the high part of the tank";
 
 // Output
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
@@ -48,7 +50,7 @@ partial model PartialLumpedVolume
         rotation=0)));
 equation
 // Mass balance
-  inlet.m_flow + outlet.m_flow = 0;
+  //inlet.m_flow + outlet.m_flow = 0;
   m_flow = inlet.m_flow;
 // Boundary equations
   if not allowFlowReversal or m_flow > 0 then
@@ -61,8 +63,11 @@ equation
   inlet.h_out = Tin * cp;
   outlet.h_out = Tout * cp;
   temperatureMixVolume = Ttilde - 273.15;
+  pout = outlet.p;
+  pin = inlet.p;
+  
 // Energy balance
-  M * cp * der(Ttilde) = m_flow * cp * (Tin - Tout) - Q_amb;
+  //M_id * cp * der(Ttilde) = m_flow * cp * (Tin - Tout) - Q_amb;
 initial equation
   der(Ttilde) = 0;
 

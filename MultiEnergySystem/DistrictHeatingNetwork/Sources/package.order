@@ -1,5 +1,7 @@
 SourcePressure
 SinkPressure
+SourceMassFlow
+SinkMassFlow
 IdealMassFlowSource
 FixedMassFlowPump
 VariableMassFlowPump

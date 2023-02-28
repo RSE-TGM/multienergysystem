@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
 
-
-  // General
+// General
   parameter Boolean thermalInertia = true
     "if true then account for metal thermal inertia";
   parameter Integer n = 3
@@ -14,7 +13,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
 
   outer System system "system object for global defaults";
 
-  // Hot side
+// Hot side
   parameter Modelica.Units.SI.Length L_hot
     "Length of the tube hot side" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
@@ -97,9 +96,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
 
-
-
-  // Cold side
+// Cold side
   parameter Modelica.Units.SI.Length L_cold
     "Length of the tube hot side" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
@@ -214,8 +211,5 @@ equation
   connect(hotside.outlet, outhot) annotation (
     Line(points = {{70, -10}, {70, -70}}, color = {168, 168, 168}));
   annotation (
-    Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle( fillColor = {215, 215, 215}, fillPattern = FillPattern.Backward,extent = {{-60, 100}, {60, -100}}, radius = 20), Text(
-          extent={{-60,-100},{60,-140}},
-          textColor={28,108,200},
-          textString="%name")}));
+    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle( fillColor = {215, 215, 215}, fillPattern = FillPattern.Backward,extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name")}));
 end BrazedPlateHeatExchanger;

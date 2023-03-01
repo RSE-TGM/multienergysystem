@@ -9,17 +9,17 @@ model HeatPump
   Modelica.Blocks.Interfaces.RealInput Pelectrical annotation (
     Placement(visible = true, transformation(origin = {-98, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-2, 60}, extent = {{-20, -20}, {20, 20}}, rotation = -90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer heatPumpHX
-    annotation (Placement(visible=true, transformation(extent={{-8,-10},{12,10}},
+    annotation (Placement(visible=true, transformation(origin = {-2, 0},extent={{-8,-10},{12,10}},
           rotation=0)));
 equation
   connect(Pelectrical, heatPumpCOP.u) annotation (
     Line(points = {{-98, 40}, {-62, 40}}, color = {0, 0, 127}));
   connect(inlet, heatPumpHX.inlet) annotation (
-    Line(points={{-100,0},{-8,0}},         color = {168, 168, 168}));
+    Line(points={{-100,0},{-10,0}},         color = {168, 168, 168}));
   connect(heatPumpHX.outlet, outlet) annotation (
-    Line(points={{12,0},{100,0}},                color = {168, 168, 168}));
+    Line(points={{10,0},{100,0}},                color = {168, 168, 168}));
   connect(heatPumpCOP.y, heatPumpHX.Ptransfer) annotation (Line(points={{-39,40},
-          {2,40},{2,8}},                       color={0,0,127}));
+          {0,40},{0,8}},                       color={0,0,127}));
 
   connect(outlet, outlet) annotation (Line(points={{100,0},{102,0},{102,6},{104,
           6},{104,0},{100,0}},  color={168,168,168}));

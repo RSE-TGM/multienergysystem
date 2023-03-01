@@ -16,3 +16,4 @@ PumpTestBase
 RoundPipeTest
 BPHETest
 WaterTest
+HeatPumpTest

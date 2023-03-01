@@ -8,7 +8,7 @@ model SinkMassFlow
   parameter SI.Pressure pin_start = 8e6 "Pressure start value of outgoing fluid";
   parameter SI.Pressure p0 = 7e6 "Pressure start value of outgoing fluid DIFFERENCE";
   parameter SI.Temperature T0 = 500 "Nominal temperature and starting value for fluid";
-  parameter SI.MassFlowRate w0 = 20 "Nominal mass flowrate";
+  parameter SI.MassFlowRate m_flow0 = 20 "Nominal mass flowrate";
   parameter Real G=0 "HydraulicConductance";
   parameter Boolean use_in_m_flow = false "Use connector input for the nominal flow rate" annotation (
     Dialog(group = "External inputs"),
@@ -48,7 +48,7 @@ protected
 equation
   inlet.m_flow = in_m_flow_internal + (inlet.p - p0)*G;
   if not use_in_m_flow then
-    in_m_flow_internal = w0 "Flow rate set by parameter";
+    in_m_flow_internal = m_flow0 "Flow rate set by parameter";
   end if;
   m_flow = inlet.m_flow;
   

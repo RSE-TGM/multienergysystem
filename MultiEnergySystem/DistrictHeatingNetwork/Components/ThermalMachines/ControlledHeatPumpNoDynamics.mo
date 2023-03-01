@@ -29,7 +29,7 @@ model ControlledHeatPumpNoDynamics
   parameter Real k_hot(unit = "Pa/(kg/s)") = (pin_hot_start - pout_hot_start)/m_flow_hot_start "Pressure loss across the hot side";
   parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_cold_start - pout_cold_start)/m_flow_cold_start "Pressure loss across the cold side";
   
-  constant Real a[2] = {-20.8918 , 4.18083} "linear equation coefficients for Tin_cold vs COP relation";
+  constant Real a[6] = {-172.6, -108.982, 0.0778191, 0.653687, 0.358927, -11.1119} "linear equation coefficients for Tin_cold vs COP relation";
   
   SI.Pressure pin_hot "Hot side inlet pressure";
   SI.Pressure pout_hot "Hot side outlet pressure";
@@ -106,6 +106,7 @@ equation
   Phot = -m_flow_hot*(hin_hot-hout_hot);
   Pcold = m_flow_cold*(hin_cold-hout_cold);  
   Phot = Pcomp + Pcold "Energy Balance";
+  //Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;
   //COP = Phot/Pcomp;
   //COP = Tin_cold*a[1]+a[2];
   

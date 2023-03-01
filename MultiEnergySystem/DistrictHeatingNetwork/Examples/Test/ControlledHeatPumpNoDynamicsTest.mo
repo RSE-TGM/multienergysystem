@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 
-model HeatPumpTest
+model ControlledHeatPumpNoDynamicsTest
   parameter SI.MassFlowRate m_flow_hot = 0.56;
   parameter SI.MassFlowRate m_flow_cold = 1;
   parameter SI.Temperature Tin_cold = 14 + 273.15;
@@ -28,4 +28,4 @@ equation
     Line(points = {{14, -20}, {14, -60}, {20, -60}}, color = {168, 168, 168}));
   connect(Tincold.y, sourceCold.in_T) annotation(
     Line(points = {{2, -90}, {30, -90}, {30, -64}}, color = {0, 0, 127}));
-end HeatPumpTest;
+end ControlledHeatPumpNoDynamicsTest;

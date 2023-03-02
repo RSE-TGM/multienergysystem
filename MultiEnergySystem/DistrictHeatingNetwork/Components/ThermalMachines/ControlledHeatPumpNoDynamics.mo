@@ -39,14 +39,14 @@ model ControlledHeatPumpNoDynamics
   SI.Temperature Tout_hot "Hot side outlet temperature";
   SI.Temperature Tin_cold "Cold side inlet temperature";
   SI.Temperature Tout_cold "Cold side outlet temperature";
-  SI.Temperature Tout_hot_max;
+  SI.Temperature Tout_hot_max "Maximum possible hot side outlet temperature";
   SI.SpecificEnthalpy hin_hot "Hot side inlet Specific Enthalpy";
   SI.SpecificEnthalpy hout_hot "Hot side outlet Specific Enthalpy";
   SI.SpecificEnthalpy hin_cold "Cold side inlet Specific Enthalpy";
   SI.SpecificEnthalpy hout_cold "Cold side outlet Specific Enthalpy";  
   SI.MassFlowRate m_flow_hot "Hot fluid mass flow rate";
   SI.MassFlowRate m_flow_cold "Cold fluid mass flow rate";
-  //SI.PerUnit COP "Coefficient of performance";
+  SI.PerUnit COP "Coefficient of performance";
   SI.Power Pcomp "Compression Power";
   SI.Power Pcold "Thermal Power cold side (lato surgente)";
   SI.Power Phot "Themal Power hot side (lato utenze)";
@@ -84,30 +84,21 @@ equation
   m_flow_hot = inhot.m_flow;
   m_flow_cold = incold.m_flow;
   
-  
-  //Specific Enthalpies
-//  hin_hot = Medium.specificHeatCapacityCp(fluidInHot)*Tin_hot;
-//  hout_hot = Medium.specificHeatCapacityCp(fluidOutHot)*Tout_hot;  
-//  hin_cold = Medium.specificHeatCapacityCp(fluidInCold)*Tin_cold;
-//  hout_cold = Medium.specificHeatCapacityCp(fluidOutCold)*Tout_cold;    
-  
   // Ideal Controlled variables
   Tout_hot_max = max(Tout_hot_start, Tin_hot); 
-  Tout_hot = Tout_hot_max;
-  Tin_cold - Tout_cold = 5;
+  Tout_hot = Tout_hot_max "Fixed hot side outlet temperature";
+  Tin_cold - Tout_cold = 5 "Fixed delta temperature in the hot side";
   
- 
-  // Balance equation
+   // Balance equation
   inhot.m_flow + outhot.m_flow = 0 "Mass Balance hot side";
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";
   pin_hot - pout_hot = k_hot*m_flow_hot "Momentum balance hot side";
-  pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side";
-  
-  Phot = -m_flow_hot*(hin_hot-hout_hot);
-  Pcold = m_flow_cold*(hin_cold-hout_cold);  
+  pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side"; 
+  Phot = -m_flow_hot*(hin_hot-hout_hot) "Thermal Power Hot side";
+  Pcold = m_flow_cold*(hin_cold-hout_cold) "Themal Power Cold side";  
   Phot = Pcomp + Pcold "Energy Balance";
   //Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;
-  //COP = Phot/Pcomp;
+  COP = Phot/Pcomp;
   //COP = Tin_cold*a[1]+a[2];
   
   // Dummy equations for energy balance

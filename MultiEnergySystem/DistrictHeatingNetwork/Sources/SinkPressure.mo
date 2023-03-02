@@ -26,6 +26,7 @@ model SinkPressure "Pressure sink for water/steam flows"
     "Use connector input for the specific enthalpy" annotation(Dialog(group="External inputs"), choices(checkBox=true));
   //outer ThermoPower.System system "System wide properties";
   Medium.AbsolutePressure p(start = p0) "Actual pressure";
+  Medium.ThermodynamicState fluid;
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
      Placement(transformation(extent={{-120,-20},{-80,20}}, rotation=0)));
   Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 annotation (Placement(
@@ -84,6 +85,8 @@ equation
   if not use_in_h then
     in_h_internal = h "Enthalpy set by parameter";
   end if;
+
+  fluid = Medium.setState_pTX(p, T);
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);

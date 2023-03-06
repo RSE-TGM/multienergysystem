@@ -157,7 +157,7 @@ equation
   for i in 1:n loop
      M[i] = Vi * fluid[i + 1].d;
      //w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
-     m_flow[i] - m_flow[i + 1] = 0;
+     m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
      rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;
 

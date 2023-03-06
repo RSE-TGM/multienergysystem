@@ -40,7 +40,8 @@ package BPHEData
     lambdam_hot = 16.3,
     lambdam_cold = 16.3,
     Rfoul = 1.4e-4,
-    Qnom = 56e3
+    Qnom = 56e3,
+    MWall = 16.8
   );
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E501(
@@ -81,7 +82,8 @@ package BPHEData
     lambdam_hot = 16.3,
     lambdam_cold = 16.3,
     Rfoul = 0.8e-4,
-    Qnom = 80e3
+    Qnom = 80e3,
+    MWall = 9.8
   );  
   
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E601(
@@ -122,7 +124,8 @@ package BPHEData
     lambdam_hot = 16.3,
     lambdam_cold = 16.3,
     Rfoul = 3.3e-4,
-    Qnom = 40e3
+    Qnom = 40e3,
+    MWall = 16.8
   );    
   
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E701(
@@ -163,6 +166,7 @@ package BPHEData
     lambdam_hot = 16.3,
     lambdam_cold = 16.3,
     Rfoul = 2.8e-4,
-    Qnom = 50e3   
+    Qnom = 50e3,
+    MWall = 3.9
   );   
 end BPHEData;

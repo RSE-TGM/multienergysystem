@@ -32,6 +32,7 @@ record BPHeatExchanger
   SI.Length h_cold "Height of the tube in the cold side";
   SI.Length dWall_hot "Thickness of the tube in the hot side";
   SI.Length dWall_cold "Thickness of the tube in the cold side";
+  SI.Mass MWall "Mass of the wall (exchange surface";
   SI.Length Di_hot "Internal diameter of a single tube in the hot side";
   SI.Length Di_cold "Internal diameter of a single tube in the cold side";
   SI.Area Stot_hot "Exchange area in the hot side";

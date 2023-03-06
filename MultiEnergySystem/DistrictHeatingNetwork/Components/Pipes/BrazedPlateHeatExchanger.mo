@@ -179,6 +179,12 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
 
+  parameter SI.Mass MWall
+    "Total mass of the wall in heat exchanger";
+  final parameter SI.SpecificHeatCapacity cpWall = cpm_hot
+    "Specific heat capacity of the wall";
+
+
   SI.Temperature Tin_hot;
   SI.Temperature Tout_hot;
   SI.Temperature Tin_cold;
@@ -202,7 +208,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.round1DFV coldside(Di = Di_cold, L = L_cold, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cpm = cpm_cold, dIns = dIns_cold, dWall = dWall_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, hin_start = hin_start_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdaM = lambdam_cold, m_flow_start = m_flow_start_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold)  annotation (
     Placement(visible = true, transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = 500, Nw = n, Tstart1 = 333.15, TstartN = 303.15, Tstartbar = 318.15, cm = cpm_cold) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, Tstart1 = 333.15, TstartN = 303.15, Tstartbar = 318.15, cm = cpWall) annotation (
     Placement(visible = true, transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Thermal.HeatExchangerTopologyFV topology(
       redeclare model HeatExchangerTopology =

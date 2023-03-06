@@ -179,37 +179,60 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
 
+  SI.Temperature Tin_hot;
+  SI.Temperature Tout_hot;
+  SI.Temperature Tin_cold;
+  SI.Temperature Tout_cold;
+  SI.Pressure pin_hot;
+  SI.Pressure pout_hot;
+  SI.Pressure pin_cold;
+  SI.Pressure pout_cold;
+  SI.TemperatureDifference LMTD;
+
+
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet of the hot fluid" annotation (
     Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 0}, extent = {{10, 50}, {50, 90}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot "Outlet of the hot fluid" annotation (
     Placement(visible = true, transformation(origin = {70, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 0}, extent = {{10, -90}, {50, -50}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet of the cold fluid" annotation (
-    Placement(visible = true, transformation(origin = {-70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 0}, extent = {{-48, 48}, {-8, 88}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-2, 2}, extent = {{-48, 48}, {-8, 88}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet of the cold fluid" annotation (
     Placement(visible = true, transformation(origin = {-70, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 0}, extent = {{-50, -90}, {-10, -50}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.round1DFV hotside(Di = Di_hot, L = L_hot, Stot = Stot_hot, Tin_start = Tin_start_hot, Tout_start = Tout_start_hot, cf = cf_hot, cpm = cpm_hot, dIns = dIns_hot, dWall = dWall_hot, gamma_nom = gamma_nom_hot, h = h_hot, hctype = hctype_hot, hin_start = hin_start_hot, k = k_hot, kc = kc_hot, lambdaIns = lambdaIns_hot, lambdaM = lambdam_hot, m_flow_start = m_flow_start_hot, n = n, nPipes = nPipes_hot, pin_start = pin_start_hot, pout_start = pout_start_hot, rho_nom = rho_nom_hot, rhom = rhom_hot, thermalInertia = thermalInertia, u_nom = u_nom_hot)  annotation (
     Placement(visible = true, transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.round1DFV coldside(Di = Di_cold, L = L_cold, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cpm = cpm_cold, dIns = dIns_cold, dWall = dWall_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, hin_start = hin_start_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdaM = lambdam_cold, m_flow_start = m_flow_start_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold)  annotation (
     Placement(visible = true, transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = 500, Nw = n, Tstart1 = 333.15, TstartN = 303.15, Tstartbar = 318.15, cm = 500) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = 500, Nw = n, Tstart1 = 333.15, TstartN = 303.15, Tstartbar = 318.15, cm = cpm_cold) annotation (
     Placement(visible = true, transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.HeatExchangerTopologyFV topology(Nw = n) annotation (
+  Thermal.HeatExchangerTopologyFV topology(
+      redeclare model HeatExchangerTopology =
+        DistrictHeatingNetwork.Components.Thermal.HeatExchangerTopologies.CounterCurrentFlow,
+      Nw = n)annotation(
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -26}, {10, -6}}, rotation = -90)));
 equation
-  connect(wall.int, hotside.wall) annotation (
-    Line(points={{23,0},{64.9,0}},    color = {255, 238, 44}));
-  connect(topology.side1, wall.ext) annotation (
-    Line(points={{-13,0},{16.9,0}},    color = {255, 238, 44}));
-  connect(coldside.wall, topology.side2) annotation (
-    Line(points={{-64.9,0},{-19.1,0}},  color = {255, 238, 44}));
-  connect(coldside.outlet, outcold) annotation (
+  Tin_hot = hotside.T[1];
+  Tout_hot = hotside.T[hotside.n + 1];
+  Tin_cold = coldside.T[1];
+  Tout_cold = coldside.T[coldside.n + 1];
+  pin_hot = hotside.inlet.p;
+  pout_hot = hotside.outlet.p;
+  pin_cold = coldside.inlet.p;
+  pout_cold = coldside.outlet.p;
+  LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log((Tin_hot - Tout_cold)/(Tout_hot - Tin_cold));
+  connect(wall.int, hotside.wall) annotation(
+    Line(points = {{23, 0}, {64.9, 0}}, color = {255, 238, 44}));
+  connect(coldside.outlet, outcold) annotation(
     Line(points = {{-70, 10}, {-70, 70}}, color = {168, 168, 168}));
-  connect(coldside.inlet, incold) annotation (
+  connect(coldside.inlet, incold) annotation(
     Line(points = {{-70, -10}, {-70, -70}}, color = {168, 168, 168}));
-  connect(hotside.inlet, inhot) annotation (
+  connect(hotside.inlet, inhot) annotation(
     Line(points = {{70, 10}, {70, 70}}, color = {168, 168, 168}));
-  connect(hotside.outlet, outhot) annotation (
+  connect(hotside.outlet, outhot) annotation(
     Line(points = {{70, -10}, {70, -70}}, color = {168, 168, 168}));
+  connect(coldside.wall, topology.side2) annotation(
+    Line(points = {{-64.9, 0}, {-19.1, 0}}, color = {255, 238, 44}));
+  connect(topology.side1, wall.ext) annotation(
+    Line(points = {{-13, 0}, {16.9, 0}}, color = {255, 238, 44}));
   annotation (
-    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle( fillColor = {215, 215, 215}, fillPattern = FillPattern.Backward,extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name")}));
+    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle( fillColor = {215, 215, 215}, fillPattern = FillPattern.Backward,extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name"), Line(origin = {-66.58, -69.45}, points = {{8, 0}, {16, 0}}, color = {94, 82, 255}, pattern = LinePattern.Dash, thickness = 0.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {-48.02, 140.54}, points = {{18, -190}, {18, -92}}, color = {76, 0, 227}, pattern = LinePattern.Dash, thickness = 0.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {-58.73, 70.36}, points = {{8, 0}, {0, 0}}, color = {57, 0, 172}, pattern = LinePattern.Dash, thickness = 0.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {23.7, 143.09}, points = {{6, -94}, {6, -192}}, color = {238, 46, 47}, pattern = LinePattern.Dash, thickness = 0.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {43.2, -68.29}, points = {{8, 0}, {16, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, thickness = 0.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {51.29, 69.9}, points = {{8, 0}, {0, 0}}, color = {213, 41, 44}, pattern = LinePattern.Dash, thickness = 0.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5)}));
 end BrazedPlateHeatExchanger;

@@ -6,7 +6,7 @@ package HeatExchangerTopologies
   end CoCurrentFlow;
 
   model CounterCurrentFlow "Counter-current flow"
-    extends BaseClasses.HeatExchangerTopologyData(
+    extends Thermal.BaseClasses.HeatExchangerTopologyData(
       final correspondingVolumes=  Nw:-1:1);
   end CounterCurrentFlow;
 end HeatExchangerTopologies;

@@ -1,107 +1,98 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
+
 model BPHETest
   extends Modelica.Icons.Example;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger HX1(Di_cold = 0.023, Di_hot = 0.03, L_cold = 0.96275, L_hot = 0.7073, Stot_cold = 0.5, Stot_hot = 0.5,
-    Tin_start_cold=323.15,
-    Tin_start_hot=353.15,
-    Tout_start_cold=303.15,
-    Tout_start_hot=333.15,                                                                                                                                                                                                        cpm_hot = 500, gamma_nom_cold = 3440, gamma_nom_hot = 3440, hin_start_cold = 1e5, hin_start_hot = 1e5, k_cold = 13923.8, k_hot = 4162.27, kc_cold = 1, kc_hot = 1, lambdam_hot = 16.3, m_flow_start_cold = 5, m_flow_start_hot = 0.6154,
-    n=7,                                                                                                                                                                                                        nPipes_cold = 1, nPipes_hot = 1,
-    pin_start_cold=110000,
-    pin_start_hot=110000,
-    pout_start_cold=101000,
-    pout_start_hot=101000,                                                                                                                                                                                                        rhom_cold(displayUnit = "kg/m3") = 7990, rhom_hot(displayUnit = "g/cm3") = 7990, thermalInertia = false) annotation (
-    Placement(visible = true, transformation(origin={-89,0},   extent = {{-31, -50}, {31, 50}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceCold(p0(displayUnit = "kPa") = 110000, use_T = true, T = 280.15) annotation (
-    Placement(visible = true, transformation(origin={-142,-38},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkCold(p0(displayUnit = "kPa") = 1000*(110 - 19.3), use_T = true, T = 288.75) annotation (
-    Placement(visible = true, transformation(origin={-144,34},   extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot(p0(displayUnit = "kPa") = 110000, use_T = true, T = 353.15) annotation (
-    Placement(visible = true, transformation(origin={-36,34},   extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkHot(p0(displayUnit = "kPa") = 1000*(110 - 2.5), use_T = true, T = 303.15) annotation (
-    Placement(visible = true, transformation(origin={-36,-36},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner System system annotation (
-    Placement(visible = true, transformation(origin={90,90},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Components.Pipes.BrazedPlateHeatExchanger                                          HX2(
-    nPlates=80,
-    u_nom_hot=6.09,
-    hctype_hot=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
-    Di_cold=0.023,
-    Di_hot=0.03,
-    L_cold=9.6351,
-    L_hot=5.765,
-    Stot_cold=4.5,
-    Stot_hot=4.5,
-    u_nom_cold=6.46,
-    hctype_cold=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
-    Tin_start_cold=293.15,
-    Tin_start_hot=301.15,
-    Tout_start_cold=298.15,
-    Tout_start_hot=298.05,
-    cpm_hot=500,
-    gamma_nom_cold=gamma_HX2,
-    gamma_nom_hot=gamma_HX2,
-    hin_start_cold=1e5,
-    hin_start_hot=1e5,
-    k_cold=10881.6965,
-    k_hot=9880.9187,
-    kc_cold=1,
-    kc_hot=1,
-    lambdam_hot=16.3,
-    m_flow_start_cold=2.673031,
-    m_flow_start_hot=4.31134,
-    n=7,
-    nPipes_cold=1,
-    nPipes_hot=1,
-    pin_start_cold=110000,
-    pin_start_hot=110000,
-    pout_start_cold=99999.99999999999*(1.1 - 0.289),
-    pout_start_hot=99999.99999999999*(1.1 - 0.426),
-    rhom_cold(displayUnit="kg/m3") = 7990,
-    rhom_hot(displayUnit="g/cm3") = 7990,
-    thermalInertia=false)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin={83,0},    extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
+  parameter Integer n_E301 = 5;
+  parameter SI.CoefficientOfHeatTransfer gamma_cold_E301 = 11682.24;
+  parameter SI.CoefficientOfHeatTransfer gamma_hot_E301 = gamma_cold_E301*gammahotovercold_factor;  
+  parameter SI.CoefficientOfHeatTransfer U_E301 = BPHE.E301.Unom;
+  parameter Integer gammahotovercold_factor = 1;
+  parameter SI.CoefficientOfHeatTransfer U_E501 = BPHE.E501.Unom;
+  parameter SI.CoefficientOfHeatTransfer U_E601 = BPHE.E601.Unom;
+  parameter SI.CoefficientOfHeatTransfer U_E701 = BPHE.E701.Unom;
+  parameter Real CorrectFactorHot = 1;
+  parameter Real CorrectFactorCold = 1;
+  inner System system annotation(
+    Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E301(Di_cold = BPHE.E301.Di_cold, Di_hot = BPHE.E301.Di_hot, L_cold = BPHE.E301.L_cold, L_hot = BPHE.E301.L_hot, Stot_cold = BPHE.E301.Stot_cold, Stot_hot = BPHE.E301.Stot_hot, Tin_start_cold = BPHE.E301.Tin_start_cold, Tin_start_hot = BPHE.E301.Tin_start_hot, Tout_start_cold = BPHE.E301.Tout_start_cold, Tout_start_hot = BPHE.E301.Tout_start_hot, cpm_cold = BPHE.E301.cpm_cold, cpm_hot = BPHE.E301.cpm_hot, dWall_cold = BPHE.E301.dWall_cold, dWall_hot = BPHE.E301.dWall_hot, gamma_nom_cold = BPHE.E301.gamma_nom_cold, gamma_nom_hot = BPHE.E301.gamma_nom_hot, h_cold = BPHE.E301.h_cold, h_hot = BPHE.E301.h_hot, hin_start_cold = BPHE.E301.hin_start_cold, hin_start_hot = BPHE.E301.hin_start_hot, k_cold = BPHE.E301.k_cold, k_hot = BPHE.E301.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = BPHE.E301.lambdam_cold, lambdam_hot = BPHE.E301.lambdam_hot, m_flow_start_cold = BPHE.E301.m_flow_start_cold, m_flow_start_hot = BPHE.E301.m_flow_start_hot, n = n_E301, nPipes_cold = BPHE.E301.nPipes_cold, nPipes_hot = BPHE.E301.nPipes_hot, nPlates = BPHE.E301.nPlates, pin_start_cold = BPHE.E301.pin_start_cold, pin_start_hot = BPHE.E301.pin_start_hot, pout_start_cold = BPHE.E301.pout_start_cold, pout_start_hot = BPHE.E301.pout_start_hot, rho_nom_cold = (BPHE.E301.rhoin_nom_cold + BPHE.E301.rhoout_nom_cold)/2, rho_nom_hot = (BPHE.E301.rhoin_nom_hot + BPHE.E301.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = BPHE.E301.rhom_cold, rhom_hot(displayUnit = "g/cm3") = BPHE.E301.rhom_hot, thermalInertia = false, u_nom_cold = BPHE.E301.u_nom_cold, u_nom_hot = BPHE.E301.u_nom_hot) annotation(
+    Placement(visible = true, transformation(origin = {-389, -2}, extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkCold_E301(T0 = BPHE.E301.Tout_start_cold, m_flow0 = BPHE.E301.m_flow_start_cold, p0 = BPHE.E301.pout_start_cold, pin_start = BPHE.E301.pout_start_cold) annotation(
+    Placement(visible = true, transformation(origin = {-449, 33}, extent = {{13, -13}, {-13, 13}}, rotation = 0)));
+  Sources.SourcePressure sourceCold_E301(T = BPHE.E301.Tin_start_cold, p0 = BPHE.E301.pin_start_cold, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {-450, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkCold_E501(T0 = BPHE.E501.Tout_start_cold, m_flow0 = 2.45957, p0 = BPHE.E501.pout_start_cold, pin_start = BPHE.E501.pout_start_cold) annotation(
+    Placement(visible = true, transformation(origin = {-235, 33}, extent = {{13, -13}, {-13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceCold_E501(T = BPHE.E501.Tin_start_cold, p0 = BPHE.E501.pin_start_cold, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {-238, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Sources.SinkMassFlow sinkHot_E301(T0 = BPHE.E301.Tout_start_hot, m_flow0 = BPHE.E301.m_flow_start_hot, p0 = BPHE.E301.pout_start_hot, pin_start = BPHE.E301.pout_start_hot) annotation(
+    Placement(visible = true, transformation(origin = {-335, -37}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot_E301(T = BPHE.E301.Tin_start_hot, p0 = BPHE.E301.pin_start_hot, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {-338, 32}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkHot_E501(T0 = BPHE.E501.Tout_start_hot, m_flow0 = BPHE.E501.m_flow_start_hot, p0 = BPHE.E501.pout_start_hot, pin_start = BPHE.E501.pout_start_hot) annotation(
+    Placement(visible = true, transformation(origin = {-117, -35}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot_E501(T = BPHE.E501.Tin_start_hot, p0 = BPHE.E501.pin_start_hot, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {-118, 34}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E501(Di_cold = BPHE.E501.Di_cold, Di_hot = BPHE.E501.Di_hot, L_cold = BPHE.E501.L_cold, L_hot = BPHE.E501.L_hot, Stot_cold = BPHE.E501.Stot_cold, Stot_hot = BPHE.E501.Stot_hot, Tin_start_cold = BPHE.E501.Tin_start_cold, Tin_start_hot = BPHE.E501.Tin_start_hot, Tout_start_cold = BPHE.E501.Tout_start_cold, Tout_start_hot = BPHE.E501.Tout_start_hot, cpm_cold = BPHE.E501.cpm_cold, cpm_hot = BPHE.E501.cpm_hot, dWall_cold = BPHE.E501.dWall_cold, dWall_hot = BPHE.E501.dWall_hot, gamma_nom_cold = BPHE.E501.gamma_nom_cold, gamma_nom_hot = BPHE.E501.gamma_nom_hot, h_cold = BPHE.E501.h_cold, h_hot = BPHE.E501.h_hot, hctype_cold = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream, hctype_hot = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle, hin_start_cold = BPHE.E501.hin_start_cold, hin_start_hot = BPHE.E501.hin_start_hot, k_cold = BPHE.E501.k_cold, k_hot = BPHE.E501.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = BPHE.E501.lambdam_cold, lambdam_hot = BPHE.E501.lambdam_hot, m_flow_start_cold = BPHE.E501.m_flow_start_cold, m_flow_start_hot = BPHE.E501.m_flow_start_hot, n = 7, nPipes_cold = BPHE.E501.nPipes_cold, nPipes_hot = BPHE.E501.nPipes_hot, nPlates = BPHE.E501.nPlates, pin_start_cold = BPHE.E501.pin_start_cold, pin_start_hot = BPHE.E501.pin_start_hot, pout_start_cold = BPHE.E501.pout_start_cold, pout_start_hot = BPHE.E501.pout_start_hot, rho_nom_cold = (BPHE.E501.rhoin_nom_cold + BPHE.E501.rhoout_nom_cold)/2, rho_nom_hot = (BPHE.E501.rhoin_nom_hot + BPHE.E501.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = BPHE.E501.rhom_cold, rhom_hot(displayUnit = "g/cm3") = BPHE.E501.rhom_hot, thermalInertia = false, u_nom_cold = BPHE.E501.u_nom_cold, u_nom_hot = BPHE.E501.u_nom_hot) annotation(
+    Placement(visible = true, transformation(origin = {-181, -2}, extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkCold_E601(T0 = BPHE.E601.Tout_start_cold, m_flow0 = BPHE.E601.m_flow_start_cold, p0 = BPHE.E601.pout_start_cold, pin_start = BPHE.E601.pout_start_cold) annotation(
+    Placement(visible = true, transformation(origin = {29, 33}, extent = {{13, -13}, {-13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E601(Di_cold = BPHE.E601.Di_cold, Di_hot = BPHE.E601.Di_hot, L_cold = BPHE.E601.L_cold, L_hot = BPHE.E601.L_hot, Stot_cold = BPHE.E601.Stot_cold, Stot_hot = BPHE.E601.Stot_hot, Tin_start_cold = BPHE.E601.Tin_start_cold, Tin_start_hot = BPHE.E601.Tin_start_hot, Tout_start_cold = BPHE.E601.Tout_start_cold, Tout_start_hot = BPHE.E601.Tout_start_hot, cpm_cold = BPHE.E601.cpm_cold, cpm_hot = BPHE.E601.cpm_hot, dWall_cold = BPHE.E601.dWall_cold, dWall_hot = BPHE.E601.dWall_hot, gamma_nom_cold = BPHE.E601.gamma_nom_cold, gamma_nom_hot = BPHE.E601.gamma_nom_hot, h_cold = BPHE.E601.h_cold, h_hot = BPHE.E601.h_hot, hin_start_cold = BPHE.E601.hin_start_cold, hin_start_hot = BPHE.E601.hin_start_hot, k_cold = BPHE.E601.k_cold, k_hot = BPHE.E601.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = BPHE.E601.lambdam_cold, lambdam_hot = BPHE.E601.lambdam_hot, m_flow_start_cold = BPHE.E601.m_flow_start_cold, m_flow_start_hot = BPHE.E601.m_flow_start_hot, n = 7, nPipes_cold = BPHE.E601.nPipes_cold, nPipes_hot = BPHE.E601.nPipes_hot, nPlates = BPHE.E601.nPlates, pin_start_cold = BPHE.E601.pin_start_cold, pin_start_hot = BPHE.E601.pin_start_hot, pout_start_cold = BPHE.E601.pout_start_cold, pout_start_hot = BPHE.E601.pout_start_hot, rho_nom_cold = (BPHE.E601.rhoin_nom_cold + BPHE.E601.rhoout_nom_cold)/2, rho_nom_hot = (BPHE.E601.rhoin_nom_hot + BPHE.E601.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = BPHE.E601.rhom_cold, rhom_hot(displayUnit = "g/cm3") = BPHE.E601.rhom_hot, thermalInertia = false, u_nom_cold = BPHE.E601.u_nom_cold, u_nom_hot = BPHE.E601.u_nom_hot) annotation(
+    Placement(visible = true, transformation(origin = {87, -2}, extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceCold_E601(T = BPHE.E601.Tin_start_cold, p0 = BPHE.E601.pin_start_cold, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {30, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot_E601(T = BPHE.E601.Tin_start_hot, p0 = BPHE.E601.pin_start_hot, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {150, 34}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkHot_E601(T0 = BPHE.E601.Tout_start_hot, m_flow0 = BPHE.E601.m_flow_start_hot, p0 = BPHE.E601.pout_start_hot, pin_start = BPHE.E601.pout_start_hot) annotation(
+    Placement(visible = true, transformation(origin = {151, -37}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkCold_E701(T0 = BPHE.E701.Tout_start_cold, m_flow0 = BPHE.E701.m_flow_start_cold, p0 = BPHE.E701.pout_start_cold, pin_start = BPHE.E701.pout_start_cold) annotation(
+    Placement(visible = true, transformation(origin = {239, 33}, extent = {{13, -13}, {-13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E701(Di_cold = BPHE.E701.Di_cold, Di_hot = BPHE.E701.Di_hot, L_cold = BPHE.E701.L_cold, L_hot = BPHE.E701.L_hot, Stot_cold = BPHE.E701.Stot_cold, Stot_hot = BPHE.E701.Stot_hot, Tin_start_cold = BPHE.E701.Tin_start_cold, Tin_start_hot = BPHE.E701.Tin_start_hot, Tout_start_cold = BPHE.E701.Tout_start_cold, Tout_start_hot = BPHE.E701.Tout_start_hot, cpm_cold = BPHE.E701.cpm_cold, cpm_hot = BPHE.E701.cpm_hot, dWall_cold = BPHE.E701.dWall_cold, dWall_hot = BPHE.E701.dWall_hot, gamma_nom_cold = BPHE.E701.gamma_nom_cold, gamma_nom_hot = BPHE.E701.gamma_nom_hot, h_cold = BPHE.E701.h_cold, h_hot = BPHE.E701.h_hot, hin_start_cold = BPHE.E701.hin_start_cold, hin_start_hot = BPHE.E701.hin_start_hot, k_cold = BPHE.E701.k_cold, k_hot = BPHE.E701.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = BPHE.E701.lambdam_cold, lambdam_hot = BPHE.E701.lambdam_hot, m_flow_start_cold = BPHE.E701.m_flow_start_cold, m_flow_start_hot = BPHE.E701.m_flow_start_hot, n = 7, nPipes_cold = BPHE.E701.nPipes_cold, nPipes_hot = BPHE.E701.nPipes_hot, nPlates = BPHE.E701.nPlates, pin_start_cold = BPHE.E701.pin_start_cold, pin_start_hot = BPHE.E701.pin_start_hot, pout_start_cold = BPHE.E701.pout_start_cold, pout_start_hot = BPHE.E701.pout_start_hot, rho_nom_cold = (BPHE.E701.rhoin_nom_cold + BPHE.E701.rhoout_nom_cold)/2, rho_nom_hot = (BPHE.E701.rhoin_nom_hot + BPHE.E701.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = BPHE.E701.rhom_cold, rhom_hot(displayUnit = "g/cm3") = BPHE.E701.rhom_hot, thermalInertia = false, u_nom_cold = BPHE.E701.u_nom_cold, u_nom_hot = BPHE.E701.u_nom_hot) annotation(
+    Placement(visible = true, transformation(origin = {297, -2}, extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceCold_E701(T = BPHE.E701.Tin_start_cold, p0 = BPHE.E701.pin_start_cold, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {240, -36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkHot_E701(T0 = BPHE.E701.Tout_start_hot, m_flow0 = BPHE.E701.m_flow_start_hot, p0 = BPHE.E701.pout_start_hot, pin_start = BPHE.E701.pout_start_hot) annotation(
+    Placement(visible = true, transformation(origin = {361, -37}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot_E701(T = BPHE.E701.Tin_start_hot, p0 = BPHE.E701.pin_start_hot, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {360, 34}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 
-  Sources.SourcePressure                                          sourceCold2(
-    p0(displayUnit="kPa") = 110000,
-    use_T=true,
-    T=293.15)                                                                                                                            annotation (
-    Placement(visible = true, transformation(origin={30,-38},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Sources.SinkPressure                                          sinkCold2(
-    p0(displayUnit="kPa") = 1000*(110 - 28.9),
-    use_T=true,
-    T=298.15)                                                                                                                                   annotation (
-    Placement(visible = true, transformation(origin={28,34},     extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Sources.SourcePressure                                          sourceHot2(
-    p0(displayUnit="kPa") = 110000,
-    use_T=true,
-    T=301.15)                                                                                                                           annotation (
-    Placement(visible = true, transformation(origin={136,34},   extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Sources.SinkPressure                                          sinkHot2(
-    p0(displayUnit="kPa") = 1000*(110 - 42.6),
-    use_T=true,
-    T=298.05)                                                                                                                                 annotation (
-    Placement(visible = true, transformation(origin={136,-36},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+
+
 equation
-  connect(sourceCold.outlet, HX1.incold) annotation (
-    Line(points={{-132,-38},{-104.5,-38},{-104.5,-35}}, color = {168, 168, 168}));
-  connect(sinkCold.inlet, HX1.outcold) annotation (
-    Line(points={{-134,34},{-103.467,34}},           color = {168, 168, 168}));
-  connect(HX1.inhot, sourceHot.outlet) annotation (
-    Line(points={{-73.5,35},{-60,35},{-60,34},{-46,34}},
-                                        color = {168, 168, 168}));
-  connect(HX1.outhot, sinkHot.inlet) annotation (
-    Line(points={{-73.5,-35},{-46,-35},{-46,-36}},   color = {168, 168, 168}));
-  connect(sourceCold2.outlet, HX2.incold) annotation (Line(points={{40,-38},{67.5,
-          -38},{67.5,-35}}, color={168,168,168}));
-  connect(sinkCold2.inlet, HX2.outcold)
-    annotation (Line(points={{38,34},{68.5333,34}}, color={168,168,168}));
-  connect(HX2.inhot, sourceHot2.outlet) annotation (Line(points={{98.5,35},{112,
-          35},{112,34},{126,34}}, color={168,168,168}));
-  connect(HX2.outhot, sinkHot2.inlet) annotation (Line(points={{98.5,-35},{126,-35},
-          {126,-36}}, color={168,168,168}));
-  annotation (
-    Diagram(coordinateSystem(preserveAspectRatio = true, extent={{-180,-100},{180,
-            100}})));
+
+  connect(sinkCold_E301.inlet, E301.outcold) annotation(
+    Line(points = {{-436, 34}, {-420, 34}, {-420, 33}, {-404.5, 33}}, color = {168, 168, 168}));
+  connect(sourceCold_E301.outlet, E301.incold) annotation(
+    Line(points = {{-440, -36}, {-404, -36}}, color = {168, 168, 168}));
+  connect(E301.outhot, sinkHot_E301.inlet) annotation(
+    Line(points = {{-374, -36}, {-348, -36}}, color = {168, 168, 168}));
+  connect(E301.inhot, sourceHot_E301.outlet) annotation(
+    Line(points = {{-374, 34}, {-348, 34}, {-348, 32}}, color = {168, 168, 168}));
+  connect(sinkCold_E501.inlet, E501.outcold) annotation(
+    Line(points = {{-222, 33}, {-196, 33}}, color = {168, 168, 168}));
+  connect(sourceCold_E501.outlet, E501.incold) annotation(
+    Line(points = {{-228, -36}, {-196, -36}}, color = {168, 168, 168}));
+  connect(E501.inhot, sourceHot_E501.outlet) annotation(
+    Line(points = {{-165.5, 33}, {-127.5, 33}}, color = {168, 168, 168}));
+  connect(E501.outhot, sinkHot_E501.inlet) annotation(
+    Line(points = {{-165.5, -37}, {-148.5, -37}, {-148.5, -35}, {-129.5, -35}}, color = {168, 168, 168}));
+  connect(sinkCold_E601.inlet, E601.outcold) annotation(
+    Line(points = {{42, 33}, {72, 33}}, color = {168, 168, 168}));
+  connect(sourceCold_E601.outlet, E601.incold) annotation(
+    Line(points = {{40, -36}, {72, -36}}, color = {168, 168, 168}));
+  connect(E601.outhot, sinkHot_E601.inlet) annotation(
+    Line(points = {{102.5, -37}, {138, -37}}, color = {168, 168, 168}));
+  connect(E601.inhot, sourceHot_E601.outlet) annotation(
+    Line(points = {{102.5, 33}, {140.5, 33}}, color = {168, 168, 168}));
+  connect(sinkCold_E701.inlet, E701.outcold) annotation(
+    Line(points = {{252, 34}, {282, 34}}, color = {168, 168, 168}));
+  connect(sourceCold_E701.outlet, E701.incold) annotation(
+    Line(points = {{250, -36}, {282, -36}}, color = {168, 168, 168}));
+  connect(E701.outhot, sinkHot_E701.inlet) annotation(
+    Line(points = {{312, -36}, {348, -36}}, color = {168, 168, 168}));
+  connect(E701.inhot, sourceHot_E701.outlet) annotation(
+    Line(points = {{312, 34}, {350, 34}}, color = {168, 168, 168}));
+  annotation(
+    Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-500, -100}, {500, 100}})));
 end BPHETest;

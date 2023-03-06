@@ -41,15 +41,15 @@ model Boiler
         rotation=0)));
 equation
   connect(gasBoilerPI.REF, T_Ref) annotation (
-    Line(points = {{-24.6, 29.8}, {-102, 29.8}, {-102, 30}}, color = {0, 0, 127}));
-  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-7.4,26},
+    Line(points = {{-25, 30}, {-102, 30}}, color = {0, 0, 127}));
+  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-7,26},
           {2,26},{2,8}},                                  color={0,0,127}));
   connect(inlet, heatHX.inlet) annotation (
     Line(points={{-100,0},{-8,0}},         color = {168, 168, 168}));
   connect(boilerFeedback.outlet, outlet) annotation (
     Line(points={{84,0},{100,0}},                           color = {168, 168, 168}));
   connect(boilerFeedback.T, gasBoilerPI.FeedBack) annotation (
-    Line(points={{74,9},{74,16},{-42,16},{-42,23},{-24.6,23}},          color = {0, 0, 127}));
+    Line(points={{74,9},{74,16},{-42,16},{-42,23},{-25,23}},          color = {0, 0, 127}));
   connect(heatHX.outlet, gasBoilerInnerVolume.inlet) annotation (Line(points={{
           12,0},{20,0},{20,-18},{40,-18},{40,-12}}, color={168,168,168}));
   connect(gasBoilerInnerVolume.outlet, boilerFeedback.inlet) annotation (Line(

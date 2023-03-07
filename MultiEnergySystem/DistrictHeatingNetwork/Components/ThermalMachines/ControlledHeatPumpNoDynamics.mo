@@ -1,17 +1,13 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 
 model ControlledHeatPumpNoDynamics
-
-  replaceable package Medium = MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby
-    Modelica.Media.Interfaces.PartialMedium "Medium model"
-    annotation(choicesAllMatching = true);
-  
+  replaceable package Medium = MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+     choicesAllMatching = true);
   // Declaration of fluid models
   Medium.ThermodynamicState fluidInHot "Hot inlet fluid";
   Medium.ThermodynamicState fluidOutHot "Hot outlet fluid";
   Medium.ThermodynamicState fluidInCold "Cold inlet fluid";
   Medium.ThermodynamicState fluidOutCold "Cold outlet fluid";
-
   parameter SI.PerUnit COP_nom = 2.7 "Nominal coefficient of performance";
   parameter SI.Temperature Tin_hot_start = 30 + 273.15 "Start/Nominal value for Hot side inlet temperature";
   final parameter SI.Temperature Tout_hot_start = Tout_hot_set "Start/Nominal value for Hot side outlet temperature";
@@ -28,9 +24,7 @@ model ControlledHeatPumpNoDynamics
   parameter SI.MassFlowRate m_flow_cold_start = 1 "Cold fluid mass flow rate";
   parameter Real k_hot(unit = "Pa/(kg/s)") = (pin_hot_start - pout_hot_start)/m_flow_hot_start "Pressure loss across the hot side";
   parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_cold_start - pout_cold_start)/m_flow_cold_start "Pressure loss across the cold side";
-  
   constant Real a[6] = {-172.6, -108.982, 0.0778191, 0.653687, 0.358927, -11.1119} "linear equation coefficients for Tin_cold vs COP relation";
-  
   SI.Pressure pin_hot "Hot side inlet pressure";
   SI.Pressure pout_hot "Hot side outlet pressure";
   SI.Pressure pin_cold "Cold side inlet pressure";
@@ -43,14 +37,13 @@ model ControlledHeatPumpNoDynamics
   SI.SpecificEnthalpy hin_hot "Hot side inlet Specific Enthalpy";
   SI.SpecificEnthalpy hout_hot "Hot side outlet Specific Enthalpy";
   SI.SpecificEnthalpy hin_cold "Cold side inlet Specific Enthalpy";
-  SI.SpecificEnthalpy hout_cold "Cold side outlet Specific Enthalpy";  
+  SI.SpecificEnthalpy hout_cold "Cold side outlet Specific Enthalpy";
   SI.MassFlowRate m_flow_hot "Hot fluid mass flow rate";
   SI.MassFlowRate m_flow_cold "Cold fluid mass flow rate";
   SI.PerUnit COP "Coefficient of performance";
   SI.Power Pcomp "Compression Power";
   SI.Power Pcold "Thermal Power cold side (lato surgente)";
   SI.Power Phot "Themal Power hot side (lato utenze)";
-
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold annotation(
     Placement(visible = true, transformation(origin = {-76, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation(
@@ -60,15 +53,12 @@ model ControlledHeatPumpNoDynamics
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot annotation(
     Placement(visible = true, transformation(origin = {60, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, 60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
-
-
-  // Fluid Definition
+// Fluid Definition
   fluidInHot = Medium.setState_phX(pin_hot, hin_hot);
   fluidInCold = Medium.setState_phX(pin_cold, hin_cold);
-  fluidOutHot = Medium.setState_phX(pout_hot, hout_hot);  
+  fluidOutHot = Medium.setState_phX(pout_hot, hout_hot);
   fluidOutCold = Medium.setState_phX(pout_cold, hout_cold);
-  
-  // Assignation of name variables
+// Assignation of name variables
   pin_hot = inhot.p;
   pout_hot = outhot.p;
   pin_cold = incold.p;
@@ -83,29 +73,24 @@ equation
   Tout_cold = Medium.temperature(fluidOutCold);
   m_flow_hot = inhot.m_flow;
   m_flow_cold = incold.m_flow;
-  
-  // Ideal Controlled variables
-  Tout_hot_max = max(Tout_hot_start, Tin_hot); 
+// Ideal Controlled variables
+  Tout_hot_max = max(Tout_hot_start, Tin_hot);
   Tout_hot = Tout_hot_max "Fixed hot side outlet temperature";
   Tin_cold - Tout_cold = 5 "Fixed delta temperature in the hot side";
-  
-   // Balance equation
+// Balance equation
   inhot.m_flow + outhot.m_flow = 0 "Mass Balance hot side";
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";
   pin_hot - pout_hot = k_hot*m_flow_hot "Momentum balance hot side";
-  pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side"; 
-  Phot = -m_flow_hot*(hin_hot-hout_hot) "Thermal Power Hot side";
-  Pcold = m_flow_cold*(hin_cold-hout_cold) "Themal Power Cold side";  
+  pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side";
+  Phot = -m_flow_hot*(hin_hot - hout_hot) "Thermal Power Hot side";
+  Pcold = m_flow_cold*(hin_cold - hout_cold) "Themal Power Cold side";
   Phot = Pcomp + Pcold "Energy Balance";
-  //Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;
+//Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;
   COP = Phot/Pcomp;
-  //COP = Tin_cold*a[1]+a[2];
-  
-  // Dummy equations for energy balance
+//COP = Tin_cold*a[1]+a[2];
+// Dummy equations for energy balance
   inhot.h_out = inStream(inhot.h_out);
   incold.h_out = inStream(incold.h_out);
-
-
-annotation(
-    Icon(graphics = {Rectangle(origin = {47, -27}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Rectangle(origin = {47, 35}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Ellipse(origin = {-40, 6}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Rectangle( fillColor = {171, 171, 171}, fillPattern = FillPattern.Solid, extent = {{-100, 60}, {100, -60}}), Rectangle(origin = {47, 19}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Rectangle(origin = {47, -13}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Rectangle(origin = {47, 3}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Ellipse(origin = {-44, 0}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Polygon(origin = {-44, 0}, lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}}), Text(origin = {0, -100}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
+  annotation(
+    Icon(graphics = {Rectangle(origin = {47, -27}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Rectangle(origin = {47, 35}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Ellipse(origin = {-40, 6}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Rectangle(fillColor = {171, 171, 171}, fillPattern = FillPattern.Solid, extent = {{-100, 60}, {100, -60}}), Rectangle(origin = {47, 19}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Rectangle(origin = {47, -13}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Rectangle(origin = {47, 3}, fillColor = {112, 112, 112}, fillPattern = FillPattern.Solid, extent = {{-33, 3}, {33, -3}}), Ellipse(origin = {-44, 0}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Polygon(origin = {-44, 0}, lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}}), Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
 end ControlledHeatPumpNoDynamics;

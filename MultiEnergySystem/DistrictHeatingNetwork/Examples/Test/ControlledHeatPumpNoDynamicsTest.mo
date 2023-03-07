@@ -33,4 +33,6 @@ equation
     Line(points = {{2, -90}, {30, -90}, {30, -64}}, color = {0, 0, 127}));
   connect(Tinhot.y, sourceHot.in_T) annotation(
     Line(points = {{-58, 70}, {-50, 70}, {-50, 50}}, color = {0, 0, 127}));
+annotation(
+    Documentation(info = "<html><head></head><body>Test model for the component:&nbsp;<a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledHeatPumpNoDynamics\">ControlledHeatPumpNoDynamics</a>.<div><br></div><div>The test includes changes in:</div><div><ul><li>cold water inlet temperature</li><li>hot water inlet temperature</li></ul></div><div></div></body></html>"));
 end ControlledHeatPumpNoDynamicsTest;

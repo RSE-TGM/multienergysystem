@@ -52,5 +52,6 @@ record BPHeatExchanger
   Real Rfoul(unit = "m2.K/W") "Fouling resistance";
   SI.Power Qnom;
   SI.Temperature LMTD = ((Tout_start_hot - Tin_start_cold)-(Tin_start_hot-Tout_start_cold))/log((Tout_start_hot - Tin_start_cold)/(Tin_start_hot-Tout_start_cold));
-  SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);
+  SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);annotation(
+    Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">Record class including main variables to describe the different Brazed-Plate Heat Exchangers of the RSE heating network.</span></body></html>"));
 end BPHeatExchanger;

@@ -15,5 +15,6 @@ record Pump
   Modelica.Units.SI.Efficiency etamech "Mechanical efficiency";
   Real a[2] "Power Characteristic coefficients";
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+        coordinateSystem(preserveAspectRatio=false)),
+  Documentation(info = "<html><head></head><body>Record class including main variables to describe the different pumps of the RSE heating network.</body></html>"));
 end Pump;

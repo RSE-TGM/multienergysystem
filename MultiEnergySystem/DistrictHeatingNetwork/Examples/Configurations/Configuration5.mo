@@ -7,10 +7,8 @@ model Configuration5 "Configuration based on file Configurazione 5.dwg"
     Placement(visible = true, transformation(origin = {-280, -106}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX701 annotation(
     Placement(visible = true, transformation(origin = {217, -61.3333}, extent = {{-14, 23.3333}, {14, -23.3333}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.Boiler boiler annotation(
-    Placement(visible = true, transformation(origin = {98, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.Pump P401 annotation(
-    Placement(visible = true, transformation(origin = {140, -38}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+    Placement(visible = true, transformation(origin = {70, -28}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkColdEX701(T0 = BPHE.E701.Tout_start_hot, m_flow0 = BPHE.E701.m_flow_start_hot, p0 = BPHE.E701.pout_start_hot, pin_start = BPHE.E701.pout_start_hot)  annotation(
     Placement(visible = true, transformation(origin = {246, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX721 annotation(
@@ -29,11 +27,11 @@ model Configuration5 "Configuration based on file Configurazione 5.dwg"
     Placement(visible = true, transformation(origin = {-120, -74}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501 annotation(
     Placement(visible = true, transformation(origin = {-121, 2.6667}, extent = {{-14, -23.3333}, {14, 23.3333}}, rotation = -90)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.GasBoiler gasBoiler annotation(
+    Placement(visible = true, transformation(origin = {115, -59}, extent = {{-21, -21}, {21, 21}}, rotation = 0)));
 equation
   connect(P201.outlet, D202.inlet) annotation(
     Line(points = {{-274.4, -98.2}, {-260.8, -98.2}, {-260.8, -78.4}, {-252.8, -78.4}}, color = {168, 168, 168}));
-  connect(boiler.outlet, P401.inlet) annotation(
-    Line(points = {{118, -60}, {138, -60}, {138, -46}}, color = {168, 168, 168}));
   connect(HP601.outcold, EX601.incold) annotation(
     Line(points = {{-16, -12}, {-18, -12}, {-18, -56}}, color = {168, 168, 168}));
   connect(HP601.incold, EX601.outcold) annotation(
@@ -52,6 +50,8 @@ equation
     Line(points = {{120, -142}, {120, -132}, {201, -132}, {201, -68}}, color = {168, 168, 168}));
   connect(sourceHot.outlet, EX601.outhot) annotation(
     Line(points = {{120, -142}, {120, -132}, {-18, -132}, {-18, -70}}, color = {168, 168, 168}));
+  connect(gasBoiler.outlet, P401.inlet) annotation(
+    Line(points = {{102, -50}, {68, -50}, {68, -36}}, color = {136, 136, 136}));
   annotation(
     Diagram(coordinateSystem(extent = {{-360, -160}, {360, 160}})));
 end Configuration5;

@@ -168,5 +168,6 @@ package BPHEData
     Rfoul = 2.8e-4,
     Qnom = 50e3,
     MWall = 3.9
-  );   
+  );annotation(
+    Documentation(info = "<html><head></head><body><h4>Brazed-Plate Heat exchangers</h4><div>According to the nomenclature of the RSE's PI&amp;D Heating Network, the BPHE models including the present package are the following:</div><div><br></div><div>- E301</div><div>- E501</div><div>- E601</div><div>- E701</div><div><br></div><div>The information was taken from the .pdf files in the folder:</div><div><br></div><div>LabTestFacility\ReteCalore\DocumentazioneComponenti\scambiatoridicalore</div></body></html>"));   
 end BPHEData;

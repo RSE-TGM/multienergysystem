@@ -17,8 +17,14 @@ partial model PartialBoiler
     "Initialisation option" annotation (
     Dialog(tab = "Initialisation"));
 
-  parameter SI.Length h = 1.115 "Vertical distance between inlet and outlet connectors of the boiler" annotation(
+  parameter SI.Length h = 1.2 "High of the water deposite" annotation(
     Dialog(tab = "Boiler Data"));
+  parameter SI.Diameter D = 0.64 "In case the shape of the Water deposite is a Cylinder" annotation(
+    Dialog(tab = "Boiler Data"));
+  parameter SI.ThermalConductivity lambdaIns = 0.045 "Conductance of the insulation material" annotation(
+    Dialog(tab = "Insulation Data"));
+  parameter SI.Length tIns = 0.04 "Insulation thickness" annotation(
+    Dialog(tab = "Insulation Data"));
   parameter SI.Power Pmaxnom = 147.6e3 "Maximum heating capacity" annotation(
     Dialog(tab = "Boiler Data"));
   parameter SI.Power Pnimnom = 40.2e3 "Minimum heating capacity" annotation(
@@ -29,9 +35,11 @@ partial model PartialBoiler
     Dialog(tab = "Boiler Data"));
   parameter SI.PerUnit etanom = 0.98 "Nominal useful efficiency" annotation(
     Dialog(tab = "Boiler Data"));
-
-  parameter SI.Volume V = 0.530 "Nominal volume of the boiler" annotation(
+  parameter SI.Volume V = h*pi*D^2/4 "Nominal volume of the fluid container (boiler)" annotation(
     Dialog(tab = "Boiler Data"));
+  parameter SI.Temperature T_ext = system.T_amb "Ambient temperature";
+  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + tIns)/(D/2))/(lambdaIns*2*pi*h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
+  final parameter Modelica.Units.SI.ThermalResistance R_flat = tIns/(lambdaIns*pi*(D/2)^2) "Flat Surface of the cylinder";
 
 
   outer DistrictHeatingNetwork.System system "system object for global defaults";
@@ -48,6 +56,8 @@ partial model PartialBoiler
   SI.Mass M "Total mass of water";
   SI.Time tr "Residence time inside the boiler";
   SI.Density rho "Outlet density of fluid";
+  SI.SpecificHeatCapacity cp "Outlet specific heat capacity of the fluid";
+  SI.Power Q_amb "heat loss to ambient";
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation(
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -38}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation(
@@ -57,8 +67,8 @@ equation
 // Balance equations
   der(M) = inlet.m_flow + outlet.m_flow;
   M = rho*V;
-
-  0 = outlet.m_flow*hout + inlet.m_flow*hin + Pheat;
+  M*cp*der(Tout) = outlet.m_flow*hout + inlet.m_flow*hin + Pheat - Q_amb;
+  Q_amb = 1/(R_lateral + 2*R_flat)*(Tout - T_ext) "Insulation all around, computation of heat loss to ambient";
   inlet.h_out = inStream(outlet.h_out) "Dummy equation considering not flow reversal";
 // Define fluids and properties
   fluidIn = Medium.setState_pTX(pin, Tin);
@@ -66,6 +76,7 @@ equation
   hin = Medium.specificEnthalpy(fluidIn);
   hout = Medium.specificEnthalpy(fluidOut);
   rho = Medium.density(fluidOut);
+  cp = Medium.specificHeatCapacityCp(fluidOut);
 // Define variables
   m_flow = inlet.m_flow;
   pin = inlet.p;
@@ -74,15 +85,16 @@ equation
   hout = outlet.h_out;
   tr = M/m_flow;
 initial equation
-  der(M) = 0 "steady state";
   if initOpt == Choices.Init.Options.steadyState then
     der(M) = 0;
+    der(Tout) = 0;
   elseif initOpt == Choices.Init.Options.fixedState then
     rho = rho_start;
+    Tout = Tout_start;
   else
 //No initial equations
   end if;
   annotation(
     Diagram,
-    Icon(graphics = {Polygon(origin = {-1, 1}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Rectangle(fillColor = {171, 171, 171}, fillPattern = FillPattern.Forward, extent = {{-60, 80}, {60, -80}}), Ellipse(origin = {0, -2}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Polygon(origin = {-1, 1}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Polygon(origin = {-1, 1}, lineColor = {255, 0, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-15, -37}, {-23, -13}, {-15, -17}, {-15, 3}, {-9, -1}, {1, 25}, {9, -1}, {15, 3}, {17, -17}, {23, -13}, {15, -37}, {1, -43}, {-15, -37}}), Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
+    Icon(graphics = {Polygon(origin = {-1, 1}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Rectangle(fillColor = {171, 171, 171}, fillPattern = FillPattern.Forward, extent = {{-60, 80}, {60, -80}}), Ellipse(origin = {0, -2}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
 end PartialBoiler;

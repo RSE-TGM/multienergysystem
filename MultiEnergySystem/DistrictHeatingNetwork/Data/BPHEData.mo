@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Data;
 
 package BPHEData  
-   "Data of the different models of BPHE in Heating NeTwork"
+   "Data of the different models of BPHE in Heating Network"
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E301(
     Name = "E301",
     ReferenceLocation = "After heat pump HP301",

@@ -3,30 +3,33 @@ package PumpData
   "Data of the different models of pump in Heating Nework"
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P7(
     Name = "P7",
-    Tin = 25+273.15,
-    Tout = 26 + 273.15,
-    pin = 1e5,
-    dp = W*eta/q,
-    hin = 0.105e6,
-    q = 0.0021,
-    rho = 997,
-    omega = 1450,
+    Tin_start = 25+273.15,
+    Tout_start = 26 + 273.15,
+    pin_start = 1e5,
+    hin_start = 0.105e6,
+    qnom = 0.0021,
+    rhonom = 997,
+    eta = 0.63,
+    omeganom = 2*3.14159*1450/60,
     W = 0.21e3,
     etaelec = 1,
-    etamech = 1);
+    etamech = 1,
+    a = {115, 45000},
+    b = {7.38557689, 617.03274734, -545218.57934041});
     
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P101(
     Name = "P101",
-    Tin = 80 + 273.15,
-    Tout = 90 + 273.15,
-    pin = 5e5,
-    dp = 1e5,
-    hin = 0.105e6,
-    q = 15.25/3600,
-    rho = 997.2,
-    omega = 1450,
+    Tin_start = 80 + 273.15,
+    Tout_start = 85 + 273.15,
+    pin_start = 3e5,
+    hin_start = 0.105e6,
+    qnom = 15.25/3600,
+    rhonom = 997.2,
+    omeganom = 2*3.14159*1450/60,
     W = 0.75e3,
     eta = 0.6,
     etaelec = 1,
-    etamech = 1);
+    etamech = 1,
+    a = {431.391174, 71019.165026}, 
+    b = {12.235634, 902.886310, -300017.452735});
 end PumpData;

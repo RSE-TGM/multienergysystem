@@ -9,12 +9,10 @@ partial model PumpBase "Base model to develop water pump models"
   Medium.ThermodynamicState fluidOut;
 
   //Constants
-  constant Real a[2] = {45000, 115}
+  parameter Real a[2] = {115, 45000}
    "value of coefficients for Linear Power Characteristic of pump model";
-  constant Real b[4] = {0.7053, 1.325, -0.5132, -401.26}
-   "value of coefficient in pump work efficiency calculation polynomial";
-  constant Real b1[3] = {0.7063, 1.699, -29.88};
-  constant Real b2[3] = {0.477, 10.158, -106.6};
+  parameter Real b[3] = {7.38557689, 617.03274734,-545218.57934041}
+   "value of quadratic polynomial coefficients for head calculation";
   constant Modelica.Units.SI.Power W_eps = 1e-8
    "Small coefficient to avoid numerical singularities";
   constant Modelica.Units.SI.AngularVelocity omega_eps = 1e-6
@@ -23,14 +21,6 @@ partial model PumpBase "Base model to develop water pump models"
    "constant gravity";
 
   //Parameters
-  parameter Boolean computeEnthalpyCondensation = false
-    "Used to decide if it is necessary to calculate enthalpy condensation";
-  parameter Boolean computeTransport = false
-    "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEntropy = true
-    "Used to decide if it is necessary to calculate the entropy of the fluid";
-  parameter Boolean compressibilityEffect = false
-    "Used to enable compressibility effects";
   parameter Boolean use_in_omega = false
     "Use connector input for the rotational speed" annotation (
     Dialog(group = "External inputs"),
@@ -47,20 +37,17 @@ partial model PumpBase "Base model to develop water pump models"
   parameter Modelica.Units.SI.Pressure pout_start
    "Start value of the outlet pressure" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy h_start = 1e5
+  parameter Modelica.Units.SI.SpecificEnthalpy hin_start = 1e5
    "Specific Enthalpy Start Value" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.MassFlowRate w_start = wnom
+  parameter Modelica.Units.SI.MassFlowRate m_flow_start = m_flow_nom
    "Mass Flow Rate Start Value" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.MassFlowRate wnom
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nom
    "nomimal outlet massflowrate" annotation (
     Dialog(group = "Pump Characteristics"));
-  final parameter Modelica.Units.SI.VolumeFlowRate qnom = wnom / rhonom
+  final parameter Modelica.Units.SI.VolumeFlowRate qnom = m_flow_nom / rhonom
    "nominal compressor volume flowrate" annotation (
-    Dialog(group = "Pump Characteristics"));
-  parameter Modelica.Units.SI.PerUnit phicnom
-   "flow coefficient nominal" annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Modelica.Units.SI.Density rhonom
    "Nominal Liquid Density" annotation (
@@ -77,33 +64,26 @@ partial model PumpBase "Base model to develop water pump models"
   parameter Modelica.Units.SI.Efficiency etaelec = 1
    "electrical efficiency" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Modelica.Units.SI.PerUnit etareg = 1
-   "correction factor of nominal efficiency";
-  final parameter Modelica.Units.SI.PerUnit psinom =  1
-   "Nominal work coefficient" annotation (
-    Dialog(group = "Characteristics"));
   final parameter Modelica.Units.SI.Efficiency etanom = 0.61524695
    "Nominal efficiency" annotation (
     Dialog(group = "Characteristics"));
-  final parameter Modelica.Units.SI.Length D = sqrt(sqrt(qnom^2*psinom*rhonom/(phicnom^2*dpnom)))
-   "Nominal diameter";
   parameter Modelica.Units.SI.AngularVelocity omeganom = 2*3.14159*1450/60;
 
 
   //Variables
-  Modelica.Units.SI.MassFlowRate m_flow(start = w_start)
+  Modelica.Units.SI.MassFlowRate m_flow
    "Mass flow rate";
-  Modelica.Units.SI.VolumeFlowRate q(start = w_start / rhonom)
+  Modelica.Units.SI.VolumeFlowRate q(start = qnom)
    "Volume flow rate";
-  Modelica.Units.SI.Pressure dp(start = dpnom)
+  Modelica.Units.SI.Pressure dp
    "Outlet pressure minus inlet pressure";
   Modelica.Units.SI.Length head
    "Pump head";
-  Modelica.Units.SI.Pressure pin(start = pin_start)
+  Modelica.Units.SI.Pressure pin
    "Pressure of entering fluid";
   Modelica.Units.SI.Pressure pout
    "Pressure of outgoing fluid";
-  Modelica.Units.SI.SpecificEnthalpy hin(start = h_start)
+  Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start)
    "Enthalpy of entering fluid";
   Modelica.Units.SI.SpecificEnthalpy hout
    "Enthalpy of outgoing fluid";
@@ -170,13 +150,16 @@ equation
   rhoout = Medium.density(fluidOut);
   Tout = Medium.temperature(fluidOut);
 
-  dp = homotopy(pout-pin, dpnom);
-  q = homotopy(m_flow/rhoin, qnom);
+  dp = pout - pin;
+  q = m_flow/rhoin;
 
-  W = (omega/omeganom)^3*Utilities.PowerCharacteristicLinear(a[1]*omeganom/omega,a[2],q) "Power Characteristic equation";
-  head = 7.38557689*(omega/omeganom)^2 + q*(617.03274734*(omega/omeganom) -545218.57934041*q) "Head Characteristic equation";
+  W = (omega/omeganom)^3*Utilities.PowerCharacteristicLinear(a[2]*omeganom/omega, a[1], q) "Power Characteristic equation";
+  head = b[1]*(omega/omeganom)^2 + q*(b[2]*(omega/omeganom) + b[3]*q) "Head Characteristic equation";
   head = dp / (rhoin * g);
   W = dp*q/eta;
+  //eta = 0.6;
+  //eta = dp*q/W;
+  //dp = W*eta/q;
 
   // Mass Balance
   inlet.m_flow + outlet.m_flow = 0;

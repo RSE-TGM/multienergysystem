@@ -33,6 +33,22 @@ package PumpData
     a = {431.391174, 71019.165026}, 
     b = {12.235634, 902.886310, -300017.452735});
     
+    constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P201(
+    Name = "P201",
+    Tin_start = 45 + 273.15,
+    Tout_start = 45.5 + 273.15,
+    pin_start = 3e5,
+    hin_start = 0.105e6,
+    qnom = 16.5/3600,
+    rhonom = 990.198,
+    omeganom = 2*3.14159*1450/60,
+    W = 0.89e3,
+    eta = 0.63,
+    etaelec = 1,
+    etamech = 1,
+    a = {439.531816, 97794.102431}, 
+    b = {14.230465,650.687103,-229082.650277});    
+
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P601(
     Name = "P601",
     Tin_start = 45 + 273.15,

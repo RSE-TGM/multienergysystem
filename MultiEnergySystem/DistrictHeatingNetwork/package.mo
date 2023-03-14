@@ -3,5 +3,6 @@ package DistrictHeatingNetwork "Components for District Heating Systems"
 import SI = Modelica.Units.SI;
 import BPHE = MultiEnergySystem.DistrictHeatingNetwork.Data.BPHEData;
 import Pump = MultiEnergySystem.DistrictHeatingNetwork.Data.PumpData;
-import pi = Modelica.Constants.pi;
+import pi = Modelica.Constants.pi;annotation(
+    Icon(graphics = {Rectangle(lineColor = {140, 56, 54}, fillColor = {211, 87, 84}, fillPattern = FillPattern.HorizontalCylinder, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25)}));
 end DistrictHeatingNetwork;

@@ -21,8 +21,7 @@ class.</p>
 <b>HeatPort_b</b> are identical with the only exception of the different
 <b>icon layout</b>.</p></HTML>
         "),
-    Icon(graphics={  Rectangle(extent = {{-100, 100}, {100, -100}}, lineColor = {191, 0, 0}, fillColor = {191, 0, 0},
-            fillPattern =                                                                                                           FillPattern.Solid)}),
-    Diagram(graphics={  Rectangle(extent = {{-50, 50}, {50, -50}}, lineColor = {191, 0, 0}, fillColor = {191, 0, 0},
-            fillPattern =                                                                                                          FillPattern.Solid), Text(extent = {{-120, 120}, {100, 60}}, lineColor = {191, 0, 0}, textString = "%name")}));
+    Icon(graphics={Rectangle(lineColor = {191, 0, 0}, fillColor = {191, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}})}),
+    Diagram(graphics={  Rectangle( lineColor = {191, 0, 0}, fillColor = {191, 0, 0},
+            fillPattern =                                                                                                          FillPattern.Solid,extent = {{-50, 50}, {50, -50}}), Text(textColor = {191, 0, 0},extent = {{-120, 120}, {100, 60}}, textString = "%name")}));
 end HeatPort;

@@ -92,5 +92,5 @@ initial equation
   end if;
   annotation(
     Diagram,
-    Icon(graphics = {Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
+    Icon);
 end PartialBoiler;

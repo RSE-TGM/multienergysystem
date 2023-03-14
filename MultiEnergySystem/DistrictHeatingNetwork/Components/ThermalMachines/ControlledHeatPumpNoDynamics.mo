@@ -93,5 +93,5 @@ equation
   inhot.h_out = inStream(inhot.h_out);
   incold.h_out = inStream(incold.h_out);
   annotation(
-    Icon(graphics = {Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
+    Icon);
 end ControlledHeatPumpNoDynamics;

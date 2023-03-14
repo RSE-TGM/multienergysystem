@@ -19,7 +19,7 @@ partial model PartialInsulatedTube
     "Thermal conductivity of the insulant material" annotation (
     Dialog(tab = "Data", group = "Insulation"));
 
-  // Metal Parameter
+// Metal Parameter
   parameter Boolean thermalInertia = true
     "if true then account for metal thermal inertia" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
@@ -59,6 +59,5 @@ equation
 
 
   annotation (
-    Icon(graphics={  Rectangle(lineColor = {102, 102, 102},fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent={{-100,40},
-              {100,-40}})}));
+    Icon(graphics={Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}})}));
 end PartialInsulatedTube;

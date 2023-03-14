@@ -5,7 +5,6 @@ model round1DFV
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
-
   replaceable package Medium =
       DistrictHeatingNetwork.Media.StandarWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
@@ -17,7 +16,7 @@ model round1DFV
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
 
-  // Flow parameter
+// Flow parameter
   parameter Boolean noInitialPressure = false
     "Remove initial equation for pressure, to be used in case of solver failure";
   parameter Integer n = 2
@@ -73,7 +72,7 @@ model round1DFV
 
   outer System system "system object for global defaults";
 
-  // Variables
+// Variables
   Modelica.Units.SI.MassFlowRate m_flow[n + 1]
     "Mass flow rate in each volume across the pipe";
   Modelica.Units.SI.VolumeFlowRate q[n + 1]
@@ -86,12 +85,12 @@ model round1DFV
     "Pipe wall temperature";
   Modelica.Units.SI.Power Qtot
     "Total heat";
-//   Modelica.Units.SI.Power Q_int[n]
-//     "Heat dissipation out of each volume into the wall";
+  //   Modelica.Units.SI.Power Q_int[n]
+  //     "Heat dissipation out of each volume into the wall";
   Modelica.Units.SI.Temperature T[n + 1](start = T_start)
     "Volume boundary temperatures";
-//   Modelica.Units.SI.Power Q_ext[n]
-//     "Heat dissipation out of each wall cell to the ambient";
+  //   Modelica.Units.SI.Power Q_ext[n]
+  //     "Heat dissipation out of each wall cell to the ambient";
   Modelica.Units.SI.Pressure pin
     "Inlet pressure";
   Modelica.Units.SI.Pressure pout
@@ -128,7 +127,7 @@ model round1DFV
     kc = kc);
     //each cp = Medium.specificHeatCapacityCp(fluid[1].state),
 
-  DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
 equation
 // Equations to set the fluid properties
@@ -141,7 +140,6 @@ equation
   end for;
 
   fluid[1].h = inStream(inlet.h_out);
-
 // Relationships for state variables
   Ttilde = T[2:n + 1];
   if hctype == Choices.Pipe.HCtypes.Downstream then
@@ -156,20 +154,15 @@ equation
 //   ptilde = pout;
   for i in 1:n loop
      M[i] = Vi * fluid[i + 1].d;
-     //w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
+//w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
      m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
      rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;
 
   Mtot = sum(M) "Total mass";
   Qtot = sum(wall.Q_flow) "Total heat";
-
-  // Momentum balance
-
-  //inlet.p - outlet.p = rho0 * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
-
-
-
+// Momentum balance
+//inlet.p - outlet.p = rho0 * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
 // Boundary conditions
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n + 1];
@@ -186,7 +179,7 @@ initial equation
     if not noInitialPressure then
       der(ptilde) = 0;
     else
- //No initial pressure
+//No initial pressure
     end if;
   elseif initOpt == Choices.Init.Options.fixedState then
     for i in 1:n loop
@@ -195,7 +188,7 @@ initial equation
     if not noInitialPressure then
       ptilde = pout_start;
     else
- //No initial pressure
+//No initial pressure
     end if;
   else
 //No initial equations

@@ -110,7 +110,6 @@ equation
   Pe = Pm/etaelec;
   inlet.h_out = inStream(outlet.h_out) "Dummy equation for flow reversal";
   annotation(
-    Icon(coordinateSystem(preserveAspectRatio = false), graphics = {Polygon(fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{-40, -24}, {-60, -60}, {60, -60}, {40, -24}, {-40, -24}}, lineColor = {0, 0, 0}), Ellipse(fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-60, 80}, {60, -40}}, lineColor = {0, 0, 0}), Polygon(fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.HorizontalCylinder, points = {{-30, 52}, {-30, -8}, {48, 20}, {-30, 52}}), Text(origin = {0, 39}, extent = {{-100, -99}, {100, -139}}, textString = "%name")}),
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     Icon(coordinateSystem(preserveAspectRatio = false)));
 end PumpBase;

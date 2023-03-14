@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 
 partial model PumpBase "Base model to develop water pump models"
+  extends DistrictHeatingNetwork.Icons.Water.WaterPump;
   replaceable package Medium = MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
      choicesAllMatching = true);
   Medium.ThermodynamicState fluidIn;
@@ -64,12 +65,12 @@ partial model PumpBase "Base model to develop water pump models"
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
   Modelica.Units.SI.Power Pm "mechanical power";
   Modelica.Units.SI.Power Pe "electrical power";
-  Interfaces.FluidPortInlet inlet annotation(
-    Placement(transformation(extent = {{-100, 0}, {-60, 40}}), iconTransformation(extent = {{-100, 0}, {-60, 40}})));
-  Interfaces.FluidPortOutlet outlet annotation(
-    Placement(transformation(extent = {{36, 58}, {76, 98}}), iconTransformation(extent = {{36, 58}, {76, 98}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation(
+    Placement(visible = true, transformation(origin = {0, 0}, extent = {{-100, 0}, {-60, 40}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{-100, 0}, {-60, 40}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation(
+    Placement(visible = true, transformation(origin = {0, 0}, extent = {{36, 58}, {76, 98}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{36, 58}, {76, 98}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput in_omega if use_in_omega "rad" annotation(
-    Placement(transformation(origin = {-26, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(extent = {{-10, -10}, {10, 10}}, rotation = 270, origin = {-40, 70})));
+    Placement(visible = true, transformation(origin = {-26, 80}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-40, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 270)));
 protected
   Modelica.Blocks.Interfaces.RealInput in_omega_int "Internal connector for rotational speed";
 equation
@@ -111,5 +112,5 @@ equation
   annotation(
     Icon(coordinateSystem(preserveAspectRatio = false), graphics = {Polygon(fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{-40, -24}, {-60, -60}, {60, -60}, {40, -24}, {-40, -24}}, lineColor = {0, 0, 0}), Ellipse(fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-60, 80}, {60, -40}}, lineColor = {0, 0, 0}), Polygon(fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.HorizontalCylinder, points = {{-30, 52}, {-30, -8}, {48, 20}, {-30, 52}}), Text(origin = {0, 39}, extent = {{-100, -99}, {100, -139}}, textString = "%name")}),
     Diagram(coordinateSystem(preserveAspectRatio = false)),
-    Icon(graphics = {Ellipse(fillColor = {0, 0, 255}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-60, 80}, {60, -40}}), Polygon(fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.HorizontalCylinder, points = {{-30, 52}, {-30, -8}, {48, 20}, {-30, 52}}), Text(origin = {0, 39}, extent = {{-100, -99}, {100, -139}}, textString = "%name")}, coordinateSystem(preserveAspectRatio = false)));
+    Icon(coordinateSystem(preserveAspectRatio = false)));
 end PumpBase;

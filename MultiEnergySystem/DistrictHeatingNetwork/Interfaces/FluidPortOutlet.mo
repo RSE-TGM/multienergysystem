@@ -2,5 +2,5 @@ within MultiEnergySystem.DistrictHeatingNetwork.Interfaces;
 connector FluidPortOutlet "Conventional outlet port"
   extends FluidPort;
   annotation (
-    Icon(graphics={  Ellipse(lineColor = {136, 136, 136}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-60, 60}, {60, -60}})}));
+    Icon(graphics={  Ellipse(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, lineThickness = 0.5, extent = {{-100, 100}, {100, -100}}), Ellipse(origin = {0, 2}, lineColor = {140, 56, 54}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, lineThickness = 0.5, extent = {{-50, 50}, {50, -50}})}));
 end FluidPortOutlet;

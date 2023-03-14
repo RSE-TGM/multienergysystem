@@ -13,10 +13,8 @@ partial model PartialBoiler
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter SI.Density rho_start = 1000 "Start value outlet density of the fluid" annotation(
     Dialog(tab = "Initialisation", group = "fluid"));
-  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt
-    "Initialisation option" annotation (
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation(
     Dialog(tab = "Initialisation"));
-
   parameter SI.Length h = 1.2 "High of the water deposite" annotation(
     Dialog(tab = "Boiler Data"));
   parameter SI.Diameter D = 0.64 "In case the shape of the Water deposite is a Cylinder" annotation(
@@ -40,10 +38,7 @@ partial model PartialBoiler
   parameter SI.Temperature T_ext = system.T_amb "Ambient temperature";
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + tIns)/(D/2))/(lambdaIns*2*pi*h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = tIns/(lambdaIns*pi*(D/2)^2) "Flat Surface of the cylinder";
-
-
   outer DistrictHeatingNetwork.System system "system object for global defaults";
-
   Medium.ThermodynamicState fluidIn, fluidOut;
   SI.MassFlowRate m_flow "mass flowrate of the fluid";
   SI.Pressure pin "inlet pressure of fluid";
@@ -96,5 +91,5 @@ initial equation
   end if;
   annotation(
     Diagram,
-    Icon(graphics = {Polygon(origin = {-1, 1}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Rectangle(fillColor = {171, 171, 171}, fillPattern = FillPattern.Forward, extent = {{-60, 80}, {60, -80}}), Ellipse(origin = {0, -2}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
+    Icon(graphics = {Polygon(origin = {-1, 1}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Rectangle(fillColor = {171, 171, 171}, fillPattern = FillPattern.Forward, extent = {{-60, 80}, {60, -80}}), Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {0, -100}, textColor = {28, 108, 200}, extent = {{-100, 20}, {100, -20}}, textString = "%name")}));
 end PartialBoiler;

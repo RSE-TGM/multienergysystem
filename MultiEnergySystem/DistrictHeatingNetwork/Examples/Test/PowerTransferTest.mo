@@ -30,11 +30,11 @@ model PowerTransferTest "3 tests using Ideal Power Transfer component"
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tsens1 annotation (Placement(
         visible=true, transformation(
-        origin={20,0},
+        origin={20,2},
         extent={{-6,-6},{6,6}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tsens2 annotation (
-    Placement(visible = true, transformation(origin={20,-40},    extent={{-6,-6},
+    Placement(visible = true, transformation(origin={20,-38},    extent={{-6,-6},
             {6,6}},                                                                               rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource msink(mflownom=-1) annotation (
       Placement(visible=true, transformation(
@@ -48,7 +48,7 @@ model PowerTransferTest "3 tests using Ideal Power Transfer component"
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tsens3 annotation (Placement(
         visible=true, transformation(
-        origin={20,-80},
+        origin={20,-78},
         extent={{6,-6},{-6,6}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer Pt3 annotation (Placement(
@@ -64,17 +64,17 @@ model PowerTransferTest "3 tests using Ideal Power Transfer component"
             {-32,-52}})));
 equation
   connect(Pt1.outlet, Tsens1.inlet)
-    annotation (Line(points={{-10,0},{14,0}}, color={168,168,168}));
+    annotation (Line(points={{-10,0},{16,0}}, color={168,168,168}));
   connect(Pt2.outlet, Tsens2.inlet)
-    annotation (Line(points={{-10,-40},{14,-40}}, color={168,168,168}));
+    annotation (Line(points={{-10,-40},{16,-40}}, color={168,168,168}));
   connect(Ptransfer1.y, Pt1.Ptransfer)
     annotation (Line(points={{-31.2,20},{-20,20},{-20,8}}, color={0,0,127}));
   connect(Ptransfer2.y, Pt2.Ptransfer) annotation (Line(points={{-31.2,-20},{-20,
           -20},{-20,-32}}, color={0,0,127}));
-  connect(Tsens2.outlet, psink2.inlet) annotation (Line(points={{26,-40},{50,-40},
+  connect(Tsens2.outlet, psink2.inlet) annotation (Line(points={{24,-40},{50,-40},
           {50,-32}}, color={168,168,168}));
   connect(Tsens1.outlet, psink1.inlet)
-    annotation (Line(points={{26,0},{50,0},{50,10}}, color={168,168,168}));
+    annotation (Line(points={{24,0},{50,0},{50,10}}, color={168,168,168}));
   connect(msource1.outlet, Pt1.inlet)
     annotation (Line(points={{-79.8,0},{-30,0}}, color={168,168,168}));
   connect(msource2.outlet, Pt2.inlet)
@@ -83,10 +83,10 @@ equation
     annotation (Line(points={{-79.8,-80},{-30,-80}}, color={168,168,168}));
   connect(Ptransfer3.y, Pt3.Ptransfer) annotation (Line(points={{-31.2,-60},{-20,
           -60},{-20,-72}}, color={0,0,127}));
-  connect(Tsens3.inlet, psource.inlet) annotation (Line(points={{26,-80},{50,-80},
+  connect(Tsens3.inlet, psource.inlet) annotation (Line(points={{24,-80},{50,-80},
           {50,-72}}, color={168,168,168}));
   connect(Tsens3.outlet, Pt3.inlet)
-    annotation (Line(points={{14,-80},{-10,-80}}, color={168,168,168}));
+    annotation (Line(points={{16,-80},{-10,-80}}, color={168,168,168}));
   annotation (
     Diagram(coordinateSystem(extent = {{-140, 40}, {100, -120}})));
 end PowerTransferTest;

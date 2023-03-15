@@ -10,11 +10,6 @@ model LumpedStorage "Model a perfectly mixed thermal storage with insulation all
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
   Modelica.Units.SI.Mass M "Total mass in the tank";
   Modelica.Units.SI.Density rho(start = 1000) "Density of the fluid in the tank";
-  replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby
-    Modelica.Media.Interfaces.PartialMedium "Medium model"
-    annotation(choicesAllMatching = true);
-  Medium.ThermodynamicState fluidIn, fluidOut;  
 equation
 // Fluid
   fluidIn = Medium.setState_phX(pin, inlet.h_out);

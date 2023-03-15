@@ -21,5 +21,6 @@ equation
   connect(idealMassFlowSource.outlet, stratified1DStorage.inlet)
     annotation (Line(points={{-29.8,0},{-10,0}}, color={168,168,168}));
   annotation (
-    Diagram(coordinateSystem(extent={{-100,-100},{100,100}})));
+    Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
+    experiment(StartTime = 0, StopTime = 6000, Tolerance = 1e-6, Interval = 12));
 end StratifiedTESTest;

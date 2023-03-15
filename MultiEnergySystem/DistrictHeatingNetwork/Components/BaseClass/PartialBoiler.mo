@@ -4,7 +4,8 @@ partial model PartialBoiler
   extends DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
   replaceable package Medium = DistrictHeatingNetwork.Media.StandarWater constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
      choicesAllMatching = true);
-  parameter SI.Pressure pin_start = 1e5 "Start value Inlet pressure of the fluid" annotation(
+  parameter SI.Pressure pin_start = 1e5 
+  "Start value Inlet pressure of the fluid" annotation(
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter SI.Pressure pout_start = 0.9e5 "Start value Outlet pressure of the fluid" annotation(
     Dialog(tab = "Initialisation", group = "fluid"));

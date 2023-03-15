@@ -85,7 +85,6 @@ initial equation
     der(M) = 0;
     der(Tout) = 0;
   elseif initOpt == Choices.Init.Options.fixedState then
-    rho = rho_start;
     Tout = Tout_start;
   else
 //No initial equations

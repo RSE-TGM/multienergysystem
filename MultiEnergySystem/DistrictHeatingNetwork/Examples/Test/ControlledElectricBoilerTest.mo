@@ -32,7 +32,7 @@ equation
   connect(add.y, sourceP.in_T) annotation(
     Line(points = {{-19, -22}, {-11, -22}, {-11, -14}}, color = {0, 0, 127}));
   annotation(
-    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-6, Interval = 0.5),
+    experiment(StartTime = 0, StopTime = 3500, Tolerance = 1e-06, Interval = 7),
     Documentation(info = "<html><head></head><body>Test model for the component:
 
 <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.GasBoiler\">GasBoiler</a>.<div><br></div><div>The test includes changes in:</div><div><ul><li>fuel flow mass flow rate&nbsp;</li><li>water flow mass flow rate</li><li>water inlet temperature</li></ul></div><div><div><br></div></div></body></html>"));

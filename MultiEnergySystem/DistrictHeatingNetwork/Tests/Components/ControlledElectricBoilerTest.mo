@@ -12,7 +12,7 @@ model ControlledElectricBoilerTest
     Placement(visible = true, transformation(origin = {-62, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = 0.25, offset = 0.7, startTime = 1800) annotation(
     Placement(visible = true, transformation(origin = {-42, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation(
+  inner MultiEnergySystem.DistrictHeatingNetwork.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)  annotation(
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin_up(duration = 100, height = 15, offset = 0, startTime = 500) annotation(
     Placement(visible = true, transformation(origin = {-62, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -32,7 +32,7 @@ equation
   connect(add.y, sourceP.in_T) annotation(
     Line(points = {{-19, -22}, {-11, -22}, {-11, -14}}, color = {0, 0, 127}));
   annotation(
-    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-6, Interval = 0.5),
+    experiment(StartTime = 0, StopTime = 3000, Tolerance = 1e-06, Interval = 6),
     Documentation(info = "<html><head></head><body>Test model for the component:
 
 <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.GasBoiler\">GasBoiler</a>.<div><br></div><div>The test includes changes in:</div><div><ul><li>fuel flow mass flow rate&nbsp;</li><li>water flow mass flow rate</li><li>water inlet temperature</li></ul></div><div><div><br></div></div></body></html>"));

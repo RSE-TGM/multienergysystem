@@ -1,4 +1,6 @@
 IdealMassFlowSensor
 IdealTemperatureSensor
+IdealPressureSensor
+IdealAbsoluteTemperatureSensor
 IdealAbsolutePressureSensor
 BaseClass

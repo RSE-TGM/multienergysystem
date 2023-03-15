@@ -1,9 +1,9 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors;
-model IdealMassFlowSensor
+model IdealPressureSensor
   "Ideal Mass Flow Sensor"
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialIdealFlowSensor;
-  Modelica.Blocks.Interfaces.RealOutput m_flow annotation (Placement(
+  Modelica.Blocks.Interfaces.RealOutput p annotation (Placement(
       visible=true,
       transformation(
         origin={0,72},
@@ -14,7 +14,7 @@ model IdealMassFlowSensor
         extent={{-10,-10},{10,10}},
         rotation= 0)));
 equation
-  m_flow = inlet.m_flow;
+  p = inlet.p;
 annotation (
-    Icon(graphics = {Text(origin = {0, 60}, textColor = {140, 56, 54}, extent = {{-20, 24}, {20, -24}}, textString = "F")}));
-end IdealMassFlowSensor;
+    Icon(graphics = {Text(origin = {2, 60}, textColor = {140, 56, 54}, extent = {{-20, 24}, {20, -24}}, textString = "P")}));
+end IdealPressureSensor;

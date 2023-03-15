@@ -21,19 +21,33 @@ package Icons  "Icon package for DHN components"
 
     end SourceW;
 
-    model WaterPump
+    partial model WaterPump
     equation
 
     annotation(
         Icon(graphics = {Text(origin = {0, 39}, textColor = {140, 56, 54}, extent = {{-100, -99}, {100, -139}}, textString = "%name"), Ellipse(origin = {0, -20}, lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, lineThickness = 0.75, extent = {{-60, 80}, {60, -40}}), Polygon(origin = {0, -20}, lineColor = {192, 80, 77}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.HorizontalCylinder, points = {{-30, 52}, {-30, -8}, {48, 20}, {-30, 52}})}));
 end WaterPump;
 
-    model Valve
+    partial model Valve
     equation
 
     annotation(
         Icon(graphics = {Polygon(lineColor = {255, 255, 255}, fillColor = {0, 255, 0}, fillPattern = FillPattern.Solid, points = {{-100, 0}, {100, 0}, {100, 0}, {0, 0}, {-100, 0}, {-100, 0}}), Polygon(points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Line(visible = false, points = {{-20, 25}, {-20, 63}, {0, 41}, {20, 63}, {20, 25}}, thickness = 0.5), Line(points = {{0, 52}, {0, 0}}), Rectangle(fillPattern = FillPattern.Solid, extent = {{-20, 60}, {20, 52}}), Ellipse(visible = false, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 94}, {40, 14}}), Polygon(lineColor = {140, 56, 54},fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, lineThickness = 0.75, points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Text(origin = {0, 14}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}));
 end Valve;
+
+    partial model ThroughSensor
+    equation
+
+    annotation(
+        Icon(graphics = {Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent = {{-40, -20}, {40, -60}}), Line(points = {{40, 60}, {60, 60}}, color = {140, 56, 54}), Ellipse(lineColor = {140, 56, 54}, extent = {{-40, 100}, {40, 20}}), Line(points = {{0, 20}, {0, -20}}, color = {140, 56, 54}), Text(origin = {0, -17}, textColor = {140, 56, 54}, extent = {{-100, -63}, {100, -83}}, textString = "%name")}));
+end ThroughSensor;
+
+    partial model OnePointSensor
+    equation
+
+    annotation(
+        Icon(graphics = {Line(points = {{0, 20}, {0, -20}}, color = {140, 56, 54}), Line(points = {{40, 60}, {60, 60}}, color = {140, 56, 54}), Ellipse(lineColor = {140, 56, 54}, extent = {{-40, 100}, {40, 20}}), Text(origin = {0, 3}, textColor = {140, 56, 54}, extent = {{-100, -63}, {100, -83}}, textString = "%name")}));
+end OnePointSensor;
   end Water;
 
   package Generic
@@ -53,14 +67,14 @@ end Valve;
 
   package ThermalMachines
     extends Modelica.Icons.IconsPackage;
-model Boiler
+partial model Boiler
     equation
 
       annotation(
         Icon(graphics = {Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, extent = {{-60, 80}, {60, -80}}), Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {0, -6}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name"), Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}})}));
     end Boiler;
 
-    model ElectricBoiler
+    partial model ElectricBoiler
       extends MultiEnergySystem.DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
     equation
 
@@ -68,7 +82,7 @@ model Boiler
         Icon(graphics = {Polygon(lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));
 end ElectricBoiler;
     
-    model HeatPump
+    partial model HeatPump
     equation
     
     annotation(

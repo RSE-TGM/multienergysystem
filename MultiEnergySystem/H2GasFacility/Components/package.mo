@@ -1,4 +1,4 @@
-within MultiEnergySystem.GasFacility;
+within MultiEnergySystem.H2GasFacility;
 
 package Components
   extends Modelica.Icons.Package;

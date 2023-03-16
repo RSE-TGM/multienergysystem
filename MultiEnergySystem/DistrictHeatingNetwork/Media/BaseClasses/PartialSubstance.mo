@@ -2,7 +2,6 @@ within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
 
 partial model PartialSubstance
   extends Modelica.Icons.MaterialProperty;
-  import AllamCycle.Types;
   parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
   parameter Boolean compressibilityEffect = false "Used to enable compressibility effects";
@@ -13,6 +12,7 @@ partial model PartialSubstance
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Integer nX = 0 "Number of elements in the mass fraction array";
   parameter Types.MolarMass MM;
+  
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
   connector InputTemperature = input Types.Temperature "Pseudo-input to check model balancedness";

@@ -2,7 +2,6 @@ within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
 
 partial model PengRobinsonMixture
   extends PartialMixture(nC = 0, Xi_start = X_start[1:nXi], nXi = if reducedX then nX - 1 else nX, mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
-  import AllamCycle.Types;
   import Modelica.Fluid.Utilities.regStep;
   replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
   parameter Boolean reducedX = false;
@@ -11,7 +10,7 @@ partial model PengRobinsonMixture
   parameter Integer posOxygen = 1 "Position of O2 in the array";
   parameter Boolean computehidealComp = false;
   final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM);
-  parameter Types.MoleFraction eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
+  parameter Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";

@@ -2,8 +2,6 @@ within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
 
 partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
-  import AllamCycle.Types;
-  parameter Boolean computeEnthalpyCondensation = false "Used to decide if it is necessary to calculate enthalpy condensation";
   parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = true "Used to decide if it is necessary to calculate the entropy of the fluid";
   parameter Integer nX = 5 "Number of elements in the mass fraction array that influence fluid properties";
@@ -41,10 +39,9 @@ partial model PartialMixture "Interface for real mixture gas models"
     HideResult = not ComputeTransport);
   Types.Density rho "Density of the fluid, needed in the pipe";
   annotation(
-    Documentation(info = "<html>
-<p><b><span style=\"font-size: 13pt;\">Interface for real mixture gas models</span></b></p>
-<p>The objetive of this model is to have an interface and use it as a base model for any real mixture model. For the Allam Cycle application, Peng-Robinson EoS is the one to be considered, however, it is possible to develop different real fluid models using other EoS.</p>
+    Documentation(info = "<html><head></head><body><p><b><span style=\"font-size: 13pt;\">Interface for real mixture gas models</span></b></p>
+<p>The objetive of this model is to have an interface and use it as a base model for any real mixture model. In this first version of the library, Peng-Robinson EoS is the one to be considered, however, it is possible to develop different real fluid models using other EoS.</p>
 <p>The <u><span style=\"color: #0000ff;\">PartialMixture</span></u> model includes three input variables for pressure, temperature and mass fraction, in order to define the full properties of the fluid. The other variables are going to be used when it comes to develop the real mixture fluid model.</p>
-</html>"),
+</body></html>"),
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
 end PartialMixture;

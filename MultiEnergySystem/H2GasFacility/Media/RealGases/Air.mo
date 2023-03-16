@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Media.RealGases;
+within MultiEnergySystem.H2GasFacility.Media.RealGases;
 
 model Air "Mixture real gas model with CO2, N2, O2, H2O & Ar (in that order) using PR EoS"
   extends MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PengRobinsonMixture(

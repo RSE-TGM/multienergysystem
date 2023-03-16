@@ -3,22 +3,6 @@ within MultiEnergySystem.H2GasFacility.Interfaces;
 connector HeatPort "Thermal port for 1-dim. heat transfer (filled rectangular icon)"
   Modelica.Units.SI.Temperature T "Port temperature";
   flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
-  Modelica.Units.SI.Temperature T "Port temperature";
-  flow Modelica.Units.SI.HeatFlowRate Q_flow "Heat flow rate (positive if flowing from outside into the component)";
   annotation(
     defaultComponentName = "port",
     Documentation(info = "<HTML>

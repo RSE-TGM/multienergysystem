@@ -1,23 +1,23 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.Utilities;
 model ComputeAdditionalCpCoefficients
-  import      Modelica.Units.SI;
+  extends DistrictHeatingNetwork.Icons.Generic.Utilities;
   import Poly = Modelica.Math.Polynomials;
   import Modelica.Utilities.Streams.*;
   replaceable package Medium = Modelica.Media.Water.StandardWater;
-  parameter SI.Temperature T_min = 273.15 + 15;
-  parameter SI.Temperature T_max = 273.15 + 130;
-  parameter SI.Pressure p = 15e5;
+  parameter Types.Temperature T_min = 273.15 + 15;
+  parameter Types.Temperature T_max = 273.15 + 130;
+  parameter Types.Pressure p = 15e5;
   parameter Types.MoleFraction MMw = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM;
   parameter Types.MoleFraction MMinc = Modelica.Media.IdealGases.Common.SingleGasesData.CO2.MM;
   parameter Integer N = 50;
   parameter Integer ord_cp = 3;
   parameter Integer ord_psat = 6;
-  constant SI.Time t0 = 1;
+  constant Types.Time t0 = 1;
 
-  SI.Temperature T;
-  SI.SpecificEnthalpy cp;
-  SI.SpecificEnthalpy cp_approx;
-  SI.SpecificEnthalpy delta_h;
+  Types.Temperature T;
+  Types.SpecificHeatCapacity cp;
+  Types.SpecificHeatCapacity cp_approx;
+  Types.SpecificEnthalpy delta_h;
   Real dpdT;
 
   String s;

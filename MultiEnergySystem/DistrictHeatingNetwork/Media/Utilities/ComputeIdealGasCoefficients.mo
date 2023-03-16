@@ -1,31 +1,31 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.Utilities;
 partial model ComputeIdealGasCoefficients
-  import      Modelica.Units.SI;
+  extends DistrictHeatingNetwork.Icons.Generic.Utilities;
   import Poly = Modelica.Math.Polynomials;
   import Modelica.Utilities.Streams.*;
-  replaceable package Medium =
-      Modelica.Media.Interfaces.PartialMedium;
+  replaceable package Medium = Modelica.Media.Interfaces.PartialMedium;
 
-  parameter SI.Temperature T_min = 280;
-  parameter SI.Temperature T_max = 1500;
+  parameter Types.Temperature T_min = 280;
+  parameter Types.Temperature T_max = 1500;
+  parameter Types.Pressure p = 30e5 "Reference pressure";
   parameter Integer N = 50;
   parameter Integer ord_cp = 3;
-  constant SI.Time t0 = 1;
+  constant Types.Time t0 = 1;
 
-  SI.Temperature T;
-  SI.SpecificEnthalpy cp;
-  SI.SpecificEnthalpy cp_approx;
+  Types.Temperature T;
+  Types.SpecificHeatCapacity cp;
+  Types.SpecificHeatCapacity cp_approx;
 
   String s;
-  //protected
-  parameter SI.Temperature T_data[:] = linspace(T_min, T_max, N);
-  parameter SI.SpecificHeatCapacity cp_data[:]=
-      {Medium.specificHeatCapacityCp(Medium.setState_pTX(1e5, T_data[i])) for i in 1:N};
+ 
+  parameter Types.Temperature T_data[:] = linspace(T_min, T_max, N);
+  parameter Types.SpecificHeatCapacity cp_data[:]=
+      {Medium.specificHeatCapacityCp(Medium.setState_pTX(p, T_data[i])) for i in 1:N};
   parameter Real coeff_cp[:] = Poly.fitting(T_data,cp_data, ord_cp);
 
 equation
   T = T_min + (T_max - T_min)*time/t0;
-  cp = Medium.specificHeatCapacityCp(Medium.setState_pTX(1e5, T));
+  cp = Medium.specificHeatCapacityCp(Medium.setState_pTX(p, T));
   cp_approx = Poly.evaluate(coeff_cp,T);
 algorithm
   when (initial()) then

@@ -5,6 +5,7 @@ partial model PengRobinsonMixture
   import Modelica.Fluid.Utilities.regStep;
   replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
   parameter Boolean reducedX = false;
+  parameter Boolean computeEnthalpyCondensation = false;
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
   parameter Integer posCond = 1 "Position of H2O which condensates in the array";
   parameter Integer posOxygen = 1 "Position of O2 in the array";

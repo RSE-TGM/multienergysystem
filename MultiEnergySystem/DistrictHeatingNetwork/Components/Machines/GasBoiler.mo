@@ -3,7 +3,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Machines;
 model GasBoiler
 
 
-  replaceable package Medium = DistrictHeatingNetwork.Media.StandarWater constrainedby
+  replaceable package Medium = DistrictHeatingNetwork.Media.StandardWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
      choicesAllMatching = true);
   

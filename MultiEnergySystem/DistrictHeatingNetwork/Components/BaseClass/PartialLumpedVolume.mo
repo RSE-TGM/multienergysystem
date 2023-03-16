@@ -6,7 +6,7 @@ partial model PartialLumpedVolume
 
   //Fluid model
   replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby
+      MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model"
     annotation(choicesAllMatching = true);
 

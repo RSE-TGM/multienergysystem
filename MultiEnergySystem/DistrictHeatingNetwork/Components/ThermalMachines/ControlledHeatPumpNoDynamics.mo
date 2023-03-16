@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 
 model ControlledHeatPumpNoDynamics
   extends DistrictHeatingNetwork.Icons.ThermalMachines.HeatPump;
-  replaceable package Medium = MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  replaceable package Medium = MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
      choicesAllMatching = true);
   // Declaration of fluid models
   Medium.ThermodynamicState fluidInHot "Hot inlet fluid";

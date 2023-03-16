@@ -6,7 +6,7 @@ model round1DFV
   import Modelica.Fluid.Utilities.regSquare;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   replaceable package Medium =
-      DistrictHeatingNetwork.Media.StandarWater constrainedby
+      DistrictHeatingNetwork.Media.StandardWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =

@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.RealGases;
 
 model WaterLiquid
-  extends AllamCycle.Substances.BaseClasses.PartialSubstance(nX = 1, mu_start = 0, MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM);
+  extends BaseClasses.PartialSubstance(nX = 1, mu_start = 0, MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM);
   parameter Types.MassFraction X_start[1] = {1};
   Types.Density rho "Density";
   //Start parameters

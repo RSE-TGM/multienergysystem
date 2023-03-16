@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model SourceMassFlow
   extends DistrictHeatingNetwork.Icons.Water.SourceW;
   replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby
+      MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(choicesAllMatching = true);
   //Nominal Values
   parameter SI.Pressure p0=7e6 "Nominal pressure starting value";

@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model SinkMassFlow
   extends DistrictHeatingNetwork.Icons.Water.SourceW;
   replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandarWater constrainedby
+      MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(choicesAllMatching = true);
   //Nominal Values
   parameter SI.Pressure pin_start = 8e6 "Pressure start value of outgoing fluid";

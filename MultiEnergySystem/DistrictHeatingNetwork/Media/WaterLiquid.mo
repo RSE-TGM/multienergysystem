@@ -1,9 +1,10 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media;
 
 model WaterLiquid
-  extends BaseClasses.PartialSubstance(nX = 1, mu_start = 0, MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM);
-  parameter Types.MassFraction X_start[1] = {1};
-  Types.Density rho "Density";
+  extends BaseClasses.PartialSubstance(
+    mu_start = 0, 
+    MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM
+);
   //Start parameters
 initial equation
   assert(computeEntropy == false, "This model is not able to compute entropy");
@@ -19,15 +20,13 @@ equation
   dv_dp = 0 "Pressure derivative of specific volume at constant Temperature";
   du_dT = ((+0.00393447*3)*T + (-3.7185)*2)*T + 5350.25;
   dv_dT = -(((+1.48186e-005*3)*T + (-0.0177278)*2)*T + 6.36275)/rho^2;
-  dv_dX = {0.0001};
-  du_dX = {0.0001};
 //p_sat = ((((+0.000342217) * T + (-0.295484)) * T + 85.5469) * T + (-8298.06)) * T + (-104.079);
   if computeTransport == true then
     mu = 0.001;
-    k = 0.62;
+    kappa = 0.62;
   else
     mu = 0;
-    k = 0;
+    kappa = 0;
   end if;
   s = 0;
   annotation(

@@ -6,20 +6,16 @@ partial model PartialSubstance
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
   parameter Boolean compressibilityEffect = false "Used to enable compressibility effects";
   parameter Boolean computeEnthalpyCondensation = false "Used to enable water condensation enthalpy";
-  parameter Boolean fixedX = false;
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
-  parameter Integer nX = 0 "Number of elements in the mass fraction array";
-  parameter Types.MolarMass MM;
+  parameter Types.MolarMass MM "Molar mass of the fluid";
   
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
   connector InputTemperature = input Types.Temperature "Pseudo-input to check model balancedness";
-  connector InputMassFraction = input Types.MassFraction "The fluid properties are defined by a temperature value";
   InputPressure p(start = p_start) "Absolute pressure";
   InputTemperature T(start = T_start) "Temperature";
-  InputMassFraction X[nX] "Mass fraction vector";
   Types.MolarVolume v "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
@@ -27,8 +23,8 @@ partial model PartialSubstance
     HideResult = not ComputeEntropy);
   Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
-  Real dv_dX[nX](each unit = "m3/kg") "Mass fraction derivative of specific volumen, per each component";
-  Types.SpecificEnergy du_dX[nX] "Mass fraction derivative of Specific Internal Energy at constant pressure, per each component";
+  //Real dv_dX(each unit = "m3/kg") "Mass fraction derivative of specific volumen, per each component";
+  //Types.SpecificEnergy du_dX "Mass fraction derivative of Specific Internal Energy at constant pressure, per each component";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
   Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation(
     HideResult = not CompressibilityEffect);
@@ -37,8 +33,9 @@ partial model PartialSubstance
     HideResult = not CompressibilityEffect);
   Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation(
     HideResult = not ComputeTransport);
-  Types.ThermalConductivity k "Thermal Conductivity" annotation(
+  Types.ThermalConductivity kappa "Thermal Conductivity" annotation(
     HideResult = not ComputeTransport);
+  Types.Density rho "Density";
   annotation(
     Documentation(info = "<HTML>
         <p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature.

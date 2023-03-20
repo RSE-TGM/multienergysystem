@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Media.RealGases;
+within MultiEnergySystem.DistrictHeatingNetwork.Media;
 
 model WaterLiquid
   extends BaseClasses.PartialSubstance(nX = 1, mu_start = 0, MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM);

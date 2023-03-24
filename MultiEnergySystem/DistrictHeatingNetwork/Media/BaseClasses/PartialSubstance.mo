@@ -10,6 +10,8 @@ partial model PartialSubstance
   parameter Types.Temperature T_start "Start value of the fluid temperature";
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.MolarMass MM "Molar mass of the fluid";
+  parameter Real rho_coeff[4] "Coefficients to compute fluid density";
+  parameter Real cp_coeff[4] "Coefficients to compute specific heat capacity";
   
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
@@ -36,6 +38,57 @@ partial model PartialSubstance
   Types.ThermalConductivity kappa "Thermal Conductivity" annotation(
     HideResult = not ComputeTransport);
   Types.Density rho "Density";
+  
+protected
+  function cp_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificHeatCapacity cp;
+  algorithm
+    cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
+    annotation(
+      Inline = true);
+  end cp_T;
+
+  function rho_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.Density rho;
+  algorithm
+    rho := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
+    annotation(
+      Inline = true);
+  end rho_T;
+  
+  function drho_dT
+    input Types.Temperature T;
+    input Real a[4];
+    output Real drho_dT(unit = "kg/(m3.K)");
+  algorithm
+    drho_dT := a[3] + T*(2*a[2] + 3*T*a[1]);
+    annotation(
+      Inline = true);
+  end drho_dT;  
+
+  function u_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificEnergy u;
+  algorithm
+    u := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
+    annotation(
+      Inline = true);
+  end u_T;
+
+  function s_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificEntropy s;
+  algorithm
+    s := a[4]*log(T) + T*(a[3] + T*(a[2]/2 + T*a[1]/3));
+    annotation(
+      Inline = true);
+  end s_T;  
   annotation(
     Documentation(info = "<HTML>
         <p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature.

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.Utilities;
-partial model ComputeIdealGasCoefficients
+partial model ComputeIdealH2OCoefficients
   extends DistrictHeatingNetwork.Icons.Generic.Utilities;
   import Poly = Modelica.Math.Polynomials;
   import Modelica.Utilities.Streams.*;
@@ -49,4 +49,4 @@ algorithm
 
 annotation (
     Documentation(info = "<html><head></head><body>Based Partial Model to compute the coefficients of the cp curve of ideal gases. The most important considerations:<div>- Temperature range of the working fluid, defining T_min and T_max.</div><div>- Order of equation of the curve defining ord_cp.</div></body></html>"));
-end ComputeIdealGasCoefficients;
+end ComputeIdealH2OCoefficients;

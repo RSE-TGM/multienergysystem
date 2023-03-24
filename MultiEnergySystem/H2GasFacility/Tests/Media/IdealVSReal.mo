@@ -48,4 +48,6 @@ equation
   u_re = realGas.u;
   dh_re = realGas1.h - realGas2.h;
   
+annotation(
+    experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
 end IdealVSReal;

@@ -26,7 +26,7 @@ partial model PengRobinsonMixture
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
   parameter Types.SpecificEnthalpy Hf_track[nC] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData for tracking components";
   parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
-  parameter Integer ord_cp_cond = 3 "order of the polynomial ideal cp(T)";
+  parameter Integer ord_cp_cond = 3 "order of the polynomial ideal cp_cond(T)";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   parameter Real cp_coeff_track[nC, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass for tracking mass components";
   //parameter Real cp_cond_coeff[ord_cp_cond+1] "copied from the result of Utilities.ComputeAdditionalCpCoefficients, per unit mass";

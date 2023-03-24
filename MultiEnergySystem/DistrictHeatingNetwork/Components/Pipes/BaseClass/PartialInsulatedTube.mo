@@ -1,21 +1,21 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 partial model PartialInsulatedTube
-  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
-  parameter Modelica.Units.SI.Length L
+  parameter Types.Length L
     "Length of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Modelica.Units.SI.Length h = 0
+  parameter Types.Length h = 0
     "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Modelica.Units.SI.Length dWall = 0.003
+  parameter Types.Length t = 0.003
     "Thickness of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Modelica.Units.SI.Length dIns = 0.15
+  parameter Types.Length tIns = 0.15
     "Insulation thickness" annotation (
     Dialog(tab = "Data", group = "Insulation"));
-  parameter Modelica.Units.SI.ThermalConductivity lambdaIns = 0.04
+  parameter Types.ThermalConductivity lambdaIns = 0.04
     "Thermal conductivity of the insulant material" annotation (
     Dialog(tab = "Data", group = "Insulation"));
 
@@ -23,35 +23,35 @@ partial model PartialInsulatedTube
   parameter Boolean thermalInertia = true
     "if true then account for metal thermal inertia" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
-  parameter Modelica.Units.SI.SpecificHeatCapacity cpm = 445
-    "Metal specific heat capacity" annotation (
+  parameter Types.SpecificHeatCapacity cm = 445
+    "Metal wall specific heat capacity" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
-  parameter Modelica.Units.SI.Density rhom = 8000
+  parameter Types.Density rhom = 8000
     "Metal density [g/cm^3], for steel = 8" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
-  parameter Modelica.Units.SI.ThermalConductivity lambdaM = 45
+  parameter Types.ThermalConductivity lambdam = 45
     "Metal thermal conductivity; steel = 45" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
 
-  parameter Modelica.Units.SI.Temperature T_ext = 298.15
+  parameter Types.Temperature T_ext = 25+273.15
     "External temperature" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.MassFlowRate m_flow_start
+  parameter Types.MassFlowRate m_flow_start
     "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pin_start
+  parameter Types.Pressure pin_start
     "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pout_start
+  parameter Types.Pressure pout_start
     "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start
+  parameter Types.SpecificEnthalpy hin_start
     "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tin_start
+  parameter Types.Temperature Tin_start
     "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tout_start
+  parameter Types.Temperature Tout_start
     "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
 

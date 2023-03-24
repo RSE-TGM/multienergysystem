@@ -11,18 +11,16 @@ partial model PartialRoundTube
     "Round tube Transversal inner Area";
   final parameter Modelica.Units.SI.Length omega = Modelica.Constants.pi * Di
     "Round tube transversal perimeter";
-  final parameter Modelica.Units.SI.Area Am = ((Di / 2 + dWall) ^ 2 - (Di / 2) ^ 2) * Modelica.Constants.pi
+  final parameter Modelica.Units.SI.Area Am = ((Di / 2 + t) ^ 2 - (Di / 2) ^ 2) * Modelica.Constants.pi
     "Transveral area of the metal tube (cross-section)";
-  final parameter Real rhomcm(unit = "J/(m3.K)") = cpm * rhom
-    "Metal heat capacity per unit volume [J/m^3.K]; steel = 3.12e6";
-  final parameter Modelica.Units.SI.HeatCapacity Cm = L * Am * rhomcm
+  final parameter Real cvolm(unit = "J/(m3.K)") = cm * rhom
+    "Wall volumetric heat capacity [J/m^3.K]; steel = 3.12e6";
+  final parameter Modelica.Units.SI.HeatCapacity Cm = L * Am * cvolm
     "Total heat capacity of the metal";
-  final parameter Modelica.Units.SI.ThermalConductance U_wm = lambdaM * 2 * Modelica.Constants.pi/ log((Di / 2 + Di / 2 + dWall) / Di)
+  final parameter Modelica.Units.SI.ThermalConductance U_wm = lambdam * 2 * Modelica.Constants.pi/ log((Di / 2 + Di / 2 + t) / Di)
     "Thermal conductance water-metal per unit meter";
-  final parameter Modelica.Units.SI.ThermalConductance U_me = lambdaIns * 2 * Modelica.Constants.pi/ log((Di / 2 + dWall + dIns) / (Di/2) + dWall)
+  final parameter Modelica.Units.SI.ThermalConductance U_me = lambdaIns * 2 * Modelica.Constants.pi/ log((Di / 2 + t + tIns) / (Di/2) + t)
     "Thermal conductance metal-ambient per unit meter";
-  final parameter Modelica.Units.SI.SpecificHeatCapacity cPip = rhomcm/rhom
-    "Specific heat capacity of the material";
 
 
 

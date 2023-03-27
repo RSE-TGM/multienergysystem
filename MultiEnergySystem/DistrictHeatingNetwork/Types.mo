@@ -99,4 +99,11 @@ package Types
   type Frequency = Real (final quantity="Frequency", final unit="Hz");
   type AngularFrequency = Real (final quantity="AngularFrequency", final unit=
         "rad/s");
+  
+  type valveOpeningChar = enumeration(
+      Linear
+           "Linear opening characteristic",
+      Quadratic
+              "Quadratic opening characteristic")
+  "Enumeration to define the choice of valve flow coefficient";
 end Types;

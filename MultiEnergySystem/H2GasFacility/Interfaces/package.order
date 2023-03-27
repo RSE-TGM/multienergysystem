@@ -2,6 +2,7 @@ FluidPort
 FluidPortInlet
 FluidPortOutlet
 PartialTwoPort
+PartialHorizontalTwoPort
 PartialOnePort
 HeatPort
 MultiHeatPort

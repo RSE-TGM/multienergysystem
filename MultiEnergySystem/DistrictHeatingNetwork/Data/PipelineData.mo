@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Data;
 
 package PipelineData
   "Generic data depending on the system of the District Heating Network"
-    constant MultiEnergySystem.DistrictHeatingNetwork.Data.RoundPipeLine Pipe100(
+    constant MultiEnergySystem.DistrictHeatingNetwork.Data.RoundPipeLine S100(
     L = 5,
     Di = 51e-3,
     t = 1.5e-3,
@@ -17,7 +17,7 @@ package PipelineData
     Tin_start = 80 + 273.15,
     Tout_start = 78 + 273.15,
     rho_nom  = 995,
-    m_flow_start = 14*Pipe100.rho_nom,
+    m_flow_start = 14*S100.rho_nom,
     cf = 0,
     u_nom = 3,
     k = 0.0001,

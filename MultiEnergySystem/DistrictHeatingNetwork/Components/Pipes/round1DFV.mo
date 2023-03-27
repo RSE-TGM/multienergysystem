@@ -10,8 +10,7 @@ model round1DFV
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
-      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-                                                                                             constrainedby
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient                                                                                            constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
@@ -19,10 +18,12 @@ model round1DFV
 // Flow parameter
   parameter Boolean noInitialPressure = false
     "Remove initial equation for pressure, to be used in case of solver failure";
+  parameter Boolean computeLinearPressureDrop = true
+    "If true, then the pressure drop is linear, else the pressure drop is non-linear computed as a function of cp and u";
   parameter Integer n = 2
     "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Integer nPipes = 2
+  parameter Integer nPipes = 1
     "Number of parallel pipes" annotation (
     Dialog(tab = "Data", group = "Pipe"));
   parameter Modelica.Units.SI.PerUnit cf = 0.004
@@ -130,6 +131,12 @@ model round1DFV
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
 equation
+
+// Assertations
+  assert(n > 1, "The number of volumes must be at least 2");
+  assert(p < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
+  
+
 // Equations to set the fluid properties
   for i in 1:n + 1 loop
     fluid[i] = Medium.setState_pTX(ptilde, T[i]);
@@ -140,29 +147,38 @@ equation
   end for;
 
   fluid[1].h = inStream(inlet.h_out);
+
 // Relationships for state variables
   Ttilde = T[2:n + 1];
-  if hctype == Choices.Pipe.HCtypes.Downstream then
-    ptilde = pout;
-    pin - pout = k*inlet.m_flow "Momentum Balance (linear friction)";
-  elseif hctype == Choices.Pipe.HCtypes.Middle then
-    pin - ptilde = k/2*inlet.m_flow;
-    ptilde - pout = -k/2*outlet.m_flow;
-  end if;
 
 //   pin - pout = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
 //   ptilde = pout;
+    //inlet.p - outlet.p = rho * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
   for i in 1:n loop
      M[i] = Vi * fluid[i + 1].d;
 //w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
+
      m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
      rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;
 
   Mtot = sum(M) "Total mass";
   Qtot = sum(wall.Q_flow) "Total heat";
+
 // Momentum balance
-//inlet.p - outlet.p = rho0 * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+  if computeLinearPressureDrop then
+    if hctype == Choices.Pipe.HCtypes.Downstream then
+      ptilde = pout;
+      pin - pout = k*inlet.m_flow "Momentum Balance (linear friction)";
+    elseif hctype == Choices.Pipe.HCtypes.Middle then
+      pin - ptilde = k/2*inlet.m_flow;
+      ptilde - pout = -k/2*outlet.m_flow;
+    end if;
+  else
+    inlet.p - outlet.p = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+    ptilde = pout;
+  end if;
+
 // Boundary conditions
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n + 1];

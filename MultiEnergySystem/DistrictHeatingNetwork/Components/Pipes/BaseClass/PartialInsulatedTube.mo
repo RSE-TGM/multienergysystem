@@ -12,6 +12,9 @@ partial model PartialInsulatedTube
   parameter Types.Length t = 0.003
     "Thickness of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
+  parameter Types.Pressure pmax = 6e5
+    "Maximum pressure that the component can support" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Length tIns = 0.15
     "Insulation thickness" annotation (
     Dialog(tab = "Data", group = "Insulation"));
@@ -33,7 +36,7 @@ partial model PartialInsulatedTube
     "Metal thermal conductivity; steel = 45" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
 
-  parameter Types.Temperature T_ext = 25+273.15
+  parameter Types.Temperature T_ext = 25 + 273.15
     "External temperature" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.MassFlowRate m_flow_start
@@ -54,7 +57,6 @@ partial model PartialInsulatedTube
   parameter Types.Temperature Tout_start
     "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-
 equation
 
 

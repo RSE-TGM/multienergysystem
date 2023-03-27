@@ -16,7 +16,7 @@ record RoundPipeLine
   Types.Temperature Tout_start "Start outlet temperature";
   Types.MassFlowRate m_flow_start "Start mass flow";
   Types.Density rho_nom "Nominal density of the fluid";
-  Types.SI.PerUnit cf "Constant Fanning friction coefficient";
+  Types.PerUnit cf "Constant Fanning friction coefficient";
   Types.Velocity u_nom "Nominal fluid velocity";
   Real k(unit = "Pa/(kg/s)")  "Coefficient for the calculation of the pressure loss across the pipe";
   Types.SpecificHeatCapacity cm "Metal specific heat capacity";

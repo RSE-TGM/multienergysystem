@@ -78,7 +78,7 @@ model round1DFV
     "Mass flow rate in each volume across the pipe";
   Types.VolumeFlowRate q[n + 1]
     "Mass flow rate in each volume across the pipe";
-  Types.Velocity u[n + 1]
+  Types.Velocity u[n + 1](each start = u_nom)
     "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer)
     "State variable temperatures";
@@ -98,7 +98,7 @@ model round1DFV
     "Outlet pressure";
   Types.Pressure ptilde(stateSelect = StateSelect.prefer)
     "Pressure state the pipe";
-  Types.Pressure dp
+  Types.Pressure dp(start = dp_nom)
     "Delta pressure";
   Types.Mass M[n]
     "Mass of fluid in each finite volume";

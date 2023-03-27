@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model round1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
+  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   replaceable package Medium =
@@ -10,7 +9,8 @@ model round1DFV
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
-      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient                                                                                            constrainedby
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+                                                                                                                                                                                        constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
@@ -26,13 +26,13 @@ model round1DFV
   parameter Integer nPipes = 1
     "Number of parallel pipes" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Modelica.Units.SI.PerUnit cf = 0.004
+  parameter Types.PerUnit cf = 0.004
     "Constant Fanning friction coefficient" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Modelica.Units.SI.Velocity u_nom = 1
+  parameter Types.Velocity u_nom = 1
     "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Modelica.Units.SI.PerUnit kc
+  parameter Types.PerUnit kc
     "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle
@@ -43,68 +43,70 @@ model round1DFV
   parameter Real k(unit = "Pa/(kg/s)") = 500
     "Coefficient for the calculation of the pressure loss across the pipe" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Modelica.Units.SI.Density rho_nom = 997
+  parameter Types.Density rho_nom = 997
     "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  final parameter Modelica.Units.SI.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
+  final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
     "Temperature start value of the fluid" annotation (
     Dialog(group = "Initialisation"));
 
-  final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho_nom * omega * L / A * u_nom ^ 2
+  final parameter Types.Pressure dp_nom = cf / 2 * rho_nom * omega * L / A * u_nom ^ 2
     "Nominal pressure drop";
-  final parameter Modelica.Units.SI.MassFlowRate m_flow_nom = rho_nom * A * u_nom
+  final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom
     "Nominal mass flow rate";
-  final parameter Modelica.Units.SI.Area S = L * omega
+  final parameter Types.Area S = L * omega
     "Total surface of the walls of one pipe of the heat exchanger";
-  final parameter Modelica.Units.SI.Area Si = S / n
+  final parameter Types.Area Si = S / n
     "Surface of the wall of each finite volume (for one pipe)";
-  parameter Modelica.Units.SI.Area Stot = S * nPipes
+  parameter Types.Area Stot = S * nPipes
     "Total surface of the wall" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  final parameter Modelica.Units.SI.Area Atot = A * nPipes
+  final parameter Types.Area Atot = A * nPipes
     "Total internal area of all tubes";
-  final parameter Modelica.Units.SI.Volume V = A * L * nPipes
+  final parameter Types.Volume V = A * L * nPipes
     "Total volume of the fluid in the pipe";
-  final parameter Modelica.Units.SI.Volume Vi = V / n
+  final parameter Types.Volume Vi = V / n
     "Volume of one finite element";
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom = 1500
+  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500
     "nominal heat transfer coeffcient" annotation (
     Dialog(group = "Heat Transfer Model"));
 
   outer System system "system object for global defaults";
 
 // Variables
-  Modelica.Units.SI.MassFlowRate m_flow[n + 1]
+  Types.MassFlowRate m_flow[n + 1]
     "Mass flow rate in each volume across the pipe";
-  Modelica.Units.SI.VolumeFlowRate q[n + 1]
+  Types.VolumeFlowRate q[n + 1]
     "Mass flow rate in each volume across the pipe";
-  Modelica.Units.SI.Velocity u[n + 1]
+  Types.Velocity u[n + 1]
     "Velocity in each volume across the pipe";
-  Modelica.Units.SI.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer)
+  Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer)
     "State variable temperatures";
-  Modelica.Units.SI.Temperature Twall[n]
+  Types.Temperature Twall[n]
     "Pipe wall temperature";
-  Modelica.Units.SI.Power Qtot
+  Types.Power Qtot
     "Total heat";
-  //   Modelica.Units.SI.Power Q_int[n]
+  //   Types.Power Q_int[n]
   //     "Heat dissipation out of each volume into the wall";
-  Modelica.Units.SI.Temperature T[n + 1](start = T_start)
+  Types.Temperature T[n + 1](start = T_start)
     "Volume boundary temperatures";
-  //   Modelica.Units.SI.Power Q_ext[n]
+  //   Types.Power Q_ext[n]
   //     "Heat dissipation out of each wall cell to the ambient";
-  Modelica.Units.SI.Pressure pin
+  Types.Pressure pin
     "Inlet pressure";
-  Modelica.Units.SI.Pressure pout
+  Types.Pressure pout
     "Outlet pressure";
-  Modelica.Units.SI.Pressure ptilde(stateSelect = StateSelect.prefer)
+  Types.Pressure ptilde(stateSelect = StateSelect.prefer)
     "Pressure state the pipe";
-  Modelica.Units.SI.Mass M[n]
+  Types.Pressure dp
+    "Delta pressure";
+  Types.Mass M[n]
     "Mass of fluid in each finite volume";
-  Modelica.Units.SI.Mass Mtot
+  Types.Mass Mtot
     "Total Mass in the pipe";
-  Modelica.Units.SI.SpecificHeatCapacity cp[n+1]
+  Types.SpecificHeatCapacity cp[n+1]
     "Specific heat capacity at each fluid";
-  Modelica.Units.SI.Density rho[n+1]
+  Types.Density rho[n+1]
     "Density at each fluid";
 
   Medium.ThermodynamicState fluid[n + 1];
@@ -136,7 +138,7 @@ equation
   assert(n > 1, "The number of volumes must be at least 2");
   assert(pin < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
   assert(pout < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
-  
+
 
 // Equations to set the fluid properties
   for i in 1:n + 1 loop
@@ -179,6 +181,8 @@ equation
     inlet.p - outlet.p = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
     ptilde = pout;
   end if;
+
+  dp = pin-pout;
 
 // Boundary conditions
   inlet.m_flow = m_flow[1];

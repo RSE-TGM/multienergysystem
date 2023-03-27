@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 partial model PartialInsulatedTube
-  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort;
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   parameter Types.Length L

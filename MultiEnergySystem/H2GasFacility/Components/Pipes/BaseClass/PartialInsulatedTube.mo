@@ -6,7 +6,7 @@ partial model PartialInsulatedTube
   parameter Types.Length L
     "Length of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Length h = 0
+  parameter Types.Length H = 0
     "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
     Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Length t = 0.003

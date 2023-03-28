@@ -6,7 +6,7 @@ model Round1DFV
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   
   // Medium & Heat Transfer Model for the pipe
-  replaceable package Medium = CH4 constrainedby PartialMixture 
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture 
     "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel = ConstantHTC constrainedby BaseConvectiveHT
@@ -96,7 +96,15 @@ model Round1DFV
 //    "Total heat";
   Types.Temperature T[n + 1]
     "Volume boundary temperatures";
-  Types.SpecificEnthalpy h_out[n + 1]
+  Types.Temperature Tin
+    "Inlet temperature";
+  Types.Temperature Tout
+    "Outlet temperature";
+  Types.SpecificEnthalpy hin
+    "Inlet Specific enthalpy";
+  Types.SpecificEnthalpy hout
+    "Outlet Specific enthalpy";   
+  Types.SpecificEnthalpy h[n + 1]
     "Specific enthalpy at each fluid";
   Types.SpecificEnthalpy u[n + 1]
     "Specific energy at each fluid";
@@ -148,7 +156,7 @@ equation
   
 // Equations to assign values from fluids properties
   for i in 1:n + 1 loop
-    h_out[i] = fluid[i].h;
+    h[i] = fluid[i].h;
     rho[i] = fluid[i].rho;
     u[i] = fluid[i].u;
     dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
@@ -170,7 +178,12 @@ equation
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
      m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
-     m_flow[i] * h_out[i] - m_flow[i + 1] * h_out[i + 1] + wall.Q_flow[i] = M[i] * du_dt[i + 1] + (m_flow[i] - m_flow[i + 1]) * u[i + 1] "Energy Balance";
+     m_flow[i] * h[i] - m_flow[i + 1] * h[i + 1] + wall.Q_flow[i] = M[i] * du_dt[i + 1] + (m_flow[i] - m_flow[i + 1]) * u[i + 1] "Energy Balance";
+     if nX == 1 then
+      0 = (Xi[i, :] - Xi[i + 1, :]);
+     else
+      M[i]*der(fluid[i+1].Xi) = w[i]* (Xi[i, :] - Xi[i + 1, :]);
+     end if;
   end for;
 
 // Boundary variables
@@ -178,22 +191,17 @@ equation
   m_flow[n + 1] = -outlet.m_flow;
   pin = inlet.p;
   pout = outlet.p;
-  h_out[1] = inStream(inlet.h_out);
-  h_out[n+1] = outlet.h_out;
+  h[1] = inStream(inlet.h_out);
+  h[n+1] = outlet.h_out;
   Xi[1,:] = fluid[1].Xi;
-  
-//  outlet.Xi = Xi[n+1,:];
-//  inlet.h = hin_start;
-//  inlet.Xi = X_start[1:nXi];
+  Tin = fluid[1].T;
+  Tout = fluid[n+1].T;
+  hin = fluid[1].h;
+  hout = fluid[n+1].h;
+  inlet.h_out = hin_start "Dummy equation (not flow reversal)" ;
 //  wall.Q_flow = heatTransfer.Q_flow;
 //  wall.T = Tw;
-//  Tin = fluid[1].T;
-//  Tout = fluid[n+1].T;
-//  hin = fluid[1].h;
-//  hout = fluid[n+1].h;
 
-
-  //inStream(inlet.C) = outlet.C;
 
 initial equation
 

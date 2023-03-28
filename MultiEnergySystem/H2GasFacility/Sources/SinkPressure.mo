@@ -12,8 +12,6 @@ model SinkPressure "Pressure sink for water/steam flows"
   parameter HydraulicResistance R = 0 
     "Hydraulic resistance" annotation(
     Evaluate = true);
-  parameter Boolean use_T = false 
-    "Use the temperature if true, otherwise use specific enthalpy";
   parameter Types.Temperature T0 = 25 + 237.15 
     "Nominal temperature";
   parameter Types.MassFraction X0[fluid.nX] = fluid.X_start
@@ -27,7 +25,6 @@ model SinkPressure "Pressure sink for water/steam flows"
     Dialog(group = "External inputs"),
     choices(checkBox = true));
 
-
   Types.Pressure p
     "Actual pressure";
   Types.Temperature T
@@ -36,7 +33,6 @@ model SinkPressure "Pressure sink for water/steam flows"
     "Actual mass fraction";
   Types.MassFlowRate m_flow
     "Actual mass flow rate";
-    
     
   Medium fluid(T_start = T0, p_start = p0);
   

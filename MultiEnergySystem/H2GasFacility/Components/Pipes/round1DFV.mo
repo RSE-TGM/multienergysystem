@@ -3,7 +3,6 @@ model round1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
-  //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   replaceable package Medium =
       DistrictHeatingNetwork.Media.StandardWater constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
@@ -86,12 +85,8 @@ model round1DFV
     "Pipe wall temperature";
   Types.Power Qtot
     "Total heat";
-  //   Types.Power Q_int[n]
-  //     "Heat dissipation out of each volume into the wall";
   Types.Temperature T[n + 1](start = T_start)
     "Volume boundary temperatures";
-  //   Types.Power Q_ext[n]
-  //     "Heat dissipation out of each wall cell to the ambient";
   Types.Pressure pin
     "Inlet pressure";
   Types.Pressure pout
@@ -128,7 +123,6 @@ model round1DFV
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
-    //each cp = Medium.specificHeatCapacityCp(fluid[1].state),
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
@@ -138,7 +132,6 @@ equation
   assert(n > 1, "The number of volumes must be at least 2");
   assert(pin < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
   assert(pout < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
-
 
 // Equations to set the fluid properties
   for i in 1:n + 1 loop
@@ -154,13 +147,8 @@ equation
 // Relationships for state variables
   Ttilde = T[2:n + 1];
 
-//   pin - pout = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
-//   ptilde = pout;
-    //inlet.p - outlet.p = rho * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
   for i in 1:n loop
      M[i] = Vi * fluid[i + 1].d;
-//w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
-
      m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
      rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;

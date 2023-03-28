@@ -2,6 +2,10 @@ within MultiEnergySystem.H2GasFacility;
 
 package Components
   extends Modelica.Icons.Package;
+  import CH4 = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4;
+  import PartialMixture = MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  import ConstantHTC = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient;
+  import BaseConvectiveHT = DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
 
 
   annotation (

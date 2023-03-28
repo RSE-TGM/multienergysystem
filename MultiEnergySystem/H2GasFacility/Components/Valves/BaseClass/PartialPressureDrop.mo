@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Components.Valves.BaseClass;
 
-partial model PartialValve
-  extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Gas.Valve;
+partial model PartialPressureDrop
+  extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Gas.PressureDrop;
   extends H2GasFacility.Components.Valves.BaseClass.BasePressureDrop;
   import Modelica.Fluid.Utilities.regRoot;
   replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;  
@@ -14,15 +14,10 @@ partial model PartialValve
     "Minimum opening area, avoid no flow condition, default 3mm diameter";
   constant Types.PerUnit pr = 0.85 
     "Pressure recovery coefficient";
-  parameter Types.valveOpeningChar openingChar = Types.valveOpeningChar.Linear
-    "opening characteristic";
   final parameter Types.MassFlowRate m_flow_nom = Kv*dp_nom*dp_nom*1 
     "Peak mass flow rate at full opening";
   Types.Area A_v = 2.7778e-5*Kv 
     "Opening area of the valve";
-  Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0) 
-    "Valve Displacement" annotation(
-    Placement(visible = true, transformation(origin = {0, 90}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
 
   
   Types.MassFlowRate m_flow(start = m_flow_nom)
@@ -36,13 +31,8 @@ equation
 // Energy balance
   inStream(inlet.h_out) = outlet.h_out;
   inStream(outlet.h_out) = inlet.h_out;
-  if openingChar == Types.valveOpeningChar.Linear then
 // Momentum balance
-    m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
-  elseif openingChar == Types.valveOpeningChar.Quadratic then
-// Momentum balance
-    m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
-  end if;
+  m_flow = homotopy(A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), m_flow_nom/dp_nom*(inlet.p - outlet.p));
   
 // Definition of fluids
   fluidIn.p = inlet.p;
@@ -64,4 +54,4 @@ equation
   
   annotation(
     Icon);
-end PartialValve;
+end PartialPressureDrop;

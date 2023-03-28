@@ -1,0 +1,6 @@
+within MultiEnergySystem.H2GasFacility.Components.Valves;
+
+model PressureDropLinear
+equation
+
+end PressureDropLinear;

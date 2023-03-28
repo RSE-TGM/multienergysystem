@@ -110,6 +110,13 @@ package Icons "Icon package for DHN components"
       annotation(
         Icon(graphics = {Polygon(lineColor = {255, 255, 255}, fillColor = {0, 255, 0}, fillPattern = FillPattern.Solid, points = {{-100, 0}, {100, 0}, {100, 0}, {0, 0}, {-100, 0}, {-100, 0}}), Polygon(points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Line(visible = false, points = {{-20, 25}, {-20, 63}, {0, 41}, {20, 63}, {20, 25}}, thickness = 0.5), Line(points = {{0, 52}, {0, 0}}), Rectangle(fillPattern = FillPattern.Solid, extent = {{-20, 60}, {20, 52}}), Ellipse(visible = false, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 94}, {40, 14}}), Polygon(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.Solid, lineThickness = 0.75, points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Text(origin = {0, 14}, textColor = {182, 109, 49}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}));
     end Valve;
+    
+    partial model PressureDrop
+    equation
+    
+      annotation(
+        Icon(graphics = {Polygon(lineColor = {255, 255, 255}, fillColor = {0, 255, 0}, fillPattern = FillPattern.Solid, points = {{-100, 0}, {100, 0}, {100, 0}, {0, 0}, {-100, 0}, {-100, 0}}), Polygon(points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Line(visible = false, points = {{-20, 25}, {-20, 63}, {0, 41}, {20, 63}, {20, 25}}, thickness = 0.5), Line(points = {{0, 52}, {0, 0}}, thickness = 0.35), Rectangle(fillPattern = FillPattern.Solid, extent = {{-20, 60}, {20, 52}}), Polygon(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.Solid, lineThickness = 0.75, points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Text(origin = {0, 14}, textColor = {182, 109, 49}, extent = {{-100, -74}, {100, -114}}, textString = "%name"), Line(origin = {29.74, 49.81}, points = {{-29.7428, 10.186}, {-29.7428, 50.186}, {30.2572, 50.186}, {-29.7428, -49.814}}, thickness = 0.35)}));
+    end PressureDrop;
     extends Modelica.Icons.IconsPackage;
   end Gas;
 end Icons;

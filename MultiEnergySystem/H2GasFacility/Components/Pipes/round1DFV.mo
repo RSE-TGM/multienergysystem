@@ -180,9 +180,9 @@ equation
      m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
      m_flow[i] * h[i] - m_flow[i + 1] * h[i + 1] + wall.Q_flow[i] = M[i] * du_dt[i + 1] + (m_flow[i] - m_flow[i + 1]) * u[i + 1] "Energy Balance";
      if nX == 1 then
-      0 = (Xi[i, :] - Xi[i + 1, :]);
+      Xi[i, :] = Xi[i + 1, :];
      else
-      M[i]*der(fluid[i+1].Xi) = w[i]* (Xi[i, :] - Xi[i + 1, :]);
+      M[i]*der(fluid[i+1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
      end if;
   end for;
 

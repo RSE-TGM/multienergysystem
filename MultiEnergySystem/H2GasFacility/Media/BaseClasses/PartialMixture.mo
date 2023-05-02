@@ -4,9 +4,8 @@ partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
   parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = true "Used to decide if it is necessary to calculate the entropy of the fluid";
-  parameter Integer nX = 5 "Number of elements in the mass fraction array that influence fluid properties";
-  parameter Integer nXi "Number of independent elements in the mass fraction array that influence fluid properties";
-  parameter Integer nC "Number of mass fractions of components that are not used to compute the fluid properties";
+  parameter Integer nXi = 1 "Number of independent elements in the mass fraction array that influence fluid properties";
+  parameter Integer nX = nXi + 1 "Number of elements in the mass fraction array that influence fluid properties";
   parameter Types.MassFraction Xi_start[nXi] "Start value of the indepentend elements of fluid mass composition";
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
@@ -17,9 +16,8 @@ partial model PartialMixture "Interface for real mixture gas models"
   connector InputMassFraction = input Types.MassFraction "The fluid properties are defined by a temperature value";
   InputPressure p(start = p_start) "Absolute pressure";
   InputTemperature T(start = T_start) "Temperature";
-  InputMassFraction Xi[nXi](start = Xi_start) "Mass fraction vector";
+  InputMassFraction Xi[nXi](start = Xi_start) "Independent Mass fraction vector";
   Types.MassFraction X[nX](start = X_start) "Mass fraction vector";
-  Types.MassFraction C[nC] "Mass fraction vector for tracking components";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
   Types.SpecificEntropy s "Specific Entropy" annotation(

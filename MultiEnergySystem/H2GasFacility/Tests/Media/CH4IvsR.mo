@@ -1,12 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
 
-model IdealVSReal
+model CH4IvsR
   extends Modelica.Icons.Example;
   replaceable package MediumIdeal = H2GasFacility.Media.IdealGases.CH4 "Ideal CH4 fluid";
   replaceable model MediumReal = H2GasFacility.Media.RealGases.CH4 "Real CH4 fluid";
-  parameter Types.Temperature T_min = -20 + 273.15 "Minimum temperature of the temperature range";
-  parameter Types.Temperature T_max = 80 + 273.15 "Maximum temperature of the temperature range";
-  parameter Types.Pressure p = 0.3 "Pressure";
+  parameter Types.Temperature T_min = 50 + 273.15 "Minimum temperature of the temperature range";
+  parameter Types.Temperature T_max = 405 + 273.15 "Maximum temperature of the temperature range";
+  parameter Types.Pressure p = 5e3 "Pressure";
   parameter Types.MassFraction X[realGas.nX] = realGas.X_start "Mass Fraction of the real gas";
   constant Real T0(unit = "s") = 1 "Reference value for units";
   MediumIdeal.BaseProperties idealGas;
@@ -31,13 +31,10 @@ equation
   dh_id = MediumIdeal.specificEnthalpy(MediumIdeal.setState_pTX(p, T_min)) - MediumIdeal.specificEnthalpy(MediumIdeal.setState_pTX(p, T_max));
   realGas.T = T;
   realGas.p = p;
-  realGas.X = X;
   realGas1.T = T_min;
   realGas1.p = p;
-  realGas1.X = X;
   realGas2.T = T_max;
   realGas2.p = p;
-  realGas2.X = X;
   rho_re = realGas.rho;
   cp_re = realGas.cp;
   cp_re_check = der(h_re)/(T_max - T_min)*T0;
@@ -47,4 +44,4 @@ equation
   dh_re = realGas1.h - realGas2.h;
   annotation(
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
-end IdealVSReal;
+end CH4IvsR;

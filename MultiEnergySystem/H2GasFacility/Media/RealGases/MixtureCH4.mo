@@ -1,16 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
 
 model MixtureCH4 "Mixture real gas model for fuel using PR EoS"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PengRobinsonMixture(
-      reducedX = false,
-      computeEnthalpyCondensation = false,
-      computehidealComp = false,
-      nX = 9,
-      nC = 0,
+  extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
+      nXi = 8,
       MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {0.792399904,0.116815801,0.024472573,0.001612859,0.001612859,0.000200209,0.000200209,0.048848891,0.013836696},
       T_start = 100+273.15,
-      posCond = 1,
       posDom = 1,
       w =   {Modelica.Media.IdealGases.Common.FluidData.CH4.acentricFactor,
              Modelica.Media.IdealGases.Common.FluidData.C2H6.acentricFactor,
@@ -84,14 +79,6 @@ model MixtureCH4 "Mixture real gas model for fuel using PR EoS"
                   {7.7294141596151e-07,     -0.0037104132127322,     6.9504505844114,    -110.40954291906},
                   {2.2131327339673e-07,     -0.00092151007501243,    1.4416059822539,     493.52730053016},
                   {-1.7194266972964e-07,     0.00044985407669627,   -0.16123790188216,    1048.8091727539}},
-      Hf_track = zeros(nC),
-      cp_coeff_track = zeros(nC,ord_cp_ideal+1),
       mu_start = 0);
-      //cp_cond_coeff = {0.0012473406994848, -1.0758153361635, 312.45929094554, -30526.814345532},
-equation
-  cp_cond_coeff[1] = 0.0053829910 + (p/1e5)*(-0.0002456170 + 0.0000035939*(p/1e5));
-  cp_cond_coeff[2] = -4.6150453224 + (p/1e5)*(0.2105769035 - 0.0030812248*(p/1e5));
-  cp_cond_coeff[3] = 1331.1529357756 + (p/1e5)*(-60.7383121266 + 0.8887413046*(p/1e5));
-  cp_cond_coeff[4] = -129029.8397929920 + (p/1e5)*(5887.4186972587 - 86.1464863001*(p/1e5));
 
 end MixtureCH4;

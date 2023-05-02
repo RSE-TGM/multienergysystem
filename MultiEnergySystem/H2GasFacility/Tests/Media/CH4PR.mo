@@ -31,10 +31,13 @@ equation
   dh_id = MediumIdeal.specificEnthalpy(MediumIdeal.setState_pTX(p, T_min)) - MediumIdeal.specificEnthalpy(MediumIdeal.setState_pTX(p, T_max));
   realGas.T = T;
   realGas.p = p;
+  realGas.Xi = X[1:realGas.nXi];
   realGas1.T = T_min;
   realGas1.p = p;
+  realGas1.Xi = X[1:realGas1.nXi];
   realGas2.T = T_max;
   realGas2.p = p;
+  realGas2.Xi = X[1:realGas2.nXi];
   rho_re = realGas.rho;
   cp_re = realGas.cp;
   cp_re_check = der(h_re)/(T_max - T_min)*T0;

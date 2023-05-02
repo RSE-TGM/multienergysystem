@@ -10,7 +10,7 @@ partial model PengRobinsonMixture
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
-  parameter Types.PerUnit Z_c[nX] "Critical compressibility factor";
+  parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_start/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
   parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   parameter Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";

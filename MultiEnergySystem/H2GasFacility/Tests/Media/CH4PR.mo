@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
 
-model CH4IvsR
+model CH4PR
   extends Modelica.Icons.Example;
   replaceable package MediumIdeal = H2GasFacility.Media.IdealGases.CH4 "Ideal CH4 fluid";
   replaceable model MediumReal = H2GasFacility.Media.RealGases.CH4 "Real CH4 fluid";
@@ -44,4 +44,4 @@ equation
   dh_re = realGas1.h - realGas2.h;
   annotation(
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
-end CH4IvsR;
+end CH4PR;

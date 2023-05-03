@@ -8,8 +8,15 @@ model NaturalGasPR
     T_min = 0 + 273.15,
     T_max = 500 + 273.15,
     p = 5e5,
-    X = {0.97201, 0.01862, 0.00393, 0.00543, 0.00001}
+    //X = {0.97201, 0.01862, 0.00393, 0.00001, 0.00543}
+    X = X_start
   );
+  
+  parameter Types.MoleFraction Y[:] = {0.97201, 0.01862, 0.00393, 0.00001, 0.00543};
+  parameter Types.Mass M[:] = Y.*realGas.MM;
+  parameter Types.Mass Mt = sum(M);
+  parameter Types.MassFraction X_start[:] = M/Mt;
+  
 equation
 
 end NaturalGasPR;

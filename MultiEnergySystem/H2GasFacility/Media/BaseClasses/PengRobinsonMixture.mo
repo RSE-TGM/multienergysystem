@@ -10,15 +10,18 @@ partial model PengRobinsonMixture
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
-  parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_start/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
+  final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
   parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   parameter Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
   parameter Types.Pressure p_c[nX] "Critical pressure of each component";
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
+  parameter Types.MolarVolume v_c[nX] "Critical molar volume of each component";
   parameter Types.AttractionForce ac[nX] = {0.45724*R^2*T_c[i]^2/(p_c[i] + eps) for i in 1:nX} "attraction parameter at critical point";
   parameter Types.MolarVolume b[nX] = {0.07780*R*T_c[i]/(p_c[i] + eps) for i in 1:nX} "molar covolume parameter";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
+  parameter Types.SpecificEnergy HHV[nX]  "Higher Heating Value of each component";
+  parameter Types.SpecificEnergy LHV[nX]  "Lower Heating Value of each component";
   parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
@@ -31,7 +34,6 @@ partial model PengRobinsonMixture
   parameter Types.Density rho_start = MM[posDom]/v_start;
   parameter Types.MolarMass MM_mix_start = MM*Y_start;
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
-  //parameter Types.SpecificEnthalpy h_start "Start value of the specific enthalpy";
   parameter Types.Temperature Tsat_min = 273.15 + 20;
   parameter Types.Temperature Tsat_max = 273.15 + 150;
   final parameter Types.PerUnit alpha_start[nX] = {(1 + m[i]*(1 - sqrt(T_start/T_c[i])))^2 for i in 1:nX};
@@ -130,17 +132,6 @@ protected
       Inline = true);
   end h_T;
 
-  function h_res_comp_T
-    input Types.Temperature T;
-    //input Real a[4];
-    output Types.SpecificEnthalpy h;
-  algorithm
-    h := 29632796590.9264*(T)^(-2.35262288);
-//h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    annotation(
-      Inline = true);
-  end h_res_comp_T;
-
   function s_T
     input Types.Temperature T;
     input Real a[4];
@@ -206,7 +197,6 @@ equation
   dbmix_dY = b "Manually derivated from bmix";
   p = R*T/(v - bmix) - amix/(v*(v + bmix) + bmix*(v - bmix)) "Peng-Robinson EoS in molar units, from(1)-Equation 4";
   Z = p*v/(R*T);
-  //R_mix =  Modelica.Constants.R/MM_mix;
   rho = MM_mix/v;
   for i in 1:nX loop
     h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";

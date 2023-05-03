@@ -7,7 +7,7 @@ partial model ComputeIdealGasCoefficients
 
   parameter Types.Temperature T_min = 280;
   parameter Types.Temperature T_max = 1500;
-  parameter Types.Pressure p = 30e5 "Reference pressure";
+  parameter Types.Pressure p = 1e5 "Reference pressure";
   parameter Integer N = 50;
   parameter Integer ord_cp = 3;
   constant Types.Time t0 = 1;

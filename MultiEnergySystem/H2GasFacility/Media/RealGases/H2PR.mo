@@ -12,6 +12,7 @@ model H2PR
       p_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalPressure},
       T_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
       delta = {{ 0}},
+      HHV = {12.75e6},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf},
       cp_coeff = {{-1.942367532068e-05,0.026331526513384,-8.2083625257152,2846.2158110588}},
       mu_start = 0  

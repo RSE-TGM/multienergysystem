@@ -11,7 +11,6 @@ model CH4
       MM =  {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM},
       p_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalPressure},
       T_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalTemperature},
-      Z_c = {0.277},
       delta = {{ 0}},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf},
       cp_coeff = {{-1.942367532068e-05,0.026331526513384,-8.2083625257152,2846.2158110588}},

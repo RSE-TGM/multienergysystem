@@ -20,13 +20,13 @@ partial model PengRobinsonMixture
   parameter Types.AttractionForce ac[nX] = {0.45724*R^2*T_c[i]^2/(p_c[i] + eps) for i in 1:nX} "attraction parameter at critical point";
   parameter Types.MolarVolume b[nX] = {0.07780*R*T_c[i]/(p_c[i] + eps) for i in 1:nX} "molar covolume parameter";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
-  parameter Types.SpecificEnergy HHV[nX]  "Higher Heating Value of each component";
+  parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component";
   parameter Types.SpecificEnergy LHV[nX]  "Lower Heating Value of each component";
   parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
   parameter Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
-  parameter Types.Temperature T0 = 298.15 "Reference temperature";
+  parameter Types.Temperature T0 = 293.15 "Reference temperature";
   parameter Types.Pressure p0 = 1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
@@ -51,6 +51,7 @@ partial model PengRobinsonMixture
   final parameter Types.DerAttractionForcebyTemperature damix_dT_start = 0.5*sum(Y_start[i]*Y_start[j]*a_star_start[i, j]*(da_dT_start[i]/a_start[i] + da_dT_start[j]/a_start[j]) for i in 1:nX, j in 1:nX);
   final parameter Types.DerPressureByTemperature dp_dT_start = R/(v_start - b*Y_start) - damix_dT_start/(v_start*(v_start + b*Y_start) + b*Y_start*(v_start - b*Y_start)) "Temperature derivative of Pressure at constant specific volume";
   final parameter Types.AttractionForce damix_dY_start[nX] = 2*{sum(Y_start[j]*a_star_start[i, j] for j in 1:nX) for i in 1:nX};
+  constant Types.Density rhoair = 1.205;
   //Variables
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_res "Residual or Departure Specific Enthalpy of the fluid";
@@ -81,9 +82,12 @@ partial model PengRobinsonMixture
   Types.MolarEnthalpy h_res_m(nominal = 5e2) "Residual or departure Molar Enthalpy of the fluid";
   Types.MolarEnthalpy dh_res_m_dY[nX](each nominal = 5e2) "Mole fraction of Molar Residual Enthalpy at constant pressure, per each component";
   Types.AttractionForce a[nX](start = a_start) "Attraction parameter of each component";
+  Types.AttractionForce a0[nX](start = a_start) "Attraction parameter of each component";
   Types.AttractionForce a_star[nX, nX](start = a_star_start) "Left-hand side terms of eq. (22)";
+  Types.AttractionForce a_star0[nX, nX](start = a_star_start) "Left-hand side terms of eq. (22)";
   Types.AttractionForce damix_dY[nX](start = damix_dY_start) "Mole fraction derivative of the fluid's attraction parameter per each component";
   Types.AttractionForce amix(start = amix_start) "Attraction parameter for the fluid";
+  Types.AttractionForce amix0(start = amix_start) "Attraction parameter for the fluid";
   Types.DerAttractionForcebyTemperature da_dT[nX](start = da_dT_start) "Temperature derivative of attraction parameter per each component";
   Types.DerAttractionForcebyTemperature damix_dT(start = damix_dT_start) "Temperature Derivative of the fluid attraction parameter";
   Types.DerAttractionForcebyTemperature ddamix_dTdY[nX] "Second Temperature and Mole fraction derivative of the fluid's attraction parameter, per each component";
@@ -91,7 +95,9 @@ partial model PengRobinsonMixture
   Types.DerPressureByTemperature dp_dT(start = dp_dT_start) "Temperature derivative of Pressure at constant specific volume";
   Types.DerPressurebySpecificVolume dp_dv(start = dp_dv_start) "Specific volumen derivative of Pressure at constant temperature";
   Types.PerUnit Tr[nX](start = T_start./T_c) "Reduced temperatures of each component";
+  Types.PerUnit Tr0[nX](start = T0./T_c) "Reduced temperatures of each component";
   Types.PerUnit alpha[nX](start = alpha_start) "dimensionless function";
+  Types.PerUnit alpha0[nX](start = alpha_start) "dimensionless function";
   Types.PerUnit dY_dX[nX, nX](start = dY_dX_start) "Mole fraction derivative of mass fraction per each component";
   Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
   Real dv_mol_dT(unit = "m3/(mol.K)") "Temperature derivative of molar volume at constant pressure";
@@ -109,6 +115,11 @@ partial model PengRobinsonMixture
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z "Compressibility factor of the mixture";
+  Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
+  Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
+  Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
+  Types.PerUnit SG "Specific gravity of the fluid mixture";
+  Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
 
   //Functions to compute cp, h and s using the coefficients obtained through Utilities.ComputegGasCoefficients
 protected
@@ -175,20 +186,25 @@ equation
   MM_mix = MM*Y "molar mass of the fluid";
 //Tr = homotopy(T./T_c, T_start./T_c);
   Tr = T./T_c;
+  Tr0 = T0./T_c;
   for i in 1:nX loop
 //Tr[i] = T/T_c[i];
     dTr_dT[i] = 1/T_c[i];
     alpha[i] = (1 + m[i]*(1 - sqrt(Tr[i])))^2 "from(1)-Equation 17";
+    alpha0[i] = (1 + m[i]*(1 - sqrt(Tr0[i])))^2 "from(1)-Equation 17";
     dalpha_dT[i] = 2*(1 + m[i]*(1 - sqrt(Tr[i])))*m[i]*(-dTr_dT[i]/(2*sqrt(Tr[i]))) "from(2)-Equation S2.131";
     ddalpha_ddT[i] = 0.5*m[i]*(m[i] + 1)*((Tr[i])^(-3/2))*(dTr_dT[i])^2 "from(2)-Equation S2.132";
     a[i] = ac[i]*alpha[i] "from(1)-Equation 12";
+    a0[i] = ac[i]*alpha0[i] "from(1)-Equation 12";
     da_dT[i] = ac[i]*dalpha_dT[i] "first derivative of a w.r.t. T";
     dda_ddT[i] = ac[i]*ddalpha_ddT[i] "second derivative of a w.r.t T";
     for j in 1:nX loop
       a_star[i, j] = (1 - delta[i, j])*sqrt(a[i])*sqrt(a[j]) "from(1)-Equation 22";
+      a_star0[i, j] = (1 - delta[i, j])*sqrt(a0[i])*sqrt(a0[j]) "from(1)-Equation 22";
     end for;
   end for;
   amix = sum(Y[i]*Y[j]*a_star[i, j] for i in 1:nX, j in 1:nX) "Attraction parameter of the mixture in molar units, from(1)-Equation 20";
+  amix0 = sum(Y[i]*Y[j]*a_star0[i, j] for i in 1:nX, j in 1:nX) "Attraction parameter of the mixture in molar units, from(1)-Equation 20";
   damix_dT = 0.5*sum(Y[i]*Y[j]*a_star[i, j]*(da_dT[i]/a[i] + da_dT[j]/a[j]) for i in 1:nX, j in 1:nX) "Manually derivated from amix";
   ddamix_ddT = 0.5*sum(Y[i]*Y[j]*a_star[i, j]*((-0.5*da_dT[i]^2/(a[i]^2)) + (-0.5*da_dT[j]^2/(a[j]^2)) + (da_dT[i]*da_dT[j]/(a[i]*a[j])) + (dda_ddT[i]/a[i]) + (dda_ddT[j]/a[j])) for i in 1:nX, j in 1:nX) "Manually derivated from amix";
   damix_dY = 2*{sum(Y[j]*a_star[i, j] for j in 1:nX) for i in 1:nX} "Manually derivated from amix";
@@ -261,6 +277,13 @@ equation
     s_res = 0;
   end if;
   s - s_id = s_res;
+  
+  HHV_mix = HHV*Y; 
+  p0 = R*T0/(v0 - bmix) - amix0/(v0*(v0 + bmix) + bmix*(v0 - bmix));
+  rho0 = MM_mix/v0;
+  SG = rho0/rhoair;
+  WI = HHV_mix/sqrt(SG);
+  
   annotation(
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));
 end PengRobinsonMixture;

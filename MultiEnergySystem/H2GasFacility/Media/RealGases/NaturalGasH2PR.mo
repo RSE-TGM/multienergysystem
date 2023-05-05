@@ -49,7 +49,7 @@ model NaturalGasH2PR "Mixture real gas model for fuel using PR EoS"
             Modelica.Media.IdealGases.Common.SingleGasesData.CO2.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.N2.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.H2.Hf},
-      HHV = {55.50e6, 51.90e6, 50.35e6, 0, 0, 141.80e6},
+      HHV = {37.669e6, 66.433e6, 95.830e6, 0, 0, 12.75e6},
       LHV = {50e6, 47.62e6, 46.35e6, 0, 0, 119.96e6},
       cp_coeff = {{-5.6776551798464e-07,     0.0004856226884952,     3.5809130457096,     1087.3242540246},
                   {3.9336581603911e-07,     -0.0025939417819359,     6.1606820767477,     115.30876220525},

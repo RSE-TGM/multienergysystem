@@ -4,7 +4,7 @@ model NaturalGasPR "Natural Gas using PR EoS"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 4,
       MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
-      X_start = {0.97201, 0.01862, 0.0393, 0.00001, 0.00543},
+      X_start = {0.97201, 0.01862, 0.0393, 0.00000, 0.00543},
       T_start = 100+273.15,
       posDom = 1,
       w =   {Modelica.Media.IdealGases.Common.FluidData.CH4.acentricFactor,

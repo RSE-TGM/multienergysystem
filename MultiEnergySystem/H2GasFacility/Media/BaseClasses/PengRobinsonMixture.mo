@@ -5,7 +5,7 @@ partial model PengRobinsonMixture
   import Modelica.Fluid.Utilities.regStep;
   replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
-  final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM);
+  final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
   parameter Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
@@ -20,14 +20,14 @@ partial model PengRobinsonMixture
   parameter Types.AttractionForce ac[nX] = {0.45724*R^2*T_c[i]^2/(p_c[i] + eps) for i in 1:nX} "attraction parameter at critical point";
   parameter Types.MolarVolume b[nX] = {0.07780*R*T_c[i]/(p_c[i] + eps) for i in 1:nX} "molar covolume parameter";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
-  parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component";
-  parameter Types.SpecificEnergy LHV[nX]  "Lower Heating Value of each component";
+  parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component in J/m3 units";
+  parameter Types.SpecificEnergy LHV[nX] "Lower Heating Value of each component";
   parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
   parameter Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
-  parameter Types.Temperature T0 = 293.15 "Reference temperature";
-  parameter Types.Pressure p0 = 1e5 "Reference pressure";
+  parameter Types.Temperature T0 = 288.15 "Reference temperature";
+  parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
   parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start*1.3*(1.5*T_red_start) "provided that this fluid composition is mostly the dominant component";
@@ -51,7 +51,7 @@ partial model PengRobinsonMixture
   final parameter Types.DerAttractionForcebyTemperature damix_dT_start = 0.5*sum(Y_start[i]*Y_start[j]*a_star_start[i, j]*(da_dT_start[i]/a_start[i] + da_dT_start[j]/a_start[j]) for i in 1:nX, j in 1:nX);
   final parameter Types.DerPressureByTemperature dp_dT_start = R/(v_start - b*Y_start) - damix_dT_start/(v_start*(v_start + b*Y_start) + b*Y_start*(v_start - b*Y_start)) "Temperature derivative of Pressure at constant specific volume";
   final parameter Types.AttractionForce damix_dY_start[nX] = 2*{sum(Y_start[j]*a_star_start[i, j] for j in 1:nX) for i in 1:nX};
-  constant Types.Density rhoair = 1.205;
+  constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
   //Variables
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_res "Residual or Departure Specific Enthalpy of the fluid";

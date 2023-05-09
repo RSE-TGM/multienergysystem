@@ -4,7 +4,7 @@ partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
   parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = true "Used to decide if it is necessary to calculate the entropy of the fluid";
-  parameter Integer nXi = 1 "Number of independent elements in the mass fraction array that influence fluid properties";
+  parameter Integer nXi = 0 "Number of independent elements in the mass fraction array that influence fluid properties";
   parameter Integer nX = nXi + 1 "Number of elements in the mass fraction array that influence fluid properties";
   parameter Types.MassFraction Xi_start[nXi] "Start value of the indepentend elements of fluid mass composition";
   parameter Types.Pressure p_start "Start value of the fluid pressure";

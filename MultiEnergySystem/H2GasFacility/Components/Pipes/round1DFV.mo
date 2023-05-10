@@ -9,8 +9,10 @@ model Round1DFV
   replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture 
     "Medium model" annotation (
      choicesAllMatching = true);
-  replaceable model HeatTransferModel = ConstantHTC constrainedby BaseConvectiveHT
-    "Heat transfer model" annotation (
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient constrainedby
+    DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
+      "Heat transfer model for " annotation (
      choicesAllMatching = true);
 
   // Main Parameters
@@ -90,8 +92,8 @@ model Round1DFV
 //    "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer)
     "State variable temperatures";
-//  Types.Temperature Twall[n]
-//    "Pipe wall temperature";
+  Types.Temperature Twall[n]
+    "Pipe wall temperature";
 //  Types.Power Qtot
 //    "Total heat";
   Types.Temperature T[n + 1]
@@ -138,6 +140,23 @@ model Round1DFV
     each X_start = X_start,
     each p_start = pout_start);
 
+  HeatTransferModel heatTransfer(
+    gamma_nom = gamma_nom,
+    n = n,
+    nPipes = nPipes,
+    Lc = Di,
+    S = Stot,
+    A = Atot,
+    Twall = Twall,
+    Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
+    m_flow = m_flow[2:end],
+    p = pout,
+    cp = Medium.specificHeatCapacityCp(fluid[2:end]),
+    mu = Medium.dynamicViscosity(fluid[2:end]),
+    k = Medium.thermalConductivity(fluid[2:end]),
+    each m_flow_nom = m_flow_start,
+    p_nom = pout_start,
+    kc = kc);
 
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
@@ -149,7 +168,7 @@ equation
 
 // Equations to set the fluid properties
   for i in 1:n + 1 loop
-    fluid[i].T = T[i];
+    fluid[i].T = T[i] "Temperature of each fluid is equal to its equivalent value in the vector variable T";
     fluid[i].Xi = Xi[i, :];
     fluid[i].p = ptilde;
   end for;
@@ -199,8 +218,8 @@ equation
   hin = fluid[1].h;
   hout = fluid[n+1].h;
   inlet.h_out = hin_start "Dummy equation (not flow reversal)" ;
-//  wall.Q_flow = heatTransfer.Q_flow;
-//  wall.T = Tw;
+  //wall.Q_flow = heatTransfer.Q_flow;
+  //wall.T = Tw;
 
 
 initial equation

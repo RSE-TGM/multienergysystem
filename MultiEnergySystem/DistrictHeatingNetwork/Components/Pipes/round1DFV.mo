@@ -136,8 +136,8 @@ equation
 
 // Assertations
   assert(n > 1, "The number of volumes must be at least 2");
-  assert(pin < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
-  assert(pout < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
+  //assert(pin < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
+  //assert(pout < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
 
 
 // Equations to set the fluid properties

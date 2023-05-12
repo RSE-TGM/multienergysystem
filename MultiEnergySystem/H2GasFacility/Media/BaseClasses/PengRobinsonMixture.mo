@@ -26,7 +26,7 @@ partial model PengRobinsonMixture
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
   parameter Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
-  parameter Types.Temperature T0 = 288.15 "Reference temperature";
+  parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
@@ -106,7 +106,6 @@ partial model PengRobinsonMixture
   Real dda_ddT[nX](each unit = "J.m3/(mol2.K2)") "Second Temperature derivative of attraction parameter per each component";
   Real ddamix_ddT(unit = "J.m3/(mol2.K2)") "Second Temperature Derivative of the fluid attraction parameter";
   Real dp_dv_mol(unit = "Pa.mol/m3") "Molar volumen derivative of pressure at constant temperature";
-  //Real dv_dX[nX](each unit="m3/kg") "Mass fraction derivative of specific volumen, per each component";
   Real dv_dY[nX](each unit = "m3/kg") "Mole fraction derivative of specific volumen, per each component";
   Real dv_mol_dY[nX](each unit = "m3/mol") "Mole fraction derivative of molar volumen, per each component";
   Real dT_dX[nX](each unit = "K") "Mass fraction derivative of Temperature at constant pressure, per each component";
@@ -181,14 +180,11 @@ equation
   assert(sum(X) > 0, "error1");
   assert(sum(MM) > 0, "error2");
 
-//assert((p < 70e5 or p > 75e5) or (T < 28 + 273.15 or T > 32 + 273.15), "Working CO2 close to the critical point", AssertionLevel.warning);
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
   MM_mix = MM*Y "molar mass of the fluid";
-//Tr = homotopy(T./T_c, T_start./T_c);
   Tr = T./T_c;
   Tr0 = T0./T_c;
   for i in 1:nX loop
-//Tr[i] = T/T_c[i];
     dTr_dT[i] = 1/T_c[i];
     alpha[i] = (1 + m[i]*(1 - sqrt(Tr[i])))^2 "from(1)-Equation 17";
     alpha0[i] = (1 + m[i]*(1 - sqrt(Tr0[i])))^2 "from(1)-Equation 17";
@@ -223,7 +219,6 @@ equation
 //Specific Enthalpy
   h_id = X*h_star "Ideal Specific Enthalpy of the fluid in unit mass";
 //h_id_m = Y.*h_star.*MM "Ideal Specific Enthalpy of the fluid in molar mass";
-//h_res_comp = 0;
   h_res_m = p*v - R*T + ((T*damix_dT - amix)/(2*sqrt(2)*bmix))*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)));
   h_res = h_res_m/MM_mix "Residual Specific Enthalpy of the fluid in unit mass, from(2)-Equation S2.122";
   h - h_id = h_res;
@@ -233,7 +228,8 @@ equation
   cp_res = (-R + T*ddamix_ddT*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix))/MM_mix - T*(dp_dT^2)/dp_dv "Residual Specific Heat Capacity of the fluid in unit mass, from(2)-Equation S2.125";
   cp = cp_id + cp_res;
   cp = cv - (T*(dp_dT^2)/dp_dv) "in unit mass, from(2)-Equation S2.126";
-//Thermodynamic variables
+
+  //Thermodynamic variables
   h = u + (p*v)/MM_mix "in unit mass";
   dp_dT = R/(v - bmix) - damix_dT/(v*(v + bmix) + bmix*(v - bmix)) "from(2)-Equation S2.127";
   dp_dY = (R*T/(v - bmix)^2 + 2*(v - bmix)*amix/(v*(v + bmix) + bmix*(v - bmix))^2)*dbmix_dY - (1/(v*(v + bmix) + bmix*(v - bmix)))*damix_dY;
@@ -260,7 +256,6 @@ equation
   dh_res_m_dY = p*dv_mol_dY + (log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))*((sqrt(2)/4)*(T*ddamix_dTdY/bmix - damix_dY/bmix - (dbmix_dY*(T*damix_dT - amix)/(bmix^2)))) + (((T*damix_dT - amix)/(2*sqrt(2)*bmix))*((v + (1 - sqrt(2))*bmix)/(v + (1 + sqrt(2))*bmix))*(2*sqrt(2)*(v*dbmix_dY - bmix*dv_mol_dY)/(v + (1 - sqrt(2))*bmix)^2))) "in mole units";
   dh_res_dX = (1/MM_mix)*dh_res_m_dY*dY_dX - (1/(MM_mix^2))*h_res_m*MM*dY_dX "in mass units";
   dh_res_dY = (1/MM_mix)*dh_res_m_dY - (1/(MM_mix^2))*h_res_m*MM "in mass units";
-  
   dh_dX = dh_res_dX + dh_id_dX "in mass units";
   dh_dY = dh_res_dY + dh_id_dY "in mass units";
   du_dY = dh_dY - p*((1/MM_mix)*dv_mol_dY - (v*MM/(MM_mix^2)));
@@ -268,7 +263,8 @@ equation
 //du_dX = dh_dX - p*((1/MM_mix)*dv_mol_dY*dY_dX-(v*MM*dY_dX/(MM_mix^2))) "in mass units";
   mu = 0 "computation not included in the model";
   k = 0 "computation not included in the model";
-//Entropy
+  
+  //Entropy
   if computeEntropy then
     s_id = X*s_star + (R*sum(Y[i]*log(Y[i] + eps) for i in 1:nX))/MM_mix "from(3)-Equation 8.6";
     s_res = (R*log(abs(p*(v - bmix)/(R*T))) + (damix_dT*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix)))/MM_mix "from(4)-Equation 6.4-30";

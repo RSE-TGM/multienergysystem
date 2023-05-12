@@ -17,13 +17,13 @@ partial model PapayMixture
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
   parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component in J/m3 units";
   parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
-  parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
+  parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass,";
   parameter Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the dominant component of the gas";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the dominant component of the gas";
-  parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start*1.3*(1.5*T_red_start) "provided that this fluid composition is mostly the dominant component";
+  parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start "provided that this fluid composition is mostly the dominant component";
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   
   // Final Parameters 
@@ -38,6 +38,8 @@ partial model PapayMixture
   final parameter Types.MolarMass MM_mix_start = MM*Y_start;
   
   //Variables
+  Types.Temperature T_c_mix "Pseudo-critical temperature of the fluid mixture";
+  Types.Pressure p_c_mix "Pseudo-critical pressure of the mixture";
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_id(start = h_id_start) "Ideal Specific Enthalpy of the fluid";
   Types.SpecificEnthalpy dh_id_dX[nX] "Mass fraction of Ideal Specific Enthalpy at constant pressure, per each component";
@@ -62,8 +64,11 @@ partial model PapayMixture
   Types.Pressure dp_dY[nX] "Mole fraction derivative of pressure at constant temperature, per each component";
   Types.DerPressureByTemperature dp_dT "Temperature derivative of Pressure at constant specific volume";
   Types.DerPressurebySpecificVolume dp_dv "Specific volumen derivative of Pressure at constant temperature";
+  Types.PerUnit Z "Compressibility factor of the mixture";
   Types.PerUnit pr[nX](start = p_start./p_c) "Reduced pressure of each component";
+  Types.PerUnit pr_mix "Pseudo-reduced pressure of the mixture";
   Types.PerUnit Tr[nX](start = T_start./T_c) "Reduced temperatures of each component";
+  Types.PerUnit Tr_mix "Pseudo-reduced temperature of the mixture";
   Types.PerUnit Tr0[nX](start = T0./T_c) "Reduced temperatures of each component";
   Types.PerUnit dY_dX[nX, nX] "Mole fraction derivative of mass fraction per each component";
   Types.PerUnit dX_dX[nX, nX](start = identity(nX)) "Mass fraction derivative of mass fraction per each component";
@@ -77,7 +82,6 @@ partial model PapayMixture
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
-  Types.PerUnit Z "Compressibility factor of the mixture";
   Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
@@ -146,12 +150,17 @@ equation
   MM_mix = MM*Y "molar mass of the fluid";
   Tr = T./T_c;
   pr = p./p_c;
+  T_c_mix = Y*T_c;
+  p_c_mix = Y*p_c;
+  Tr_mix = T/T_c_mix;
+  pr_mix = p/p_c_mix;
   Tr0 = T0./T_c;
   for i in 1:nX loop
     dTr_dT[i] = 1/T_c[i];
   end for;
 
   p = rho*Z*R*T/MM_mix "Equation of State";
+  Z = 1 - 3.52*pr_mix*exp(-2.26*Tr_mix) + 0.247*pr_mix*pr_mix*exp(-1.878*Tr_mix);
   rho = MM_mix/v;
   for i in 1:nX loop
     h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";

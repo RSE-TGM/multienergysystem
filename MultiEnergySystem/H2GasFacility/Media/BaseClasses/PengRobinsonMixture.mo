@@ -56,7 +56,6 @@ partial model PengRobinsonMixture
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_res "Residual or Departure Specific Enthalpy of the fluid";
   Types.SpecificEnthalpy h_id(start = h_id_start) "Ideal Specific Enthalpy of the fluid";
-  //Types.SpecificEnergy du_dX[nX] "Mass fraction derivative of Specific Internal Energy at constant pressure, per each component";
   Types.SpecificEnthalpy dh_res_dX[nX] "Mass fraction derivative of Specific Residual Enthalpy at constant pressure, per each component";
   Types.SpecificEnthalpy dh_res_dY[nX] "Mass fraction derivative of Specific Residual Enthalpy at constant pressure, per each component";
   Types.SpecificEnthalpy dh_id_dX[nX] "Mass fraction of Ideal Specific Enthalpy at constant pressure, per each component";

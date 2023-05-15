@@ -2,7 +2,7 @@ within MultiEnergySystem.H2GasFacility.Sources;
 
 model SourcePressure "Pressure source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
-  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
     "Medium model" annotation(
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
@@ -53,6 +53,8 @@ protected
   Modelica.Blocks.Interfaces.RealInput in_X0_internal[fluid.nX];
 equation
   outlet.h_out = fluid.h;
+  outlet.Xi = fluid.Xi;
+  
   if R > 0 then
     outlet.p = p + outlet.m_flow*R;
   else

@@ -6,7 +6,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPapay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
      choicesAllMatching = true);
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation(
      choicesAllMatching = true);
@@ -59,7 +59,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 
     "nominal heat transfer coeffcient" annotation(
     Dialog(group = "Heat Transfer Model"));
-  parameter Types.MassFraction X_start[fluid[1].nX] = fluid[1].X_start
+  parameter Types.MassFraction X_start[nX]
     "Start value for the mass fraction" annotation(
     Dialog(group = "Initialisation"));
   
@@ -182,4 +182,26 @@ equation
   end for;
   pin - pout = (rho[1]+rho[n+1])/2 * g_n * H + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
   
+initial equation
+  if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
+    for i in 1:n loop
+      der(Xitilde[i,:]) = zeros(nXi);
+    end for;
+    if not noInitialPressure then
+      der(ptilde) = 0;
+    else
+//  No initial pressure
+    end if;
+  elseif initOpt == DistrictHeatingNetwork.Choices.Init.Options.fixedState then
+    for i in 1:n loop
+      fluid[i+1].X = X_start;
+    end for;
+    if not noInitialPressure then
+      ptilde = pout_start;
+    else
+//  No initial pressure
+    end if;
+  else
+// No initial equations
+  end if;  
 end Round1DFV;

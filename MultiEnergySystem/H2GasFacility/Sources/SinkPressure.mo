@@ -7,11 +7,11 @@ model SinkPressure "Pressure sink for water/steam flows"
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
   
-  parameter Types.Pressure p0 = 1.01325e5
-    "Nominal pressure";
   parameter HydraulicResistance R = 0 
     "Hydraulic resistance" annotation(
     Evaluate = true);
+  parameter Types.Pressure p0 = 1.01325e5
+    "Nominal pressure";
   parameter Types.Temperature T0 = 25 + 237.15 
     "Nominal temperature";
   parameter Types.MassFraction X0[fluid.nX] = fluid.X_start

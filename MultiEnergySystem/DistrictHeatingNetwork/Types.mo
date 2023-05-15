@@ -14,7 +14,7 @@ package Types
   type Temperature =
       Modelica.Units.SI.Temperature (             nominal = 500);
   type Pressure = Modelica.Units.SI.Pressure (
-                                            nominal = 1e7);
+                                            nominal = 1e5);
   type Density = Modelica.Units.SI.Density (
                                           nominal = 1e2);
   type Volume = Modelica.Units.SI.Volume (

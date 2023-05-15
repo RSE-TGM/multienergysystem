@@ -1,12 +1,16 @@
 within MultiEnergySystem.H2GasFacility.Components.Valves.BaseClass;
 
 partial model BasePressureDrop
-  extends H2GasFacility.Interfaces.PartialHorizontalTwoPort;
+  extends H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet.nXi = fluidIn.nXi, outlet.nXi = fluidOut.nXi);
 
   replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture 
     "fluid model"; 
 
   // Basic parameters for declaring fluids 
+  parameter Boolean computeTransport = false
+    "Used to decide if it is necessary to calculate the transport properties";
+  parameter Boolean computeEntropy = false
+    "Used to decide if it is necessary to calculate entropy";
   parameter Types.Pressure dp_nom = 0.1e5 
     "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(group = "Initialization"));
@@ -30,12 +34,16 @@ partial model BasePressureDrop
   Medium fluidIn(
     T_start = Tin_start, 
     p_start = pin_start, 
-    X_start = X_start)
+    X_start = X_start,
+    computeTransport = computeTransport,
+    computeEntropy = computeEntropy)
     "inlet fluid";
   Medium fluidOut(
     T_start = Tout_start, 
     p_start = pout_start, 
-    X_start = X_start) 
+    X_start = X_start,
+    computeTransport = computeTransport,
+    computeEntropy = computeEntropy) 
     "outlet fluid";
 
   Types.Density rhoin

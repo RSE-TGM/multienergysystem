@@ -1,2 +1,4 @@
 TestSourcePressureOnly
 TestSourceFlowOnly
+TestSinkPressureOnly
+TestSinkFlowOnly

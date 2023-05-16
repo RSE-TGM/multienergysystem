@@ -166,9 +166,11 @@ equation
   m_flow[1] = inlet.m_flow;
   m_flow[n + 1] = -outlet.m_flow;
   h[1] = inStream(inlet.h_out);
-  h[n+1] = outlet.h_out;
+  //h[n+1] = outlet.h_out;
+  outlet.h_out = h[n + 1];
   Xi[1,:] = inStream(inlet.Xi);
-  Xi[n+1,:] = outlet.Xi;
+  //Xi[n+1,:] = outlet.Xi;
+  outlet.Xi = Xi[n + 1, :];
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
   Tout = fluid[n+1].T "Outlet temperature equals to temperature of last fluid";
   hin = fluid[1].h "Inlet specific enthalpy equals to specific enthalpy of first fluid";
@@ -182,10 +184,12 @@ equation
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
      //m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
-     m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X));
-     M[i]*der(fluid[i+1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
+     m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
+     //M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
+     M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (fluid[i].Xi - fluid[i + 1].Xi);
      //Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
-     T[i] - T[i + 1] = 0;
+     //T[i] - T[i + 1] = 0;
+     m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
   end for;
   //pin - pout = rho[n+1] * g_n * H + homotopy(cf / 2 * rho[n+1] * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
   pin - pout = k*inlet.m_flow;
@@ -197,7 +201,7 @@ initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
       der(Ttilde[i]) = 0;
-      //der(Xitilde[i,:]) = zeros(nXi);
+      der(Xitilde[i,:]) = zeros(nXi);
     end for;
     if not noInitialPressure then
       der(ptilde) = 0;

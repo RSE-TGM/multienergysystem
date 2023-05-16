@@ -53,7 +53,7 @@ partial model PapayMixture
   final parameter Types.AttractionForce damix_dY_start[nX] = 2*{sum(Y_start[j]*a_star_start[i, j] for j in 1:nX) for i in 1:nX};
   constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
   //Variables
-  Types.Temperature T_c_mix "Pseudo-critical temperature of the fluid mixture";
+  Types.Temperature T_c_mix(start = T_c[posDom]) "Pseudo-critical temperature of the fluid mixture";
   Types.Pressure p_c_mix(start = p_c[posDom]) "Pseudo-critical pressure of the mixture";
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_res "Residual or Departure Specific Enthalpy of the fluid";
@@ -97,7 +97,7 @@ partial model PapayMixture
   Types.DerPressureByTemperature dp_dT(start = dp_dT_start) "Temperature derivative of Pressure at constant specific volume";
   Types.DerPressurebySpecificVolume dp_dv(start = dp_dv_start) "Specific volumen derivative of Pressure at constant temperature";
   Types.PerUnit Tr[nX](start = T_start./T_c) "Reduced temperatures of each component";
-  Types.PerUnit Tr_mix "Pseudo-reduced temperature of the mixture";
+  Types.PerUnit Tr_mix(start = T_start/T_c[posDom]) "Pseudo-reduced temperature of the mixture";
   Types.PerUnit pr[nX](start = p_start./p_c) "Reduced pressure of each component";
   Types.PerUnit pr_mix "Pseudo-reduced pressure of the mixture";
   Types.PerUnit Tr0[nX](start = T0./T_c) "Reduced temperatures of each component";

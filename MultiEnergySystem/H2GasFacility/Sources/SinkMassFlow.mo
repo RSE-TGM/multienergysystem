@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Sources;
 model SinkMassFlow
   extends DistrictHeatingNetwork.Icons.Gas.SourceW;
-  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
     "Fluid model"  annotation(choicesAllMatching=true);
   
   //Nominal Values
@@ -17,7 +17,7 @@ model SinkMassFlow
     "Nominal mass fraction";
   final parameter Types.MassFraction[fluid.nXi] Xi_start = X0[1:fluid.nXi] 
     "Nominal mass fraction of independent variables";
-  parameter AllamCycle.Types.HydraulicConductance G=0 
+  parameter Types.HydraulicConductance G=1000 
     "Hydraulic Conductance";
   parameter Boolean use_in_m_flow0 = false 
     "Use connector input for the nominal flow rate" annotation (

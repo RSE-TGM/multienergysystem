@@ -11,7 +11,7 @@ partial model PartialRoundTube
     "Round tube Transversal inner Area";
   final parameter Types.Length omega = Modelica.Constants.pi * Di
     "Round tube transversal perimeter";
-  final parameter Types.Area Am = ((Di / 2 + t) ^ 2 - A) * Modelica.Constants.pi
+  final parameter Types.Area Am = Modelica.Constants.pi * (Di + t) * t
     "Transveral area of the metal tube (cross-section)";
   final parameter Real cvolm(unit = "J/(m3.K)") = cm * rhom
     "Wall volumetric heat capacity [J/m^3.K]; steel = 3.12e6";

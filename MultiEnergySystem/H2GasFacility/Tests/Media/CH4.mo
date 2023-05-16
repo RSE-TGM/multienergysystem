@@ -4,8 +4,8 @@ model CH4
   extends Modelica.Icons.Example;
   replaceable package Medium = DistrictHeatingNetwork.Media.IdealGases.CH4 "Ideal CH4 fluid";
   parameter Types.Temperature T_min = 15 + 273.15;
-  parameter Types.Temperature T_max = 30 + 273.15;
-  parameter Types.Pressure p = 0.3e5;
+  parameter Types.Temperature T_max = 20 + 273.15;
+  parameter Types.Pressure p = 101325;
   parameter Types.MassFraction X[2] = {0.8, 0.2};
   constant Real T0(unit = "s") = 1 "Reference value for units";
   Medium.BaseProperties idealGas;

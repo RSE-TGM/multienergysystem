@@ -87,7 +87,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // State Variables
   Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)) 
     "Composition state for each volume";
-  Types.Pressure ptilde(stateSelect = StateSelect.prefer) 
+  Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start) 
     "Pressure state the pipe";  
   Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:n+1])
     "State variable temperatures";
@@ -177,10 +177,12 @@ equation
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
      m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
-     M[i]*der(fluid[i+1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
+     //M[i]*der(fluid[i+1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
+     Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
      T[i] - T[i + 1] = 0;
   end for;
-  pin - pout = (rho[1]+rho[n+1])/2 * g_n * H + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+  //pin - pout = rho[n+1] * g_n * H + homotopy(cf / 2 * rho[n+1] * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+  pin - pout = k*inlet.m_flow;
   
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then

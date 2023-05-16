@@ -7,8 +7,8 @@ model SinglePTXFluidTest
   parameter Types.Pressure p_ref = 5e3 "Reference pressure";
   parameter Types.MassFraction X_ref[:] = M/Mt "Mass Fraction of the real gas";
   parameter Types.MoleFraction Y[:] = {0.97201, 0.01862, 0.00393, 0.00000,0.00000,0.00000,0.00000, 0.00000, 0.00544};
-  parameter Types.Mass M[:] = Y.*medium.MM;
-  parameter Types.Mass Mt = sum(M);
+  parameter Types.MolarMass M[:] = Y.*medium.MM;
+  parameter Types.MolarMass Mt = sum(M);
   Medium medium(T_start = T_ref, p_start = p_ref, X_start = X_ref);
   Types.Density rho;
   Types.SpecificEnergy u;

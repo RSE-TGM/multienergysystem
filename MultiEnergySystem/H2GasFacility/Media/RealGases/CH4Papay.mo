@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
 
-model CH4
+model CH4Papay
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 0,
       MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
@@ -17,4 +17,4 @@ model CH4
       cp_coeff = {{-1.942367532068e-05,0.026331526513384,-8.2083625257152,2846.2158110588}},
       mu_start = 0  
   );
-end CH4;
+end CH4Papay;

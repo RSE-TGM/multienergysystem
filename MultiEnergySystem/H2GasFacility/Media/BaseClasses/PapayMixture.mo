@@ -30,7 +30,7 @@ partial model PapayMixture
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
-  parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start*1.3*(1.5*T_red_start) "provided that this fluid composition is mostly the dominant component";
+  parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start*1.3*(1.5*T_red_start)  "provided that this fluid composition is mostly the dominant component";
   parameter Types.Density rho_start = MM[posDom]/v_start;
   parameter Types.MolarMass MM_mix_start = MM*Y_start;
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
@@ -225,7 +225,6 @@ equation
   for i in 1:nX loop
     h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
     cp_star[i] = cp_T(T, cp_coeff[i]) "Ideal specific heat capacity of each component in unit mass";
-    s_star[i] = s_T(T, cp_coeff[i]) - s_T(T0, cp_coeff[i]) - (R*log(p/p0))/MM_mix "Ideal specific entropy of each component in unit mass, from(3)-Equation 6.11";
   end for;
 
 //Specific Enthalpy
@@ -280,9 +279,13 @@ equation
   if computeEntropy then
     s_id = X*s_star + (R*sum(Y[i]*log(Y[i] + eps) for i in 1:nX))/MM_mix "from(3)-Equation 8.6";
     s_res = (R*log(abs(p*(v - bmix)/(R*T))) + (damix_dT*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix)))/MM_mix "from(4)-Equation 6.4-30";
+    for i in 1:nX loop
+      s_star[i] = s_T(T, cp_coeff[i]) - s_T(T0, cp_coeff[i]) - (R*log(p/p0))/MM_mix "Ideal specific entropy of each component in unit mass, from(3)-Equation 6.11";
+    end for;
   else
     s_id = 0;
     s_res = 0;
+    s_star = zeros(nX);
   end if;
   s - s_id = s_res;
   

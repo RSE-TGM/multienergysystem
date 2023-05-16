@@ -109,7 +109,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // Vector Variables
   Types.Mass M[n]
     "Mass of fluid in each finite volume";
-  Types.Density rho[n + 1]
+  Types.Density rho[n + 1](each start = rho_nom)
     "Density at each volume boundary";
   Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start)
     "Mass flow at each volume boundary";
@@ -121,10 +121,15 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Specific enthalpy at each fluid";
   Types.MassFraction Xi[n + 1, nXi] 
     "Mass fractions at each volume boundary";
-  Types.Velocity u[n + 1](each start = u_nom)
+  Types.Velocity u[n + 1]
     "Velocity at each volume boundary";
-  Real dv_dt[n + 1](each unit = "m3/(kg.s)")
-    "Derivative of specific volume w.r.t. time";
+  //Real dv_dt[n + 1](each unit = "m3/(kg.s)")
+  //  "Derivative of specific volume w.r.t. time";
+
+  // Complementary variables
+  
+  Types.Time taur
+    "Residence time";
 
   // Fluids
   Medium fluid[n + 1](
@@ -147,7 +152,7 @@ equation
   for i in 1:n + 1 loop
     h[i] = fluid[i].h "Specific enthalpy at each volume boundary";
     rho[i] = fluid[i].rho "Density at each volume boundary";
-    dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
+    //dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
     q[i] = m_flow[i]/rho[i];
     m_flow[i] = A * u[i]* rho[i];
   end for;
@@ -176,18 +181,23 @@ equation
   // Balances
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
-     m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
-     //M[i]*der(fluid[i+1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
-     Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
+     //m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
+     m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X));
+     M[i]*der(fluid[i+1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
+     //Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
      T[i] - T[i + 1] = 0;
   end for;
   //pin - pout = rho[n+1] * g_n * H + homotopy(cf / 2 * rho[n+1] * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
   pin - pout = k*inlet.m_flow;
   
+  // Complementary variables
+  taur = sum(M)/inlet.m_flow;
+  
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
-      der(Xitilde[i,:]) = zeros(nXi);
+      der(Ttilde[i]) = 0;
+      //der(Xitilde[i,:]) = zeros(nXi);
     end for;
     if not noInitialPressure then
       der(ptilde) = 0;

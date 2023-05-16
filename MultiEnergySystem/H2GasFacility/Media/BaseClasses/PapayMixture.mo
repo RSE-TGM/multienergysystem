@@ -30,7 +30,7 @@ partial model PapayMixture
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
-  parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start*1.3*(1.5*T_red_start)  "provided that this fluid composition is mostly the dominant component";
+  parameter Types.MolarVolume v_start = R*T_start/p_start "provided that this fluid composition is mostly the dominant component";
   parameter Types.Density rho_start = MM[posDom]/v_start;
   parameter Types.MolarMass MM_mix_start = MM*Y_start;
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
@@ -54,7 +54,7 @@ partial model PapayMixture
   constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
   //Variables
   Types.Temperature T_c_mix "Pseudo-critical temperature of the fluid mixture";
-  Types.Pressure p_c_mix "Pseudo-critical pressure of the mixture";
+  Types.Pressure p_c_mix(start = p_c[posDom]) "Pseudo-critical pressure of the mixture";
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_res "Residual or Departure Specific Enthalpy of the fluid";
   Types.SpecificEnthalpy h_id(start = h_id_start) "Ideal Specific Enthalpy of the fluid";

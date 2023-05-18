@@ -33,7 +33,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   parameter Types.Velocity u_nom = 1 
     "Nominal fluid velocity" annotation(
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.PerUnit kc 
+  parameter Types.PerUnit kc = 1
     "Corrective factor for heat tranfer" annotation(
     Dialog(group = "Heat Transfer Model"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle 
@@ -62,7 +62,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   parameter Types.MassFraction X_start[nX]
     "Start value for the mass fraction" annotation(
     Dialog(group = "Initialisation"));
-  
+  parameter Types.PerUnit cfnom = 0.005;
   
   // Final parameters
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
@@ -130,6 +130,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   
   Types.Time taur
     "Residence time";
+  Real kf(unit = "1/m4");
 
   // Fluids
   Medium fluid[n + 1](
@@ -183,16 +184,18 @@ equation
   // Balances
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
-     //m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 * dv_dt[i + 1] "Total Mass Balance";
      m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
      //M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
      M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (fluid[i].Xi - fluid[i + 1].Xi);
      //Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
-     //T[i] - T[i + 1] = 0;
      m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
   end for;
-  //pin - pout = rho[n+1] * g_n * H + homotopy(cf / 2 * rho[n+1] * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+  
   pin - pout = k*inlet.m_flow;
+  //pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
+  kf = cfnom * omega * L / (2* A^3);
+  
+  
   
   // Complementary variables
   taur = sum(M)/inlet.m_flow;

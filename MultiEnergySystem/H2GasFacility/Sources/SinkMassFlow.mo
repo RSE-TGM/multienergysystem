@@ -60,7 +60,7 @@ model SinkMassFlow
         origin={60,50},
         extent={{-10,-10},{10,10}},
         rotation=270)));
-  H2GasFacility.Interfaces.FluidPortOutlet inlet(nXi = fluid.nXi)  annotation (Placement(
+  H2GasFacility.Interfaces.FluidPortInlet inlet(nXi = fluid.nXi)  annotation (Placement(
         visible=true,
         transformation(
           origin={100,0},

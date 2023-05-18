@@ -13,7 +13,7 @@ model SourcePressure "Pressure source for water/steam flows"
     "Hydraulic resistance";
   parameter Types.Temperature T0 = 25 + 273.15 
     "Nominal temperature";
-  parameter Types.MassFraction X0[fluid.nX] = fluid.X_start
+  parameter Types.MassFraction X0[fluid.nX]
     "Nominal mass fraction";
   parameter Boolean use_in_p0 = false 
     "Use connector input for the pressure" annotation(

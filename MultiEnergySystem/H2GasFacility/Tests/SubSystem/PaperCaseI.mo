@@ -24,8 +24,6 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {40, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe18(redeclare model Medium = Medium, Di = Pipe.pipe18.Di, L = Pipe.pipe18.L, Tin_start = Pipe.pipe18.Tin_start, Tout_start = Pipe.pipe18.Tout_start, X_start = X_start, hin_start = Pipe.pipe18.hin_start, k = Pipe.pipe18.k, kc = 1, m_flow_start = Pipe.pipe18.m_flow_start, n = n, pin_start = Pipe.pipe18.pin_start, pout_start = Pipe.pipe18.pout_start) annotation(
     Placement(visible = true, transformation(origin = {70, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare model Medium = Medium, m_flow0 = 0.044645108) annotation(
-    Placement(visible = true, transformation(origin = {10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.System system annotation(
     Placement(visible = true, transformation(origin = {130, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user5(redeclare model Medium = Medium, m_flow0 = 0.03493965) annotation(
@@ -33,11 +31,11 @@ model PaperCaseI
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe19(redeclare model Medium = Medium, Di = Pipe.pipe19.Di, L = Pipe.pipe19.L, Tin_start = Pipe.pipe19.Tin_start, Tout_start = Pipe.pipe19.Tout_start, X_start = X_start, hin_start = Pipe.pipe19.hin_start, k = Pipe.pipe19.k, kc = 1, m_flow_start = Pipe.pipe19.m_flow_start, n = n, pin_start = Pipe.pipe19.pin_start, pout_start = Pipe.pipe19.pout_start) annotation(
     Placement(visible = true, transformation(origin = {-40, -50}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(redeclare model Medium = Medium, Di = Pipe.pipe13.Di, L = Pipe.pipe13.L, Tin_start = Pipe.pipe13.Tin_start, Tout_start = Pipe.pipe13.Tout_start, X_start = X_start, hin_start = Pipe.pipe13.hin_start, k = Pipe.pipe13.k, kc = 1, m_flow_start = Pipe.pipe13.m_flow_start, n = n, pin_start = Pipe.pipe13.pin_start, pout_start = Pipe.pipe13.pout_start) annotation(
-    Placement(visible = true, transformation(origin = {-60, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-60, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe20(redeclare model Medium = Medium, Di = Pipe.pipe20.Di, L = Pipe.pipe20.L, Tin_start = Pipe.pipe20.Tin_start, Tout_start = Pipe.pipe20.Tout_start, X_start = X_start, hin_start = Pipe.pipe20.hin_start, k = Pipe.pipe20.k, kc = 1, m_flow_start = Pipe.pipe20.m_flow_start, n = n, pin_start = Pipe.pipe20.pin_start, pout_start = Pipe.pipe20.pout_start) annotation(
     Placement(visible = true, transformation(origin = {-64, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(redeclare model Medium = Medium, Di = Pipe.pipe12.Di, L = Pipe.pipe12.L, Tin_start = Pipe.pipe12.Tin_start, Tout_start = Pipe.pipe12.Tout_start, X_start = X_start, hin_start = Pipe.pipe12.hin_start, k = Pipe.pipe12.k, kc = 1, m_flow_start = Pipe.pipe12.m_flow_start, n = n, pin_start = Pipe.pipe12.pin_start, pout_start = Pipe.pipe12.pout_start) annotation(
-    Placement(visible = true, transformation(origin = {-20, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+    Placement(visible = true, transformation(origin = {-20, -30}, extent = {{10, -10}, {-10, 10}}, rotation = -180)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe14(redeclare model Medium = Medium, Di = Pipe.pipe14.Di, L = Pipe.pipe14.L, Tin_start = Pipe.pipe14.Tin_start, Tout_start = Pipe.pipe14.Tout_start, X_start = X_start, hin_start = Pipe.pipe14.hin_start, k = Pipe.pipe14.k, kc = 1, m_flow_start = Pipe.pipe14.m_flow_start, n = n, pin_start = Pipe.pipe14.pin_start, pout_start = Pipe.pipe14.pout_start) annotation(
     Placement(visible = true, transformation(origin = {40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe15(redeclare model Medium = Medium, Di = Pipe.pipe15.Di, L = Pipe.pipe15.L, Tin_start = Pipe.pipe15.Tin_start, Tout_start = Pipe.pipe15.Tout_start, X_start = X_start, hin_start = Pipe.pipe15.hin_start, k = Pipe.pipe15.k, kc = 1, m_flow_start = Pipe.pipe15.m_flow_start, n = n, pin_start = Pipe.pipe15.pin_start, pout_start = Pipe.pipe15.pout_start) annotation(
@@ -65,20 +63,18 @@ model PaperCaseI
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user14(redeclare model Medium = Medium, m_flow0 = 0.008734913) annotation(
     Placement(visible = true, transformation(origin = {70, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP18(redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = {1}, p0 = 0.5e5) annotation(
-    Placement(visible = true, transformation(origin = {-110, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-152, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe9(redeclare model Medium = Medium, Di = Pipe.pipe9.Di, L = Pipe.pipe9.L, Tin_start = Pipe.pipe9.Tin_start, Tout_start = Pipe.pipe9.Tout_start, X_start = X_start, hin_start = Pipe.pipe9.hin_start, k = Pipe.pipe9.k, kc = 1, m_flow_start = Pipe.pipe9.m_flow_start, n = n, pin_start = Pipe.pipe9.pin_start, pout_start = Pipe.pipe9.pout_start) annotation(
-    Placement(visible = true, transformation(origin = {10, 30}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {10, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe11(redeclare model Medium = Medium, Di = Pipe.pipe11.Di, L = Pipe.pipe11.L, Tin_start = Pipe.pipe11.Tin_start, Tout_start = Pipe.pipe11.Tout_start, X_start = X_start, hin_start = Pipe.pipe11.hin_start, k = Pipe.pipe11.k, kc = 1, m_flow_start = Pipe.pipe11.m_flow_start, n = n, pin_start = Pipe.pipe11.pin_start, pout_start = Pipe.pipe11.pout_start) annotation(
     Placement(visible = true, transformation(origin = {10, -10}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe21(redeclare model Medium = Medium, Di = Pipe.pipe21.Di, L = Pipe.pipe21.L, Tin_start = Pipe.pipe21.Tin_start, Tout_start = Pipe.pipe21.Tout_start, X_start = X_start, hin_start = Pipe.pipe21.hin_start, k = Pipe.pipe21.k, kc = 1, m_flow_start = Pipe.pipe21.m_flow_start, n = n, pin_start = Pipe.pipe21.pin_start, pout_start = Pipe.pipe21.pout_start) annotation(
+    Placement(visible = true, transformation(origin = {-120, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare model Medium = Medium, m_flow0 = 0.044645108) annotation(
+    Placement(visible = true, transformation(origin = {10, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
-  connect(user10.inlet, pipe13.inlet) annotation(
-    Line(points = {{-90, -30}, {-70, -30}}, color = {182, 109, 49}));
   connect(pipe16.outlet, user13.inlet) annotation(
     Line(points = {{130, -60}, {130, -80}}, color = {182, 109, 49}));
-  connect(sourceP18.outlet, pipe8.inlet) annotation(
-    Line(points = {{-100, 10}, {-88, 10}, {-88, 20}}, color = {182, 109, 49}));
-  connect(pipe5.inlet, sourceP18.outlet) annotation(
-    Line(points = {{-70, 10}, {-100, 10}}, color = {182, 109, 49}));
   connect(user5.inlet, pipe8.outlet) annotation(
     Line(points = {{-88, 50}, {-88, 40}}, color = {182, 109, 49}));
   connect(user5.inlet, pipe4.outlet) annotation(
@@ -89,8 +85,6 @@ equation
     Line(points = {{-30, 50}, {-40, 50}, {-40, 40}}, color = {182, 109, 49}));
   connect(pipe1.outlet, pipe2.inlet) annotation(
     Line(points = {{-40, 60}, {-40, 40}}, color = {182, 109, 49}));
-  connect(pipe3.outlet, user4.inlet) annotation(
-    Line(points = {{-10, 50}, {10, 50}}, color = {182, 109, 49}));
   connect(pipe2.outlet, pipe7.inlet) annotation(
     Line(points = {{-40, 20}, {-40, 0}}, color = {182, 109, 49}));
   connect(pipe5.outlet, pipe7.inlet) annotation(
@@ -105,20 +99,6 @@ equation
     Line(points = {{-40, -60}, {-40, -80}}, color = {182, 109, 49}));
   connect(pipe7.outlet, pipe19.inlet) annotation(
     Line(points = {{-40, -20}, {-40, -40}}, color = {182, 109, 49}));
-  connect(pipe13.outlet, pipe19.inlet) annotation(
-    Line(points = {{-50, -30}, {-40, -30}, {-40, -40}}, color = {182, 109, 49}));
-  connect(pipe12.outlet, pipe19.inlet) annotation(
-    Line(points = {{-30, -30}, {-40, -30}, {-40, -40}}, color = {182, 109, 49}));
-  connect(pipe12.inlet, pipe14.inlet) annotation(
-    Line(points = {{-10, -30}, {30, -30}}, color = {182, 109, 49}));
-  connect(user4.inlet, pipe9.inlet) annotation(
-    Line(points = {{10, 50}, {10, 40}}, color = {182, 109, 49}));
-  connect(pipe6.outlet, pipe17.inlet) annotation(
-    Line(points = {{-10, 10}, {30, 10}}, color = {182, 109, 49}));
-  connect(pipe9.outlet, pipe17.inlet) annotation(
-    Line(points = {{10, 20}, {10, 10}, {30, 10}}, color = {182, 109, 49}));
-  connect(pipe9.outlet, pipe11.inlet) annotation(
-    Line(points = {{10, 20}, {10, 0}}, color = {182, 109, 49}));
   connect(pipe11.outlet, pipe14.inlet) annotation(
     Line(points = {{10, -20}, {10, -30}, {30, -30}}, color = {182, 109, 49}));
   connect(pipe15.outlet, user12.inlet) annotation(
@@ -137,7 +117,30 @@ equation
     Line(points = {{50, -30}, {70, -30}}, color = {182, 109, 49}));
   connect(user11.inlet, pipe15.inlet) annotation(
     Line(points = {{70, -30}, {90, -30}}, color = {182, 109, 49}));
-
-annotation(
+  connect(sourceP18.outlet, pipe21.inlet) annotation(
+    Line(points = {{-142, 10}, {-130, 10}}, color = {182, 109, 49}));
+  connect(pipe21.outlet, pipe5.inlet) annotation(
+    Line(points = {{-110, 10}, {-70, 10}}, color = {182, 109, 49}));
+  connect(pipe21.outlet, pipe8.inlet) annotation(
+    Line(points = {{-110, 10}, {-88, 10}, {-88, 20}}, color = {182, 109, 49}));
+  connect(user10.inlet, pipe13.outlet) annotation(
+    Line(points = {{-90, -30}, {-70, -30}}, color = {182, 109, 49}));
+  connect(pipe13.inlet, pipe19.inlet) annotation(
+    Line(points = {{-50, -30}, {-40, -30}, {-40, -40}}, color = {182, 109, 49}));
+  connect(pipe3.outlet, user4.inlet) annotation(
+    Line(points = {{-10, 50}, {10, 50}}, color = {182, 109, 49}));
+  connect(user4.inlet, pipe9.outlet) annotation(
+    Line(points = {{10, 50}, {10, 40}}, color = {182, 109, 49}));
+  connect(pipe9.inlet, pipe11.inlet) annotation(
+    Line(points = {{10, 20}, {10, 0}}, color = {182, 109, 49}));
+  connect(pipe6.outlet, pipe9.inlet) annotation(
+    Line(points = {{-10, 10}, {10, 10}, {10, 20}}, color = {182, 109, 49}));
+  connect(pipe6.outlet, pipe17.inlet) annotation(
+    Line(points = {{-10, 10}, {30, 10}}, color = {182, 109, 49}));
+  connect(pipe12.inlet, pipe19.inlet) annotation(
+    Line(points = {{-30, -30}, {-40, -30}, {-40, -40}}, color = {182, 109, 49}));
+  connect(pipe12.outlet, pipe11.outlet) annotation(
+    Line(points = {{-10, -30}, {10, -30}, {10, -20}}, color = {182, 109, 49}));
+  annotation(
     Diagram(coordinateSystem(extent = {{-140, -120}, {140, 120}})));
 end PaperCaseI;

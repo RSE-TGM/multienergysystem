@@ -15,5 +15,5 @@ equation
     Line(points = {{-100, 0}, {-10, 0}}));
 
 annotation(
-    Icon(graphics = {Ellipse(lineColor = {244, 125, 35}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Sphere, lineThickness = 0.5, extent = {{-60, 60}, {60, -60}})}));
+    Icon(graphics = {Ellipse(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.Sphere, lineThickness = 0.5, extent = {{-60, 60}, {60, -60}})}));
 end IdealUser;

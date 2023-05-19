@@ -21,7 +21,7 @@ model Round1DFV   "Model of a 1D flow in a circular rigid pipe. Finite Volume (F
     "Used to decide if it is necessary to calculate specific entropy";
   parameter Boolean noInitialPressure = false 
     "Remove initial equation for pressure, to be used in case of solver failure";
-  parameter Boolean quasistaticEnergyBalance = true
+  parameter Boolean quasistaticEnergyBalance = false
     "If true, then T = Tconst";
   parameter Integer n = 3 
     "Number of finite volumes in each pipe" annotation(
@@ -186,15 +186,18 @@ equation
   // Balances
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
-     m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
+     //m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
      //M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
      M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (fluid[i].Xi - fluid[i + 1].Xi);
      //Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
      if quasistaticEnergyBalance then
+        m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
         T[i] - T[i + 1] = 0;
      else
+        m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
         m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
      end if;
+     //m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
   end for;
   
   pin - pout = k*inlet.m_flow;

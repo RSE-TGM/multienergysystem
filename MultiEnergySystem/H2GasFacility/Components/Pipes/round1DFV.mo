@@ -21,6 +21,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Used to decide if it is necessary to calculate specific entropy";
   parameter Boolean noInitialPressure = false 
     "Remove initial equation for pressure, to be used in case of solver failure";
+  parameter Boolean quasistaticEnergyBalance = true
+    "If true, then T = Tconst";
   parameter Integer n = 3 
     "Number of finite volumes in each pipe" annotation(
     Dialog(tab = "Data", group = "Fluid"));
@@ -188,7 +190,11 @@ equation
      //M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
      M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (fluid[i].Xi - fluid[i + 1].Xi);
      //Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
-     m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
+     if quasistaticEnergyBalance then
+        T[i] - T[i + 1] = 0;
+     else
+        m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
+     end if;
   end for;
   
   pin - pout = k*inlet.m_flow;
@@ -203,7 +209,11 @@ equation
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
-      der(Ttilde[i]) = 0;
+      if quasistaticEnergyBalance then
+      // nothing
+      else
+        der(Ttilde[i]) = 0;
+      end if;
       der(Xitilde[i,:]) = zeros(nXi);
     end for;
     if not noInitialPressure then

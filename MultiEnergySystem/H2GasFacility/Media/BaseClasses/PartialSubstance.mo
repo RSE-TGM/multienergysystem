@@ -19,7 +19,7 @@ partial model PartialSubstance
   InputPressure p(start = p_start) "Absolute pressure";
   InputTemperature T(start = T_start) "Temperature";
   InputMassFraction X[nX] "Mass fraction vector";
-  Types.MolarVolume v "Molar volume";
+  Types.MolarVolume v_mol "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
   Types.SpecificEntropy s "Specific Entropy" annotation(

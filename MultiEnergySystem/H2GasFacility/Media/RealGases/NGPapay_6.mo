@@ -31,7 +31,7 @@ model NGPapay_6 "Natural Gas using PR EoS"
              Modelica.Media.IdealGases.Common.FluidData.C4H10_n_butane.criticalTemperature,
              Modelica.Media.IdealGases.Common.FluidData.CO2.criticalTemperature,
              Modelica.Media.IdealGases.Common.FluidData.N2.criticalTemperature},
-      v_c = { Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
+      v_mol_c = { Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.C2H6.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.C3H8.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.C4H10_n_butane.criticalMolarVolume,

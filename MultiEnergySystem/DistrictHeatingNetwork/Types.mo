@@ -12,7 +12,7 @@ package Types
   type HeatCapacity =
       Modelica.Units.SI.HeatCapacity (              nominal = 1e3);
   type Temperature =
-      Modelica.Units.SI.Temperature (             nominal = 500);
+      Modelica.Units.SI.Temperature (             nominal = 300);
   type Pressure = Modelica.Units.SI.Pressure (
                                             nominal = 1e5);
   type Density = Modelica.Units.SI.Density (
@@ -72,7 +72,7 @@ package Types
   type Energy = Modelica.Units.SI.Energy (
                                         nominal = 1e6);
   type MolarMass = Modelica.Units.SI.MolarMass (
-                                              nominal = 0.0440095);
+                                              nominal = 0.0160425);
   type MassFraction = Modelica.Units.SI.MassFraction;
   type MoleFraction = Modelica.Units.SI.MoleFraction;
   type PerUnit = Modelica.Units.SI.PerUnit;

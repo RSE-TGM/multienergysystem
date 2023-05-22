@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 
 model PaperCaseI
+  extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.RealGases.CH4Papay;
   replaceable model Medium = H2GasFacility.Media.RealGases.CH4H2Papay;
   //replaceable model Medium = H2GasFacility.Media.RealGases.NGPapay_6;

@@ -1,10 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 
 model PaperCaseI
-  replaceable model Medium = H2GasFacility.Media.RealGases.CH4Papay;
+  //replaceable model Medium = H2GasFacility.Media.RealGases.CH4Papay;
+  replaceable model Medium = H2GasFacility.Media.RealGases.CH4H2Papay;
   //replaceable model Medium = H2GasFacility.Media.RealGases.NGPapay_6;
-  parameter Integer n = 7 "Number of volumes in each pipeline";
-  parameter Types.MassFraction X_start[1] = {1};
+  parameter Integer n = 3 "Number of volumes in each pipeline";
+  //parameter Types.MassFraction X_start[1] = {1};
+  parameter Types.MassFraction X_start[2] = {1,0};
   //parameter Types.MassFlowRate X_start[6] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0001, 0.0092477};
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(redeclare model Medium = Medium, Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start) annotation(
     Placement(visible = true, transformation(origin = {-30, 60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -143,5 +145,5 @@ equation
     Line(points = {{0, -40}, {20, -40}, {20, -30}}, color = {182, 109, 49}));
   annotation(
     Diagram(coordinateSystem(extent = {{-160, -120}, {160, 120}})),
-    experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
+    experiment(StartTime = 0, StopTime = 150, Tolerance = 1e-06, Interval = 0.3));
 end PaperCaseI;

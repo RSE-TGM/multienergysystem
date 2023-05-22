@@ -88,8 +88,10 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // State Variables
   Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)) 
     "Composition state for each volume";
-  Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start) 
+  Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) 
     "Pressure state the pipe";  
+  //Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = 1e4) 
+  //  "Pressure state the pipe";  
   Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:n+1])
     "State variable temperatures";
   
@@ -126,6 +128,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Velocity at each volume boundary";
   //Real dv_dt[n + 1](each unit = "m3/(kg.s)")
   //  "Derivative of specific volume w.r.t. time";
+  //Types.Pressure p[n + 1];
 
   // Complementary variables
   
@@ -148,6 +151,7 @@ equation
     fluid[i].T = T[i] "Temperature at each volume boundary is equal to its equivalent value in the vector variable T";
     fluid[i].Xi = Xi[i, :] "Mass fraction at each volume boundary is equal to its equivalent value in the vector variable Xi";
     fluid[i].p = ptilde "Pressure at each volume boundary is equal to ptilde";
+    //fluid[i].p = p[i] "Pressure at each volume boundary is equal to ptilde";
   end for;
 
   // Equations to assign values from fluids properties
@@ -162,6 +166,7 @@ equation
   // Relationships for state variables
   Ttilde = T[2:n+1];
   Xitilde = Xi[2:n+1,:];
+  //ptilde = p[2:n+1];
   //ptilde = pout;
 
   // Boundary variables
@@ -192,7 +197,9 @@ equation
      else
         m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
         m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
-     end if;
+     end if; 
+     //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
+     //p[i] - ptilde[i] = k/2*m_flow[i]/n;
   end for;
   
   //pin - pout = k*inlet.m_flow;
@@ -201,7 +208,8 @@ equation
   
   //pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
   kf = cfnom * omega * L / (2* A^3);
-  
+  //p[1] = inlet.p;
+  //p[n + 1] = outlet.p;
   
   
   // Complementary variables
@@ -219,6 +227,7 @@ initial equation
     end for;
     if not noInitialPressure then
       der(ptilde) = 0;
+      //der(ptilde) = zeros(n);
     else
 //  No initial pressure
     end if;

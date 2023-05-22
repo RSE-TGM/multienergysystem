@@ -81,6 +81,8 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {-114, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation(
     Placement(visible = true, transformation(origin = {-140, -28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di = Pipe.pipe10.Di, L = Pipe.pipe10.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe10.Tin_start, Tout_start = Pipe.pipe10.Tout_start, X_start = X_start, hin_start = Pipe.pipe10.hin_start, k = Pipe.pipe10.k, kc = 1, m_flow_start = Pipe.pipe10.m_flow_start, n = n, pin_start = Pipe.pipe10.pin_start, pout_start = Pipe.pipe10.pout_start) annotation(
+    Placement(visible = true, transformation(origin = {-80, -18}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
 equation
   connect(pipe16.outlet, user13.inlet) annotation(
     Line(points = {{140, -70}, {140, -80}}, color = {182, 109, 49}));
@@ -152,6 +154,10 @@ equation
     Line(points = {{0, -40}, {20, -40}, {20, -30}}, color = {182, 109, 49}));
   connect(m_flow_H2.y, sourceH2_A.in_m_flow0) annotation(
     Line(points = {{-128, -28}, {-120, -28}, {-120, -36}}, color = {0, 0, 127}));
+  connect(pipe21.outlet, pipe10.inlet) annotation(
+    Line(points = {{-100, 0}, {-80, 0}, {-80, -8}}, color = {182, 109, 49}));
+  connect(pipe10.outlet, user10.inlet) annotation(
+    Line(points = {{-80, -28}, {-80, -40}}, color = {182, 109, 49}));
   annotation(
     Diagram(coordinateSystem(extent = {{-160, -120}, {160, 120}})),
     experiment(StartTime = 0, StopTime = 150, Tolerance = 1e-06, Interval = 0.3));

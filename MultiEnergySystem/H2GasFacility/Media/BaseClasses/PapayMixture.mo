@@ -10,13 +10,13 @@ partial model PapayMixture
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
-  final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
+  final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
   parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   parameter Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
   parameter Types.Pressure p_c[nX] "Critical pressure of each component";
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
-  parameter Types.MolarVolume v_c[nX] "Critical molar volume of each component";
+  parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
   parameter Types.AttractionForce ac[nX] = {0.45724*R^2*T_c[i]^2/(p_c[i] + eps) for i in 1:nX} "attraction parameter at critical point";
   parameter Types.MolarVolume b[nX] = {0.07780*R*T_c[i]/(p_c[i] + eps) for i in 1:nX} "molar covolume parameter";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
@@ -30,8 +30,8 @@ partial model PapayMixture
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
-  parameter Types.MolarVolume v_start = R*T_start/p_start "provided that this fluid composition is mostly the dominant component";
-  parameter Types.Density rho_start = MM[posDom]/v_start;
+  parameter Types.MolarVolume v_mol_start = R*T_start/p_start "provided that this fluid composition is mostly the dominant component";
+  parameter Types.Density rho_start = MM[posDom]/v_mol_start;
   parameter Types.MolarMass MM_mix_start = MM*Y_start;
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.Temperature Tsat_min = 273.15 + 20;
@@ -42,14 +42,14 @@ partial model PapayMixture
   final parameter Types.SpecificEnthalpy h_id_start = X_start*h_star_start;
   final parameter Types.AttractionForce a_star_start[nX, nX] = {(1 - delta[i, j])*sqrt(a_start[i])*sqrt(a_start[j]) for i in 1:nX, j in 1:nX} "Left-hand side terms of eq. (22)";
   final parameter Types.AttractionForce amix_start = sum(Y_start[i]*Y_start[j]*a_star_start[i, j] for i in 1:nX, j in 1:nX);
-  final parameter Types.DerPressurebySpecificVolume dp_dv_start = (-R*T_start/(v_start - b*Y_start)^2 + 2*amix_start*(v_start + b*Y_start)/(v_start*(v_start + b*Y_start) + b*Y_start*(v_start - b*Y_start))^2)*MM_mix_start;
+  final parameter Types.DerPressurebySpecificVolume dp_dv_start = (-R*T_start/(v_mol_start - b*Y_start)^2 + 2*amix_start*(v_mol_start + b*Y_start)/(v_mol_start*(v_mol_start + b*Y_start) + b*Y_start*(v_mol_start - b*Y_start))^2)*MM_mix_start;
   final parameter Types.SpecificHeatCapacity cp_star_start[nX] = {cp_T(T_start, cp_coeff[i]) for i in 1:nX};
   final parameter Types.DerAttractionForcebyTemperature da_dT_start[nX] = {ac[i]*dalpha_dT_start[i] for i in 1:nX};
   final parameter Types.DerPerUnitbyTemperature dalpha_dT_start[nX] = {2*(1 + m[i]*(1 - sqrt(T_start/T_c[i])))*m[i]*(-(1/T_c[i])/(2*sqrt(T_start/T_c[i]))) for i in 1:nX};
   final parameter Types.PerUnit dX_dX_start[nX, nX] = identity(nX);
   final parameter Types.PerUnit dY_dX_start[nX, nX] = {(MM_mix_start/MM[i])*(dX_dX_start[i, j] - (MM_mix_start/MM[j])*X_start[i]) for j in 1:nX, i in 1:nX};
   final parameter Types.DerAttractionForcebyTemperature damix_dT_start = 0.5*sum(Y_start[i]*Y_start[j]*a_star_start[i, j]*(da_dT_start[i]/a_start[i] + da_dT_start[j]/a_start[j]) for i in 1:nX, j in 1:nX);
-  final parameter Types.DerPressureByTemperature dp_dT_start = R/(v_start - b*Y_start) - damix_dT_start/(v_start*(v_start + b*Y_start) + b*Y_start*(v_start - b*Y_start)) "Temperature derivative of Pressure at constant specific volume";
+  final parameter Types.DerPressureByTemperature dp_dT_start = R/(v_mol_start - b*Y_start) - damix_dT_start/(v_mol_start*(v_mol_start + b*Y_start) + b*Y_start*(v_mol_start - b*Y_start)) "Temperature derivative of Pressure at constant specific volume";
   final parameter Types.AttractionForce damix_dY_start[nX] = 2*{sum(Y_start[j]*a_star_start[i, j] for j in 1:nX) for i in 1:nX};
   constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
   //Variables
@@ -78,7 +78,7 @@ partial model PapayMixture
   Types.DerPerUnitbyTemperature dalpha_dT[nX](start = dalpha_dT_start) "Temperature derivative of alpha per each component";
   Types.MoleFraction Y[nX](start = Y_start) "Mole fractions of the components";
   Types.MolarMass MM_mix(start = MM*Y_start) "Molar Mass of the fluid (mixture)";
-  Types.MolarVolume v(start = v_start) "Molar volume";
+  Types.MolarVolume v_mol(start = v_mol_start) "Molar volume";
   Types.MolarVolume bmix(start = b*Y_start) "Covolume of mixture";
   Types.MolarVolume dbmix_dY[nX] "Mole fraction derivative of the fluid's molar covolumen, per each component";
   Types.MolarEnthalpy h_res_m(nominal = 5e2) "Residual or departure Molar Enthalpy of the fluid";
@@ -118,7 +118,7 @@ partial model PapayMixture
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
-  Types.PerUnit Z "Compressibility factor of the mixture";
+  Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
   Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
@@ -217,68 +217,71 @@ equation
   ddamix_dTdY = {sum(Y[j]*a_star[i, j]*(da_dT[i]/(a[i]) + da_dT[j]/(a[j])) for j in 1:nX) for i in 1:nX};
   bmix = b*Y "Molar covolumen of the mixture, from(1)-Equation 21";
   dbmix_dY = b "Manually derivated from bmix";
-  //p = R*T/(v - bmix) - amix/(v*(v + bmix) + bmix*(v - bmix)) "Peng-Robinson EoS in molar units, from(1)-Equation 4";
+  //p = R*T/(v_mol - bmix) - amix/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix)) "Peng-Robinson EoS in molar units, from(1)-Equation 4";
   //p = rho*Z*R*T/MM_mix "Equation of State";
-  Z = p*v/(R*T);
+  Z = p*v_mol/(R*T);
   Z = 1 - 3.52*pr_mix*exp(-2.26*Tr_mix) + 0.247*pr_mix*pr_mix*exp(-1.878*Tr_mix);
-  rho = MM_mix/v;
+  rho = MM_mix/v_mol;
   for i in 1:nX loop
-    h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    //h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    h_star[i] = Hf[i] + h_T(T, cp_coeff[i]);
     cp_star[i] = cp_T(T, cp_coeff[i]) "Ideal specific heat capacity of each component in unit mass";
   end for;
 
-//Specific Enthalpy
+  //Specific Enthalpy
   h_id = X*h_star "Ideal Specific Enthalpy of the fluid in unit mass";
-//h_id_m = Y.*h_star.*MM "Ideal Specific Enthalpy of the fluid in molar mass";
-  h_res_m = p*v - R*T + ((T*damix_dT - amix)/(2*sqrt(2)*bmix))*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)));
+  //h_res_m = p*v_mol - R*T + ((T*damix_dT - amix)/(2*sqrt(2)*bmix))*log(abs((v_mol + (1 + sqrt(2))*bmix)/(v_mol + (1 - sqrt(2))*bmix)));
+  h_res_m = 0;
   h_res = h_res_m/MM_mix "Residual Specific Enthalpy of the fluid in unit mass, from(2)-Equation S2.122";
   h - h_id = h_res;
-//Specific Heat Capacity
+
+  //Specific Heat Capacity
 //cp_id = X*cp_star "Ideal Specific Heat Capacity of the fluid in unit mass";
   cp_id = X*cp_star;
-  cp_res = (-R + T*ddamix_ddT*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix))/MM_mix - T*(dp_dT^2)/dp_dv "Residual Specific Heat Capacity of the fluid in unit mass, from(2)-Equation S2.125";
+  //cp_res = (-R + T*ddamix_ddT*log(abs((v_mol + (1 + sqrt(2))*bmix)/(v_mol + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix))/MM_mix - T*(dp_dT^2)/dp_dv "Residual Specific Heat Capacity of the fluid in unit mass, from(2)-Equation S2.125";
+  cp_res = 0;
   cp = cp_id + cp_res;
   cp = cv - (T*(dp_dT^2)/dp_dv) "in unit mass, from(2)-Equation S2.126";
 
   //Thermodynamic variables
-  h = u + (p*v)/MM_mix "in unit mass";
-  dp_dT = R/(v - bmix) - damix_dT/(v*(v + bmix) + bmix*(v - bmix)) "from(2)-Equation S2.127";
-  dp_dY = (R*T/(v - bmix)^2 + 2*(v - bmix)*amix/(v*(v + bmix) + bmix*(v - bmix))^2)*dbmix_dY - (1/(v*(v + bmix) + bmix*(v - bmix)))*damix_dY;
-  dp_dv_mol = (-R*T/(v - bmix)^2 + 2*amix*(v + bmix)/(v*(v + bmix) + bmix*(v - bmix))^2) "in mole units";
+  h = u + (p*v_mol)/MM_mix "in unit mass";
+  dp_dT = R/(v_mol - bmix) - damix_dT/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix)) "from(2)-Equation S2.127";
+  dp_dY = (R*T/(v_mol - bmix)^2 + 2*(v_mol - bmix)*amix/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix))^2)*dbmix_dY - (1/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix)))*damix_dY;
+  dp_dv_mol = (-R*T/(v_mol - bmix)^2 + 2*amix*(v_mol + bmix)/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix))^2) "in mole units";
   dv_mol_dT = -dv_mol_dp*dp_dT "in mole units";
   dv_mol_dp = 1/dp_dv_mol "in mole units";
   dv_mol_dY = -dp_dY*dv_mol_dp "in mole units";
-  dp_dv = (-R*T/(v - bmix)^2 + 2*amix*(v + bmix)/(v*(v + bmix) + bmix*(v - bmix))^2)*MM_mix "in mass units, from(2)-Equation S2.128";
+  dp_dv = (-R*T/(v_mol - bmix)^2 + 2*amix*(v_mol + bmix)/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix))^2)*MM_mix "in mass units, from(2)-Equation S2.128";
   du_dT = cp + p*dp_dT*dv_dp "in mass units";
   du_dp = -(T*dv_dT + p*dv_dp) "in mass units";
   dv_dT = -dv_dp*dp_dT "in mass units";
-  dv_dp = (1/((-R*T/(v - bmix)^2) + 2*amix*(v + bmix)/(v*(v + bmix) + bmix*(v - bmix))^2))/MM_mix "in mass units";
-  dv_dY = (1/MM_mix)*dv_mol_dY - v*(1/MM_mix^2)*MM "in mass units";
-  dv_dX = (1/MM_mix)*dv_mol_dY*dY_dX - v*(1/MM_mix^2)*MM*dY_dX "in mass units";
+  dv_dp = (1/((-R*T/(v_mol - bmix)^2) + 2*amix*(v_mol + bmix)/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix))^2))/MM_mix "in mass units";
+  dv_dY = (1/MM_mix)*dv_mol_dY - v_mol*(1/MM_mix^2)*MM "in mass units";
+  dv_dX = (1/MM_mix)*dv_mol_dY*dY_dX - v_mol*(1/MM_mix^2)*MM*dY_dX "in mass units";
   dT_dY = -dp_dY/dp_dT;
   dT_dX = dT_dY*dY_dX;
   dX_dX = identity(nX);
   dY_dX = {(MM_mix/MM[i])*(dX_dX[i, j] - (MM_mix/MM[j])*X[i]) for j in 1:nX, i in 1:nX};
-  drho_dp = -MM_mix*(1/v^2)*dv_mol_dp "in mass units";
-  drho_dT = -MM_mix*(1/v^2)*dv_mol_dT "in mass units";
-  drho_dX = (1/v)*MM*dY_dX - MM_mix*(1/v^2)*dv_mol_dY*dY_dX;
+  drho_dp = -MM_mix*(1/v_mol^2)*dv_mol_dp "in mass units";
+  drho_dT = -MM_mix*(1/v_mol^2)*dv_mol_dT "in mass units";
+  drho_dX = (1/v_mol)*MM*dY_dX - MM_mix*(1/v_mol^2)*dv_mol_dY*dY_dX;
   dh_id_dX = h_star "in mass units";
   dh_id_dY = {(1/MM_mix)*MM[i]*h_star[i] - (1/MM_mix^2)*MM[i]*(Y.*MM)*h_star for i in 1:nX};
-  dh_res_m_dY = p*dv_mol_dY + (log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))*((sqrt(2)/4)*(T*ddamix_dTdY/bmix - damix_dY/bmix - (dbmix_dY*(T*damix_dT - amix)/(bmix^2)))) + (((T*damix_dT - amix)/(2*sqrt(2)*bmix))*((v + (1 - sqrt(2))*bmix)/(v + (1 + sqrt(2))*bmix))*(2*sqrt(2)*(v*dbmix_dY - bmix*dv_mol_dY)/(v + (1 - sqrt(2))*bmix)^2))) "in mole units";
+  dh_res_m_dY = p*dv_mol_dY + (log(abs((v_mol + (1 + sqrt(2))*bmix)/(v_mol + (1 - sqrt(2))*bmix)))*((sqrt(2)/4)*(T*ddamix_dTdY/bmix - damix_dY/bmix - (dbmix_dY*(T*damix_dT - amix)/(bmix^2)))) + (((T*damix_dT - amix)/(2*sqrt(2)*bmix))*((v_mol + (1 - sqrt(2))*bmix)/(v_mol + (1 + sqrt(2))*bmix))*(2*sqrt(2)*(v_mol*dbmix_dY - bmix*dv_mol_dY)/(v_mol + (1 - sqrt(2))*bmix)^2))) "in mole units";
   dh_res_dX = (1/MM_mix)*dh_res_m_dY*dY_dX - (1/(MM_mix^2))*h_res_m*MM*dY_dX "in mass units";
   dh_res_dY = (1/MM_mix)*dh_res_m_dY - (1/(MM_mix^2))*h_res_m*MM "in mass units";
   dh_dX = dh_res_dX + dh_id_dX "in mass units";
   dh_dY = dh_res_dY + dh_id_dY "in mass units";
-  du_dY = dh_dY - p*((1/MM_mix)*dv_mol_dY - (v*MM/(MM_mix^2)));
+  du_dY = dh_dY - p*((1/MM_mix)*dv_mol_dY - (v_mol*MM/(MM_mix^2)));
   du_dX = du_dY*dY_dX "in mass units";
-//du_dX = dh_dX - p*((1/MM_mix)*dv_mol_dY*dY_dX-(v*MM*dY_dX/(MM_mix^2))) "in mass units";
+//du_dX = dh_dX - p*((1/MM_mix)*dv_mol_dY*dY_dX-(v_mol*MM*dY_dX/(MM_mix^2))) "in mass units";
   mu = 0 "computation not included in the model";
   k = 0 "computation not included in the model";
   
   //Entropy
   if computeEntropy then
     s_id = X*s_star + (R*sum(Y[i]*log(Y[i] + eps) for i in 1:nX))/MM_mix "from(3)-Equation 8.6";
-    s_res = (R*log(abs(p*(v - bmix)/(R*T))) + (damix_dT*log(abs((v + (1 + sqrt(2))*bmix)/(v + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix)))/MM_mix "from(4)-Equation 6.4-30";
+    s_res = (R*log(abs(p*(v_mol - bmix)/(R*T))) + (damix_dT*log(abs((v_mol + (1 + sqrt(2))*bmix)/(v_mol + (1 - sqrt(2))*bmix)))/(2*sqrt(2)*bmix)))/MM_mix "from(4)-Equation 6.4-30";
     for i in 1:nX loop
       s_star[i] = s_T(T, cp_coeff[i]) - s_T(T0, cp_coeff[i]) - (R*log(p/p0))/MM_mix "Ideal specific entropy of each component in unit mass, from(3)-Equation 6.11";
     end for;

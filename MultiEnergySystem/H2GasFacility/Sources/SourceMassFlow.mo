@@ -9,7 +9,7 @@ model SourceMassFlow
     "Nominal pressure starting value";
   parameter Types.Temperature T0 = 15 + 273.15 
     "Nominal temperature and starting value for fluid";
-  parameter Types.MassFraction X0[fluid.nX] = fluid.X_start
+  parameter Types.MassFraction X0[fluid.nX]
     "Nominal mass fraction and start value for fluid";
   parameter Types.MassFlowRate m_flow0 = 20 
     "Nominal mass flowrate";
@@ -17,7 +17,7 @@ model SourceMassFlow
     "HydraulicConductance";
   
   // Boolean Type  parameters
-  parameter Boolean computeTransport = true
+  parameter Boolean computeTransport = false
     "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false
     "Used to decide if it is necessary to calculate the transport properties";
@@ -64,11 +64,11 @@ model SourceMassFlow
   Medium fluid(p_start = p0, T_start = T0, X_start = X0, computeEntropy = computeEntropy, computeTransport = computeTransport);
   
   // Variables
-  Types.MassFlowRate m_flow
+  Types.MassFlowRate m_flow(start = m_flow0)
     "Actual mass flow rate";
   Types.Temperature T
     "Actual temperature";
-  Types.Pressure p
+  Types.Pressure p(start = p0)
     "Actual pressure";
   Types.MassFraction X[fluid.nX]
     "Actual mass fraction";    

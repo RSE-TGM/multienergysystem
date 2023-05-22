@@ -66,11 +66,11 @@ model SourceMassFlow
   // Variables
   Types.MassFlowRate m_flow(start = m_flow0)
     "Actual mass flow rate";
-  Types.Temperature T
+  Types.Temperature T(start = T0)
     "Actual temperature";
   Types.Pressure p(start = p0)
     "Actual pressure";
-  Types.MassFraction X[fluid.nX]
+  Types.MassFraction X[fluid.nX](start = X0)
     "Actual mass fraction";    
   Types.SpecificEnthalpy h 
     "Actual specific enthalpy";

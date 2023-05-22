@@ -77,7 +77,7 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {-110, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.044645108) annotation(
     Placement(visible = true, transformation(origin = {20, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start_H2, computeEnthalpyWithFixedPressure = true, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation(
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(redeclare model Medium = Medium, G = 1000, T0 = 15 + 273.15, X0 = X_start_H2, computeEnthalpyWithFixedPressure = true, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation(
     Placement(visible = true, transformation(origin = {-114, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation(
     Placement(visible = true, transformation(origin = {-140, -28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

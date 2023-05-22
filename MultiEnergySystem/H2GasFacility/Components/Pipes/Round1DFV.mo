@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 
-model Round1DFV   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
+model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet.nXi = nXi, outlet.nXi = nXi);
   import Modelica.Fluid.Utilities.regSquare;
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
@@ -10,7 +10,6 @@ model Round1DFV   "Model of a 1D flow in a circular rigid pipe. Finite Volume (F
      choicesAllMatching = true);
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation(
      choicesAllMatching = true);
- 
  
   constant Types.Acceleration g_n = Modelica.Constants.g_n;
   
@@ -113,7 +112,7 @@ model Round1DFV   "Model of a 1D flow in a circular rigid pipe. Finite Volume (F
     "Mass of fluid in each finite volume";
   Types.Density rho[n + 1](each start = rho_nom)
     "Density at each volume boundary";
-  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start)
+  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start, each nominal = 0.01)
     "Mass flow at each volume boundary";
   Types.VolumeFlowRate q[n + 1]
     "Mass flow rate in each volume across the pipe";
@@ -121,7 +120,7 @@ model Round1DFV   "Model of a 1D flow in a circular rigid pipe. Finite Volume (F
     "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1] 
     "Specific enthalpy at each fluid";
-  Types.MassFraction Xi[n + 1, nXi] 
+  Types.MassFraction Xi[n + 1, nXi]
     "Mass fractions at each volume boundary";
   Types.Velocity u[n + 1]
     "Velocity at each volume boundary";
@@ -163,7 +162,7 @@ equation
   // Relationships for state variables
   Ttilde = T[2:n+1];
   Xitilde = Xi[2:n+1,:];
-  ptilde = pout;
+  //ptilde = pout;
 
   // Boundary variables
   m_flow[1] = inlet.m_flow;
@@ -186,21 +185,20 @@ equation
   // Balances
   for i in 1:n loop
      M[i] = Vi * rho[i + 1];
-     //m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
-     //M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
-     M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (fluid[i].Xi - fluid[i + 1].Xi);
-     //Xi[i, :] - Xi[i + 1, :] = zeros(nXi);
+     M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
      if quasistaticEnergyBalance then
         m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
-        T[i] - T[i + 1] = 0;
+        0 = T[i] - T[i + 1];
      else
         m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
         m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
      end if;
-     //m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
   end for;
   
-  pin - pout = k*inlet.m_flow;
+  //pin - pout = k*inlet.m_flow;
+  pin - ptilde = k/2*inlet.m_flow;
+  ptilde - pout = -k/2*outlet.m_flow;
+  
   //pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
   kf = cfnom * omega * L / (2* A^3);
   

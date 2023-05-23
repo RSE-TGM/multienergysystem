@@ -3,13 +3,15 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.RealGases.CH4Papay;
-  replaceable model Medium = H2GasFacility.Media.RealGases.CH4H2Papay;
+  //replaceable model Medium = H2GasFacility.Media.RealGases.CH4H2Papay;
+  replaceable model Medium = H2GasFacility.Media.IdealGases.CH4H2;
   //replaceable model Medium = H2GasFacility.Media.RealGases.NGPapay_6;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   //parameter Types.MassFraction X_start[1] = {1};
   parameter Types.MassFraction X_start[2] = {1,0};
   //parameter Types.MassFlowRate X_start[6] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0001, 0.0092477};
   parameter Types.MassFraction X_start_H2[2] = {0,1};
+  //parameter Types.MassFraction X_start_H2[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 1};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(redeclare model Medium = Medium, Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start) annotation(
     Placement(visible = true, transformation(origin = {-30, 60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));

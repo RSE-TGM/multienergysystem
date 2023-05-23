@@ -16,8 +16,6 @@ model CH4H2
              Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
       v_mol_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
                  Modelica.Media.IdealGases.Common.FluidData.H2.criticalMolarVolume},
-      delta = {{0, 0.0156},
-               {0.0156, 0}},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.H2.Hf},
       HHV = {37.669e6, 12.75e6},

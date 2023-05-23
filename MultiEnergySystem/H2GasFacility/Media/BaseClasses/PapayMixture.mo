@@ -219,7 +219,8 @@ equation
   dbmix_dY = b "Manually derivated from bmix";
   //p = R*T/(v_mol - bmix) - amix/(v_mol*(v_mol + bmix) + bmix*(v_mol - bmix)) "Peng-Robinson EoS in molar units, from(1)-Equation 4";
   //p = rho*Z*R*T/MM_mix "Equation of State";
-  Z = p*v_mol/(R*T);
+  //Z = p*v_mol/(R*T);
+  p*v_mol = Z*R*T;
   Z = 1 - 3.52*pr_mix*exp(-2.26*Tr_mix) + 0.247*pr_mix*pr_mix*exp(-1.878*Tr_mix);
   rho = MM_mix/v_mol;
   for i in 1:nX loop

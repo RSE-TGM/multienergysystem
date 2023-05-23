@@ -8,7 +8,6 @@ partial model IdealMixture
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
   final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
   parameter Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
-  parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
   parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   parameter Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";

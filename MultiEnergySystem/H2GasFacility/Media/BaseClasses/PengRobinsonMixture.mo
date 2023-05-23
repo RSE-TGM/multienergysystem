@@ -207,7 +207,7 @@ equation
   bmix = b*Y "Molar covolumen of the mixture, from(1)-Equation 21";
   dbmix_dY = b "Manually derivated from bmix";
   p = R*T/(v - bmix) - amix/(v*(v + bmix) + bmix*(v - bmix)) "Peng-Robinson EoS in molar units, from(1)-Equation 4";
-  Z = p*v/(R*T);
+  p*v = Z*R*T;
   rho = MM_mix/v;
   for i in 1:nX loop
     h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";

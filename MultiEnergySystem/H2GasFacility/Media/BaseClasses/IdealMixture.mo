@@ -148,7 +148,8 @@ equation
   rho = 1/v;
   v_mol = v*MM_mix;
   for i in 1:nX loop
-    h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    //h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    h_star[i] = h_T(T, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
     cp_star[i] = cp_T(T, cp_coeff[i]) "Ideal specific heat capacity of each component in unit mass";
   end for;
 
@@ -163,9 +164,9 @@ equation
 
   //Thermodynamic variables
   h = u + p*v "in unit mass";
-  dp_dT = R/v_mol "from(2)-Equation S2.127";
+  dp_dT = R/v_mol;
   dp_dY = R/(MM_mix^2)*MM;
-  dp_dv = -(R/(MM_mix*T))/v^2 "in mass units";
+  dp_dv = -(R*T/MM_mix)/v^2 "in mass units";
   dMM_mix_dY = MM; 
   du_dT = cp + p*dp_dT*dv_dp "in mass units";
   du_dp = -(T*dv_dT + p*dv_dp) "in mass units";

@@ -4,7 +4,6 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet.nXi = nXi, outlet.nXi = nXi);
   import Modelica.Fluid.Utilities.regSquare;
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
-  
   // Medium & Heat Transfer Model for the pipe
   replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPapay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
      choicesAllMatching = true);
@@ -12,7 +11,6 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
      choicesAllMatching = true);
  
   constant Types.Acceleration g_n = Modelica.Constants.g_n;
-  
   // Main Parameters
   parameter Boolean computeTransport = false
     "Used to decide if it is necessary to calculate the transport properties";
@@ -64,7 +62,6 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Start value for the mass fraction" annotation(
     Dialog(group = "Initialisation"));
   parameter Types.PerUnit cfnom = 0.005;
-  
   // Final parameters
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
     "Temperature start value of the fluid";
@@ -84,17 +81,15 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Volume of one finite element";
   outer System system 
     "system object for global defaults";
-  
   // State Variables
   Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)) 
     "Composition state for each volume";
   Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) 
     "Pressure state the pipe";  
-  //Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = 1e4) 
-  //  "Pressure state the pipe";  
+//Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = 1e4)
+  //  "Pressure state the pipe";
   Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:n+1])
     "State variable temperatures";
-  
   // Inlet/Outlet Variables
   Types.Temperature Tin
     "Inlet temperature";
@@ -109,7 +104,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Pressure pout
     "Outlet pressure";
 
-  // Vector Variables
+// Vector Variables
   Types.Mass M[n]
     "Mass of fluid in each finite volume";
   Types.Density rho[n + 1](each start = rho_nom)
@@ -129,97 +124,84 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   //Real dv_dt[n + 1](each unit = "m3/(kg.s)")
   //  "Derivative of specific volume w.r.t. time";
   //Types.Pressure p[n + 1];
-
   // Complementary variables
-  
   Types.Time taur
     "Residence time";
   Real kf(unit = "1/m4");
 
-  // Fluids
+// Fluids
   Medium fluid[n + 1](
     T_start = T_start,
     each X_start = X_start,
     each p_start = pout_start,
     each computeTransport = computeTransport,
     each computeEntropy = computeEntropy);
-
 equation
-
-  // Equations to set the fluid properties
+// Equations to set the fluid properties
   for i in 1:n + 1 loop
     fluid[i].T = T[i] "Temperature at each volume boundary is equal to its equivalent value in the vector variable T";
     fluid[i].Xi = Xi[i, :] "Mass fraction at each volume boundary is equal to its equivalent value in the vector variable Xi";
     fluid[i].p = ptilde "Pressure at each volume boundary is equal to ptilde";
-    //fluid[i].p = p[i] "Pressure at each volume boundary is equal to ptilde";
+//fluid[i].p = p[i] "Pressure at each volume boundary is equal to ptilde";
   end for;
-
-  // Equations to assign values from fluids properties
+// Equations to assign values from fluids properties
   for i in 1:n + 1 loop
     h[i] = fluid[i].h "Specific enthalpy at each volume boundary";
     rho[i] = fluid[i].rho "Density at each volume boundary";
-    //dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
+//dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
     q[i] = m_flow[i]/rho[i];
-    m_flow[i] = A * u[i]* rho[i];
+    m_flow[i] = A*u[i]*rho[i];
   end for;
-
-  // Relationships for state variables
-  Ttilde = T[2:n+1];
-  Xitilde = Xi[2:n+1,:];
-  //ptilde = p[2:n+1];
-  //ptilde = pout;
-
-  // Boundary variables
+// Relationships for state variables
+  Ttilde = T[2:n + 1];
+  Xitilde = Xi[2:n + 1, :];
+//ptilde = p[2:n+1];
+//ptilde = pout;
+// Boundary variables
   m_flow[1] = inlet.m_flow;
   m_flow[n + 1] = -outlet.m_flow;
   h[1] = inStream(inlet.h_out);
-  //h[n+1] = outlet.h_out;
+//h[n+1] = outlet.h_out;
   outlet.h_out = h[n + 1];
-  Xi[1,:] = inStream(inlet.Xi);
-  //Xi[n+1,:] = outlet.Xi;
+  Xi[1, :] = inStream(inlet.Xi);
+//Xi[n+1,:] = outlet.Xi;
   outlet.Xi = Xi[n + 1, :];
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
-  Tout = fluid[n+1].T "Outlet temperature equals to temperature of last fluid";
+  Tout = fluid[n + 1].T "Outlet temperature equals to temperature of last fluid";
   hin = fluid[1].h "Inlet specific enthalpy equals to specific enthalpy of first fluid";
-  hout = fluid[n+1].h "Outlet specific enthalpy equals to specific enthalpy of last fluid";
+  hout = fluid[n + 1].h "Outlet specific enthalpy equals to specific enthalpy of last fluid";
   pin = inlet.p "Inlet pressure equals to pressure of the inlet connector";
   pout = outlet.p "Outlet pressure equals to pressure of the outlet connector";
   inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
   inlet.h_out = hin_start "Dummy equation (not flow reversal)";
-  
-  // Balances
+// Balances
   for i in 1:n loop
-     M[i] = Vi * rho[i + 1];
-     M[i]*der(fluid[i + 1].Xi) = m_flow[i]* (Xi[i, :] - Xi[i + 1, :]);
-     if quasistaticEnergyBalance then
-        m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
-        0 = T[i] - T[i + 1];
-     else
-        m_flow[i] - m_flow[i + 1] = -Vi * rho[i + 1] ^ 2 *(fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X));
-        m_flow[i] * fluid[i].h - m_flow[i + 1] * fluid[i + 1].h = M[i] * (fluid[i + 1].du_dT * der(fluid[i + 1].T) + fluid[i + 1].du_dp * der(fluid[i + 1].p) + fluid[i + 1].du_dX * der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1]) * fluid[i + 1].u "Energy Balance";
-     end if; 
-     //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
-     //p[i] - ptilde[i] = k/2*m_flow[i]/n;
+    M[i] = Vi*rho[i + 1];
+    M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+    if quasistaticEnergyBalance then
+      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
+      0 = T[i] - T[i + 1];
+    else
+      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
+      m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
+    end if;
+//ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
+//p[i] - ptilde[i] = k/2*m_flow[i]/n;
   end for;
-  
-  //pin - pout = k*inlet.m_flow;
+//pin - pout = k*inlet.m_flow;
   pin - ptilde = k/2*inlet.m_flow;
   ptilde - pout = -k/2*outlet.m_flow;
-  
-  //pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
-  kf = cfnom * omega * L / (2* A^3);
-  //p[1] = inlet.p;
-  //p[n + 1] = outlet.p;
-  
-  
-  // Complementary variables
+//pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
+  kf = cfnom*omega*L/(2*A^3);
+//p[1] = inlet.p;
+//p[n + 1] = outlet.p;
+// Complementary variables
   taur = sum(M)/inlet.m_flow;
-  
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
       if quasistaticEnergyBalance then
-      // nothing
+// nothing
       else
         der(Ttilde[i]) = 0;
       end if;
@@ -227,7 +209,7 @@ initial equation
     end for;
     if not noInitialPressure then
       der(ptilde) = 0;
-      //der(ptilde) = zeros(n);
+//der(ptilde) = zeros(n);
     else
 //  No initial pressure
     end if;

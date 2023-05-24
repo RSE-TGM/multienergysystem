@@ -66,8 +66,8 @@ partial model IdealMixture
   Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
   Types.MolarMass dMM_mix_dY[nX](start = MM) "Mole fraction derivative of the mixture molar mass";
   Types.SpecificVolume dv_dY[nX] "Mole fraction derivative of specific volumen, per each component";
-  Real dT_dX[nX](each unit = "K") "Mass fraction derivative of Temperature at constant pressure, per each component";
-  Real dT_dY[nX](each unit = "K") "Mole fraction derivative of temperature at constant pressure, per each component";
+  Real dT_dX[nX](each unit = "K") "Mass fraction derivative vector of Temperature at constant pressure";
+  Real dT_dY[nX](each unit = "K") "Mole fraction derivative vectir of temperature at constant pressure";
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
@@ -76,6 +76,28 @@ partial model IdealMixture
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG "Specific gravity of the fluid mixture";
   Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
+  
+  Types.Pressure dp_dYi[nXi];
+  Types.SpecificVolume dv_dYi[nXi];
+  Types.SpecificVolume dv_dXi[nXi];
+  Real dT_dYi[nXi](each unit = "K");
+  Real dT_dXi[nXi](each unit = "K");
+  Real dT_dXi_check[nXi](each unit = "K");
+  Real dXi_dXi[nXi, nXi];
+  Real dYi_dYi[nXi, nXi];
+  Real dYi_dXi[nXi, nXi];
+  Real dXi_dYi[nXi, nXi];
+  Real drho_dXi[nXi](each unit = "kg/m3");
+  Types.SpecificEnthalpy dh_id_dXi[nXi];
+  Types.SpecificEnthalpy dh_id_dYi[nXi];
+  Types.SpecificEnthalpy dh_dXi[nXi];
+  Types.SpecificEnthalpy dh_dYi[nXi];
+  Types.SpecificEnergy du_dYi[nXi];
+  Types.SpecificEnergy du_dXi[nXi];
+  Types.MolarMass dMM_mix_dYi[nXi];
+  Types.MolarMass dMM_mix_dXi[nXi];
+  Types.MolarMass dMM_mix_dXi_check[nXi];
+  
 
   //Functions to compute cp, h and s using the coefficients obtained through Utilities.ComputegGasCoefficients
 protected
@@ -202,11 +224,36 @@ equation
   end if;
   s - s_id = 0;
   
-  HHV_mix = HHV*Y; 
-  1 = p0*v0/(R*T0);
+  HHV_mix = HHV*Y;
+  p0*v0 = Z*R*T0;
   rho0 = MM_mix/v0;
   SG = rho0/rhoair;
   WI = HHV_mix/sqrt(SG);
+  
+  
+  dXi_dXi = identity(nXi);
+  dYi_dYi = identity(nXi);
+  dYi_dXi = {(MM_mix/MM[i])*(dXi_dXi[i, j] - ((MM_mix)*(1/MM[j] - 1/MM[nX]))*X[i]) for j in 1:nXi, i in 1:nXi};
+  dXi_dYi = Modelica.Math.Matrices.inv(dYi_dXi);
+  dMM_mix_dXi = -(MM_mix)^2*{1/MM[i] - 1/MM[nX] for i in 1:nXi};
+  dMM_mix_dYi = MM[1:nXi] - ones(nXi)*MM[nX];
+  dMM_mix_dXi_check = dYi_dXi*dMM_mix_dYi;
+  
+  dT_dYi = (p*v/R)*dMM_mix_dYi;
+  dT_dXi = dT_dYi*dYi_dXi;
+  dT_dXi_check = (p*v/R)*dMM_mix_dXi;
+  dv_dYi = -(R*T/p)*(1/MM_mix^2)*dMM_mix_dYi;
+  dv_dXi = dv_dYi*dYi_dXi;
+  dp_dYi = -(R*T/v)*(1/MM_mix^2)*dMM_mix_dYi;
+  drho_dXi = -rho^2*dv_dYi*dYi_dXi;
+  
+  dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
+  dh_id_dYi = dh_id_dXi*dXi_dYi;
+  dh_dXi = dh_id_dXi "in mass units";
+  dh_dYi = dh_id_dYi "in mass units";
+  du_dYi = dh_dYi - p*dv_dYi - v*dp_dYi;
+  du_dXi = du_dYi*dYi_dXi "in mass units";
+  
   
   annotation(
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));

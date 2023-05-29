@@ -204,9 +204,9 @@ equation
   dv_dp = -v/p;
   dv_dX = v*MM_mix./MM;
   dv_dY = -v*MM/MM_mix;
-  drho_dp = -rho^2*dv_dp "in mass units";
-  drho_dT = -rho^2*dv_dT "in mass units";
-  drho_dX = -rho^2*dv_dX "in mass units";
+  drho_dp = -rho^2*dv_dp;
+  drho_dT = -rho^2*dv_dT;
+  drho_dX = -rho^2*dv_dX;
   
   // Mass/mol fraction derivaties
   dX_dX = identity(nX);

@@ -2,9 +2,9 @@ within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
 
 model TestSinglePipe_A
   replaceable model Medium = H2GasFacility.Media.RealGases.NGPapay_6;
-  parameter Types.MassFraction Xref[6] = {0.81878, 0.102312, 0.0250063, 0.00329607, 0.0124787, 0.0381269};
+  parameter Types.MassFraction Xref[:] = {0.81878, 0.102312, 0.0250063, 0.00329607, 0.0124787, 0.0381269};
   parameter Types.MassFlowRate m_flow_ref = 0.02;
-  parameter Integer n = 13;
+  parameter Integer n = 5;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(redeclare model Medium = Medium, Di = 0.02, L = 50, Tin_start = 20 + 273.15, Tout_start = 20 + 273.15, X_start = Xref, cf = 0.1, hin_start = -4.27208e6, k = 44500, kc = 1, m_flow_start = m_flow_ref, n = n, pin_start = 75e2, pout_start = 66.09e2, quasistaticEnergyBalance = true, rho_nom = 0.05521, u_nom = 17.82146) annotation(
     Placement(visible = true, transformation(origin = {-3.55271e-15, 2.22045e-16}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
   H2GasFacility.Sources.SourcePressure sourceP(redeclare model Medium = Medium, T0 = 20 + 273.15, X0 = Xref, p0 = 75e2, use_in_T0 = true, use_in_p0 = true) annotation(

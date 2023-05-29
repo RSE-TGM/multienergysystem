@@ -77,27 +77,32 @@ partial model IdealMixture
   Types.PerUnit SG "Specific gravity of the fluid mixture";
   Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
   
-  Types.Pressure dp_dYi[nXi];
-  Types.SpecificVolume dv_dYi[nXi];
-  Types.SpecificVolume dv_dXi[nXi];
-  Real dT_dYi[nXi](each unit = "K");
-  Real dT_dXi[nXi](each unit = "K");
-  Real dT_dXi_check[nXi](each unit = "K");
-  Real dXi_dXi[nXi, nXi];
-  Real dYi_dYi[nXi, nXi];
-  Real dYi_dXi[nXi, nXi];
-  Real dXi_dYi[nXi, nXi];
-  Real drho_dXi[nXi](each unit = "kg/m3");
-  Types.SpecificEnthalpy dh_id_dXi[nXi];
-  Types.SpecificEnthalpy dh_id_dYi[nXi];
-  Types.SpecificEnthalpy dh_dXi[nXi];
-  Types.SpecificEnthalpy dh_dYi[nXi];
-  Types.SpecificEnergy du_dYi[nXi];
-  Types.SpecificEnergy du_dXi[nXi];
-  Types.MolarMass dMM_mix_dYi[nXi];
-  Types.MolarMass dMM_mix_dXi[nXi];
-  Types.MolarMass dMM_mix_dXi_check[nXi];
-  
+//  Types.Pressure dp_dYi[nXi];
+//  Types.Pressure dp_dXi[nXi];
+//  Types.SpecificVolume dv_dYi[nXi];
+//  Types.SpecificVolume dv_dXi[nXi];
+//  Types.SpecificVolume dv_dXi_check[nXi];
+  //Types.SpecificVolume dv_dX_check[nX];
+  //Real dp_dT_check(unit = "Pa/K");
+//  Real dT_dYi[nXi](each unit = "K");
+//  Real dT_dXi[nXi](each unit = "K");
+//  Real dT_dXi_check[nXi](each unit = "K");
+//  Real dXi_dXi[nXi, nXi];
+//  Real dYi_dYi[nXi, nXi];
+//  Real dYi_dXi[nXi, nXi];
+//  Real dXi_dYi[nXi, nXi];
+//  Real drho_dXi[nXi](each unit = "kg/m3");
+//  Types.SpecificEnthalpy dh_id_dXi[nXi];
+//  Types.SpecificEnthalpy dh_id_dYi[nXi];
+//  Types.SpecificEnthalpy dh_dXi[nXi];
+//  Types.SpecificEnthalpy dh_dYi[nXi];
+//  Types.SpecificEnergy du_dYi[nXi];
+//  Types.SpecificEnergy du_dXi[nXi];
+//  Types.SpecificEnergy du_dXi_check[nXi];
+//  Types.MolarMass dMM_mix_dYi[nXi];
+//  Types.MolarMass dMM_mix_dXi[nXi];
+//  Types.MolarMass dMM_mix_dXi_check[nXi];
+//  Types.MolarMass MM_mix_check;
 
   //Functions to compute cp, h and s using the coefficients obtained through Utilities.ComputegGasCoefficients
 protected
@@ -162,16 +167,16 @@ equation
   assert(sum(MM) > 0, "error2");
 
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
-  MM_mix = MM*Y "molar mass of the fluid";
-  
+  MM_mix = MM*Y "molar mass of the fluid"; 
   
   Z = 1;
   p*v_mol = Z*R*T;
   rho = 1/v;
   v_mol = v*MM_mix;
+  
   for i in 1:nX loop
-    //h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
-    h_star[i] = h_T(T, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    //h_star[i] = h_T(T, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
     cp_star[i] = cp_T(T, cp_coeff[i]) "Ideal specific heat capacity of each component in unit mass";
   end for;
 
@@ -184,31 +189,42 @@ equation
   cp = cp_id;
   cp = cv - (T*(dp_dT^2)/dp_dv) "in unit mass, from(2)-Equation S2.126";
 
-  //Thermodynamic variables
+  //Specific enthaly and energy relationship
   h = u + p*v "in unit mass";
-  dp_dT = R/v_mol;
+  
+  // Pressure and temperature derivatives
   dp_dY = R/(MM_mix^2)*MM;
-  dp_dv = -(R*T/MM_mix)/v^2 "in mass units";
-  dMM_mix_dY = MM; 
-  du_dT = cp + p*dp_dT*dv_dp "in mass units";
-  du_dp = -(T*dv_dT + p*dv_dp) "in mass units";
-  dv_dT = -dv_dp*dp_dT "in mass units";
-  dv_dp = -(R/MM_mix)*T/p^2 "in mass units";
-  dv_dY = -(T/p)*(R/MM_mix^2)*MM "in mass units";
-  dv_dX = dv_dY*dY_dX "in mass units";
+  dp_dv = -(R*T/MM_mix)*rho^2 "in mass units";
+  dp_dT = R*rho*sum(X[j]/MM[j] for j in 1:nX);
   dT_dY = -dp_dY/dp_dT;
   dT_dX = dT_dY*dY_dX;
+
+  // Specific volume and density derivates
+  dv_dT = v/T;
+  dv_dp = -v/p;
+  dv_dX = v*MM_mix./MM;
+  dv_dY = -v*MM/MM_mix;
+  drho_dp = -rho^2*dv_dp "in mass units";
+  drho_dT = -rho^2*dv_dT "in mass units";
+  drho_dX = -rho^2*dv_dX "in mass units";
+  
+  // Mass/mol fraction derivaties
   dX_dX = identity(nX);
   dY_dX = {(MM_mix/MM[i])*(dX_dX[i, j] - (MM_mix/MM[j])*X[i]) for j in 1:nX, i in 1:nX};
-  drho_dp = -(1/v^2)*dv_dp "in mass units";
-  drho_dT = -(1/v^2)*dv_dT "in mass units";
-  drho_dX = -rho^2*dv_dY*dY_dX;
+  dMM_mix_dY = MM;
+  
+  // Specific enthalpy derivatives
   dh_id_dX = h_star "in mass units";
   dh_id_dY = {(1/MM_mix)*MM[i]*h_star[i] - (1/MM_mix^2)*MM[i]*(Y.*MM)*h_star for i in 1:nX};
   dh_dX = dh_id_dX "in mass units";
   dh_dY = dh_id_dY "in mass units";
-  du_dY = dh_dY - p*dv_dY - v*dp_dY;
-  du_dX = du_dY*dY_dX "in mass units";
+  
+  // Specific Energy derivatives
+  du_dT = cp - p*dv_dT;
+  du_dp = -v - p*dv_dp;
+  du_dX = dh_dX - p*dv_dX;
+  du_dY = dh_dY - p*dv_dY;
+  
   mu = 0 "computation not included in the model";
   k = 0 "computation not included in the model";
   
@@ -224,6 +240,8 @@ equation
   end if;
   s - s_id = 0;
   
+  
+  // Energy parameters
   HHV_mix = HHV*Y;
   p0*v0 = Z*R*T0;
   rho0 = MM_mix/v0;
@@ -231,28 +249,31 @@ equation
   WI = HHV_mix/sqrt(SG);
   
   
-  dXi_dXi = identity(nXi);
-  dYi_dYi = identity(nXi);
-  dYi_dXi = {(MM_mix/MM[i])*(dXi_dXi[i, j] - ((MM_mix)*(1/MM[j] - 1/MM[nX]))*X[i]) for j in 1:nXi, i in 1:nXi};
-  dXi_dYi = Modelica.Math.Matrices.inv(dYi_dXi);
-  dMM_mix_dXi = -(MM_mix)^2*{1/MM[i] - 1/MM[nX] for i in 1:nXi};
-  dMM_mix_dYi = MM[1:nXi] - ones(nXi)*MM[nX];
-  dMM_mix_dXi_check = dYi_dXi*dMM_mix_dYi;
+//  dXi_dXi = {if i==j then 1 else -1 for j in 1:nXi, i in 1:nXi};
+//  dYi_dYi = identity(nXi);
+//  dYi_dXi = {(MM_mix/MM[i])*(dXi_dXi[i, j] - ((MM_mix)*(1/MM[j] - 1/MM[nX]))*X[i]) for j in 1:nXi, i in 1:nXi};
+//  dXi_dYi = Modelica.Math.Matrices.inv(dYi_dXi);
+//  dMM_mix_dXi = -(MM_mix)^2*{1/MM[i] - 1/MM[nX] for i in 1:nXi};
+//  dMM_mix_dYi = MM[1:nXi] - ones(nXi)*MM[nX];
+//  dMM_mix_dXi_check = dYi_dXi*dMM_mix_dYi;
   
-  dT_dYi = (p*v/R)*dMM_mix_dYi;
-  dT_dXi = dT_dYi*dYi_dXi;
-  dT_dXi_check = (p*v/R)*dMM_mix_dXi;
-  dv_dYi = -(R*T/p)*(1/MM_mix^2)*dMM_mix_dYi;
-  dv_dXi = dv_dYi*dYi_dXi;
-  dp_dYi = -(R*T/v)*(1/MM_mix^2)*dMM_mix_dYi;
-  drho_dXi = -rho^2*dv_dYi*dYi_dXi;
+//  dT_dYi = (p*v/R)*dMM_mix_dYi;
+//  dT_dXi = dT_dYi*dYi_dXi;
+//  dT_dXi_check = (p*v/R)*dMM_mix_dXi;
+//  dv_dYi = -(R*T/p)*(1/MM_mix^2)*dMM_mix_dYi;
+//  dv_dXi = dv_dYi*dYi_dXi;
+//  dv_dXi_check = (R*T/p)*{1/MM[i] - 1/MM[nX] for i in 1:nXi};
+//  dp_dYi = -(R*T/v)*(1/MM_mix^2)*dMM_mix_dYi;
+//  dp_dXi = dp_dYi*dYi_dXi;
+//  drho_dXi = -rho^2*dv_dYi*dYi_dXi;
   
-  dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
-  dh_id_dYi = dh_id_dXi*dXi_dYi;
-  dh_dXi = dh_id_dXi "in mass units";
-  dh_dYi = dh_id_dYi "in mass units";
-  du_dYi = dh_dYi - p*dv_dYi - v*dp_dYi;
-  du_dXi = du_dYi*dYi_dXi "in mass units";
+//  dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
+//  dh_id_dYi = dh_id_dXi*dXi_dYi;
+//  dh_dXi = dh_id_dXi "in mass units";
+//  dh_dYi = dh_id_dYi "in mass units";
+//  du_dYi = dh_dYi - p*dv_dYi;
+//  du_dXi = dh_id_dXi - p*dv_dXi;
+//  du_dXi_check = du_dYi*dYi_dXi "in mass units";
   
   
   annotation(

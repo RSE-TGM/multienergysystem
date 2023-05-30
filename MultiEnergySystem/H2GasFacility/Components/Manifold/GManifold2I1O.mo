@@ -2,7 +2,8 @@ within MultiEnergySystem.H2GasFacility.Components.Manifold;
 
 model GManifold2I1O
   extends Manifold.BaseClass.BaseManifold;
-  replaceable model MediumIn = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumIn1 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumIn2 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   
   parameter Types.Volume V = 0.1;
@@ -46,8 +47,8 @@ model GManifold2I1O
   MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet2(nXi = fluidIn2.nXi) annotation(
     Placement(visible = true, transformation(origin = {-90, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-80, -40}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
-  MediumIn fluidIn1(T_start = Tin_start1, p_start = p_start, X_start = Xin_start1);
-  MediumIn fluidIn2(T_start = Tin_start2, p_start = p_start, X_start = Xin_start2);
+  MediumIn1 fluidIn1(T_start = Tin_start1, p_start = p_start, X_start = Xin_start1);
+  MediumIn2 fluidIn2(T_start = Tin_start2, p_start = p_start, X_start = Xin_start2);
   MediumOut fluidOut(T_start = Tout_start, p_start = p_start, X_start = Xout_start);
 
 equation

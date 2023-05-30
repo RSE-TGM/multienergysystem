@@ -32,8 +32,7 @@ partial model IdealMixture
   parameter Types.Temperature Tsat_max = 273.15 + 150;
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity";
-  //final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
-  final parameter Types.SpecificEnthalpy h_star_start[nX] = {h_T(T_start, cp_coeff[i]) for i in 1:nX};
+  final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
   final parameter Types.SpecificEnthalpy h_id_start = X_start*h_star_start;
   final parameter Types.DerPressurebySpecificVolume dp_dv_start = (-R*T_start/(v_mol_start)^2)*MM_mix_start;
   final parameter Types.SpecificHeatCapacity cp_star_start[nX] = {cp_T(T_start, cp_coeff[i]) for i in 1:nX};
@@ -176,8 +175,8 @@ equation
   v_mol = v*MM_mix;
   
   for i in 1:nX loop
-    //h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
-    h_star[i] = h_T(T, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+    h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
+   // h_star[i] = h_T(T, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
     cp_star[i] = cp_T(T, cp_coeff[i]) "Ideal specific heat capacity of each component in unit mass";
   end for;
 

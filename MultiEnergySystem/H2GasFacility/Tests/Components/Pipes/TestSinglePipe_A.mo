@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
 
 model TestSinglePipe_A
+  extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.RealGases.NGPapay_6;
   parameter Types.MassFraction Xref[:] = {0.81878, 0.102312, 0.0250063, 0.00329607, 0.0124787, 0.0381269};
   parameter Types.MassFlowRate m_flow_ref = 0.02;

@@ -14,12 +14,11 @@ model Manifold2I1O
   parameter Types.MassFraction Xin_start1[1] = {1};
   parameter Types.MassFraction Xin_start2[1] = {1};
   parameter Types.MassFraction Xout_start[fluidOut.nX] = {0.8, 0.2};
-  parameter Types.MassFlowRate wout_start = 0.01;
 
   
   Types.MassFlowRate win1;
   Types.MassFlowRate win2;
-  Types.MassFlowRate wout(start = wout_start);
+  Types.MassFlowRate wout;
   Types.Mass M;
   Types.Density rho;
   Real dM_dt(unit = "kg/s");
@@ -81,8 +80,6 @@ equation
   
   // Component Mass Balance
   M*der(Xi) + Xi*dM_dt = win1*ones(fluidOut.nXi) - wout*Xi;
-  //Xi[1]*wout = win1;
-  
   
   // Energy Balance
   dU_dt = win1*hin1 + win2*hin2 - wout*h;
@@ -113,7 +110,7 @@ equation
   inlet2.Xi = zeros(fluidIn2.nXi);
   
 initial equation
-
+  //Always in Steady State
   der(T) = 0;
   der(Xi) = zeros(fluidOut.nXi);
   

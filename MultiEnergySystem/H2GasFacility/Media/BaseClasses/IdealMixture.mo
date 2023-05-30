@@ -34,11 +34,11 @@ partial model IdealMixture
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity";
   final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
   final parameter Types.SpecificEnthalpy h_id_start = X_start*h_star_start;
-  final parameter Types.DerPressurebySpecificVolume dp_dv_start = (-R*T_start/(v_mol_start)^2)*MM_mix_start;
+  final parameter Types.DerPressurebySpecificVolume dp_dv_start = -(R*T_start/MM_mix_start)*rho_start^2;
   final parameter Types.SpecificHeatCapacity cp_star_start[nX] = {cp_T(T_start, cp_coeff[i]) for i in 1:nX};
   final parameter Types.PerUnit dX_dX_start[nX, nX] = identity(nX);
   final parameter Types.PerUnit dY_dX_start[nX, nX] = {(MM_mix_start/MM[i])*(dX_dX_start[i, j] - (MM_mix_start/MM[j])*X_start[i]) for j in 1:nX, i in 1:nX};
-  final parameter Types.DerPressureByTemperature dp_dT_start = R/(v_mol_start) "Temperature derivative of Pressure at constant specific volume";
+  final parameter Types.DerPressureByTemperature dp_dT_start = R*rho_start*sum(X_start[j]/MM[j] for j in 1:nX) "Temperature derivative of Pressure at constant specific volume";
   
   //Variables
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
@@ -58,7 +58,7 @@ partial model IdealMixture
   Types.MolarMass MM_mix(start = MM*Y_start) "Molar Mass of the fluid (mixture)";
   Types.SpecificVolume v(start = v_mol_start/MM_mix_start) "Speficic volume";
   Types.MolarVolume v_mol(start = v_mol_start) "Molar volume";
-  Types.Pressure dp_dY[nX] "Mole fraction derivative of pressure at constant temperature, per each component";
+  //Types.Pressure dp_dY[nX] "Mole fraction derivative of pressure at constant temperature, per each component";
   Types.DerPressureByTemperature dp_dT(start = dp_dT_start) "Temperature derivative of Pressure at constant specific volume";
   Types.DerPressurebySpecificVolume dp_dv(start = dp_dv_start) "Specific volumen derivative of Pressure at constant temperature";
   Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
@@ -66,8 +66,8 @@ partial model IdealMixture
   Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
   Types.MolarMass dMM_mix_dY[nX](start = MM) "Mole fraction derivative of the mixture molar mass";
   Types.SpecificVolume dv_dY[nX] "Mole fraction derivative of specific volumen, per each component";
-  Real dT_dX[nX](each unit = "K") "Mass fraction derivative vector of Temperature at constant pressure";
-  Real dT_dY[nX](each unit = "K") "Mole fraction derivative vectir of temperature at constant pressure";
+  //Real dT_dX[nX](each unit = "K") "Mass fraction derivative vector of Temperature at constant pressure";
+  //Real dT_dY[nX](each unit = "K") "Mole fraction derivative vectir of temperature at constant pressure";
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
@@ -194,11 +194,11 @@ equation
   
   // Pressure and temperature derivatives
   //dp_dY = R/(MM_mix^2)*MM;
-  dp_dY = -p/MM_mix*MM;
+//  dp_dY = -p/MM_mix*MM;
   dp_dv = -(R*T/MM_mix)*rho^2 "in mass units";
   dp_dT = R*rho*sum(X[j]/MM[j] for j in 1:nX);
-  dT_dY = -dp_dY/dp_dT;
-  dT_dX = dT_dY*dY_dX;
+//  dT_dY = -dp_dY/dp_dT;
+//  dT_dX = dT_dY*dY_dX;
 
   // Specific volume and density derivates
   dv_dT = v/T;

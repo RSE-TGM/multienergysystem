@@ -1,0 +1,47 @@
+within MultiEnergySystem.H2GasFacility.Media.IdealGases;
+
+model NG4_H2
+  extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
+      nXi = 4,
+      MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
+      X_start = {0.9, 0.04, 0.04, 0.01, 0.01},
+      T_start = 25 + 273.15,
+      p_start = 1e5,
+      posDom = 1,
+      MM =  {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.C2H6.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.C3H8.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.C4H10_n_butane.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.H2.MM},
+      p_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalPressure,
+             Modelica.Media.IdealGases.Common.FluidData.C2H6.criticalPressure,
+             Modelica.Media.IdealGases.Common.FluidData.C3H8.criticalPressure,
+             Modelica.Media.IdealGases.Common.FluidData.C4H10_n_butane.criticalPressure,
+             Modelica.Media.IdealGases.Common.FluidData.H2.criticalPressure},
+      T_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalTemperature,
+             Modelica.Media.IdealGases.Common.FluidData.C2H6.criticalTemperature,
+             Modelica.Media.IdealGases.Common.FluidData.C3H8.criticalTemperature,
+             Modelica.Media.IdealGases.Common.FluidData.C4H10_n_butane.criticalTemperature,
+             Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
+      v_mol_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
+                 Modelica.Media.IdealGases.Common.FluidData.C2H6.criticalMolarVolume,
+                 Modelica.Media.IdealGases.Common.FluidData.C3H8.criticalMolarVolume,
+                 Modelica.Media.IdealGases.Common.FluidData.C4H10_n_butane.criticalMolarVolume,
+                 Modelica.Media.IdealGases.Common.FluidData.H2.criticalMolarVolume},
+      Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf,
+            Modelica.Media.IdealGases.Common.SingleGasesData.C2H6.Hf,
+            Modelica.Media.IdealGases.Common.SingleGasesData.C3H8.Hf,
+            Modelica.Media.IdealGases.Common.SingleGasesData.C4H10_n_butane.Hf,
+            Modelica.Media.IdealGases.Common.SingleGasesData.H2.Hf},
+      HHV = {37.669e6, 12.75e6, 95.830e6, 120.160e6, 12.75e6},
+      LHV = {50e6, 119.96e6, 46.35e6, 0, 0},
+      cp_coeff = {{-2.0604948457659e-05,    0.02738991794621,       -8.523906729998,      2877.5194077417},
+                  {-1.8590327701056e-05,    0.020445520613204,      -3.2072168623893,     1377.4913394337},
+                  {-1.757458394263e-05,     0.017922407341861,      -1.5091379730785,     991.41142728185},
+                  {-1.8297628465779e-05,    0.018684376184739,      -1.8817923782208,     1082.5087760849},
+                  {8.0738788389137e-05,     -0.097360047650082,      40.00291818555,      8892.3843103683}},
+      mu_start = 0
+  );
+equation
+
+end NG4_H2;

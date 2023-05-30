@@ -5,8 +5,8 @@ partial model ComputeIdealGasCoefficients
   import Modelica.Utilities.Streams.*;
   replaceable package Medium = Modelica.Media.Interfaces.PartialMedium;
 
-  parameter Types.Temperature T_min = 270;
-  parameter Types.Temperature T_max = 370;
+  parameter Types.Temperature T_min = 0 + 273.15;
+  parameter Types.Temperature T_max = 100 + 273.15;
   parameter Types.Pressure p = 1e5 "Reference pressure";
   parameter Integer N = 50;
   parameter Integer ord_cp = 3;

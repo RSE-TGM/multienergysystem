@@ -14,11 +14,12 @@ model Manifold2I1O
   parameter Types.MassFraction Xin_start1[1] = {1};
   parameter Types.MassFraction Xin_start2[1] = {1};
   parameter Types.MassFraction Xout_start[fluidOut.nX] = {0.8, 0.2};
+  parameter Types.MassFlowRate wout_start = 0.01;
 
   
   Types.MassFlowRate win1;
   Types.MassFlowRate win2;
-  Types.MassFlowRate wout;
+  Types.MassFlowRate wout(start = wout_start);
   Types.Mass M;
   Types.Density rho;
   Real dM_dt(unit = "kg/s");
@@ -29,9 +30,9 @@ model Manifold2I1O
   Types.SpecificEnthalpy hin1;
   Types.SpecificEnthalpy hin2;
   Types.MassFraction Xi[fluidOut.nXi];
-  Types.Temperature T;
-  Types.Pressure p;
-  Types.MassFraction X[fluidOut.nX];
+  Types.Temperature T(start = Tout_start, stateSelect = StateSelect.prefer);
+  Types.Pressure p(start = p_start, stateSelect = StateSelect.prefer);
+  Types.MassFraction X[fluidOut.nX](each stateSelect = StateSelect.prefer);
   Real dU_dt(unit = "J/s");
   Real du_dT(unit = "J/(kg.K)");
   Real du_dp(unit = "J/(kg.Pa)");
@@ -56,14 +57,14 @@ equation
   win1 = inlet1.m_flow;
   win2 = inlet2.m_flow;
   wout = -outlet.m_flow;
+  rho = fluidOut.rho;
   hin1 = inStream(inlet1.h_out);
   hin2 = inStream(inlet2.h_out);
-  rho = fluidOut.rho;
+  h = outlet.h_out;
+  Xi = outlet.Xi;
   T = fluidOut.T;
-  p = fluidOut.p;
   X = fluidOut.X;
   u = fluidOut.u;
-  M = fluidOut.M;
   
   // Detivatives
   du_dT = fluidOut.du_dT;
@@ -80,6 +81,8 @@ equation
   
   // Component Mass Balance
   M*der(Xi) + Xi*dM_dt = win1*ones(fluidOut.nXi) - wout*Xi;
+  //Xi[1]*wout = win1;
+  
   
   // Energy Balance
   dU_dt = win1*hin1 + win2*hin2 - wout*h;
@@ -104,10 +107,15 @@ equation
   fluidOut.Xi = Xi;
   
   // Flow reversal equations
-  inlet1.h_out = 0;
-  inlet2.h_out = 0;
+  inlet1.h_out = inStream(outlet.h_out);
+  inlet2.h_out = inStream(outlet.h_out);
   inlet1.Xi = zeros(fluidIn1.nXi);
   inlet2.Xi = zeros(fluidIn2.nXi);
+  
+initial equation
+
+  der(T) = 0;
+  der(Xi) = zeros(fluidOut.nXi);
   
 
 annotation(

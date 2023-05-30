@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Sources;
 model SourceMassFlow
   extends DistrictHeatingNetwork.Icons.Gas.SourceW;
-  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
     "Medium model" annotation(
      choicesAllMatching = true);
   // Real Type Parameters

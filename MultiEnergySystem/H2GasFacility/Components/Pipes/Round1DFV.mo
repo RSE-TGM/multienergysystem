@@ -5,7 +5,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import Modelica.Fluid.Utilities.regSquare;
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPapay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
      choicesAllMatching = true);
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation(
      choicesAllMatching = true);
@@ -177,12 +177,14 @@ equation
 // Balances
   for i in 1:n loop
     M[i] = Vi*rho[i + 1];
+    //M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
     M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
     if quasistaticEnergyBalance then
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       0 = T[i] - T[i + 1];
     else
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
+      //m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dXi*der(fluid[i + 1].Xi));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
     end if;
 //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;

@@ -194,8 +194,11 @@ equation
       //m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dXi*der(fluid[i + 1].Xi));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
     end if;
-  ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
-  p[i] - ptilde[i] = k/2*m_flow[i]/n;
+  //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
+  //p[i] - ptilde[i] = k/2*m_flow[i]/n;
+  
+  p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*(L/n)*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e6;
+  ptilde[i] = p[i+1];
   end for;
 
   //pin - ptilde = k/2*inlet.m_flow;

@@ -30,6 +30,7 @@ partial model IdealMixture
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.Temperature Tsat_min = 273.15 + 20;
   parameter Types.Temperature Tsat_max = 273.15 + 150;
+  parameter Types.DynamicViscosity mu_const "Constant Dynamic viscosity";
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity";
   final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
@@ -74,8 +75,8 @@ partial model IdealMixture
   Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
-  Types.PerUnit SG "Specific gravity of the fluid mixture";
-  Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
+  Types.PerUnit SG(start = 1) "Specific gravity of the fluid mixture";
+  //Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
   
 //  Types.Pressure dp_dYi[nXi];
 //  Types.Pressure dp_dXi[nXi];
@@ -226,7 +227,12 @@ equation
   du_dX = dh_dX - p*dv_dX;
   du_dY = dh_dY - p*dv_dY;
   
-  mu = 0 "computation not included in the model";
+  if computeTransport then
+    mu = mu_const;
+  else
+    mu = 0;
+  end if;
+  //mu = 0 "computation not included in the model";
   k = 0 "computation not included in the model";
   
   //Entropy
@@ -245,9 +251,10 @@ equation
   // Energy parameters
   HHV_mix = HHV*Y;
   p0*v0 = Z*R*T0;
-  rho0 = MM_mix/v0;
+  rho0 = MM[1]/v0;
+  //rho0 = MM_mix/v0;
   SG = rho0/rhoair;
-  WI = HHV_mix/sqrt(SG);
+//  WI = HHV_mix/sqrt(SG);
   
   
 //  dXi_dXi = {if i==j then 1 else -1 for j in 1:nXi, i in 1:nXi};

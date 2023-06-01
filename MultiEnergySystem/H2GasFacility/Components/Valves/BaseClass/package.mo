@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Components.Valves;
 
 package BaseClass
-  extends Modelica.Icons.Package;
+  extends Modelica.Icons.BasesPackage;
 end BaseClass;

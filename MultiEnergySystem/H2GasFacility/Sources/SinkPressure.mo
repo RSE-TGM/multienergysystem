@@ -2,52 +2,33 @@ within MultiEnergySystem.H2GasFacility.Sources;
 
 model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
-    "Medium model" annotation(
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
-  
   // Real Parameters
-  parameter HydraulicResistance R = 0 
-    "Hydraulic resistance" annotation(
+  parameter HydraulicResistance R = 0 "Hydraulic resistance" annotation(
     Evaluate = true);
-  parameter Types.Pressure p0 = 1.01325e5
-    "Nominal pressure";
-  parameter Types.Temperature T0 = 25 + 237.15 
-    "Nominal temperature";
-  parameter Types.MassFraction X0[fluid.nX] = fluid.X_start
-    "Nominal mass fraction";
-  
+  parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure";
+  parameter Types.Temperature T0 = 25 + 237.15 "Nominal temperature";
+  parameter Types.MassFraction X0[fluid.nX] = fluid.X_start "Nominal mass fraction";
   // Boolean Parameters
-  parameter Boolean computeTransport = true
-    "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEntropy = false
-    "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean use_in_p0 = false 
-    "Use connector input for the pressure" annotation(
+  parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
+  parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the transport properties";
+  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean use_in_T0 = false 
-    "Use connector input for the temperature" annotation(
+  parameter Boolean use_in_T0 = false "Use connector input for the temperature" annotation(
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean use_in_X0 = false 
-    "Use connector input for the mass fraction" annotation(
+  parameter Boolean use_in_X0 = false "Use connector input for the mass fraction" annotation(
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  
   // Variables
-  Types.Pressure p(start = p0)
-    "Actual pressure";
-  Types.Temperature T(start = T0)
-    "Actual temperature";
-  Types.MassFraction X[fluid.nX]
-    "Actual mass fraction";
-  Types.MassFlowRate m_flow
-    "Actual mass flow rate";
-    
+  Types.Pressure p(start = p0) "Actual pressure";
+  Types.Temperature T(start = T0) "Actual temperature";
+  Types.MassFraction X[fluid.nX] "Actual mass fraction";
+  Types.MassFlowRate m_flow "Actual mass flow rate";
   Medium fluid(T_start = T0, p_start = p0, X_start = X0, computeTransport = computeTransport, computeEntropy = computeEntropy);
-  
   H2GasFacility.Interfaces.FluidPortInlet inlet(nXi = fluid.nXi) annotation(
     Placement(transformation(extent = {{-120, -20}, {-80, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation(
@@ -61,11 +42,9 @@ protected
   Modelica.Blocks.Interfaces.RealInput in_T0_internal;
   Modelica.Blocks.Interfaces.RealInput in_X0_internal[fluid.nX];
 equation
-  
-  // Connector Balance
+// Connector Balance
   inlet.h_out = fluid.h;
   inlet.Xi = fluid.Xi;
-  
   if R > 0 then
     inlet.p = p + inlet.m_flow*R;
   else
@@ -83,25 +62,20 @@ equation
   if not use_in_X0 then
     in_X0_internal = X0 "Mass fraction set by parameter";
   end if;
-  
-  // Fluid definition
+// Fluid definition
   fluid.p = p;
   fluid.T = T;
   fluid.Xi = X[1:fluid.nXi];
-  
-  // Variables Definition
+// Variables Definition
   m_flow = inlet.m_flow;
-  
-  // Connect protected connectors to public conditional connectors
+// Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);
   connect(in_T0, in_T0_internal);
   connect(in_X0, in_X0_internal);
   annotation(
     Diagram(graphics),
-    Documentation(info = "<HTML>
-<p><b>Modelling options</b></p>
+    Documentation(info = "<html><head></head><body><p><b>Modelling options</b></p>
 <p>If <tt>R</tt> is set to zero, the pressure sink is ideal; otherwise, the inlet pressure increases proportionally to the incoming flowrate.</p>
-<p>If <code>use_T</code> is false, the specific enthalpy is prescribed, otherwise the temperature is prescribed.</p>
-<p>The pressure, specific enthalpy and temperature can be supplied from external inputs by setting to true the corresponding <code>use_in_XX</code> parameter and connecting an external signal to the input connector.</p>
-</HTML>", revisions = "<html><head></head><body></body></html>"));
+<p>The pressure, temperature and mass fraction vector can be supplied from external inputs by setting to true the corresponding <code>use_in_XX</code> parameter and connecting an external signal to the input connector.</p>
+</body></html>", revisions = "<html><head></head><body></body></html>"));
 end SinkPressure;

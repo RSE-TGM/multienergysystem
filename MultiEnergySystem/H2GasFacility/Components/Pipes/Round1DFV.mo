@@ -197,7 +197,7 @@ equation
   //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
   //p[i] - ptilde[i] = k/2*m_flow[i]/n;
   
-  p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*(L/n)*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e6;
+  p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e6;
   ptilde[i] = p[i+1];
   end for;
 

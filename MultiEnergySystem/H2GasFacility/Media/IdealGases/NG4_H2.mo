@@ -4,7 +4,7 @@ model NG4_H2
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
       computeTransport = true,
       nXi = 4,
-      MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
+      //MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {0.9, 0.04, 0.04, 0.01, 0.01},
       T_start = 25 + 273.15,
       p_start = 1e5,

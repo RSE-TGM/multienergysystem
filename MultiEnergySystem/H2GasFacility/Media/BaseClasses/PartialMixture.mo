@@ -10,6 +10,7 @@ partial model PartialMixture "Interface for real mixture gas models"
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
   parameter Types.MassFraction X_start[nX] "Start value of the fluid mass composition";
+  
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
   connector InputTemperature = input Types.Temperature "Pseudo-input to check model balancedness";
@@ -20,8 +21,6 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.MassFraction X[nX](start = X_start) "Mass fraction vector";
   Types.SpecificEnergy u "Specific Internal Energy";
   Types.SpecificEnthalpy h "Specific Enthalpy";
-  Types.SpecificEntropy s "Specific Entropy" annotation(
-    HideResult = not ComputeEntropy);
   Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
   Types.SpecificEnergy du_dX[nX] "Mass fraction derivative of Specific Internal Energy at constant pressure vector";
@@ -30,6 +29,8 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature";
   Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure";
   Types.SpecificVolume dv_dX[nX] "Mass fraction derivative of specific volume, per each component";
+  Types.SpecificEntropy s "Specific Entropy" annotation(
+    HideResult = not ComputeEntropy);
   Types.DynamicViscosity mu "Dynamic viscosity" annotation(
     HideResult = not ComputeTransport);
   Types.ThermalConductivity k "Thermal Conductivity" annotation(

@@ -3,40 +3,43 @@ within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model IdealMixture
   extends PartialMixture(Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
-  replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
-  constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
+  
+  // Constants
+  constant Types.Density rhoair = 1.2250 "Reference density of air at T = 15°C and p = 1atm";
+  constant Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
+  constant Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
+  constant Integer ord_cp_ideal = 3 "order of the polynomial for ideal cp(T)";
+  constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
+  
+  // Parameters
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
-  final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
-  parameter Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
-  parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
-  parameter Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
   parameter Types.Pressure p_c[nX] "Critical pressure of each component";
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
   parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component in J/m3 units";
   parameter Types.SpecificEnergy LHV[nX] "Lower Heating Value of each component";
-  parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
-  parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
-  parameter Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
-  parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
-  parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
-  parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
-  parameter Types.MolarVolume v_mol_start = R*T_start/p_start "provided that this fluid composition is mostly the dominant component";
-  parameter Types.Density rho_start = MM[posDom]/v_mol_start;
-  parameter Types.MolarMass MM_mix_start = MM*Y_start;
-  parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
-  parameter Types.Temperature Tsat_min = 273.15 + 20;
-  parameter Types.Temperature Tsat_max = 273.15 + 150;
+  parameter Types.Pressure p0 = 101325 "Reference pressure";
+  parameter Types.DynamicViscosity mu_start = mu_const "Start value of the fluid dynamic viscosity";
   parameter Types.DynamicViscosity mu_const "Constant Dynamic viscosity";
+  parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
+    
+  // Final parameters
+  final parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
+  final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
-  final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity";
+  final parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main/dominant component";
+  final parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main/dominant component";
+  final parameter Types.MolarVolume v_mol_start = R*T_start/p_start "provided that this fluid composition is mostly the dominant component";
+  final parameter Types.MolarMass MM_mix_start = MM*Y_start;
+  final parameter Types.Density rho_start = MM_mix_start/v_mol_start;
+  final parameter Types.SpecificHeatCapacity cp_star_start[nX] = {cp_T(T_start, cp_coeff[i]) for i in 1:nX};
+  final parameter Types.SpecificHeatCapacity cp_id_start = X_start*cp_star_start "Ideal Specific heat capacity";
   final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
   final parameter Types.SpecificEnthalpy h_id_start = X_start*h_star_start;
   final parameter Types.DerPressurebySpecificVolume dp_dv_start = -(R*T_start/MM_mix_start)*rho_start^2;
-  final parameter Types.SpecificHeatCapacity cp_star_start[nX] = {cp_T(T_start, cp_coeff[i]) for i in 1:nX};
   final parameter Types.PerUnit dX_dX_start[nX, nX] = identity(nX);
   final parameter Types.PerUnit dY_dX_start[nX, nX] = {(MM_mix_start/MM[i])*(dX_dX_start[i, j] - (MM_mix_start/MM[j])*X_start[i]) for j in 1:nX, i in 1:nX};
   final parameter Types.DerPressureByTemperature dp_dT_start = R*rho_start*sum(X_start[j]/MM[j] for j in 1:nX) "Temperature derivative of Pressure at constant specific volume";
@@ -49,8 +52,10 @@ partial model IdealMixture
   Types.SpecificEnthalpy dh_id_dY[nX] "Molar fraction of Ideal Specific Enthalpy at constant pressure, per each component";
   Types.SpecificEnthalpy dh_dY[nX] "Molar fraction derivative of Specific Enthalpy at constant pressure, per each component";
   Types.SpecificEnergy du_dY[nX] "Mole fraction derivative of Specific Internal Energy at constant pressure, per each component";
-  Types.SpecificEntropy s_star[nX] "Specific entropy of the fluid";
-  Types.SpecificEntropy s_id "Ideal Specific Entropy of the fluid";
+  Types.SpecificEntropy s_star[nX] "Specific entropy of the fluid" annotation(
+    HideResult = not ComputeEntropy);
+  Types.SpecificEntropy s_id "Ideal Specific Entropy of the fluid"  annotation(
+    HideResult = not ComputeEntropy);
   Types.SpecificHeatCapacity cp_star[nX](start = cp_star_start) "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_id(start = X_start*cp_star_start) "Ideal Specific heat capacity of the fluid";
   Types.ThermalConductivity k "Thermal Conductivity" annotation(
@@ -59,16 +64,13 @@ partial model IdealMixture
   Types.MolarMass MM_mix(start = MM*Y_start) "Molar Mass of the fluid (mixture)";
   Types.SpecificVolume v(start = v_mol_start/MM_mix_start) "Speficic volume";
   Types.MolarVolume v_mol(start = v_mol_start) "Molar volume";
-  //Types.Pressure dp_dY[nX] "Mole fraction derivative of pressure at constant temperature, per each component";
   Types.DerPressureByTemperature dp_dT(start = dp_dT_start) "Temperature derivative of Pressure at constant specific volume";
   Types.DerPressurebySpecificVolume dp_dv(start = dp_dv_start) "Specific volumen derivative of Pressure at constant temperature";
-  Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
+  Types.PerUnit Z(start = 1) "Compressibility factor of the fluid";
   Types.PerUnit dY_dX[nX, nX](start = dY_dX_start) "Mole fraction derivative of mass fraction per each component";
   Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
   Types.MolarMass dMM_mix_dY[nX](start = MM) "Mole fraction derivative of the mixture molar mass";
   Types.SpecificVolume dv_dY[nX] "Mole fraction derivative of specific volumen, per each component";
-  //Real dT_dX[nX](each unit = "K") "Mass fraction derivative vector of Temperature at constant pressure";
-  //Real dT_dY[nX](each unit = "K") "Mole fraction derivative vectir of temperature at constant pressure";
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
@@ -76,7 +78,7 @@ partial model IdealMixture
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG(start = 1) "Specific gravity of the fluid mixture";
-  //Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
+  Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
   
 //  Types.Pressure dp_dYi[nXi];
 //  Types.Pressure dp_dXi[nXi];
@@ -251,10 +253,10 @@ equation
   // Energy parameters
   HHV_mix = HHV*Y;
   p0*v0 = Z*R*T0;
-  rho0 = MM[1]/v0;
-  //rho0 = MM_mix/v0;
+  //rho0 = MM[1]/v0;
+  rho0 = MM_mix/v0;
   SG = rho0/rhoair;
-//  WI = HHV_mix/sqrt(SG);
+  WI = HHV_mix/sqrt(SG);
   
   
 //  dXi_dXi = {if i==j then 1 else -1 for j in 1:nXi, i in 1:nXi};

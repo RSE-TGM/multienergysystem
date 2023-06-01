@@ -36,9 +36,9 @@ partial model PartialMixture "Interface for real mixture gas models"
     HideResult = not ComputeTransport);
   Types.Density rho "Density";
   annotation(
-    Documentation(info = "<html><head></head><body><p><b><span style=\"font-size: 13pt;\">Interface for real mixture gas models</span></b></p>
-<p>The objetive of this model is to have an interface and use it as a base model for any real mixture model. In this first version of the library, Peng-Robinson EoS is the one to be considered, however, it is possible to develop different real fluid models using other EoS.</p>
-<p>The <u><span style=\"color: #0000ff;\">PartialMixture</span></u> model includes three input variables for pressure, temperature and mass fraction, in order to define the full properties of the fluid. The other variables are going to be used when it comes to develop the real mixture fluid model.</p>
+    Documentation(info = "<html><head></head><body><p><b><span style=\"font-size: 13pt;\">Interface for ideal/real mixture gas models</span></b></p>
+<p>The objetive of this model is to have an interface and use it as a base model for any<b> ideal/real &nbsp;single/mixture&nbsp;</b><b>gas&nbsp;</b><b>model.</b> In this first version of the library, ideal gas is the one to be considered, however, it is possible to develop different real fluid models such as Papay, Peng Robinson, etc..</p>
+<p>The <u><span style=\"color: #0000ff;\">PartialMixture</span></u> model includes three input variables for pressure \"p\", temperature \"T\" and mass fraction \"Xi\", in order to define the full properties of the fluid. The other variables are going to be used when it comes to develop the real mixture fluid model.</p><p>Since the components which use gases can storage mass and energy, additional relevant variables added to this base gas model are the derivatives of specific volume and specific energy with respect to pressure, temperature and mass fraction.</p>
 </body></html>"),
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
 end PartialMixture;

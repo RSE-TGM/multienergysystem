@@ -34,7 +34,7 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {80, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   inner MultiEnergySystem.System system annotation(
     Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user5(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.03493965) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user5(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.03493965, userdemand = [0, 0.03493965; 0.5*3600, 0.03493965; 1*3600, 1*0.03493965; 6*3600, 1*0.03493965]) annotation(
     Placement(visible = true, transformation(origin = {-80, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe19(redeclare model Medium = Medium, Di = Pipe.pipe19.Di, L = Pipe.pipe19.L, Tin_start = Pipe.pipe19.Tin_start, Tout_start = Pipe.pipe19.Tout_start, X_start = X_start, hin_start = Pipe.pipe19.hin_start, k = Pipe.pipe19.k, kc = 1, m_flow_start = Pipe.pipe19.m_flow_start, n = n, pin_start = Pipe.pipe19.pin_start, pout_start = Pipe.pipe19.pout_start) annotation(
     Placement(visible = true, transformation(origin = {-30, -60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
@@ -52,7 +52,7 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {-80, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe16(redeclare model Medium = Medium, Di = Pipe.pipe16.Di, L = Pipe.pipe16.L, Tin_start = Pipe.pipe16.Tin_start, Tout_start = Pipe.pipe16.Tout_start, X_start = X_start, hin_start = Pipe.pipe16.hin_start, k = Pipe.pipe16.k, kc = 1, m_flow_start = Pipe.pipe16.m_flow_start, n = n, pin_start = Pipe.pipe16.pin_start, pout_start = Pipe.pipe16.pout_start) annotation(
     Placement(visible = true, transformation(origin = {140, -60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user10(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.040762925) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user10(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.040762925, userdemand = [0, 0.040762925; 0.5*3600, 0.040762925; 1*3600, 1*0.040762925; 6*3600, 1*0.040762925]) annotation(
     Placement(visible = true, transformation(origin = {-80, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user11(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.009705458) annotation(
     Placement(visible = true, transformation(origin = {80, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -66,7 +66,7 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {-80, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start, p0 = 0.5e5) annotation(
     Placement(visible = true, transformation(origin = {-30, 90}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user15(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.017469825) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user15(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.017469825, userdemand = [0, 0.017469825; 0.5*3600, 0.017469825; 1*3600, 1*0.017469825; 6*3600, 1*0.017469825]) annotation(
     Placement(visible = true, transformation(origin = {80, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user14(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.008734913) annotation(
     Placement(visible = true, transformation(origin = {80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -78,7 +78,7 @@ model PaperCaseI
     Placement(visible = true, transformation(origin = {20, -20}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe21(redeclare model Medium = Medium, Di = Pipe.pipe21.Di, L = Pipe.pipe21.L, Tin_start = Pipe.pipe21.Tin_start, Tout_start = Pipe.pipe21.Tout_start, X_start = X_start, hin_start = Pipe.pipe21.hin_start, k = Pipe.pipe21.k, kc = 1, m_flow_start = Pipe.pipe21.m_flow_start, n = n, pin_start = Pipe.pipe21.pin_start, pout_start = Pipe.pipe21.pout_start) annotation(
     Placement(visible = true, transformation(origin = {-110, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.044645108) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.044645108, userdemand = [0, 0.044645108; 0.5*3600, 0.044645108; 1*3600, 0.4*0.044645108; 6*3600, 0.4*0.044645108]) annotation(
     Placement(visible = true, transformation(origin = {20, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(redeclare model Medium = Medium, G = 1000, T0 = 15 + 273.15, X0 = X_start_H2, computeEnthalpyWithFixedPressure = true, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation(
     Placement(visible = true, transformation(origin = {-114, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -163,5 +163,5 @@ equation
     Line(points = {{-80, -28}, {-80, -40}}, color = {182, 109, 49}));
   annotation(
     Diagram(coordinateSystem(extent = {{-160, -120}, {160, 120}})),
-    experiment(StartTime = 0, StopTime = 150, Tolerance = 1e-06, Interval = 0.3));
+    experiment(StartTime = 0, StopTime = 22000, Tolerance = 1e-06, Interval = 44));
 end PaperCaseI;

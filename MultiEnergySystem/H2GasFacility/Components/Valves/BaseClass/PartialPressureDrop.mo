@@ -3,8 +3,7 @@ within MultiEnergySystem.H2GasFacility.Components.Valves.BaseClass;
 partial model PartialPressureDrop
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Gas.PressureDrop;
   extends H2GasFacility.Components.Valves.BaseClass.BasePressureDrop;
-  import Modelica.Fluid.Utilities.regRoot;
-  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;  
+  import Modelica.Fluid.Utilities.regRoot;  
   
   parameter Types.PerUnit nomOpening = 1 
     "Nominal valve opening";

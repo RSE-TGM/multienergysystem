@@ -3,7 +3,7 @@ within MultiEnergySystem.H2GasFacility.Components.Valves.BaseClass;
 partial model BasePressureDrop
   extends H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet.nXi = fluidIn.nXi, outlet.nXi = fluidOut.nXi);
 
-  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture 
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture 
     "fluid model"; 
 
   // Basic parameters for declaring fluids 

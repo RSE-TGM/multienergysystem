@@ -4,7 +4,7 @@ partial model PartialValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Gas.Valve;
   extends H2GasFacility.Components.Valves.BaseClass.BasePressureDrop;
   import Modelica.Fluid.Utilities.regRoot;
-  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;  
+  replaceable package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;  
   
   parameter Types.PerUnit nomOpening = 1 
     "Nominal valve opening";
@@ -18,7 +18,7 @@ partial model PartialValve
     "opening characteristic";
   final parameter Types.MassFlowRate m_flow_nom = Kv*dp_nom*dp_nom*1 
     "Peak mass flow rate at full opening";
-  Types.Area A_v = 2.7778e-5*Kv 
+  Types.Area A_v = 2.7778e-4*Kv 
     "Opening area of the valve";
   Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0) 
     "Valve Displacement" annotation(

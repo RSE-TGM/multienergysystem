@@ -3,7 +3,6 @@ within MultiEnergySystem.H2GasFacility.Media.IdealGases;
 model CH4
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
       nXi = 0,
-      MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {1},
       T_start = 25 + 273.15,
       p_start = 1e5,

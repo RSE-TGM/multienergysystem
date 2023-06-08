@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Valves;
 
 model BaseValve
+  extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve1(redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {0.9, 0.1}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation(
     Placement(visible = true, transformation(origin = {0, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

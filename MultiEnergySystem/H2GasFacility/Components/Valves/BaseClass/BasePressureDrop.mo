@@ -26,7 +26,7 @@ partial model BasePressureDrop
   parameter Types.Temperature Tout_start = 20 + 273.15
     "Outlet nominal and start temperature" annotation (
     Dialog(group = "Initialization"));
-  final parameter Types.MassFraction X_start[fluidIn.nX] = fluidIn.X_start
+  parameter Types.MassFraction X_start[fluidIn.nX]
     "Nominal mass fraction through the valve" annotation (
     Dialog(group = "Initialization"));
 

@@ -160,7 +160,7 @@ protected
   end massToMoleFractions;
 
 initial equation
-  assert(abs(p/p_start - 1) < 0.25, "Please check p_start, you may get convergence to wrong solution of P-R EoS", AssertionLevel.warning);
+  assert(abs(p/p_start - 1) < 0.25, "Please check p_start, you may get convergence to wrong solution of EoS", AssertionLevel.warning);
 
 equation
   X[1:nXi] = Xi;

@@ -13,4 +13,10 @@ package Pipe
       Upstream "At the inlet",
       Downstream "At the outlet")
     "Type, constants and menu choices to select the location of the hydraulic capacitance";
+  
+  type Momentum  = enumeration(
+      LowPressure "Pressures below 75mbar",
+      MediumPressure "0.75mbar - 7bar approx",
+      HighPressure "Above 7bar")
+    "Type, menu choices to select the momentum equation";
 end Pipe;

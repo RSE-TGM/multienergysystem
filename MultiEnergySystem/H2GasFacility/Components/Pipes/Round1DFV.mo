@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet.nXi = nXi, outlet.nXi = nXi);
+  extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet.nXi = nXi, outlet.nXi = nXi, inlet.m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), outlet.m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0), hin_start = fluid[1].h_id_start);
   import Modelica.Fluid.Utilities.regSquare;
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   // Medium & Heat Transfer Model for the pipe
@@ -62,6 +62,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Start value for the mass fraction" annotation(
     Dialog(group = "Initialisation"));
   parameter Types.PerUnit cfnom = 0.005;
+  parameter Types.Length kappa = 0.01e-3
+    "Roughness of the pipe";
   // Final parameters
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
     "Temperature start value of the fluid";
@@ -79,10 +81,11 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Total volume of the fluid in the pipe";
   final parameter Types.Volume Vi = V / n
     "Volume of one finite element";
+  final parameter Types.PerUnit Re_start = Di*m_flow_start/(A*fluid[1].mu_const);
   outer System system 
     "system object for global defaults";
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)) 
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n), nominal = fill(X_start[1:nXi], n)) 
     "Composition state for each volume";
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) 
    // "Pressure state the pipe";  
@@ -95,7 +98,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Inlet temperature";
   Types.Temperature Tout
     "Outlet temperature";
-  Types.SpecificEnthalpy hin
+  Types.SpecificEnthalpy hin(start = hin_start)
     "Inlet Specific enthalpy";
   Types.SpecificEnthalpy hout
     "Outlet Specific enthalpy";
@@ -115,7 +118,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Mass flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] 
     "Volume boundary temperatures";
-  Types.SpecificEnthalpy h[n + 1] 
+  Types.SpecificEnthalpy h[n + 1](each nominal = 1e6) 
     "Specific enthalpy at each fluid";
   Types.MassFraction Xi[n + 1, nXi]
     "Mass fractions at each volume boundary";
@@ -123,18 +126,18 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Velocity at each volume boundary";
   //Real dv_dt[n + 1](each unit = "m3/(kg.s)")
   //  "Derivative of specific volume w.r.t. time";
-  Types.Pressure p[n + 1];
+  Types.Pressure p[n + 1](each nominal = 1e4);
   // Complementary variables
   Types.Time taur
     "Residence time";
   Real kf(unit = "1/m4");
-  Types.PerUnit Re[n + 1]
+  Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start)
     "Reynolds";
-  Types.PerUnit ff[n + 1]
+  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.005)
     "Friction factor";
 
 // Fluids
-  Medium fluid[n + 1](
+  Medium fluid[n + 1](each p(nominal = 1e4),
     T_start = T_start,
     each X_start = X_start,
     each p_start = pout_start,
@@ -157,7 +160,12 @@ equation
     m_flow[i] = A*u[i]*rho[i];
     Re[i] = Di*m_flow[i]/(A*fluid[i].mu_const);
     //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + 0.045e-3/(3.715*Di)));
-    ff[i] = -3.6*log10((6.9/Re[i]) + (0.045e-3/(3.71*Di))^(1.11));
+    //1 = (-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))*sqrt(ff[i]);
+    //ff[i] = 0.00475;
+    //ff[i] = 1/(-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))^2;
+    ff[i] = 64/Re[i] + 1/(-2*log(k/(3.71*Di)))^2 "Nikuradse";
+    //ff[i] = 0.079 * Re[i]^(-0.25);
+    //ff[i] = -3.6*log10((6.9/Re[i]) + (0.045e-3/(3.71*Di))^(1.11));
   end for;
 // Relationships for state variables
   Ttilde = T[2:n + 1];
@@ -179,8 +187,10 @@ equation
   hout = fluid[n + 1].h "Outlet specific enthalpy equals to specific enthalpy of last fluid";
   pin = inlet.p "Inlet pressure equals to pressure of the inlet connector";
   pout = outlet.p "Outlet pressure equals to pressure of the outlet connector";
-  inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
-  inlet.h_out = hin_start "Dummy equation (not flow reversal)";
+  //inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
+  //inlet.h_out = hin_start "Dummy equation (not flow reversal)";
+  inlet.Xi = inStream(outlet.Xi) "Dummy equation (not flow reversal)";
+  inlet.h_out = inStream(outlet.h_out) "Dummy equation (not flow reversal)";
 // Balances
   for i in 1:n loop
     M[i] = Vi*rho[i + 1];
@@ -197,7 +207,8 @@ equation
   //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
   //p[i] - ptilde[i] = k/2*m_flow[i]/n;
   
-  p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e6;
+  //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
+  p[i] - p[i + 1] = k * m_flow[i] * m_flow[i] * (L/n) / (rho[i]*Di^5); 
   ptilde[i] = p[i+1];
   end for;
 

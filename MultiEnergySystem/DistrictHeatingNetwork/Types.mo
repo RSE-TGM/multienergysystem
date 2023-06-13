@@ -16,13 +16,13 @@ package Types
   type Pressure = Modelica.Units.SI.Pressure (
                                             nominal = 1e5);
   type Density = Modelica.Units.SI.Density (
-                                          nominal = 1e2);
+                                          nominal = 1e2, displayUnit="kg/m3");
   type Volume = Modelica.Units.SI.Volume (
                                         nominal = 10);
   type SpecificVolume = Real (
       final quantity="SpecificVolume",
       final unit="m3/kg",
-      nominal = 0.01);
+      nominal = 0.1);
   type MolarVolume =
       Modelica.Units.SI.MolarVolume (             nominal = 1e-3);
   type MassFlowRate =

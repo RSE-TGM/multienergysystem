@@ -37,6 +37,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Heat Transfer Model"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle 
     "Location of pressure state";
+  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure 
+    "Equation for momentum equation";
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt 
     "Initialisation option" annotation(
     Dialog(group = "Initialisation"));
@@ -85,7 +87,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   outer System system 
     "system object for global defaults";
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n), nominal = fill(X_start[1:nXi], n)) 
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)/*, nominal = fill(X_start[1:nXi], n)*/) 
     "Composition state for each volume";
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) 
    // "Pressure state the pipe";  
@@ -133,14 +135,14 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Real kf(unit = "1/m4");
   Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start)
     "Reynolds";
-  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.005)
+  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.001)
     "Friction factor";
 
 // Fluids
-  Medium fluid[n + 1](each p(nominal = 1e4),
+  Medium fluid[n + 1](each p(nominal = 1e4), each v(nominal = 1),
     T_start = T_start,
     each X_start = X_start,
-    each p_start = pout_start,
+    p_start = linspace(pin_start, pout_start, n),
     each computeTransport = computeTransport,
     each computeEntropy = computeEntropy);
 equation
@@ -201,15 +203,19 @@ equation
       0 = T[i] - T[i + 1];
     else
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
-      //m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dXi*der(fluid[i + 1].Xi));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
     end if;
   //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
   //p[i] - ptilde[i] = k/2*m_flow[i]/n;
   
   //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
-  p[i] - p[i + 1] = k * m_flow[i] * m_flow[i] * (L/n) / (rho[i]*Di^5); 
-  ptilde[i] = p[i+1];
+    if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then 
+      p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5); 
+      ptilde[i] = p[i+1];  
+    elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
+      p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
+      ptilde[i] = p[i+1];
+    end if;
   end for;
 
   //pin - ptilde = k/2*inlet.m_flow;

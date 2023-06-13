@@ -4,8 +4,8 @@ model PaperCaseII
   extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
   parameter Integer n = 7 "Number of volumes in each pipeline";
-  parameter Types.MassFlowRate X_start[5] = {0.862424, 0.107765, 0.0263392, 0.00347176, 0};
-  parameter Types.MassFlowRate X_start_H2[5] = {0.0, 0.0, 0.0, 0.0, 1};
+  parameter Types.MassFraction X_start[5] = {0.862424, 0.107765, 0.0263392, 0.00347176, 0};
+  parameter Types.MassFraction X_start_H2[5] = {0.0, 0.0, 0.0, 0.0, 1};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(Di = 0.16, L = 50, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = 0.001368, kc = 1, m_flow_start = 0.2666, n = n, pin_start(displayUnit = "Pa") = 7499.999999999999, pout_start(displayUnit = "Pa") = 6608.999999999999, rho_nom(displayUnit = "kg/m3") = 0.0520458, u_nom = 17) annotation(
     Placement(visible = true, transformation(origin = {-30, 70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));

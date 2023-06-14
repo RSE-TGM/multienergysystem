@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet.nXi = nXi, outlet.nXi = nXi, inlet.m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), outlet.m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0), hin_start = fluid[1].h_id_start);
+  extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet.nXi = nXi, outlet.nXi = nXi, inlet.m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), outlet.m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0), hin_start = fluid[1].h_id_start, inlet.Xi(start = X_start[1:fluid[1].nXi]));
   import Modelica.Fluid.Utilities.regSquare;
   import HCtypes = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   // Medium & Heat Transfer Model for the pipe
@@ -42,9 +42,12 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt 
     "Initialisation option" annotation(
     Dialog(group = "Initialisation"));
-  parameter Real k(unit = "Pa/(kg/s)") = 500 
-    "Coefficient for the calculation of the pressure loss across the pipe" annotation(
+  parameter Real k = 500 
+    "Coefficient for the calculation of the pressure loss" annotation(
     Dialog(tab = "Data", group = "Pipe"));
+  parameter Real k_linear(unit = "Pa/(kg/s)") = 500 
+    "Coefficient for the calculation of the linear pressure loss across the pipe" annotation(
+    Dialog(tab = "Data", group = "Pipe"));  
   parameter Types.Density rho_nom = 0.68 
     "Nominal density of the fluid" annotation(
     Dialog(tab = "Data", group = "Fluid"));
@@ -114,7 +117,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Mass of fluid in each finite volume";
   Types.Density rho[n + 1](each start = rho_nom)
     "Density at each volume boundary";
-  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start, each nominal = 0.01)
+  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start, each nominal = 0.3)
     "Mass flow at each volume boundary";
   Types.VolumeFlowRate q[n + 1]
     "Mass flow rate in each volume across the pipe";
@@ -139,7 +142,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     "Friction factor";
 
 // Fluids
-  Medium fluid[n + 1](each p(nominal = 1e4), each v(nominal = 1),
+  Medium fluid[n + 1](each p(nominal = 7500), each v(nominal = 50),
     T_start = T_start,
     each X_start = X_start,
     p_start = linspace(pin_start, pout_start, n),
@@ -160,12 +163,12 @@ equation
 //dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
     q[i] = m_flow[i]/rho[i];
     m_flow[i] = A*u[i]*rho[i];
-    Re[i] = Di*m_flow[i]/(A*fluid[i].mu_const);
+    Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) ;
     //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + 0.045e-3/(3.715*Di)));
     //1 = (-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))*sqrt(ff[i]);
     //ff[i] = 0.00475;
     //ff[i] = 1/(-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))^2;
-    ff[i] = 64/Re[i] + 1/(-2*log(k/(3.71*Di)))^2 "Nikuradse";
+    ff[i] = 64/(Re[i]+1) + 1/(-2*log(kappa/(3.71*Di)))^2 "Nikuradse";
     //ff[i] = 0.079 * Re[i]^(-0.25);
     //ff[i] = -3.6*log10((6.9/Re[i]) + (0.045e-3/(3.71*Di))^(1.11));
   end for;
@@ -215,6 +218,9 @@ equation
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
       p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
       ptilde[i] = p[i+1];
+    elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
+      p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;
+      ptilde[i] - p[i+1] = k_linear/2*m_flow[i]/n;
     end if;
   end for;
 

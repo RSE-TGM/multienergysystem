@@ -71,8 +71,7 @@ package Types
                                     nominal = 1e2);
   type Energy = Modelica.Units.SI.Energy (
                                         nominal = 1e6);
-  type MolarMass = Modelica.Units.SI.MolarMass (
-                                              nominal = 0.0160425);
+  type MolarMass = Modelica.Units.SI.MolarMass;
   type MassFraction = Modelica.Units.SI.MassFraction;
   type MoleFraction = Modelica.Units.SI.MoleFraction;
   type PerUnit = Modelica.Units.SI.PerUnit;

@@ -12,7 +12,7 @@ model PaperCaseII
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure;
   inner MultiEnergySystem.System system annotation(
     Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(Di = 0.08, L = 200, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000615, k_linear = 27762.39269, kc = 1, m_flow_start = 0.0458, n = n, pin_start(displayUnit = "Pa") = 2815, pout_start(displayUnit = "Pa") = 2414, rho_nom = 0.019534524, u_nom = 4.006497, momentum = momentum) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(Di = 0.08, L = 200, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000615, k_linear = 27762.39269, kc = 1, m_flow_start = 0.0458, n = n, pin_start(displayUnit = "Pa") = 2815, pout_start(displayUnit = "Pa") = 2414, rho_nom = 0.019534524, u_nom = 4.006497) annotation(
     Placement(visible = true, transformation(origin = {70, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.008304, p0(displayUnit = "Pa") = 2414, userdemand = [0, 0.008333; 1000, 0.008333]) annotation(
     Placement(visible = true, transformation(origin = {100, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -20,7 +20,7 @@ model PaperCaseII
     Placement(visible = true, transformation(origin = {130, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.006111, p0(displayUnit = "Pa") = 2342, userdemand = [0, 0.006111; 1000, 0.006111]) annotation(
     Placement(visible = true, transformation(origin = {160, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(Di = 0.08, L = 200, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000873, k_linear = 46674.20152, kc = 1, m_flow_start = 0.023889, n = n, pin_start(displayUnit = "Pa") = 3930, pout_start(displayUnit = "Pa") = 2815, rho_nom = 0.02727200, u_nom = 6.559995, momentum = momentum) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(Di = 0.08, L = 200, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000873, k_linear = 46674.20152, kc = 1, m_flow_start = 0.023889, n = n, pin_start(displayUnit = "Pa") = 3930, pout_start(displayUnit = "Pa") = 2815, rho_nom = 0.02727200, u_nom = 6.559995) annotation(
     Placement(visible = true, transformation(origin = {10, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node9(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.009444, p0(displayUnit = "Pa") = 2815, userdemand = [0, 0.009444; 1000, 0.009444]) annotation(
     Placement(visible = true, transformation(origin = {40, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -60,7 +60,7 @@ model PaperCaseII
     Placement(visible = true, transformation(origin = {-20, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe9(Di = 0.08, L = 600, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0010998, k_linear = 68764.04494, kc = 1, m_flow_start = 0.011125, n = n, pin_start(displayUnit = "Pa") = 4694.999999999999, pout_start(displayUnit = "Pa") = 3930, rho_nom = 0.032580671, u_nom = 3.033642) annotation(
     Placement(visible = true, transformation(origin = {-20, 30}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(Di = 0.11, L = 600, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009341, k_linear = 29824.94057, kc = 1, m_flow_start = 0.027762, momentum = MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure, n = n, pin_start(displayUnit = "Pa") = 4756.87, pout_start(displayUnit = "Pa") = 3840, rho_nom = 0.032393306, u_nom = 3.763901) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(Di = 0.11, L = 600, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009341, k_linear = 29824.94057, kc = 1, m_flow_start = 0.027762, n = n, pin_start(displayUnit = "Pa") = 4756.87, pout_start(displayUnit = "Pa") = 3840, rho_nom = 0.032393306, u_nom = 3.763901, momentum = momentum) annotation(
     Placement(visible = true, transformation(origin = {-110, -20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(pipe13.outlet, node10.inlet) annotation(

@@ -160,7 +160,6 @@ equation
   for i in 1:n + 1 loop
     h[i] = fluid[i].h "Specific enthalpy at each volume boundary";
     rho[i] = fluid[i].rho "Density at each volume boundary";
-//dv_dt[i] = fluid[i].dv_dT * der(fluid[i].T) + fluid[i].dv_dp * der(fluid[i].p) + fluid[i].dv_dX * der(fluid[i].X);
     q[i] = m_flow[i]/rho[i];
     m_flow[i] = A*u[i]*rho[i];
     Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) ;
@@ -192,14 +191,13 @@ equation
   hout = fluid[n + 1].h "Outlet specific enthalpy equals to specific enthalpy of last fluid";
   pin = inlet.p "Inlet pressure equals to pressure of the inlet connector";
   pout = outlet.p "Outlet pressure equals to pressure of the outlet connector";
-  //inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
+  inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
   //inlet.h_out = hin_start "Dummy equation (not flow reversal)";
-  inlet.Xi = inStream(outlet.Xi) "Dummy equation (not flow reversal)";
+  //inlet.Xi = inStream(outlet.Xi) "Dummy equation (not flow reversal)";
   inlet.h_out = inStream(outlet.h_out) "Dummy equation (not flow reversal)";
 // Balances
   for i in 1:n loop
     M[i] = Vi*rho[i + 1];
-    //M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
     M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
     if quasistaticEnergyBalance then
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));

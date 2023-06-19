@@ -9,6 +9,7 @@ model BaseManifold
   // Parameters
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
+  parameter Boolean noInitialPressure = false "Remove initial equation on pressure" annotation(choices(checkBox=true));
   parameter Types.Volume V = 0.1 "Volume of the manifold";
   parameter Types.Pressure p_start = 1e4 "Start pressure value of the manifold";
   parameter Types.Temperature Tin_start1 = 15 + 273.15 "Start temperature value for inlet 1 fluid";
@@ -114,7 +115,9 @@ initial equation
   //Always in Steady State
   der(T) = 0;
   der(Xi) = zeros(fluidOut.nXi);
-  der(p) = 0;
+  if not noInitialPressure then
+    der(p) = 0;
+  end if;
 
 annotation(
     Icon(graphics = {Rectangle(rotation = 90, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Rectangle(origin = {60, 0}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, -40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, 40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}})}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));

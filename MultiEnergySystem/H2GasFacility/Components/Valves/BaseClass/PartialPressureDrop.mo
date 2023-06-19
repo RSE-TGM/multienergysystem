@@ -30,8 +30,10 @@ equation
 // Energy balance
   inStream(inlet.h_out) = outlet.h_out;
   inStream(outlet.h_out) = inlet.h_out;
+
 // Momentum balance
   m_flow = homotopy(A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), m_flow_nom/dp_nom*(inlet.p - outlet.p));
+  
   
 // Definition of fluids
   fluidIn.p = inlet.p;

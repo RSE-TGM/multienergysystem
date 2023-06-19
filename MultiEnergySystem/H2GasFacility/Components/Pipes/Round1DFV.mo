@@ -11,165 +11,120 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
      choicesAllMatching = true);
  
   constant Types.Acceleration g_n = Modelica.Constants.g_n;
+  
   // Main Parameters
-  parameter Boolean computeTransport = false
-    "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEntropy = false
-    "Used to decide if it is necessary to calculate specific entropy";
-  parameter Boolean noInitialPressure = false 
-    "Remove initial equation for pressure, to be used in case of solver failure";
-  parameter Boolean quasistaticEnergyBalance = false
-    "If true, then T = Tconst";
-  parameter Integer n = 3 
-    "Number of finite volumes in each pipe" annotation(
+  parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
+  parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate specific entropy";
+  parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure";
+  parameter Boolean quasistaticEnergyBalance = false "If true, then T[i+1] = T[i]";
+  parameter Integer n = 3 "Number of finite volumes in each pipe" annotation(
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Integer nPipes = 1 
-    "Number of parallel pipes" annotation(
+  parameter Integer nPipes = 1 "Number of parallel pipes" annotation(
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.PerUnit cf = 0.004 
-    "Constant Fanning friction coefficient" annotation(
+  parameter Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient" annotation(
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Velocity u_nom = 1 
-    "Nominal fluid velocity" annotation(
+  parameter Types.Pressure pin_nom = 7500 "Nominal pressure of the pipeline system";
+  parameter Types.Density rho_nom = 0.68 "Nominal density of the fluid" annotation(
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.PerUnit kc = 1
-    "Corrective factor for heat tranfer" annotation(
+  parameter Types.Velocity u_nom = 1 "Nominal fluid velocity" annotation(
+    Dialog(tab = "Data", group = "Fluid"));
+  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation(
     Dialog(group = "Heat Transfer Model"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle 
-    "Location of pressure state";
-  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure 
-    "Equation for momentum equation";
-  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt 
-    "Initialisation option" annotation(
+  parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation(
+    Dialog(group = "Heat Transfer Model"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure "Momentum equation";
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation(
     Dialog(group = "Initialisation"));
-  parameter Real k = 500 
-    "Coefficient for the calculation of the pressure loss" annotation(
+  parameter Real k = 500 "Coefficient for the calculation of the pressure loss" annotation(
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Real k_linear(unit = "Pa/(kg/s)") = 500 
-    "Coefficient for the calculation of the linear pressure loss across the pipe" annotation(
-    Dialog(tab = "Data", group = "Pipe"));  
-  parameter Types.Density rho_nom = 0.68 
-    "Nominal density of the fluid" annotation(
-    Dialog(tab = "Data", group = "Fluid"));
-  parameter Integer nX = fluid[1].nX 
-    "Number of components in the fluid" annotation(
-    Dialog(tab = "Data", group = "Fluid"));
-  parameter Integer nXi = fluid[1].nXi
-    "Number of independent components in the fluid" annotation(
-    Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.Area Stot = S*nPipes 
-    "Total surface of the wall" annotation(
+  parameter Real k_linear(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the linear pressure loss across the pipe" annotation(
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 
-    "nominal heat transfer coeffcient" annotation(
-    Dialog(group = "Heat Transfer Model"));
-  parameter Types.MassFraction X_start[nX]
-    "Start value for the mass fraction" annotation(
+  parameter Integer nX = fluid[1].nX "Number of components in the fluid" annotation(
+    Dialog(tab = "Data", group = "Fluid"));
+  parameter Integer nXi = fluid[1].nXi "Number of independent components in the fluid" annotation(
+    Dialog(tab = "Data", group = "Fluid"));
+  parameter Types.MassFraction X_start[nX] "Start value for the mass fraction" annotation(
     Dialog(group = "Initialisation"));
   parameter Types.PerUnit cfnom = 0.005;
-  parameter Types.Length kappa = 0.01e-3
-    "Roughness of the pipe";
+  parameter Types.Length kappa = 0.01e-3 "Roughness of the pipe" annotation(
+    Dialog(tab = "Data", group = "Pipe"));
+  
+  
   // Final parameters
-  final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
-    "Temperature start value of the fluid";
-  final parameter Types.Pressure dp_nom = pin_start - pout_start
-    "Nominal pressure drop";
-  final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom
-    "Nominal mass flow rate";
-  final parameter Types.Area S = L*omega 
-    "Total surface of the walls of one pipe of the heat exchanger";
-  final parameter Types.Area Si = S / n
-    "Surface of the wall of each finite volume (for one pipe)";
-  final parameter Types.Area Atot = A * nPipes
-    "Total internal area of all tubes";
-  final parameter Types.Volume V = A * L * nPipes
-    "Total volume of the fluid in the pipe";
-  final parameter Types.Volume Vi = V / n
-    "Volume of one finite element";
+  final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid";
+  final parameter Types.Pressure dp_nom = pin_start - pout_start "Nominal pressure drop";
+  final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom "Nominal mass flow rate";
+  final parameter Types.Area S = L*omega "Total surface of the walls of one pipe of the heat exchanger";
+  final parameter Types.Area Si = S / n "Surface of the wall of each finite volume (for one pipe)";
+  final parameter Types.Area Stot = S*nPipes "Total surface of the wall";
+  final parameter Types.Area Atot = A * nPipes "Total internal area of all tubes";
+  final parameter Types.Volume V = A * L * nPipes "Total volume of the fluid in the pipe";
+  final parameter Types.Volume Vi = V / n "Volume of one finite element";
   final parameter Types.PerUnit Re_start = Di*m_flow_start/(A*fluid[1].mu_const);
-  outer System system 
-    "system object for global defaults";
+  
+  outer System system "system object for global defaults";
+  
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)/*, nominal = fill(X_start[1:nXi], n)*/) 
-    "Composition state for each volume";
-  //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) 
-   // "Pressure state the pipe";  
-  Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = 1e4)
-    "Pressure state the pipe";
-  Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:n+1])
-    "State variable temperatures";
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = StateSelect.prefer, start = fill(X_start[1:nXi], n)) "Mass Composition state";
+  //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) "Pressure state the pipe";  
+  Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = pin_nom) "Press. state";
+  Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:n+1]) "State variable temperatures";
+  
   // Inlet/Outlet Variables
-  Types.Temperature Tin
-    "Inlet temperature";
-  Types.Temperature Tout
-    "Outlet temperature";
-  Types.SpecificEnthalpy hin(start = hin_start)
-    "Inlet Specific enthalpy";
-  Types.SpecificEnthalpy hout
-    "Outlet Specific enthalpy";
-  Types.Pressure pin
-    "Inlet pressure";
-  Types.Pressure pout
-    "Outlet pressure";
+  Types.Temperature Tin "Inlet temperature";
+  Types.Temperature Tout "Outlet temperature";
+  Types.SpecificEnthalpy hin(start = hin_start) "Inlet Specific enthalpy";
+  Types.SpecificEnthalpy hout"Outlet Specific enthalpy";
+  Types.Pressure pin "Inlet pressure";
+  Types.Pressure pout "Outlet pressure";
 
-// Vector Variables
-  Types.Mass M[n]
-    "Mass of fluid in each finite volume";
-  Types.Density rho[n + 1](each start = rho_nom)
-    "Density at each volume boundary";
-  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start, each nominal = 0.3)
-    "Mass flow at each volume boundary";
-  Types.VolumeFlowRate q[n + 1]
-    "Mass flow rate in each volume across the pipe";
-  Types.Temperature T[n + 1] 
-    "Volume boundary temperatures";
-  Types.SpecificEnthalpy h[n + 1](each nominal = 1e6) 
-    "Specific enthalpy at each fluid";
-  Types.MassFraction Xi[n + 1, nXi]
-    "Mass fractions at each volume boundary";
-  Types.Velocity u[n + 1]
-    "Velocity at each volume boundary";
-  //Real dv_dt[n + 1](each unit = "m3/(kg.s)")
-  //  "Derivative of specific volume w.r.t. time";
-  Types.Pressure p[n + 1](each nominal = 1e4);
+  // Vector Variables
+  Types.Mass M[n] "Mass of fluid in each finite volume";
+  Types.Density rho[n + 1](each start = rho_nom) "Density at each volume boundary";
+  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start, each nominal = 0.3) "Mass flow at each volume boundary";
+  Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
+  Types.Temperature T[n + 1] "Volume boundary temperatures";
+  Types.SpecificEnthalpy h[n + 1](each nominal = 1e6) "Specific enthalpy at each fluid";
+  Types.MassFraction Xi[n + 1, nXi] "Mass fractions at each volume boundary";
+  Types.Velocity u[n + 1] "Velocity at each volume boundary";
+  Types.Pressure p[n + 1](each nominal = pin_nom) "Pressure at each fluid";
+  
   // Complementary variables
-  Types.Time taur
-    "Residence time";
+  Types.Time taur "Residence time";
+  Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start) "Reynolds";
+  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.001) "Friction factor";
   Real kf(unit = "1/m4");
-  Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start)
-    "Reynolds";
-  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.001)
-    "Friction factor";
 
-// Fluids
-  Medium fluid[n + 1](each p(nominal = 7500), each v(nominal = 50),
+  // Fluids
+  Medium fluid[n + 1](each p(nominal = pin_nom), each v(nominal = 50),
     T_start = T_start,
     each X_start = X_start,
     p_start = linspace(pin_start, pout_start, n),
     each computeTransport = computeTransport,
     each computeEntropy = computeEntropy);
+
 equation
 // Equations to set the fluid properties
   for i in 1:n + 1 loop
     fluid[i].T = T[i] "Temperature at each volume boundary is equal to its equivalent value in the vector variable T";
     fluid[i].Xi = Xi[i, :] "Mass fraction at each volume boundary is equal to its equivalent value in the vector variable Xi";
-    //fluid[i].p = ptilde "Pressure at each volume boundary is equal to ptilde";
     fluid[i].p = p[i] "Pressure at each volume boundary is equal to ptilde";
+    //fluid[i].p = ptilde "Pressure at each volume boundary is equal to ptilde";
   end for;
 // Equations to assign values from fluids properties
   for i in 1:n + 1 loop
     h[i] = fluid[i].h "Specific enthalpy at each volume boundary";
     rho[i] = fluid[i].rho "Density at each volume boundary";
-    q[i] = m_flow[i]/rho[i];
-    m_flow[i] = A*u[i]*rho[i];
-    Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) ;
-    //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + 0.045e-3/(3.715*Di)));
+    q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
+    m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
+    Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) "Reynold's number";
+    //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + kappa/(3.715*Di)));
     //1 = (-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))*sqrt(ff[i]);
     //ff[i] = 0.00475;
     //ff[i] = 1/(-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))^2;
-    ff[i] = 64/(Re[i]+1) + 1/(-2*log(kappa/(3.71*Di)))^2 "Nikuradse";
-    //ff[i] = 0.079 * Re[i]^(-0.25);
-    //ff[i] = -3.6*log10((6.9/Re[i]) + (0.045e-3/(3.71*Di))^(1.11));
+    ff[i] = 64/(Re[i]+1) + 1/(-2*log(kappa/(3.71*Di)))^2 "Nikuradse, friction factor";
+    //ff[i] = -3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11));
   end for;
 // Relationships for state variables
   Ttilde = T[2:n + 1];
@@ -183,7 +138,6 @@ equation
 //h[n+1] = outlet.h_out;
   outlet.h_out = h[n + 1];
   Xi[1, :] = inStream(inlet.Xi);
-//Xi[n+1,:] = outlet.Xi;
   outlet.Xi = Xi[n + 1, :];
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
   Tout = fluid[n + 1].T "Outlet temperature equals to temperature of last fluid";
@@ -206,9 +160,6 @@ equation
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
     end if;
-  //ptilde[i] - p[i + 1] = k/2*m_flow[i]/n;
-  //p[i] - ptilde[i] = k/2*m_flow[i]/n;
-  
   //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
     if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then 
       p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5); 
@@ -233,7 +184,7 @@ equation
  
   
 //pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
-  kf = cfnom*omega*L/(2*A^3);
+  kf = cf*omega*L/(2*A^3);
   p[1] = inlet.p;
   p[n + 1] = outlet.p;
 // Complementary variables
@@ -242,7 +193,7 @@ initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
       if quasistaticEnergyBalance then
-// nothing
+      // nothing
       else
         der(Ttilde[i]) = 0;
       end if;

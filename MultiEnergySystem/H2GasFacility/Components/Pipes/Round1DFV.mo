@@ -10,7 +10,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation(
      choicesAllMatching = true);
  
-  constant Types.Acceleration g_n = Modelica.Constants.g_n;
+  constant Types.Acceleration g_n = Modelica.Constants.g_n "Gravity";
   
   // Main Parameters
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
@@ -25,8 +25,6 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Pressure pin_nom = 7500 "Nominal pressure of the pipeline system";
   parameter Types.Density rho_nom = 0.68 "Nominal density of the fluid" annotation(
-    Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.Velocity u_nom = 1 "Nominal fluid velocity" annotation(
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation(
     Dialog(group = "Heat Transfer Model"));
@@ -46,22 +44,20 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.MassFraction X_start[nX] "Start value for the mass fraction" annotation(
     Dialog(group = "Initialisation"));
-  parameter Types.PerUnit cfnom = 0.005;
   parameter Types.Length kappa = 0.01e-3 "Roughness of the pipe" annotation(
-    Dialog(tab = "Data", group = "Pipe"));
-  
+    Dialog(tab = "Data", group = "Pipe"));  
   
   // Final parameters
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid";
   final parameter Types.Pressure dp_nom = pin_start - pout_start "Nominal pressure drop";
-  final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom "Nominal mass flow rate";
+  final parameter Types.Velocity u_nom = m_flow_start / (rho_nom * A) "Nominal mass flow rate";
   final parameter Types.Area S = L*omega "Total surface of the walls of one pipe of the heat exchanger";
   final parameter Types.Area Si = S / n "Surface of the wall of each finite volume (for one pipe)";
-  final parameter Types.Area Stot = S*nPipes "Total surface of the wall";
+  final parameter Types.Area Stot = S * nPipes "Total surface of the wall";
   final parameter Types.Area Atot = A * nPipes "Total internal area of all tubes";
   final parameter Types.Volume V = A * L * nPipes "Total volume of the fluid in the pipe";
   final parameter Types.Volume Vi = V / n "Volume of one finite element";
-  final parameter Types.PerUnit Re_start = Di*m_flow_start/(A*fluid[1].mu_const);
+  final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_const) "Start value for Reynolds number";
   
   outer System system "system object for global defaults";
   

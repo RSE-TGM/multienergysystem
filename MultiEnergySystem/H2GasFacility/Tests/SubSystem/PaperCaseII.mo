@@ -4,15 +4,15 @@ model PaperCaseII
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.CH4;
   replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
-  parameter Integer n = 5 "Number of volumes in each pipeline";
+  parameter Integer n = 7 "Number of volumes in each pipeline";
   //parameter Types.MassFraction X_start[1] = {1};
   parameter Types.MassFraction X_start[5] = {0.862424, 0.107765, 0.0263392, 0.00347176, 0};
-  parameter Types.MassFraction X_start_H2[5] = {0.0, 0.0, 0.0, 0.0, 1};
+  parameter Types.MassFraction X_start_H2[5] = X_start;
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
-  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure;
+  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
   inner MultiEnergySystem.System system annotation(
     Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(Di = 0.08, L = 200, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000615, k_linear = 27762.39269, kc = 1, m_flow_start = 0.0458, n = n, pin_start(displayUnit = "Pa") = 2815, pout_start(displayUnit = "Pa") = 2414, rho_nom = 0.019534524, u_nom = 4.006497) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(Di = 0.08, L = 200, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000615, k_linear = 27762.39269, kc = 1, m_flow_start = 0.014444, n = n, pin_start(displayUnit = "Pa") = 2815, pout_start(displayUnit = "Pa") = 2414, rho_nom = 0.019534524, u_nom = 4.006497) annotation(
     Placement(visible = true, transformation(origin = {70, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.008304, p0(displayUnit = "Pa") = 2414, userdemand = [0, 0.008333; 1000, 0.008333]) annotation(
     Placement(visible = true, transformation(origin = {100, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -62,6 +62,10 @@ model PaperCaseII
     Placement(visible = true, transformation(origin = {-20, 30}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(Di = 0.11, L = 600, redeclare model Medium = Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009341, k_linear = 29824.94057, kc = 1, m_flow_start = 0.027762, n = n, pin_start(displayUnit = "Pa") = 4756.87, pout_start(displayUnit = "Pa") = 3840, rho_nom = 0.032393306, u_nom = 3.763901) annotation(
     Placement(visible = true, transformation(origin = {-110, -20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(G = 0, redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start_H2, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation(
+    Placement(visible = true, transformation(origin = {40, 40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation(
+    Placement(visible = true, transformation(origin = {70, 70}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(pipe13.outlet, node10.inlet) annotation(
     Line(points = {{80, -20}, {100, -20}}, color = {182, 109, 49}));
@@ -119,6 +123,10 @@ equation
     Line(points = {{-140, -20}, {-140, -60}}, color = {182, 109, 49}));
   connect(node8.inlet, pipe10.outlet) annotation(
     Line(points = {{-80, -120}, {-80, -100}, {-140, -100}, {-140, -80}}, color = {182, 109, 49}));
+  connect(m_flow_H2.y, sourceH2_A.in_m_flow0) annotation(
+    Line(points = {{60, 70}, {46, 70}, {46, 46}}, color = {0, 0, 127}));
+  connect(sourceH2_A.outlet, node3.inlet) annotation(
+    Line(points = {{30, 40}, {6, 40}, {6, -4}, {-80, -4}, {-80, -20}}, color = {182, 109, 49}));
   annotation(
     Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}})),
     experiment(StartTime = 0, StopTime = 1000, Tolerance = 1e-06, Interval = 2));

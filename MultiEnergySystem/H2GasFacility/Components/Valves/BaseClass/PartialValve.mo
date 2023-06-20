@@ -15,14 +15,15 @@ partial model PartialValve
     "Pressure recovery coefficient";
   parameter Types.valveOpeningChar openingChar = Types.valveOpeningChar.Linear
     "opening characteristic";
-  final parameter Types.MassFlowRate m_flow_nom = Kv*dp_nom*dp_nom*1 
+  final parameter Types.MassFlowRate m_flow_nom = A_v*dp_nom*dp_nom*1 
     "Peak mass flow rate at full opening";
   parameter Types.Area A_v = 0.01
     "Opening area of the valve";
   Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0) 
     "Valve Displacement" annotation(
     Placement(visible = true, transformation(origin = {0, 90}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
-
+  parameter Boolean PressureDropLinear = false;
+  parameter Real K_v = 1e-3;
   
   Types.MassFlowRate m_flow(start = m_flow_nom)
     "Mass flow rate through the valve";
@@ -42,7 +43,11 @@ equation
   
   if openingChar == Types.valveOpeningChar.Linear then
 // Momentum balance
-    m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    if PressureDropLinear then
+      m_flow = (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*K_v*(inlet.p - outlet.p);
+    else 
+      m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    end if;
   elseif openingChar == Types.valveOpeningChar.Quadratic then
 // Momentum balance
     m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));

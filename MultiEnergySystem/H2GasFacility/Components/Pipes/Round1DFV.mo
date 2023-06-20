@@ -145,10 +145,15 @@ equation
   //inlet.h_out = hin_start "Dummy equation (not flow reversal)";
   //inlet.Xi = inStream(outlet.Xi) "Dummy equation (not flow reversal)";
   inlet.h_out = inStream(outlet.h_out) "Dummy equation (not flow reversal)";
+
 // Balances
   for i in 1:n loop
     M[i] = Vi*rho[i + 1];
+    
+    // Mass fraction Balance
     M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+    
+    // Mass & Energy Balance
     if quasistaticEnergyBalance then
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       0 = T[i] - T[i + 1];
@@ -156,7 +161,8 @@ equation
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
     end if;
-  //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
+  
+    // Momentum Balance
     if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then 
       p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5); 
       ptilde[i] = p[i+1];  
@@ -183,8 +189,10 @@ equation
   kf = cf*omega*L/(2*A^3);
   p[1] = inlet.p;
   p[n + 1] = outlet.p;
+
 // Complementary variables
   taur = sum(M)/inlet.m_flow;
+
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop

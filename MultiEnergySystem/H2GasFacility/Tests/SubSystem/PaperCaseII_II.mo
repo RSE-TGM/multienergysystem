@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 
 model PaperCaseII_II
-  extends MultiEnergySystem.H2GasFacility.Tests.SubSystem.PaperCaseII(X_start_H2 = {0.848265,0.105996,0.0287853,0.00379418,0.0131595});
+  extends MultiEnergySystem.H2GasFacility.Tests.SubSystem.PaperCaseII(X_start_H2 = {0.822493,0.101895,0.0276716,0.00364738,0.031643, 0.0126504});
 equation
 annotation(
     experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-6, Interval = 0.5),

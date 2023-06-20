@@ -3,13 +3,15 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseII
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.CH4;
-  replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
+  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
+  replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2;
   parameter Integer n = 7 "Number of volumes in each pipeline";
   //parameter Types.MassFraction X_start[1] = {1};
-  parameter Types.MassFraction X_start[5] = {0.862424, 0.107765, 0.0263392, 0.00347176, 0};
-  parameter Types.MassFraction X_start_H2[5] = X_start;
+  parameter Types.MassFraction X_start[6] = {0.835866, 0.103412, 0.0252754, 0.00333153, 0.0321143, 0};
+  parameter Types.MassFraction X_start_H2[6] = X_start;
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
+  parameter Integer duration = 20;
   inner MultiEnergySystem.System system annotation(
     Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
@@ -65,9 +67,9 @@ model PaperCaseII
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.006111, p0(displayUnit = "Pa") = 2342, userdemand = [0, 0.006111; 1000, 0.006111]) annotation(
     Placement(visible = true, transformation(origin = {160, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(G = 0, redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start_H2, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation(
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(G = 0, redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start_H2, m_flow0 = m_flow_H2_ref, p0 (displayUnit = "Pa")= 7500, use_in_m_flow0 = true) annotation(
     Placement(visible = true, transformation(origin = {40, 40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation(
+  Modelica.Blocks.Sources.Ramp m_flow_H2(duration = duration, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation(
     Placement(visible = true, transformation(origin = {70, 70}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(pipe13.outlet, node10.inlet) annotation(

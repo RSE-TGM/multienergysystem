@@ -1,11 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Components.Manifold.BaseClass;
-
-model BaseManifold
+partial model BaseManifold
   // Mediums
   replaceable model MediumIn1 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumIn2 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
-  
+
   // Parameters
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
@@ -18,7 +17,7 @@ model BaseManifold
   parameter Types.MassFraction Xin_start1[fluidIn1.nX] = {1, 0} "Start mass composition for inlet 1 fluid";
   parameter Types.MassFraction Xin_start2[fluidIn1.nX] = {0, 1} "Start mass composition for inlet 2 fluid";
   parameter Types.MassFraction Xout_start[fluidOut.nX] = {0.8, 0.2} "Start mass composition for outlet fluid";
-  
+
   // Variables
   Types.MassFlowRate m_flow_in1 "Inlet mass flow rate 1";
   Types.MassFlowRate m_flow_in2 "Inlet mass flow rate 2";
@@ -26,7 +25,7 @@ model BaseManifold
   Types.Mass M "Total mass inside the manifold";
   Types.Density rho "Density at the outlet";
   Types.Temperature T(start = Tout_start, stateSelect = StateSelect.prefer) "Temperature at the outlet";
-  Types.Pressure p(start = p_start, stateSelect = StateSelect.prefer) "Pressure at the outlet";  
+  Types.Pressure p(start = p_start, stateSelect = StateSelect.prefer) "Pressure at the outlet";
   Types.MassFraction Xi[fluidOut.nXi](start = Xout_start[1:fluidOut.nXi]) "Independent mass fraction at the outlet";
   Types.MassFraction X[fluidOut.nX](each stateSelect = StateSelect.prefer) "Mass fraction at the outlet";
   Types.SpecificEnthalpy h "Specific enthalpy at the outlet";
@@ -42,17 +41,17 @@ model BaseManifold
   Real du_dp(unit = "J/(kg.Pa)") "Pressure derivative of specific energy at the outlet";
   Real du_dX[fluidOut.nX](each unit = "J/kg") "Mass fraction derivative of specific energy at the outlet";
 
-  // Definition of the fluids at the inlets and outlet  
+  // Definition of the fluids at the inlets and outlet
   MediumIn1 fluidIn1(T_start=Tin_start1, p_start=p_start, X_start=Xin_start1, computeEntropy=computeEntropy, computeTransport=computeTransport);
   MediumIn2 fluidIn2(T_start=Tin_start2, p_start=p_start, X_start=Xin_start2, computeEntropy=computeEntropy, computeTransport=computeTransport);
   MediumOut fluidOut(T_start=Tout_start, p_start=p_start, X_start=Xout_start, computeEntropy=computeEntropy, computeTransport=computeTransport);
 
   // Connectors
-  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluidOut.nXi) annotation(
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluidOut.nXi) annotation (
     Placement(visible = true, transformation(origin = {90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {80, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet1(nXi = fluidIn1.nXi) annotation(
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet1(nXi = fluidIn1.nXi) annotation (
     Placement(visible = true, transformation(origin = {-90, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-80, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet2(nXi = fluidIn2.nXi) annotation(
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet2(nXi = fluidIn2.nXi) annotation (
     Placement(visible = true, transformation(origin = {-90, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-80, -40}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
 equation
@@ -69,14 +68,14 @@ equation
   T = fluidOut.T;
   X = fluidOut.X;
   u = fluidOut.u;
-  
+
   // Detivatives
   du_dT = fluidOut.du_dT;
   du_dp = fluidOut.du_dp;
   du_dX = fluidOut.du_dX;
   dv_dT = fluidOut.dv_dT;
   dv_dp = fluidOut.dv_dp;
-  dv_dX = fluidOut.dv_dX;  
+  dv_dX = fluidOut.dv_dX;
 
   // Mass Balance
   M = rho*V;
@@ -96,21 +95,21 @@ equation
   fluidIn1.p = inlet1.p;
   fluidIn1.h = inStream(inlet1.h_out);
   fluidIn1.Xi = inStream(inlet1.Xi);
-  
+
   fluidIn2.p = inlet2.p;
   fluidIn2.h = inStream(inlet2.h_out);
   fluidIn2.Xi = inStream(inlet2.Xi);
-  
+
   fluidOut.p = outlet.p;
   fluidOut.h = h;
   fluidOut.Xi = Xi;
-  
+
   // Flow reversal equations
   inlet1.h_out = inStream(outlet.h_out);
   inlet2.h_out = inStream(outlet.h_out);
   inlet1.Xi = zeros(fluidIn1.nXi);
   inlet2.Xi = zeros(fluidIn2.nXi);
-  
+
 initial equation
   //Always in Steady State
   der(T) = 0;
@@ -119,6 +118,6 @@ initial equation
     der(p) = 0;
   end if;
 
-annotation(
-    Icon(graphics = {Rectangle(rotation = 90, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Rectangle(origin = {60, 0}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, -40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, 40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}})}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+annotation (
+    Icon(graphics={  Rectangle(rotation = 90, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Rectangle(origin = {60, 0}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, -40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, 40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}})}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
 end BaseManifold;

@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
 model SinglePTXFluidTest
   extends Modelica.Icons.Example;
-  replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2 "Real fluid";
+  replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Real fluid";
   parameter Types.Temperature T_ref = 50 + 273.15 "Reference temperature";
   parameter Types.Pressure p_ref = 5e3 "Reference pressure";
   parameter Types.MassFraction X_ref[:] = M/Mt "Mass Fraction of the real gas";

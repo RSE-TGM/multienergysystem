@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-
 model H2PR
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 0,
@@ -11,10 +10,11 @@ model H2PR
       MM =  {Modelica.Media.IdealGases.Common.SingleGasesData.H2.MM},
       p_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalPressure},
       T_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
+      v_mol_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalMolarVolume},
       delta = {{ 0}},
       HHV = {12.75e6},
+      LHV = {119.96e6},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.H2.Hf},
       cp_coeff = {{8.3022149358563e-05,-0.099563690420583,40.70928347186,8817.1836822808}},
-      mu_start = 0  
-  );
+      mu_start = 0);
 end H2PR;

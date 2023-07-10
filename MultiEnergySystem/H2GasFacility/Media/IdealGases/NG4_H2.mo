@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
-
 model NG4_H2
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
       computeTransport = true,
@@ -40,9 +39,8 @@ model NG4_H2
                   {-1.757458394263e-05,     0.017922407341861,      -1.5091379730785,     991.41142728185},
                   {-1.8297628465779e-05,    0.018684376184739,      -1.8817923782208,     1082.5087760849},
                   {8.0738788389137e-05,     -0.097360047650082,      40.00291818555,      8892.3843103683}},
-      mu_start = 0,
-      mu_const = 1.088e-5
-  );
+      mu_start = 1.088e-5,
+      mu_const = 1.088e-5);
 equation
 
 end NG4_H2;

@@ -1,11 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-
 model NaturalGasH2PR "Mixture real gas model for fuel using PR EoS"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 5,
       MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {0.94201, 0.01862, 0.0393, 0.00543, 0.00001, 0.03},
       T_start = 100+273.15,
+      mu_start = 0,
       posDom = 1,
       w =   {Modelica.Media.IdealGases.Common.FluidData.CH4.acentricFactor,
              Modelica.Media.IdealGases.Common.FluidData.C2H6.acentricFactor,
@@ -31,23 +31,19 @@ model NaturalGasH2PR "Mixture real gas model for fuel using PR EoS"
              Modelica.Media.IdealGases.Common.FluidData.CO2.criticalTemperature,
              Modelica.Media.IdealGases.Common.FluidData.N2.criticalTemperature,
              Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
-      v_c = { Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
+      v_mol_c = { Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.C2H6.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.C3H8.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.CO2.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.N2.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.H2.criticalMolarVolume},
       delta=
-         {{ 0.00000,  -0.00260, 	0.01400,   0.01330,	0.02560,   0.02300,-0.00560,   0.09190,	0.03110,   0.20475},
-         { -0.00260,   0.00000, 	0.00110,   0.00960,-0.00670,   0.00780,	0.00000,   0.13220,	0.05150,   0.28838},
-         {  0.01400,   0.00110, 	0.00000,   0.00330,-0.00780,   0.02670,	0.01110,   0.12410,	0.08520,   0.34487},
-         {  0.01330,   0.00960, 	0.00330,   0.00000,-0.00040,   0.01740,	0.00292,   0.13330,	0.08000,   0.39535},
-         {  0.02560,  -0.00670,    -0.00780,  -0.00040,	0.00000,   0.00000,	0.00000,   0.12000,	0.10330,   0.36888},
-         {  0.02300,   0.00780, 	0.02670,   0.01740,	0.00000,   0.00000,	0.00000,   0.12220,	0.10000,   0.40612},
-         { -0.00560,   0.00000, 	0.01110,   0.00292,	0.00000,   0.00000,	0.00000,   0.12190,	0.09220,   0.38028},
-         {  0.09190,   0.13220, 	0.12410,   0.13330,	0.12000,   0.12220,	0.12190,   0.00000,-0.01700,   0.00000},
-         {  0.03110,   0.05150, 	0.08520,   0.08000,	0.10330,   0.10000,	0.09220,  -0.01700,	0.00000,   0.00000},
-         {  0.20470,   0.28838, 	0.34487,   0.39535,	0.36888,   0.40612,	0.38028,   0.00000,	0.00000,   0.00000}},
+         {{ 0.00000,  -0.00260,  0.01400,   0.09190, 0.03110,   0.20475},
+         { -0.00260,   0.00000,  0.00110,   0.13220, 0.05150,   0.28838},
+         { -0.00560,   0.00000,  0.01110,   0.12190, 0.09220,   0.38028},
+         {  0.09190,   0.13220,  0.12410,   0.00000,-0.01700,   0.00000},
+         {  0.03110,   0.05150,  0.08520,  -0.01700, 0.00000,   0.00000},
+         {  0.20470,   0.28838,  0.34487,   0.00000, 0.00000,   0.00000}},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.C2H6.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.C3H8.Hf,
@@ -61,7 +57,6 @@ model NaturalGasH2PR "Mixture real gas model for fuel using PR EoS"
                   {6.9469559921695e-07,     -0.0034853852149653,     6.8351551007804,    -82.089844972399},
                   {2.2131327339673e-07,     -0.00092151007501243,    1.4416059822539,     493.52730053016},
                   {-1.7194266972964e-07,     0.00044985407669627,   -0.16123790188216,    1048.8091727539},
-                  {2.69978537485e-07,        0.0003275951859054,    0.068037231792628,    14324.363921531}},
-      mu_start = 0);
+                  {2.69978537485e-07,        0.0003275951859054,    0.068037231792628,    14324.363921531}});
 
 end NaturalGasH2PR;

@@ -3,16 +3,19 @@ partial model PapayMixture
   extends PartialMixture(Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
   replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
+
+
+  constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
+  constant Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
+  constant Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
+  constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
+
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
-  final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
-  parameter Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
-  final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
   parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
-  constant Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
   parameter Types.Pressure p_c[nX] "Critical pressure of each component";
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
@@ -21,10 +24,7 @@ partial model PapayMixture
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
   parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component in J/m3 units";
   parameter Types.SpecificEnergy LHV[nX] "Lower Heating Value of each component";
-  constant Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
-  final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
-  constant Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
@@ -35,6 +35,10 @@ partial model PapayMixture
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.Temperature Tsat_min = 273.15 + 20;
   parameter Types.Temperature Tsat_max = 273.15 + 150;
+
+  final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
+  final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
+  final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
   final parameter Types.PerUnit alpha_start[nX] = {(1 + m[i]*(1 - sqrt(T_start/T_c[i])))^2 for i in 1:nX};
   final parameter Types.AttractionForce a_start[nX] = {ac[i]*alpha_start[i] for i in 1:nX};
   final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
@@ -50,7 +54,7 @@ partial model PapayMixture
   final parameter Types.DerAttractionForcebyTemperature damix_dT_start = 0.5*sum(Y_start[i]*Y_start[j]*a_star_start[i, j]*(da_dT_start[i]/a_start[i] + da_dT_start[j]/a_start[j]) for i in 1:nX, j in 1:nX);
   final parameter Types.DerPressureByTemperature dp_dT_start = R/(v_mol_start - b*Y_start) - damix_dT_start/(v_mol_start*(v_mol_start + b*Y_start) + b*Y_start*(v_mol_start - b*Y_start)) "Temperature derivative of Pressure at constant specific volume";
   final parameter Types.AttractionForce damix_dY_start[nX] = 2*{sum(Y_start[j]*a_star_start[i, j] for j in 1:nX) for i in 1:nX};
-  constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
+
   //Variables
   Types.Temperature T_c_mix(start = T_c[posDom]) "Pseudo-critical temperature of the fluid mixture";
   Types.Pressure p_c_mix(start = p_c[posDom]) "Pseudo-critical pressure of the mixture";

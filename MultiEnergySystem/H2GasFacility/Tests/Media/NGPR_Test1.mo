@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
 model NGPR_Test1 "Molar fraction from paper reference"
-  extends SinglePTXFluidTest(
+  extends NaturalGasPR(
     T_ref = 0 + 273.15,
     p_ref = 101325,
     Y = {0.85306, 0.06486, 0.02058, 0.00437, 0.0028, 0.00063, 0.00099, 0.01268, 0.03882});

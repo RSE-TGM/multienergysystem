@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
-
 model CH4H2
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
       nXi = 1,
@@ -21,8 +20,8 @@ model CH4H2
       LHV = {50e6, 119.96e6},
       cp_coeff = {{-2.0604948457659e-05,0.02738991794621,-8.523906729998,2877.5194077417},
                   {8.3022149358563e-05,-0.099563690420583,40.70928347186,8817.1836822808}},
-      mu_const = 1.088e-5
-  );
+      mu_start = 1.088e-5,
+      mu_const = 1.088e-5);
 equation
 
 end CH4H2;

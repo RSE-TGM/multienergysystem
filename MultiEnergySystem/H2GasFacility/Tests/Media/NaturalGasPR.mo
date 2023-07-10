@@ -15,7 +15,7 @@ model NaturalGasPR
   //parameter Types.MoleFraction Y[:] = {0.9651, 0.0166, 0.0062, 0.0032, 0.0089} "paper 3. Polimi";
   //parameter Types.MoleFraction Y[:] = {0.85306, 0.06486, 0.02058, 0.0028, 0.00437, 0.00099, 0.00063, 0.03882, 0.01268} "ref paper: https://doi.org/10.1016/j.ijhydene.2021.04.065";
   //parameter Types.MoleFraction Y[:] = {0.86486, 0.08788, 0.01179, 0.01323, 0.01894} "paper 5. xxx";
-  
+
   parameter Types.Mass M[:] = Y.*realGas.MM;
   parameter Types.Mass Mt = sum(M);
   parameter Types.MassFraction X_start[:] = M/Mt;

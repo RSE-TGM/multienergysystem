@@ -1,19 +1,18 @@
-within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
-
+﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PengRobinsonMixture
   extends PartialMixture(Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
   replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
   final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
-  parameter Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
+  constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
   parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
-  parameter Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
+  constant Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
   parameter Types.Pressure p_c[nX] "Critical pressure of each component";
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_c[nX] "Critical molar volume of each component";
@@ -22,10 +21,10 @@ partial model PengRobinsonMixture
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
   parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component in J/m3 units";
   parameter Types.SpecificEnergy LHV[nX] "Lower Heating Value of each component";
-  parameter Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
+  constant Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
-  parameter Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
+  constant Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
   parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
@@ -69,7 +68,7 @@ partial model PengRobinsonMixture
   Types.SpecificHeatCapacity cp_res "Residual or Departure Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_id(start = X_start*cp_star_start) "Ideal Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_star[nX](start = cp_star_start) "Specific heat capacity of the fluid";
-  Types.ThermalConductivity k "Thermal Conductivity" annotation(
+  Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.DerPerUnitbyTemperature dTr_dT[nX] "Temperature derivative of Reduced Temperature per each component";
   Types.DerPerUnitbyTemperature dalpha_dT[nX](start = dalpha_dT_start) "Temperature derivative of alpha per each component";
@@ -127,7 +126,7 @@ protected
     output Types.SpecificHeatCapacity cp;
   algorithm
     cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
-    annotation(
+    annotation (
       Inline = true);
   end cp_T;
 
@@ -137,7 +136,7 @@ protected
     output Types.SpecificEnthalpy h;
   algorithm
     h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    annotation(
+    annotation (
       Inline = true);
   end h_T;
 
@@ -147,7 +146,7 @@ protected
     output Types.SpecificEntropy s;
   algorithm
     s := a[4]*log(T) + T*(a[3] + T*(a[2]/2 + T*a[1]/3));
-    annotation(
+    annotation (
       Inline = true);
   end s_T;
 
@@ -167,7 +166,7 @@ protected
     for i in 1:size(X, 1) loop
       moleFractions[i] := Mmix*X[i]/MMX[i];
     end for;
-    annotation(
+    annotation (
       smoothOrder = 5);
   end massToMoleFractions;
 initial equation
@@ -262,7 +261,7 @@ equation
 //du_dX = dh_dX - p*((1/MM_mix)*dv_mol_dY*dY_dX-(v*MM*dY_dX/(MM_mix^2))) "in mass units";
   mu = 0 "computation not included in the model";
   k = 0 "computation not included in the model";
-  
+
   //Entropy
   if computeEntropy then
     s_id = X*s_star + (R*sum(Y[i]*log(Y[i] + eps) for i in 1:nX))/MM_mix "from(3)-Equation 8.6";
@@ -272,13 +271,13 @@ equation
     s_res = 0;
   end if;
   s - s_id = s_res;
-  
-  HHV_mix = HHV*Y; 
+
+  HHV_mix = HHV*Y;
   p0 = R*T0/(v0 - bmix) - amix0/(v0*(v0 + bmix) + bmix*(v0 - bmix));
   rho0 = MM_mix/v0;
   SG = rho0/rhoair;
   WI = HHV_mix/sqrt(SG);
-  
-  annotation(
+
+  annotation (
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));
 end PengRobinsonMixture;

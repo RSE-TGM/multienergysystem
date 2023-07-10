@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
-
 model CH4PR
   extends SinglePTXFluidTest(
     redeclare model Medium = H2GasFacility.Media.RealGases.CH4,
@@ -9,6 +8,6 @@ model CH4PR
 
 equation
 
-  annotation(
+  annotation (
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
 end CH4PR;

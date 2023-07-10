@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
-
 model NGPapay_Test1 "Molar fraction from paper reference"
   extends NGPR_Test1(
     redeclare model Medium = H2GasFacility.Media.RealGases.NaturalGasPapay,

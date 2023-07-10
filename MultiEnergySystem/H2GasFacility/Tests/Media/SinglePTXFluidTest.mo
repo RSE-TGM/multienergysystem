@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
-
 model SinglePTXFluidTest
   extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2 "Real fluid";
@@ -24,6 +23,6 @@ equation
   cv = medium.cv;
   h = medium.h;
   u = medium.u;
-annotation(
+annotation (
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002));
 end SinglePTXFluidTest;

@@ -1,9 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-
 model CH4Papay
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
       nXi = 0,
-      MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {1},
       T_start = 25 + 273.15,
       p_start = 1e5,
@@ -18,6 +16,5 @@ model CH4Papay
       HHV = {37.669e6},
       LHV = {50e6},
       cp_coeff = {{-1.942367532068e-05,0.026331526513384,-8.2083625257152,2846.2158110588}},
-      mu_start = 0  
-  );
+      mu_start = 0);
 end CH4Papay;

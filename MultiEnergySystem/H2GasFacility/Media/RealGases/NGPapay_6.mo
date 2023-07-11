@@ -1,9 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-
 model NGPapay_6 "Natural Gas using PR EoS"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
       nXi = 5,
-      MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {0.85306, 0.06486, 0.02058, 0.0028, 0.03882, 0.01268},
       T_start = 100+273.15,
       posDom = 1,
@@ -38,15 +36,12 @@ model NGPapay_6 "Natural Gas using PR EoS"
               Modelica.Media.IdealGases.Common.FluidData.CO2.criticalMolarVolume,
               Modelica.Media.IdealGases.Common.FluidData.N2.criticalMolarVolume},
       delta=
-            
-         {{ 0.00000,  -0.00260, 	0.01400,   0.01330,	0.09190,	0.03110},
-         { -0.00260,   0.00000, 	0.00110,   0.00960,   0.13220,	0.05150},
-         {  0.01400,   0.00110, 	0.00000,   0.00330,   0.12410,	0.08520},
-         {  0.01330,   0.00960, 	0.00330,   0.00000,   0.13330,	0.08000},
-         {  0.09190,   0.13220, 	0.12410,   0.13330,	0.00000,  -0.01700},
-         {  0.03110,   0.05150, 	0.08520,   0.08000,  -0.01700,	0.00000}},
-
-            
+         {{ 0.00000,  -0.00260,  0.01400,   0.01330, 0.09190, 0.03110},
+         { -0.00260,   0.00000,  0.00110,   0.00960,   0.13220, 0.05150},
+         {  0.01400,   0.00110,  0.00000,   0.00330,   0.12410, 0.08520},
+         {  0.01330,   0.00960,  0.00330,   0.00000,   0.13330, 0.08000},
+         {  0.09190,   0.13220,  0.12410,   0.13330, 0.00000,  -0.01700},
+         {  0.03110,   0.05150,  0.08520,   0.08000,  -0.01700, 0.00000}},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.C2H6.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.C3H8.Hf,
@@ -62,5 +57,6 @@ model NGPapay_6 "Natural Gas using PR EoS"
                   {2.2131327339673e-07,     -0.00092151007501243,    1.4416059822539,     493.52730053016},
                   {-1.7194266972964e-07,     0.00044985407669627,   -0.16123790188216,    1048.8091727539}},
       mu_start = 0);
+
 
 end NGPapay_6;

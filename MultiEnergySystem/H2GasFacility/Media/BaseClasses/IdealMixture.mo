@@ -20,7 +20,6 @@ partial model IdealMixture
   parameter Types.SpecificEnergy LHV[nX] "Lower Heating Value of each component";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325 "Reference pressure";
-  //parameter Types.DynamicViscosity mu_start = 1e-5 "Start value of the fluid dynamic viscosity";
   parameter Types.DynamicViscosity mu_const "Constant Dynamic viscosity";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
 

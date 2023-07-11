@@ -10,7 +10,7 @@ model PaperCaseII
   //parameter Types.MassFraction X_start[1] = {1};
   parameter Types.MassFraction X_start[6] = {0.835866, 0.103412, 0.0252754, 0.00333153, 0.0321143, 0};
   parameter Types.MassFraction X_start_H2[6] = X_start;
-  parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
+  parameter Types.MassFlowRate m_flow_H2_ref = 0.000480657;
   parameter Integer duration = 20;
   inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

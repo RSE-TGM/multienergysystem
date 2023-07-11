@@ -43,13 +43,11 @@ partial model PapayMixture
   Types.Temperature T_c_mix(start = T_c[posDom]) "Pseudo-critical temperature of the fluid mixture";
   Types.Pressure p_c_mix(start = p_c[posDom]) "Pseudo-critical pressure of the mixture";
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
-
   Types.SpecificEnthalpy h_id(start = h_id_start) "Ideal Specific Enthalpy of the fluid";
   Types.SpecificEnthalpy dh_id_dX[nX] "Mass fraction of Ideal Specific Enthalpy at constant pressure, per each component";
   Types.SpecificEnthalpy dh_dX[nX] "Mass fraction derivative of Specific Enthalpy at constant pressure, per each component";
   Types.SpecificEntropy s_star[nX] "Specific entropy of the fluid";
   Types.SpecificEntropy s_id "Ideal Specific Entropy of the fluid";
-
   Types.SpecificHeatCapacity cp_id(start = X_start*cp_star_start) "Ideal Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_star[nX](start = cp_star_start) "Specific heat capacity of the fluid";
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
@@ -67,8 +65,6 @@ partial model PapayMixture
   Types.PerUnit Tr0[nX](start = T0./T_c) "Reduced temperatures of each component";
   Types.PerUnit dY_dX[nX, nX](start = dY_dX_start) "Mole fraction derivative of mass fraction per each component";
   Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
-
-
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
@@ -78,7 +74,6 @@ partial model PapayMixture
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG "Specific gravity of the fluid mixture";
   Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
-
   Real dZ_dp(unit = "Pa-1") "Pressure derivative at constant T, X of compressibility factor";
   Real dZ_dT(unit = "K-1") "Temperature derivative at constant p, X of compressibility factor";
   Types.PerUnit dZ_dX[nX] "Mass fraction derivative at constant p, T of compressibility factor, per each component";
@@ -196,27 +191,19 @@ equation
 
   dp_dv = p/(((-Zcoeff[1]*exp(-Zcoeff[2]*Tr_mix) + 2*pr_mix*Zcoeff[3]*exp(-Zcoeff[4]*Tr_mix))/p_c_mix) - v) "in mass units";
   dp_dT = ((R/MM_mix)*T*(Zcoeff[1]*Zcoeff[2]*pr_mix*exp(-Zcoeff[2]*Tr_mix)/p_c_mix - Zcoeff[3]*Zcoeff[4]*pr_mix^2*exp(-Zcoeff[4]*Tr_mix)/T_c_mix) + Z*(R/MM_mix)) / (v - (R/MM_mix)*T*(-Zcoeff[1]*exp(-Zcoeff[2]*Tr_mix)/p_c_mix + Zcoeff[3]*exp(-Zcoeff[4]*Tr_mix)*2*pr_mix/p_c_mix));
-
   dv_dT = ((R/MM_mix)*T*dZ_dT + Z*(R/MM_mix))/p;
   dv_dp = ((R/MM_mix)*T*dZ_dp - v)/p;
   dv_dX = ((R/MM_mix)*T*dZ_dX - Z*T*(R/MM_mix^2)*MM*dY_dX)/p;
   drho_dp = -rho^2*dv_dp;
   drho_dT = -rho^2*dv_dT;
   drho_dX = -rho^2*dv_dX;
-
   du_dT = cp + p*dp_dT*dv_dp "in mass units";
   du_dp = -(T*dv_dT + p*dv_dp) "in mass units";
   du_dX = dh_dX - p*dv_dX;
-
-
-
   dX_dX = identity(nX);
   dY_dX = {(MM_mix/MM[i])*(dX_dX[i, j] - (MM_mix/MM[j])*X[i]) for j in 1:nX, i in 1:nX};
-
-
   dh_id_dX = h_star "in mass units";
   dh_dX = dh_id_dX "in mass units";
-
 
 
   mu = 0 "computation not included in the model";

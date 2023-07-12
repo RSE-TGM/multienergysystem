@@ -16,98 +16,63 @@ model round1DFV
      choicesAllMatching = true);
 
 // Flow parameter
-  parameter Boolean noInitialPressure = false
-    "Remove initial equation for pressure, to be used in case of solver failure";
-  parameter Boolean computeLinearPressureDrop = true
-    "If true, then the pressure drop is linear, else the pressure drop is non-linear computed as a function of cp and u";
-  parameter Integer n = 2
-    "Number of finite volumes in each pipe" annotation (
+  parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure";
+  parameter Boolean computeLinearPressureDrop = true "If true, then the pressure drop is linear, else the pressure drop is non-linear computed as a function of cp and u";
+  parameter Integer n = 2 "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Integer nPipes = 1
-    "Number of parallel pipes" annotation (
+  parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.PerUnit cf = 0.004
-    "Constant Fanning friction coefficient" annotation (
+  parameter Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Velocity u_nom = 1
-    "Nominal fluid velocity" annotation (
+  parameter Types.Velocity u_nom = 1 "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.PerUnit kc
-    "Corrective factor for heat tranfer" annotation (
+  parameter Types.PerUnit kc "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle
-    "Location of pressure state";
-  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt
-    "Initialisation option" annotation (
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real k(unit = "Pa/(kg/s)") = 500
-    "Coefficient for the calculation of the pressure loss across the pipe" annotation (
+  parameter Real k(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Density rho_nom = 997
-    "Nominal density of the fluid" annotation (
+  parameter Types.Density rho_nom = 997 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1)
-    "Temperature start value of the fluid" annotation (
-    Dialog(group = "Initialisation"));
+  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation (
+    Dialog(group = "Heat Transfer Model"));
+  parameter Types.Area Stot = S * nPipes "Total surface of the wall" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
 
-  final parameter Types.Pressure dp_nom = cf / 2 * rho_nom * omega * L / A * u_nom ^ 2
-    "Nominal pressure drop";
-  final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom
-    "Nominal mass flow rate";
-  final parameter Types.Area S = L * omega
-    "Total surface of the walls of one pipe of the heat exchanger";
-  final parameter Types.Area Si = S / n
-    "Surface of the wall of each finite volume (for one pipe)";
-  parameter Types.Area Stot = S * nPipes
-    "Total surface of the wall" annotation (
-    Dialog(tab = "Data", group = "Pipe"));
-  final parameter Types.Area Atot = A * nPipes
-    "Total internal area of all tubes";
-  final parameter Types.Volume V = A * L * nPipes
-    "Total volume of the fluid in the pipe";
-  final parameter Types.Volume Vi = V / n
-    "Volume of one finite element";
-  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500
-    "nominal heat transfer coeffcient" annotation (
-    Dialog(group = "Heat Transfer Model"));
+  final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid" annotation (
+    Dialog(group = "Initialisation"));
+  final parameter Types.Pressure dp_nom = cf / 2 * rho_nom * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
+  final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom "Nominal mass flow rate";
+  final parameter Types.Area S = L * omega "Total surface of the walls of one pipe of the heat exchanger";
+  final parameter Types.Area Si = S / n "Surface of the wall of each finite volume (for one pipe)";
+  final parameter Types.Area Atot = A * nPipes "Total internal area of all tubes";
+  final parameter Types.Volume V = A * L * nPipes "Total volume of the fluid in the pipe";
+  final parameter Types.Volume Vi = V / n "Volume of one finite element";
 
   outer System system "system object for global defaults";
 
-// Variables
-  Types.MassFlowRate m_flow[n + 1]
-    "Mass flow rate in each volume across the pipe";
-  Types.VolumeFlowRate q[n + 1]
-    "Mass flow rate in each volume across the pipe";
-  Types.Velocity u[n + 1](each start = u_nom)
-    "Velocity in each volume across the pipe";
-  Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer)
-    "State variable temperatures";
-  Types.Temperature Twall[n]
-    "Pipe wall temperature";
-  Types.Power Qtot
-    "Total heat";
+  // Variables
+  Types.MassFlowRate m_flow[n + 1] "Mass flow rate in each volume across the pipe";
+  Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
+  Types.Velocity u[n + 1](each start = u_nom) "Velocity in each volume across the pipe";
+  Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "State variable temperatures";
+  Types.Temperature Twall[n] "Pipe wall temperature";
+  Types.Power Qtot "Total heat";
+  Types.Temperature T[n + 1](start = T_start) "Volume boundary temperatures";
+  Types.Pressure pin "Inlet pressure";
+  Types.Pressure pout "Outlet pressure";
+  Types.Pressure ptilde(stateSelect = StateSelect.prefer) "Pressure state the pipe";
+  Types.Pressure dp(start = dp_nom) "Delta pressure";
+  Types.Mass M[n] "Mass of fluid in each finite volume";
+  Types.Mass Mtot "Total Mass in the pipe";
+  Types.SpecificHeatCapacity cp[n+1] "Specific heat capacity at each fluid";
+  Types.Density rho[n+1] "Density at each fluid";
+
   //   Types.Power Q_int[n]
   //     "Heat dissipation out of each volume into the wall";
-  Types.Temperature T[n + 1](start = T_start)
-    "Volume boundary temperatures";
   //   Types.Power Q_ext[n]
   //     "Heat dissipation out of each wall cell to the ambient";
-  Types.Pressure pin
-    "Inlet pressure";
-  Types.Pressure pout
-    "Outlet pressure";
-  Types.Pressure ptilde(stateSelect = StateSelect.prefer)
-    "Pressure state the pipe";
-  Types.Pressure dp(start = dp_nom)
-    "Delta pressure";
-  Types.Mass M[n]
-    "Mass of fluid in each finite volume";
-  Types.Mass Mtot
-    "Total Mass in the pipe";
-  Types.SpecificHeatCapacity cp[n+1]
-    "Specific heat capacity at each fluid";
-  Types.Density rho[n+1]
-    "Density at each fluid";
 
   Medium.ThermodynamicState fluid[n + 1];
 

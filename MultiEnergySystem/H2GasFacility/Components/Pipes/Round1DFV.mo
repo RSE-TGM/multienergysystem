@@ -1,17 +1,17 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
-    inlet(                                                          nXi =       nXi,                   m_flow(      start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0),                                                                                                                                        Xi(      start = X_start[1:fluid[1].nXi])),
-    outlet(                                                                          nXi =        nXi,                                                                                                     m_flow(       start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)),hin_start = fluid[1].h_id_start);
+    inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
+    outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)),hin_start = fluid[1].h_id_start);
   import Modelica.Fluid.Utilities.regSquare;
-  import           MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
+  import MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   // Medium & Heat Transfer Model for the pipe
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2                        constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-                                                                                                                               constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation (
+                                                                                             constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation (
      choicesAllMatching = true);
 
   constant Types.Acceleration g_n = Modelica.Constants.g_n "Gravity";
@@ -75,8 +75,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Temperature Tin "Inlet temperature";
   Types.Temperature Tout "Outlet temperature";
   Types.SpecificEnthalpy hin(start = hin_start) "Inlet Specific enthalpy";
-  Types.SpecificEnthalpy hout
-                             "Outlet Specific enthalpy";
+  Types.SpecificEnthalpy hout "Outlet Specific enthalpy";
   Types.Pressure pin "Inlet pressure";
   Types.Pressure pout "Outlet pressure";
 

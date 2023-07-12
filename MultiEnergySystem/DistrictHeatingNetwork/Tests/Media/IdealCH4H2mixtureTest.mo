@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Media;
-
 model IdealCH4H2mixtureTest
-  replaceable package Medium = DistrictHeatingNetwork.Media.IdealGases.MethaneOxygen "Ideal Gas mixture model";
+  replaceable package Medium =
+      DistrictHeatingNetwork.Media.IdealGases.MethaneOxygen                          "Ideal Gas mixture model";
   parameter SI.Temperature T_min = 800;
   parameter SI.Temperature T_max = 1500;
   parameter SI.Pressure p = 1e5;
@@ -23,5 +23,5 @@ equation
   u_id = idealGas.u;
   cp_id = Medium.specificHeatCapacityCp(idealGas.state);
   cv_id = Medium.specificHeatCapacityCv(idealGas.state);
-  h_id = Medium.specificHeatCapacityCv(idealGas.state);
+  h_id = Medium.specificEnthalpy(idealGas.state);
 end IdealCH4H2mixtureTest;

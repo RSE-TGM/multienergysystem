@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Data;
-
 record BPHeatExchanger
   String Name "Name of the HX";
   String ReferenceLocation "Information about the location in the system";
@@ -11,7 +10,7 @@ record BPHeatExchanger
   Real q_nom_hot(unit = "m3/h") "Nominal volumetric flow rate in the hot side";
   Real q_nom_cold(unit = "m3/h") "Nominal volumetric flow rate in the cold side";
   SI.Velocity u_nom_hot "Nominal fluid velocity in hot side";
-  SI.Velocity u_nom_cold "Nominal fluid velocity in cold side"; 
+  SI.Velocity u_nom_cold "Nominal fluid velocity in cold side";
   SI.MassFlowRate m_flow_start_hot = (q_nom_hot/3600)*((rhoin_nom_hot+rhoout_nom_hot)/2) "Nominal mass flow rate in the hot side";
   SI.MassFlowRate m_flow_start_cold = (q_nom_cold/3600)*((rhoin_nom_cold+rhoout_nom_cold)/2) "Nominal mass flow rate in the cold side";
   SI.Pressure pin_start_hot "Nominal inlet pressure in the hot side";
@@ -25,13 +24,13 @@ record BPHeatExchanger
   SI.Temperature Tin_start_cold "Nominal inlet temperature in the cold side";
   SI.Temperature Tout_start_cold "Nominal outlet temperature in the cold side";
   SI.SpecificEnthalpy hin_start_hot = 4185*Tin_start_hot "Nominal inlet specific enthalpy in the hot side";
-  SI.SpecificEnthalpy hin_start_cold = 4185*Tin_start_cold "Nominal inlet specific enthalpy in the cold side"; 
+  SI.SpecificEnthalpy hin_start_cold = 4185*Tin_start_cold "Nominal inlet specific enthalpy in the cold side";
   SI.Length L_hot "Length of the tube in the hot side";
   SI.Length L_cold "Length of the tube in the cold side";
   SI.Length h_hot "Height of the tube in the hot side";
   SI.Length h_cold "Height of the tube in the cold side";
-  SI.Length dWall_hot "Thickness of the tube in the hot side";
-  SI.Length dWall_cold "Thickness of the tube in the cold side";
+  SI.Length t_hot "Thickness of the tube in the hot side";
+  SI.Length t_cold "Thickness of the tube in the cold side";
   SI.Mass MWall "Mass of the wall (exchange surface";
   SI.Length Di_hot "Internal diameter of a single tube in the hot side";
   SI.Length Di_cold "Internal diameter of a single tube in the cold side";
@@ -52,6 +51,7 @@ record BPHeatExchanger
   Real Rfoul(unit = "m2.K/W") "Fouling resistance";
   SI.Power Qnom;
   SI.Temperature LMTD = ((Tout_start_hot - Tin_start_cold)-(Tin_start_hot-Tout_start_cold))/log((Tout_start_hot - Tin_start_cold)/(Tin_start_hot-Tout_start_cold));
-  SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);annotation(
+  SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);
+                                                           annotation (
     Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">Record class including main variables to describe the different Brazed-Plate Heat Exchangers of the RSE heating network.</span></body></html>"));
 end BPHeatExchanger;

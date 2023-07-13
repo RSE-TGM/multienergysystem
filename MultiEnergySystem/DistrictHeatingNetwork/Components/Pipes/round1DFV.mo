@@ -10,7 +10,7 @@ model round1DFV
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-                                                                                                                                                                                        constrainedby
+      constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
@@ -68,6 +68,7 @@ model round1DFV
   Types.Mass Mtot "Total Mass in the pipe";
   Types.SpecificHeatCapacity cp[n+1] "Specific heat capacity at each fluid";
   Types.Density rho[n+1] "Density at each fluid";
+  Types.SpecificEnthalpy htilde[n];
 
   //   Types.Power Q_int[n]
   //     "Heat dissipation out of each volume into the wall";
@@ -112,12 +113,14 @@ equation
     cp[i] = Medium.specificHeatCapacityCp(fluid[i]);
     m_flow[i] = A * u[i]* rho[i];
     q[i] = m_flow[i]/rho[i];
+
   end for;
 
   fluid[1].h = inStream(inlet.h_out);
 
 // Relationships for state variables
   Ttilde = T[2:n + 1];
+  htilde = Medium.specificEnthalpy(fluid[2:n + 1]);
 
 //   pin - pout = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
 //   ptilde = pout;
@@ -126,7 +129,8 @@ equation
      M[i] = Vi * fluid[i + 1].d;
 //w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
 
-     m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
+     //m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
+     m_flow[i] - m_flow[i + 1] = V*(Medium.density_derp_h(fluid[i + 1])*der(htilde[i]) + Medium.density_derh_p(fluid[i+1])*der(ptilde));
      rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
   end for;
 

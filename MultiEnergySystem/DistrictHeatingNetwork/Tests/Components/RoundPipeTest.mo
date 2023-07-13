@@ -56,9 +56,9 @@ model RoundPipeTest
   DistrictHeatingNetwork.Components.Pipes.round1DFV hotside(
     L=0.7073,
     thermalInertia=false,
-    cpm=500,
+    cm=500,
     rhom(displayUnit="g/cm3") = 7990,
-    lambdaM=16.3,
+    lambdam=16.3,
     m_flow_start=0.6154,
     pin_start=110000,
     pout_start=101000,

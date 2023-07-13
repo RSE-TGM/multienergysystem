@@ -1,6 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Data;
-
-package BPHEData  
+package BPHEData
    "Data of the different models of BPHE in Heating Network"
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E301(
     Name = "E301",
@@ -26,8 +25,8 @@ package BPHEData
     L_cold = 9.6351,
     h_hot = 0,
     h_cold = 0,
-    dWall_hot = 0.001,
-    dWall_cold = 0.001,
+    t_hot = 0.001,
+    t_cold = 0.001,
     Di_hot = 0.03,
     Di_cold = 0.023,
     Stot_hot = 4.5,
@@ -41,8 +40,7 @@ package BPHEData
     lambdam_cold = 16.3,
     Rfoul = 1.4e-4,
     Qnom = 56e3,
-    MWall = 16.8
-  );
+    MWall = 16.8);
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E501(
     Name = "E501",
@@ -68,8 +66,8 @@ package BPHEData
     L_cold = 4.835,
     h_hot = 0,
     h_cold = 0,
-    dWall_hot = 0.001,
-    dWall_cold = 0.001,
+    t_hot = 0.001,
+    t_cold = 0.001,
     Di_hot = 0.03,
     Di_cold = 0.023,
     Stot_hot = 2.2,
@@ -83,9 +81,8 @@ package BPHEData
     lambdam_cold = 16.3,
     Rfoul = 0.8e-4,
     Qnom = 80e3,
-    MWall = 9.8
-  );  
-  
+    MWall = 9.8);
+
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E601(
     Name = "E601",
     ReferenceLocation = "After heat pump HP601",
@@ -112,8 +109,8 @@ package BPHEData
     Di_cold = 0.023,
     h_hot = 0,
     h_cold = 0,
-    dWall_hot = 0.001,
-    dWall_cold = 0.001,
+    t_hot = 0.001,
+    t_cold = 0.001,
     Stot_hot = 4.5,
     nPipes_hot = 1,
     nPipes_cold = 1,
@@ -125,9 +122,8 @@ package BPHEData
     lambdam_cold = 16.3,
     Rfoul = 3.3e-4,
     Qnom = 40e3,
-    MWall = 16.8
-  );    
-  
+    MWall = 16.8);
+
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.BPHeatExchanger E701(
     Name = "E701",
     ReferenceLocation = "After heat pump HP601",
@@ -154,8 +150,8 @@ package BPHEData
     Di_cold = 0.023,
     h_hot = 0,
     h_cold = 0,
-    dWall_hot = 0.001,
-    dWall_cold = 0.001,
+    t_hot = 0.001,
+    t_cold = 0.001,
     Stot_hot = 0.5,
     nPipes_hot = 1,
     nPipes_cold = 1,
@@ -167,7 +163,7 @@ package BPHEData
     lambdam_cold = 16.3,
     Rfoul = 2.8e-4,
     Qnom = 50e3,
-    MWall = 3.9
-  );annotation(
-    Documentation(info = "<html><head></head><body><h4>Brazed-Plate Heat exchangers</h4><div>According to the nomenclature of the RSE's PI&amp;D Heating Network, the BPHE models including the present package are the following:</div><div><br></div><div>- E301</div><div>- E501</div><div>- E601</div><div>- E701</div><div><br></div><div>The information was taken from the .pdf files in the folder:</div><div><br></div><div>LabTestFacility-ReteCalore-DocumentazioneComponenti-scambiatoridicalore</div></body></html>"));   
+    MWall = 3.9);
+    annotation (
+    Documentation(info = "<html><head></head><body><h4>Brazed-Plate Heat exchangers</h4><div>According to the nomenclature of the RSE's PI&amp;D Heating Network, the BPHE models including the present package are the following:</div><div><br></div><div>- E301</div><div>- E501</div><div>- E601</div><div>- E701</div><div><br></div><div>The information was taken from the .pdf files in the folder:</div><div><br></div><div>LabTestFacility-ReteCalore-DocumentazioneComponenti-scambiatoridicalore</div></body></html>"));
 end BPHEData;

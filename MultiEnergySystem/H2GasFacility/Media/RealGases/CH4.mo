@@ -13,7 +13,7 @@ model CH4
       v_mol_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume},
       delta = {{ 0}},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf},
-      HHV = {37.669e6},
+      HHV = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.CH4.HHV_SCM},
       LHV = {50e6},
       cp_coeff = {{-1.942367532068e-05,0.026331526513384,-8.2083625257152,2846.2158110588}},
       mu_start = 0);

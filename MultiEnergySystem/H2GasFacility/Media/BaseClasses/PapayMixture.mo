@@ -17,8 +17,8 @@ partial model PapayMixture
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
-  parameter Real HHV[nX](each unit = "J/Sm3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
-  parameter Real LHV[nX](each unit = "J/Sm3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
+  parameter Real HHV[nX](each unit = "J/m3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
+  parameter Real LHV[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
@@ -70,8 +70,8 @@ partial model PapayMixture
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
   Types.PerUnit Z0(start = 1) "Compressibility factor of the mixture at Standard Conditions";
-  Real HHV_mix(unit = "J/Sm3") "Higher Heating Value of the fluid mixture in Standard conditions";
-  Real LHV_mix(unit = "J/Sm3") "Lower Heating Value of the fluid mixture in Standard conditions";
+  Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
+  Real LHV_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG "Specific gravity of the fluid mixture";

@@ -208,8 +208,12 @@ equation
   dh_id_dX = h_star "in mass units";
   dh_dX = dh_id_dX "in mass units";
 
-
-  mu = 0 "computation not included in the model";
+  if computeTransport then
+    mu = mu_start;
+  else
+    mu = 0;
+  end if;
+  //mu = 0 "computation not included in the model";
   k = 0 "computation not included in the model";
 
   //Entropy

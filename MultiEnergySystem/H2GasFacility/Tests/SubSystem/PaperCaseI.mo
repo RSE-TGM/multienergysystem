@@ -7,7 +7,6 @@ model PaperCaseI "Distribution network example from [1]"
   parameter Integer n = 15 "Number of volumes in each pipeline";
   parameter Types.MassFlowRate X_start[5] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
   //parameter Types.MassFlowRate X_start[6] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0001, 0.0092477};
-  //parameter Types.MassFraction X_start_H2[2] = {0,1};
   parameter Types.MassFlowRate X_start_H2[5] = {0.0, 0.0, 0.0, 0.0, 1};
   //parameter Types.MassFraction X_start_H2[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 1};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;

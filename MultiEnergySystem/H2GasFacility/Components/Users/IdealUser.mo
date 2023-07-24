@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Components.Users;
 model IdealUser
-  replaceable model Medium = H2GasFacility.Media.IdealGases.CH4;
+  replaceable model Medium = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Types.Pressure p0(nominal = 1e4) = 0.5e5;
   parameter Types.MassFlowRate m_flow0(nominal = 0.01) = 0.04;
   parameter Types.MassFraction X0[sink_demand.fluid.nX] = {1};

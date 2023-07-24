@@ -2,3 +2,5 @@ RoundPipeLine
 PipelineData
 FuelHeatingValues
 FuelHeatingData
+NaturalGasMassMolCompositions
+MassMolFractionData

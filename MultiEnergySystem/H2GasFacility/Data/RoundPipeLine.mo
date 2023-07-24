@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Data;
-
 record RoundPipeLine
   Types.Length L "Total length";
   Types.Length Di "Internal diameter";

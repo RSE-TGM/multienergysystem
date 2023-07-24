@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
-model PaperCaseII
+model PaperCaseII "Distribution network example from [2]"
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2;
   replaceable model Medium = H2GasFacility.Media.RealGases.NG5_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
@@ -61,35 +61,35 @@ model PaperCaseII
       model Medium =                                                                                             Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000529, k_linear = 11782.0324, kc = 1, m_flow_start = 0.006111, n = n, pin_start(displayUnit = "Pa") = 2414, pout_start(displayUnit = "Pa") = 2342, rho_nom = 0.016751808, quasistaticEnergyBalance = quasistaticEnergyBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin = {130, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node2(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.043611, p0(displayUnit = "Pa") = 6608.999999999999, userdemand = [0, 0.043611; 1000, 0.043611]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node2(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.043611, p0(displayUnit = "Pa") = 6608.999999999999, userdemand = [0, 0.043611; 1000, 0.043611]) annotation (
     Placement(visible = true, transformation(origin = {-80, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node3(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.038333, p0(displayUnit = "Pa") = 4668, userdemand = [0, 0.038333; 1000, 0.038333]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node3(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.038333, p0(displayUnit = "Pa") = 4668, userdemand = [0, 0.038333; 1000, 0.038333]) annotation (
     Placement(visible = true, transformation(origin = {-80, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node4(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.034722, p0(displayUnit = "Pa") = 4694.999999999999, userdemand = [0, 0.034722; 1000, 0.034722]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node4(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.034722, p0(displayUnit = "Pa") = 4694.999999999999, userdemand = [0, 0.034722; 1000, 0.034722]) annotation (
     Placement(visible = true, transformation(origin = {-20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node5(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.045278, p0(displayUnit = "Pa") = 4145, userdemand = [0, 0.045278; 1000, 0.045278]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node5(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.045278, p0(displayUnit = "Pa") = 4145, userdemand = [0, 0.045278; 1000, 0.045278]) annotation (
     Placement(visible = true, transformation(origin = {-140, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node6(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.031389, p0(displayUnit = "Pa") = 3840, userdemand = [0, 0.031389; 1000, 0.031389]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node6(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.031389, p0(displayUnit = "Pa") = 3840, userdemand = [0, 0.031389; 1000, 0.031389]) annotation (
     Placement(visible = true, transformation(origin = {-140, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node7(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.008611, p0(displayUnit = "Pa") = 3930, userdemand = [0, 0.008611; 1000, 0.008611]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node7(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.008611, p0(displayUnit = "Pa") = 3930, userdemand = [0, 0.008611; 1000, 0.008611]) annotation (
     Placement(visible = true, transformation(origin = {-20, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node8(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.040833, p0(displayUnit = "Pa") = 3739, userdemand = [0, 0.040833; 1000, 0.040833]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node8(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.040833, p0(displayUnit = "Pa") = 3739, userdemand = [0, 0.040833; 1000, 0.040833]) annotation (
     Placement(visible = true, transformation(origin = {-80, -120}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node9(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.009444, p0(displayUnit = "Pa") = 2815, userdemand = [0, 0.009444; 1000, 0.009444]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node9(redeclare model
+            Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.009444, p0(displayUnit = "Pa") = 2815, userdemand = [0, 0.009444; 1000, 0.009444]) annotation (
     Placement(visible = true, transformation(origin = {40, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare
-      model Medium =                                                                         Medium, X0 = X_start, m_flow0 = 0.008304, p0(displayUnit = "Pa") = 2414, userdemand = [0, 0.008333; 1000, 0.008333]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare model
+            Medium =                                                                         Medium, X0 = X_start, m_flow0 = 0.008304, p0(displayUnit = "Pa") = 2414, userdemand = [0, 0.008333; 1000, 0.008333]) annotation (
     Placement(visible = true, transformation(origin = {100, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare
-      model Medium =                                                                         Medium, X0 = X_start, m_flow0 = 0.006111, p0(displayUnit = "Pa") = 2342, userdemand = [0, 0.006111; 1000, 0.006111]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare model
+            Medium =                                                                         Medium, X0 = X_start, m_flow0 = 0.006111, p0(displayUnit = "Pa") = 2342, userdemand = [0, 0.006111; 1000, 0.006111]) annotation (
     Placement(visible = true, transformation(origin = {160, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(G = 0, redeclare
@@ -160,5 +160,9 @@ equation
     Line(points = {{30, 40}, {6, 40}, {6, -4}, {-80, -4}, {-80, -20}}, color = {182, 109, 49}));
   annotation (
     Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}})),
-    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-06, Interval = 0.5));
+    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-06, Interval = 0.5),
+    Documentation(info="<html>
+<p><span style=\"font-family: Arial;\">The following test model takes the information of the study case in paper&nbsp;<a href=\"https://www.sciencedirect.com/science/article/pii/S0360319921018541\">[</a><a href=\"https://www.sciencedirect.com/science/article/pii/S0306261915007321\">2</a><a href=\"https://www.sciencedirect.com/science/article/pii/S0360319921018541\">]</a>. This case corresponds to a&nbsp;<b>low-pressure</b>&nbsp;distribution network with 0.075 bar as working pressure.</span></p>
+<p><img src=\"modelica://MultiEnergySystem/../../../Lavoro/3. ReteGas/Figures/LowPressureNaturalGasGridLayout_Abeseykera.PNG\"/></p>
+</html>"));
 end PaperCaseII;

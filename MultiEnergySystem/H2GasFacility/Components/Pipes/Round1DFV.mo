@@ -61,7 +61,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   final parameter Types.Area Atot = A * nPipes "Total internal area of all tubes";
   final parameter Types.Volume V = A * L * nPipes "Total volume of the fluid in the pipe";
   final parameter Types.Volume Vi = V / n "Volume of one finite element";
-  final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_const) "Start value for Reynolds number";
+  //final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_const) "Start value for Reynolds number";
+  final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
   outer System system "system object for global defaults";
 
@@ -118,7 +119,10 @@ equation
     rho[i] = fluid[i].rho "Density at each volume boundary";
     q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
     m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
-    Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) "Reynold's number";
+    //Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) "Reynold's number";
+    Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
+
+
     //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + kappa/(3.715*Di)));
     //1 = (-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))*sqrt(ff[i]);
     //ff[i] = 0.00475;

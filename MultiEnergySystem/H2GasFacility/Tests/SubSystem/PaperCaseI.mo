@@ -1,9 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
-model PaperCaseI
+model PaperCaseI "Distribution network example from [1]"
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.CH4H2;
-  replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
-  //replaceable model Medium = H2GasFacility.Media.RealGases.NGPapay_6;
+  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG4_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Integer n = 15 "Number of volumes in each pipeline";
   //parameter Types.MassFraction X_start[1] = {1};
   //parameter Types.MassFraction X_start[2] = {1,0};
@@ -197,5 +198,9 @@ equation
     Line(points = {{-30, 110}, {-30, 70}}, color = {182, 109, 49}));
   annotation (
     Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}})),
-    experiment(StartTime = 0, StopTime = 22000, Tolerance = 1e-06, Interval = 44));
+    experiment(StartTime = 0, StopTime = 22000, Tolerance = 1e-06, Interval = 44),
+    Documentation(info="<html>
+<p>The following test model takes the information of the study case in paper <a href=\"https://www.sciencedirect.com/science/article/pii/S0360319921018541\">[1]</a>. This case corresponds to a <b>medium pressure</b> distribution network with 0.5 bar as working pressure.</p>
+<p><img src=\"modelica://MultiEnergySystem/../../../Lavoro/3. ReteGas/Figures/MediumPressureNaturalGasGridLayout_Cheli.PNG\"/></p>
+</html>"));
 end PaperCaseI;

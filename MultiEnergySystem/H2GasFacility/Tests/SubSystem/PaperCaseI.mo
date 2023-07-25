@@ -10,7 +10,7 @@ model PaperCaseI "Distribution network example from [1]"
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   inner MultiEnergySystem.System system annotation (
-    Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={170,130},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(redeclare model Medium = Medium, Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, momentum = momentum) annotation (
     Placement(visible = true, transformation(origin = {-30, 60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(redeclare model Medium = Medium, Di = Pipe.pipe2.Di, L = Pipe.pipe2.L, Tin_start = Pipe.pipe2.Tin_start, Tout_start = Pipe.pipe2.Tout_start, X_start = X_start, hin_start = Pipe.pipe2.hin_start, k = Pipe.pipe2.k, kc = 1, m_flow_start = Pipe.pipe2.m_flow_start, n = n, pin_start = Pipe.pipe2.pin_start, pout_start = Pipe.pipe2.pout_start, momentum = momentum) annotation (
@@ -75,9 +75,9 @@ model PaperCaseI "Distribution network example from [1]"
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user17(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.010676004) annotation (
     Placement(visible = true, transformation(origin = {-80, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start, p0 = 0.5e5) annotation (
-    Placement(visible = true, transformation(origin = {-30, 120}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin={-30,96},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP18(redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start, p0 = 0.5e5) annotation (
-    Placement(visible = true, transformation(origin = {-170, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={-142,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(redeclare model Medium = Medium, G = 1000, T0 = 15 + 273.15, X0 = X_start_H2, computeEnthalpyWithFixedPressure = true, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin = {-114, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation (
@@ -154,9 +154,9 @@ equation
   connect(pipe10.outlet, user10.inlet) annotation (
     Line(points = {{-80, -28}, {-80, -40}}, color = {182, 109, 49}));
   connect(sourceP18.outlet, pipe21.inlet) annotation (
-    Line(points = {{-160, 0}, {-120, 0}}, color = {182, 109, 49}));
+    Line(points={{-132,0},{-120,0}},      color = {182, 109, 49}));
   connect(sourceP1.outlet, pipe1.inlet) annotation (
-    Line(points = {{-30, 110}, {-30, 70}}, color = {182, 109, 49}));
+    Line(points={{-30,86},{-30,70}},       color = {182, 109, 49}));
   annotation (
     Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}})),
     experiment(StartTime = 0, StopTime = 22000, Tolerance = 1e-06, Interval = 44),

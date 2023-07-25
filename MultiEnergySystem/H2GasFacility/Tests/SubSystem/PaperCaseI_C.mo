@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
-model PaperCaseI_B "Same as PaperCaseI with injection of pure hydrogen in node 7"
+model PaperCaseI_C "Same as PaperCaseI with injection of pure hydrogen in node 9"
   extends Tests.SubSystem.PaperCaseI(sourceH2_A(
     computeEnthalpyWithFixedPressure = false, use_in_m_flow0 = true, G = 0),
     m_flow_H2(duration = 0), n = 9);
@@ -10,4 +10,4 @@ equation
   annotation (
     Diagram(coordinateSystem(extent = {{-160, -120}, {160, 120}})),
     experiment(StartTime = 0, StopTime = 500, Tolerance = 1e-06, Interval = 0.5));
-end PaperCaseI_B;
+end PaperCaseI_C;

@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseII_II "Same as PaperCaseII with injection of natural gas with different mass composition in node 3"
-  extends MultiEnergySystem.H2GasFacility.Tests.SubSystem.PaperCaseII(X_start_H2 = {0.822493,0.101895,0.0276716,0.00364738,0.031643, 0.0126504});
+  extends MultiEnergySystem.H2GasFacility.Tests.SubSystem.PaperCaseII(X_start_H2 = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X, m_flow_H2_ref = 0.000480657);
 annotation (
     experiment(
       StopTime=250,

@@ -2,16 +2,15 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseII "Distribution network example from [2]"
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2;
-  replaceable model Medium = H2GasFacility.Media.RealGases.NG5_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean quasistaticEnergyBalance = false;
   parameter Boolean computeTransport = true;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
   parameter Integer n = 11 "Number of volumes in each pipeline";
-  //parameter Types.MassFraction X_start[1] = {1};
-  parameter Types.MassFraction X_start[6] = {0.835866, 0.103412, 0.0252754, 0.00333153, 0.0321143, 0};
-  parameter Types.MassFraction X_start_H2[6] = X_start;
-  parameter Types.MassFlowRate m_flow_H2_ref = 0.000480657;
-  parameter Integer duration = 20;
+  parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X;
+  parameter Types.MassFraction X_start_H2[7] = X_start;
+  parameter Types.MassFlowRate m_flow_H2_ref = 0.000480657*0;
+  parameter Integer duration = 0;
   inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {150, 110}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 

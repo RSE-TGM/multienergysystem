@@ -3,12 +3,10 @@ model PaperCaseI "Distribution network example from [1]"
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG4_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Integer n = 15 "Number of volumes in each pipeline";
-  parameter Types.MassFlowRate X_start[5] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
-  //parameter Types.MassFlowRate X_start[6] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0001, 0.0092477};
-  parameter Types.MassFlowRate X_start_H2[5] = {0.0, 0.0, 0.0, 0.0, 1};
-  //parameter Types.MassFraction X_start_H2[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 1};
+  parameter Types.MassFlowRate X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
+  parameter Types.MassFlowRate X_start_H2[7] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0042;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   inner MultiEnergySystem.System system annotation (

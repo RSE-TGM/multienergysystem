@@ -61,5 +61,8 @@ equation
 
 
   annotation (
-    Icon(graphics={Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}})}));
+    Icon(graphics={Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Text(
+          extent={{-100,-60},{100,-120}},
+          textColor={28,108,200},
+          textString="%name")}));
 end PartialInsulatedTube;

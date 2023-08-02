@@ -9,6 +9,7 @@ model IdealUser
   Types.MassFraction Xi[sink_demand.fluid.nXi] "Fluid mass flow rate";
   Types.SpecificEnthalpy h "Fluid specific enthalpy";
   Types.Pressure p "Fluid pressure outlet";
+  Types.Power E "Power given to the user/node";
   Medium fluid(p_start = p0, T_start = T0, X_start = X0);
   H2GasFacility.Sources.SinkMassFlow sink_demand(G = 0, redeclare model Medium = Medium, T0 = T0, X0 = X0, m_flow0 = m_flow0, p0 = p0, use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -23,10 +24,14 @@ equation
   fluid.p = p;
   fluid.h = h;
   fluid.Xi = Xi;
+  E = inlet.m_flow*h;
   connect(inlet, sink_demand.inlet) annotation (
     Line(points = {{-100, 0}, {-10, 0}}));
   connect(demand.y, sink_demand.in_m_flow0) annotation (
     Line(points={{-39,40},{-6,40},{-6,5}},        color = {0, 0, 127}));
   annotation (
-    Icon(graphics={  Ellipse(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.Sphere, lineThickness = 0.5, extent = {{-60, 60}, {60, -60}})}));
+    Icon(graphics={  Ellipse(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.Sphere, lineThickness = 0.5, extent = {{-60, 60}, {60, -60}}), Text(
+          extent={{-100,-80},{100,-140}},
+          textColor={28,108,200},
+          textString="%name")}));
 end IdealUser;

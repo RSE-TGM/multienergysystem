@@ -73,6 +73,8 @@ partial model IdealMixture
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
+  Real HHV_mix(unit = "J/kg") "Higher Heating Value of the fluid in mass units";
+  Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
   Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
   Real LHV_SCM_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
@@ -250,7 +252,9 @@ equation
   s - s_id = 0;
 
 
-  // Energy parameters
+  // Energy variables
+  HHV_mix = HHV*X;
+  LHV_mix = LHV*X;
   HHV_SCM_mix = HHV_SCM*Y;
   LHV_SCM_mix = LHV_SCM*Y;
   p0*v_mol_0 = Z*R*T0;

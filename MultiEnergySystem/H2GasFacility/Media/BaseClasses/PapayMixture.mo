@@ -72,6 +72,8 @@ partial model PapayMixture
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
   Types.PerUnit Z0(start = 1) "Compressibility factor of the mixture at Standard Conditions";
+  Real HHV_mix(unit = "J/kg") "Higher Heating Value of the fluid in mass units";
+  Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
   Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
   Real LHV_SCM_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
@@ -231,6 +233,9 @@ equation
   end if;
   s - s_id = 0;
 
+  // Energy variables
+  HHV_mix = HHV*X;
+  LHV_mix = LHV*X;
   HHV_SCM_mix = HHV_SCM*Y;
   LHV_SCM_mix = LHV_SCM*Y;
   p0*v_mol_0 = Z0*R*T0;

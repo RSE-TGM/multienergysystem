@@ -119,6 +119,8 @@ partial model PengRobinsonMixture
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z "Compressibility factor of the mixture";
+  Real HHV_mix(unit = "J/kg") "Higher Heating Value of the fluid in mass units";
+  Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
   Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
@@ -279,6 +281,9 @@ equation
   end if;
   s - s_id = s_res;
 
+  // Energy variables
+  HHV_mix = HHV*X;
+  LHV_mix = LHV*X;
   HHV_SCM_mix = HHV_SCM*Y;
   p0 = R*T0/(v0 - bmix) - amix0/(v0*(v0 + bmix) + bmix*(v0 - bmix));
   rho0 = MM_mix/v0;

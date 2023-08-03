@@ -1,41 +1,42 @@
 within MultiEnergySystem.H2GasFacility.Sources;
 model SourceMassFlow
   extends DistrictHeatingNetwork.Icons.Gas.SourceW;
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
-    "Medium model" annotation(
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR
+                                                                                          constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+    "Medium model" annotation (
      choicesAllMatching = true);
   // Real Type Parameters
-  parameter Types.Pressure p0 = 0.1e5 
+  parameter Types.Pressure p0 = 0.1e5
     "Nominal pressure starting value";
-  parameter Types.Temperature T0 = 15 + 273.15 
+  parameter Types.Temperature T0 = 15 + 273.15
     "Nominal temperature and starting value for fluid";
   parameter Types.MassFraction X0[fluid.nX]
     "Nominal mass fraction and start value for fluid";
-  parameter Types.MassFlowRate m_flow0 = 20 
+  parameter Types.MassFlowRate m_flow0 = 20
     "Nominal mass flowrate";
-  parameter Real G(unit = "kg/(s.Pa)") = 0 
+  parameter Real G(unit = "kg/(s.Pa)") = 0
     "HydraulicConductance";
-  
+
   // Boolean Type  parameters
   parameter Boolean computeTransport = false
     "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false
     "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEnthalpyWithFixedPressure = false 
+  parameter Boolean computeEnthalpyWithFixedPressure = false
     "True if fluid enthalpy is computed with p_start";
-  parameter Boolean use_in_m_flow0 = false 
+  parameter Boolean use_in_m_flow0 = false
     "Use connector input for the nominal flow rate" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean use_in_T0 = false 
+  parameter Boolean use_in_T0 = false
     "Use connector input for the temperature" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean use_in_X0 = false 
+  parameter Boolean use_in_X0 = false
     "Use connector input for the mass fraction" annotation (
     Dialog(group = "External inputs"),
-    choices(checkBox = true));  
-  
+    choices(checkBox = true));
+
   // Connectors
   Modelica.Blocks.Interfaces.RealInput in_m_flow0 if use_in_m_flow0 annotation (Placement(
         transformation(
@@ -47,7 +48,7 @@ model SourceMassFlow
         origin={0,50},
         extent={{10,-10},{-10,10}},
         rotation=90)));
-  Modelica.Blocks.Interfaces.RealInput in_X0[fluid.nX] if use_in_X0 annotation( Placement(
+  Modelica.Blocks.Interfaces.RealInput in_X0[fluid.nX] if use_in_X0 annotation (Placement(
   visible = true, transformation(origin = {60, 50}, extent = {{10, -10}, {-10, 10}}, rotation = 90), iconTransformation(origin = {60, 50}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluid.nXi) annotation (Placement(
         visible=true,
@@ -59,10 +60,10 @@ model SourceMassFlow
           origin={100,-1.33227e-15},
           extent={{-20,-20},{20,20}},
           rotation=0)));
-  
+
   // Fluid model
   Medium fluid(p_start = p0, T_start = T0, X_start = X0, computeEntropy = computeEntropy, computeTransport = computeTransport);
-  
+
   // Variables
   Types.MassFlowRate m_flow(start = m_flow0)
     "Actual mass flow rate";
@@ -71,9 +72,11 @@ model SourceMassFlow
   Types.Pressure p(start = p0)
     "Actual pressure";
   Types.MassFraction X[fluid.nX](start = X0)
-    "Actual mass fraction";    
-  Types.SpecificEnthalpy h 
+    "Actual mass fraction";
+  Types.SpecificEnthalpy h
     "Actual specific enthalpy";
+  Types.Power E
+    "Energy given to the grid";
 
 protected
   Modelica.Blocks.Interfaces.RealInput in_m_flow0_internal;
@@ -83,11 +86,11 @@ protected
 equation
 
   outlet.m_flow = -in_m_flow0_internal + (outlet.p - p0)*G "Mass Conservation";
-  
+
   if use_in_m_flow0 == false then
     in_m_flow0_internal = m_flow0 "Flow rate set by parameter";
   end if;
-  
+
   m_flow = in_m_flow0_internal;
 
   T = in_T0_internal;
@@ -105,17 +108,18 @@ equation
   else
     p = outlet.p;
   end if;
-  
+
   // Fluid Definition
   fluid.p = p;
   fluid.T = T;
   fluid.Xi = X[1:fluid.nXi];
-  
+
   // Connector balance
   outlet.h_out = fluid.h;
   outlet.Xi = fluid.Xi;
-  
+
   h = outlet.h_out;
+  E = m_flow*fluid.LHV_mix;
 
 // Connect protected connectors to public conditional connectors
   connect(in_m_flow0, in_m_flow0_internal);

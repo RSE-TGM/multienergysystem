@@ -24,7 +24,7 @@ equation
   fluid.p = p;
   fluid.h = h;
   fluid.Xi = Xi;
-  E = inlet.m_flow*h;
+  E = inlet.m_flow*fluid.LHV_mix;
   connect(inlet, sink_demand.inlet) annotation (
     Line(points = {{-100, 0}, {-10, 0}}));
   connect(demand.y, sink_demand.in_m_flow0) annotation (

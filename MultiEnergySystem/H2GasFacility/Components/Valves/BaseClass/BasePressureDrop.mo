@@ -1,17 +1,18 @@
 within MultiEnergySystem.H2GasFacility.Components.Valves.BaseClass;
-
 partial model BasePressureDrop
-  extends H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet.nXi = fluidIn.nXi, outlet.nXi = fluidOut.nXi);
+  extends H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(
+                                                            nXi       = fluidIn.nXi), outlet(
+                                                                                     nXi        = fluidOut.nXi));
 
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture 
-    "fluid model"; 
+  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4PR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+    "fluid model";
 
-  // Basic parameters for declaring fluids 
+  // Basic parameters for declaring fluids
   parameter Boolean computeTransport = false
     "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false
     "Used to decide if it is necessary to calculate entropy";
-  parameter Types.Pressure dp_nom = 0.1e5 
+  parameter Types.Pressure dp_nom = 0.1e5
     "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(group = "Initialization"));
   parameter Types.Pressure pin_start = 1e5
@@ -30,31 +31,31 @@ partial model BasePressureDrop
     "Nominal mass fraction through the valve" annotation (
     Dialog(group = "Initialization"));
 
-  
+
   Medium fluidIn(
-    T_start = Tin_start, 
-    p_start = pin_start, 
+    T_start = Tin_start,
+    p_start = pin_start,
     X_start = X_start,
     computeTransport = computeTransport,
     computeEntropy = computeEntropy)
     "inlet fluid";
   Medium fluidOut(
-    T_start = Tout_start, 
-    p_start = pout_start, 
+    T_start = Tout_start,
+    p_start = pout_start,
     X_start = X_start,
     computeTransport = computeTransport,
-    computeEntropy = computeEntropy) 
+    computeEntropy = computeEntropy)
     "outlet fluid";
 
   Types.Density rhoin
     "Density at the inlet";
-  Types.Pressure pin 
+  Types.Pressure pin
     "Actual inlet pressure";
-  Types.Pressure pout 
+  Types.Pressure pout
     "Actual outlet pressure";
-  Types.Temperature Tin 
+  Types.Temperature Tin
     "Actual inlet temperature";
-  Types.Temperature Tout 
+  Types.Temperature Tout
     "Actual outlet temperature";
 
 equation

@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-model CH4
+model CH4PR
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 0,
       X_start = {1},
@@ -19,4 +19,4 @@ model CH4
       cp_coeff = {{-1.942367532068e-05,0.026331526513384,-8.2083625257152,2846.2158110588}},
       mu_start = 0);
       //v_start = 0.022336,
-end CH4;
+end CH4PR;

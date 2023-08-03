@@ -2,7 +2,6 @@ within MultiEnergySystem.H2GasFacility.Media.RealGases;
 model NaturalGasPR "Natural Gas using PR EoS"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 8,
-      MM_mix_start = Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
       X_start = {0.85306, 0.06486, 0.02058, 0.0028, 0.00437, 0.00099, 0.00063, 0.03882, 0.01268},
       T_start = 100+273.15,
       posDom = 1,
@@ -70,7 +69,7 @@ model NaturalGasPR "Natural Gas using PR EoS"
             Modelica.Media.IdealGases.Common.SingleGasesData.C5H12_i_pentane.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.CO2.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.N2.Hf},
-      HHV = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.CH4.HHV_SCM,
+      HHV_SCM = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.CH4.HHV_SCM,
              MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.C2H6.HHV_SCM,
              MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.C3H8.HHV_SCM,
              120160e3,
@@ -79,7 +78,7 @@ model NaturalGasPR "Natural Gas using PR EoS"
              148328e3,
              0,
              0},
-      LHV = {50e6, 47.62e6, 46.35e6, 0, 0, 0, 0, 0, 0},
+      LHV_SCM = {50e6, 47.62e6, 46.35e6, 0, 0, 0, 0, 0, 0},
       cp_coeff = {{-5.6776551798464e-07,     0.0004856226884952,     3.5809130457096,     1087.3242540246},
                   {3.9336581603911e-07,     -0.0025939417819359,     6.1606820767477,     115.30876220525},
                   {6.9469559921695e-07,     -0.0034853852149653,     6.8351551007804,    -82.089844972399},

@@ -17,8 +17,10 @@ partial model PapayMixture
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
-  parameter Real HHV[nX](each unit = "J/m3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
-  parameter Real LHV[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
+  parameter Real HHV[nX](each unit = "J/kg") "Higher Heating Value of each component in mass units";
+  parameter Real LHV[nX](each unit = "J/kg") "Lower Heating Value of each component in mass units";
+  parameter Real HHV_SCM[nX](each unit = "J/m3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
+  parameter Real LHV_SCM[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
@@ -70,8 +72,8 @@ partial model PapayMixture
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
   Types.PerUnit Z0(start = 1) "Compressibility factor of the mixture at Standard Conditions";
-  Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
-  Real LHV_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
+  Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
+  Real LHV_SCM_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v_mol_0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG "Specific gravity of the fluid mixture";
@@ -229,12 +231,12 @@ equation
   end if;
   s - s_id = 0;
 
-  HHV_mix = HHV*Y;
-  LHV_mix = LHV*Y;
+  HHV_SCM_mix = HHV_SCM*Y;
+  LHV_SCM_mix = LHV_SCM*Y;
   p0*v_mol_0 = Z0*R*T0;
   rho0 = MM_mix/v_mol_0;
   SG = rho0/rhoair;
-  WI = HHV_mix/sqrt(SG);
+  WI = HHV_SCM_mix/sqrt(SG);
 
   annotation (
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));

@@ -11,8 +11,10 @@ model H2
       T_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
       v_mol_c = {Modelica.Media.IdealGases.Common.FluidData.H2.criticalMolarVolume},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.H2.Hf},
-      HHV = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.H2.HHV_SCM},
-      LHV = {119.96e6},
+      HHV = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.H2.HHV},
+      LHV = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.H2.LHV},
+      HHV_SCM = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.H2.HHV_SCM},
+      LHV_SCM = {119.96e6},
       cp_coeff = {{8.3022149358563e-05,-0.099563690420583,40.70928347186,8817.1836822808}},
       mu_start = 0.00000876,
       mu_const = 0.00000876);

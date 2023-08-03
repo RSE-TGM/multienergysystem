@@ -15,30 +15,32 @@ partial model PengRobinsonMixture
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";
-  parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   parameter Types.Pressure p_c[nX] "Critical pressure of each component";
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
-  parameter Types.AttractionForce ac[nX] = {0.45724*R^2*T_c[i]^2/(p_c[i] + eps) for i in 1:nX} "attraction parameter at critical point";
-  parameter Types.MolarVolume b[nX] = {0.07780*R*T_c[i]/(p_c[i] + eps) for i in 1:nX} "molar covolume parameter";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
-  parameter Real HHV[nX](each unit = "J/m3")  "Higher Heating Value of each component in J/m3 units";
-  parameter Types.SpecificEnergy LHV[nX] "Lower Heating Value of each component";
+  parameter Real HHV[nX](each unit = "J/kg") "Higher Heating Value of each component in mass units";
+  parameter Real LHV[nX](each unit = "J/kg") "Lower Heating Value of each component in mass units";
+  parameter Real HHV_SCM[nX](each unit = "J/m3") "Higher Heating Value of each component in J/m3 units";
+  parameter Real LHV_SCM[nX](each unit = "J/m3") "Lower Heating Value of each component";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, per unit mass, for independent mass components";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
-  parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
-  parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
   parameter Types.MolarVolume v_start = if T_red_start > 1.255 or p_red_start < 1 then R*T_start/p_start else b*Y_start*1.3*(1.5*T_red_start) "provided that this fluid composition is mostly the dominant component";
-  parameter Types.Density rho_start = MM[posDom]/v_start;
-  parameter Types.MolarMass MM_mix_start = MM*Y_start;
+  final parameter Types.Density rho_start = MM[posDom]/v_start;
+  final parameter Types.MolarMass MM_mix_start = MM*Y_start;
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.Temperature Tsat_min = 273.15 + 20;
   parameter Types.Temperature Tsat_max = 273.15 + 150;
 
+  final parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   final parameter Types.PerUnit m[nX] = {0.378893 + w[i]*(1.4897153 + w[i]*((-0.17131848) + w[i]*0.0196554)) for i in 1:nX} "Constant characteristic of each substance";
+  final parameter Types.AttractionForce ac[nX] = {0.45724*R^2*T_c[i]^2/(p_c[i] + eps) for i in 1:nX} "attraction parameter at critical point";
+  final parameter Types.MolarVolume b[nX] = {0.07780*R*T_c[i]/(p_c[i] + eps) for i in 1:nX} "molar covolume parameter";
+  final parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the dominant component";
+  final parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of the dominant component";
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
   final parameter Types.PerUnit alpha_start[nX] = {(1 + m[i]*(1 - sqrt(T_start/T_c[i])))^2 for i in 1:nX};
   final parameter Types.AttractionForce a_start[nX] = {ac[i]*alpha_start[i] for i in 1:nX};
@@ -117,7 +119,7 @@ partial model PengRobinsonMixture
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z "Compressibility factor of the mixture";
-  Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
+  Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG "Specific gravity of the fluid mixture";
@@ -277,11 +279,11 @@ equation
   end if;
   s - s_id = s_res;
 
-  HHV_mix = HHV*Y;
+  HHV_SCM_mix = HHV_SCM*Y;
   p0 = R*T0/(v0 - bmix) - amix0/(v0*(v0 + bmix) + bmix*(v0 - bmix));
   rho0 = MM_mix/v0;
   SG = rho0/rhoair;
-  WI = HHV_mix/sqrt(SG);
+  WI = HHV_SCM_mix/sqrt(SG);
 
   annotation (
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));

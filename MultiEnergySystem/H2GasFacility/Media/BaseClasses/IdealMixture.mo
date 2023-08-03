@@ -16,8 +16,10 @@ partial model IdealMixture
   parameter Types.Temperature T_c[nX] "Critical temperature of each component";
   parameter Types.MolarVolume v_mol_c[nX] "Critical molar volume of each component";
   parameter Types.SpecificEnthalpy Hf[nX] "Hf derived from Modelica.Media.IdealGases.Common.SingleGasesData";
-  parameter Real HHV[nX](each unit = "J/m3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
-  parameter Real LHV[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
+  parameter Real HHV[nX](each unit = "J/kg") "Higher Heating Value of each component in mass units";
+  parameter Real LHV[nX](each unit = "J/kg") "Lower Heating Value of each component in mass units";
+  parameter Real HHV_SCM[nX](each unit = "J/m3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
+  parameter Real LHV_SCM[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature, Standard conditions";
   parameter Types.Pressure p0 = 101325 "Reference pressure, Standard conditions";
   parameter Types.DynamicViscosity mu_const "Constant Dynamic viscosity";
@@ -71,8 +73,8 @@ partial model IdealMixture
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
-  Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
-  Real LHV_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
+  Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
+  Real LHV_SCM_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
   Types.MolarVolume v_mol_0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG(start = 1) "Specific gravity of the fluid mixture";
@@ -249,12 +251,12 @@ equation
 
 
   // Energy parameters
-  HHV_mix = HHV*Y;
-  LHV_mix = LHV*Y;
+  HHV_SCM_mix = HHV_SCM*Y;
+  LHV_SCM_mix = LHV_SCM*Y;
   p0*v_mol_0 = Z*R*T0;
   rho0 = MM_mix/v_mol_0;
   SG = rho0/rhoair;
-  WI = HHV_mix/sqrt(SG);
+  WI = HHV_SCM_mix/sqrt(SG);
 
 
 //  dXi_dXi = {if i==j then 1 else -1 for j in 1:nXi, i in 1:nXi};

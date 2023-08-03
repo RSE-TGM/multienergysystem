@@ -74,7 +74,7 @@ partial model IdealMixture
   Real HHV_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
   Real LHV_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
   Types.Density rho0 "Density of the fluid mixture at reference temperature and pressure";
-  Types.MolarVolume v0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
+  Types.MolarVolume v_mol_0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG(start = 1) "Specific gravity of the fluid mixture";
   Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
 
@@ -251,9 +251,8 @@ equation
   // Energy parameters
   HHV_mix = HHV*Y;
   LHV_mix = LHV*Y;
-  p0*v0 = Z*R*T0;
-  //rho0 = MM[1]/v0;
-  rho0 = MM_mix/v0;
+  p0*v_mol_0 = Z*R*T0;
+  rho0 = MM_mix/v_mol_0;
   SG = rho0/rhoair;
   WI = HHV_mix/sqrt(SG);
 

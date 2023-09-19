@@ -12,15 +12,15 @@ model PaperCaseI_EnergyDemand
   residentialDemand16 = residentialDemand_W(W_max_user16),
   residentialDemand17 = residentialDemand_W(W_max_user17),
   user4(energydemand=industrialDemand4),
-  user10(energydemand=industrialDemand10),
   user5(energydemand=industrialDemand5),
-  user15(energydemand=residentialDemand15),
-  user16(energydemand=residentialDemand16),
-  user14(energydemand=residentialDemand14),
+  user10(energydemand=industrialDemand10),
   user11(energydemand=residentialDemand11),
   user12(energydemand=residentialDemand12),
-  user17(energydemand=residentialDemand17),
-  user13(energydemand=residentialDemand13));
+  user13(energydemand=residentialDemand13),
+  user14(energydemand=residentialDemand14),
+  user15(energydemand=residentialDemand15),
+  user16(energydemand=residentialDemand16),
+  user17(energydemand=residentialDemand17));
 
   parameter Real W_max_user4 = 0.044645108*3.84E+07/0.696977;
   parameter Real W_max_user5 = 0.03493965*3.84E+07/0.696977;

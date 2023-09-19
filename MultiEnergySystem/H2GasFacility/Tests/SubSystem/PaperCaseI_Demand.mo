@@ -64,6 +64,9 @@ protected
       Inline = true);
   end industrialDemand_mfr;
 
+equation
+  connect(H2_Production.y, sourceH2_A.in_m_flow0) annotation (Line(points={{-129,-66},{
+          -124,-66},{-124,-37},{-120,-37}}, color={0,0,127}));
  annotation (experiment(
       StopTime=86400,
       Interval=44,

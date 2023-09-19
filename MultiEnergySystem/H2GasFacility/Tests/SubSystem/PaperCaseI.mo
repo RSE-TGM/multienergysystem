@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
-model PaperCaseI "Distribution network example from [1]"
+partial model PaperCaseI "Distribution network example from [1]"
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
   replaceable model Medium =
@@ -11,6 +11,7 @@ model PaperCaseI "Distribution network example from [1]"
   parameter Types.MassFlowRate X_start_H2[7] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
+  parameter Real H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.00119840; 15*3600, 0.00169773; 16*3600, 0.00109853; 17*3600, 0; 24*3600, 0];
 
   Types.MassFlowRate total_m_flow_demand;
   inner MultiEnergySystem.System system annotation (
@@ -106,6 +107,8 @@ model PaperCaseI "Distribution network example from [1]"
     Placement(visible = true, transformation(origin = {-114, -42}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation (
     Placement(visible = true, transformation(origin = {-140, -28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.TimeTable H2_Production(table=H2Production)
+    annotation (Placement(transformation(extent={{-150,-76},{-130,-56}})));
 equation
   total_m_flow_demand = user4.inlet.m_flow + user5.inlet.m_flow + user10.inlet.m_flow + user11.inlet.m_flow + user12.inlet.m_flow + user13.inlet.m_flow + user14.inlet.m_flow + user15.inlet.m_flow + user16.inlet.m_flow + user17.inlet.m_flow;
   connect(pipe16.outlet, user13.inlet) annotation (
@@ -172,8 +175,6 @@ equation
     Line(points = {{-20, -40}, {-30, -40}, {-30, -50}}, color = {182, 109, 49}));
   connect(pipe12.outlet, pipe11.outlet) annotation (
     Line(points = {{0, -40}, {20, -40}, {20, -30}}, color = {182, 109, 49}));
-  connect(m_flow_H2.y, sourceH2_A.in_m_flow0) annotation (
-    Line(points={{-129,-28},{-120,-28},{-120,-37}},        color = {0, 0, 127}));
   connect(pipe21.outlet, pipe10.inlet) annotation (
     Line(points = {{-100, 0}, {-80, 0}, {-80, -8}}, color = {182, 109, 49}));
   connect(pipe10.outlet, user10.inlet) annotation (

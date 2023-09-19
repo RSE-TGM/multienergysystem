@@ -36,7 +36,7 @@ partial model PartialInsulatedTube
     "Metal thermal conductivity; steel = 45" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
 
-  parameter Types.Temperature T_ext = 25 + 273.15
+  parameter Types.Temperature T_ext = 15 + 273.15
     "External temperature" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.MassFlowRate m_flow_start

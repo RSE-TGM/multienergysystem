@@ -149,9 +149,9 @@ equation
   hout = fluid[n + 1].h "Outlet specific enthalpy equals to specific enthalpy of last fluid";
   pin = inlet.p "Inlet pressure equals to pressure of the inlet connector";
   pout = outlet.p "Outlet pressure equals to pressure of the outlet connector";
-  inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
+  //inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
   //inlet.h_out = hin_start "Dummy equation (not flow reversal)";
-  //inlet.Xi = inStream(outlet.Xi) "Dummy equation (not flow reversal)";
+  inlet.Xi = inStream(outlet.Xi) "Dummy equation (not flow reversal)";
   inlet.h_out = inStream(outlet.h_out) "Dummy equation (not flow reversal)";
 
 // Balances
@@ -174,6 +174,7 @@ equation
     if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then
       p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5);
       ptilde[i] = p[i+1];
+      //ptilde[i] = 2*(p[i] + p[i+1] - (p[i]*p[i+1]/(p[i]+p[i+1])))/3;
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
       p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
       ptilde[i] = p[i+1];

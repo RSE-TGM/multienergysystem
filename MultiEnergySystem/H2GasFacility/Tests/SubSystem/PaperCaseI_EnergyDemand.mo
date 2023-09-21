@@ -22,16 +22,7 @@ model PaperCaseI_EnergyDemand
   user16(energydemand=residentialDemand16),
   user17(energydemand=residentialDemand17));
 
-  parameter Real W_max_user4 = 0.044645108*3.84E+07/0.696977;
-  parameter Real W_max_user5 = 0.03493965*3.84E+07/0.696977;
-  parameter Real W_max_user10 = 0.040762925*3.84E+07/0.696977;
-  parameter Real W_max_user11 = 0.009705458*3.84E+07/0.696977;
-  parameter Real W_max_user12 = 0.014558188*3.84E+07/0.696977;
-  parameter Real W_max_user13 = 0.006793821*3.84E+07/0.696977;
-  parameter Real W_max_user14 = 0.008734913*3.84E+07/0.696977;
-  parameter Real W_max_user15 = 0.017469825*3.84E+07/0.696977;
-  parameter Real W_max_user16 = 0.012723856*3.84E+07/0.696977;
-  parameter Real W_max_user17 = 0.010676004*3.84E+07/0.696977;
+
 
 protected
   function residentialDemand_W

@@ -5,6 +5,7 @@ record RoundPipeLine
   Types.Length t "Thickness";
   Types.Length tIns "Insulation thickness";
   Types.Length h "Outlet height w.r.t to inlet";
+  Types.Length kappa "Roughness in (m)";
   Types.ThermalConductivity lambdaIns "Insulation thermal conductivity";
   Types.ThermalConductivity lambdam "Metal thermal conductivity";
   Types.SpecificEnthalpy hin_start "Start inlet specific enthalpy";

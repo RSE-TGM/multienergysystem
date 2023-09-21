@@ -94,7 +94,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // Complementary variables
   Types.Time taur "Residence time";
   Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start) "Reynolds";
-  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.001) "Friction factor";
+  Types.PerUnit ff[n + 1](each nominal = 0.001, each min = 0, each start = 0.01) "Friction factor";
   Real kf(unit = "1/m4");
 
   // Fluids
@@ -127,7 +127,12 @@ equation
     //1 = (-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))*sqrt(ff[i]);
     //ff[i] = 0.00475;
     //ff[i] = 1/(-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))^2;
-    ff[i] = 64/(Re[i]+1) + 1/(-2*log(kappa/(3.71*Di)))^2 "Nikuradse, friction factor";
+    //ff[i] = 64/(Re[i]+1) + 1/(-2*log(kappa/(3.71*Di)))^2 "Nikuradse, friction factor";
+    //sqrt(ff[i]) = 1/(-2*log10(kappa/(3.71*Di))) "Nikuradse, friction factor";
+    //1/sqrt(ff[i]) = ;
+    sqrt(ff[i]) = 1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11));
+    //ff[i] = (1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)))^2;
+
     //ff[i] = -3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11));
   end for;
 // Relationships for state variables
@@ -176,7 +181,11 @@ equation
       ptilde[i] = p[i+1];
       //ptilde[i] = 2*(p[i] + p[i+1] - (p[i]*p[i+1]/(p[i]+p[i+1])))/3;
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
-      p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
+      //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
+      //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
+      //p[i] - ptilde[i] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho/2;
+      //ptilde[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i+1]*m_flow[i+1]/fluid[i].rho/2;
+      p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho;
       ptilde[i] = p[i+1];
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
       p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;

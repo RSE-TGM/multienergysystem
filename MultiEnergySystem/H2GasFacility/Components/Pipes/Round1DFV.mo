@@ -83,7 +83,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // Vector Variables
   Types.Mass M[n] "Mass of fluid in each finite volume";
   Types.Density rho[n + 1](each start = rho_nom) "Density at each volume boundary";
-  Types.MassFlowRate m_flow[n + 1](each min = 0, each start = m_flow_start, each nominal = 0.3) "Mass flow at each volume boundary";
+  Types.MassFlowRate m_flow[n + 1](each min = if allowFlowReversal then -Modelica.Constants.inf else 0, each start = m_flow_start, each nominal = 0.3) "Mass flow at each volume boundary";
   Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1](each nominal = 1e6) "Specific enthalpy at each fluid";
@@ -120,7 +120,7 @@ equation
     q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
     m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
     //Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) "Reynold's number";
-    Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
+    Re[i] = homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
 
 
     //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + kappa/(3.715*Di)));
@@ -185,7 +185,7 @@ equation
       //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
       //p[i] - ptilde[i] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho/2;
       //ptilde[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i+1]*m_flow[i+1]/fluid[i].rho/2;
-      p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho;
+      p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i])*m_flow[i]/fluid[i].rho;
       ptilde[i] = p[i+1];
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
       p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;

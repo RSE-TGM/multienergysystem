@@ -88,7 +88,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1](each nominal = 1e6) "Specific enthalpy at each fluid";
   Types.MassFraction Xi[n + 1, nXi] "Mass fractions at each volume boundary";
-  Types.Velocity u[n + 1] "Velocity at each volume boundary";
+  Types.Velocity u[n + 1](each start = u_nom)
+                                             "Velocity at each volume boundary";
   Types.Pressure p[n + 1](each nominal = pin_nom) "Pressure at each fluid";
 
   // Complementary variables
@@ -105,6 +106,12 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     each computeTransport = computeTransport,
     each computeEntropy = computeEntropy);
 
+  // Tracking error variables
+  Types.Pressure dp_track[n];
+  Real dv_dp_p[n];
+  Real dv_dX_X[n];
+
+
 equation
 // Equations to set the fluid properties
   for i in 1:n + 1 loop
@@ -119,35 +126,51 @@ equation
     rho[i] = fluid[i].rho "Density at each volume boundary";
     q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
     m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
-    //Re[i] = homotopy(Di*m_flow[i]/(A*fluid[i].mu_const), Di*m_flow_start/(A*fluid[i].mu_const)) "Reynold's number";
     Re[i] = homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
 
+//     if abs(m_flow[i]) >=1e-6 then
+//       sqrt(ff[i]) = 1/(-1.8*log10((6.9/(Re[i]+1e-2)) + (kappa/(3.71*Di))^1.11));
+//     else
+//       ff[i] = 1e-3;
+//     end if;
 
-    //ff[i] = -2*log((2.51/(Re[i]*sqrt(ff[i])) + kappa/(3.715*Di)));
-    //1 = (-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))*sqrt(ff[i]);
-    //ff[i] = 0.00475;
-    //ff[i] = 1/(-3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11)))^2;
-    //ff[i] = 64/(Re[i]+1) + 1/(-2*log(kappa/(3.71*Di)))^2 "Nikuradse, friction factor";
-    //sqrt(ff[i]) = 1/(-2*log10(kappa/(3.71*Di))) "Nikuradse, friction factor";
-    //1/sqrt(ff[i]) = ;
-    sqrt(ff[i]) = 1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11));
+//     if Re[i] >= 4000 then
+//       sqrt(ff[i]) = 1/(-1.8*log10((6.9/(Re[i]+1e-2)) + (kappa/(3.71*Di))^1.11));
+//     else
+//       ff[i] = 64*4/Re[i];
+//     end if;
+    ff[i] = 0.02;
+
     //ff[i] = (1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)))^2;
 
-    //ff[i] = -3.6*log10((6.9/Re[i]) + (kappa/(3.71*Di))^(1.11));
   end for;
 // Relationships for state variables
   Ttilde = T[2:n + 1];
   Xitilde = Xi[2:n + 1, :];
 //ptilde = p[2:n+1];
 //ptilde = pout;
+
 // Boundary variables
-  m_flow[1] = inlet.m_flow;
-  m_flow[n + 1] = -outlet.m_flow;
-  h[1] = inStream(inlet.h_out);
-//h[n+1] = outlet.h_out;
-  outlet.h_out = h[n + 1];
-  Xi[1, :] = inStream(inlet.Xi);
-  outlet.Xi = Xi[n + 1, :];
+
+
+  inlet.m_flow = m_flow[1];
+  outlet.m_flow = -m_flow[n + 1];
+  inlet.h_out = fluid[1].h;
+  outlet.h_out = fluid[n + 1].h;
+  inlet.Xi = fluid[1].Xi;
+  outlet.Xi = fluid[n + 1].Xi;
+
+//   inlet.h_out = semiLinear(inlet.m_flow, inStream(inlet.h_out), fluid[1].h)/abs(inlet.m_flow);
+//   h[n+1] = -semiLinear(outlet.m_flow, inStream(outlet.h_out), fluid[n].h);
+//   Xi[1] = semiLinear(inlet.m_flow, inStream(inlet.Xi), fluid[1].Xi)/abs(inlet.m_flow);
+//   Xi[n+1] = -semiLinear(outlet.m_flow, inStream(outlet.Xi), fluid[n].Xi);
+
+
+  //h[1] = inStream(inlet.h_out);
+  //h[n+1] = outlet.h_out;
+  //outlet.h_out = h[n + 1];
+  //Xi[1, :] = inStream(inlet.Xi);
+  //outlet.Xi = Xi[n + 1, :];
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
   Tout = fluid[n + 1].T "Outlet temperature equals to temperature of last fluid";
   hin = fluid[1].h "Inlet specific enthalpy equals to specific enthalpy of first fluid";
@@ -162,36 +185,50 @@ equation
 // Balances
   for i in 1:n loop
     M[i] = Vi*rho[i + 1];
-
+    //M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+    //M[i]*der(fluid[i + 1].Xi) = m_flow[i]*Xi[i,:] - m_flow[i]*Xi[i + 1,:];
+    M[i]*der(fluid[i + 1].Xi) = semiLinear(m_flow[i], fluid[i].Xi, fluid[i + 1].Xi) - semiLinear(m_flow[i], fluid[i + 1].Xi, fluid[i].Xi);
     // Mass fraction Balance
-    M[i]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+
 
     // Mass & Energy Balance
+    dv_dp_p[i] = fluid[i + 1].dv_dp*der(fluid[i + 1].p);
+    dv_dX_X[i] = fluid[i + 1].dv_dX*der(fluid[i + 1].X);
     if quasistaticEnergyBalance then
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       0 = T[i] - T[i + 1];
     else
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
-      m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
+      //m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
+      semiLinear(m_flow[i], fluid[i].h, fluid[i+1].h) - semiLinear(m_flow[i+1], fluid[i+1].h, fluid[i].h) = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) +
+      semiLinear(m_flow[i], fluid[i+1].u, fluid[i].u) - semiLinear(m_flow[i+1], fluid[i+1].u, fluid[i].u);
     end if;
 
     // Momentum Balance
     if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then
       p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5);
-      ptilde[i] = p[i+1];
+      ptilde[i] = if pin - pout >= 0 then p[i+1] else p[i];
       //ptilde[i] = 2*(p[i] + p[i+1] - (p[i]*p[i+1]/(p[i]+p[i+1])))/3;
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
       //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
       //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
       //p[i] - ptilde[i] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho/2;
       //ptilde[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i+1]*m_flow[i+1]/fluid[i].rho/2;
-      p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i])*m_flow[i]/fluid[i].rho;
+//       if m_flow[i] >= 0 then
+//         p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i])*m_flow[i]/fluid[i].rho;
+//       else
+//         p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i+1])*m_flow[i+1]/fluid[i+1].rho;
+//       end if;
+      p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(A*u[i]*fluid[i+1].rho)*A*u[i];
       ptilde[i] = p[i+1];
+
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
       p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;
       ptilde[i] - p[i+1] = k_linear/2*m_flow[i]/n;
     end if;
+  dp_track[i] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i+1])*m_flow[i+1]/fluid[i+1].rho;
   end for;
+
 
   //pin - ptilde = k/2*inlet.m_flow;
   //ptilde - pout = -k/2*outlet.m_flow;
@@ -209,7 +246,7 @@ equation
   p[n + 1] = outlet.p;
 
 // Complementary variables
-  taur = sum(M)/inlet.m_flow;
+  taur = sum(M)/abs(inlet.m_flow);
 
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then

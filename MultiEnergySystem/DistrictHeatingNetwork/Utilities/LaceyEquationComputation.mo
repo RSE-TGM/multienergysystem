@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Utilities;
-
 model LaceyEquationComputation
   parameter Real D = 160/1000;
   parameter Real pin = 75e2;

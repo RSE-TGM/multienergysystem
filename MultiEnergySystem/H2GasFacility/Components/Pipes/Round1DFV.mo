@@ -6,6 +6,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.sqrtReg;
+  import MultiEnergySystem.DistrictHeatingNetwork.Utilities.squareReg;
+  import Modelica.Fluid.Utilities.regStep;
   // Medium & Heat Transfer Model for the pipe
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2
@@ -130,7 +132,6 @@ equation
 //ptilde = p[2:n+1];
 //ptilde = pout;
 
-
 // Inlet/Outlet variables
 
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -159,11 +160,19 @@ equation
   Xi[1, :] = inStream(inlet.Xi);
   outlet.Xi = Xi[n+1,:];
 
-  //inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
-  //inlet.h_out = hin_start "Dummy equation (not flow reversal)";
   inlet.Xi = inStream(inlet.Xi) "Dummy equation (not flow reversal)";
   inlet.h_out = inStream(inlet.h_out) "Dummy equation (not flow reversal)";
 
+//   inlet.h_out = regStep(inlet.m_flow, inStream(inlet.h_out), actualStream(inlet.h_out));
+//   inlet.Xi = regStep(inlet.m_flow, inStream(inlet.Xi), 0);
+
+//    if noEvent(inlet.m_flow>=0) then
+//      inlet.Xi = inStream(inlet.Xi);
+//      inlet.h_out = inStream(inlet.h_out);
+//    else
+//      outlet.Xi = inStream(outlet.Xi);
+//      outlet.h_out = inStream(outlet.h_out);
+//    end if;
 
 // Balances
   for i in 1:n loop
@@ -196,18 +205,13 @@ equation
       //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
       //p[i] - ptilde[i] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho/2;
       //ptilde[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i+1]*m_flow[i+1]/fluid[i].rho/2;
-//       if m_flow[i] >= 0 then
-//         p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i])*m_flow[i]/fluid[i].rho;
-//       else
-//         p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(m_flow[i+1])*m_flow[i+1]/fluid[i+1].rho;
-//       end if;
-      p[i] - p[i+1] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*abs(A*u[i]*fluid[i].rho)*A*u[i];
+      p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
       ptilde[i] = p[i+1];
 
 
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
       p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;
-      ptilde[i] - p[i+1] = k_linear/2*m_flow[i]/n;
+      ptilde[i] - p[i+1] = k_linear/2*m_flow[i+1]/n;
     end if;
   end for;
 

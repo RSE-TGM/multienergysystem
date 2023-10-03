@@ -5,6 +5,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)),hin_start = fluid[1].h_id_start);
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
+  import MultiEnergySystem.DistrictHeatingNetwork.Utilities.sqrtReg;
   // Medium & Heat Transfer Model for the pipe
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2
@@ -118,16 +119,10 @@ equation
   for i in 1:n + 1 loop
     h[i] = fluid[i].h "Specific enthalpy at each volume boundary";
     rho[i] = fluid[i].rho "Density at each volume boundary";
-    q[i]*rho[i] = m_flow[i] "Volumetric flowrate at each volume boundary";
+    q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
     m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
     Re[i] = homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
-
-    if Re[i] >= 4000 then
-      sqrt(ff[i]) = 1/(-1.8*log10((6.9/(Re[i]+1e-2)) + (kappa/(3.71*Di))^1.11));
-    else
-      sqrt(ff[i]) = 1/(-1.8*log10((6.9/(4000+1e-2)) + (kappa/(3.71*Di))^1.11));
-    end if;
-
+    sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
   end for;
 // Relationships for state variables
   Ttilde = T[2:n + 1];
@@ -159,9 +154,9 @@ equation
 
   //m_flow[1] = inlet.m_flow;
   //m_flow[n+1] = -outlet.m_flow;
-  //h[1] = inStream(inlet.h_out);
+  h[1] = inStream(inlet.h_out);
   outlet.h_out = h[n+1];
-  //Xi[1, :] = inStream(inlet.Xi);
+  Xi[1, :] = inStream(inlet.Xi);
   outlet.Xi = Xi[n+1,:];
 
   //inlet.Xi = X_start[1:nXi] "Dummy equation (not flow reversal)";
@@ -176,9 +171,8 @@ equation
   end for;
 
   for i in 1:n loop
-    //Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
-    //M[i]*der(fluid[i + 1].Xi) = m_flow[i]*Xi[i,:] - m_flow[i]*Xi[i + 1,:];
-    Vi*rho[i+1]*der(fluid[i+1].Xi) = semiLinear(m_flow[i], fluid[i].Xi, fluid[i+1].Xi) - semiLinear(m_flow[i], fluid[i+1].Xi, fluid[i].Xi);
+    Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+    //Vi*rho[i+1]*der(fluid[i+1].Xi) = semiLinear(m_flow[i], fluid[i].Xi, fluid[i+1].Xi) - semiLinear(m_flow[i], fluid[i+1].Xi, fluid[i].Xi);
     // Mass fraction Balance
 
     // Mass & Energy Balance
@@ -187,9 +181,9 @@ equation
       0 = T[i] - T[i + 1];
     else
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
-      //m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
-      semiLinear(m_flow[i], fluid[i].h, fluid[i+1].h) - semiLinear(m_flow[i+1], fluid[i+1].h, fluid[i].h) = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) +
-      semiLinear(m_flow[i], fluid[i+1].u, fluid[i].u) - semiLinear(m_flow[i+1], fluid[i+1].u, fluid[i].u);
+      m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
+      //semiLinear(m_flow[i], fluid[i].h, fluid[i+1].h) - semiLinear(m_flow[i+1], fluid[i+1].h, fluid[i].h) = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) +
+      //semiLinear(m_flow[i], fluid[i+1].u, fluid[i].u) - semiLinear(m_flow[i+1], fluid[i+1].u, fluid[i].u);
     end if;
 
     // Momentum Balance
@@ -219,8 +213,8 @@ equation
 
   //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
   //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
-  fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) elseif m_flow[1]>= 0 then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
-  fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) elseif m_flow[1]>= 0 then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
+  //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) elseif m_flow[1]>= 0 then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
+  //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) elseif m_flow[1]>= 0 then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
   //fluid[n+1].h = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.h_out) else inStream(outlet.h_out)), actualStream(outlet.h_out));
   //fluid[n+1].Xi = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.Xi) else inStream(outlet.Xi)), actualStream(outlet.Xi));
 

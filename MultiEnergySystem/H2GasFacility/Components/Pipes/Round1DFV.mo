@@ -25,6 +25,9 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate specific entropy";
   parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure";
   parameter Boolean quasistaticEnergyBalance = false "If true, then T[i+1] = T[i]";
+  parameter Boolean quasistaticComponentBalance = false;
+  parameter Boolean quasistatic = false;
+
   parameter Integer n = 3 "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
@@ -124,7 +127,8 @@ equation
     q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
     m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
     Re[i] = homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
-    sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
+    //sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
+    ff[i]=0.02;
   end for;
 // Relationships for state variables
   Ttilde = T[2:n + 1];
@@ -155,72 +159,66 @@ equation
 
   //m_flow[1] = inlet.m_flow;
   //m_flow[n+1] = -outlet.m_flow;
-  h[1] = inStream(inlet.h_out);
-  outlet.h_out = h[n+1];
-  Xi[1, :] = inStream(inlet.Xi);
-  outlet.Xi = Xi[n+1,:];
+  //h[1] = inStream(inlet.h_out);
+  //outlet.h_out = h[n+1];
+  //Xi[1, :] = inStream(inlet.Xi);
+  //outlet.Xi = Xi[n+1,:];
 
-  inlet.Xi = inStream(inlet.Xi) "Dummy equation (not flow reversal)";
-  inlet.h_out = inStream(inlet.h_out) "Dummy equation (not flow reversal)";
-
-//   inlet.h_out = regStep(inlet.m_flow, inStream(inlet.h_out), actualStream(inlet.h_out));
-//   inlet.Xi = regStep(inlet.m_flow, inStream(inlet.Xi), 0);
-
-//    if noEvent(inlet.m_flow>=0) then
-//      inlet.Xi = inStream(inlet.Xi);
-//      inlet.h_out = inStream(inlet.h_out);
-//    else
-//      outlet.Xi = inStream(outlet.Xi);
-//      outlet.h_out = inStream(outlet.h_out);
-//    end if;
+  //inlet.Xi = inStream(inlet.Xi) "Dummy equation (not flow reversal)";
+  //inlet.h_out = inStream(inlet.h_out) "Dummy equation (not flow reversal)";
 
 // Balances
   for i in 1:n loop
-    M[i] = Vi*rho[i+1];
-  end for;
-
-  for i in 1:n loop
-    Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
-    //Vi*rho[i+1]*der(fluid[i+1].Xi) = semiLinear(m_flow[i], fluid[i].Xi, fluid[i+1].Xi) - semiLinear(m_flow[i], fluid[i+1].Xi, fluid[i].Xi);
-    // Mass fraction Balance
-
-    // Mass & Energy Balance
-    if quasistaticEnergyBalance then
-      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
+    M[i] = Vi*regStep(inlet.m_flow, rho[i+1], rho[i]);
+    //Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+    if quasistatic or abs(u[1])<0.1 then
+      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p));
+      zeros(nXi) = Xi[i,:] - Xi[i+1,:];
       0 = T[i] - T[i + 1];
     else
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
-      //semiLinear(m_flow[i], fluid[i].h, fluid[i+1].h) - semiLinear(m_flow[i+1], fluid[i+1].h, fluid[i].h) = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) +
-      //semiLinear(m_flow[i], fluid[i+1].u, fluid[i].u) - semiLinear(m_flow[i+1], fluid[i+1].u, fluid[i].u);
+      Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
+      //Vi*M[i]*der(fluid[i + 1].Xi) = regStep(inlet.m_flow, m_flow[i], m_flow[i+1])*(Xi[i, :] - Xi[i + 1, :]);
     end if;
 
     // Momentum Balance
     if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then
       p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5);
       ptilde[i] = p[i+1];
-      //ptilde[i] = 2*(p[i] + p[i+1] - (p[i]*p[i+1]/(p[i]+p[i+1])))/3;
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
-      //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
-      //p[i]*p[i] = p[i+1]*p[i+1] + (8*(L/n)*L*ff[i]*T[i]*(fluid[i].R/fluid[i].MM_mix)*m_flow[i]*m_flow[i]/(Modelica.Constants.pi^2*Di^5))/1e3;
-      //p[i] - ptilde[i] = ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i]*m_flow[i]/fluid[i].rho/2;
-      //ptilde[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*m_flow[i+1]*m_flow[i+1]/fluid[i].rho/2;
       p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
       ptilde[i] = p[i+1];
-
-
     elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
       p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;
       ptilde[i] - p[i+1] = k_linear/2*m_flow[i+1]/n;
     end if;
   end for;
 
+  //inlet.h_out = if pin-pout >=0 then 0 else fluid[1].h;
+  //inlet.Xi = if pin-pout>= 0 then zeros(nXi) else fluid[1].Xi;
+  //outlet.h_out = if pin-pout >=0 then fluid[n+1].h else 0;
+  //outlet.Xi = if pin-pout>=0 then fluid[n+1].Xi else zeros(nXi);
+
+  inlet.h_out = regStep(inlet.m_flow, -4.5e6, fluid[1].h, 1e-5);
+  inlet.Xi = regStep(inlet.m_flow, X_start[1:nXi], fluid[1].Xi, 1e-5);
+  outlet.h_out = regStep(-outlet.m_flow, fluid[n+1].h, -4.5e6, 1e-5);
+  outlet.Xi = regStep(-outlet.m_flow, fluid[n+1].Xi, X_start[1:nXi], 1e-5);
+
+  if pin-pout>=0 then
+    fluid[1].h = inStream(inlet.h_out);
+    fluid[1].Xi = inStream(inlet.Xi);
+  else
+    fluid[n+1].h = inStream(outlet.h_out);
+    fluid[n+1].Xi = inStream(outlet.Xi);
+  end if;
+
   //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
   //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
-  //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) elseif m_flow[1]>= 0 then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
+  //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) elseif m_flow[1] >= 0 then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
   //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) elseif m_flow[1]>= 0 then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
-  //fluid[n+1].h = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.h_out) else inStream(outlet.h_out)), actualStream(outlet.h_out));
-  //fluid[n+1].Xi = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.Xi) else inStream(outlet.Xi)), actualStream(outlet.Xi));
+  //fluid[n+1].h = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.h_out) elseif m_flow[n+1]< 0 then actualStream(outlet.h_out) else inStream(outlet.h_out)), actualStream(outlet.h_out));
+  //fluid[n+1].Xi = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.Xi) elseif m_flow[n+1]< 0 then actualStream(outlet.Xi) else inStream(outlet.Xi)), actualStream(outlet.Xi));
 
   //pin - ptilde = k/2*inlet.m_flow;
   //ptilde - pout = -k/2*outlet.m_flow;
@@ -238,24 +236,25 @@ equation
 
 // Complementary variables
   Mt = sum(M);
-  taur = sum(M)/abs(inlet.m_flow);
+  taur = sum(M)/max(abs(inlet.m_flow), 0.0000001);
 
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
-      if quasistaticEnergyBalance then
+      if quasistatic then
       // nothing
       else
+        der(Xitilde[i,:]) = zeros(nXi);
         der(Ttilde[i]) = 0;
       end if;
-      der(Xitilde[i,:]) = zeros(nXi);
     end for;
     if not noInitialPressure then
       //der(ptilde) = 0;
       der(ptilde) = zeros(n);
     else
-//  No initial pressure
+      //  No initial pressure
     end if;
+
   elseif initOpt == DistrictHeatingNetwork.Choices.Init.Options.fixedState then
     for i in 1:n loop
       fluid[i+1].X = X_start;

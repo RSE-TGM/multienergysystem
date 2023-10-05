@@ -171,7 +171,8 @@ equation
   for i in 1:n loop
     M[i] = Vi*regStep(inlet.m_flow, rho[i+1], rho[i]);
     //Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
-    if quasistatic or abs(u[1])<0.1 then
+    //if quasistatic or abs(u[1])<0.1 then
+    if quasistatic then
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p));
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
       0 = T[i] - T[i + 1];
@@ -200,10 +201,10 @@ equation
   //outlet.h_out = if pin-pout >=0 then fluid[n+1].h else 0;
   //outlet.Xi = if pin-pout>=0 then fluid[n+1].Xi else zeros(nXi);
 
-  inlet.h_out = regStep(inlet.m_flow, -4.5e6, fluid[1].h, 1e-5);
-  inlet.Xi = regStep(inlet.m_flow, X_start[1:nXi], fluid[1].Xi, 1e-5);
-  outlet.h_out = regStep(-outlet.m_flow, fluid[n+1].h, -4.5e6, 1e-5);
-  outlet.Xi = regStep(-outlet.m_flow, fluid[n+1].Xi, X_start[1:nXi], 1e-5);
+  inlet.h_out = regStep(pin-pout, -4.5e6, fluid[1].h);
+  inlet.Xi = regStep(pin-pout, X_start[1:nXi], fluid[1].Xi);
+  outlet.h_out = regStep(pin-pout, fluid[n+1].h, -4.5e6);
+  outlet.Xi = regStep(pin-pout, fluid[n+1].Xi, X_start[1:nXi]);
 
   if pin-pout>=0 then
     fluid[1].h = inStream(inlet.h_out);

@@ -169,7 +169,7 @@ equation
 
 // Balances
   for i in 1:n loop
-    M[i] = Vi*regStep(inlet.m_flow, rho[i+1], rho[i]);
+    M[i] = Vi*regStep(pin-pout, rho[i+1], rho[i]);
     //Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
     //if quasistatic or abs(u[1])<0.1 then
     if quasistatic then
@@ -179,8 +179,10 @@ equation
     else
       m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
-      Vi*rho[i + 1]*der(fluid[i + 1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i + 1, :]);
-      //Vi*M[i]*der(fluid[i + 1].Xi) = regStep(inlet.m_flow, m_flow[i], m_flow[i+1])*(Xi[i, :] - Xi[i + 1, :]);
+      M[i]*der(fluid[i+1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i+1, :]);
+      //M[i]*der(fluid[i+1].Xi) =  m_flow[i]*Xi[i,:] - m_flow[i]*Xi[i+1,:];
+      //M[i]*der(fluid[i+1].Xi) = regStep(inlet.m_flow, m_flow[i], m_flow[i+1])*(Xi[i, :] - Xi[i + 1, :]);
+      //M[i]*der(fluid[i+1].Xi) + fluid[i+1].Xi*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
 
     // Momentum Balance

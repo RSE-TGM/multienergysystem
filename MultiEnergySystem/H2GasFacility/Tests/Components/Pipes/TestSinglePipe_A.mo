@@ -15,13 +15,22 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
 
   // Components
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(
-    redeclare model Medium = Medium, Di = Pipe.pipe1.Di, L = Pipe.pipe1.L,
-    Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start,
-    quasistaticEnergyBalance=true,
-    quasistaticComponentBalance=true,                                     rho_nom=Pipe.pipe1.rho_nom,
-    X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kc = 1,
-    m_flow_start = Pipe.pipe1.m_flow_start, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start,
-    momentum = momentum, kappa=kappa) annotation (
+    redeclare model Medium = Medium,
+    Di = Pipe.pipe1.Di,
+    L = Pipe.pipe1.L,
+    Tin_start = Pipe.pipe1.Tin_start,
+    Tout_start = Pipe.pipe1.Tout_start,
+    rho_nom = Pipe.pipe1.rho_nom,
+    X_start = X_start,
+    hin_start = Pipe.pipe1.hin_start,
+    k = Pipe.pipe1.k,
+    kc = 1,
+    m_flow_start = Pipe.pipe1.m_flow_start,
+    n = n,
+    pin_start = Pipe.pipe1.pin_start,
+    pout_start = Pipe.pipe1.pout_start,
+    momentum = momentum,
+    kappa=kappa) annotation (
     Placement(visible = true, transformation(origin={0,2.22045e-16},               extent = {{-22, -22}, {22, 22}}, rotation = 0)));
   H2GasFacility.Sources.SourcePressure sourceP(
     redeclare model Medium = Medium, T0=293.15, X0 = Xref, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (

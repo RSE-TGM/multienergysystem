@@ -2,7 +2,8 @@ within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
-    outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)),hin_start = fluid[1].h_id_start);
+    outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)),hin_start = fluid[1].h_id_start,
+    T_ext = system.T_amb);
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.sqrtReg;
@@ -21,41 +22,53 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   constant Types.Acceleration g_n = Modelica.Constants.g_n "Gravity";
   outer System system;
   // Main Parameters
-  parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate specific entropy";
-  parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure";
-  parameter Boolean quasiStatic = false;
-  parameter Boolean constantFrictionFactor = false;
-
-  parameter Integer n = 3 "Number of finite volumes in each pipe" annotation (
+  parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties" annotation (
+    Dialog(group = "Choices"));
+  parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate specific entropy" annotation (
+    Dialog(group = "Choices"));
+  parameter Boolean noInitialPressure = false "Used to remove initial equation for pressure, to be used in case of solver failure" annotation (
+    Dialog(group = "Choices"));
+  parameter Boolean quasiStatic = false "Used to remove energy and composition dynamic equations" annotation (
+    Dialog(group = "Choices"));
+  parameter Boolean constantFrictionFactor = false "Used to set a constant value for the friction factor" annotation (
+    Dialog(group = "Choices"));
+  parameter Boolean computeInertialTerm = false "Used to decide if the inertial term is considered in the momentum balance" annotation (
+    Dialog(group = "Choices"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state (hydraulic capacitance)" annotation (
+    Dialog(group = "Choices"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure "Momentum equation according to the operating pressure" annotation (
+    Dialog(group = "Choices"));
+  parameter Types.Pressure pin_nom = pin_start "Nominal pressure of the pipeline system" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
-    Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient" annotation (
-    Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Pressure pin_nom = 7500 "Nominal pressure of the pipeline system";
   parameter Types.Density rho_nom = 0.68 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation (
-    Dialog(group = "Heat Transfer Model"));
-  parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation (
-    Dialog(group = "Heat Transfer Model"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure "Momentum equation";
-  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Real k = 500 "Coefficient for the calculation of the pressure loss" annotation (
-    Dialog(tab = "Data", group = "Pipe"));
-  parameter Real k_linear(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the linear pressure loss across the pipe" annotation (
-    Dialog(tab = "Data", group = "Pipe"));
+  parameter Types.PerUnit ff_nom = 0.025 "Nominal friction factor" annotation (
+    Dialog(tab = "Data", group = "Fluid"));
   parameter Integer nX = fluid[1].nX "Number of components in the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Integer nXi = fluid[1].nXi "Number of independent components in the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.MassFraction X_start[nX] "Start value for the mass fraction" annotation (
-    Dialog(group = "Initialisation"));
+  parameter Integer n = 3 "Number of finite volumes in each pipe" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
+  parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Length kappa = 0.01e-3 "Roughness of the pipe" annotation (
     Dialog(tab = "Data", group = "Pipe"));
+  parameter Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
+  parameter Real k = 500 "Coefficient for the calculation of the pressure loss" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
+  parameter Real k_linear(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the linear pressure loss across the pipe" annotation (
+    Dialog(tab = "Data", group = "Pipe"));
+
+  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation (
+    Dialog(group = "Heat Transfer Model"));
+  parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation (
+    Dialog(group = "Heat Transfer Model"));
+  parameter Types.MassFraction X_start[nX] "Start value for the mass fraction" annotation (
+    Dialog(group = "Initialisation"));
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
+    Dialog(group = "Initialisation"));
 
   // Final parameters
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid";
@@ -98,7 +111,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // Complementary variables
   Types.Time taur "Residence time";
   Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start) "Reynolds";
-  Types.PerUnit ff[n + 1](each nominal = 0.01, each min = 0, each start = 0.01) "Friction factor";
+  Types.PerUnit ff[n + 1](each nominal = ff_nom, each min = 0, each start = ff_nom) "Friction factor";
   Real kf(unit = "1/m4");
 
   // Fluids
@@ -123,8 +136,8 @@ equation
     rho[i] = fluid[i].rho "Density at each volume boundary";
     q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
     m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
-    Re[i] = homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)) "Reynold's number";
-    if constantFrictionFactor then
+    Re[i] = min(homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)), 4000) "Reynold's number";
+    if not constantFrictionFactor then
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
     else
       ff[i]=0.02;
@@ -133,6 +146,7 @@ equation
 // Relationships for state variables
   Ttilde = T[2:n + 1];
   Xitilde = Xi[2:n + 1, :];
+  ptilde = if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream then p[2:n+1] else p[1:n];
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -146,14 +160,13 @@ equation
   inlet.p = p[1];
   outlet.p = p[n+1];
   inlet.m_flow = m_flow[1];
-  outlet.m_flow = -m_flow[n + 1];
+  outlet.m_flow = -m_flow[n+1];
 
 // Balances
   for i in 1:n loop
     M[i] = Vi*rho[i+1];
-    //if quasistatic or abs(u[1])<0.1 then
     if quasiStatic then
-      m_flow[i] - m_flow[i + 1] = if abs(m_flow[i])>0 then -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p)) else 0;
+      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p));
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
       0 = T[i] - T[i + 1];
     else
@@ -161,20 +174,15 @@ equation
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
       M[i]*der(fluid[i+1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i+1, :]);
     end if;
-
     // Momentum Balance
-    if momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure then
-      p[i] - p[i + 1] = k*m_flow[i]*m_flow[i]*(L/n)/((rho[1])*Di^5);
-      ptilde[i] = p[i+1];
-    elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure then
-      p[i] - p[i+1] = if abs(m_flow[i]) > 0 then ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]) else 0;
-      ptilde[i] = p[i+1];
-      //p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
-    elseif momentum == DistrictHeatingNetwork.Choices.Pipe.Momentum.HighPressure then
-      p[i] - ptilde[i] = k_linear/2*m_flow[i]/n;
-      ptilde[i] - p[i+1] = k_linear/2*m_flow[i+1]/n;
+    if not computeInertialTerm then
+    //-L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
+      p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i]);
+    else
+      -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
     end if;
   end for;
+
 
   if not allowFlowReversal then
     inlet.h_out = fluid[1].h;
@@ -197,28 +205,12 @@ equation
     end if;
   end if;
 
-
-
-  //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
-  //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
   //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) elseif m_flow[1] >= 0 then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
   //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) elseif m_flow[1]>= 0 then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
   //fluid[n+1].h = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.h_out) elseif m_flow[n+1]< 0 then actualStream(outlet.h_out) else inStream(outlet.h_out)), actualStream(outlet.h_out));
   //fluid[n+1].Xi = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.Xi) elseif m_flow[n+1]< 0 then actualStream(outlet.Xi) else inStream(outlet.Xi)), actualStream(outlet.Xi));
 
-  //pin - ptilde = k/2*inlet.m_flow;
-  //ptilde - pout = -k/2*outlet.m_flow;
-
-  //pin*pin = pout*pout + (8*L*L*ff[n+1]*T_start[n+1]*(fluid[n+1].R/fluid[1].MM_mix)*m_flow[n + 1]*m_flow[n + 1]/(Modelica.Constants.pi^2*Di^5))/1e6 ;
-  //pin*pin = pout*pout + (8*L*L*ff[n+1]*(pout/rho[n+1])*m_flow[n + 1]*m_flow[n + 1]/(Modelica.Constants.pi^2*Di^5))/1e6 ;
-
-  //pin*pin = homotopy(pout*pout + (8*L*L*ff[n+1]*(pin/rho[1])*m_flow[n + 1]*m_flow[n + 1]/(Modelica.Constants.pi^2*Di^5))/1e6,pout_start*pout_start + (8*L*L*ff[n+1]*(pin/rho_nom)*m_flow_start*m_flow_start/(Modelica.Constants.pi^2*Di^5))/1e6 ) ;
-  //ptilde = pout;
-
-
-//pin - pout = homotopy(kf * inlet.m_flow^2/ rho_nom, dp_nom * inlet.m_flow/m_flow_start);
   kf = cf*omega*L/(2*A^3);
-
 
 // Complementary variables
   Mt = sum(M);

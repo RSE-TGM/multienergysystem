@@ -146,7 +146,6 @@ equation
 // Relationships for state variables
   Ttilde = T[2:n + 1];
   Xitilde = Xi[2:n + 1, :];
-  ptilde = if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream then p[2:n+1] else p[1:n];
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -181,6 +180,7 @@ equation
     else
       -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
     end if;
+    ptilde[i] = if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream then p[i+1] else p[i];
   end for;
 
 

@@ -1,7 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Media;
-
 model ModelicaVSPartialSubstance
-  extends Modelica.Icons.Example;
   extends Modelica.Icons.Example;
   replaceable package MediumIdeal = DistrictHeatingNetwork.Media.StandardWater "Modelica Water";
   replaceable model MediumReal = DistrictHeatingNetwork.Media.WaterLiquid "Simplified Water model";
@@ -44,6 +42,6 @@ equation
   u_re = realGas.u;
   dh_re = realGas1.h - realGas2.h;
   u_bias = realGas.u - idealGas.u;
-  annotation(
+  annotation (
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
 end ModelicaVSPartialSubstance;

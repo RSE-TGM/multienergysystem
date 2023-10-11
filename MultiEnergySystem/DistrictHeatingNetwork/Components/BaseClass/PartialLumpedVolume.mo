@@ -11,13 +11,13 @@ partial model PartialLumpedVolume
     annotation(choicesAllMatching = true);
 
   // Parameters
-  parameter Boolean allowFlowReversal = true 
+  parameter Boolean allowFlowReversal = true
     "= false prohibits flow reversal, simplify the equations" annotation (
     Dialog(tab = "Data", group = "Operating conditions"));
-  parameter SI.Length h 
+  parameter SI.Length h
     "High of the lumped water tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
-  parameter SI.Length D 
+  parameter SI.Length D
     "Diameter of the lumped water tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
   parameter SI.Temperature T_start = 298.15 "Starting temperature" annotation (
@@ -39,12 +39,12 @@ partial model PartialLumpedVolume
 
   // Fluids
   Medium.ThermodynamicState fluid[n]
-    "Number of volumes in the vertical lumped volume";  
+    "Number of volumes in the vertical lumped volume";
 
   // Variables
-  SI.MassFlowRate m_flow_in 
+  SI.MassFlowRate m_flow_in
     "Mass flow rate across the volume";
-  SI.Temperature Ttilde(start = T_start) 
+  SI.Temperature Ttilde(start = T_start)
     "Temperatue of the water inside the volume";
   SI.Temperature Tin
    "Temperatue of the water entering/leaving the volume";
@@ -56,9 +56,9 @@ partial model PartialLumpedVolume
    "Pressure in the lower part of the tank";
   SI.Pressure pout
    "Pressure in the high part of the tank";
-  
+
   // Connectors
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
       visible=true,
@@ -71,12 +71,12 @@ partial model PartialLumpedVolume
         extent={{-20,-20},{20,20}},
         rotation=0)));
 equation
-  
+
   // Definition of some variables
-  m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";  
+  m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";
   pout = outlet.p;
   pin = inlet.p;
-  
+
   // Boundary Conditions
   inlet.h_out = inStream(inlet.h_out);
 

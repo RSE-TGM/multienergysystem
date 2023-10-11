@@ -38,7 +38,7 @@ equation
   if thermalInertia then
     for i in 1:N loop
       rho0 * V/N * cp * der(Ttilde[i]) = m_flow * cp * (T[i] - T[i + 1]) - Q_int[i] "Energy balance water volume";
-      L / N * rhomcm * Am * der(Twall[i]) = Q_int[i] + Q_ext[i] "Energy balance wall";
+      L / N * rhom * cm * Am * der(Twall[i]) = Q_int[i] + Q_ext[i] "Energy balance wall";
       // Heat conduction through the internal half-thickness water to wall
       Q_int[i] = U_wm * L / N * (Ttilde[i] - Twall[i]);
       // Heat conduction through the external half-thickness wall to ambient

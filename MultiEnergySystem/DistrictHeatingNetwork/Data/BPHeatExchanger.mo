@@ -40,6 +40,9 @@ record BPHeatExchanger
   Integer nPipes_cold "Number of parallel pipes in the cold side";
   Real k_hot(unit = "Pa/(kg/s)") = (pin_start_hot - pout_start_hot)/m_flow_start_hot "Pressure loss coefficient in the hot side";
   Real k_cold(unit = "Pa/(kg/s)") = (pin_start_cold - pout_start_cold)/m_flow_start_cold  "Pressure loss coefficient in the cold side";
+  SI.Power Qnom;
+  SI.Temperature LMTD = ((Tout_start_hot - Tin_start_cold)-(Tin_start_hot-Tout_start_cold))/log((Tout_start_hot - Tin_start_cold)/(Tin_start_hot-Tout_start_cold));
+  SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);
   SI.CoefficientOfHeatTransfer gamma_nom_hot = 2*Unom "Nominal heat transfer coefficient hot side";
   SI.CoefficientOfHeatTransfer gamma_nom_cold = gamma_nom_hot "Nominal heat transfer coefficient cold side";
   SI.SpecificHeatCapacity cpm_hot "Nominal specific heat capacity of the metal hot side";
@@ -49,9 +52,7 @@ record BPHeatExchanger
   SI.ThermalConductivity lambdam_hot "Nominal thermal conductivity of metal hot side";
   SI.ThermalConductivity lambdam_cold "Nominal thermal conductivity of metal cold side";
   Real Rfoul(unit = "m2.K/W") "Fouling resistance";
-  SI.Power Qnom;
-  SI.Temperature LMTD = ((Tout_start_hot - Tin_start_cold)-(Tin_start_hot-Tout_start_cold))/log((Tout_start_hot - Tin_start_cold)/(Tin_start_hot-Tout_start_cold));
-  SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);
+
                                                            annotation (
     Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">Record class including main variables to describe the different Brazed-Plate Heat Exchangers of the RSE heating network.</span></body></html>"));
 end BPHeatExchanger;

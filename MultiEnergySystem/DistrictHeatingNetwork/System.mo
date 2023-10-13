@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork;
 model System
   // Assumptions
-  parameter Boolean allowFlowReversal=true     "= false to restrict to design flow direction (flangeA -> flangeB)"     annotation (
+  parameter Boolean allowFlowReversal=true "= false to restrict to design flow direction (flangeA -> flangeB)" annotation (
       Evaluate=true,
       Dialog(group="Simulation options"));
 

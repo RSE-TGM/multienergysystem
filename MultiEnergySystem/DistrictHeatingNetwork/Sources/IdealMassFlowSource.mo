@@ -3,7 +3,8 @@ model IdealMassFlowSource "Generate a fixed mass flow rate at a temperature give
 
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
-  parameter Boolean allowFlowReversal = false "= false prohibits flow reversal, simplify the equations";
+  parameter Boolean allowFlowReversal = false "= if true, allow flow reversal" annotation(
+    Evaluate=true, Dialog(group = "Choices"));
   parameter Boolean use_in_m_flow = false "Use connector input for the nominal flow rate" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));

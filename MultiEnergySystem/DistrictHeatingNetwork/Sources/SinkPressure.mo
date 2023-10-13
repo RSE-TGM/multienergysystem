@@ -1,35 +1,49 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
-  replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater                          constrainedby
-    Modelica.Media.Interfaces.PartialMedium "Medium model"
-    annotation(choicesAllMatching = true);
-  type HydraulicResistance = Real (
-     final quantity="HydraulicResistance", final unit="Pa/(kg/s)");
-  parameter SI.Pressure p0=1.01325e5 "Nominal pressure";
-  parameter HydraulicResistance R=0 "Hydraulic resistance"
-    annotation (Evaluate=true);
-  parameter Boolean use_T = false "Use the temperature if true, otherwise use specific enthalpy";
-  parameter SI.Temperature T = 298.15 "Nominal temperature"
-    annotation(Dialog(enable = use_T and not use_in_T));
-  parameter Medium.SpecificEnthalpy h=1e5 "Nominal specific enthalpy"
-    annotation(Dialog(enable = not use_T and not use_in_h));
-//   parameter Boolean allowFlowReversal=system.allowFlowReversal
-//     "= true to allow flow reversal, false restricts to design direction"
-//     annotation(Evaluate=true);
-  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(Dialog(group="External inputs"), choices(checkBox=true));
-  parameter Boolean use_in_T = false
-    "Use connector input for the temperature"
-    annotation(Dialog(group="External inputs"), choices(checkBox=true));
-  parameter Boolean use_in_h = false
-    "Use connector input for the specific enthalpy" annotation(Dialog(group="External inputs"), choices(checkBox=true));
-  //outer ThermoPower.System system "System wide properties";
+  
+  // Water model
+  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+    choicesAllMatching = true);
+
+  // Definition of System
+  outer System system "System wide properties";
+
+  // Initial choices
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation(
+    Evaluate=true, Dialog(group = "Choices"));
+  parameter Boolean use_T = true "Use reference temperature if true, otherwise use specific enthalpy" annotation(
+    Dialog(group = "Choices"));
+  
+  // External input conditions
+  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(
+    Dialog(group="External inputs"), choices(checkBox=true));
+  parameter Boolean use_in_T = false "Use connector input for the temperature" annotation(
+    Dialog(group="External inputs"), choices(checkBox=true));
+  parameter Boolean use_in_h = false "Use connector input for the specific enthalpy" annotation(
+    Dialog(group="External inputs"), choices(checkBox=true));  
+  
+  // Nominal parameters
+  parameter Types.Pressure p0=1.01325e5 "Nominal pressure" annotation(
+    Dialog(group = "Fluid parameters"));
+  parameter Types.Temperature T0 = 298.15 "Nominal temperature" annotation(
+    Dialog(enable = use_T and not use_in_T, Dialog(group = "Fluid parameters")));
+  parameter Types.SpecificEnthalpy h0=1e5 "Nominal specific enthalpy" annotation(
+    Dialog(enable = not use_T and not use_in_h, Dialog(group = "Fluid parameters")));
+  parameter Types.HydraulicResistance R=0 "Hydraulic resistance" annotation (
+    Evaluate=true, Dialog(group = "Fluid parameters"));  
+
+  // Variables
+  Medium.ThermodynamicState fluid "Actual fluid, including its variables";
   Medium.AbsolutePressure p(start = p0) "Actual pressure";
-  Medium.ThermodynamicState fluid;
+  Medium.SpecificEnthalpy h "Actual specific enthalpy";
+  
+  // Outlet fluid connector
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
      Placement(transformation(extent={{-120,-20},{-80,20}}, rotation=0)));
-  Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 annotation (Placement(
+  
+  // Input connectors
+  Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation (Placement(
         transformation(
         origin={-40,92},
         extent={{-20,-20},{20,20}},
@@ -37,15 +51,14 @@ model SinkPressure "Pressure sink for water/steam flows"
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-40,84})));
-  Modelica.Blocks.Interfaces.RealInput in_T if use_in_T
-    "Externally supplied temperature" annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput in_T if use_in_T "Externally supplied temperature" annotation (Placement(transformation(
         origin={0,60},
         extent={{-20,-20},{20,20}},
         rotation=270), iconTransformation(
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={0,96})));
-  Modelica.Blocks.Interfaces.RealInput in_h if use_in_h annotation (Placement(
+  Modelica.Blocks.Interfaces.RealInput in_h if use_in_h "Externally supplied specific enthalpy" annotation (Placement(
         transformation(
         origin={40,90},
         extent={{-20,-20},{20,20}},
@@ -80,13 +93,14 @@ equation
   end if;
 
   if not use_in_T then
-    in_T_internal = T "Temperature set by parameter";
+    in_T_internal = T0 "Temperature set by parameter";
   end if;
   if not use_in_h then
-    in_h_internal = h "Enthalpy set by parameter";
+    in_h_internal = h0 "Enthalpy set by parameter";
   end if;
-
-  fluid = Medium.setState_pTX(p, T);
+  
+  h = inlet.h_out;
+  fluid = Medium.setState_phX(p, h);
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);

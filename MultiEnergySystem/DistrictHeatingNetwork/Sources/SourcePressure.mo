@@ -5,9 +5,6 @@ model SourcePressure "Pressure source for water/steam flows"
   // Water model
   replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
     choicesAllMatching = true);
-  
-  // Type HydraulicResistance
-  type HydraulicResistance = Real(final quantity="HydraulicResistance", final unit="Pa/(kg/s)");
 
   // Definition of System
   outer System system "System wide properties";
@@ -33,7 +30,7 @@ model SourcePressure "Pressure source for water/steam flows"
     Dialog(enable = use_T and not use_in_T, group="Fluid parameters"));
   parameter Medium.SpecificEnthalpy h0=1e5 "Nominal specific enthalpy" annotation(
     Dialog(enable = not use_T and not use_in_h, group="Fluid parameters"));
-  parameter HydraulicResistance R=0 "Hydraulic resistance" annotation(
+  parameter Types.HydraulicResistance R=0 "Hydraulic resistance" annotation(
     Dialog(group="Fluid parameters"));
 
   // Variables
@@ -101,7 +98,6 @@ equation
   
   h = outlet.h_out;
   fluid = Medium.setState_phX(p, h);
-  
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);

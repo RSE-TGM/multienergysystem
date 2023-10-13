@@ -1,8 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
-model VariableMassFlowPump
-  "Controllable mass flow pump, flow from inlet to outlet"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Sources.BaseClass.PartialIdealPump;
+model VariableMassFlowPump "Controllable mass flow pump, flow from inlet to outlet"
+  extends DistrictHeatingNetwork.Sources.BaseClass.PartialIdealPump;
   Modelica.Blocks.Interfaces.RealInput m_flow annotation (Placement(
       visible=true,
       transformation(
@@ -13,6 +11,7 @@ model VariableMassFlowPump
         origin={-78,60},
         extent={{-20,-20},{20,20}},
         rotation=-90)));
+
 equation
-  inlet.m_flow =m_flow;
+  inlet.m_flow = m_flow;
 end VariableMassFlowPump;

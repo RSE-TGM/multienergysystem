@@ -3,8 +3,9 @@ partial model PartialTwoPort "Partial component with two ports"
 
   parameter Boolean allowFlowReversal = true "= false prohibits flow reversal, simplify the equations";
 
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet
-    annotation (Placement(
+  // Fluid connectors
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation(
+    Placement(
       visible=true,
       transformation(
         origin={-100,0},
@@ -14,8 +15,8 @@ partial model PartialTwoPort "Partial component with two ports"
         origin={-100,0},
         extent={{-20,-20},{20,20}},
         rotation=0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet
-    annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation(
+    Placement(
       visible=true,
       transformation(
         origin={100,0},

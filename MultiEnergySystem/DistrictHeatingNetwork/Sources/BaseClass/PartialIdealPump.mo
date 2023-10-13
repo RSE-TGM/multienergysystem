@@ -5,7 +5,7 @@ partial model PartialIdealPump
 equation
   // Mass balance
   inlet.m_flow + outlet.m_flow = 0;
-  // Energy conservation
+  // Energy conservation considering flow reversal
   outlet.h_out = inStream(inlet.h_out);
   inlet.h_out = inStream(outlet.h_out);
 

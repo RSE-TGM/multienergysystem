@@ -3,8 +3,7 @@ model ElectricBoiler
   "Model of an electric boiler, controlled through a On Off controller "
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
 
- // Parameters
-
+// Parameters
   parameter Modelica.Units.SI.Temperature T_start = 338.16 "Tank water temperature";
   parameter Modelica.Units.SI.Temperature T_ext = 298.16 "Ambient temperature";
 
@@ -28,8 +27,8 @@ model ElectricBoiler
         origin={-12,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Storage.LumpedStorageConstantMass gasBoilerInnerVolume(D = D, T_ext = T_ext, T_start = T_start, dIns = dIns, h = h, lambdaIns = lambdaIns) annotation (
-    Placement(visible = true, transformation(origin={40,2},     extent={{10,-10},
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass gasBoilerInnerVolume(D = D, T_ext = T_ext, T_start = T_start, dIns = dIns, h = h, lambdaIns = lambdaIns) annotation (
+    Placement(visible = true, transformation(origin={40,10},     extent={{10,-10},
             {-10,10}},                                                                           rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput referenceT annotation (
     Placement(visible = true, transformation(origin = {-112, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-34, 100}, extent = {{-20, -20}, {20, 20}}, rotation = -90)));
@@ -41,14 +40,14 @@ equation
   connect(referenceT, onOffController.reference) annotation (
     Line(points = {{-112, 40}, {-78, 40}}, color = {0, 0, 127}));
 
-  connect(gasBoilerInnerVolume.outlet, outlet) annotation (Line(points={{40,12},
-          {40,24},{100,24},{100,0}},color={168,168,168}));
+  connect(gasBoilerInnerVolume.outlet, outlet) annotation (Line(points={{50,14},
+          {50,24},{100,24},{100,0}},color={168,168,168}));
   connect(powerTransfer.outlet, gasBoilerInnerVolume.inlet) annotation (Line(
-        points={{-2,0},{12,0},{12,-16},{40,-16},{40,-8}},  color={168,168,168}));
+        points={{-2,0},{12,0},{12,-10}, {58, -10}, {58, 6},{50,6}},  color={168,168,168}));
   connect(inlet, powerTransfer.inlet)
     annotation (Line(points={{-100,0},{-22,0}}, color={168,168,168}));
   connect(gasBoilerInnerVolume.temperatureMixVolume, onOffController.u)
-    annotation (Line(points={{31.7,8.1},{10,8.1},{10,16},{-86,16},{-86,28},{-78,
+    annotation (Line(points={{30, 16},{-86,16},{-86,28},{-78,
           28}}, color={0,0,127}));
 annotation (
     Diagram(coordinateSystem(extent = {{-120, 60}, {100, -20}})),

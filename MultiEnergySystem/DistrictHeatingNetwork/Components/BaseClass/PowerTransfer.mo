@@ -3,20 +3,21 @@ model PowerTransfer
   "Model a imposed power loss to the fluid, with no pressure loss"
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Types;
 
-  parameter Modelica.Units.SI.MassFlowRate b = 0.001 "Regularization mass flow rate, avoid null division. Try to keep it low in accordance to the expected mass flow.";
+  parameter Types.MassFlowRate b = 0.001 "Regularization mass flow rate, avoid null division. Try to keep it low in accordance to the expected mass flow.";
 
-  Modelica.Units.SI.Temperature Tin "Inlet temperature";
-  Modelica.Units.SI.Temperature Tout "Outlet temperature";
-  Modelica.Units.SI.SpecificEnthalpy hin "Inlet specific enthalpy";
-  Modelica.Units.SI.SpecificEnthalpy hout "Outlet specific enthalpy";
-  Modelica.Units.SI.Pressure pin "inlet pressure";
-  Modelica.Units.SI.Pressure pout "Outlet pressure";
-  Modelica.Units.SI.MassFlowRate m_flow "Mass Flow Rate across the component";
+  // Variables
+  Types.Temperature Tin "Inlet temperature";
+  Types.Temperature Tout "Outlet temperature";
+  Types.SpecificEnthalpy hin "Inlet specific enthalpy";
+  Types.SpecificEnthalpy hout "Outlet specific enthalpy";
+  Types.Pressure pin "inlet pressure";
+  Types.Pressure pout "Outlet pressure";
+  Types.MassFlowRate m_flow "Mass Flow Rate across the component";
 
-  Modelica.Blocks.Interfaces.RealInput Ptransfer
-    "if positive, power entering the component/fluid, if negative, power leaving the component/fluid."
-    annotation (Placement(
+  Modelica.Blocks.Interfaces.RealInput Ptransfer "if positive then power entering else power leaving the component/fluid." annotation (
+    Placement(
       visible=true,
       transformation(
         origin={-90,60},

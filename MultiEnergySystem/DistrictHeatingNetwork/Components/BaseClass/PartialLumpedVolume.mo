@@ -2,60 +2,48 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 partial model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
+  import MultiEnergySystem.DistrictHeatingNetwork.Types;
+  
+  // Definition of System
   outer System system "system object for global defaults";
 
   //Fluid model
-  replaceable package Medium =
-      MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater constrainedby
-    Modelica.Media.Interfaces.PartialMedium "Medium model"
-    annotation(choicesAllMatching = true);
+  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+    choicesAllMatching = true);
 
   // Parameters
-  parameter Boolean allowFlowReversal = true
-    "= false prohibits flow reversal, simplify the equations" annotation (
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal, simplify the equations" annotation (
     Dialog(tab = "Data", group = "Operating conditions"));
-  parameter SI.Length h
-    "High of the lumped water tank" annotation (
+  parameter Types.Length H "High of the lumped water tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
-  parameter SI.Length D
-    "Diameter of the lumped water tank" annotation (
+  parameter Types.Length D "Diameter of the lumped water tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
-  parameter SI.Temperature T_start = 298.15 "Starting temperature" annotation (
+  parameter Types.Temperature T_start = 298.15 "Starting temperature" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter SI.Temperature T_ext = system.T_amb
-    "Ambient temperature" annotation (
+  parameter Types.Temperature T_ext = system.T_amb "Ambient temperature" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter SI.Pressure pin_start = 5e5 "start pressure at lower part of the tank" annotation (
+  parameter Types.Pressure pin_start = 5e5 "start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
 
-  parameter Integer n = 1
-    "Number of volumes (min = 2)" annotation (
+  parameter Integer n = 1 "Number of volumes (min = 2)" annotation (
     Dialog(tab = "Data", group = "Fluid"));
 
-  final parameter SI.Volume V = Modelica.Constants.pi*h*(D/2)^2
-    "Volume of water inside the mixing volume";
-  final parameter SI.Mass M_id = V * rho0
-    "Mass of water inside the mixing volume";
+  // Final parameters
+  final parameter SI.Volume V = Modelica.Constants.pi*H*(D/2)^2 "Volume of water inside the mixing volume";
+  final parameter SI.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
 
   // Fluids
-  Medium.ThermodynamicState fluid[n]
-    "Number of volumes in the vertical lumped volume";
+  //Medium.ThermodynamicState fluid[n]
+  //  "Number of volumes in the vertical lumped volume";
 
   // Variables
-  SI.MassFlowRate m_flow_in
-    "Mass flow rate across the volume";
-  SI.Temperature Ttilde(start = T_start)
-    "Temperatue of the water inside the volume";
-  SI.Temperature Tin
-   "Temperatue of the water entering/leaving the volume";
-  SI.Temperature Tout
-   "Temperatue of the water entering/leaving the volume";
-  SI.HeatFlowRate Q_amb
-   "Heat losses to ambient";
-  SI.Pressure pin(start = pin_start)
-   "Pressure in the lower part of the tank";
-  SI.Pressure pout
-   "Pressure in the high part of the tank";
+  SI.MassFlowRate m_flow_in "Mass flow rate across the volume";
+  SI.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
+  SI.Temperature Tin "Temperatue of the water entering/leaving the volume";
+  SI.Temperature Tout "Temperatue of the water entering/leaving the volume";
+  SI.HeatFlowRate Q_amb "Heat losses to ambient";
+  SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
+  SI.Pressure pout "Pressure in the high part of the tank";
 
   // Connectors
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (

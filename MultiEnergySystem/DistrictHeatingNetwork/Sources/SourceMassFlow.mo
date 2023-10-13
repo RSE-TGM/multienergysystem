@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
-model SourceMassFlow
+model SourceMassFlow "Mass flow rate source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceW;
   
   // Water model
@@ -59,6 +59,7 @@ model SourceMassFlow
         origin={0,50},
         extent={{10,-10},{-10,10}},
         rotation=90)));
+
 protected
   Modelica.Blocks.Interfaces.RealInput in_m_flow_internal;
   Modelica.Blocks.Interfaces.RealInput in_T_internal;

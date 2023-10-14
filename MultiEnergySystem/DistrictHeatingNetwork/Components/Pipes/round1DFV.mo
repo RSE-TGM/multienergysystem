@@ -4,8 +4,7 @@ model round1DFV
   extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
-  replaceable package Medium =
-      DistrictHeatingNetwork.Media.StandardWater constrainedby
+  replaceable package Medium = Water constrainedby
     Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =

@@ -8,7 +8,7 @@ model Boiler
   parameter Real Pmax = 160e3 "Boiler maximum power output";
   parameter Real Pmin = 0 "Boiler minimum power output";
   // Structural
-  parameter Modelica.Units.SI.Length h = 0.8 "Boiler inner tank hight";
+  parameter Modelica.Units.SI.Length H = 0.8 "Boiler inner tank hight";
   parameter Modelica.Units.SI.Length D = 0.5 "Boiler inner tank diameter";
 
   parameter Modelica.Units.SI.Temperature T_start = 338.16 "Tank water temperature";
@@ -29,7 +29,7 @@ model Boiler
     T_ext=T_ext,
     T_start=T_start,
     dIns=dIns,
-    h=h,
+    H=h,
     lambdaIns=lambdaIns) annotation (Placement(visible=true, transformation(
         origin={40,-2},
         extent={{-10,-10},{10,10}},

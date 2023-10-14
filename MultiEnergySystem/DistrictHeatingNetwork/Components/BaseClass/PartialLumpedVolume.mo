@@ -12,7 +12,7 @@ partial model PartialLumpedVolume
     choicesAllMatching = true);
 
   // Parameters
-  parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal, simplify the equations" annotation (
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal" annotation (
     Dialog(tab = "Data", group = "Operating conditions"));
   parameter Types.Length H "High of the lumped water tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
@@ -29,8 +29,8 @@ partial model PartialLumpedVolume
     Dialog(tab = "Data", group = "Fluid"));
 
   // Final parameters
-  final parameter SI.Volume V = Modelica.Constants.pi*H*(D/2)^2 "Volume of water inside the mixing volume";
-  final parameter SI.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
+  final parameter Types.Volume V = Modelica.Constants.pi*H*(D/2)^2 "Volume of water inside the mixing volume";
+  final parameter Types.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
 
   // Fluids
   //Medium.ThermodynamicState fluid[n]

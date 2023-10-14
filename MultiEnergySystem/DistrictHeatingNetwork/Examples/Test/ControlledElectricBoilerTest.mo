@@ -6,7 +6,7 @@ model ControlledElectricBoilerTest
     Placement(visible = true, transformation(origin = {28, 8}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true) annotation(
     Placement(visible = true, transformation(origin = {-20, 18}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T = 60 + 273.15, p0 = 3.1e5, use_T = true, use_in_T = true) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = 60 + 273.15, p0 = 3.1e5, use_T = true, use_in_T = true) annotation(
     Placement(visible = true, transformation(origin = {-10, -4}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin(duration = 100, height = -12, offset = 65 + 273.15, startTime = 250) annotation(
     Placement(visible = true, transformation(origin = {-62, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

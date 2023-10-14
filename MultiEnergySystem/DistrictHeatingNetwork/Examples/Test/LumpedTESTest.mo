@@ -1,9 +1,9 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model LumpedTESTest
   extends Modelica.Icons.Example;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage tank(D = 1.7, T_start( displayUnit = "K")= 338.15, allowFlowReversal = false, h = 4, pin_start = 250000)  annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage tank(D = 1.7, T_start( displayUnit = "K")= 338.15, allowFlowReversal = false, H = 4, pin_start = 250000)  annotation (
     Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, -14}, {10, 14}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkP(T = 65 + 273.15, use_T = true, use_in_p0 = false)  annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkP(T0 = 65 + 273.15, use_T = true, use_in_p0 = false)  annotation (
     Placement(visible = true, transformation(origin = {-40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourceMassFlow sourceW(T0 = 338.15,m_flow0 = 5, p0( displayUnit = "Pa")= 1.1, use_in_m_flow = true)  annotation (
     Placement(visible = true, transformation(origin = {-60, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
@@ -11,11 +11,11 @@ model LumpedTESTest
     Placement(visible = true, transformation(origin = {-82, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner System system annotation (
     Placement(visible = true, transformation(origin = {88, 68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage tank2(D = 1.7, T_start(displayUnit = "K") = 338.15, allowFlowReversal = false, h = 4, pin_start = 99999.99999999999) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage tank2(D = 1.7, T_start(displayUnit = "K") = 338.15, allowFlowReversal = false, H = 4, pin_start = 99999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -14}, {10, 14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sink_mflow(T0 = 68 + 273.15, p0 = 99999.99999999999, pin_start = 99999.99999999999, m_flow0 = 0.5)  annotation (
     Placement(visible = true, transformation(origin = {20, 42}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T = 65 + 273.15, use_T = true)  annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = 65 + 273.15, use_T = true)  annotation (
     Placement(visible = true, transformation(origin = {20, -44}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
 equation
   connect(sinkP.inlet, tank.outlet) annotation (

@@ -21,7 +21,7 @@ model Configuration5 "Configuration based on file Configurazione 5.dwg"
     Placement(visible = true, transformation(origin = {-1, -63.3333}, extent = {{-14, -23.3333}, {14, 23.3333}}, rotation = -90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledHeatPumpNoDynamics HP601 annotation(
     Placement(visible = true, transformation(origin = {-1, 3}, extent = {{-25, -25}, {25, 25}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot(T = 17 + 273.15, use_T = true)  annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot(T0 = 17 + 273.15, use_T = true)  annotation(
     Placement(visible = true, transformation(origin = {120, -152}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.CombinedHeatPower CHP annotation(
     Placement(visible = true, transformation(origin = {-214, -66}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));

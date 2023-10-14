@@ -27,7 +27,7 @@ model ElectricBoiler
         origin={-12,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass gasBoilerInnerVolume(D = D, T_ext = T_ext, T_start = T_start, dIns = dIns, h = h, lambdaIns = lambdaIns) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass gasBoilerInnerVolume(D = D, T_ext = T_ext, T_start = T_start, dIns = dIns, H = h, lambdaIns = lambdaIns) annotation (
     Placement(visible = true, transformation(origin={40,10},     extent={{10,-10},
             {-10,10}},                                                                           rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput referenceT annotation (

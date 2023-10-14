@@ -8,7 +8,7 @@ model GasBoilerTestII
     Placement(visible = true, transformation(origin = {-20, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true)  annotation(
     Placement(visible = true, transformation(origin = {-48, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T = 60 + 273.15, p0 = 3.1e5, use_T = true, use_in_T = true)  annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = 60 + 273.15, p0 = 3.1e5, use_T = true, use_in_T = true)  annotation(
     Placement(visible = true, transformation(origin = {-48, -12}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp fuel_flow(duration = 20, height = 0.002370206*0.5, offset = 0.002370206, startTime = 10)  annotation(
     Placement(visible = true, transformation(origin = {-50, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

@@ -6,16 +6,18 @@ model PlugFlowCore
   import Modelica.Fluid.Utilities.regSquare;
 
   // Parameter declaration
-  parameter Modelica.Units.SI.PerUnit cf = 0.004 "Constant Fanning factor";
-  parameter Modelica.Units.SI.Velocity u_nom = 1 "Nominal fluid velocity";
-  parameter Modelica.Units.SI.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
+  parameter Types.PerUnit cf = 0.004 "Constant Fanning factor";
+  parameter Types.Velocity u_nom = 1 "Nominal fluid velocity";
+  parameter Types.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
 parameter Modelica.Units.SI.Temperature T_start = 25 + 273.15;
   // Final parameter computation
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho0 * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
-  final parameter Modelica.Units.SI.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";
-  Modelica.Units.SI.Length x "Spatial coordinate for spatialDistribution operator";
-  Modelica.Units.SI.Velocity v "Flow velocity of medium in pipe";
-  Modelica.Units.SI.VolumeFlowRate V_flow = inlet.m_flow / rho0 "Volume flow rate at inflowing port (positive when flow from port_a to port_b)";
+  final parameter Types.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";
+  
+  //Variables
+  Types.Length x "Spatial coordinate for spatialDistribution operator";
+  Types.Velocity v "Flow velocity of medium in pipe";
+  Types.VolumeFlowRate V_flow = inlet.m_flow / rho0 "Volume flow rate at inflowing port (positive when flow from port_a to port_b)";
 
 protected
     parameter Modelica.Units.SI.SpecificEnthalpy h_ini_in = cp * T_start "For initialization of spatialDistribution inlet";

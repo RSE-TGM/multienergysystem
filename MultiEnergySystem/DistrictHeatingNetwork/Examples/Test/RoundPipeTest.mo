@@ -23,12 +23,12 @@ model RoundPipeTest
   Sources.SourcePressure sourceP(
     p0=110000,
     use_T=true,
-    T=323.15)
+    T0=323.15)
     annotation (Placement(transformation(extent={{-80,70},{-60,90}})));
   Sources.SinkPressure sinkP(
     p0=101000,
     use_T=true,
-    T=303.15)
+    T0=303.15)
     annotation (Placement(transformation(extent={{58,70},{78,90}})));
   Components.Thermal.Wall.Wall_FixedT wall_FixedT(n=n, Twall=308.15)
     annotation (Placement(transformation(extent={{-10,114},{10,134}})));
@@ -56,9 +56,9 @@ model RoundPipeTest
   Components.Pipes.round1DFV hotside(
     L=0.7073,
     thermalInertia=false,
-    cpm=500,
+    cm=500,
     rhom(displayUnit="g/cm3") = 7990,
-    lambdaM=16.3,
+    lambdam=16.3,
     m_flow_start=0.6154,
     pin_start=110000,
     pout_start=101000,
@@ -94,12 +94,12 @@ model RoundPipeTest
   Sources.SourcePressure sourceHot(
     p0(displayUnit="kPa") = 110000,
     use_T=true,
-    T=353.15)
+    T0=353.15)
     annotation (Placement(transformation(extent={{-80,-42},{-60,-22}})));
   Sources.SinkPressure sinkHot(
     p0(displayUnit="kPa") = 1000*(110 - 2.5),
     use_T=true,
-    T=303.15) annotation (Placement(transformation(extent={{62,-42},{82,-22}})));
+    T0=303.15) annotation (Placement(transformation(extent={{62,-42},{82,-22}})));
   Components.Thermal.Wall.MetalWallFV metalWallFV(
     Nw=n,
     M=500,
@@ -115,12 +115,12 @@ model RoundPipeTest
   Sources.SinkPressure sinkCold(
     p0(displayUnit="kPa") = 1000*(110 - 19.3),
     use_T=true,
-    T=288.75)
+    T0=288.75)
     annotation (Placement(transformation(extent={{-60,10},{-80,30}})));
   Sources.SourcePressure sourceCold(
     p0(displayUnit="kPa") = 110000,
     use_T=true,
-    T=280.15) annotation (Placement(transformation(extent={{82,10},{62,30}})));
+    T0=280.15) annotation (Placement(transformation(extent={{82,10},{62,30}})));
 equation
   connect(wall_FixedT.MultiPort, rpipe1.wall)
     annotation (Line(points={{0,124},{0,105.1}},

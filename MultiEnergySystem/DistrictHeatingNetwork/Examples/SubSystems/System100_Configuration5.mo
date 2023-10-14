@@ -6,7 +6,7 @@ model System100_Configuration5
     Placement(visible = true, transformation(origin = {-25, -29}, extent = {{-19, -19}, {19, 19}}, rotation = -90)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourceMassFlow CH4(T0 = 60 + 273.15, m_flow0 = 0.002370206, p0(displayUnit = "Pa") = 2000, use_in_m_flow = true) annotation(
     Placement(visible = true, transformation(origin = {18, -28}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T = 61 + 273.15, p0 = Pump.P101.pin_start, use_T = true, use_in_T = false) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = 61 + 273.15, p0 = Pump.P101.pin_start, use_T = true, use_in_T = false) annotation(
     Placement(visible = true, transformation(origin = {-58, 4}, extent = {{-8, 8}, {8, -8}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.Pump P101(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom) annotation(
     Placement(visible = true, transformation(origin = {1, 5}, extent = {{-11, -11}, {11, 11}}, rotation = 0)));

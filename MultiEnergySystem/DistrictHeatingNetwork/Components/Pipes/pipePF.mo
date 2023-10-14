@@ -12,7 +12,7 @@ model pipePF
   // Parameter
   parameter SI.Length L "Length";
   parameter SI.Length D "Internal diameter";
-  parameter SI.Length h = 0 "Hight, positive if outlet is higher than inlet. = 0 ports at same hight";
+  parameter SI.Length H = 0 "Hight, positive if outlet is higher than inlet. = 0 ports at same hight";
   parameter SI.Length tIns = 0.15 "Insulation thickness";
   parameter SI.ThermalConductivity lambdaIns = 0.04 "Thermal conductivity of the insulant material";
   // Metal Parameter
@@ -39,7 +39,7 @@ model pipePF
     T_start=T_start,
     tIns=tIns,
     t=t,
-    h=h,
+    h=H,
     lambdaIns=lambdaIns,
     lambdam=lambdam,
     m_flow_nominal=m_flow_nominal,
@@ -58,7 +58,7 @@ model pipePF
     cf=cf,
     tIns=tIns,
     t=t,
-    h=h,
+    h=H,
     lambdaIns=lambdaIns,
     lambdam=lambdam,
     m_flow_small=m_flow_small,
@@ -76,7 +76,7 @@ model pipePF
     T_start=T_start,
     tIns=tIns,
     t=t,
-    h=h,
+    h=H,
     lambdaIns=lambdaIns,
     lambdam=lambdam,
     m_flow_nominal=m_flow_nominal,
@@ -98,7 +98,7 @@ model pipePF
         origin={-20,24},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  BaseClass.ThermalInertiaPlugFlow metalInertiaEquivalent(D = 2,T_ext = T_ext, T_start = T_start_m, h = h_equivalent)  annotation (
+  BaseClass.ThermalInertiaPlugFlow metalInertiaEquivalent(D = 2,T_ext = T_ext, T_start = T_start_m, H = h_equivalent)  annotation (
     Placement(visible = true, transformation(origin = {64, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(plugFlowCore.outlet, outletHeatLosses.inlet) annotation (

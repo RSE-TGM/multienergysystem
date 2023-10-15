@@ -1,7 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Media;
 model IdealCH4H2mixtureTest
+  extends Modelica.Icons.Example;
   replaceable package Medium =
-      DistrictHeatingNetwork.Media.IdealGases.MethaneOxygen                          "Ideal Gas mixture model";
+      DistrictHeatingNetwork.Media.IdealGases.MethaneOxygen "Ideal Gas mixture model";
   parameter SI.Temperature T_min = 800;
   parameter SI.Temperature T_max = 1500;
   parameter SI.Pressure p = 1e5;

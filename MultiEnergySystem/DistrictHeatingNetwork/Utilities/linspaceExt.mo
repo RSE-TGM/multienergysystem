@@ -3,7 +3,7 @@ function linspaceExt "Extended linspace function handling also the N=1 case"
   input Real x1;
   input Real x2;
   input Integer N;
-  output Real vec[N];
+  output Real vec[:];
 algorithm
   vec := if N == 1 then {x1}
          else linspace(x1, x2, N);

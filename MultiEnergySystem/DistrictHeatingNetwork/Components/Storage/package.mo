@@ -1,4 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components;
 package Storage
-  extends Modelica.Icons.VariantsPackage;
+  extends Modelica.Icons.Package;
 end Storage;

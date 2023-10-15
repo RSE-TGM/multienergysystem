@@ -1,4 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components;
 package Valves
-  extends Modelica.Icons.VariantsPackage;
+  extends Modelica.Icons.Package;
 end Valves;

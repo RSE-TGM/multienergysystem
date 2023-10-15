@@ -16,6 +16,8 @@ model System100_Configuration5
     Placement(visible = true, transformation(origin = {31, 11}, extent = {{-11, -11}, {11, 11}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp water_flow(duration = 0, height = -147.6e3/(20*4186)*0.21, offset = 147.6e3/(20*4186), startTime = 100) annotation(
     Placement(visible = true, transformation(origin = {58, 30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation(
+    Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(gasBoiler.inletfuel, CH4.outlet) annotation(
     Line(points = {{-9.8, -29}, {8.2, -29}}, color = {136, 136, 136}));

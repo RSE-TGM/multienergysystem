@@ -1,5 +1,5 @@
 within MultiEnergySystem;
-package DistrictHeatingNetwork "Components for District Heating Systems"
+package DistrictHeatingNetwork "Components for District Heating and Cooling Systems"
 import      Modelica.Units.SI;
 import BPHE = MultiEnergySystem.DistrictHeatingNetwork.Data.BPHEData;
 import Pump = MultiEnergySystem.DistrictHeatingNetwork.Data.PumpData;

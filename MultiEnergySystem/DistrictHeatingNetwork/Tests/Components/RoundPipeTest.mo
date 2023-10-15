@@ -23,12 +23,12 @@ model RoundPipeTest
   DistrictHeatingNetwork.Sources.SourcePressure sourceP(
     p0=110000,
     use_T=true,
-    T=323.15)
+    T0=323.15)
     annotation (Placement(transformation(extent={{-80,70},{-60,90}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkP(
     p0=101000,
     use_T=true,
-    T=303.15)
+    T0=303.15)
     annotation (Placement(transformation(extent={{58,70},{78,90}})));
   DistrictHeatingNetwork.Components.Thermal.Wall.Wall_FixedT wall_FixedT(n=n, Twall=308.15)
     annotation (Placement(transformation(extent={{-10,114},{10,134}})));
@@ -94,12 +94,12 @@ model RoundPipeTest
   DistrictHeatingNetwork.Sources.SourcePressure sourceHot(
     p0(displayUnit="kPa") = 110000,
     use_T=true,
-    T=353.15)
+    T0=353.15)
     annotation (Placement(transformation(extent={{-80,-42},{-60,-22}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkHot(
     p0(displayUnit="kPa") = 1000*(110 - 2.5),
     use_T=true,
-    T=303.15) annotation (Placement(transformation(extent={{62,-42},{82,-22}})));
+    T0=303.15) annotation (Placement(transformation(extent={{62,-42},{82,-22}})));
   DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV metalWallFV(
     Nw=n,
     M=500,
@@ -115,12 +115,12 @@ model RoundPipeTest
   DistrictHeatingNetwork.Sources.SinkPressure sinkCold(
     p0(displayUnit="kPa") = 1000*(110 - 19.3),
     use_T=true,
-    T=288.75)
+    T0=288.75)
     annotation (Placement(transformation(extent={{-60,10},{-80,30}})));
   DistrictHeatingNetwork.Sources.SourcePressure sourceCold(
     p0(displayUnit="kPa") = 110000,
     use_T=true,
-    T=280.15) annotation (Placement(transformation(extent={{82,10},{62,30}})));
+    T0=280.15) annotation (Placement(transformation(extent={{82,10},{62,30}})));
 equation
   connect(wall_FixedT.MultiPort, rpipe1.wall)
     annotation (Line(points={{0,124},{0,105.1}},

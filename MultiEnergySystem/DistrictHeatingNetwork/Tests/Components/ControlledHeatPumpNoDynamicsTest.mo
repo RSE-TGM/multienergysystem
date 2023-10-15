@@ -10,11 +10,11 @@ model ControlledHeatPumpNoDynamicsTest
     Placement(visible = true, transformation(origin = {-6, 6.43929e-15}, extent = {{-34, -34}, {34, 34}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkHot(T0 = 45 + 273.15, p0 = 99999.99999999999, pin_start = 99999.99999999999, m_flow0 = m_flow_hot)  annotation(
     Placement(visible = true, transformation(origin = {34, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot(T = Tin_hot, p0 = 1e5, use_T = true, use_in_T = true)  annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceHot(T0 = Tin_hot, p0 = 1e5, use_T = true, use_in_T = true)  annotation(
     Placement(visible = true, transformation(origin = {-50, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold(T0 = Tin_cold, m_flow0 = m_flow_cold, p0(displayUnit = "Pa") = 200000, use_in_T = true)  annotation(
     Placement(visible = true, transformation(origin = {30, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkCold(T = 9 + 273.15, p0 = 200000, use_T = true)  annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkCold(T0 = 9 + 273.15, p0 = 200000, use_T = true)  annotation(
     Placement(visible = true, transformation(origin = {-50, -60}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tincold(duration = 20, height = -7, offset = 14 + 273.15, startTime = 10)  annotation(
     Placement(visible = true, transformation(origin = {-10, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

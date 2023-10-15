@@ -29,7 +29,7 @@ model Boiler
     T_ext=T_ext,
     T_start=T_start,
     dIns=dIns,
-    H=h,
+    H=H,
     lambdaIns=lambdaIns) annotation (Placement(visible=true, transformation(
         origin={40,-2},
         extent={{-10,-10},{10,10}},

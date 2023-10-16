@@ -15,11 +15,13 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
 
   // Components
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(
+    allowFlowReversal=false,
     redeclare model Medium = Medium,
     Di = Pipe.pipe1.Di,
     L = Pipe.pipe1.L,
     Tin_start = Pipe.pipe1.Tin_start,
     Tout_start = Pipe.pipe1.Tout_start,
+    computeInertialTerm=true,
     rho_nom = Pipe.pipe1.rho_nom,
     X_start = X_start,
     hin_start = Pipe.pipe1.hin_start,
@@ -46,7 +48,7 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(
     duration=100,
-    height=-m_flow_start*2,                                                   offset = m_flow_start,
+    height=-m_flow_start*0.8,                                                 offset = m_flow_start,
     startTime=75)                                                                                                    annotation (
     Placement(visible = true, transformation(origin = {26, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height=0, offset = 15 + 273.15, startTime = 150) annotation (

@@ -7,7 +7,7 @@ partial model PumpBase "Base model to develop water pump models"
   Medium.ThermodynamicState fluidIn;
   Medium.ThermodynamicState fluidOut;
   //Constants
-  parameter Real a[2] = {115, 45000} "value of coefficients for Linear Power Characteristic of pump model";
+  parameter Real a[3] = {338.084416, 130887.059346, -8074937.668508} "value of coefficients for Linear Power Characteristic of pump model";
   parameter Real b[3] = {7.38557689, 617.03274734, -545218.57934041} "value of quadratic polynomial coefficients for head calculation";
   constant Modelica.Units.SI.Power W_eps = 1e-8 "Small coefficient to avoid numerical singularities";
   constant Modelica.Units.SI.AngularVelocity omega_eps = 1e-6 "Small coefficient to avoid numerical singularities";
@@ -41,6 +41,10 @@ partial model PumpBase "Base model to develop water pump models"
   parameter Modelica.Units.SI.Efficiency etamech = 0.98 "mechanical efficiency" annotation(
     Dialog(group = "Pump Characteristics"));
   parameter Modelica.Units.SI.Efficiency etaelec = 1 "electrical efficiency" annotation(
+    Dialog(group = "Pump Characteristics"));
+  parameter Modelica.Units.SI.Length headmax = 13.5 "maximum head" annotation(
+    Dialog(group = "Pump Characteristics"));
+  parameter Modelica.Units.SI.Length headmin = 2.5 "maximum head" annotation(
     Dialog(group = "Pump Characteristics"));
   final parameter Modelica.Units.SI.Efficiency etanom = 0.61524695 "Nominal efficiency" annotation(
     Dialog(group = "Characteristics"));
@@ -76,6 +80,7 @@ protected
 equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
+  assert(headmax > head or headmin < head, "Head is outside the operating range", AssertionLevel.error);
   connect(in_omega, in_omega_int);
   if not use_in_omega then
     in_omega_int = omeganom "Rotational speed provided by parameter";
@@ -95,8 +100,10 @@ equation
   Tout = Medium.temperature(fluidOut);
   dp = pout - pin;
   q = m_flow/rhoin;
-  W = (omega/omeganom)^3*Utilities.PowerCharacteristicLinear(a[2]*omeganom/omega, a[1], q) "Power Characteristic equation";
-  head = b[1]*(omega/omeganom)^2 + q*(b[2]*(omega/omeganom) + b[3]*q) "Head Characteristic equation";
+  //W = (omega/omeganom)^3*Utilities.PowerCharacteristicLinear(a[2]*omeganom/omega, a[1], q) "Power Characteristic equation";
+  W = (omega/omeganom)^3*(a[1] + q*(omeganom/omega)*(a[2] + a[3]*q*(omeganom/omega))) "Power Characteristic equation";
+  //head = omega/omeganom)^2*( + q*(b[2]*(omeganom/omega) + b[3]*q) "Head Characteristic equation";
+  head = (omega/omeganom)^2*(b[1]+ q*(omeganom/omega)*(b[2] + b[3]*q*(omeganom/omega))) "Head Characteristic equation";
   head = dp/(rhoin*g);
   W = dp*q/eta;
 //eta = 0.6;
@@ -111,5 +118,5 @@ equation
   inlet.h_out = inStream(outlet.h_out) "Dummy equation for flow reversal";
   annotation(
     Diagram(coordinateSystem(preserveAspectRatio = false)),
-    Icon(coordinateSystem(preserveAspectRatio = false)));
+    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
 end PumpBase;

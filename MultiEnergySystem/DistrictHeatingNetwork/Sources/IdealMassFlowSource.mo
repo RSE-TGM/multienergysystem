@@ -49,14 +49,12 @@ equation
   if use_in_T == false then
     in_T_internal = Tnom "Temperature set by parameter";
   end if;
+  
+  connect(in_m_flow, in_m_flow_internal);
+  connect(in_T, in_T_internal);
 
-    annotation (
-      Icon(graphics={                                                Text(origin={0,-100},  extent={{-100,20},
-              {100,-20}},                                                                                                    textString = "%name"),
-                     Rectangle(lineColor = {173, 173, 173}, lineThickness = 3, extent={{-100,58},
-              {100,-62}}),                                                                                                                                                       Polygon(lineColor={135,135,
-              135},                                                                                                                                                                                                   fillColor={0,0,255},
-            fillPattern=FillPattern.Solid,                                                                                                                                                                                                        points={{-20,-20},
-              {60,0},{-20,20},{18,0},{-20,-20}},
-          lineThickness=0.5)}));
+    annotation (Icon(graphics=
+                    {Text(origin={0,-100},  extent={{-100,20}, {100,-20}}, textString = "%name"),
+                     Rectangle(lineColor = {173, 173, 173}, lineThickness = 3, extent={{-100,58}, {100,-62}}),
+                     Polygon(lineColor={135,135,135}, fillColor={0,0,255}, fillPattern=FillPattern.Solid, points={{-20,-20}, {60,0},{-20,20},{18,0},{-20,-20}}, lineThickness=0.5)}));
 end IdealMassFlowSource;

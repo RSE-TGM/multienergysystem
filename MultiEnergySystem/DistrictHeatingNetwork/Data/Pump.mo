@@ -16,7 +16,7 @@ record Pump
   Modelica.Units.SI.AngularVelocity omeganom "Nominal angular velocity"; 
   Modelica.Units.SI.Efficiency etaelec "Electrical efficiency";
   Modelica.Units.SI.Efficiency etamech "Mechanical efficiency";
-  Real a[2] "Power Characteristic coefficients";
+  Real a[3] "Power Characteristic coefficients";
   Real b[3] "Head Characteristic coefficients";
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),

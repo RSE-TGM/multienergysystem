@@ -32,13 +32,10 @@ model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (P
   final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*1) "Consider a diameter of 2, compute hight";
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow outletHeatLosses(Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation(
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
-  //rhomcm=rhomcm)
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PlugFlowCore plugFlowCore(Di = D, L = L, T_ext = T_ext, T_start = T_start, cf = cf, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_small = m_flow_small, rhom = rhom, u_nom = u_nom) annotation(
     Placement(visible = true, transformation(origin = {-10, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  //rhomcm=rhomcm,
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow inletHeatLosses(Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation(
     Placement(visible = true, transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  //rhomcm=rhomcm
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor massFlowSensor annotation(
     Placement(visible = true, transformation(origin = {-38, 4}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.TimeDelayPlugFlow timeDelayPlugFlow(D = D, L = L, m_flow_nominal = m_flow_nominal, m_flow_start = m_flow_start) annotation(

@@ -6,26 +6,34 @@ model WaterTest "Definition of two water states using temperature and density as
   //Declaration of water fluids
   Medium.ThermodynamicState fluidIn, fluidOut;
 
+  //Constants
+  constant Real T0(unit = "s") = 1 "Reference value for units";
+  
   //Parameters
-  parameter Modelica.Units.SI.Temperature Tin = 28 + 273.15;
-  parameter Modelica.Units.SI.Temperature Tout = 24.9 + 273.15;
-  parameter Modelica.Units.SI.Density rhoin = 995.03;
-  parameter Modelica.Units.SI.Density rhoout = 996.01;
+  parameter Modelica.Units.SI.Temperature Tin = 80 + 273.15;
+  parameter Modelica.Units.SI.Temperature Tout = 15 + 273.15;
+  parameter Types.Density rhoin = 991.77;
+  //parameter Modelica.Units.SI.Density rhoout = 996.01;
+  parameter Types.Pressure p_min = 1e5;
+  parameter Types.Pressure p_max = 5e5;
   
   //Variables
-  Modelica.Units.SI.Pressure pin, pout, dp;
+  Types.Pressure p;
   Modelica.Units.SI.SpecificHeatCapacity cpin, cpout;
+  Types.Density rhoout;
 equation
+  p = p_min + (p_max - p_min)*time/T0;
   //Definition of fluids
-  fluidIn = Medium.setState_dTX(rhoin, Tin);
-  fluidOut = Medium.setState_dTX(rhoout, Tout);
+  fluidIn = Medium.setState_pTX(p, Tin);
+  //fluidOut = Medium.setState_dTX(rhoout, Tout);
+  fluidOut = Medium.setState_pTX(p, Tout);
   
   //Definition of thermodynamic variables
   cpin = Medium.specificHeatCapacityCp(fluidIn);
   cpout = Medium.specificHeatCapacityCp(fluidOut);
-  pin = fluidIn.p;
-  pout = fluidOut.p;
-  dp = pin - pout;
+  //pin = fluidIn.p;
+  rhoout = fluidOut.d;
+  //dp = pin - pout;
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));

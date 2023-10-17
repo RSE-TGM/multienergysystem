@@ -75,6 +75,7 @@ package PumpData
     qnom = 32.34652403/3600,
     rhonom = 999.147,
     omeganom = 2*3.14159*2900/60,
+    headnom = 27.5,
     Wnom = 3.51e3,
     etanom = 0.69,
     etaelec = 1,

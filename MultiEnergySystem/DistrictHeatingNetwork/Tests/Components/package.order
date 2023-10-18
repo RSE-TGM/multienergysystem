@@ -7,3 +7,4 @@ GasBoilerTest
 ElectricBoilerTest
 ControlledElectricBoilerTest
 ControlledHeatPumpNoDynamicsTest
+BaseClass

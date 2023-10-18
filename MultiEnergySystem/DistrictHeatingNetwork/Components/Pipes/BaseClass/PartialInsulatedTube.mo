@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 partial model PartialInsulatedTube
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort;
+  extends DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort;
+  extends DistrictHeatingNetwork.Icons.Water.Pipe;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   parameter Types.Length L "Length of the tube" annotation (
@@ -17,7 +17,7 @@ partial model PartialInsulatedTube
   parameter Types.ThermalConductivity lambdaIns = 0.04 "Thermal conductivity of the insulant material" annotation (
     Dialog(tab = "Data", group = "Insulation"));
 
-// Metal Parameter
+  //Metal Parameter
   parameter Boolean thermalInertia = true "if true then account for metal thermal inertia" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
   parameter Types.SpecificHeatCapacity cm = 445 "Metal wall specific heat capacity" annotation (
@@ -45,5 +45,5 @@ equation
 
 
   annotation (
-    Icon(graphics={Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}})}));
+    Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
 end PartialInsulatedTube;

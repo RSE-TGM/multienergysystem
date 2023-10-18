@@ -2,6 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 
 model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (PF) representation inspired by building plug flow model/ Trnsys 31-Type model."
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  extends DistrictHeatingNetwork.Icons.Water.Pipe;
   import Modelica.Units.SI;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   // Flow initial parameters
@@ -63,5 +64,5 @@ equation
     Line(points = {{-4, 30}, {32, 30}, {32, 6}}, color = {0, 0, 127}));
   annotation(
     Diagram(coordinateSystem(extent = {{-120, 40}, {100, -20}})),
-    Icon(graphics = {Rectangle(lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 44}, {100, -44}})}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+    Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
 end pipePF;

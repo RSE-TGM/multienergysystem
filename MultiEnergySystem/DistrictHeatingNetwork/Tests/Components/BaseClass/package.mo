@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
 
-package Pumps
-  extends Modelica.Icons.ExamplesPackage;
-end Pumps;
+package BaseClass
+  extends Modelica.Icons.Package;
+end BaseClass;

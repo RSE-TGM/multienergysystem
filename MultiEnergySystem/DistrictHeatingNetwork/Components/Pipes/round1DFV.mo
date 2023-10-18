@@ -1,5 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
-model round1DFV
+
+model Round1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
@@ -182,5 +183,5 @@ initial equation
   else
 //No initial equations
   end if;
-  annotation ();
-end round1DFV;
+
+end Round1DFV;

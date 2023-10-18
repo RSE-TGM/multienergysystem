@@ -9,7 +9,7 @@ model PlugFlowCore
   parameter Types.PerUnit cf = 0.004 "Constant Fanning factor";
   parameter Types.Velocity u_nom = 1 "Nominal fluid velocity";
   parameter Types.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
-  parameter Types.Temperature T_start = 25 + 273.15;
+  parameter Types.Temperature T_start = 25 + 273.15 "Start value to be used for specific enthalpy initialization";
   // Final parameter computation
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho0 * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
   final parameter Types.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";

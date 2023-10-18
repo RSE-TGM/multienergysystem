@@ -100,7 +100,7 @@ equation
   end if;
   
   h = inlet.h_out;
-  fluid = Medium.setState_phX(p, h);
+  fluid = Medium.setState_pTX(p, T0);
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);

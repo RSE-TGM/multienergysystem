@@ -12,6 +12,6 @@ partial model PartialRoundTube
   final parameter Real cvolm(unit = "J/(m3.K)") = cm * rhom "Wall volumetric heat capacity [J/m^3.K]; steel = 3.12e6";
   final parameter Types.HeatCapacity Cm = L * Am * cvolm "Total heat capacity of the metal";
   final parameter Types.ThermalConductance U_wm = lambdam * 2 * Modelica.Constants.pi/ log((Di + 2*t) / Di) "Thermal conductance water-metal per unit meter";
-  final parameter Types.ThermalConductance U_me = lambdaIns * 2 * Modelica.Constants.pi/ log((Di / 2 + t + tIns) / (Di/2) + t) "Thermal conductance metal-ambient per unit meter";
+  final parameter Types.ThermalConductance U_me = lambdaIns * 2 * Modelica.Constants.pi/ log(((Di / 2) + t + tIns) / ((Di/2) + t)) "Thermal conductance metal-ambient per unit meter";
 
 end PartialRoundTube;

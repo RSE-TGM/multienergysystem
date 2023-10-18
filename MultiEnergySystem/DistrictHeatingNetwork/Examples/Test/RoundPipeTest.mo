@@ -5,7 +5,7 @@ model RoundPipeTest
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_hot = 6000;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_cold = 2400;
 
-  Components.Pipes.round1DFV rpipe1(
+  Components.Pipes.Round1DFV rpipe1(
     L=2,
     thermalInertia=false,
     rhom(displayUnit="kg/m3"),
@@ -32,7 +32,7 @@ model RoundPipeTest
     annotation (Placement(transformation(extent={{58,70},{78,90}})));
   Components.Thermal.Wall.Wall_FixedT wall_FixedT(n=n, Twall=308.15)
     annotation (Placement(transformation(extent={{-10,114},{10,134}})));
-  Components.Pipes.round1DFV rpipe2(
+  Components.Pipes.Round1DFV rpipe2(
     L=2,
     thermalInertia=false,
     rhom(displayUnit="kg/m3"),
@@ -50,10 +50,10 @@ model RoundPipeTest
   Components.Thermal.Wall.Wall_inputQ wall_inputQ(n=n, Twall=308.15)
     annotation (Placement(transformation(extent={{-10,44},{10,64}})));
   Modelica.Blocks.Sources.RealExpression Q(y=50000)
-    annotation (Placement(transformation(extent={{-32,58},{-12,78}})));
+    annotation (Placement(visible = true, transformation(origin = {2, 0}, extent = {{-32, 58}, {-12, 78}}, rotation = 0)));
   inner System system
     annotation (Placement(transformation(extent={{80,120},{100,140}})));
-  Components.Pipes.round1DFV hotside(
+  Components.Pipes.Round1DFV hotside(
     L=0.7073,
     thermalInertia=false,
     cm=500,
@@ -73,7 +73,7 @@ model RoundPipeTest
     Stot=0.5,
     gamma_nom=gamma_nom_hot)
     annotation (Placement(transformation(extent={{-10,-42},{10,-22}})));
-  Components.Pipes.round1DFV coldside(
+  Components.Pipes.Round1DFV coldside(
     L=0.96275,
     thermalInertia=false,
     rhom(displayUnit="kg/m3"),
@@ -133,7 +133,7 @@ equation
                          color={168,168,168}));
   connect(wall_inputQ.MultiPort, rpipe2.wall)
     annotation (Line(points={{0,54},{0,45.1}},color={255,238,44}));
-  connect(Q.y, wall_inputQ.S) annotation (Line(points={{-11,68},{0,68},{0,58}},
+  connect(Q.y, wall_inputQ.S) annotation (Line(points={{-9,68},{2,68}, {2, 58},{0,58}},
                           color={0,0,127}));
   connect(sourceP.outlet, rpipe2.inlet)
     annotation (Line(points={{-60,80},{-40,80},{-40,40},{-10,40}},

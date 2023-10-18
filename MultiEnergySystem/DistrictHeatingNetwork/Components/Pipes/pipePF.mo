@@ -41,7 +41,7 @@ model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (P
     Placement(visible = true, transformation(origin = {-38, 4}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.TimeDelayPlugFlow timeDelayPlugFlow(D = D, L = L, m_flow_nominal = m_flow_nominal, m_flow_start = m_flow_start) annotation(
     Placement(visible = true, transformation(origin = {-14, 26}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.ThermalInertiaPlugFlow metalInertiaEquivalent(D = 2, T_ext = T_ext, T_start = T_start_m, H = h_equivalent) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass metalInertiaEquivalent(D = 2, T_ext = T_ext, T_start = T_start_m, H = h_equivalent) annotation(
     Placement(visible = true, transformation(origin = {68, -10}, extent = {{-8, -8}, {8, 8}}, rotation = -90)));
 equation
   connect(plugFlowCore.outlet, outletHeatLosses.inlet) annotation(

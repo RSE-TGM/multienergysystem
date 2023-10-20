@@ -127,7 +127,7 @@ equation
 
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
   M = Vi*rhotilde;
-  Ttilde = regStep(dp, T[2:n+1], T[1:n], T_start*1e-5);
+  Ttilde = regStep(dp, T[2:n+1], T[1:n], Tin_start*1e-5);
  // ptilde = regStep(inlet.m_flow, pout, pin);
   ptilde = pout;
     
@@ -171,7 +171,7 @@ equation
   
   //fluid[1].h = inStream(inlet.h_out);
   
-  if inlet.m_flow > 0 then
+  if noEvent(dp > 0) then
     T[1] = fluid_temp.T;
   else
     T[end] = fluid_temp.T;
@@ -181,7 +181,7 @@ equation
   //fluid_temp = Medium.setState_phX(ptilde, noEvent(if inlet.m_flow>0 then inStream(inlet.h_out) else inStream(outlet.h_out)));
   //fluid_temp = Medium.setState_phX(ptilde, regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5));
   fluid_temp.p = ptilde;
-  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out)), hin_start);
+  fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5), hin_start);
 
 // Boundary conditions
   inlet.m_flow = m_flow[1];
@@ -197,7 +197,7 @@ initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Ttilde) = zeros(n);
     if not noInitialPressure then
-      der(ptilde) = 0;
+      //der(ptilde) = 0;
     else
 //No initial pressure
     end if;

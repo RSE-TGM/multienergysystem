@@ -4,21 +4,25 @@ model Round1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
+  import Modelica.Fluid.Utilities.regStep;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
-  replaceable package Medium = Water constrainedby
-    Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
-     choicesAllMatching = true);
+//  replaceable package Medium = Water constrainedby
+//    Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
+//     choicesAllMatching = true);
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
 
+  constant Types.Acceleration g = Modelica.Constants.g_n;
+  parameter Boolean computePressureDifference = true;
 // Flow parameter
   parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure";
   parameter Boolean computeLinearPressureDrop = true "If true, then the pressure drop is linear, else the pressure drop is non-linear computed as a function of cp and u";
-  parameter Integer n = 2 "Number of finite volumes in each pipe" annotation (
+  parameter Integer n = 3 "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
     Dialog(tab = "Data", group = "Pipe"));
@@ -53,9 +57,10 @@ model Round1DFV
   outer System system "system object for global defaults";
 
   // Variables
-  Types.MassFlowRate m_flow[n + 1] "Mass flow rate in each volume across the pipe";
-  Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
-  Types.Velocity u[n + 1](each start = u_nom) "Velocity in each volume across the pipe";
+  Types.MassFlowRate m_flow[n + 1](each start = m_flow_start) "Mass flow rate in each section across the pipe";
+  Types.VolumeFlowRate q[n + 1] "Volumetric flowrate in each section across the pipe";
+  Real q_m3h[n + 1](each unit = "m3/h") "Volumetric flowrate in each section in m3/h";
+  Types.Velocity u[n + 1](each start = u_nom, each nominal = u_nom*5) "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "State variable temperatures";
   Types.Temperature Twall[n] "Pipe wall temperature";
   Types.Power Qtot "Total heat";
@@ -68,14 +73,18 @@ model Round1DFV
   Types.Mass Mtot "Total Mass in the pipe";
   Types.SpecificHeatCapacity cp[n+1] "Specific heat capacity at each fluid";
   Types.Density rho[n+1] "Density at each fluid";
-  Types.SpecificEnthalpy htilde[n];
+  //Types.SpecificEnthalpy htilde[n];
+  Types.Density rhotilde[n];
 
   //   Types.Power Q_int[n]
   //     "Heat dissipation out of each volume into the wall";
   //   Types.Power Q_ext[n]
   //     "Heat dissipation out of each wall cell to the ambient";
 
-  Medium.ThermodynamicState fluid[n + 1];
+  //Medium.ThermodynamicState fluid[n + 1];
+  //Medium.ThermodynamicState fluid_temp;
+  Medium fluid[n+1](T_start = T_start, p_start = linspace(pin_start, pout_start, n + 1));
+  Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
 
   HeatTransferModel heatTransfer(
     gamma_nom = gamma_nom,
@@ -88,9 +97,12 @@ model Round1DFV
     Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
     m_flow = m_flow[2:end],
     p = pout,
-    cp = Medium.specificHeatCapacityCp(fluid[2:end]),
-    mu = Medium.dynamicViscosity(fluid[2:end]),
-    k = Medium.thermalConductivity(fluid[2:end]),
+    //cp = Medium.specificHeatCapacityCp(fluid[2:end]),
+    cp = fluid[2:end].cp,
+    //mu = Medium.dynamicViscosity(fluid[2:end]),
+    mu = fluid[2:end].mu,
+    //k = Medium.thermalConductivity(fluid[2:end]),
+    k = fluid[2:end].kappa,
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
@@ -106,59 +118,84 @@ equation
   //assert(pout < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
 
 
-// Equations to set the fluid properties
-  for i in 1:n + 1 loop
-    fluid[i] = Medium.setState_pTX(ptilde, T[i]);
-    rho[i] = Medium.density(fluid[i]);
-    cp[i] = Medium.specificHeatCapacityCp(fluid[i]);
-    m_flow[i] = A * u[i]* rho[i];
-    q[i] = m_flow[i]/rho[i];
-
-  end for;
-
-  fluid[1].h = inStream(inlet.h_out);
-
-// Relationships for state variables
-  Ttilde = T[2:n + 1];
-  htilde = Medium.specificEnthalpy(fluid[2:n + 1]);
-
-//   pin - pout = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
-//   ptilde = pout;
-    //inlet.p - outlet.p = rho * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
+// Mass & Energy Balance
   for i in 1:n loop
-     M[i] = Vi * fluid[i + 1].d;
-//w[i] - w[i + 1] = -Vi * fluid[i + 1].rho ^ 2 * (fluid[i + 1].dv_dT * der(fluid[i + 1].T) + fluid[i + 1].dv_dp * der(fluid[i + 1].p) + fluid[i + 1].dv_dX * der(fluid[i + 1].X)) "Total Mass Balance";
-
-     //m_flow[i] - m_flow[i + 1] = 0 "Mass balance";
-     m_flow[i] - m_flow[i + 1] = V*(Medium.density_derp_h(fluid[i + 1])*der(htilde[i]) + Medium.density_derh_p(fluid[i+1])*der(ptilde));
-     rho[i] * Vi * cp[i] * der(Ttilde[i]) = cp[i] * m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
+    //der(M[i]) = m_flow[i] - m_flow[i+1];
+    m_flow[i]- m_flow[i+1] = Vi*fluid[i+1].drho_dT*der(Ttilde[i]);
+    //M[i] = Vi*rhotilde[i];
+    //rhotilde[i] = if inlet.m_flow > 0 then rho[i+1] else rho[i];
+    rhotilde[i]*Vi*cp[i]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
+    
+    
+    //Ttilde[i] = if inlet.m_flow > 0 then T[i+1] else T[i];
   end for;
+  
+  //rhotilde = rho[2:n+1];
+  M = Vi*rhotilde;
+  rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n]);
+  //Ttilde = T[2:n+1];
+  //Ttilde = noEvent(if inlet.m_flow>0 then T[2:n+1] else T[1:n]);
+  Ttilde = regStep(dp, T[2:n+1], T[1:n]);
+  //Ttilde = if inlet.m_flow > 0 then T[2:n+1] else T[1:n];
+    
+// Momentum Balance
+
+//pin - pout = if inlet.m_flow > 0 then rho[1]*g*h + homotopy(cf/2*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]) else
+//                                      rho[n+1]*g*h + cf/2*rho[n+1]*omega*L/A*regSquare(u[n+1],u_nom*0.05);
+  //pin-pout = regStep(inlet.m_flow, rho[end]*g*h + cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), rho[1]*g*h + cf/2*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05),dp_nom*1e-5); 
+//  if computePressureDifference then
+//    pin - pout = homotopy(cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);  
+//  else 
+//    regSquare(u[end], u_nom*0.05) = homotopy((pin - pout)*(2*A)/(cf*rho[end]*omega*L), (u_nom)^2*dp/dp_nom);
+//  end if;
+  //pin - pout = 1000*inlet.m_flow;
+  ptilde = pout;
+  pin - pout = homotopy(cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
+  //ptilde = if inlet.m_flow > 0 then pin else pout;
+  //ptilde = regStep(inlet.m_flow, pout, pin, pin_start*1e-5);
+  //ptilde = noEvent(if inlet.m_flow > 0 then pin else pout);
+
+// Equations to set the fluid properties
+  fluid.T = T;
+  fluid.p = ones(n+1)*ptilde;
+  rho = fluid[1:end].rho;
+  cp = fluid[1:end].cp;
+  m_flow = rho.*u*A;
+  q = m_flow./rho;
+  q_m3h = q*3600;
+  
 
   Mtot = sum(M) "Total mass";
   Qtot = sum(wall.Q_flow) "Total heat";
 
-// Momentum balance
-  if computeLinearPressureDrop then
-    if hctype == Choices.Pipe.HCtypes.Downstream then
-      ptilde = pout;
-      pin - pout = k*inlet.m_flow "Momentum Balance (linear friction)";
-    elseif hctype == Choices.Pipe.HCtypes.Middle then
-      pin - ptilde = k/2*inlet.m_flow;
-      ptilde - pout = -k/2*outlet.m_flow;
-    end if;
-  else
-    inlet.p - outlet.p = (rho[1]+rho[n+1])/2 * Modelica.Constants.g_n * h + homotopy(cf / 2 * (rho[1]+rho[n+1])/2 * omega * L / A * regSquare(u[1], u_nom * 0.05), dp_nom / m_flow_nom * m_flow[1]);
-    ptilde = pout;
-  end if;
-
   dp = pin-pout;
+//  if inlet.m_flow > 0 or not allowFlowReversal then
+//    fluid[1].h = inStream(inlet.h_out);
+//    T[1] = fluid
+//  else
+//    fluid[end].h = inStream(outlet.h_out);
+//  end if;
+  
+  //fluid[1].h = inStream(inlet.h_out);
+  
+  if inlet.m_flow > 0 then
+    T[1] = fluid_temp.T;
+  else
+    T[end] = fluid_temp.T;
+  end if;
+  
+  
+  //fluid_temp = Medium.setState_phX(ptilde, noEvent(if inlet.m_flow>0 then inStream(inlet.h_out) else inStream(outlet.h_out)));
+  //fluid_temp = Medium.setState_phX(ptilde, regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5));
+  fluid_temp.p = ptilde;
+  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out)), hin_start);
 
 // Boundary conditions
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n + 1];
   inlet.p = pin;
   outlet.p = pout;
-  inlet.h_out = 1e5;
+  inlet.h_out = fluid[1].h;
   outlet.h_out = fluid[n+1].h;
   wall.Q_flow = heatTransfer.Q_flow;
   wall.T = Twall;

@@ -74,7 +74,8 @@ model Round1DFV
   Types.SpecificHeatCapacity cp[n+1] "Specific heat capacity at each fluid";
   Types.Density rho[n+1] "Density at each fluid";
   //Types.SpecificEnthalpy htilde[n];
-  Types.Density rhotilde[n];
+  Types.Density rhotilde[n](each start = rho_nom);
+  //Types.SpecificEnthalpy htilde[n];
 
   //   Types.Power Q_int[n]
   //     "Heat dissipation out of each volume into the wall";
@@ -98,7 +99,7 @@ model Round1DFV
     m_flow = m_flow[2:end],
     p = pout,
     //cp = Medium.specificHeatCapacityCp(fluid[2:end]),
-    cp = fluid[2:end].cp,
+    cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
     //mu = Medium.dynamicViscosity(fluid[2:end]),
     mu = fluid[2:end].mu,
     //k = Medium.thermalConductivity(fluid[2:end]),
@@ -120,23 +121,15 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    //der(M[i]) = m_flow[i] - m_flow[i+1];
-    m_flow[i]- m_flow[i+1] = Vi*fluid[i+1].drho_dT*der(Ttilde[i]);
-    //M[i] = Vi*rhotilde[i];
-    //rhotilde[i] = if inlet.m_flow > 0 then rho[i+1] else rho[i];
+    m_flow[i]- m_flow[i+1] = Vi*regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]);
     rhotilde[i]*Vi*cp[i]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
-    
-    
-    //Ttilde[i] = if inlet.m_flow > 0 then T[i+1] else T[i];
   end for;
-  
-  //rhotilde = rho[2:n+1];
+
+  rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
   M = Vi*rhotilde;
-  rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n]);
-  //Ttilde = T[2:n+1];
-  //Ttilde = noEvent(if inlet.m_flow>0 then T[2:n+1] else T[1:n]);
-  Ttilde = regStep(dp, T[2:n+1], T[1:n]);
-  //Ttilde = if inlet.m_flow > 0 then T[2:n+1] else T[1:n];
+  Ttilde = regStep(dp, T[2:n+1], T[1:n], T_start*1e-5);
+ // ptilde = regStep(inlet.m_flow, pout, pin);
+  ptilde = pout;
     
 // Momentum Balance
 
@@ -149,7 +142,7 @@ equation
 //    regSquare(u[end], u_nom*0.05) = homotopy((pin - pout)*(2*A)/(cf*rho[end]*omega*L), (u_nom)^2*dp/dp_nom);
 //  end if;
   //pin - pout = 1000*inlet.m_flow;
-  ptilde = pout;
+  
   pin - pout = homotopy(cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
   //ptilde = if inlet.m_flow > 0 then pin else pout;
   //ptilde = regStep(inlet.m_flow, pout, pin, pin_start*1e-5);

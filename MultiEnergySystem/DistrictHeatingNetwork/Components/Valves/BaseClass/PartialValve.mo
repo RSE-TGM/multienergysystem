@@ -6,21 +6,33 @@ partial model PartialValve
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regRoot;
   
-  constant Modelica.Units.SI.PerUnit pr = 0.85 "Pressure recovery coefficient";
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  
+  constant Types.PerUnit pr = 0.85 "Pressure recovery coefficient";
   
   // Parameters
-  parameter Modelica.Units.SI.PerUnit nomOpening = 1 "Nominal valve opening";
+  parameter Types.PerUnit nomOpening = 1 "Nominal valve opening";
   parameter Real Kv(unit = "m3/h") = 12 "Metri Flow Coefficient ";
-  parameter Modelica.Units.SI.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter";
+  parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter";
   parameter Modelica.Units.SI.PressureDifference dp_nom = 4e5 "Pressure drop between supply and return, as imposed by the differential pump";
   parameter Components.Types.valveOpeningChar openingChar = Components.Types.valveOpeningChar.Linear "opening characteristic";
   
+  // Start values
+  parameter Types.Temperature Tin_start = 20 + 273.15;
+  parameter Types.Pressure pin_start = 2e5;
+  final parameter Types.Temperature Tout_start =  Tin_start;
+  final parameter Types.Pressure pout_start = pin_start - dp_nom;
+  
   // Final parameters
-  final parameter Modelica.Units.SI.MassFlowRate m_nom = Kv*dp_nom*dp_nom*1 "Peak mass flow rate at full opening";
+  final parameter Types.MassFlowRate m_flow_nom = Kv*dp_nom*dp_nom*1 "Peak mass flow rate at full opening";
   
   // Variables
-  Modelica.Units.SI.Area A_v = 2.7778e-5*Kv "Opening area of the valve";
-  Modelica.Units.SI.MassFlowRate m_flow "mass flow rate through the valve";
+  Types.Area A_v = 2.7778e-5*Kv "Opening area of the valve";
+  Types.MassFlowRate m_flow "mass flow rate through the valve";
+
+  // Medium 
+  Medium fluidIn(T_start = Tin_start, p_start = pin_start);
+  Medium fluidOut(T_start = Tout_start, p_start = pout_start);
   
   // Inputs
   Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0) "Valve Displacement" annotation(
@@ -36,10 +48,17 @@ equation
   
   // Momentum balance
   if openingChar == Components.Types.valveOpeningChar.Linear then  
-    m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*sqrt(rho0)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*sqrt(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.Quadratic then
-    m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*sqrt(rho0)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*sqrt(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
+  
+  // Definition of fluids
+  fluidIn.p = inlet.p;
+  fluidIn.h = regStep(m_flow, inStream(inlet.h_out), inlet.h_out, m_flow_nom*1e-5);
+  fluidOut.p = outlet.p;
+  fluidOut.h = regStep(m_flow, outlet.h_out, inStream(outlet.h), m_flow_nom*1e-5);
+  
   annotation(
     Icon);
 end PartialValve;

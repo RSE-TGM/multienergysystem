@@ -8,7 +8,7 @@ model GasBoilerTest
     Placement(visible = true, transformation(origin = {-20, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true) annotation(
     Placement(visible = true, transformation(origin = {-48, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = 60 + 273.15, p0 = 3.1e5, use_T = true, use_in_T = true) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = 60 + 273.15, p0 = 3.1e5) annotation(
     Placement(visible = true, transformation(origin = {-48, -12}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp fuel_flow(duration = 20, height = 0.002370206*0.5, offset = 0.002370206, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-50, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -27,7 +27,7 @@ equation
     Line(points = {{-38, -12}, {-16, -12}, {-16, -10}}, color = {136, 136, 136}));
   connect(fuel_flow.y, CH4.in_m_flow) annotation(
     Line(points = {{-38, 70}, {-26, 70}, {-26, 56}}, color = {0, 0, 127}));
-  connect(Tin.y, sourceP.in_T) annotation(
+  connect(Tin.y, sourceP.in_T0) annotation(
     Line(points = {{-58, -30}, {-48, -30}, {-48, -22}}, color = {0, 0, 127}));
   connect(m_flow.y, sinkM.in_m_flow) annotation(
     Line(points = {{-58, 30}, {-42, 30}, {-42, 16}}, color = {0, 0, 127}));

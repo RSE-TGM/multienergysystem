@@ -17,7 +17,7 @@ model DropPressure
   parameter Integer n = 5 "Number of volumes";
   parameter Types.Length L = 10;
   parameter Types.Length Di = 0.085;
-  parameter Types.Length H = 0;
+  parameter Types.Length H =0.01;
   parameter Types.Length t = 2e-3;
   parameter Types.Length tIns = 60e-3;
   parameter Types.PerUnit cf = 0.004;
@@ -43,7 +43,7 @@ model DropPressure
     Placement(visible = true, transformation(origin = {48, -80}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkmassflow2(G = 0, T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start2, pin_start = pout_start2, use_in_m_flow = true) annotation(
     Placement(visible = true, transformation(origin = {86, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp pout_set(duration = 50, height = 0.5*pout_start, offset = pout_start, startTime = 150) annotation(
+  Modelica.Blocks.Sources.Ramp pout_set(duration = 50, height = 0.1*pout_start, offset = pout_start, startTime = 150) annotation(
     Placement(visible = true, transformation(origin = {70, 70}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
 equation
   connect(pipe1.outlet, sinkP.inlet) annotation(
@@ -66,7 +66,15 @@ equation
     Line(points = {{80, -74}, {80, -26}, {50, -26}, {50, -10}, {60, -10}}, color = {0, 0, 127}));
   connect(pout_set.y, sinkP.in_p0) annotation(
     Line(points = {{60, 70}, {36, 70}, {36, 48}}, color = {0, 0, 127}));
+  connect(wall_FixedT.MultiPort, pipe1.wall) annotation(
+    Line(points = {{-80, 0}, {-66, 0}, {-66, 58}, {0, 58}, {0, 48}}, color = {255, 238, 44}));
+  connect(wall_FixedT.MultiPort, pipe2.wall) annotation(
+    Line(points = {{-80, 0}, {-66, 0}, {-66, -30}, {0, -30}, {0, -32}}, color = {255, 238, 44}));
+  connect(wall_FixedT.MultiPort, pipe3.wall) annotation(
+    Line(points = {{-80, 0}, {-66, 0}, {-66, -60}, {0, -60}, {0, -72}}, color = {255, 238, 44}));
+  connect(pipe4.wall, pipe3.wall) annotation(
+    Line(points = {{48, -72}, {48, -60}, {0, -60}, {0, -72}}, color = {255, 238, 44}));
   annotation(
     Documentation(info = "<html><head></head><body>Base test to verify the difference between considering linear or non-linear drop pressure.</body></html>"),
-    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-06, Interval = 0.166667));
+    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-06, Interval = 0.166889));
 end DropPressure;

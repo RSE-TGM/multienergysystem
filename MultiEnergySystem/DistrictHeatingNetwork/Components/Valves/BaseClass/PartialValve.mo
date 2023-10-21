@@ -5,6 +5,7 @@ partial model PartialValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regRoot;
+  import Modelica.Fluid.Utilities.regStep;
   
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
   
@@ -57,7 +58,7 @@ equation
   fluidIn.p = inlet.p;
   fluidIn.h = regStep(m_flow, inStream(inlet.h_out), inlet.h_out, m_flow_nom*1e-5);
   fluidOut.p = outlet.p;
-  fluidOut.h = regStep(m_flow, outlet.h_out, inStream(outlet.h), m_flow_nom*1e-5);
+  fluidOut.h = regStep(m_flow, outlet.h_out, inStream(outlet.h_out), m_flow_nom*1e-5);
   
   annotation(
     Icon);

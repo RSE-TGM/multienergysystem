@@ -17,7 +17,7 @@ model SourcePressure "Pressure source for water/steam flows"
   // External input conditions
   parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(
     Dialog(group="External inputs"), choices(checkBox=true));
-  parameter Boolean use_in_T = false "Use connector input for the temperature" annotation(
+  parameter Boolean use_in_T0 = false "Use connector input for the temperature" annotation(
     Dialog(group="External inputs"), choices(checkBox=true));
   
   // Nominal parameters
@@ -52,18 +52,15 @@ model SourcePressure "Pressure source for water/steam flows"
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={-40,84})));
-  Modelica.Blocks.Interfaces.RealInput in_T if use_in_T "Externally supplied temperature" annotation (Placement(
-    transformation(
+  Modelica.Blocks.Interfaces.RealInput in_T0 if use_in_T0 "Externally supplied temperature" annotation (Placement(
+    visible = true,transformation(
         origin={0,60},
         extent={{-20,-20},{20,20}},
-        rotation=270), iconTransformation(
-        extent={{-16,-16},{16,16}},
-        rotation=270,
-        origin={0,96})));
+        rotation=270), iconTransformation(origin = {40, 84}, extent = {{-16, -16}, {16, 16}}, rotation = 270)));
 
 protected
   Modelica.Blocks.Interfaces.RealInput in_p0_internal;
-  Modelica.Blocks.Interfaces.RealInput in_T_internal;
+  Modelica.Blocks.Interfaces.RealInput in_T0_internal;
 equation
   if R > 0 then
     outlet.p = p +outlet.m_flow *R;
@@ -76,9 +73,9 @@ equation
     in_p0_internal = p0 "Pressure set by parameter";
   end if;
   
-  T = in_T_internal;
-  if not use_in_T then
-    in_T_internal = T0;
+  T = in_T0_internal;
+  if not use_in_T0 then
+    in_T0_internal = T0;
   end if;
   //in_T_internal = T0 "Temperature set by parameter";
   
@@ -93,7 +90,7 @@ equation
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);
-  connect(in_T, in_T_internal);
+  connect(in_T0, in_T0_internal);
 
   // Restrictions on modelling options
   //assert(not (use_in_T and use_in_h), "Either temperature or specific enthalpy input");

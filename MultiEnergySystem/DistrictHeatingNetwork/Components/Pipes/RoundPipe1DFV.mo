@@ -60,7 +60,7 @@ model RoundPipe1DFV
   Types.MassFlowRate m_flow[n + 1](each start = m_flow_start) "Mass flow rate in each section across the pipe";
   Types.VolumeFlowRate q[n + 1] "Volumetric flowrate in each section across the pipe";
   Real q_m3h[n + 1](each unit = "m3/h") "Volumetric flowrate in each section in m3/h";
-  Types.Velocity u[n + 1](each start = u_nom, each nominal = u_nom*5) "Velocity in each volume across the pipe";
+  Types.Velocity u[n + 1](each start = u_nom, each nominal = 1) "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "State variable temperatures";
   Types.Temperature Twall[n] "Pipe wall temperature";
   Types.Power Qtot "Total heat";
@@ -120,7 +120,10 @@ equation
 // Mass & Energy Balance
   for i in 1:n loop
     m_flow[i]- m_flow[i+1] = Vi*regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]);
-    rhotilde[i]*Vi*cp[i]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
+    //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
+    (Vi*regStep(dp,fluid[i+1].h,fluid[i].h) + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
+    
+    
   end for;
 
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
@@ -133,20 +136,9 @@ equation
 
 //pin - pout = if inlet.m_flow > 0 then rho[1]*g*h + homotopy(cf/2*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]) else
 //                                      rho[n+1]*g*h + cf/2*rho[n+1]*omega*L/A*regSquare(u[n+1],u_nom*0.05);
-  //pin-pout = regStep(inlet.m_flow, rho[end]*g*h + cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), rho[1]*g*h + cf/2*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05),dp_nom*1e-5); 
-//  if computePressureDifference then
-//    pin - pout = homotopy(cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);  
-//  else 
-//    regSquare(u[end], u_nom*0.05) = homotopy((pin - pout)*(2*A)/(cf*rho[end]*omega*L), (u_nom)^2*dp/dp_nom);
-//  end if;
-  //pin - pout = 1000*inlet.m_flow;
   
-  pin - pout = homotopy(cf/2*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
-  //ptilde = if inlet.m_flow > 0 then pin else pout;
-  //ptilde = regStep(inlet.m_flow, pout, pin, pin_start*1e-5);
-  //ptilde = noEvent(if inlet.m_flow > 0 then pin else pout);
-
-// Equations to set the fluid properties
+  pin - pout = homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
+  // Equations to set the fluid properties
   fluid.T = T;
   fluid.p = ones(n+1)*ptilde;
   rho = fluid[1:end].rho;
@@ -161,8 +153,8 @@ equation
 
   dp = pin-pout;
   
-  //if noEvent(dp > 0) then
-  if dp > 0 then
+  if noEvent(dp > 0) then
+  //if dp > 0 then
     T[1] = fluid_temp.T;
   else
     T[end] = fluid_temp.T;

@@ -73,17 +73,11 @@ model RoundPipe1DFV
   Types.Mass Mtot "Total Mass in the pipe";
   Types.SpecificHeatCapacity cp[n+1] "Specific heat capacity at each fluid";
   Types.Density rho[n+1] "Density at each fluid";
-  //Types.SpecificEnthalpy htilde[n];
   Types.Density rhotilde[n](each start = rho_nom);
-  //Types.SpecificEnthalpy htilde[n];
 
-  //   Types.Power Q_int[n]
-  //     "Heat dissipation out of each volume into the wall";
-  //   Types.Power Q_ext[n]
-  //     "Heat dissipation out of each wall cell to the ambient";
+  //   Types.Power Q_int[n] "Heat dissipation out of each volume into the wall";
+  //   Types.Power Q_ext[n] "Heat dissipation out of each wall cell to the ambient";
 
-  //Medium.ThermodynamicState fluid[n + 1];
-  //Medium.ThermodynamicState fluid_temp;
   Medium fluid[n+1](T_start = T_start, p_start = linspace(pin_start, pout_start, n + 1));
   Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
 
@@ -95,9 +89,8 @@ model RoundPipe1DFV
     S = Stot,
     A = Atot,
     Twall = Twall,
-    Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
-    //m_flow = 0.5*(m_flow[1:end-1] + m_flow[2:end]),
-    m_flow = m_flow[2:end],
+    Tmean = regStep(dp, fluid[2:end].T, fluid[1:end-1].T),
+    m_flow = regStep(dp, m_flow[2:end], m_flow[1:end-1]),
     p = pout,
     //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
     cp = fluid[2:end].cp,
@@ -121,23 +114,17 @@ equation
   for i in 1:n loop
     m_flow[i]- m_flow[i+1] = Vi*regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]);
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
-    (Vi*regStep(dp,fluid[i+1].h,fluid[i].h) + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
-    
-    
+    (Vi*regStep(dp,fluid[i+1].h,fluid[i].h) + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance"; 
   end for;
 
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
   M = Vi*rhotilde;
   Ttilde = regStep(dp, T[2:n+1], T[1:n], Tin_start*1e-5);
- // ptilde = regStep(inlet.m_flow, pout, pin);
   ptilde = pout;
     
-// Momentum Balance
-
-//pin - pout = if inlet.m_flow > 0 then rho[1]*g*h + homotopy(cf/2*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]) else
-//                                      rho[n+1]*g*h + cf/2*rho[n+1]*omega*L/A*regSquare(u[n+1],u_nom*0.05);
+  // Momentum Balance
+  pin - pout = rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
   
-  pin - pout = homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
   // Equations to set the fluid properties
   fluid.T = T;
   fluid.p = ones(n+1)*ptilde;
@@ -154,7 +141,6 @@ equation
   dp = pin-pout;
   
   if noEvent(dp > 0) then
-  //if dp > 0 then
     T[1] = fluid_temp.T;
   else
     T[end] = fluid_temp.T;
@@ -163,7 +149,7 @@ equation
   fluid_temp.p = ptilde;
   fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5), hin_start);
 
-// Boundary conditions
+  // Boundary conditions
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n + 1];
   inlet.p = pin;

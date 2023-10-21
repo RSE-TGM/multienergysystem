@@ -2,30 +2,69 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pipes;
 
 model DropPressure
   extends Modelica.Icons.Example;
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourceMassFlow sourceL(T0 = 80 + 273.15, m_flow0 = Pipe.S100.m_flow_start, p0(displayUnit = "Pa") = 310000) annotation(
-    Placement(visible = true, transformation(origin = {-40, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourceMassFlow sourceNL(T0 = 80 + 273.15, m_flow0 = Pipe.S100.m_flow_start, p0(displayUnit = "Pa") = 310000) annotation(
-    Placement(visible = true, transformation(origin = {-40, -32}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkL(T0 = 75 + 273.15, p0(displayUnit = "Pa") = 300000, use_T = true) annotation(
-    Placement(visible = true, transformation(origin = {40, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkNL(T0 = 75 + 273.15, p0(displayUnit = "Pa") = 300000, use_T = true) annotation(
-    Placement(visible = true, transformation(origin = {40, -32}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV linearpipe(Di = Pipe.S100.Di, L = Pipe.S100.L*2, Tin_start = Pipe.S100.Tin_start, Tout_start = Pipe.S100.Tout_start, computeLinearPressureDrop = true, h = Pipe.S100.h, hin_start = Pipe.S100.hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = Pipe.S100.m_flow_start, pin_start = Pipe.S100.pin_start, pout_start = Pipe.S100.pout_start, rho_nom = Pipe.S100.rho_nom, u_nom = Pipe.S100.u_nom) annotation(
-    Placement(visible = true, transformation(origin = {1.77636e-15, 28}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  // Nominal fluid parameters
+  parameter Types.Pressure pin_start = 3e5;
+  parameter Types.Pressure pout_start = 2.9e5;
+  parameter Types.Temperature Tin_start = 80 + 273.15;
+  parameter Types.Temperature Tout_start = 70 + 273.15;
+  parameter Types.Pressure pout_start2 = 2.8e5;
+  parameter Types.SpecificEnthalpy hin_start = 3e5;
+  parameter Types.SpecificEnthalpy hout_start = 2.9e5;
+  parameter Types.MassFlowRate m_flow_start = 16.545;
+  parameter Types.Velocity u_start = 3;
+  parameter Types.Density rho_start = 971.892;
+  // Nominal pipe parameters
+  parameter Integer n = 5 "Number of volumes";
+  parameter Types.Length L = 10;
+  parameter Types.Length Di = 0.085;
+  parameter Types.Length H = 0;
+  parameter Types.Length t = 2e-3;
+  parameter Types.Length tIns = 60e-3;
+  parameter Types.PerUnit cf = 0.004;
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkP(T0 = Tout_start, h0 = hout_start, p0(displayUnit = "Pa") = pout_start, use_T = true) annotation(
+    Placement(visible = true, transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV pipe1(Di = Di, L = L, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, h = H, hin_start = hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = m_flow_start, n = n, pin_start = pin_start, pout_start = pout_start, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation(
+    Placement(visible = true, transformation(origin = {0, 40}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation(
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV nonlinearpipe(Di = Pipe.S100.Di, L = Pipe.S100.L*2, Tin_start = Pipe.S100.Tin_start, Tout_start = Pipe.S100.Tout_start, computeLinearPressureDrop = false, h = Pipe.S100.h, hin_start = Pipe.S100.hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = Pipe.S100.m_flow_start, pin_start = Pipe.S100.pin_start, pout_start = Pipe.S100.pout_start, rho_nom = Pipe.S100.rho_nom, u_nom = Pipe.S100.u_nom) annotation(
-    Placement(visible = true, transformation(origin = {-2, -32}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp m_flow_set(duration = 50, height = -1.5*m_flow_start, offset = m_flow_start, startTime = 50) annotation(
+    Placement(visible = true, transformation(origin = {70, -10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(R = 1e-6,T0 = Tin_start, h0 = hin_start, p0 = pin_start) annotation(
+    Placement(visible = true, transformation(origin = {-50, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV pipe2(Di = Di, L = L, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, computeLinearPressureDrop = true, h = H, hin_start = hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = m_flow_start, n = n, pin_start = pin_start, pout_start = pout_start, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation(
+    Placement(visible = true, transformation(origin = {0, -40}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  Sources.SinkMassFlow sinkmassflow(G = 0, T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start, pin_start = pout_start, use_in_m_flow = true) annotation(
+    Placement(visible = true, transformation(origin = {40, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.Wall_FixedT wall_FixedT(Twall = system.T_amb, n = n) annotation(
+    Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, 10}, {10, -10}}, rotation = 270)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV pipe3(Di = Di, L = L, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, computeLinearPressureDrop = true, h = H, hin_start = hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = m_flow_start, n = n, pin_start = pin_start, pout_start = pout_start, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation(
+    Placement(visible = true, transformation(origin = {0, -80}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV pipe4(Di = Di, L = L, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, computeLinearPressureDrop = true, h = H, hin_start = hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = m_flow_start, n = n, pin_start = pout_start, pout_start = pout_start2, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation(
+    Placement(visible = true, transformation(origin = {48, -80}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkmassflow2(G = 0, T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start2, pin_start = pout_start2, use_in_m_flow = true) annotation(
+    Placement(visible = true, transformation(origin = {86, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
-  connect(sourceL.outlet, linearpipe.inlet) annotation(
-    Line(points = {{-30, 28}, {-14, 28}}, color = {140, 56, 54}));
-  connect(linearpipe.outlet, sinkL.inlet) annotation(
-    Line(points = {{14, 28}, {30, 28}}, color = {140, 56, 54}));
-  connect(sourceNL.outlet, nonlinearpipe.inlet) annotation(
-    Line(points = {{-30, -32}, {-16, -32}}, color = {140, 56, 54}));
-  connect(nonlinearpipe.outlet, sinkNL.inlet) annotation(
-    Line(points = {{12, -32}, {30, -32}}));
+  connect(pipe1.outlet, sinkP.inlet) annotation(
+    Line(points = {{14, 40}, {30, 40}}, color = {140, 56, 54}));
+  connect(sourceP.outlet, pipe1.inlet) annotation(
+    Line(points = {{-40, 0}, {-30, 0}, {-30, 40}, {-14, 40}}, color = {140, 56, 54}));
+  connect(sourceP.outlet, pipe2.inlet) annotation(
+    Line(points = {{-40, 0}, {-30, 0}, {-30, -40}, {-14, -40}}, color = {140, 56, 54}));
+  connect(pipe2.outlet, sinkmassflow.inlet) annotation(
+    Line(points = {{14, -40}, {30, -40}}, color = {140, 56, 54}));
+  connect(m_flow_set.y, sinkmassflow.in_m_flow) annotation(
+    Line(points = {{60, -10}, {34, -10}, {34, -34}}, color = {0, 0, 127}));
+  connect(sourceP.outlet, pipe3.inlet) annotation(
+    Line(points = {{-40, 0}, {-30, 0}, {-30, -80}, {-14, -80}}, color = {140, 56, 54}));
+  connect(pipe3.outlet, pipe4.inlet) annotation(
+    Line(points = {{14, -80}, {34, -80}}, color = {140, 56, 54}));
+  connect(pipe4.outlet, sinkmassflow2.inlet) annotation(
+    Line(points = {{62, -80}, {76, -80}}, color = {140, 56, 54}));
+  connect(sinkmassflow2.in_m_flow, m_flow_set.y) annotation(
+    Line(points = {{80, -74}, {80, -26}, {50, -26}, {50, -10}, {60, -10}}, color = {0, 0, 127}));
+  connect(wall_FixedT.MultiPort, pipe1.wall) annotation(
+    Line(points = {{-80, 0}, {-64, 0}, {-64, 62}, {0, 62}, {0, 48}}, color = {255, 238, 44}));
   annotation(
     Documentation(info = "<html><head></head><body>Base test to verify the difference between considering linear or non-linear drop pressure.</body></html>"),
-    experiment(StartTime = 0, StopTime = 10, Tolerance = 1e-06, Interval = 0.02));
+    experiment(StartTime = 0, StopTime = 200, Tolerance = 1e-06, Interval = 0.133333));
 end DropPressure;

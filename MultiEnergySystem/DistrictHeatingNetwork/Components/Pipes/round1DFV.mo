@@ -67,7 +67,7 @@ model Round1DFV
   Types.Temperature T[n + 1](start = T_start) "Volume boundary temperatures";
   Types.Pressure pin "Inlet pressure";
   Types.Pressure pout "Outlet pressure";
-  Types.Pressure ptilde(stateSelect = StateSelect.prefer) "Pressure state the pipe";
+  Types.Pressure ptilde "Pressure state the pipe";
   Types.Pressure dp(start = dp_nom) "Delta pressure";
   Types.Mass M[n] "Mass of fluid in each finite volume";
   Types.Mass Mtot "Total Mass in the pipe";
@@ -96,18 +96,16 @@ model Round1DFV
     A = Atot,
     Twall = Twall,
     Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
+    //m_flow = 0.5*(m_flow[1:end-1] + m_flow[2:end]),
     m_flow = m_flow[2:end],
     p = pout,
-    //cp = Medium.specificHeatCapacityCp(fluid[2:end]),
-    cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
-    //mu = Medium.dynamicViscosity(fluid[2:end]),
+    //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
+    cp = fluid[2:end].cp,
     mu = fluid[2:end].mu,
-    //k = Medium.thermalConductivity(fluid[2:end]),
     k = fluid[2:end].kappa,
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
-    //each cp = Medium.specificHeatCapacityCp(fluid[1].state),
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
@@ -162,24 +160,14 @@ equation
   Qtot = sum(wall.Q_flow) "Total heat";
 
   dp = pin-pout;
-//  if inlet.m_flow > 0 or not allowFlowReversal then
-//    fluid[1].h = inStream(inlet.h_out);
-//    T[1] = fluid
-//  else
-//    fluid[end].h = inStream(outlet.h_out);
-//  end if;
   
-  //fluid[1].h = inStream(inlet.h_out);
-  
-  if noEvent(dp > 0) then
+  //if noEvent(dp > 0) then
+  if dp > 0 then
     T[1] = fluid_temp.T;
   else
     T[end] = fluid_temp.T;
   end if;
-  
-  
-  //fluid_temp = Medium.setState_phX(ptilde, noEvent(if inlet.m_flow>0 then inStream(inlet.h_out) else inStream(outlet.h_out)));
-  //fluid_temp = Medium.setState_phX(ptilde, regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5));
+
   fluid_temp.p = ptilde;
   fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5), hin_start);
 

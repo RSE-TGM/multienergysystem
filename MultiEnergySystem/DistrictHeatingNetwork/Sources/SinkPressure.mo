@@ -3,9 +3,10 @@ model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
   
   // Water model
-  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
-    choicesAllMatching = true);
-
+  //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  //  choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  
   // Definition of System
   outer System system "System wide properties";
 
@@ -34,9 +35,13 @@ model SinkPressure "Pressure sink for water/steam flows"
     Evaluate=true, Dialog(group = "Fluid parameters"));  
 
   // Variables
-  Medium.ThermodynamicState fluid "Actual fluid, including its variables";
-  Medium.AbsolutePressure p(start = p0) "Actual pressure";
-  Medium.SpecificEnthalpy h "Actual specific enthalpy";
+  //Medium.ThermodynamicState fluid "Actual fluid, including its variables";
+  Medium fluid(T_start = T0, p_start = p0);
+  
+  Types.Pressure p "Actual pressure";
+  Types.SpecificEnthalpy h "Actual specific enthalpy";
+  //Medium.AbsolutePressure p(start = p0) "Actual pressure";
+  //Medium.SpecificEnthalpy h "Actual specific enthalpy";
   
   // Outlet fluid connector
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
@@ -84,10 +89,11 @@ equation
   end if;
 
   if use_T then
-    inlet.h_out = Medium.specificEnthalpy_pTX(
-      inlet.p,
-      in_T_internal,
-      fill(0, 0));
+//    inlet.h_out = Medium.specificEnthalpy_pTX(
+//      inlet.p,
+//      in_T_internal,
+//      fill(0, 0));
+    inlet.h_out = fluid.h;
   else
     inlet.h_out = in_h_internal "Enthalpy set by connector";
   end if;
@@ -100,7 +106,9 @@ equation
   end if;
   
   h = inlet.h_out;
-  fluid = Medium.setState_pTX(p, T0);
+  //fluid = Medium.setState_pTX(p, T0);
+  fluid.p = p;
+  fluid.T = T0;
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);

@@ -23,19 +23,19 @@ model pipeFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) re
   Modelica.Blocks.Interfaces.RealVectorOutput section_T[N] annotation(
     Placement(visible = true, transformation(origin = {2, 62}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 22}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
-// Mass balance
+  // Mass balance
   inlet.m_flow + outlet.m_flow = 0;
-// Momentum balance
+  // Momentum balance
   m_flow = rho0*A*u;
   inlet.p - outlet.p = rho0*Modelica.Constants.g_n*h + homotopy(cf/2*rho0*omega*L/A*regSquare(u, u_nom*0.05), dp_nom/m_flow_nom*m_flow);
-// Energy balance
+  // Energy balance
   if thermalInertia then
     for i in 1:N loop
       rho0*V/N*cp*der(Ttilde[i]) = m_flow*cp*(T[i] - T[i + 1]) - Q_int[i] "Energy balance water volume";
       L/N*rhom*cm*Am*der(Twall[i]) = Q_int[i] + Q_ext[i] "Energy balance wall";
-// Heat conduction through the internal half-thickness water to wall
+      // Heat conduction through the internal half-thickness water to wall
       Q_int[i] = U_wm*L/N*(Ttilde[i] - Twall[i]);
-// Heat conduction through the external half-thickness wall to ambient
+      // Heat conduction through the external half-thickness wall to ambient
       Q_ext[i] = U_me*L/N*(T_ext - Twall[i]);
     end for;
   else
@@ -43,7 +43,7 @@ equation
       rho0*V/N*cp*der(Ttilde[i]) = m_flow*cp*(T[i] - T[i + 1]) - Q_ext[i] "Energy balance water";
       Q_int[i] = 0;
       der(Twall[i]) = 0;
-// Heat exchange outwards
+      // Heat exchange outwards
       Q_ext[i] = U_me*L/N*(T_ext - Ttilde[i]);
     end for;
   end if;
@@ -54,7 +54,7 @@ equation
     T[1:end - 1] = Ttilde;
     T[end] = inStream(outlet.h_out)/cp + 273.15;
   end if;
-// Boundary conditions
+  // Boundary conditions
   m_flow = inlet.m_flow;
   inlet.h_out = Ttilde[1]*cp;
   outlet.h_out = Ttilde[N]*cp;

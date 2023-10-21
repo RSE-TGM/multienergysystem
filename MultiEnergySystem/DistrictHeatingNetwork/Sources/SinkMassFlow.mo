@@ -3,9 +3,10 @@ model SinkMassFlow "Mass flow rate sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceW;
   
   // Water model
-  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
-    choicesAllMatching = true);
-
+  //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  //  choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  
   // Definition of System
   outer System system "System wide properties";
   
@@ -40,7 +41,8 @@ model SinkMassFlow "Mass flow rate sink for water/steam flows"
   Types.Temperature T "Actual temperature";
   Types.Pressure p "Actual pressure";
   Types.SpecificEnthalpy h "Actual specific enthalpy";
-  Medium.ThermodynamicState fluid "Actual fluid, including its variables";
+  //Medium.ThermodynamicState fluid "Actual fluid, including its variables";
+  Medium fluid(T_start = T0, p_start = p0);
 
   // Outlet fluid connector
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (Placement(
@@ -81,10 +83,13 @@ equation
     in_T_internal = T0 "Temperature set by parameter";
   end if;
   
-  fluid = Medium.setState_pTX(p, T);
+  //fluid = Medium.setState_pTX(p, T);
+  fluid.p = p;
+  fluid.T = T;
   
   h = inlet.h_out;
-  inlet.h_out = Medium.specificEnthalpy_pTX(inlet.p, in_T_internal, fill(0,0));
+  //inlet.h_out = Medium.specificEnthalpy_pTX(inlet.p, in_T_internal, fill(0,0));
+  inlet.h_out = fluid.h;
   p = inlet.p;
 
 // Connect protected connectors to public conditional connectors

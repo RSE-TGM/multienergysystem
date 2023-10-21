@@ -2,10 +2,9 @@ within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
 
 partial model PartialSubstance
   extends Modelica.Icons.MaterialProperty;
-  parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
+  parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
   parameter Boolean compressibilityEffect = false "Used to enable compressibility effects";
-  parameter Boolean computeEnthalpyCondensation = false "Used to enable water condensation enthalpy";
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
@@ -18,15 +17,14 @@ partial model PartialSubstance
   connector InputTemperature = input Types.Temperature "Pseudo-input to check model balancedness";
   InputPressure p(start = p_start) "Absolute pressure";
   InputTemperature T(start = T_start) "Temperature";
-  Types.MolarVolume v "Molar volume";
+  Types.SpecificVolume v "Specific volume";
+  Types.MolarVolume v_mol "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
   Types.SpecificEntropy s "Specific Entropy" annotation(
     HideResult = not ComputeEntropy);
   Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
-  //Real dv_dX(each unit = "m3/kg") "Mass fraction derivative of specific volumen, per each component";
-  //Types.SpecificEnergy du_dX "Mass fraction derivative of Specific Internal Energy at constant pressure, per each component";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
   Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation(
     HideResult = not CompressibilityEffect);
@@ -50,6 +48,15 @@ protected
       Inline = true);
   end cp_T;
 
+  function h_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificEnthalpy h;
+  algorithm
+    h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
+  annotation(Inline = true);
+  end h_T;
+
   function rho_T
     input Types.Temperature T;
     input Real a[4];
@@ -60,7 +67,7 @@ protected
       Inline = true);
   end rho_T;
   
-  function drho_dT
+  function drhodT_T
     input Types.Temperature T;
     input Real a[4];
     output Real drho_dT(unit = "kg/(m3.K)");
@@ -68,7 +75,7 @@ protected
     drho_dT := a[3] + T*(2*a[2] + 3*T*a[1]);
     annotation(
       Inline = true);
-  end drho_dT;  
+  end drhodT_T;
 
   function u_T
     input Types.Temperature T;

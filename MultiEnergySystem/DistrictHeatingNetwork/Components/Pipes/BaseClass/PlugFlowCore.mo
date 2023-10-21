@@ -5,7 +5,7 @@ model PlugFlowCore
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import Modelica.Fluid.Utilities.regSquare;
 
-  // Parameter declaration
+// Parameter declaration
   parameter Types.PerUnit cf = 0.004 "Constant Fanning factor";
   parameter Types.Velocity u_nom = 1 "Nominal fluid velocity";
   parameter Types.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
@@ -13,7 +13,6 @@ model PlugFlowCore
   // Final parameter computation
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho0 * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
   final parameter Types.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";
-  
   //Variables
   Types.Length x "Spatial coordinate for spatialDistribution operator";
   Types.Velocity v "Flow velocity of medium in pipe";
@@ -25,12 +24,11 @@ protected
 initial equation
     x = 0;
 equation
-  // Pressure drop due to friction
+// Pressure drop due to friction
   inlet.p - outlet.p = rho0 * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * V_flow * rho0);
-  // Mass balance (no storage)
+// Mass balance (no storage)
   inlet.m_flow + outlet.m_flow = 0;
   der(x) = v;
   v = V_flow / A;
   (inlet.h_out, outlet.h_out) = spatialDistribution(inStream(inlet.h_out), inStream(outlet.h_out), x / L, v >= 0, {0.0, 1.0}, {h_ini_in, h_ini_out});
-
 end PlugFlowCore;

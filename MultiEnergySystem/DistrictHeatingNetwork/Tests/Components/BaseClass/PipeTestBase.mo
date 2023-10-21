@@ -22,8 +22,6 @@ model PipeTestBase
   parameter Types.PerUnit cf = 0.004;
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV pipeFV(Di = Di, L = L, N = n, T_ext = system.T_amb, T_start = Tin_start, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, h = H, hin_start = hin_start, m_flow_start = m_flow_start, pin_start = pin_start, pout_start = pout_start, t = t, tIns = tIns, thermalInertia = true, u_nom = u_start) annotation(
     Placement(visible = true, transformation(origin = {-1.77636e-15, 30}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.Round1DFV round1DFV(Di = Di, L = L, T_ext = system.T_amb, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, h = H, hin_start = hin_start, kc = 1, m_flow_start = m_flow_start, n = n, nPipes = 1, pin_start = pin_start, pout_start = pout_start, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation(
-    Placement(visible = true, transformation(origin = {0, -50}, extent = {{-14, 14}, {14, -14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PlugFlowCore plugFlowCore(Di = Di, L = L, T_ext = system.T_amb, T_start = Tin_start, Tin_start = Tin_start, Tout_start = Tout_start, allowFlowReversal = system.allowFlowReversal, cf = cf, h = H, hin_start = hin_start, m_flow_start = m_flow_start, pin_start = pin_start, pout_start = pout_start, t = t, tIns = tIns, u_nom = u_start) annotation(
     Placement(visible = true, transformation(origin = {0, 70}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = Tin_start, h0 = hin_start, p0 = pin_start) annotation(
@@ -41,18 +39,12 @@ equation
     Line(points = {{-50, 0}, {-40, 0}, {-40, 70}, {-14, 70}}, color = {140, 56, 54}));
   connect(sourceP.outlet, pipeFV.inlet) annotation(
     Line(points = {{-50, 0}, {-40, 0}, {-40, 30}, {-14, 30}}, color = {140, 56, 54}));
-  connect(sourceP.outlet, round1DFV.inlet) annotation(
-    Line(points = {{-50, 0}, {-40, 0}, {-40, -50}, {-14, -50}}, color = {140, 56, 54}));
   connect(plugFlowCore.outlet, sinkP.inlet) annotation(
     Line(points = {{14, 70}, {40, 70}, {40, 0}, {50, 0}}, color = {140, 56, 54}));
   connect(pipeFV.outlet, sinkP.inlet) annotation(
     Line(points = {{14, 30}, {40, 30}, {40, 0}, {50, 0}}, color = {140, 56, 54}));
-  connect(round1DFV.outlet, sinkP.inlet) annotation(
-    Line(points = {{14, -50}, {40, -50}, {40, 0}, {50, 0}}, color = {140, 56, 54}));
-  connect(round1DFV.wall, wall_FixedT.MultiPort) annotation(
-    Line(points = {{0, -58}, {0, -80}}, color = {255, 238, 44}));
   connect(pout_set.y, sinkP.in_p0) annotation(
     Line(points = {{80, 30}, {56, 30}, {56, 8}}, color = {0, 0, 127}));
   annotation(
-    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.1));
+    experiment(StartTime = 0, StopTime = 50, Tolerance = 1e-06, Interval = 0.01));
 end PipeTestBase;

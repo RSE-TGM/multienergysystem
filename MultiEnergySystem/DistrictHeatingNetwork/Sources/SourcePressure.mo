@@ -3,40 +3,41 @@ model SourcePressure "Pressure source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
   
   // Water model
-  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
-    choicesAllMatching = true);
-
+  //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  //  choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  
   // Definition of System
   outer System system "System wide properties";
   
   // Initial choices
   parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation(
     Evaluate=true, Dialog(group = "Choices"));
-  parameter Boolean use_T = true "Use reference temperature if true, otherwise use specific enthalpy" annotation(
-    Dialog(group = "Choices"));
 
   // External input conditions
   parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(
     Dialog(group="External inputs"), choices(checkBox=true));
   parameter Boolean use_in_T = false "Use connector input for the temperature" annotation(
     Dialog(group="External inputs"), choices(checkBox=true));
-  parameter Boolean use_in_h = false "Use connector input for the specific enthalpy" annotation(
-    Dialog(group="External inputs"), choices(checkBox=true));
   
   // Nominal parameters
-  parameter Medium.AbsolutePressure p0=1.01325e5 "Nominal pressure" annotation(
+  parameter Types.Pressure p0=1.01325e5 "Nominal pressure" annotation(
     Dialog(group = "Fluid parameters"));
-  parameter Medium.Temperature T0=298.15 "Nominal temperature" annotation(
-    Dialog(enable = use_T and not use_in_T, group="Fluid parameters"));
-  parameter Medium.SpecificEnthalpy h0=1e5 "Nominal specific enthalpy" annotation(
-    Dialog(enable = not use_T and not use_in_h, group="Fluid parameters"));
+  parameter Types.Temperature T0=298.15 "Nominal temperature" annotation(
+    Dialog(group="Fluid parameters"));
+  parameter Types.SpecificEnthalpy h0=1e5 "Nominal specific enthalpy" annotation(
+    Dialog(group="Fluid parameters"));
   parameter Types.HydraulicResistance R=0 "Hydraulic resistance" annotation(
     Dialog(group="Fluid parameters"));
 
   // Variables
-  Medium.ThermodynamicState fluid "Actual fluid, including its variables";
-  Medium.AbsolutePressure p "Actual pressure";
-  Medium.SpecificEnthalpy h "Actual specific enthalpy";
+  //Medium.ThermodynamicState fluid "Actual fluid, including its variables";
+  Medium fluid(T_start = T0, p_start = p0);
+  //Medium.AbsolutePressure p "Actual pressure";
+  //Medium.SpecificEnthalpy h "Actual specific enthalpy";
+  Types.Pressure p;
+  Types.Temperature T;
+  Types.SpecificEnthalpy h;
   
   // Outlet fluid connector
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
@@ -59,18 +60,10 @@ model SourcePressure "Pressure source for water/steam flows"
         extent={{-16,-16},{16,16}},
         rotation=270,
         origin={0,96})));
-  Modelica.Blocks.Interfaces.RealInput in_h if use_in_h "Externally supplied specific enthalpy" annotation (Placement(
-        transformation(
-        origin={40,90},
-        extent={{-20,-20},{20,20}},
-        rotation=270), iconTransformation(
-        extent={{-16,-16},{16,16}},
-        rotation=270,
-        origin={42,84})));
+
 protected
   Modelica.Blocks.Interfaces.RealInput in_p0_internal;
   Modelica.Blocks.Interfaces.RealInput in_T_internal;
-  Modelica.Blocks.Interfaces.RealInput in_h_internal;
 equation
   if R > 0 then
     outlet.p = p +outlet.m_flow *R;
@@ -82,32 +75,30 @@ equation
   if not use_in_p0 then
     in_p0_internal = p0 "Pressure set by parameter";
   end if;
-
-  if use_T then
-    outlet.h_out = Medium.specificEnthalpy_pTX(outlet.p, in_T_internal, fill(0,0));
-  else
-    outlet.h_out = in_h_internal "Enthalpy set by connector";
-  end if;
-
-  if not use_in_T then
-    in_T_internal = T0 "Temperature set by parameter";
-  end if;
-  if not use_in_h then
-    in_h_internal = h0 "Enthalpy set by parameter";
-  end if;
   
-  h = outlet.h_out;
-  fluid = Medium.setState_pTX(p, T0);
+  T = in_T_internal;
+  if not use_in_T then
+    in_T_internal = T0;
+  end if;
+  //in_T_internal = T0 "Temperature set by parameter";
+  
+  
+  //fluid = Medium.setState_pTX(p, T0);
+  fluid.p = p;
+  fluid.T = T;
+  
+  h = fluid.h;
+  
+  outlet.h_out = h;
 
   // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);
   connect(in_T, in_T_internal);
-  connect(in_h, in_h_internal);
 
   // Restrictions on modelling options
-  assert(not (use_in_T and use_in_h), "Either temperature or specific enthalpy input");
-  assert(not (use_T and use_in_h), "use_in_h required use_T = false");
-  assert(not (not use_T and use_in_T), "use_in_T required use_T = true");
+  //assert(not (use_in_T and use_in_h), "Either temperature or specific enthalpy input");
+ // assert(not (use_T and use_in_h), "use_in_h required use_T = false");
+  //assert(not (not use_T and use_in_T), "use_in_T required use_T = true");
   annotation (
     Documentation(info="<HTML>
 <p><b>Modelling options</b></p>

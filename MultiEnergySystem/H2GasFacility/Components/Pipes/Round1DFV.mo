@@ -3,7 +3,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
     outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)),hin_start = fluid[1].h_id_start,
-    T_ext = system.T_amb);
+    T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal);
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes;
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.sqrtReg;
@@ -159,19 +159,16 @@ equation
   Xitilde = regStep(dp, Xi[2:end,:], Xi[1:end-1,:], dp_nom*1e-7);
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*1e-7);
   utilde = regStep(dp, fluid[2:end].u, fluid[1:end-1].u, dp_nom*1e-7);
-  ptilde = p[2:end];
-  //ptilde = regStep(dp, p[2:end], p[1:end-1], dp_nom*1e-5);
-  //ptilde = regStep(pin-pout, p[2:end], p[1:end-1], pin_start*1e-5);
-  //Xitilde = Xi[2:n + 1, :];
+  //ptilde = p[2:end];
+
   M = Vi*rhotilde;
-  //dvdttilde = regStep(dp, fluid[2:end].dv_dT, fluid[1:end-1].dv_dT).*der(Ttilde) + 
-  //            regStep(dp, fluid[2:end].dv_dp, fluid[1:end-1].dv_dp).*der(ptilde);
-              //fluid[2:end].dv_dp.*der(ptilde);
-             //{regStep(dp, fluid[i+1].dv_dX*der(fluid[i+1].X), fluid[i].dv_dX*der(fluid[i].X),1e-7) for i in 1:n};
-  dvdttilde = {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
+
+  dvdttilde = if quasiStatic then {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} else
+              {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
               {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
               {regStep(dp, fluid[i+1].dv_dX[1:nXi], fluid[i].dv_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
-  dudttilde = {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
+  dudttilde = if quasiStatic then {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} else
+              {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
               {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n}+
               {regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
  
@@ -196,7 +193,7 @@ equation
 // Balances
   for i in 1:n loop
     if quasiStatic then
-      m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp)*der(ptilde[i]);
+      m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]);
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
       0 = T[i] - T[i + 1];
     else
@@ -205,11 +202,12 @@ equation
       M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
     
-    //p[i] - ptilde[i] = rho[i]*g_n*H/2 + ff_nom*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05)/2;
-    //ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + ff_nom*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05)/2;
-    p[i]-p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
+     // Momentum Balance
+    p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+    ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+    //p[i]-p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       
-    // Momentum Balance
+   
 //    if not computeInertialTerm then
 //    //-L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
 //      p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);

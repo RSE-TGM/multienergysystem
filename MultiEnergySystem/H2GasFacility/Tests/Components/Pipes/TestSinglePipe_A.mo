@@ -39,6 +39,6 @@ equation
   connect(T_in.y, sourceP.in_T0) annotation(
     Line(points = {{-75, 52}, {-50, 52}, {-50, 9.6}}, color = {0, 0, 127}));
   annotation(
-    experiment(StopTime = 250, Interval = 0.0350035, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"),
+    experiment(StopTime = 250, Interval = 0.0350042, Tolerance = 1e-06, StartTime = 0),
     Diagram);
 end TestSinglePipe_A;

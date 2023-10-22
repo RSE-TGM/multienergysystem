@@ -144,13 +144,15 @@ equation
 
 // Equations to assign values from fluids properties
   for i in 1:n + 1 loop
-    Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000) "Reynold's number";
     if not constantFrictionFactor then
+      Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000) "Reynold's number";
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
     else
-      ff[i]=0.02;
+      Re[i]=0;
+      ff[i]=ff_nom;
     end if;
   end for;
+  
   h = fluid.h;
   rho = fluid.rho;
   q = m_flow./rho;

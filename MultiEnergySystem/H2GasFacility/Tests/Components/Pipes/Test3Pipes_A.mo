@@ -4,6 +4,7 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
   extends Modelica.Icons.Example;
   replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
+  parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
   parameter Integer n = 3 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
@@ -30,7 +31,7 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
     Placement(visible = true, transformation(origin = {38, 0}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, constantFrictionFactor = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom) annotation(
     Placement(visible = true, transformation(origin = {6, -50}, extent = {{22, -22}, {-22, 22}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium = Medium, R = 0, T0(displayUnit = "K") = 293.15, X0 = Xref, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation(
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium = Medium, R = 0, T0(displayUnit = "K") = 293.15, X0 = Xref_2, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation(
     Placement(visible = true, transformation(origin = {-20, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in3(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation(
     Placement(visible = true, transformation(origin = {-60, -58}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

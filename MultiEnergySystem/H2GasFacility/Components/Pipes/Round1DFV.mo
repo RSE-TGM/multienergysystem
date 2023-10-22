@@ -83,7 +83,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.default else StateSelect.default, start = fill(X_start[1:nXi], n), nominal = fill(ones(nXi),n)) "Mass Composition state";
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = fill(X_start[1:nXi], n), nominal = fill(ones(nXi),n)) "Mass Composition state";
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) "Pressure state the pipe";
   Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = pin_nom) "Press. state";
   Types.Temperature Ttilde[n](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = T_start[2:n+1]) "State variable temperatures";
@@ -169,11 +169,11 @@ equation
               //fluid[2:end].dv_dp.*der(ptilde);
              //{regStep(dp, fluid[i+1].dv_dX*der(fluid[i+1].X), fluid[i].dv_dX*der(fluid[i].X),1e-7) for i in 1:n};
   dvdttilde = {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-              {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n};
-              //{regStep(dp, fluid[i+1].dv_dX, fluid[i].dv_dX, dp_nom*1e-5)*der(Xtilde[i,:]) for i in 1:n};
+              {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
+              {regStep(dp, fluid[i+1].dv_dX, fluid[i].dv_dX, dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-              {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n};
-              //{regStep(dp, fluid[i+1].du_dX, fluid[i].du_dX, dp_nom*1e-5)*der(Xtilde[i,:]) for i in 1:n};
+              {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n}+
+              {regStep(dp, fluid[i+1].du_dX, fluid[i].du_dX, dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
  
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -202,10 +202,7 @@ equation
     else
       m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*dvdttilde[i] "Mass Balance";
       m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h = M[i]*dudttilde[i] + (m_flow[i] - m_flow[i+1])*utilde[i] "Energy Balance";
-      //M[i]*der(Xtilde[i,:]) = m_flow[i]*(X[i, :] - X[i+1, :]);
-      //M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
-      //M[i]*der(Xtilde[i,:]) + Xtilde[i,:]*(-Vi*rhotilde[i]^2*dvdttilde[i]) = m_flow[i]*X[i,:] - m_flow[i+1]*X[i+1,:];
-      zeros(nXi) = Xi[i,:] - Xi[i+1,:];
+      M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
     
     //p[i] - ptilde[i] = rho[i]*g_n*H/2 + ff_nom*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05)/2;
@@ -251,7 +248,7 @@ initial equation
       if quasiStatic then
       // nothing
       else
-        //der(Xitilde[i,:]) = zeros(nXi);
+        der(Xitilde[i,:]) = zeros(nXi);
         der(Ttilde[i]) = 0;
       end if;
     end for;

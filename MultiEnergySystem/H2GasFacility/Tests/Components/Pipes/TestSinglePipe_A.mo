@@ -20,7 +20,7 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
     Placement(visible = true, transformation(origin = {52, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation(
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = -m_flow_start*1.2, offset = m_flow_start, startTime = 75) annotation(
+  Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = -m_flow_start*2, offset = m_flow_start, startTime = 75) annotation(
     Placement(visible = true, transformation(origin = {26, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation(
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

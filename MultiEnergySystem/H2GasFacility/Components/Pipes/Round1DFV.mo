@@ -72,6 +72,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
 
   // Final parameters
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid";
+  final parameter Types.Pressure p_start[n+1] = linspace(pin_start, pout_start, n+1)"Pressure start value of fluids";
   final parameter Types.Pressure dp_nom = pin_start - pout_start "Nominal pressure drop";
   final parameter Types.Velocity u_nom = m_flow_start / (rho_nom * A) "Nominal mass flow rate";
   final parameter Types.Area S = L*omega "Total surface of the walls of one pipe of the heat exchanger";
@@ -85,24 +86,24 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   // State Variables
   Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = fill(X_start[1:nXi], n), nominal = fill(ones(nXi),n)) "Mass Composition state";
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) "Pressure state the pipe";
-  Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = pin_nom) "Press. state";
-  Types.Temperature Ttilde[n](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = T_start[2:n+1]) "State variable temperatures";
+  Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = p_start[2:end], each nominal = pin_nom) "Press. state";
+  Types.Temperature Ttilde[n](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.prefer, start = T_start[2:end]) "State variable temperatures";
   Types.Density rhotilde[n](each start = rho_nom);
   Types.SpecificEnergy utilde[n];
 
 
   // Inlet/Outlet Variables
-  Types.Temperature Tin(start = Tin_start) "Inlet temperature";
-  Types.Temperature Tout(start = Tout_start) "Outlet temperature";
+  Types.Temperature Tin "Inlet temperature";
+  Types.Temperature Tout "Outlet temperature";
   Types.SpecificEnthalpy hin(start = hin_start) "Inlet Specific enthalpy";
   Types.SpecificEnthalpy hout "Outlet Specific enthalpy";
-  Types.Pressure pin(start = pin_start) "Inlet pressure";
-  Types.Pressure pout(start = pout_start) "Outlet pressure";
+  Types.Pressure pin "Inlet pressure";
+  Types.Pressure pout "Outlet pressure";
 
   // Vector Variables
   Types.Mass M[n] "Mass of fluid in each finite volume";
   Types.Mass Mt "Total mass in the full volume";
-  Types.Density rho[n + 1](each start = rho_nom) "Density at each volume boundary";
+  Types.Density rho[n + 1] "Density at each volume boundary";
   Types.MassFlowRate m_flow[n + 1](each min = if allowFlowReversal then -Modelica.Constants.inf else 0, each start = m_flow_start, each nominal = 1) "Mass flow at each volume boundary";
   Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] "Volume boundary temperatures";
@@ -115,8 +116,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
 
   // Complementary variables
   Types.Time taur "Residence time";
-  Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start) "Reynolds";
-  Types.PerUnit ff[n + 1](each nominal = ff_nom, each min = 0, each start = ff_nom) "Friction factor";
+  Types.PerUnit Re[n + 1](each nominal = 1e5) "Reynolds";
+  Types.PerUnit ff[n + 1](each nominal = 5e-2, each min = 0, each start = ff_nom) "Friction factor";
   Real kf(unit = "1/m4");
   Types.Pressure dp(start = dp_nom) "Delta pressure";
 
@@ -141,8 +142,12 @@ equation
   fluid.Xi = Xi;
   fluid.p = p;
 // Equations to assign values from fluids properties
+  
+  //Re = max((Di/A)*homotopy(abs(m_flow)./fluid.mu_start+ones(n+1), m_flow_start./fluid.mu_start),ones(n+1)*4000);
+  //homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start));
   for i in 1:n + 1 loop
-    Re[i] = min(homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)), 4000) "Reynold's number";
+    Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000);
+    //Re[i] = min(homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)), 4000) "Reynold's number";
     if not constantFrictionFactor then
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
     else
@@ -163,14 +168,20 @@ equation
 
   M = Vi*rhotilde;
 
-  dvdttilde = if quasiStatic then {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} else
-              {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-              {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
-              {regStep(dp, fluid[i+1].dv_dX[1:nXi], fluid[i].dv_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
-  dudttilde = if quasiStatic then {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} else
-              {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-              {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n}+
-              {regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
+  dvdttilde = if quasiStatic then 
+                {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} +
+                {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n}
+              else
+                {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
+                {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
+                {regStep(dp, fluid[i+1].dv_dX[1:nXi], fluid[i].dv_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
+  dudttilde = if quasiStatic then 
+                {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
+                {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} 
+              else
+                {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
+                {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
+                {regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
  
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -193,9 +204,11 @@ equation
 // Balances
   for i in 1:n loop
     if quasiStatic then
-      m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]);
+      //m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]);
+      m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*dvdttilde[i];
+      m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h = M[i]*dudttilde[i] + (m_flow[i] - m_flow[i+1])*utilde[i] "Energy Balance";
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
-      0 = T[i] - T[i + 1];
+      //0 = T[i] - T[i + 1];
     else
       m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*dvdttilde[i] "Mass Balance";
       m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h = M[i]*dudttilde[i] + (m_flow[i] - m_flow[i+1])*utilde[i] "Energy Balance";
@@ -245,6 +258,7 @@ initial equation
     for i in 1:n loop
       if quasiStatic then
       // nothing
+        der(Ttilde[i]) = 0;
       else
         der(Xitilde[i,:]) = zeros(nXi);
         der(Ttilde[i]) = 0;

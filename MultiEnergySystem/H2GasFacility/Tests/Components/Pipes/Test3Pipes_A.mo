@@ -14,7 +14,7 @@ model Test3Pipes_A
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
 
-  // Components
+// Components
   H2GasFacility.Sources.SourcePressure sourceP(
     redeclare model Medium = Medium, T0=293.15, X0 = Xref, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (
     Placement(visible = true, transformation(origin={-68,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -152,7 +152,6 @@ equation
   annotation (
     experiment(
       StopTime=250,
-      Interval=0.0350035,
-      Tolerance=1e-07,
-      __Dymola_Algorithm="Dassl"));
+      Interval=0.0350042,
+      Tolerance=1e-07, StartTime = 0));
 end Test3Pipes_A;

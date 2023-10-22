@@ -83,10 +83,13 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = fill(X_start[1:nXi], n), nominal = fill(1e-2*ones(nXi),n)) "Mass Composition state";
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = fill(X_start[1:nXi], n), nominal = fill(ones(nXi),n)) "Mass Composition state";
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) "Pressure state the pipe";
   Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = linspace(pin_start, pout_start, n), each nominal = pin_nom) "Press. state";
   Types.Temperature Ttilde[n](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = T_start[2:n+1]) "State variable temperatures";
+  Types.Density rhotilde[n](each start = rho_nom);
+  Types.SpecificEnergy utilde[n];
+
 
   // Inlet/Outlet Variables
   Types.Temperature Tin(start = Tin_start) "Inlet temperature";
@@ -100,19 +103,22 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Mass M[n] "Mass of fluid in each finite volume";
   Types.Mass Mt "Total mass in the full volume";
   Types.Density rho[n + 1](each start = rho_nom) "Density at each volume boundary";
-  Types.MassFlowRate m_flow[n + 1](each min = if allowFlowReversal then -Modelica.Constants.inf else 0, each start = m_flow_start, each nominal = 1e-4) "Mass flow at each volume boundary";
+  Types.MassFlowRate m_flow[n + 1](each min = if allowFlowReversal then -Modelica.Constants.inf else 0, each start = m_flow_start, each nominal = 1) "Mass flow at each volume boundary";
   Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] "Volume boundary temperatures";
-  Types.SpecificEnthalpy h[n + 1](each nominal = 1e6) "Specific enthalpy at each fluid";
-  Types.MassFraction Xi[n + 1, nXi](nominal = fill(1e-2*ones(nXi),n+1)) "Mass fractions at each volume boundary";
+  Types.SpecificEnthalpy h[n + 1] "Specific enthalpy at each fluid";
+  Types.MassFraction Xi[n + 1, nXi] "Mass fractions at each volume boundary";
   Types.Velocity u[n + 1](each start = u_nom, each nominal = 1) "Velocity at each volume boundary";
   Types.Pressure p[n + 1](each nominal = pin_nom) "Pressure at each fluid";
+  Real dvdttilde[n];
+  Real dudttilde[n];
 
   // Complementary variables
   Types.Time taur "Residence time";
   Types.PerUnit Re[n + 1](each nominal = 1e5, each start = Re_start) "Reynolds";
   Types.PerUnit ff[n + 1](each nominal = ff_nom, each min = 0, each start = ff_nom) "Friction factor";
   Real kf(unit = "1/m4");
+  Types.Pressure dp(start = dp_nom) "Delta pressure";
 
   // Fluids
   Medium fluid[n + 1](each p(nominal = pin_nom),
@@ -122,20 +128,20 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     each computeTransport = computeTransport,
     each computeEntropy = computeEntropy);
 
+  Medium fluid_temp(
+    T_start = Tin_start, 
+    p_start = pin_start, 
+    X_start = X_start,
+    computeTransport = computeTransport,
+    computeEntropy = computeEntropy);
+
 equation
 // Equations to set the fluid properties
-  for i in 1:n + 1 loop
-    fluid[i].T = T[i] "Temperature at each volume boundary is equal to its equivalent value in the vector variable T";
-    fluid[i].Xi = Xi[i, :] "Mass fraction at each volume boundary is equal to its equivalent value in the vector variable Xi";
-    fluid[i].p = p[i] "Pressure at each volume boundary is equal to ptilde";
-    //fluid[i].p = ptilde "Pressure at each volume boundary is equal to ptilde";
-  end for;
+  fluid.T = T;
+  fluid.Xi = Xi;
+  fluid.p = p;
 // Equations to assign values from fluids properties
   for i in 1:n + 1 loop
-    h[i] = fluid[i].h "Specific enthalpy at each volume boundary";
-    rho[i] = fluid[i].rho "Density at each volume boundary";
-    q[i] = m_flow[i]/rho[i] "Volumetric flowrate at each volume boundary";
-    m_flow[i] = A*u[i]*rho[i] "Velocity - mass flowrate relationship";
     Re[i] = min(homotopy(Di*abs(m_flow[i])/(A*fluid[i].mu_start), Di*m_flow_start/(A*fluid[i].mu_start)), 4000) "Reynold's number";
     if not constantFrictionFactor then
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
@@ -143,10 +149,29 @@ equation
       ff[i]=0.02;
     end if;
   end for;
+  h = fluid.h;
+  rho = fluid.rho;
+  q = m_flow./rho;
+  m_flow = A*u.*rho;
+  
 // Relationships for state variables
-  Ttilde = T[2:n + 1];
-  Xitilde = Xi[2:n + 1, :];
-
+  Ttilde = regStep(pin-pout, T[2:end], T[1:end-1], Tin_start*1e-5);
+  Xitilde = regStep(pin-pout, Xi[2:end,:], Xi[1:end-1,:], 1e-7);
+  rhotilde = regStep(pin-pout, rho[2:n+1], rho[1:n], rho_nom*1e-5);
+  utilde = regStep(pin-pout, fluid[2:end].u, fluid[1:end-1].u, 1);
+  ptilde = p[2:end];
+  //ptilde = regStep(pin-pout, p[2:end], p[1:end-1], pin_start*1e-5);
+  //Xitilde = Xi[2:n + 1, :];
+  M = Vi*rhotilde;
+  dvdttilde = regStep(pin-pout, fluid[2:end].dv_dT, fluid[1:end-1].dv_dT).*der(Ttilde) + 
+              //regStep(pin-pout, fluid[2:end].dv_dp, fluid[1:end-1].dv_dp).*der(ptilde) +
+              fluid[2:end].dv_dp.*der(ptilde)+
+             {regStep(pin-pout, fluid[i+1].dv_dX*der(fluid[i+1].X), fluid[i].dv_dX*der(fluid[i].X),1e-7) for i in 1:n};
+  dudttilde = regStep(pin-pout, fluid[2:end].du_dT, fluid[1:end-1].du_dT).*der(Ttilde) +
+              //regStep(pin-pout, fluid[2:end].du_dp, fluid[1:end-1].du_dp).*der(ptilde) +
+              fluid[2:end].du_dp.*der(ptilde) + 
+             {regStep(pin-pout, fluid[i+1].du_dX*der(fluid[i+1].X), fluid[i].du_dX*der(fluid[i].X),1e-7) for i in 1:n};
+ 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
   Tout = fluid[n+1].T "Outlet temperature equals to temperature of last fluid";
@@ -160,19 +185,32 @@ equation
   outlet.p = p[n+1];
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n+1];
+  inlet.h_out = fluid[1].h;
+  outlet.h_out = fluid[end].h;
+  inlet.Xi= fluid[1].Xi;
+  outlet.Xi = fluid[end].Xi;  
 
 // Balances
   for i in 1:n loop
-    M[i] = Vi*rho[i+1];
     if quasiStatic then
-      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p));
+      m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*(fluid[i + 1].dv_dp*der(fluid[i + 1].p));
+      //m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*regStep(pin-pout, fluid[i+1].dv_dp, fluid[i].dv_dp)*der(ptilde);
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
       0 = T[i] - T[i + 1];
     else
-      m_flow[i] - m_flow[i + 1] = -Vi*rho[i + 1]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
+      //m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*(fluid[i + 1].dv_dT*der(fluid[i + 1].T) + fluid[i + 1].dv_dp*der(fluid[i + 1].p) + fluid[i + 1].dv_dX*der(fluid[i + 1].X));
+      m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*dvdttilde[i];
+      
       m_flow[i]*fluid[i].h - m_flow[i + 1]*fluid[i + 1].h = M[i]*(fluid[i + 1].du_dT*der(fluid[i + 1].T) + fluid[i + 1].du_dp*der(fluid[i + 1].p) + fluid[i + 1].du_dX*der(fluid[i + 1].X)) + (m_flow[i] - m_flow[i + 1])*fluid[i + 1].u "Energy Balance";
-      M[i]*der(fluid[i+1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i+1, :]);
+      //M[i]*dudttilde[i] + (m_flow[i] - m_flow[i + 1])*utilde[i] = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h  "Energy Balance";
+      //M[i]*der(fluid[i+1].Xi) = m_flow[i]*(Xi[i, :] - Xi[i+1, :]);
+      //M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i, :] - Xi[i+1, :]);
+      //Xi[i+1,:] = Xi[i, :] - (M[i]/m_flow[i])*der(Xitilde[i,:]);
+      //der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:]-Xi[i+1,:])/M[i];
+      //M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
+      M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
+    //M.*der(Xitilde) + Xitilde*(m_flow
     // Momentum Balance
     if not computeInertialTerm then
     //-L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
@@ -180,30 +218,21 @@ equation
     else
       -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
     end if;
-    ptilde[i] = if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream then p[i+1] else p[i];
   end for;
+    
 
-
-  if not allowFlowReversal then
-    inlet.h_out = fluid[1].h;
-    inlet.Xi = fluid[1].Xi;
-    outlet.h_out = fluid[n+1].h;
-    outlet.Xi = fluid[n+1].Xi;
-    fluid[1].h = inStream(inlet.h_out);
-    fluid[1].Xi = inStream(inlet.Xi);
+  
+  if noEvent(pin-pout > 0) then
+    T[1] = fluid_temp.T;
+    Xi[1,:] = fluid_temp.Xi;
   else
-    inlet.h_out = regStep(pin-pout, -4.52e6, fluid[1].h,1e2);
-    inlet.Xi = regStep(pin-pout, X_start[1:nXi], fluid[1].Xi);
-    outlet.h_out = regStep(pin-pout, fluid[n+1].h, -4.52e6,1e2);
-    outlet.Xi = regStep(pin-pout, fluid[n+1].Xi, X_start[1:nXi]);
-    if pin-pout>=0 then
-      fluid[1].h = inStream(inlet.h_out);
-      fluid[1].Xi = inStream(inlet.Xi);
-    else
-      fluid[n+1].h = inStream(outlet.h_out);
-      fluid[n+1].Xi = inStream(outlet.Xi);
-    end if;
+    T[end] = fluid_temp.T;
+    Xi[end,:] = fluid_temp.Xi;
   end if;
+
+  fluid_temp.p = pout;
+  fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5), hin_start);
+  fluid_temp.Xi = homotopy(regStep(dp, inStream(inlet.Xi), inStream(outlet.Xi), 1e-7), X_start);
 
   //fluid[1].h = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.h_out) elseif m_flow[1] >= 0 then inStream(inlet.h_out) else actualStream(inlet.h_out)), inStream(inlet.h_out));
   //fluid[1].Xi = homotopy(noEvent(if not allowFlowReversal then inStream(inlet.Xi) elseif m_flow[1]>= 0 then inStream(inlet.Xi) else actualStream(inlet.Xi)), inStream(inlet.Xi));
@@ -211,6 +240,7 @@ equation
   //fluid[n+1].Xi = homotopy(noEvent(if not allowFlowReversal then actualStream(outlet.Xi) elseif m_flow[n+1]< 0 then actualStream(outlet.Xi) else inStream(outlet.Xi)), actualStream(outlet.Xi));
 
   kf = cf*omega*L/(2*A^3);
+  dp = pin-pout;
 
 // Complementary variables
   Mt = sum(M);

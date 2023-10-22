@@ -200,8 +200,11 @@ equation
   dp_dv = p/(((-Zcoeff[1]*exp(-Zcoeff[2]*Tr_mix) + 2*pr_mix*Zcoeff[3]*exp(-Zcoeff[4]*Tr_mix))/p_c_mix) - v) "in mass units";
   dp_dT = ((R/MM_mix)*T*(Zcoeff[1]*Zcoeff[2]*pr_mix*exp(-Zcoeff[2]*Tr_mix)/p_c_mix - Zcoeff[3]*Zcoeff[4]*pr_mix^2*exp(-Zcoeff[4]*Tr_mix)/T_c_mix) + Z*(R/MM_mix)) / (v - (R/MM_mix)*T*(-Zcoeff[1]*exp(-Zcoeff[2]*Tr_mix)/p_c_mix + Zcoeff[3]*exp(-Zcoeff[4]*Tr_mix)*2*pr_mix/p_c_mix));
   dv_dT = ((R/MM_mix)*T*dZ_dT + Z*(R/MM_mix))/p;
+  //dv_dT = ((R/MM_mix)*T*dZ_dT + Z*(R/MM_mix))/(Z*R*T/v_mol);
   dv_dp = ((R/MM_mix)*T*dZ_dp - v)/p;
+  //dv_dp = ((R/MM_mix)*T*dZ_dp - v)/(Z*R*T/v_mol);
   dv_dX = ((R/MM_mix)*T*dZ_dX - Z*T*(R/MM_mix^2)*MM*dY_dX)/p;
+  //dv_dX = ((R/MM_mix)*T*dZ_dX - Z*T*(R/MM_mix^2)*MM*dY_dX)/(Z*R*T/v_mol);
   drho_dp = -rho^2*dv_dp;
   drho_dT = -rho^2*dv_dT;
   drho_dX = -rho^2*dv_dX;

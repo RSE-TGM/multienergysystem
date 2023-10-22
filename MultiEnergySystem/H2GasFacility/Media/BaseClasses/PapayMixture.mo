@@ -144,9 +144,15 @@ protected
 initial equation
   assert(abs(p/p_start - 1) < 0.25, "Please check p_start, you may get convergence to wrong solution of P-R EoS", AssertionLevel.warning);
 equation
-  X[1:nXi] = Xi;
-  X[nX] = 1 - sum(Xi);
-
+  if nX == nXi+1 then
+    X[1:nXi] = Xi;
+    X[nX] = 1 - sum(Xi);
+  else
+    X = Xi;
+  end if;
+//  X[1:nXi] = Xi;
+//  X[nX] = 1 - sum(Xi);
+  
   assert(sum(X) > 0, "error1");
   assert(sum(MM) > 0, "error2");
 

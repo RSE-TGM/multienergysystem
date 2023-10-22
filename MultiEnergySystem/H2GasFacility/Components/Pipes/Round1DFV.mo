@@ -119,7 +119,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.PerUnit Re[n + 1](each nominal = 1e5) "Reynolds";
   Types.PerUnit ff[n + 1](each nominal = 5e-2, each min = 0, each start = ff_nom) "Friction factor";
   Real kf(unit = "1/m4");
-  Types.Pressure dp(start = dp_nom) "Delta pressure";
+  Types.Pressure dp "Delta pressure";
 
   // Fluids
   Medium fluid[n + 1](each p(nominal = pin_nom),

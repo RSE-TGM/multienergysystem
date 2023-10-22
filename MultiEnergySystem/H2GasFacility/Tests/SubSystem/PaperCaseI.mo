@@ -7,7 +7,7 @@ partial model PaperCaseI "Distribution network example from [1]"
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = false;
-  parameter Integer n = 5 "Number of volumes in each pipeline";
+  parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter Types.MassFraction X_start_H2[7] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
@@ -270,7 +270,7 @@ partial model PaperCaseI "Distribution network example from [1]"
 protected
   function residentialDemand_mfr
     input Types.MassFlowRate m_flow_max;
-    output Real[:,2] demand;
+    output Real[14,2] demand;
   algorithm
     demand := [0, m_flow_max*0.9; 1*3600, m_flow_max*0.9; 2*3600, m_flow_max*0.4; 3*3600, m_flow_max*0.4; 4*3600, m_flow_max*0.8; 6*3600, m_flow_max*0.8; 7*3600, m_flow_max*0.4; 9*3600, m_flow_max*0.4; 10*3600, m_flow_max*1; 13*3600, m_flow_max*1; 15*3600, m_flow_max*0.1; 21*3600, m_flow_max*0.1; 22*3600, m_flow_max*0.9; 24*3600, m_flow_max*0.9];
     annotation (
@@ -279,7 +279,7 @@ protected
 
   function industrialDemand_mfr
     input Types.MassFlowRate m_flow_max;
-    output Real[:,2] demand;
+    output Real[5,2] demand;
   algorithm
     demand := [0, m_flow_max*1; 10*3600, m_flow_max*1; 11*3600, m_flow_max*0.8; 22*3600, m_flow_max*0.8; 24*3600, m_flow_max*1];
     annotation (

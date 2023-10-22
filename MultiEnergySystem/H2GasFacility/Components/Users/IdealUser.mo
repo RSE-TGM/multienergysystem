@@ -2,7 +2,7 @@ within MultiEnergySystem.H2GasFacility.Components.Users;
 model IdealUser
   replaceable model Medium = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
-  // Parameters
+// Parameters
   parameter Boolean useEnergyDemand = false "True if the demand approach uses energy instead of mass flowrate";
   parameter Types.Pressure p0(nominal = 1e4) = 0.5e5 "Nominal pressure";
   parameter Types.MassFlowRate m_flow0(nominal = 0.01) = 0.04 "Nominal mass flowrate";
@@ -12,7 +12,7 @@ model IdealUser
   parameter Types.MassFlowRate massflowratedemand[:,2] = [0, m_flow0; 24*3600, m_flow0] "Table for demand";
   parameter Types.Power energydemand[:, 2] = [0, m_flow0; 24*3600, m_flow0] "Table for energy demand";
 
-  // Variables
+// Variables
   Types.MassFraction Xi[sink_demand.fluid.nXi] "Fluid mass flow rate";
   Types.SpecificEnthalpy h "Fluid specific enthalpy";
   Types.Pressure p "Fluid pressure outlet";
@@ -21,7 +21,7 @@ model IdealUser
 
 
   Medium fluid(p_start = p0, T_start = T0, X_start = X0);
-  H2GasFacility.Sources.SinkMassFlow sink_demand(G = 0, redeclare model Medium = Medium, T0 = T0, X0 = X0, m_flow0 = m_flow0, p0 = p0, use_in_m_flow0 = true) annotation (
+  H2GasFacility.Sources.SinkMassFlow sink_demand(G = 0, redeclare model Medium = Medium, T0 = T0, X0 = X0, m_flow0 = m_flow0, p0 = p0, pin_start = p0, use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet(nXi = sink_demand.fluid.nXi) annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));

@@ -170,10 +170,10 @@ equation
              //{regStep(dp, fluid[i+1].dv_dX*der(fluid[i+1].X), fluid[i].dv_dX*der(fluid[i].X),1e-7) for i in 1:n};
   dvdttilde = {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
               {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
-              {regStep(dp, fluid[i+1].dv_dX, fluid[i].dv_dX, dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
+              {regStep(dp, fluid[i+1].dv_dX[1:nXi], fluid[i].dv_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
               {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n}+
-              {regStep(dp, fluid[i+1].du_dX, fluid[i].du_dX, dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
+              {regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], dp_nom*1e-5)*der(Xitilde[i,:]) for i in 1:n};
  
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";

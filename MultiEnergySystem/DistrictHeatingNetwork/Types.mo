@@ -21,8 +21,7 @@ package Types
                                         nominal = 10);
   type SpecificVolume = Real (
       final quantity="SpecificVolume",
-      final unit="m3/kg",
-      nominal = 0.1);
+      final unit="m3/kg");
   type MolarVolume =
       Modelica.Units.SI.MolarVolume (             nominal = 1e-3);
   type MassFlowRate =

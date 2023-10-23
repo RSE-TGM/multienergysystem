@@ -29,7 +29,7 @@ model PipePumpTestBase "Base test model for pumps' tests"
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp omega(duration = 10, height = 0, offset = Pump.P101.omeganom, startTime = 10) annotation(
     Placement(visible = true, transformation(origin = {-60, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp theta(duration = 20, height = 0, offset = 1, startTime = 30) annotation(
+  Modelica.Blocks.Sources.Ramp theta(duration = 20, height = -0.5, offset = 1, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {-20, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale cvalve(Kv = 33.25192916, dp_nom = 20000) annotation(
     Placement(visible = true, transformation(origin = {0, 10}, extent = {{-8, -8}, {8, 8}}, rotation = 0)));
@@ -37,8 +37,10 @@ model PipePumpTestBase "Base test model for pumps' tests"
     Placement(visible = true, transformation(origin = {36, 10}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_set(duration = 20, height = 5.5, offset = 0.5, startTime = 30) annotation(
     Placement(visible = true, transformation(origin = {50, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkP annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkPressure sinkP(T0 = Tout_start, p0 = pout_start)  annotation(
     Placement(visible = true, transformation(origin = {72, 10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.Wall_FixedT wall_FixedT(Twall = system.T_amb, n = n) annotation(
+    Placement(visible = true, transformation(origin = {36, 26}, extent = {{-10, 10}, {10, -10}}, rotation = 180)));
 equation
   connect(pump.inlet, sourceP.outlet) annotation(
     Line(points = {{-48.4, 0}, {-70.4, 0}}, color = {140, 56, 54}));
@@ -52,6 +54,8 @@ equation
     Line(points = {{-8, 50}, {0, 50}, {0, 16}}, color = {0, 0, 127}));
   connect(omega.y, pump.in_omega) annotation(
     Line(points = {{-48, 50}, {-42, 50}, {-42, 10}}, color = {0, 0, 127}));
+  connect(wall_FixedT.MultiPort, pipe1.wall) annotation(
+    Line(points = {{36, 26}, {36, 18}}, color = {255, 238, 44}));
 protected
   annotation(
     Icon(coordinateSystem(preserveAspectRatio = false)),

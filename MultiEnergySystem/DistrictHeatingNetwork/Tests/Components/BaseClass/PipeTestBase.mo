@@ -26,7 +26,7 @@ model PipeTestBase
     Placement(visible = true, transformation(origin = {0, 70}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = Tin_start, h0 = hin_start, p0 = pin_start) annotation(
     Placement(visible = true, transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Sources.SinkPressure sinkP(T0 = Tout_start, h0 = hout_start, p0 = pout_start, use_in_p0 = true) annotation(
+  Sources.SinkPressure sinkP(T0 = Tout_start, p0 = pout_start, use_in_p0 = true) annotation(
     Placement(visible = true, transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner System system annotation(
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

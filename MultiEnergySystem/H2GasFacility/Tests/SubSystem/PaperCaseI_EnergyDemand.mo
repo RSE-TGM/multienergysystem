@@ -38,7 +38,7 @@ protected
     input Types.Power W_max;
     output Real[:,2] demand;
   algorithm
-    demand := [0, W_max*1; 10*3600, W_max*1; 11*3600, W_max*0.75; 22*3600, W_max*0.75; 24*3600, W_max*1];
+    demand := [0, W_max*1; 10*3600, W_max*1; 11*3600, W_max*0.2; 22*3600, W_max*0.2; 24*3600, W_max*1];
     annotation (
       Inline = true);
   end industrialDemand_W;

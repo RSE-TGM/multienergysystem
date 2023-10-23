@@ -6,7 +6,7 @@ partial model PaperCaseI "Distribution network example from [1]"
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = false;
+  parameter Boolean quasiStatic = true;
   parameter Boolean constantFrictionFactor = true;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
@@ -284,7 +284,7 @@ protected
     input Types.MassFlowRate m_flow_max;
     output Real[5,2] demand;
   algorithm
-    demand := [0, m_flow_max*1; 10*3600, m_flow_max*1; 11*3600, m_flow_max*0.8; 22*3600, m_flow_max*0.8; 24*3600, m_flow_max*1];
+    demand := [0, m_flow_max*1; 10*3600, m_flow_max*1; 11*3600, m_flow_max*0.2; 22*3600, m_flow_max*0.2; 24*3600, m_flow_max*1];
     annotation (
       Inline = true);
   end industrialDemand_mfr;

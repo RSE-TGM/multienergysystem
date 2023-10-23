@@ -2,10 +2,13 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 
 partial model PumpBase "Base model to develop water pump models"
   extends DistrictHeatingNetwork.Icons.Water.WaterPump;
-  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  //   choicesAllMatching = true);
+  //Medium.ThermodynamicState fluidIn;
+  //Medium.ThermodynamicState fluidOut;
+  
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid annotation(
      choicesAllMatching = true);
-  Medium.ThermodynamicState fluidIn;
-  Medium.ThermodynamicState fluidOut;
   //Constants
   parameter Real a[3] = {338.084416, 130887.059346, -8074937.668508} "value of coefficients for Linear Power Characteristic of pump model";
   parameter Real b[3] = {7.38557689, 617.03274734, -545218.57934041} "value of quadratic polynomial coefficients for head calculation";
@@ -51,6 +54,9 @@ partial model PumpBase "Base model to develop water pump models"
   parameter Types.Length headmin = 2.5 "minimum head" annotation(
     Dialog(group = "Pump Characteristics"));
   parameter Real qnom_inm3h_min(unit = "m3/h") = 5.5;
+  
+  Medium fluidIn(T_start = Tin_start, p_start = pin_start);
+  Medium fluidOut(T_start = Tout_start, p_start = pout_start);
 
   //Final parameters
   final parameter Types.VolumeFlowRate qnom = qnom_inm3h/3600 "nominal compressor volume flowrate" annotation(
@@ -88,22 +94,29 @@ equation
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
   assert(headmax > head or headmin < head, "Head is outside the operating range", AssertionLevel.error);
   
-  q_m3hr = q*3600;
-  pin = inlet.p;
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;
-  pout = outlet.p;
-  hout = outlet.h_out;
   
-  // Fluid properties
-  fluidIn = Medium.setState_phX(pin, hin);
-  rhoin = Medium.density(fluidIn);
-  Tin = Medium.temperature(fluidIn);
-  fluidOut = Medium.setState_phX(pout, hout);
-  rhoout = Medium.density(fluidOut);
-  Tout = Medium.temperature(fluidOut);
+  // Boundary conditions
+  inlet.p = pin;
+  inlet.h_out = hin;  
+  outlet.p = pout;
+  outlet.h_out = hout;
+  
+  // Equations to set fluid properties  
+  {fluidIn.p, fluidIn.h} = {pin, hin};
+  {fluidOut.p, fluidOut.h} = {pout, hout};
+  
+  // Inlet/outlet variables from fluids
+  Tin = fluidIn.T;
+  rhoin = fluidIn.rho;
+  Tout = fluidOut.T;
+  rhoout = fluidOut.rho;
+   
+  // Additional variables
   dp = pout - pin;
   q = m_flow/rhoin;
+  q_m3hr = q*3600;
   W = homotopy((omega/omeganom)^3*(a[1] + q_m3hr*(omeganom/omega)*(a[2] + a[3]*q_m3hr*(omeganom/omega))),
                ((a[1] + q_m3hr*(omeganom/omega)*(a[2] + a[3]*q_m3hr*(omeganom/omega)))))  "Power Characteristic equation";
   head = if q_m3hr >= qnom_inm3h_min then homotopy((omega/omeganom)^2*(b[1]+ q_m3hr*(omeganom/omega)*(b[2] + b[3]*q_m3hr*(omeganom/omega))),
@@ -119,7 +132,7 @@ equation
   0 = outlet.m_flow*hout + inlet.m_flow*hin + W - Qloss "Energy balance";
   Pm = W/etamech;
   Pe = Pm/etaelec;
-  inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";
+  //inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";
   annotation(
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));

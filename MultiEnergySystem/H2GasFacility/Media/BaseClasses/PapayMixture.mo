@@ -55,7 +55,7 @@ partial model PapayMixture
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.MoleFraction Y[nX](start = Y_start) "Mole fractions of the components";
-  Types.MolarMass MM_mix(start = MM*Y_start) "Molar Mass of the fluid (mixture)";
+  Types.MolarMass MM_mix(start = MM*Y_start, nominal = MM*Y_start) "Molar Mass of the fluid (mixture)";
   Types.SpecificVolume v(start = v_mol_start/MM_mix_start) "Speficic volume";
   Types.MolarVolume v_mol(start = v_mol_start) "Molar volume";
   Types.DerPressureByTemperature dp_dT "Temperature derivative of Pressure at constant specific volume";
@@ -63,7 +63,7 @@ partial model PapayMixture
   Types.PerUnit Tr[nX](start = T_start./T_c) "Reduced temperatures of each component";
   Types.PerUnit Tr_mix(start = T_start/T_c[posDom]) "Pseudo-reduced temperature of the mixture";
   Types.PerUnit pr[nX](start = p_start./p_c) "Reduced pressure of each component";
-  Types.PerUnit pr_mix "Pseudo-reduced pressure of the mixture";
+  Types.PerUnit pr_mix(start = p_start/p_c[posDom]) "Pseudo-reduced pressure of the mixture";
   Types.PerUnit Tr0[nX](start = T0./T_c) "Reduced temperatures of each component";
   Types.PerUnit dY_dX[nX, nX](start = dY_dX_start) "Mole fraction derivative of mass fraction per each component";
   Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";

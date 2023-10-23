@@ -34,7 +34,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Choices"));
   parameter Boolean computeInertialTerm = false "Used to decide if the inertial term is considered in the momentum balance" annotation (
     Dialog(group = "Choices"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state (hydraulic capacitance)" annotation (
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream "Location of pressure state (hydraulic capacitance)" annotation (
     Dialog(group = "Choices"));
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure "Momentum equation according to the operating pressure" annotation (
     Dialog(group = "Choices"));
@@ -60,7 +60,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(tab = "Data", group = "Pipe"));
   parameter Real k_linear(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the linear pressure loss across the pipe" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-
+  parameter Real dp_small = 1e-5;
+  
   parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation (
     Dialog(group = "Heat Transfer Model"));
   parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation (
@@ -159,28 +160,28 @@ equation
   m_flow = A*u.*rho;
   
 // Relationships for state variables
-  Ttilde = regStep(dp, T[2:end], T[1:end-1],dp_nom*1e-7);
-  Xitilde = regStep(dp, Xi[2:end,:], Xi[1:end-1,:], dp_nom*1e-7);
-  rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*1e-7);
-  utilde = regStep(dp, fluid[2:end].u, fluid[1:end-1].u, dp_nom*1e-7);
+  Ttilde = regStep(dp, T[2:end], T[1:end-1],dp_nom*dp_small);
+  Xitilde = regStep(dp, Xi[2:end,:], Xi[1:end-1,:], dp_nom*dp_small);
+  rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*dx);
+  utilde = regStep(dp, fluid[2:end].u, fluid[1:end-1].u, dp_nom*dp_small);
   //ptilde = p[2:end];
 
   M = Vi*rhotilde;
 
   dvdttilde = if quasiStatic then 
-                {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} +
-                {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n}
+                {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} +
+                {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n}
               else
-                {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-                {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
-                {regStep(dp, fluid[i+1].dv_dX, fluid[i].dv_dX, dp_nom*1e-7)*der(Xitilde[i,:]) for i in 1:n};
+                {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} + 
+                {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n} +
+                {regStep(dp, fluid[i+1].dv_dX, fluid[i].dv_dX, dp_nom*dp_small)*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = if quasiStatic then 
-                {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-                {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} 
+                {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} + 
+                {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n} 
               else
-                {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
-                {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
-                {regStep(dp, fluid[i+1].du_dX, fluid[i].du_dX, dp_nom*1e-7)*der(Xitilde[i,:]) for i in 1:n};
+                {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} + 
+                {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n} +
+                {regStep(dp, fluid[i+1].du_dX, fluid[i].du_dX, dp_nom*dp_small)*der(Xitilde[i,:]) for i in 1:n};
  
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";

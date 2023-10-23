@@ -162,7 +162,7 @@ equation
 // Relationships for state variables
   Ttilde = regStep(dp, T[2:end], T[1:end-1],dp_nom*dp_small);
   Xitilde = regStep(dp, Xi[2:end,:], Xi[1:end-1,:], dp_nom*dp_small);
-  rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*dx);
+  rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*dp_small);
   utilde = regStep(dp, fluid[2:end].u, fluid[1:end-1].u, dp_nom*dp_small);
   //ptilde = p[2:end];
 

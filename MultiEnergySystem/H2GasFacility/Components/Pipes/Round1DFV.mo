@@ -173,14 +173,14 @@ equation
               else
                 {regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
                 {regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
-                {regStep(dp, fluid[i+1].dv_dX[1:nXi], fluid[i].dv_dX[1:nXi], dp_nom*1e-7)*der(Xitilde[i,:]) for i in 1:n};
+                {regStep(dp, fluid[i+1].dv_dX, fluid[i].dv_dX, dp_nom*1e-7)*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = if quasiStatic then 
                 {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
                 {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} 
               else
                 {regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*1e-7)*der(ptilde[i]) for i in 1:n} + 
                 {regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*1e-7)*der(Ttilde[i]) for i in 1:n} +
-                {regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], dp_nom*1e-7)*der(Xitilde[i,:]) for i in 1:n};
+                {regStep(dp, fluid[i+1].du_dX, fluid[i].du_dX, dp_nom*1e-7)*der(Xitilde[i,:]) for i in 1:n};
  
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -230,21 +230,20 @@ equation
 //      -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
 //    end if;
   end for;
-    
+  
   if noEvent(dp > 0) then
+    fluid_temp.p = inlet.p;
+    fluid_temp.h = inStream(inlet.h_out);
+    fluid_temp.Xi = inStream(inlet.Xi);
     T[1] = fluid_temp.T;
     Xi[1,:] = fluid_temp.Xi;
   else
+    fluid_temp.p = outlet.p;
+    fluid_temp.h = inStream(outlet.h_out);
+    fluid_temp.Xi = inStream(outlet.Xi);
     T[end] = fluid_temp.T;
     Xi[end,:] = fluid_temp.Xi;
   end if;
-
-  //fluid_temp.p = pout;
-  fluid_temp.p = regStep(dp, inlet.p, outlet.p, dp_nom*1e-5);
-  //fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5), hin_start);
-  fluid_temp.h = regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5);
-  //fluid_temp.Xi = homotopy(regStep(dp, inStream(inlet.Xi), inStream(outlet.Xi), dp_nom*1e-5), X_start[1:nXi]);
-  fluid_temp.Xi = regStep(dp, inStream(inlet.Xi), inStream(outlet.Xi), dp_nom*1e-5);
 
   kf = cf*omega*L/(2*A^3);
   dp = pin-pout;
@@ -283,7 +282,5 @@ initial equation
   else
 // No initial equations
   end if;
-
-
 
 end Round1DFV;

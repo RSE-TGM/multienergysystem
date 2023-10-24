@@ -22,7 +22,7 @@ partial model IdealMixture
   parameter Real LHV_SCM[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature, Standard conditions";
   parameter Types.Pressure p0 = 101325 "Reference pressure, Standard conditions";
-  parameter Types.DynamicViscosity mu_const "Constant Dynamic viscosity";
+  //parameter Types.DynamicViscosity mu_const "Constant Dynamic viscosity";
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
 
   // Final parameters

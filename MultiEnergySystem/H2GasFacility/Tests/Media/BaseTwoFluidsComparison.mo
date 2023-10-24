@@ -2,13 +2,13 @@ within MultiEnergySystem.H2GasFacility.Tests.Media;
 
 model BaseTwoFluidsComparison
   extends Modelica.Icons.Example;
-  replaceable model Medium1 = H2GasFacility.Media.RealGases.NaturalGasPR constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Fluid reference";
-  replaceable model Medium2 = H2GasFacility.Media.RealGases.NaturalGasPapay constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Fluid compared";
+  replaceable model Medium1 = H2GasFacility.Media.IdealGases.NG6_H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Fluid reference";
+  replaceable model Medium2 = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Fluid compared";
   
   parameter Types.Temperature T_ref = 20 + 273.15 "Reference temperature";
   parameter Types.Pressure p_ref = 0.05e5 "Reference pressure";
   parameter Types.MassFraction X_ref[:] = M/Mt "Mass Fraction of the real gas";
-  parameter Types.MoleFraction Y[:] = {0.85306, 0.06486, 0.02058, 0.0028, 0.00437, 0.00099, 0.00063, 0.03882, 0.01268};
+  parameter Types.MoleFraction Y[:] = H2GasFacility.Data.MassMolFractionData.NG_Guzzo_Russian.Y;
   parameter Types.MolarMass M[:] = Y.*medium1.MM;
   parameter Types.MolarMass Mt = sum(M);
   

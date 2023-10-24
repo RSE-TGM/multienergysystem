@@ -16,8 +16,7 @@ model CH4
       HHV_SCM = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.CH4.HHV_SCM},
       LHV_SCM = {50e6},
       cp_coeff = {{-2.0604948457659e-05,0.02738991794621,-8.523906729998,2877.5194077417}},
-      mu_start = 1.1e-5,
-      mu_const = 1.1e-5);
+      mu_start = 1.1e-5);
 equation
 
 end CH4;

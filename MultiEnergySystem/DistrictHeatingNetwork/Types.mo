@@ -30,7 +30,7 @@ package Types
       Modelica.Units.SI.HeatFlowRate (              nominal = 1e6);
   type SpecificEnthalpy = SpecificEnergy;
   type SpecificEnergy =
-      Modelica.Units.SI.SpecificEnergy (                nominal = 1e4);
+      Modelica.Units.SI.SpecificEnergy (                nominal = 1e6);
   type SpecificEntropy =
       Modelica.Units.SI.SpecificEntropy (                 nominal = 5e2);
   type SpecificHeatCapacityWater =

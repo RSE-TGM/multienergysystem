@@ -4,7 +4,9 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
   extends Modelica.Icons.Example;
   replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
-  parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
+  //parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
+  parameter Types.MassFraction Xref_2[:] = {0.972, 0.018, 0.003, 0.001, 0.001, 0.005, 0};
+  //parameter Types.MassFraction Xref_2[:] = H2GasFacility.Data.MassMolFractionData.NG_Guzzo_Russian.X;
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
   parameter Integer n = 5 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
@@ -19,7 +21,7 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
   // Components
   H2GasFacility.Sources.SourcePressure sourceP(redeclare model Medium = Medium, T0(displayUnit = "K") = 293.15, X0 = Xref, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation(
     Placement(visible = true, transformation(origin = {-68, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  H2GasFacility.Sources.SinkMassFlow sink(G = 0, redeclare model Medium = Medium, T0(displayUnit = "K") = 288.15+ 5, X0 = Xref, m_flow0 = m_flow_start, p0 = 48000, pin_start = 48000, use_in_m_flow0 = true) annotation(
+  H2GasFacility.Sources.SinkMassFlow sink(G = 0, redeclare model Medium = Medium, T0(displayUnit = "K") = 288.15 + 5, X0 = Xref, m_flow0 = m_flow_start, p0 = 48000, pin_start = 48000, use_in_m_flow0 = true) annotation(
     Placement(visible = true, transformation(origin = {90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation(
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -31,9 +33,9 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
     Placement(visible = true, transformation(origin = {-86, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom, quasiStatic = quasiStatic, constantFrictionFactor = constantFrictionFactor, hctype = hctype, dp_small = dp_small) annotation(
     Placement(visible = true, transformation(origin = {-28, 2.22045e-16}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom, quasiStatic = quasiStatic, constantFrictionFactor = constantFrictionFactor, hctype = hctype, dp_small= dp_small) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom, quasiStatic = quasiStatic, constantFrictionFactor = constantFrictionFactor, hctype = hctype, dp_small = dp_small) annotation(
     Placement(visible = true, transformation(origin = {38, 0}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom, quasiStatic = quasiStatic, constantFrictionFactor =constantFrictionFactor, hctype = hctype, dp_small = dp_small) annotation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, constantFrictionFactor = constantFrictionFactor, dp_small = dp_small, hctype = hctype, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, quasiStatic = quasiStatic, rho_nom = Pipe.pipe1.rho_nom) annotation(
     Placement(visible = true, transformation(origin = {6, -50}, extent = {{22, -22}, {-22, 22}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium = Medium, R = 0, T0(displayUnit = "K") = 293.15, X0 = Xref_2, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation(
     Placement(visible = true, transformation(origin = {-20, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

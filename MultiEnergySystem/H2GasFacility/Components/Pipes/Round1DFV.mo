@@ -75,7 +75,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid";
   final parameter Types.Pressure p_start[n+1] = linspace(pin_start, pout_start, n+1)"Pressure start value of fluids";
   final parameter Types.Pressure dp_nom = pin_start - pout_start "Nominal pressure drop";
-  final parameter Types.Velocity u_nom = m_flow_start / (rho_nom * A) "Nominal mass flow rate";
+  final parameter Types.Velocity vel_nom = m_flow_start / (rho_nom * A) "Nominal mass flow rate";
   final parameter Types.Area S = L*omega "Total surface of the walls of one pipe of the heat exchanger";
   final parameter Types.Area Si = S / n "Surface of the wall of each finite volume (for one pipe)";
   final parameter Types.Area Stot = S * nPipes "Total surface of the wall";
@@ -109,8 +109,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1] "Specific enthalpy at each fluid";
-  Types.MassFraction Xi[n + 1, nXi] "Mass fractions at each volume boundary";
-  Types.Velocity u[n + 1](each start = u_nom, each nominal = 1) "Velocity at each volume boundary";
+  Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";
+  Types.Velocity vel[n + 1](each start = vel_nom, each nominal = 1) "Velocity at each volume boundary";
   Types.Pressure p[n + 1](each nominal = pin_nom) "Pressure at each fluid";
   Real dvdttilde[n](each start = 0);
   Real dudttilde[n](each start = 0);
@@ -130,7 +130,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.PerUnit Re[n + 1](each nominal = 1e5) "Reynolds";
   Types.PerUnit ff[n + 1](each nominal = 5e-2, each min = 0, each start = ff_nom) "Friction factor";
   Real kf(unit = "1/m4");
-  Types.Pressure dp(start = dp_nom) "Delta pressure";
+  Types.Pressure dp(start = dp_nom, nominal = 1e4) "Delta pressure";
 
   // Fluids
   Medium fluid[n + 1](each p(nominal = pin_nom),
@@ -167,7 +167,7 @@ equation
   h = fluid.h;
   rho = fluid.rho;
   q = m_flow./rho;
-  m_flow = A*u.*rho;
+  m_flow = A*vel.*rho;
   
 // Relationships for state variables
   Ttilde = regStep(dp, T[2:end], T[1:end-1],dp_nom*dp_small);

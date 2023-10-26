@@ -39,8 +39,8 @@ partial model IdealMixture
   final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
   final parameter Types.SpecificEnthalpy h_id_start = X_start*h_star_start;
   final parameter Types.DerPressurebySpecificVolume dp_dv_start = -(R*T_start/MM_mix_start)*rho_start^2;
-  final parameter Types.PerUnit dX_dX_start[nX, nX] = identity(nX);
-  final parameter Types.PerUnit dY_dX_start[nX, nX] = {(MM_mix_start/MM[i])*(dX_dX_start[i, j] - (MM_mix_start/MM[j])*X_start[i]) for j in 1:nX, i in 1:nX};
+  //final parameter Types.PerUnit dX_dX_start[nX, nX] = identity(nX);
+  //final parameter Types.PerUnit dY_dX_start[nX, nX] = {(MM_mix_start/MM[i])*(dX_dX_start[i, j] - (MM_mix_start/MM[j])*X_start[i]) for j in 1:nX, i in 1:nX};
   final parameter Types.DerPressureByTemperature dp_dT_start = R*rho_start*sum(X_start[j]/MM[j] for j in 1:nX) "Temperature derivative of Pressure at constant specific volume";
 
   //Variables
@@ -48,9 +48,9 @@ partial model IdealMixture
   Types.SpecificEnthalpy h_id(start = h_id_start) "Ideal Specific Enthalpy of the fluid";
   Types.SpecificEnthalpy dh_id_dX[nX] "Mass fraction of Ideal Specific Enthalpy at constant pressure, per each component";
   Types.SpecificEnthalpy dh_dX[nX] "Mass fraction derivative of Specific Enthalpy at constant pressure, per each component";
-  Types.SpecificEnthalpy dh_id_dY[nX] "Molar fraction of Ideal Specific Enthalpy at constant pressure, per each component";
-  Types.SpecificEnthalpy dh_dY[nX] "Molar fraction derivative of Specific Enthalpy at constant pressure, per each component";
-  Types.SpecificEnergy du_dY[nX] "Mole fraction derivative of Specific Internal Energy at constant pressure, per each component";
+ // Types.SpecificEnthalpy dh_id_dY[nX] "Molar fraction of Ideal Specific Enthalpy at constant pressure, per each component";
+  //Types.SpecificEnthalpy dh_dY[nX] "Molar fraction derivative of Specific Enthalpy at constant pressure, per each component";
+  //Types.SpecificEnergy du_dY[nX] "Mole fraction derivative of Specific Internal Energy at constant pressure, per each component";
   Types.SpecificEntropy s_star[nX] "Specific entropy of the fluid" annotation (
     HideResult = not ComputeEntropy);
   Types.SpecificEntropy s_id "Ideal Specific Entropy of the fluid"  annotation (
@@ -60,20 +60,22 @@ partial model IdealMixture
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.MoleFraction Y[nX](start = Y_start) "Mole fractions of the components";
-  Types.MolarMass MM_mix(start = MM*Y_start) "Molar Mass of the fluid (mixture)";
+  Types.MolarMass MM_mix(start = MM*Y_start, nominal = MM*Y_start) "Molar Mass of the fluid (mixture)";
   Types.SpecificVolume v(start = v_mol_start/MM_mix_start) "Speficic volume";
   Types.MolarVolume v_mol(start = v_mol_start) "Molar volume";
   Types.DerPressureByTemperature dp_dT(start = dp_dT_start) "Temperature derivative of Pressure at constant specific volume";
   Types.DerPressurebySpecificVolume dp_dv(start = dp_dv_start) "Specific volumen derivative of Pressure at constant temperature";
   Types.PerUnit Z(start = 1) "Compressibility factor of the fluid";
-  Types.PerUnit dY_dX[nX, nX](start = dY_dX_start) "Mole fraction derivative of mass fraction per each component";
-  Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
-  Types.MolarMass dMM_mix_dY[nX](start = MM) "Mole fraction derivative of the mixture molar mass";
-  Types.SpecificVolume dv_dY[nX] "Mole fraction derivative of specific volumen, per each component";
+  //Types.PerUnit dY_dX[nX, nX](start = dY_dX_start) "Mole fraction derivative of mass fraction per each component";
+  //Types.PerUnit dX_dX[nX, nX](start = dX_dX_start) "Mass fraction derivative of mass fraction per each component";
+  //Types.MolarMass dMM_mix_dY[nX](start = MM) "Mole fraction derivative of the mixture molar mass";
+  //Types.SpecificVolume dv_dY[nX] "Mole fraction derivative of specific volumen, per each component";
   Real drho_dT(unit = "kg/(K.m3)") "Temperature derivative of density per each component";
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
-  Real HHV_mix(unit = "J/kg") "Higher Heating Value of the fluid in mass units";
+
+//  **Energy Variables**
+  Real HHV_mix(unit = "J/kg", start = HHV*X_start) "Higher Heating Value of the fluid in mass units";
   Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
   Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
   Real LHV_SCM_mix(unit = "J/m3") "Lower Heating Value of the fluid mixture in Standard conditions";
@@ -85,7 +87,7 @@ partial model IdealMixture
 //  Types.Pressure dp_dYi[nXi];
 //  Types.Pressure dp_dXi[nXi];
 //  Types.SpecificVolume dv_dYi[nXi];
-//  Types.SpecificVolume dv_dXi[nXi];
+  Types.SpecificVolume dv_dXi[nXi];
 //  Types.SpecificVolume dv_dXi_check[nXi];
   //Types.SpecificVolume dv_dX_check[nX];
   //Real dp_dT_check(unit = "Pa/K");
@@ -96,13 +98,13 @@ partial model IdealMixture
 //  Real dYi_dYi[nXi, nXi];
 //  Real dYi_dXi[nXi, nXi];
 //  Real dXi_dYi[nXi, nXi];
-//  Real drho_dXi[nXi](each unit = "kg/m3");
-//  Types.SpecificEnthalpy dh_id_dXi[nXi];
+  Real drho_dXi[nXi](each unit = "kg/m3");
+  Types.SpecificEnthalpy dh_id_dXi[nXi];
 //  Types.SpecificEnthalpy dh_id_dYi[nXi];
-//  Types.SpecificEnthalpy dh_dXi[nXi];
+  Types.SpecificEnthalpy dh_dXi[nXi];
 //  Types.SpecificEnthalpy dh_dYi[nXi];
 //  Types.SpecificEnergy du_dYi[nXi];
-//  Types.SpecificEnergy du_dXi[nXi];
+  Types.SpecificEnergy du_dXi[nXi];
 //  Types.SpecificEnergy du_dXi_check[nXi];
 //  Types.MolarMass dMM_mix_dYi[nXi];
 //  Types.MolarMass dMM_mix_dXi[nXi];
@@ -154,9 +156,10 @@ protected
       invMMX[i] := 1/MMX[i];
     end for;
     Mmix := 1/(X*invMMX);
-    for i in 1:size(X, 1) loop
+    for i in 2:size(X, 1) loop
       moleFractions[i] := Mmix*X[i]/MMX[i];
     end for;
+    moleFractions[1] := 1 - sum(moleFractions[2:size(X,1)]);
     annotation (
       smoothOrder = 5);
   end massToMoleFractions;
@@ -167,6 +170,8 @@ initial equation
 equation
   X[1:nXi] = Xi;
   X[nX] = 1 - sum(Xi);
+  //X[1] = 1-sum(Xi);
+  //X[2:nX] = Xi;
 
   assert(sum(X) > 0, "error1");
   assert(sum(MM) > 0, "error2");
@@ -209,27 +214,31 @@ equation
   dv_dT = v/T;
   dv_dp = -v/p;
   dv_dX = v*MM_mix./MM;
-  dv_dY = -v*MM/MM_mix;
-  drho_dp = -rho^2*dv_dp;
-  drho_dT = -rho^2*dv_dT;
+  //dv_dY = -v*MM/MM_mix;
+  //drho_dp = -rho^2*dv_dp;
+  //drho_dT = -rho^2*dv_dT;
+  drho_dp = rho/p;
+  drho_dT = -rho/T;
   drho_dX = -rho^2*dv_dX;
+  drho_dXi = -rho*MM_mix*(ones(nXi)./MM[1:nXi] + ones(nXi)/MM[nX]);
+  drho_dXi = -rho^2*dv_dXi;
 
   // Mass/mol fraction derivaties
-  dX_dX = identity(nX);
-  dY_dX = {(MM_mix/MM[i])*(dX_dX[i, j] - (MM_mix/MM[j])*X[i]) for j in 1:nX, i in 1:nX};
-  dMM_mix_dY = MM;
+  //dX_dX = identity(nX);
+  //dY_dX = {(MM_mix/MM[i])*(dX_dX[i, j] - (MM_mix/MM[j])*X[i]) for j in 1:nX, i in 1:nX};
+  //dMM_mix_dY = MM;
 
   // Specific enthalpy derivatives
   dh_id_dX = h_star "in mass units";
-  dh_id_dY = {(1/MM_mix)*MM[i]*h_star[i] - (1/MM_mix^2)*MM[i]*(Y.*MM)*h_star for i in 1:nX};
+  //dh_id_dY = {(1/MM_mix)*MM[i]*h_star[i] - (1/MM_mix^2)*MM[i]*(Y.*MM)*h_star for i in 1:nX};
   dh_dX = dh_id_dX "in mass units";
-  dh_dY = dh_id_dY "in mass units";
+  //dh_dY = dh_id_dY "in mass units";
 
   // Specific Energy derivatives
   du_dT = cp - p*dv_dT;
   du_dp = -v - p*dv_dp;
   du_dX = dh_dX - p*dv_dX;
-  du_dY = dh_dY - p*dv_dY;
+  //du_dY = dh_dY - p*dv_dY;
 
   if computeTransport then
     mu = mu_start;
@@ -281,12 +290,12 @@ equation
 //  dp_dXi = dp_dYi*dYi_dXi;
 //  drho_dXi = -rho^2*dv_dYi*dYi_dXi;
 
-//  dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
+  dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
 //  dh_id_dYi = dh_id_dXi*dXi_dYi;
-//  dh_dXi = dh_id_dXi "in mass units";
+  dh_dXi = dh_id_dXi "in mass units";
 //  dh_dYi = dh_id_dYi "in mass units";
 //  du_dYi = dh_dYi - p*dv_dYi;
-//  du_dXi = dh_id_dXi - p*dv_dXi;
+  du_dXi = dh_dXi - p*dv_dXi;
 //  du_dXi_check = du_dYi*dYi_dXi "in mass units";
 
 

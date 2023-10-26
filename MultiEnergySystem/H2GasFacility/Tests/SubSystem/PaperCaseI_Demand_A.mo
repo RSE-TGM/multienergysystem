@@ -10,9 +10,6 @@ equation
       points={{-104,-40},{-96,-40},{-96,-58},{-68,-58},{-68,-6},{-30,-6},{-30,-10}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(
-      StopTime=86400,
-      Interval=44,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime = 86400, Interval = 44, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"),
+  Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})));
 end PaperCaseI_Demand_A;

@@ -5,11 +5,11 @@ model PaperCaseI_B "Same as PaperCaseI with injection of pure hydrogen in node 7
     m_flow_H2(duration = 0), n = 9);
 equation
   connect(sourceH2_A.outlet, pipe17.inlet) annotation (
-    Line(points={{-104,-40},{-94,-40},{-94,-100},{12,-100},{12,0},{40,0}},            color = {182, 109, 49},
+    Line(points={{-95,-40},{-94,-40},{-94,-99},{16,-99},{16,0},{49,0}},            color = {182, 109, 49},
       thickness=0.5));
   connect(m_flow_H2.y, sourceH2_A.in_m_flow0)
     annotation (Line(points={{-159,-30},{-120,-30},{-120,-35}}, color={0,0,127}));
   annotation (
-    Diagram(coordinateSystem(extent = {{-160, -120}, {160, 120}})),
+    Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})),
     experiment(StartTime = 0, StopTime = 500, Tolerance = 1e-06, Interval = 0.5));
 end PaperCaseI_B;

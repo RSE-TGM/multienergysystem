@@ -11,6 +11,6 @@ equation
   connect(m_flow_H2.y, sourceH2_A.in_m_flow0) annotation (Line(points={{-159,-30},{-124,-30},
           {-124,-26},{-120,-26},{-120,-35}},      color={0,0,127}));
   annotation (
-    Diagram(coordinateSystem(extent = {{-160, -120}, {160, 120}})),
+    Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})),
     experiment(StartTime = 0, StopTime = 500, Tolerance = 1e-06, Interval = 0.5));
 end PaperCaseI_C;

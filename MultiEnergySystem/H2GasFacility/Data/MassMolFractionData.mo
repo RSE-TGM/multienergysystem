@@ -112,9 +112,10 @@ package MassMolFractionData "Data of different articles"
       invMMX[i] := 1/MMX[i];
     end for;
     Mmix := 1/(X*invMMX);
-    for i in 1:size(X, 1) loop
+    for i in 2:size(X, 1) loop
       moleFractions[i] := Mmix*X[i]/MMX[i];
     end for;
+    moleFractions[1] := 1 - sum(moleFractions[2:size(X,1)]);
     annotation (
       smoothOrder = 5);
   end massToMoleFractions;

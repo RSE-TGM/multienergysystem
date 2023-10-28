@@ -15,62 +15,150 @@ model GasBoilerSystem
   parameter Real CorrectFactorHot = 1;
   parameter Real CorrectFactorCold = 1;
 
+  parameter Types.Pressure pin_start_S1 = 1.85e5;
+  parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
+  parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
+  parameter Types.Length L_S1 = 10;
+  parameter Types.Length Di_S1 = 51e-3;
+  parameter Types.Length t_S1 = 1.5e-3;
+  parameter Types.Length L_S9 = 10;
+  parameter Types.Length Di_S9 = 51e-3;
+  parameter Types.Length t_S9 = 1.5e-3;
+  parameter Types.MassFlowRate m_flow_total = 1.6;
+
+  parameter Types.Pressure pin_start_Users = 3e5;
+  parameter Types.Pressure pout_start_Users = 2.5e5;
+  parameter Types.Temperature Tin_start_Users = 80 + 273.15;
+  parameter Types.Temperature Tout_start_Users = 60 + 273.15;
+  parameter Types.MassFlowRate m_flow_start_Users = m_flow_total/4;
+  parameter Types.Length L_Users = 10;
+  parameter Types.Length Di_Users = 32e-3;
+  parameter Types.Length t_Users = 1.5e-3;
+
 
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
-    P101(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom, use_in_omega = true) annotation (Placement(transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
+    P101(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom,
+    use_m_flow=true) annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
         origin={-220,-21})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
-    FCV101 annotation (Placement(transformation(
+    FCV101(
+    allowFlowReversal=false,
+    Kv=30,
+    dp_nom(displayUnit="Pa") = 5000,
+    Tin_start(displayUnit="K") = 80 + 273.15,
+    pin_start=200000)
+           annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-220,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV annotation (Placement(transformation(
+    roundPipe1DFV(
+    L=L_S1,
+    t=t_S1,       m_flow_start=m_flow_total,
+    pin_start=BPHE.E301.pin_start_cold,
+    pout_start=BPHE.E301.pin_start_cold - 0.01e5,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S1)     annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-220,-50})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV1 annotation (Placement(transformation(
+    roundPipe1DFV1(
+    L=L_S1,
+    t=t_S1,        m_flow_start=m_flow_total,
+    pin_start=20000000000,
+    pout_start=19000000000,
+    Tin_start=Tin_start_S1,
+    Tout_start=Tin_start_S1,
+    Di=Di_S1)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-240,-50})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV3 annotation (Placement(transformation(
+    roundPipe1DFV3(
+    L=L_S1,
+    t=t_S1,        m_flow_start=m_flow_total,
+    pin_start=30000000000,
+    pout_start=29000000000,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S1)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-220,70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV4 annotation (Placement(transformation(
+    roundPipe1DFV4(
+    L=L_S9,
+    t=t_S9,        m_flow_start=m_flow_total,
+    pin_start=29000000000,
+    pout_start=28000000000,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S9)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={-200,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
-    P901 annotation (Placement(transformation(
+    P901(
+    Tin_start(displayUnit="K") = 80 + 273.15,
+    Tout_start(displayUnit="K") = 82 + 273.15,                               a = Pump.P201.a, b = Pump.P201.b, dpnom = Pump.P201.dpnom, etaelec = Pump.P201.etaelec, etamech = Pump.P201.etamech, etanom = Pump.P201.etanom, hin_start = Pump.P201.hin_start, m_flow_nom = Pump.P201.m_flow_nom, omeganom = Pump.P201.omeganom, pin_start = Pump.P201.pin_start,
+    pout_start=Pump.P201.pout_start,                                                                                                                                                                                                        qnom_inm3h = 16.25, rhonom(displayUnit = "kg/m3") = Pump.P201.rhonom,
+    headmax=15,
+    qnom_inm3h_min=5.4)                                                                                                                                                                                                         annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=0,
         origin={-169,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
-    FCV901 annotation (Placement(transformation(
+    FCV901(
+    allowFlowReversal=false,
+    nomOpening=1,
+    Kv=30,
+    dp_nom(displayUnit="Pa") = 5000,
+    Tin_start(displayUnit="K") = 80 + 273.15,
+    pin_start=290000)
+           annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={-140,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV5 annotation (Placement(transformation(
+    roundPipe1DFV5(
+    L=L_S9,
+    t=t_S9,        m_flow_start=m_flow_total,
+    pin_start=pin_start_Users + 0.01e5,
+    pout_start=pin_start_Users,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S9)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={-110,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV7 annotation (Placement(transformation(
+    roundPipe1DFV7(L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pin_start_Users,
+    pout_start=pin_start_Users - 0.1e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+                              Di=Di_Users)
+                   annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
-    FCV701 annotation (Placement(transformation(
+    FCV701(
+    allowFlowReversal=false,
+    Kv=80,
+    dp_nom(displayUnit="Pa") = 5000,
+    Tin_start(displayUnit="K") = 60 + 273.15,
+    pin_start=200000)
+           annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-20,10})));
@@ -80,12 +168,28 @@ model GasBoilerSystem
         rotation=-90,
         origin={-40,-30.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV11 annotation (Placement(transformation(
+    roundPipe1DFV11(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users*3,
+    pin_start=pin_start_Users,
+    pout_start=pin_start_Users - 0.01e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={-40,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV12 annotation (Placement(transformation(
+    roundPipe1DFV12(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pout_start_Users + 0.01e5,
+    pout_start=pout_start_Users,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-20,110})));
@@ -95,7 +199,15 @@ model GasBoilerSystem
         rotation=-90,
         origin={40,-29.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV13 annotation (Placement(transformation(
+    roundPipe1DFV13(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pin_start_Users,
+    pout_start=pin_start_Users - 0.1e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={20,70})));
@@ -110,127 +222,245 @@ model GasBoilerSystem
         rotation=-90,
         origin={200,-30.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
-    FCV711 annotation (Placement(transformation(
+    FCV711(
+    allowFlowReversal=false,
+    Kv=80,
+    dp_nom(displayUnit="Pa") = 5000,
+    Tin_start(displayUnit="K") = 60 + 273.15,
+    pin_start=200000)
+           annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={60,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
-    FCV721 annotation (Placement(transformation(
+    FCV721(
+    allowFlowReversal=false,
+    Kv=80,
+    dp_nom(displayUnit="Pa") = 5000,
+    Tin_start(displayUnit="K") = 60 + 273.15,
+    pin_start=200000)
+           annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={140,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
-    FCV731 annotation (Placement(transformation(
+    FCV731(
+    allowFlowReversal=false,
+    Kv=80,
+    dp_nom(displayUnit="Pa") = 5000,
+    Tin_start(displayUnit="K") = 60 + 273.15,
+    pin_start=200000)
+           annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={220,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV18 annotation (Placement(transformation(
+    roundPipe1DFV18(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pout_start_Users + 0.01e5,
+    pout_start=pout_start_Users,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={60,110})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV19 annotation (Placement(transformation(
+    roundPipe1DFV19(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users*2,
+    pin_start=pin_start_Users - 0.01e5,
+    pout_start=pin_start_Users - 0.02e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={40,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV20 annotation (Placement(transformation(
+    roundPipe1DFV20(
+    L=L_S1,
+    t=t_S1,
+    m_flow_start=m_flow_total,
+    pin_start=pout_start_Users - 0.03e5,
+    pout_start=pout_start_Users - 0.04e5,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_S1)       annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={-80,130})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV21 annotation (Placement(transformation(
+    roundPipe1DFV21(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users*3,
+    pin_start=pout_start_Users - 0.02e5,
+    pout_start=pout_start_Users - 0.03e5,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={0,130})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV26 annotation (Placement(transformation(
+    roundPipe1DFV26(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pin_start_Users,
+    pout_start=pin_start_Users - 0.1e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={100,70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV30 annotation (Placement(transformation(
+    roundPipe1DFV30(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pout_start_Users + 0.01e5,
+    pout_start=pout_start_Users,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={140,110})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV31 annotation (Placement(transformation(
+    roundPipe1DFV31(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users*2,
+    pin_start=pout_start_Users - 0.01e5,
+    pout_start=pout_start_Users - 0.02e5,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={80,130})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV33 annotation (Placement(transformation(
+    roundPipe1DFV33(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pin_start_Users - 0.02e5,
+    pout_start=pin_start_Users - 0.03e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={120,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV35 annotation (Placement(transformation(
+    roundPipe1DFV35(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pin_start_Users,
+    pout_start=pin_start_Users - 0.1e5,
+    Tin_start=Tin_start_Users,
+    Tout_start=Tin_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={180,70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV39 annotation (Placement(transformation(
+    roundPipe1DFV39(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pout_start_Users + 0.01e5,
+    pout_start=pout_start_Users,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={220,110})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
-    roundPipe1DFV40 annotation (Placement(transformation(
+    roundPipe1DFV40(
+    L=L_Users,
+    t=t_Users,
+    m_flow_start=m_flow_start_Users,
+    pin_start=pout_start_Users,
+    pout_start=pout_start_Users - 0.01e5,
+    Tin_start=Tout_start_Users,
+    Tout_start=Tout_start_Users,
+    Di=Di_Users)    annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={160,130})));
   Sources.SinkMassFlow sinkCold_701(
-    T0=BPHE.E301.Tout_start_cold,
-    m_flow0=BPHE.E301.m_flow_start_cold,
-    p0=BPHE.E301.pout_start_cold,
-    pin_start=BPHE.E301.pout_start_cold) annotation (Placement(visible=true,
+    T0=BPHE.E701.Tout_start_cold,
+    m_flow0=BPHE.E701.m_flow_start_cold,
+    p0=BPHE.E701.pout_start_cold,
+    pin_start=BPHE.E701.pout_start_cold) annotation (Placement(visible=true,
         transformation(
         origin={-60,-83},
         extent={{13,-13},{-13,13}},
         rotation=90)));
-  Sources.SourcePressure sourceCold_701(T0=BPHE.E301.Tin_start_cold, p0=BPHE.E301.pin_start_cold)
+  Sources.SourcePressure sourceCold_701(
+    T0=BPHE.E701.Tin_start_cold,
+    p0=BPHE.E701.pin_start_cold,
+    h0=BPHE.E701.hin_start_cold)
     annotation (Placement(visible=true, transformation(
         origin={-20,-80},
         extent={{-10,-10},{10,10}},
         rotation=90)));
   Sources.SinkMassFlow sinkCold_1(
-    T0=BPHE.E301.Tout_start_cold,
-    m_flow0=BPHE.E301.m_flow_start_cold,
-    p0=BPHE.E301.pout_start_cold,
-    pin_start=BPHE.E301.pout_start_cold) annotation (Placement(visible=true,
+    T0=BPHE.E701.Tout_start_cold,
+    m_flow0=BPHE.E701.m_flow_start_cold,
+    p0=BPHE.E701.pout_start_cold,
+    pin_start=BPHE.E701.pout_start_cold) annotation (Placement(visible=true,
         transformation(
         origin={20,-83},
         extent={{13,-13},{-13,13}},
         rotation=90)));
-  Sources.SourcePressure sourceCold_1(T0=BPHE.E301.Tin_start_cold, p0=BPHE.E301.pin_start_cold)
+  Sources.SourcePressure sourceCold_1(
+    T0=BPHE.E701.Tin_start_cold,
+    p0=BPHE.E701.pin_start_cold,
+    h0=BPHE.E701.hin_start_cold)
     annotation (Placement(visible=true, transformation(
         origin={60,-80},
         extent={{-10,-10},{10,10}},
         rotation=90)));
   Sources.SinkMassFlow sinkCold_2(
-    T0=BPHE.E301.Tout_start_cold,
-    m_flow0=BPHE.E301.m_flow_start_cold,
-    p0=BPHE.E301.pout_start_cold,
-    pin_start=BPHE.E301.pout_start_cold) annotation (Placement(visible=true,
+    T0=BPHE.E701.Tout_start_cold,
+    m_flow0=BPHE.E701.m_flow_start_cold,
+    p0=BPHE.E701.pout_start_cold,
+    pin_start=BPHE.E701.pout_start_cold) annotation (Placement(visible=true,
         transformation(
         origin={100,-83},
         extent={{13,-13},{-13,13}},
         rotation=90)));
-  Sources.SourcePressure sourceCold_2(T0=BPHE.E301.Tin_start_cold, p0=BPHE.E301.pin_start_cold)
+  Sources.SourcePressure sourceCold_2(
+    T0=BPHE.E701.Tin_start_cold,
+    p0=BPHE.E701.pin_start_cold,
+    h0=BPHE.E701.hin_start_cold)
     annotation (Placement(visible=true, transformation(
         origin={140,-80},
         extent={{-10,-10},{10,10}},
         rotation=90)));
   Sources.SinkMassFlow sinkCold_3(
-    T0=BPHE.E301.Tout_start_cold,
-    m_flow0=BPHE.E301.m_flow_start_cold,
-    p0=BPHE.E301.pout_start_cold,
-    pin_start=BPHE.E301.pout_start_cold) annotation (Placement(visible=true,
+    T0=BPHE.E701.Tout_start_cold,
+    m_flow0=BPHE.E701.m_flow_start_cold,
+    p0=BPHE.E701.pout_start_cold,
+    pin_start=BPHE.E701.pout_start_cold) annotation (Placement(visible=true,
         transformation(
         origin={180,-83},
         extent={{13,-13},{-13,13}},
         rotation=90)));
-  Sources.SourcePressure sourceCold_3(T0=BPHE.E301.Tin_start_cold, p0=BPHE.E301.pin_start_cold)
+  Sources.SourcePressure sourceCold_3(
+    T0=BPHE.E701.Tin_start_cold,
+    p0=BPHE.E701.pin_start_cold,
+    h0=BPHE.E701.hin_start_cold)
     annotation (Placement(visible=true, transformation(
         origin={220,-80},
         extent={{-10,-10},{10,10}},
@@ -240,7 +470,9 @@ model GasBoilerSystem
         origin={-220,-80},
         extent={{-10,-10},{10,10}},
         rotation=90)));
-  Sources.SinkPressure sinkPressure annotation (Placement(transformation(
+  Sources.SinkPressure sinkPressure(p0=pin_start_S1,
+                                    T0=Tin_start_S1)
+                                    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-240,-80})));
@@ -253,6 +485,8 @@ model GasBoilerSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-140,60})));
+  Modelica.Blocks.Sources.RealExpression P101_m_flow(y=m_flow_total)
+    annotation (Placement(transformation(extent={{-271,-36},{-251,-16}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -442,6 +676,8 @@ equation
       points={{220.3,-39.25},{220.3,-38},{220,-38},{220,-70}},
       color={140,56,54},
       thickness=0.5));
+  connect(P101_m_flow.y, P101.in_m_flow) annotation (Line(points={{-250,-26},{-237.76,
+          -26},{-237.76,-25.8},{-225.52,-25.8}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})));

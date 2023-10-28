@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
-
 model RoundPipe1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
@@ -30,7 +29,7 @@ model RoundPipe1DFV
     Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Velocity u_nom = 1 "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.PerUnit kc "Corrective factor for heat tranfer" annotation (
+  parameter Types.PerUnit kc=1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
@@ -92,13 +91,13 @@ model RoundPipe1DFV
     Tmean = regStep(dp, fluid[2:end].T, fluid[1:end-1].T),
     m_flow = regStep(dp, m_flow[2:end], m_flow[1:end-1]),
     p = pout,
-    //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
     cp = fluid[2:end].cp,
     mu = fluid[2:end].mu,
     k = fluid[2:end].kappa,
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
+    //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
@@ -114,17 +113,19 @@ equation
   for i in 1:n loop
     m_flow[i]- m_flow[i+1] = Vi*regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]);
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
-    (Vi*regStep(dp,fluid[i+1].h,fluid[i].h) + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance"; 
+    //(Vi*regStep(dp,fluid[i+1].h,fluid[i].h)*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
+
+    (Vi*(m_flow[i]-m_flow[i+1])*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   end for;
 
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
   M = Vi*rhotilde;
   Ttilde = regStep(dp, T[2:n+1], T[1:n], Tin_start*1e-5);
   ptilde = pout;
-    
+
   // Momentum Balance
   pin - pout = rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
-  
+
   // Equations to set the fluid properties
   fluid.T = T;
   fluid.p = ones(n+1)*ptilde;
@@ -133,13 +134,13 @@ equation
   m_flow = rho.*u*A;
   q = m_flow./rho;
   q_m3h = q*3600;
-  
+
 
   Mtot = sum(M) "Total mass";
   Qtot = sum(wall.Q_flow) "Total heat";
 
   dp = pin-pout;
-  
+
   if noEvent(dp > 0) then
     T[1] = fluid_temp.T;
   else

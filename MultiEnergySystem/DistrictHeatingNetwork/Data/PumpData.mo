@@ -16,7 +16,7 @@ package PumpData
     etamech = 1,
     a = {338.084416, 36.357516, -0.623066},
     b = {12.235634, 0.250802, -0.023149});
-    
+
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P101(
     Name = "P101",
     Tin_start = 80 + 273.15,
@@ -33,7 +33,7 @@ package PumpData
     etamech = 1,
     a = {338.084416, 36.357516, -0.623066},
     b = {12.235634, 0.250802, -0.023149});
-    
+
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P201(
     Name = "P201",
     Tin_start = 45 + 273.15,
@@ -42,13 +42,14 @@ package PumpData
     hin_start = 0.105e6,
     qnom = 16.5/3600,
     rhonom = 990.198,
+    headnom = 12.5,
     omeganom = 2*3.14159*1450/60,
     Wnom = 0.89e3,
     etanom = 0.63,
     etaelec = 1,
     etamech = 1,
-    a = {388.549620, 131794.193604, -4853678.406628}, 
-    b = {14.230465,650.687103,-229082.650277});    
+    a = {388.549620, 131794.193604, -4853678.406628},
+    b = {14.230465,650.687103,-229082.650277});
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P601(
     Name = "P601",
@@ -63,7 +64,7 @@ package PumpData
     etanom = 0.63,
     etaelec = 1,
     etamech = 1,
-    a = {388.549620, 131794.193604, -4853678.406628}, 
+    a = {388.549620, 131794.193604, -4853678.406628},
     b = {14.230465,650.687103,-229082.650277});
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump PR01(
@@ -80,7 +81,7 @@ package PumpData
     etanom = 0.69,
     etaelec = 1,
     etamech = 1,
-    a = {1139.365534, 128.328267, -1.759478},    
+    a = {1139.365534, 128.328267, -1.759478},
     b = {31.670260, 0.358044, -0.015408});
-    
+
 end PumpData;

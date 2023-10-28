@@ -35,7 +35,7 @@ partial model PartialInsulatedTube
     Dialog(group = "Initialisation"));
   parameter Types.Pressure pout_start "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.SpecificEnthalpy hin_start "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
+  parameter Types.SpecificEnthalpy hin_start = 3.3e5 "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Temperature Tin_start "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));

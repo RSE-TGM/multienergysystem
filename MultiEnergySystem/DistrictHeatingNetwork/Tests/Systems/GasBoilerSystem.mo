@@ -35,6 +35,9 @@ model GasBoilerSystem
   parameter Types.Length Di_Users = 32e-3;
   parameter Types.Length t_Users = 1.5e-3;
 
+  parameter Real Kv_UsersValve(unit = "m3/h") = 2.5 "Metri Flow Coefficient ";
+  parameter Types.Pressure dp_nom_UsersValve = 0.5e5;
+
 
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
@@ -154,8 +157,8 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV701(
     allowFlowReversal=false,
-    Kv=80,
-    dp_nom(displayUnit="Pa") = 5000,
+    Kv=Kv_UsersValve,
+    dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000)
            annotation (Placement(transformation(
@@ -224,8 +227,8 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV711(
     allowFlowReversal=false,
-    Kv=80,
-    dp_nom(displayUnit="Pa") = 5000,
+    Kv=Kv_UsersValve,
+    dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000)
            annotation (Placement(transformation(
@@ -235,8 +238,8 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV721(
     allowFlowReversal=false,
-    Kv=80,
-    dp_nom(displayUnit="Pa") = 5000,
+    Kv=Kv_UsersValve,
+    dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000)
            annotation (Placement(transformation(
@@ -246,8 +249,8 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV731(
     allowFlowReversal=false,
-    Kv=80,
-    dp_nom(displayUnit="Pa") = 5000,
+    Kv=Kv_UsersValve,
+    dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000)
            annotation (Placement(transformation(

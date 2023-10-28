@@ -1,13 +1,13 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media;
-
 model WaterLiquid
   extends BaseClasses.PartialSubstance(
-    mu_start = 0, 
+    h(start = h_start),
+    mu_start = 0,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,
-    rho_coeff = {1.4496006460422e-05,-0.017530234889523,6.3355709390869,282.3634495117}, 
-    cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755}
-);
+    rho_coeff = {1.4496006460422e-05,-0.017530234889523,6.3355709390869,282.3634495117},
+    cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755});
 
+  parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) - u_bias;
   parameter Types.SpecificEnergy u_bias = 1.492354e+06;
   Real drho_dT(unit = "kg/(m3.K)");
   //Real drhodv(unit = "mol/m3");
@@ -46,7 +46,7 @@ equation
     kappa = 0;
   end if;
   s = 0;
-  annotation(
+  annotation (
     Documentation(info = "<HTML>
         <p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature.
         <p>From that reference point the water is modeled as an incompressible liquid with the density of the saturated liquid, so it obeys the following equations of state:

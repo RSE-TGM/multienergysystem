@@ -1,13 +1,12 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
-
 partial model PumpBase "Base model to develop water pump models"
   extends DistrictHeatingNetwork.Icons.Water.WaterPump;
   //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
   //   choicesAllMatching = true);
   //Medium.ThermodynamicState fluidIn;
   //Medium.ThermodynamicState fluidOut;
-  
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid annotation(
+
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid annotation (
      choicesAllMatching = true);
   //Constants
   parameter Real a[3] = {338.084416, 130887.059346, -8074937.668508} "value of coefficients for Linear Power Characteristic of pump model";
@@ -15,53 +14,53 @@ partial model PumpBase "Base model to develop water pump models"
   constant Modelica.Units.SI.Power W_eps = 1e-8 "Small coefficient to avoid numerical singularities";
   constant Modelica.Units.SI.AngularVelocity omega_eps = 1e-6 "Small coefficient to avoid numerical singularities";
   constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n "constant gravity";
-  
+
   //Start Parameters
-  parameter Modelica.Units.SI.Temperature Tin_start "Start value of the inlet temperature" annotation(
+  parameter Modelica.Units.SI.Temperature Tin_start "Start value of the inlet temperature" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tout_start "Start value of the outlet temperature" annotation(
+  parameter Modelica.Units.SI.Temperature Tout_start "Start value of the outlet temperature" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pin_start "Start value of the inlet pressure" annotation(
+  parameter Modelica.Units.SI.Pressure pin_start "Start value of the inlet pressure" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pout_start "Start value of the outlet pressure" annotation(
+  parameter Modelica.Units.SI.Pressure pout_start "Start value of the outlet pressure" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start = 1e5 "Specific Enthalpy Start Value" annotation(
+  parameter Modelica.Units.SI.SpecificEnthalpy hin_start = 1e5 "Specific Enthalpy Start Value" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.MassFlowRate m_flow_start = m_flow_nom "Mass Flow Rate Start Value" annotation(
+  parameter Modelica.Units.SI.MassFlowRate m_flow_start = m_flow_nom "Mass Flow Rate Start Value" annotation (
     Dialog(tab = "Initialisation"));
-  
+
   //Nominal parameters
-  parameter Types.MassFlowRate m_flow_nom "nomimal outlet mass flowrate" annotation(
+  parameter Types.MassFlowRate m_flow_nom "nomimal outlet mass flowrate" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Real qnom_inm3h(unit = "m3/h") "nominal volumetric flowrate in m3/h " annotation(
+  parameter Real qnom_inm3h(unit = "m3/h") "nominal volumetric flowrate in m3/h " annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.Density rhonom "Nominal Liquid Density" annotation(
+  parameter Types.Density rhonom "Nominal Liquid Density" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.Volume V = 0 "Pump Internal Volume" annotation(
+  parameter Types.Volume V = 0 "Pump Internal Volume" annotation (
     Evaluate = true);
-  parameter Types.Pressure dpnom "Nominal pressure increase" annotation(
+  parameter Types.Pressure dpnom "Nominal pressure increase" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.AngularVelocity omeganom = 2*3.14159*1450/60 "Nominal angular velocity in rad/s" annotation(
-    Dialog(group = "Pump Characteristics"));  
-  parameter Types.Efficiency etanom = 0.61524695 "Nominal efficiency" annotation(
-    Dialog(group = "Pump Characteristics"));  
-  parameter Types.Efficiency etamech = 0.98 "mechanical efficiency" annotation(
+  parameter Types.AngularVelocity omeganom = 2*3.14159*1450/60 "Nominal angular velocity in rad/s" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.Efficiency etaelec = 1 "electrical efficiency" annotation(
+  parameter Types.Efficiency etanom = 0.61524695 "Nominal efficiency" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.Length headmax = 13.5 "maximum head" annotation(
+  parameter Types.Efficiency etamech = 0.98 "mechanical efficiency" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.Length headmin = 2.5 "minimum head" annotation(
+  parameter Types.Efficiency etaelec = 1 "electrical efficiency" annotation (
+    Dialog(group = "Pump Characteristics"));
+  parameter Types.Length headmax = 13.5 "maximum head" annotation (
+    Dialog(group = "Pump Characteristics"));
+  parameter Types.Length headmin = 2.5 "minimum head" annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Real qnom_inm3h_min(unit = "m3/h") = 5.5;
-  
+
   Medium fluidIn(T_start = Tin_start, p_start = pin_start);
   Medium fluidOut(T_start = Tout_start, p_start = pout_start);
 
   //Final parameters
-  final parameter Types.VolumeFlowRate qnom = qnom_inm3h/3600 "nominal compressor volume flowrate" annotation(
+  final parameter Types.VolumeFlowRate qnom = qnom_inm3h/3600 "nominal compressor volume flowrate" annotation (
     Dialog(group = "Pump Characteristics"));
-  final parameter Types.VolumeFlowRate qnommin = qnom_inm3h_min/3600 "nominal compressor volume flowrate" annotation(
+  final parameter Types.VolumeFlowRate qnommin = qnom_inm3h_min/3600 "nominal compressor volume flowrate" annotation (
     Dialog(group = "Pump Characteristics"));
   //Variables
   Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate";
@@ -84,35 +83,35 @@ partial model PumpBase "Base model to develop water pump models"
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
   Modelica.Units.SI.Power Pm "mechanical power";
   Modelica.Units.SI.Power Pe "electrical power";
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-100, 0}, {-60, 40}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{-100, 0}, {-60, 40}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation(
-    Placement(visible = true, transformation(origin = {0, 0}, extent = {{36, 58}, {76, 98}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{36, 58}, {76, 98}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
+    Placement(visible = true, transformation(origin = {0, 0}, extent = {{36, 58}, {76, 98}}, rotation = 0), iconTransformation(origin={24,-78},   extent = {{36, 58}, {76, 98}}, rotation = 0)));
 
 equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
   assert(headmax > head or headmin < head, "Head is outside the operating range", AssertionLevel.error);
-  
+
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;
-  
+
   // Boundary conditions
   inlet.p = pin;
-  inlet.h_out = hin;  
+  inlet.h_out = hin;
   outlet.p = pout;
   outlet.h_out = hout;
-  
-  // Equations to set fluid properties  
+
+  // Equations to set fluid properties
   {fluidIn.p, fluidIn.h} = {pin, hin};
   {fluidOut.p, fluidOut.h} = {pout, hout};
-  
+
   // Inlet/outlet variables from fluids
   Tin = fluidIn.T;
   rhoin = fluidIn.rho;
   Tout = fluidOut.T;
   rhoout = fluidOut.rho;
-   
+
   // Additional variables
   dp = pout - pin;
   q = m_flow/rhoin;
@@ -133,7 +132,7 @@ equation
   Pm = W/etamech;
   Pe = Pm/etaelec;
   //inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";
-  annotation(
+  annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
 end PumpBase;

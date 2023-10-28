@@ -156,7 +156,7 @@ model GasBoilerSystem
         origin={-60,70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV701(
-    allowFlowReversal=false,
+    allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
     dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
@@ -226,7 +226,7 @@ model GasBoilerSystem
         origin={200,-30.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV711(
-    allowFlowReversal=false,
+    allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
     dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
@@ -237,7 +237,7 @@ model GasBoilerSystem
         origin={60,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV721(
-    allowFlowReversal=false,
+    allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
     dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
@@ -248,7 +248,7 @@ model GasBoilerSystem
         origin={140,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV731(
-    allowFlowReversal=false,
+    allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
     dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,

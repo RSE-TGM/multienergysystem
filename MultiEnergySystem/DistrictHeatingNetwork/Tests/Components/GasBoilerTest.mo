@@ -13,7 +13,7 @@ model GasBoilerTest
     p0=310000)                                                                                          annotation (
     Placement(visible = true, transformation(origin = {-48, -12}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp fuel_flow(duration = 20,
-    height=0.002370206*0.05*0,                                                    offset = 0.002370206,
+    height=0.002370206*0.2,                                                       offset = 0.002370206,
     startTime=50)                                                                                                       annotation (
     Placement(visible = true, transformation(origin = {-50, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin(duration = 20,
@@ -21,7 +21,8 @@ model GasBoilerTest
     Placement(visible = true, transformation(origin = {-70, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(
     duration=0,
-    height=-0.5,                                                    offset = 2,
+    height=0,
+    offset=1.6,
     startTime=100)                                                                              annotation (
     Placement(visible = true, transformation(origin = {-70, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
@@ -33,7 +34,7 @@ equation
     Line(points={{-38,10},{-26,10},{-26,10.4},{-15.6,10.4}},
                                           color = {136, 136, 136}));
   connect(sourceP.outlet, gasBoiler.inlet) annotation (
-    Line(points={{-38,-12},{-15.6,-12},{-15.6,-9.88}},  color = {136, 136, 136}));
+    Line(points={{-38,-12},{-15.6,-12},{-15.6,-10.4}},  color = {136, 136, 136}));
   connect(fuel_flow.y, CH4.in_m_flow) annotation (
     Line(points={{-39,70},{-26,70},{-26,55}},        color = {0, 0, 127}));
   connect(m_flow.y, sinkM.in_m_flow) annotation (

@@ -60,12 +60,30 @@ package PumpData
     qnom = 16.5/3600,
     rhonom = 990.198,
     omeganom = 2*3.14159*1450/60,
+    headnom = 10.875,
     Wnom = 0.89e3,
     etanom = 0.63,
     etaelec = 1,
     etamech = 1,
     a = {388.549620, 131794.193604, -4853678.406628},
     b = {14.230465,650.687103,-229082.650277});
+
+    constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P901(
+    Name = "P901",
+    Tin_start = 80 + 273.15,
+    Tout_start = 81 + 273.15,
+    pin_start = 3e5,
+    hin_start = 0.105e6,
+    qnom = 19/3600,
+    headnom = 22.50,
+    omeganom = 2*3.141592654*50/60,
+    Wnom = 1.75e3,
+    etanom = 0.66,
+    etaelec = 1,
+    etamech = 1,
+    a = {909.586813, 909.586813, -0.574542},
+    b = {24.122662, 0.669933, -0.039537});
+    //rhonom = 990.198,
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump PR01(
     Name = "PR01",

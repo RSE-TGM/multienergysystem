@@ -180,8 +180,8 @@ model CirculationPumpWithUsers
     T0(displayUnit="K") = 80 + 273.15,
     m_flow0=m_flow_total) annotation (Placement(transformation(
         extent={{13,-13},{-13,13}},
-        rotation=180,
-        origin={-193,60})));
+        rotation=270,
+        origin={-210,-30})));
   Sources.SinkPressure sinkHot(p0=200000, T0=(60 + 273.15) + 273.15)
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -437,24 +437,70 @@ model CirculationPumpWithUsers
     P901(
     Tin_start(displayUnit="K") = 80 + 273.15,
     Tout_start(displayUnit="K") = 82 + 273.15,
-    a=Pump.P201.a,
-    b=Pump.P201.b,
-    dpnom(displayUnit="Pa") = 0.4e5,
-    etaelec=Pump.P201.etaelec,
-    etamech=Pump.P201.etamech,
-    etanom=Pump.P201.etanom,
-    hin_start=Pump.P201.hin_start,
-    m_flow_nom=m_flow_total,
-    omeganom=Pump.P201.omeganom,
+    a=Pump.P901.a,
+    b=Pump.P901.b,
+    dpnom(displayUnit="Pa") = Pump.P901.dpnom,
+    etaelec=Pump.P901.etaelec,
+    etamech=Pump.P901.etamech,
+    etanom=Pump.P901.etanom,
+    hin_start=Pump.P901.hin_start,
+    m_flow_nom=Pump.P901.m_flow_nom,
+    omeganom=Pump.P901.omeganom,
     pin_start(displayUnit="Pa") = 2.5e5,
     pout_start(displayUnit="Pa") = 2.9e5,
-    qnom_inm3h=4.8,
-    rhonom(displayUnit="kg/m3") = Pump.P201.rhonom,
-    headmax=15,
-    qnom_inm3h_min=4.8)                                                                                                                                                                                                         annotation (Placement(transformation(
-        extent={{-12,-12},{12,12}},
+    qnom_inm3h=19,
+    rhonom(displayUnit="kg/m3") = Pump.P901.rhonom,
+    headmax=27,
+    headmin=11,
+    qnom_inm3h_min=10,
+    use_in_omega=true)                                                                                                                                                                                                         annotation (Placement(transformation(
+        extent={{-12,12},{12,-12}},
         rotation=0,
         origin={-159,60})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
+    roundPipe1DFV3(
+    L=L_S1,
+    t=t_S1,
+    m_flow_start=m_flow_total,
+    pin_start=30000000000,
+    pout_start=29000000000,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S1)      annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={-210,40})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
+    roundPipe1DFV4(
+    L=L_S9,
+    t=t_S9,
+    m_flow_start=m_flow_total,
+    pin_start=29000000000,
+    pout_start=28000000000,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S9)      annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=0,
+        origin={-190,60})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    FCV101(
+    allowFlowReversal=false,
+    Kv=12,
+    dp_nom(displayUnit="Pa") = 0.1e5,
+    Tin_start(displayUnit="K") = 80 + 273.15,
+    pin_start=200000)
+           annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={-210,9})));
+  Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
+    annotation (Placement(transformation(extent={{-170,-1},{-190,19}})));
+  Modelica.Blocks.Sources.RealExpression P901_omega(y=0.6*Pump.P901.omeganom)
+    annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=-90,
+        origin={-164,30})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-30,-8},{-30,-29.75},{-30.7,-29.75}},
@@ -627,11 +673,28 @@ equation
       points={{-149.4,60},{-140,60}},
       color={140,56,54},
       thickness=0.5));
-  connect(sourceHot.outlet, P901.inlet) annotation (Line(
+  connect(roundPipe1DFV3.outlet,roundPipe1DFV4. inlet) annotation (Line(
+      points={{-210,50},{-210,60},{-200,60}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV4.outlet, P901.inlet) annotation (Line(
       points={{-180,60},{-168.6,60}},
       color={140,56,54},
       thickness=0.5));
+  connect(FCV101_theta.y,FCV101. opening)
+    annotation (Line(points={{-191,9},{-202,9}},   color={0,0,127}));
+  connect(FCV101.inlet, sourceHot.outlet) annotation (Line(
+      points={{-210,-1},{-210,-17}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV3.inlet, FCV101.outlet) annotation (Line(
+      points={{-210,30},{-210,19}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(P901.in_omega, P901_omega.y) annotation (Line(points={{-163.8,54},{
+          -163.8,47.5},{-164,47.5},{-164,41}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-320,-180},{320,180}}, grid={1,1})), Icon(
-        coordinateSystem(grid={0.5,0.5})));
+        coordinateSystem(grid={0.5,0.5})),
+    experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
 end CirculationPumpWithUsers;

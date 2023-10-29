@@ -36,6 +36,7 @@ model GasBoilerSystem
   parameter Types.Length t_Users = 1.5e-3;
 
   parameter Real Kv_UsersValve(unit = "m3/h") = 2.5 "Metri Flow Coefficient ";
+  parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
   parameter Types.Pressure dp_nom_UsersValve = 0.5e5;
 
 
@@ -50,9 +51,9 @@ model GasBoilerSystem
         origin={-220,-21})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV101(
-    allowFlowReversal=false,
-    Kv=30,
-    dp_nom(displayUnit="Pa") = 5000,
+    allowFlowReversal=true,
+    Kv=12,
+    dp_nom(displayUnit="Pa") = 0.1e5,
     Tin_start(displayUnit="K") = 80 + 273.15,
     pin_start=200000)
            annotation (Placement(transformation(
@@ -110,18 +111,32 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P901(
     Tin_start(displayUnit="K") = 80 + 273.15,
-    Tout_start(displayUnit="K") = 82 + 273.15,                               a = Pump.P201.a, b = Pump.P201.b, dpnom = Pump.P201.dpnom, etaelec = Pump.P201.etaelec, etamech = Pump.P201.etamech, etanom = Pump.P201.etanom, hin_start = Pump.P201.hin_start, m_flow_nom = Pump.P201.m_flow_nom, omeganom = Pump.P201.omeganom, pin_start = Pump.P201.pin_start,
-    pout_start=Pump.P201.pout_start,                                                                                                                                                                                                        qnom_inm3h = 16.25, rhonom(displayUnit = "kg/m3") = Pump.P201.rhonom,
-    headmax=15,
-    qnom_inm3h_min=5.4)                                                                                                                                                                                                         annotation (Placement(transformation(
-        extent={{-12,-12},{12,12}},
+    Tout_start(displayUnit="K") = 82 + 273.15,
+    a=Pump.P901.a,
+    b=Pump.P901.b,
+    dpnom(displayUnit="Pa") = Pump.P901.dpnom,
+    etaelec=Pump.P901.etaelec,
+    etamech=Pump.P901.etamech,
+    etanom=Pump.P901.etanom,
+    hin_start=Pump.P901.hin_start,
+    m_flow_nom=Pump.P901.m_flow_nom,
+    omeganom=Pump.P901.omeganom,
+    pin_start(displayUnit="Pa") = 2.5e5,
+    pout_start(displayUnit="Pa") = 2.9e5,
+    qnom_inm3h=19,
+    rhonom(displayUnit="kg/m3") = Pump.P901.rhonom,
+    headmax=27,
+    headmin=11,
+    qnom_inm3h_min=10,
+    use_in_omega=true)                                                                                                                                                                                                         annotation (Placement(transformation(
+        extent={{-12,12},{12,-12}},
         rotation=0,
         origin={-169,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV901(
     allowFlowReversal=false,
     nomOpening=1,
-    Kv=30,
+    Kv=Kv_FCV901,
     dp_nom(displayUnit="Pa") = 5000,
     Tin_start(displayUnit="K") = 80 + 273.15,
     pin_start=290000)
@@ -468,7 +483,8 @@ model GasBoilerSystem
         origin={220,-80},
         extent={{-10,-10},{10,10}},
         rotation=90)));
-  Sources.SourcePressure sourceCold_4(T0=BPHE.E301.Tin_start_cold, p0=BPHE.E301.pin_start_cold)
+  Sources.SourcePressure sourceCold_4(T0(displayUnit="K") = 80 + 273.15, p0(
+        displayUnit="Pa") = 1e5)
     annotation (Placement(visible=true, transformation(
         origin={-220,-80},
         extent={{-10,-10},{10,10}},
@@ -490,6 +506,11 @@ model GasBoilerSystem
         origin={-140,60})));
   Modelica.Blocks.Sources.RealExpression P101_m_flow(y=m_flow_total)
     annotation (Placement(transformation(extent={{-271,-36},{-251,-16}})));
+  Modelica.Blocks.Sources.RealExpression P901_omega(y=0.6*Pump.P901.omeganom)
+    annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=-90,
+        origin={-174,60})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -681,6 +702,8 @@ equation
       thickness=0.5));
   connect(P101_m_flow.y, P101.in_m_flow) annotation (Line(points={{-250,-26},{-237.76,
           -26},{-237.76,-25.8},{-225.52,-25.8}}, color={0,0,127}));
+  connect(P901.in_omega, P901_omega.y) annotation (Line(points={{-173.8,84},{
+          -173.8,77.5},{-174,77.5},{-174,71}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})));

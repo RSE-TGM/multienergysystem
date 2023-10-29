@@ -35,7 +35,8 @@ package MassMolFractionData "Data of different articles"
              Modelica.Media.IdealGases.Common.SingleGasesData.CO2.MM,
              Modelica.Media.IdealGases.Common.SingleGasesData.N2.MM,
              Modelica.Media.IdealGases.Common.SingleGasesData.H2.MM},
-      Y = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0});
+      Y = {0.972, 0.018, 0.003, 0.001, 0.001, 0.005, 0});
+      //Y = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0});
     constant MultiEnergySystem.H2GasFacility.Data.NaturalGasMassMolCompositions NG_Guzzo_Russian(
       MM =  {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
              Modelica.Media.IdealGases.Common.SingleGasesData.C2H6.MM,

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model UsersPipelineSystem
+model UsersPipelineOLSystem
   "Users Systems and some pipelines connected on the heating side"
 
   parameter Integer n = 3 "Number of volumes";
@@ -104,7 +104,7 @@ model UsersPipelineSystem
         rotation=-90,
         origin={140,30})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=1)
-    annotation (Placement(transformation(extent={{230,40},{210,60}})));
+    annotation (Placement(transformation(extent={{230,20},{210,40}})));
   Sources.SourceMassFlow sourceHot(
     p0=280000,
     T0(displayUnit="K") = 80 + 273.15,
@@ -406,6 +406,12 @@ model UsersPipelineSystem
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={60,-140})));
+  Sources.SourceMassFlow sourceMassFlow(
+    use_in_m_flow=true,
+    p0=BPHE.E701.pin_start_cold,
+    T0=BPHE.E701.Tin_start_cold,
+    m_flow0=BPHE.E701.m_flow_start_cold*4)
+    annotation (Placement(transformation(extent={{180,-90},{160,-70}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
     roundPipe1DFV9(
     L=L_Users,
@@ -497,59 +503,14 @@ model UsersPipelineSystem
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={80,-80})));
-  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=5.55)
-    annotation (Placement(transformation(extent={{209,-6},{189,14}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
-    coolingInit(
-    p_start(displayUnit="Pa") = 2e5,
-    T_start(displayUnit="K") = 15.6 + 273.15,
-    m_flow_start=8.977481)
-    annotation (Placement(transformation(extent={{115,-150},{135,-130}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV SimplifiedChiller(
-    L=1,
-    t=t_Users,
-    T_ext(displayUnit="K") = 25 + 273.15,
-    m_flow_start=8.977481,
-    pin_start(displayUnit="Pa") = 2e5,
-    pout_start(displayUnit="Pa") = 1.99e5,
-    Tin_start(displayUnit="K") = 15 + 273.15,
-    Tout_start(displayUnit="K") = 8 + 273.15,
-    Di=Di_Users,
-    n=3,
-    cf=0.0004)   annotation (Placement(transformation(
-        extent={{15,-15},{-15,15}},
-        rotation=0,
-        origin={220,-20})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.Wall_inputQ
-    Qtot_chiller(n=3, Twall(displayUnit="K") = 25 + 273.15)  annotation (
-      Placement(transformation(
+  Sources.SinkPressure sinkHot1(p0=BPHE.E701.pout_start_cold, T0=BPHE.E701.Tout_start_cold)
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={231,0})));
-  Modelica.Blocks.Sources.RealExpression Qset_chiller(y=-0.32634112e5*5.35)
-    annotation (Placement(transformation(extent={{279,-10},{259,10}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
-    PR01(
-    Tin_start(displayUnit="K") = 15 + 273.15,
-    Tout_start(displayUnit="K") = 16 + 273.15,
-    a=Pump.PR01.a,
-    b=Pump.PR01.b,
-    m_flow_start=8.977481,
-    dpnom=Pump.PR01.dpnom,
-    etaelec=Pump.PR01.etaelec,
-    etamech=Pump.PR01.etamech,
-    etanom=Pump.PR01.etanom,
-    hin_start=Pump.PR01.hin_start,
-    m_flow_nom=Pump.PR01.m_flow_nom,
-    omeganom=Pump.PR01.omeganom,
-    pin_start(displayUnit="Pa") = 2e5,
-    pout_start(displayUnit="Pa") = 2.6e5,
-    qnom_inm3h=32.34652403,
-    rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
-        extent={{-13,13},{13,-13}},
-        rotation=-90,
-        origin={190,-50})));
+        rotation=0,
+        origin={170,-140})));
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers1(y=if time < 50
+         then BPHE.E701.m_flow_start_cold*4 else BPHE.E701.m_flow_start_cold*6)
+    annotation (Placement(transformation(extent={{230,-70},{210,-50}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-100,20},{-100,0.25},{-100.7,0.25}},
@@ -568,15 +529,14 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCV_thetaconsumers.y, FCV731.opening)
-    annotation (Line(points={{209,50},{160,50},{160,30},{148,30}},
-                                                 color={0,0,127}));
+    annotation (Line(points={{209,30},{148,30}}, color={0,0,127}));
   connect(FCV721.opening, FCV731.opening) annotation (Line(points={{68,30},{80,
-          30},{80,50},{160,50},{160,30},{148,30}},  color={0,0,127}));
+          30},{80,50},{190,50},{190,30},{148,30}},  color={0,0,127}));
   connect(FCV711.opening, FCV731.opening) annotation (Line(points={{-12,30},{0,
-          30},{0,50},{160,50},{160,30},{148,30}},
+          30},{0,50},{190,50},{190,30},{148,30}},
                                                color={0,0,127}));
   connect(FCV701.opening, FCV731.opening) annotation (Line(points={{-92,30},{
-          -80,30},{-80,50},{160,50},{160,30},{148,30}},
+          -80,30},{-80,50},{190,50},{190,30},{148,30}},
                                               color={0,0,127}));
   connect(roundPipe1DFV12.outlet,roundPipe1DFV20. inlet) annotation (Line(
       points={{-100,120},{-100,130},{-150,130}},
@@ -758,29 +718,16 @@ equation
       points={{140,-60},{140,-80},{90,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV8.outlet, coolingInit.inlet) annotation (Line(
-      points={{70,-140},{108,-140},{108,-140.2},{115,-140.2}},
+  connect(sourceMassFlow.outlet, roundPipe1DFV22.inlet) annotation (Line(
+      points={{160,-80},{90,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(Qset_chiller.y, Qtot_chiller.S) annotation (Line(points={{258,0},{246,
-          0},{246,-6.66134e-16},{235,-6.66134e-16}}, color={0,0,127}));
-  connect(SimplifiedChiller.outlet, PR01.inlet) annotation (Line(
-      points={{205,-20},{190,-20},{190,-39.6}},
+  connect(sinkHot1.inlet, roundPipe1DFV4.outlet) annotation (Line(
+      points={{160,-140},{100,-140},{100,-120}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01.outlet, roundPipe1DFV22.inlet) annotation (Line(
-      points={{190,-60.4},{190,-80},{90,-80}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(coolingInit.outlet, SimplifiedChiller.inlet) annotation (Line(
-      points={{135,-140},{250,-140},{250,-20},{235,-20}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{188,4},{183,
-          4},{183,3},{173,3},{173,-44.8},{184.02,-44.8}}, color={0,0,127}));
-  connect(Qtot_chiller.MultiPort, SimplifiedChiller.wall) annotation (Line(
-        points={{231,0},{226,0},{226,1},{219,1},{219,-12.35},{220,-12.35}},
-        color={255,238,44}));
+  connect(FCV_thetaconsumers1.y, sourceMassFlow.in_m_flow)
+    annotation (Line(points={{209,-60},{176,-60},{176,-75}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})));
-end UsersPipelineSystem;
+end UsersPipelineOLSystem;

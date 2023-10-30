@@ -111,7 +111,7 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    m_flow[i]- m_flow[i+1] = Vi*regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]);
+    m_flow[i]- m_flow[i+1] = Vi*(regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-5*der(ptilde));
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
     //(Vi*regStep(dp,fluid[i+1].h,fluid[i].h)*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
 
@@ -164,6 +164,7 @@ equation
 initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Ttilde) = zeros(n);
+    der(ptilde) = 0;
     if not noInitialPressure then
       //der(ptilde) = 0;
     else

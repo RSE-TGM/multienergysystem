@@ -43,7 +43,7 @@ partial model PartialBoiler
   outer DistrictHeatingNetwork.System system "system object for global defaults";
 
   SI.MassFlowRate m_flow "mass flowrate of the fluid";
-  SI.Pressure pin "inlet pressure of fluid";
+  SI.Pressure pin(start = pin_start) "inlet pressure of fluid";
   SI.Pressure pout "Outlet pressure of fluid";
   SI.Temperature Tin "inlet temperature fluid";
   SI.Temperature Tout(start = Tout_start) "Outlet temperature cold fluid";

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GasBoilerSystem
+model GasBoilerOLSystem2
   "Case in which the gas boiler is the only source of heat"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
@@ -39,17 +39,10 @@ model GasBoilerSystem
   parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
   parameter Types.Pressure dp_nom_UsersValve = 0.5e5;
 
-
-
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
-    P101(
-    Tin_start(displayUnit="K") = 80 + 273.15,
-    Tout_start=(80 + 273.15) + 273.15,                                       a = Pump.P101.a, b = Pump.P101.b,
-    m_flow_start=m_flow_total,                                                                                 dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom,
-    pin_start(displayUnit="Pa") = 1.8400803e5,
-    pout_start(displayUnit="Pa") = 1.9920743e5,                                                                                                                                                                                                        qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom,
+    P101(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom,
     use_m_flow=true) annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
@@ -116,10 +109,9 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P901(
     Tin_start(displayUnit="K") = 80 + 273.15,
-    Tout_start(displayUnit="K") = 80 + 273.15,
+    Tout_start(displayUnit="K") = 82 + 273.15,
     a=Pump.P901.a,
     b=Pump.P901.b,
-    m_flow_start=m_flow_total,
     dpnom(displayUnit="Pa") = Pump.P901.dpnom,
     etaelec=Pump.P901.etaelec,
     etamech=Pump.P901.etamech,
@@ -127,8 +119,8 @@ model GasBoilerSystem
     hin_start=Pump.P901.hin_start,
     m_flow_nom=Pump.P901.m_flow_nom,
     omeganom=Pump.P901.omeganom,
-    pin_start(displayUnit="Pa") = 1.73e5,
-    pout_start(displayUnit="Pa") = 2.569662e5,
+    pin_start(displayUnit="Pa") = 2.5e5,
+    pout_start(displayUnit="Pa") = 2.9e5,
     qnom_inm3h=19,
     rhonom(displayUnit="kg/m3") = Pump.P901.rhonom,
     headmax=27,
@@ -140,12 +132,12 @@ model GasBoilerSystem
         origin={-169,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV901(
-    allowFlowReversal=true,
+    allowFlowReversal=false,
     nomOpening=1,
     Kv=Kv_FCV901,
     dp_nom(displayUnit="Pa") = 5000,
     Tin_start(displayUnit="K") = 80 + 273.15,
-    pin_start(displayUnit="Pa") = 2.5e5)
+    pin_start=290000)
            annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
@@ -498,8 +490,7 @@ model GasBoilerSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-140,60})));
-  Modelica.Blocks.Sources.RealExpression P101_m_flow(y=if time < 60 then
-        m_flow_total else m_flow_total*1.05)
+  Modelica.Blocks.Sources.RealExpression P101_m_flow(y=m_flow_total)
     annotation (Placement(transformation(extent={{-271,-36},{-251,-16}})));
   Modelica.Blocks.Sources.RealExpression P901_omega(y=0.6*Pump.P901.omeganom)
     annotation (Placement(transformation(
@@ -515,7 +506,7 @@ model GasBoilerSystem
         extent={{-25,-25},{25,25}},
         rotation=-90)));
   Sources.SourceMassFlow CH4(
-    T0=333.15,
+    T0=60 + 273.15,
     m_flow0=0.002370206,
     p0(displayUnit="Pa") = 2000,
     use_in_m_flow=true)                                                                                                    annotation (
@@ -528,14 +519,18 @@ model GasBoilerSystem
     startTime=50)                                                                                                       annotation (
     Placement(visible = true, transformation(origin={-180,-130}, extent={{10,-10},
             {-10,10}},                                                                            rotation=-90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
-    closedLoopInitializer(
-    p_start(displayUnit="Pa") = 2.333038e5,
-    T_start(displayUnit="K") = 80.32302 + 273.15,
-    m_flow_start=m_flow_total) annotation (Placement(transformation(
+  Sources.SourcePressure sourceP(T0(displayUnit="K") = 80 + 273.15, p0(
+        displayUnit="bar") = 175549.79)
+                                   annotation (Placement(visible=true,
+        transformation(
+        origin={-195,44},
         extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-80,90})));
+        rotation=90)));
+  Sources.SinkPressure sinkPressure(p0=175549.79, T0(displayUnit="K") = 80 +
+      273.15)                       annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=-90,
+        origin={-166,19})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -649,6 +644,10 @@ equation
       points={{140,-70},{140,-54.125},{140.3,-54.125},{140.3,-38.25}},
       color={140,56,54},
       thickness=0.5));
+  connect(roundPipe1DFV5.outlet, roundPipe1DFV11.inlet) annotation (Line(
+      points={{-100,90},{-50,90}},
+      color={140,56,54},
+      thickness=0.5));
   connect(roundPipe1DFV7.inlet, roundPipe1DFV11.inlet) annotation (Line(
       points={{-60,80},{-60,90},{-50,90}},
       color={140,56,54},
@@ -714,16 +713,12 @@ equation
   connect(P901.in_omega, P901_omega.y) annotation (Line(points={{-173.8,84},{
           -173.8,77.5},{-174,77.5},{-174,71}}, color={0,0,127}));
 
-  connect(roundPipe1DFV3.inlet, FCV101.outlet) annotation (Line(
-      points={{-220,60},{-220,20}},
+  connect(sourceP.outlet, roundPipe1DFV3.inlet) annotation (Line(
+      points={{-195,54},{-195,59},{-218,59},{-218,60},{-220,60}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV5.outlet, closedLoopInitializer.inlet) annotation (Line(
-      points={{-100,90},{-95,90},{-95,89.8},{-90,89.8}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV11.inlet, closedLoopInitializer.outlet) annotation (Line(
-      points={{-50,90},{-70,90}},
+  connect(sinkPressure.inlet, FCV101.outlet) annotation (Line(
+      points={{-166,29},{-166,38},{-186,38},{-186,29},{-220,29},{-220,20}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV1.outlet, GB101.inlet) annotation (Line(
@@ -734,8 +729,8 @@ equation
       points={{-220,-60},{-220,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(CH4.outlet, GB101.inletfuel) annotation (Line(
-      points={{-196,-95},{-210,-95}},
+  connect(GB101.inletfuel, CH4.outlet) annotation (Line(
+      points={{-210,-95},{-196,-95}},
       color={140,56,54},
       thickness=0.5));
   connect(CH4.in_m_flow, fuel_flow.y)
@@ -743,8 +738,5 @@ equation
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})),
-    experiment(
-      StopTime=500,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
-end GasBoilerSystem;
+    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+end GasBoilerOLSystem2;

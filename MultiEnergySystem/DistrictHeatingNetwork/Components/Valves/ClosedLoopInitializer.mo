@@ -4,9 +4,9 @@ model ClosedLoopInitializer
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
     "Fluid model" annotation(choicesAllMatching = true);
-  parameter DistrictHeatingNetwork.Types.Pressure p_start "Initial value of pressure"
+  parameter DistrictHeatingNetwork.Types.Pressure p_start=1e5 "Initial value of pressure"
     annotation (Dialog(tab="Initialisation"));
-  parameter DistrictHeatingNetwork.Types.Temperature T_start "Initial value of temperature"
+  parameter DistrictHeatingNetwork.Types.Temperature T_start=25+273.15 "Initial value of temperature"
     annotation (Dialog(tab="Initialisation"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start=1.5
     "Initial value of the mass flow rate"

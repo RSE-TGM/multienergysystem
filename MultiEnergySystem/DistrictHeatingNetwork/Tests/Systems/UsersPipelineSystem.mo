@@ -104,7 +104,7 @@ model UsersPipelineSystem
         rotation=-90,
         origin={140,30})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=1)
-    annotation (Placement(transformation(extent={{230,40},{210,60}})));
+    annotation (Placement(transformation(extent={{229,40},{209,60}})));
   Sources.SourceMassFlow sourceHot(
     p0=280000,
     T0(displayUnit="K") = 80 + 273.15,
@@ -550,6 +550,48 @@ model UsersPipelineSystem
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={190,-50})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    TCV701(
+    allowFlowReversal=true,
+    Kv=12,
+    dp_nom(displayUnit="Pa") = 0.17e5,
+    Tin_start(displayUnit="K") = 36.7 + 273.15,
+    pin_start=200000) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={-140,-50})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    TCV711(
+    allowFlowReversal=true,
+    Kv=12,
+    dp_nom(displayUnit="Pa") = 0.17e5,
+    Tin_start(displayUnit="K") = 36.7 + 273.15,
+    pin_start=200000) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={-60,-50})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    TCV721(
+    allowFlowReversal=true,
+    Kv=12,
+    dp_nom(displayUnit="Pa") = 0.17e5,
+    Tin_start(displayUnit="K") = 36.7 + 273.15,
+    pin_start=200000) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={20,-50})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    TCV731(
+    allowFlowReversal=true,
+    Kv=12,
+    dp_nom(displayUnit="Pa") = 0.17e5,
+    Tin_start(displayUnit="K") = 36.7 + 273.15,
+    pin_start=200000) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={100,-50})));
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers1(y=1)
+    annotation (Placement(transformation(extent={{-190,-60},{-170,-40}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-100,20},{-100,0.25},{-100.7,0.25}},
@@ -568,15 +610,14 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCV_thetaconsumers.y, FCV731.opening)
-    annotation (Line(points={{209,50},{160,50},{160,30},{148,30}},
+    annotation (Line(points={{208,50},{160,50},{160,30},{148,30}},
                                                  color={0,0,127}));
-  connect(FCV721.opening, FCV731.opening) annotation (Line(points={{68,30},{80,
-          30},{80,50},{160,50},{160,30},{148,30}},  color={0,0,127}));
-  connect(FCV711.opening, FCV731.opening) annotation (Line(points={{-12,30},{0,
-          30},{0,50},{160,50},{160,30},{148,30}},
-                                               color={0,0,127}));
-  connect(FCV701.opening, FCV731.opening) annotation (Line(points={{-92,30},{
-          -80,30},{-80,50},{160,50},{160,30},{148,30}},
+  connect(FCV721.opening, FCV731.opening) annotation (Line(points={{68,30},{80,30},
+          {80,50},{160,50},{160,30},{148,30}},      color={0,0,127}));
+  connect(FCV711.opening, FCV731.opening) annotation (Line(points={{-12,30},{0,30},
+          {0,50},{160,50},{160,30},{148,30}},  color={0,0,127}));
+  connect(FCV701.opening, FCV731.opening) annotation (Line(points={{-92,30},{-80,
+          30},{-80,50},{160,50},{160,30},{148,30}},
                                               color={0,0,127}));
   connect(roundPipe1DFV12.outlet,roundPipe1DFV20. inlet) annotation (Line(
       points={{-100,120},{-100,130},{-150,130}},
@@ -678,14 +719,6 @@ equation
           {-40,145},{0,145},{0,135.1}},                   color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV40.wall) annotation (Line(points={{-40,150},
           {-40,144},{80,144},{80,135.1}},          color={255,238,44}));
-  connect(EX701.outcold, roundPipe1DFV1.inlet) annotation (Line(
-      points={{-141.3,-17.25},{-140,-17.25},{-140,-100}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX711.outcold, roundPipe1DFV2.inlet) annotation (Line(
-      points={{-61.3,-16.25},{-60,-16.25},{-60,-100}},
-      color={140,56,54},
-      thickness=0.5));
   connect(roundPipe1DFV1.outlet, roundPipe1DFV5.inlet) annotation (Line(
       points={{-140,-120},{-140,-140},{-110,-140}},
       color={140,56,54},
@@ -704,14 +737,6 @@ equation
       thickness=0.5));
   connect(roundPipe1DFV8.inlet, roundPipe1DFV6.outlet) annotation (Line(
       points={{50,-140},{-10,-140}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX721.outcold, roundPipe1DFV3.inlet) annotation (Line(
-      points={{18.7,-16.25},{20,-16.25},{20,-100}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX731.outcold, roundPipe1DFV4.inlet) annotation (Line(
-      points={{98.7,-17.25},{98.7,-26},{100,-26},{100,-100}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV8.outlet, roundPipe1DFV4.outlet) annotation (Line(
@@ -776,11 +801,52 @@ equation
       points={{135,-140},{250,-140},{250,-20},{235,-20}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{188,4},{183,
-          4},{183,3},{173,3},{173,-44.8},{184.02,-44.8}}, color={0,0,127}));
+  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{188,4},{183,4},
+          {183,3},{173,3},{173,-44.8},{184.02,-44.8}}, color={0,0,127}));
   connect(Qtot_chiller.MultiPort, SimplifiedChiller.wall) annotation (Line(
         points={{231,0},{226,0},{226,1},{219,1},{219,-12.35},{220,-12.35}},
         color={255,238,44}));
+  connect(EX701.outcold, TCV701.inlet) annotation (Line(
+      points={{-141.3,-17.25},{-140,-17.25},{-140,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TCV701.outlet, roundPipe1DFV1.inlet) annotation (Line(
+      points={{-140,-60},{-140,-100}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EX711.outcold, TCV711.inlet) annotation (Line(
+      points={{-61.3,-16.25},{-60,-16.25},{-60,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TCV711.outlet, roundPipe1DFV2.inlet) annotation (Line(
+      points={{-60,-60},{-60,-100}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EX721.outcold, TCV721.inlet) annotation (Line(
+      points={{18.7,-16.25},{20,-16.25},{20,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TCV721.outlet, roundPipe1DFV3.inlet) annotation (Line(
+      points={{20,-60},{20,-100}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EX731.outcold, TCV731.inlet) annotation (Line(
+      points={{98.7,-17.25},{98.7,-26},{100,-26},{100,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TCV731.outlet, roundPipe1DFV4.inlet) annotation (Line(
+      points={{100,-60},{100,-100}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV_thetaconsumers1.y, TCV701.opening)
+    annotation (Line(points={{-169,-50},{-148,-50}}, color={0,0,127}));
+  connect(FCV_thetaconsumers1.y, TCV731.opening) annotation (Line(points={{-169,
+          -50},{-160,-50},{-160,-34},{80,-34},{80,-50},{92,-50}}, color={0,0,127}));
+  connect(FCV_thetaconsumers1.y, TCV721.opening) annotation (Line(points={{-169,
+          -50},{-160,-50},{-160,-34},{0,-34},{0,-50},{12,-50}}, color={0,0,127}));
+  connect(FCV_thetaconsumers1.y, TCV711.opening) annotation (Line(points={{-169,
+          -50},{-160,-50},{-160,-34},{-80,-34},{-80,-50},{-68,-50}}, color={0,0,
+          127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})));
 end UsersPipelineSystem;

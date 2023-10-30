@@ -26,6 +26,8 @@ model GasBoilerCompleteSystem
   parameter Types.Length t_S9 = 1.5e-3;
   parameter Types.MassFlowRate m_flow_total = 1.6;
 
+  parameter Types.MassFlowRate m_flow_start_cooling = 2;
+
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;
   parameter Types.Temperature Tin_start_Users = 80 + 273.15;
@@ -469,7 +471,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV2(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -482,7 +484,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV6(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -495,7 +497,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV8(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -508,7 +510,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV9(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -521,7 +523,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV10(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users*3,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=Tin_start_Users,
@@ -534,7 +536,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV14(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users*3,
+    m_flow_start=m_flow_start_cooling*2,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=Tin_start_Users,
@@ -547,7 +549,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV15(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users*3,
+    m_flow_start=m_flow_start_cooling*3,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=Tin_start_Users,
@@ -560,7 +562,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV16(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -573,7 +575,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV17(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -586,7 +588,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV22(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -599,7 +601,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV23(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tin_start_Users,
@@ -612,7 +614,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV24(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users*3,
+    m_flow_start=m_flow_start_cooling,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=Tin_start_Users,
@@ -625,7 +627,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV25(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users*3,
+    m_flow_start=m_flow_start_cooling*2,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=Tin_start_Users,
@@ -638,7 +640,7 @@ model GasBoilerCompleteSystem
     roundPipe1DFV27(
     L=L_Users,
     t=t_Users,
-    m_flow_start=m_flow_start_Users*3,
+    m_flow_start=m_flow_start_cooling*3,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=Tin_start_Users,
@@ -649,8 +651,8 @@ model GasBoilerCompleteSystem
         origin={160,-118})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     PR01(
-    Tin_start(displayUnit="K") = 15 + 273.15,
-    Tout_start(displayUnit="K") = 16 + 273.15,
+    Tin_start(displayUnit="K") = 28 + 273.15,
+    Tout_start(displayUnit="K") = 29 + 273.15,
     a=Pump.PR01.a,
     b=Pump.PR01.b,
     m_flow_start=8.977481,
@@ -662,14 +664,15 @@ model GasBoilerCompleteSystem
     m_flow_nom=Pump.PR01.m_flow_nom,
     omeganom=Pump.PR01.omeganom,
     pin_start(displayUnit="Pa") = 2e5,
-    pout_start(displayUnit="Pa") = 2.6e5,
+    pout_start(displayUnit="Pa") = 2.7e5,
     qnom_inm3h=32.34652403,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
     use_m_flow=true) annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={270,-88})));
-  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=9)
+  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=if time < 100 then 9
+         elseif time < 500 then 8 else 10)
     annotation (Placement(transformation(extent={{287,-36},{267,-16}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     TCV701(
@@ -713,16 +716,18 @@ model GasBoilerCompleteSystem
         origin={180,-80})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers1(y=1)
     annotation (Placement(transformation(extent={{-110,-90},{-90,-70}})));
-  Sources.SinkPressure sinkCold_HX(p0(displayUnit="Pa") = 2.7e5, T0=(36.7 +
-        273.15) + 273.15) annotation (Placement(transformation(
+  Sources.SinkPressure sinkCold_HX(
+    p0(displayUnit="Pa") = 2e5,
+    T0=(36.7 + 273.15) + 273.15,
+    R=1e-3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={274,-178})));
+        origin={278,-178})));
   Sources.SourcePressure sourceColdP_HX(
     p0(displayUnit="Pa") = 2e5,
     T0(displayUnit="K") = 28 + 273.15,
-    h0=BPHE.E701.hin_start_cold)
-    annotation (Placement(transformation(extent={{320,-78},{300,-58}})));
+    h0=BPHE.E701.hin_start_cold,
+    R=1e-3) annotation (Placement(transformation(extent={{320,-68},{300,-48}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -893,8 +898,8 @@ equation
       thickness=0.5));
   connect(CH4.in_m_flow, fuel_flow.y)
     annotation (Line(points={{-180,-100},{-180,-119}}, color={0,0,127}));
-  connect(P101.in_m_flow, P101_m_flow.y) annotation (Line(points={{-214.48,
-          -25.8},{-201,-25.8},{-201,-26}}, color={0,0,127}));
+  connect(P101.in_m_flow, P101_m_flow.y) annotation (Line(points={{-214.48,-25.8},
+          {-201,-25.8},{-201,-26}}, color={0,0,127}));
   connect(roundPipe1DFV2.outlet, roundPipe1DFV10.inlet) annotation (Line(
       points={{-60,-158},{-60,-178},{-30,-178}},
       color={140,56,54},
@@ -963,9 +968,8 @@ equation
       points={{270,-98.4},{270,-118},{170,-118}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{266,-26},{
-          265,-26},{265,-25},{255,-25},{255,-82.8},{264.02,-82.8}}, color={0,0,
-          127}));
+  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{266,-26},{265,
+          -26},{265,-25},{255,-25},{255,-82.8},{264.02,-82.8}}, color={0,0,127}));
   connect(EX701.outcold, TCV701.inlet) annotation (Line(
       points={{-60.3,-39.25},{-60,-39.25},{-60,-70}},
       color={140,56,54},
@@ -1000,19 +1004,18 @@ equation
       thickness=0.5));
   connect(FCV_thetaconsumers1.y, TCV701.opening)
     annotation (Line(points={{-89,-80},{-68,-80}}, color={0,0,127}));
-  connect(FCV_thetaconsumers1.y, TCV711.opening) annotation (Line(points={{-89,
-          -80},{-80,-80},{-80,-60},{0,-60},{0,-80},{12,-80}}, color={0,0,127}));
-  connect(FCV_thetaconsumers1.y, TCV721.opening) annotation (Line(points={{-89,
-          -80},{-80,-80},{-80,-60},{80,-60},{80,-80},{92,-80}}, color={0,0,127}));
-  connect(FCV_thetaconsumers1.y, TCV731.opening) annotation (Line(points={{-89,
-          -80},{-80,-80},{-80,-60},{160,-60},{160,-80},{172,-80}}, color={0,0,
-          127}));
-  connect(sinkCold_HX.inlet, roundPipe1DFV9.outlet) annotation (Line(
-      points={{264,-178},{180,-178},{180,-158}},
+  connect(FCV_thetaconsumers1.y, TCV711.opening) annotation (Line(points={{-89,-80},
+          {-80,-80},{-80,-60},{0,-60},{0,-80},{12,-80}}, color={0,0,127}));
+  connect(FCV_thetaconsumers1.y, TCV721.opening) annotation (Line(points={{-89,-80},
+          {-80,-80},{-80,-60},{80,-60},{80,-80},{92,-80}}, color={0,0,127}));
+  connect(FCV_thetaconsumers1.y, TCV731.opening) annotation (Line(points={{-89,-80},
+          {-80,-80},{-80,-60},{160,-60},{160,-80},{172,-80}}, color={0,0,127}));
+  connect(roundPipe1DFV15.outlet, sinkCold_HX.inlet) annotation (Line(
+      points={{150,-178},{268,-178}},
       color={140,56,54},
       thickness=0.5));
-  connect(sourceColdP_HX.outlet, PR01.inlet) annotation (Line(
-      points={{300,-68},{270,-68},{270,-77.6}},
+  connect(PR01.inlet, sourceColdP_HX.outlet) annotation (Line(
+      points={{270,-77.6},{270,-58},{300,-58}},
       color={140,56,54},
       thickness=0.5));
   annotation (

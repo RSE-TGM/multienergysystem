@@ -6,13 +6,16 @@ model PowerTransfer
   import MultiEnergySystem.DistrictHeatingNetwork.Types;
 
   parameter Types.MassFlowRate b = 0.001 "Regularization mass flow rate, avoid null division. Try to keep it low in accordance to the expected mass flow.";
+  parameter Types.Temperature Tin_start = 36+273.15;
+  parameter Types.Temperature Tout_start = 28+273.15;
+  parameter Types.Pressure pin_start = 2.7e5;
 
   // Variables
-  Types.Temperature Tin "Inlet temperature";
+  Types.Temperature Tin(start = Tin_start) "Inlet temperature";
   Types.Temperature Tout "Outlet temperature";
   Types.SpecificEnthalpy hin "Inlet specific enthalpy";
   Types.SpecificEnthalpy hout "Outlet specific enthalpy";
-  Types.Pressure pin "inlet pressure";
+  Types.Pressure pin(start = pin_start) "inlet pressure";
   Types.Pressure pout "Outlet pressure";
   Types.MassFlowRate m_flow "Mass Flow Rate across the component";
 

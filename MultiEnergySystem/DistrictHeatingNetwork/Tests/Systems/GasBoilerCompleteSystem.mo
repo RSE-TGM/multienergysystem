@@ -428,8 +428,7 @@ model GasBoilerCompleteSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-140,60})));
-  Modelica.Blocks.Sources.RealExpression P101_m_flow(y=if time < 60 then
-        m_flow_total else m_flow_total*1.05)
+  Modelica.Blocks.Sources.RealExpression P101_m_flow(y=m_flow_total)
     annotation (Placement(transformation(extent={{-180,-36},{-200,-16}})));
   Modelica.Blocks.Sources.RealExpression P901_omega(y=0.6*Pump.P901.omeganom)
     annotation (Placement(transformation(
@@ -454,7 +453,7 @@ model GasBoilerCompleteSystem
   Modelica.Blocks.Sources.Ramp fuel_flow(
     duration=20,
     height=0.002370206*0.2*0,
-    offset=0.0037212234,
+    offset=0.0037212234*0.7,
     startTime=50)                                                                                                       annotation (
     Placement(visible = true, transformation(origin={-180,-130}, extent={{10,-10},
             {-10,10}},                                                                            rotation=-90)));
@@ -648,27 +647,6 @@ model GasBoilerCompleteSystem
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={160,-118})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
-    coolingInit(
-    p_start(displayUnit="Pa") = 2e5,
-    T_start(displayUnit="K") = 15.6 + 273.15,
-    m_flow_start=8.977481)
-    annotation (Placement(transformation(extent={{195,-188},{215,-168}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV SimplifiedChiller(
-    L=1,
-    t=t_Users,
-    T_ext(displayUnit="K") = 25 + 273.15,
-    m_flow_start=8.977481,
-    pin_start(displayUnit="Pa") = 2e5,
-    pout_start(displayUnit="Pa") = 1.99e5,
-    Tin_start(displayUnit="K") = 15 + 273.15,
-    Tout_start(displayUnit="K") = 8 + 273.15,
-    Di=Di_Users,
-    n=3,
-    cf=0.0004)   annotation (Placement(transformation(
-        extent={{15,-15},{-15,15}},
-        rotation=0,
-        origin={300,-58})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     PR01(
     Tin_start(displayUnit="K") = 15 + 273.15,
@@ -691,16 +669,8 @@ model GasBoilerCompleteSystem
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={270,-88})));
-  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=5.55)
+  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=9)
     annotation (Placement(transformation(extent={{287,-36},{267,-16}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.Wall_inputQ
-    Qtot_chiller(n=3, Twall(displayUnit="K") = 25 + 273.15)  annotation (
-      Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={313,-28})));
-  Modelica.Blocks.Sources.RealExpression Qset_chiller(y=-0.32634112e5*5.35)
-    annotation (Placement(transformation(extent={{357,-38},{337,-18}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     TCV701(
     allowFlowReversal=true,
@@ -743,6 +713,16 @@ model GasBoilerCompleteSystem
         origin={180,-80})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers1(y=1)
     annotation (Placement(transformation(extent={{-110,-90},{-90,-70}})));
+  Sources.SinkPressure sinkCold_HX(p0(displayUnit="Pa") = 2.7e5, T0=(36.7 +
+        273.15) + 273.15) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={274,-178})));
+  Sources.SourcePressure sourceColdP_HX(
+    p0(displayUnit="Pa") = 2e5,
+    T0(displayUnit="K") = 28 + 273.15,
+    h0=BPHE.E701.hin_start_cold)
+    annotation (Placement(transformation(extent={{320,-78},{300,-58}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -979,30 +959,13 @@ equation
       points={{220,-98},{220,-118},{170,-118}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV15.outlet, coolingInit.inlet) annotation (Line(
-      points={{150,-178},{188,-178},{188,-178.2},{195,-178.2}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(SimplifiedChiller.outlet,PR01. inlet) annotation (Line(
-      points={{285,-58},{270,-58},{270,-77.6}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PR01.outlet,roundPipe1DFV27. inlet) annotation (Line(
       points={{270,-98.4},{270,-118},{170,-118}},
       color={140,56,54},
       thickness=0.5));
-  connect(coolingInit.outlet,SimplifiedChiller. inlet) annotation (Line(
-      points={{215,-178},{330,-178},{330,-58},{315,-58}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(Qset_chiller.y,Qtot_chiller. S) annotation (Line(points={{336,-28},{
-          317,-28}},                                 color={0,0,127}));
   connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{266,-26},{
           265,-26},{265,-25},{255,-25},{255,-82.8},{264.02,-82.8}}, color={0,0,
           127}));
-  connect(Qtot_chiller.MultiPort, SimplifiedChiller.wall) annotation (Line(
-        points={{313,-28},{300,-28},{300,-52},{299,-52},{299,-50.35},{300,
-          -50.35}}, color={255,238,44}));
   connect(EX701.outcold, TCV701.inlet) annotation (Line(
       points={{-60.3,-39.25},{-60,-39.25},{-60,-70}},
       color={140,56,54},
@@ -1044,11 +1007,19 @@ equation
   connect(FCV_thetaconsumers1.y, TCV731.opening) annotation (Line(points={{-89,
           -80},{-80,-80},{-80,-60},{160,-60},{160,-80},{172,-80}}, color={0,0,
           127}));
+  connect(sinkCold_HX.inlet, roundPipe1DFV9.outlet) annotation (Line(
+      points={{264,-178},{180,-178},{180,-158}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sourceColdP_HX.outlet, PR01.inlet) annotation (Line(
+      points={{300,-68},{270,-68},{270,-77.6}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-400,-200},{400,200}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),
     experiment(
-      StopTime=500,
+      StopTime=5000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end GasBoilerCompleteSystem;

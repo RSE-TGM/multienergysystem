@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components;
 package Valves
   extends Modelica.Icons.Package;
-  import Types = MultiEnergySystem.DistrictHeatingNetwork.Types;
+  import         MultiEnergySystem.DistrictHeatingNetwork.Types;
 end Valves;

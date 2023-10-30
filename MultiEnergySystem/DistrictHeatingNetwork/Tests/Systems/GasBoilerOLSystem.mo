@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GasBoilerSystem
+model GasBoilerOLSystem
   "Case in which the gas boiler is the only source of heat"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
@@ -26,6 +26,8 @@ model GasBoilerSystem
   parameter Types.Length t_S9 = 1.5e-3;
   parameter Types.MassFlowRate m_flow_total = 1.6;
 
+  parameter Types.Pressure pin_start_Boiler = 1.85e5;
+
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;
   parameter Types.Temperature Tin_start_Users = 80 + 273.15;
@@ -38,8 +40,6 @@ model GasBoilerSystem
   parameter Real Kv_UsersValve(unit = "m3/h") = 2.5 "Metri Flow Coefficient ";
   parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
   parameter Types.Pressure dp_nom_UsersValve = 0.5e5;
-
-
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -483,6 +483,19 @@ model GasBoilerSystem
         origin={220,-80},
         extent={{-10,-10},{10,10}},
         rotation=90)));
+  Sources.SourcePressure sourceP(T0(displayUnit="K") = 80 + 273.15, p0(
+        displayUnit="Pa") = pin_start_Boiler)
+                                   annotation (Placement(visible=true,
+        transformation(
+        origin={-220,-80},
+        extent={{-10,-10},{10,10}},
+        rotation=90)));
+  Sources.SinkPressure sinkPressure(p0=pin_start_S1,
+                                    T0=Tin_start_S1)
+                                    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=-90,
+        origin={-240,-80})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=1)
     annotation (Placement(transformation(extent={{311,0},{291,20}})));
   Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
@@ -499,38 +512,6 @@ model GasBoilerSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-174,60})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler
-    GB101(
-    Tin_start=333.15,
-    pin_start=180000,
-    pout_start=179000) annotation (Placement(visible=true, transformation(
-        origin={-312,-94},
-        extent={{-26,-26},{26,26}},
-        rotation=0)));
-  Sources.SourceMassFlow CH4(
-    T0=60 + 273.15,
-    m_flow0=0.002370206,
-    p0(displayUnit="Pa") = 2000,
-    use_in_m_flow=true)                                                                                                    annotation (
-    Placement(visible = true, transformation(origin={-332,-44},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp fuel_flow(
-    duration=20,
-    height=0.002370206*0.2*0,
-    offset=0.0037212234,
-    startTime=50)                                                                                                       annotation (
-    Placement(visible = true, transformation(origin={-362,-24},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp Tin(
-    duration=20,
-    height=0,
-    offset=60 + 273.15,
-    startTime=40)                                                                                    annotation (
-    Placement(visible = true, transformation(origin={-382,-124},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow(
-    duration=0,
-    height=0,
-    offset=1.6,
-    startTime=100)                                                                              annotation (
-    Placement(visible = true, transformation(origin={-382,-64},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -586,6 +567,14 @@ equation
       thickness=0.5));
   connect(sinkCold_701.inlet, EX701.outcold) annotation (Line(
       points={{-60,-70},{-60,-39.25},{-60.3,-39.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV.inlet, sourceP.outlet) annotation (Line(
+      points={{-220,-60},{-220,-70}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV1.outlet, sinkPressure.inlet) annotation (Line(
+      points={{-240,-60},{-240,-70}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV1.inlet, roundPipe1DFV20.outlet) annotation (Line(
@@ -688,6 +677,10 @@ equation
       points={{220,100},{220,20}},
       color={140,56,54},
       thickness=0.5));
+  connect(FCV101.outlet, roundPipe1DFV3.inlet) annotation (Line(
+      points={{-220,20},{-220,60}},
+      color={140,56,54},
+      thickness=0.5));
   connect(FCV_thetaconsumers.y, FCV731.opening)
     annotation (Line(points={{290,10},{228,10}}, color={0,0,127}));
   connect(FCV721.opening, FCV731.opening) annotation (Line(points={{148,10},{160,
@@ -712,25 +705,8 @@ equation
           -26},{-237.76,-25.8},{-225.52,-25.8}}, color={0,0,127}));
   connect(P901.in_omega, P901_omega.y) annotation (Line(points={{-173.8,84},{
           -173.8,77.5},{-174,77.5},{-174,71}}, color={0,0,127}));
-  connect(CH4.outlet, GB101.inletfuel) annotation (Line(points={{-322,-44},{
-          -312,-44},{-312,-73.2}}, color={136,136,136}));
-  connect(fuel_flow.y,CH4. in_m_flow) annotation (
-    Line(points={{-351,-24},{-338,-24},{-338,-39}},  color = {0, 0, 127}));
-  connect(GB101.outlet, roundPipe1DFV.inlet) annotation (Line(
-      points={{-327.6,-83.6},{-346,-83.6},{-346,-68},{-220,-68},{-220,-60}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(GB101.inlet, roundPipe1DFV1.outlet) annotation (Line(
-      points={{-327.6,-104.4},{-352,-104.4},{-352,-130},{-240,-130},{-240,-60}},
-      color={140,56,54},
-      thickness=0.5));
-
-  connect(FCV101.outlet, roundPipe1DFV3.inlet) annotation (Line(
-      points={{-220,20},{-220,60}},
-      color={140,56,54},
-      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})),
     experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
-end GasBoilerSystem;
+end GasBoilerOLSystem;

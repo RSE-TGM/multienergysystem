@@ -11,7 +11,8 @@ model GasBoiler
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inletfuel annotation (
     Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
-  m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)) = inlet.p - outlet.p "Momentum Balance";
+  inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
+  //0.01e5 = inlet.p-outlet.p;
   inlet.p = inletfuel.p;
   Pheat = m_flow_fuel*HH*etanom;
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";

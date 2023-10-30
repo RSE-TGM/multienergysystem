@@ -10,14 +10,15 @@ model GasBoilerTest
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(
     use_in_T0=true,
     T0=333.15,
-    p0=310000)                                                                                          annotation (
+    p0=180000)                                                                                          annotation (
     Placement(visible = true, transformation(origin = {-48, -12}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp fuel_flow(duration = 20,
-    height=0.002370206*0.2,                                                       offset = 0.002370206,
+    height=0.002370206*0.57,                                                      offset = 0.002370206,
     startTime=50)                                                                                                       annotation (
     Placement(visible = true, transformation(origin = {-50, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin(duration = 20,
-    height=0,                                                  offset = 60 + 273.15, startTime = 40) annotation (
+    height=0,
+    offset=53 + 273.15,                                                              startTime = 40) annotation (
     Placement(visible = true, transformation(origin = {-70, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(
     duration=0,

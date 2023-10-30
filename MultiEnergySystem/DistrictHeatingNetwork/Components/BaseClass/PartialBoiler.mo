@@ -65,6 +65,7 @@ partial model PartialBoiler
     Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
   assert(Pmaxnom >= Pheat, "Actual heat power is higher than Maximum heat power", AssertionLevel.warning);
+  assert(10e5 >= inlet.p, "Actual heat power is higher than Maximum heat power", AssertionLevel.warning);
 
   // Balance equations
   V*fluidOut.drho_dT*der(Tout) = inlet.m_flow + outlet.m_flow;
@@ -102,6 +103,7 @@ initial equation
   if initOpt == Choices.Init.Options.steadyState then
     //der(M) = 0;
     der(Tout) = 0;
+    //der(pout) = 0;
   elseif initOpt == Choices.Init.Options.fixedState then
     Tout = Tout_start;
   else

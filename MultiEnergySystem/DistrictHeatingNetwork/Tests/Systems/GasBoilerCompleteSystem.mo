@@ -27,6 +27,7 @@ model GasBoilerCompleteSystem
   parameter Types.MassFlowRate m_flow_total = 1.6;
 
   parameter Types.MassFlowRate m_flow_start_cooling = 2;
+  parameter Types.Pressure pin_start_CoolingValve = 3.6e5;
 
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;
@@ -680,7 +681,8 @@ model GasBoilerCompleteSystem
     Kv=12,
     dp_nom(displayUnit="Pa") = 0.17e5,
     Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+    pin_start=pin_start_CoolingValve)
+                      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,-80})));
@@ -690,7 +692,8 @@ model GasBoilerCompleteSystem
     Kv=12,
     dp_nom(displayUnit="Pa") = 0.17e5,
     Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+    pin_start=pin_start_CoolingValve)
+                      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={20,-80})));
@@ -700,7 +703,8 @@ model GasBoilerCompleteSystem
     Kv=12,
     dp_nom(displayUnit="Pa") = 0.17e5,
     Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+    pin_start=pin_start_CoolingValve)
+                      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={100,-80})));
@@ -710,7 +714,8 @@ model GasBoilerCompleteSystem
     Kv=12,
     dp_nom(displayUnit="Pa") = 0.17e5,
     Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+    pin_start=pin_start_CoolingValve)
+                      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={180,-80})));

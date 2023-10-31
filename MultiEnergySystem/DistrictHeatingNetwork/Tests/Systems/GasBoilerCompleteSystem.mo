@@ -667,9 +667,11 @@ model GasBoilerCompleteSystem
     m_flow_nom=Pump.PR01.m_flow_nom,
     omeganom=Pump.PR01.omeganom,
     pin_start(displayUnit="Pa") = 2e5,
-    pout_start(displayUnit="Pa") = 2.7e5,
-    qnom_inm3h=32.34652403,
+    pout_start(displayUnit="Pa") = 5e5,
+    qnom_inm3h=Pump.PR01.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
+    headmax=Pump.PR01.headnommax,
+    headmin=Pump.PR01.headnommin,
     use_m_flow=true) annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
@@ -729,12 +731,27 @@ model GasBoilerCompleteSystem
     R=1e-3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={281,-178})));
+        origin={408,-127})));
   Sources.SourcePressure sourceColdP_HX(
     p0(displayUnit="Pa") = 2e5,
     T0(displayUnit="K") = 28 + 273.15,
     h0=BPHE.E701.hin_start_cold,
-    R=1e-3) annotation (Placement(transformation(extent={{320,-80},{300,-60}})));
+    R=1e-3) annotation (Placement(transformation(extent={{418,-112},{398,-92}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer Pt4(pin_start
+      =200000)                                                                    annotation (Placement(
+        visible=true, transformation(
+        origin={300,-58},
+        extent={{-10,10},{10,-10}},
+        rotation=180)));
+  Modelica.Blocks.Sources.RealExpression Ptransfer4(y=-327159.72)
+                                                                annotation (Placement(transformation(extent={{274,-48},
+            {290,-32}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
+    closedLoopInitializer1(
+    p_start(displayUnit="Pa") = 2e5,
+    T_start(displayUnit="K") = 36.7 + 273.15,
+    m_flow_start=9)
+    annotation (Placement(transformation(extent={{235,-187},{252,-169}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -1020,12 +1037,18 @@ equation
           {-80,-80},{-80,-60},{80,-60},{80,-80},{92,-80}}, color={0,0,127}));
   connect(FCV_thetaconsumers1.y, TCV731.opening) annotation (Line(points={{-89,-80},
           {-80,-80},{-80,-60},{160,-60},{160,-80},{172,-80}}, color={0,0,127}));
-  connect(roundPipe1DFV15.outlet, sinkCold_HX.inlet) annotation (Line(
-      points={{150,-178},{271,-178}},
+  connect(Ptransfer4.y, Pt4.Ptransfer) annotation (Line(points={{290.8,-40},{
+          300,-40},{300,-50}}, color={0,0,127}));
+  connect(Pt4.outlet, PR01.inlet) annotation (Line(
+      points={{290,-58},{270,-58},{270,-77.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(sourceColdP_HX.outlet, PR01.inlet) annotation (Line(
-      points={{300,-70},{270,-70},{270,-77.6}},
+  connect(closedLoopInitializer1.inlet, roundPipe1DFV9.outlet) annotation (Line(
+      points={{235,-178.18},{208,-178.18},{208,-178},{180,-178},{180,-158}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(closedLoopInitializer1.outlet, Pt4.inlet) annotation (Line(
+      points={{252,-178},{330,-178},{330,-58},{310,-58}},
       color={140,56,54},
       thickness=0.5));
   annotation (

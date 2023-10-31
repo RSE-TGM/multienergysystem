@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pumps;
 model TestPumpPR01
-  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
     m_flow_set(
       height = 12,
       offset = 2),

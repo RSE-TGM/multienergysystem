@@ -20,7 +20,7 @@ partial model ComputeIdealGasCoefficients
   Types.Density d_approx;
 
   String s;
- 
+
   parameter Types.Temperature T_data[:] = linspace(T_min, T_max, N);
   parameter Types.SpecificHeatCapacity cp_data[:]=
       {Medium.specificHeatCapacityCp(Medium.setState_pTX(p, T_data[i])) for i in 1:N};

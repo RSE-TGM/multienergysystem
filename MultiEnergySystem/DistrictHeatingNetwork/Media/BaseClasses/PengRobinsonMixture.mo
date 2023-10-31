@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
-
 partial model PengRobinsonMixture
   extends PartialMixture(nC = 0, Xi_start = X_start[1:nXi], nXi = if reducedX then nX - 1 else nX, mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
@@ -85,7 +84,7 @@ partial model PengRobinsonMixture
   Types.SpecificHeatCapacity cp_cond "Condensation specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_star[nX](start = cp_star_start) "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_star_track[nC] "Specific heat capacity for tracking components";
-  Types.ThermalConductivity k "Thermal Conductivity" annotation(
+  Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.DerPerUnitbyTemperature dTr_dT[nX] "Temperature derivative of Reduced Temperature per each component";
   Types.DerPerUnitbyTemperature dalpha_dT[nX](start = dalpha_dT_start) "Temperature derivative of alpha per each component";
@@ -134,7 +133,7 @@ protected
     output Types.SpecificHeatCapacity cp;
   algorithm
     cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
-    annotation(
+    annotation (
       Inline = true);
   end cp_T;
 
@@ -144,7 +143,7 @@ protected
     output Types.SpecificEnthalpy h;
   algorithm
     h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    annotation(
+    annotation (
       Inline = true);
   end h_T;
 
@@ -154,8 +153,8 @@ protected
     output Types.SpecificEnthalpy h;
   algorithm
     h := 29632796590.9264*(T)^(-2.35262288);
-//h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    annotation(
+    //h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
+    annotation (
       Inline = true);
   end h_res_comp_T;
 
@@ -165,7 +164,7 @@ protected
     output Types.SpecificEntropy s;
   algorithm
     s := a[4]*log(T) + T*(a[3] + T*(a[2]/2 + T*a[1]/3));
-    annotation(
+    annotation (
       Inline = true);
   end s_T;
 
@@ -181,7 +180,7 @@ protected
     for i in 1:size(X, 1) loop
       invMMX[i] := 1/MMX[i];
     end for;
-/*  FOR DEBUGGING PURPOSES - REMOVE ASAP
+    /*  FOR DEBUGGING PURPOSES - REMOVE ASAP
     Modelica.Utilities.Streams.print("X="+String(X[1])+", MMX="+String(MMX[1]));
     Modelica.Utilities.Streams.print("X="+String(X[2])+", MMX="+String(MMX[2]));
     Modelica.Utilities.Streams.print("X="+String(X[3])+", MMX="+String(MMX[3]));
@@ -192,7 +191,7 @@ protected
     for i in 1:size(X, 1) loop
       moleFractions[i] := Mmix*X[i]/MMX[i];
     end for;
-    annotation(
+    annotation (
       smoothOrder = 5);
   end massToMoleFractions;
 initial equation
@@ -336,6 +335,6 @@ equation
     s_res = 0;
   end if;
   s - s_id = s_res;
-  annotation(
+  annotation (
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));
 end PengRobinsonMixture;

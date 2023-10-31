@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.IdealGases;
-
 package MethaneOxygen "Ideal Mixture of CH4 + H2 usin Modelica Standard Library"
   extends Modelica.Media.IdealGases.Common.MixtureGasNasa(
      mediumName="MoistAir",

@@ -1,20 +1,19 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Actuators;
-
 block TriggerGenerator "Triggered generator"
   extends Modelica.Blocks.Icons.PartialBooleanBlock;
   parameter Real offset = 0 "Offset of output signal";
-  Modelica.Blocks.Interfaces.BooleanInput u "Connector of Boolean input signal" annotation(
+  Modelica.Blocks.Interfaces.BooleanInput u "Connector of Boolean input signal" annotation (
     Placement(transformation(extent = {{-140, -20}, {-100, 20}})));
-  Modelica.Blocks.Interfaces.RealOutput y "Connector of Real output signal" annotation(
+  Modelica.Blocks.Interfaces.RealOutput y "Connector of Real output signal" annotation (
     Placement(transformation(extent = {{100, -10}, {120, 10}})));
-  Modelica.Blocks.Interfaces.RealInput amplitude annotation(
+  Modelica.Blocks.Interfaces.RealInput amplitude annotation (
     Placement(visible = true, transformation(origin = {10, 10}, extent = {{-140, -20}, {-100, 20}}, rotation = 0), iconTransformation(origin = {0, -60}, extent = {{-140, -20}, {-100, 20}}, rotation = 0)));
 protected
   Real endValue "Value of y at time of recent edge";
 equation
   y = endValue;
   endValue = if u then amplitude + offset else offset;
-  annotation(
+  annotation (
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}), graphics = {Line(origin = {0, 2.84746},points = {{-60, -70}, {-60, -70}, {-60, 40}, {8, 40}, {8, -72}, {8, -72}}, color = {0, 0, 127}), Line(points = {{-90, -70}, {82, -70}}, color = {192, 192, 192}), Line(points = {{-80, 68}, {-80, -80}}, color = {192, 192, 192}), Polygon(lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{90, -70}, {68, -62}, {68, -78}, {90, -70}}), Polygon(lineColor = {192, 192, 192}, fillColor = {192, 192, 192}, fillPattern = FillPattern.Solid, points = {{-80, 90}, {-88, 68}, {-72, 68}, {-80, 90}}), Line(points = {{-80, -70}, {-60, -70}, {-60, 24}, {8, 24}, {8, -70}, {60, -70}}, color = {255, 0, 255})}),
     Documentation(info = "<html>
 <p>The block TriggeredTrapezoid has a Boolean input and a real

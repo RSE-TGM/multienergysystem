@@ -8,5 +8,4 @@ package System
         "SteadyStateInitial -- Dynamic balance, Steady state initial with guess value",
       SteadyState "SteadyState -- Steady state balance, Initial guess value")
     "Enumeration to define definition of balance equations";
-
 end System;

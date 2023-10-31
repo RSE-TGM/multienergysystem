@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
-
 partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
   parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
@@ -22,23 +21,23 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.MassFraction C[nC] "Mass fraction vector for tracking components";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
-  Types.SpecificEntropy s "Specific Entropy" annotation(
+  Types.SpecificEntropy s "Specific Entropy" annotation (
     HideResult = not ComputeEntropy);
   Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
   Types.SpecificEnergy du_dX[nX] "Mass fraction derivative of Specific Internal Energy at constant pressure, per each component";
   Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
-  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation(
+  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation (
     HideResult = not CompressibilityEffect);
   Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure";
   Real dv_dX[nX](each unit = "m3/kg") "Mass fraction derivative of specific volumen, per each component";
-  Types.DynamicViscosity mu "Dynamic viscosity" annotation(
+  Types.DynamicViscosity mu "Dynamic viscosity" annotation (
     HideResult = not ComputeTransport);
-  Types.ThermalConductivity k "Thermal Conductivity" annotation(
+  Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.Density rho "Density of the fluid, needed in the pipe";
-  annotation(
+  annotation (
     Documentation(info = "<html><head></head><body><p><b><span style=\"font-size: 13pt;\">Interface for real mixture gas models</span></b></p>
 <p>The objetive of this model is to have an interface and use it as a base model for any real mixture model. In this first version of the library, Peng-Robinson EoS is the one to be considered, however, it is possible to develop different real fluid models using other EoS.</p>
 <p>The <u><span style=\"color: #0000ff;\">PartialMixture</span></u> model includes three input variables for pressure, temperature and mass fraction, in order to define the full properties of the fluid. The other variables are going to be used when it comes to develop the real mixture fluid model.</p>

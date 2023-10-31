@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Utilities;
-
 function GasPressureLosses
   "Renourd for q/D < 150 (m3/(h.mm))"
   input Real Q "volumetric flow in m3/h";

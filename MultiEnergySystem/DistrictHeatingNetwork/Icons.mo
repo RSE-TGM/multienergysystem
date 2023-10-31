@@ -82,7 +82,8 @@ package Icons "Icon package for DHN components"
     end Boiler;
 
     partial model ElectricBoiler
-      extends MultiEnergySystem.DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
+      extends
+        MultiEnergySystem.DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
     equation
 
       annotation (

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components;
 package BaseClass
   extends Modelica.Icons.BasesPackage;
-  import Types = MultiEnergySystem.DistrictHeatingNetwork.Types;
+  import         MultiEnergySystem.DistrictHeatingNetwork.Types;
 end BaseClass;

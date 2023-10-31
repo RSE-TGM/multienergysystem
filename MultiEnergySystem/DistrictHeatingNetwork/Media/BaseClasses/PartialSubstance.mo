@@ -1,5 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
-
 partial model PartialSubstance
   extends Modelica.Icons.MaterialProperty;
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
@@ -11,7 +10,7 @@ partial model PartialSubstance
   parameter Types.MolarMass MM "Molar mass of the fluid";
   parameter Real rho_coeff[4] "Coefficients to compute fluid density";
   parameter Real cp_coeff[4] "Coefficients to compute specific heat capacity";
-  
+
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
   connector InputTemperature = input Types.Temperature "Pseudo-input to check model balancedness";
@@ -21,22 +20,22 @@ partial model PartialSubstance
   Types.MolarVolume v_mol "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
-  Types.SpecificEntropy s "Specific Entropy" annotation(
+  Types.SpecificEntropy s "Specific Entropy" annotation (
     HideResult = not ComputeEntropy);
   Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
-  Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation(
+  Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation (
     HideResult = not CompressibilityEffect);
   Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure";
-  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation(
+  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation (
     HideResult = not CompressibilityEffect);
-  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation(
+  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (
     HideResult = not ComputeTransport);
-  Types.ThermalConductivity kappa "Thermal Conductivity" annotation(
+  Types.ThermalConductivity kappa "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.Density rho "Density";
-  
+
 protected
   function cp_T
     input Types.Temperature T;
@@ -44,7 +43,7 @@ protected
     output Types.SpecificHeatCapacity cp;
   algorithm
     cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
-    annotation(
+    annotation (
       Inline = true);
   end cp_T;
 
@@ -63,17 +62,17 @@ protected
     output Types.Density rho;
   algorithm
     rho := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
-    annotation(
+    annotation (
       Inline = true);
   end rho_T;
-  
+
   function drhodT_T
     input Types.Temperature T;
     input Real a[4];
     output Real drho_dT(unit = "kg/(m3.K)");
   algorithm
     drho_dT := a[3] + T*(2*a[2] + 3*T*a[1]);
-    annotation(
+    annotation (
       Inline = true);
   end drhodT_T;
 
@@ -83,7 +82,7 @@ protected
     output Types.SpecificEnergy u;
   algorithm
     u := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    annotation(
+    annotation (
       Inline = true);
   end u_T;
 
@@ -93,10 +92,10 @@ protected
     output Types.SpecificEntropy s;
   algorithm
     s := a[4]*log(T) + T*(a[3] + T*(a[2]/2 + T*a[1]/3));
-    annotation(
+    annotation (
       Inline = true);
-  end s_T;  
-  annotation(
+  end s_T;
+  annotation (
     Documentation(info = "<HTML>
         <p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature.
         <p>From that reference point the water is modeled as an incompressible liquid with the density of the saturated liquid, so it obeys the following equations of state:

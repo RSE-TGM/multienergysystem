@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
-
 model pipeFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   // Flow parameter
@@ -20,7 +20,7 @@ model pipeFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) re
   Modelica.Units.SI.Power Q_int[N] "Heat dissipation out of each volume into the wall";
   Types.Temperature T[N + 1] "Volume boundary temperatures";
   Modelica.Units.SI.Power Q_ext[N] "Heat dissipation out of each wall cell to the ambient";
-  Modelica.Blocks.Interfaces.RealVectorOutput section_T[N] annotation(
+  Modelica.Blocks.Interfaces.RealVectorOutput section_T[N] annotation (
     Placement(visible = true, transformation(origin = {2, 62}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 22}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
   // Mass balance
@@ -68,6 +68,6 @@ initial equation
   else
 //
   end if;
-  annotation(
+  annotation (
     experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
 end pipeFV;

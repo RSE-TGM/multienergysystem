@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.RealGases;
-
 model Air "Mixture real gas model with CO2, N2, O2, H2O & Ar (in that order) using PR EoS"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PengRobinsonMixture(
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PengRobinsonMixture(
       reducedX = false,
       computeEnthalpyCondensation = false,
       computehidealComp = false,

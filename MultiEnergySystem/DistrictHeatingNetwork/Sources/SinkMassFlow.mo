@@ -1,19 +1,19 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model SinkMassFlow "Mass flow rate sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceW;
-  
+
   // Water model
   //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
   //  choicesAllMatching = true);
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
-  
+
   // Definition of System
   outer System system "System wide properties";
-  
+
   // Initial Choices
-  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation(
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation (
     Evaluate=true, Dialog(group = "Choices"));
-  parameter Boolean computeEnthalpyWithFixedPressure = false "True if fluid enthalpy is computed with p_start" annotation(
+  parameter Boolean computeEnthalpyWithFixedPressure = false "True if fluid enthalpy is computed with p_start" annotation (
     Dialog(group = "Choices"));
 
   // External input conditions
@@ -23,17 +23,17 @@ model SinkMassFlow "Mass flow rate sink for water/steam flows"
   parameter Boolean use_in_T = false "Use connector input for the temperature" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-    
+
   //Nominal Values
-  parameter Types.Pressure pin_start = 8e6 "Pressure start value of outgoing fluid" annotation(
+  parameter Types.Pressure pin_start = 8e6 "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Fluid parameters"));
-  parameter Types.Pressure p0 = 7e6 "Pressure start value of outgoing fluid DIFFERENCE" annotation(
+  parameter Types.Pressure p0 = 7e6 "Pressure start value of outgoing fluid DIFFERENCE" annotation (
     Dialog(group = "Fluid parameters"));
-  parameter Types.Temperature T0 = 500 "Nominal temperature and starting value for fluid" annotation(
+  parameter Types.Temperature T0 = 500 "Nominal temperature and starting value for fluid" annotation (
     Dialog(group = "Fluid parameters"));
-  parameter Types.MassFlowRate m_flow0 = 20 "Nominal mass flowrate" annotation(
+  parameter Types.MassFlowRate m_flow0 = 20 "Nominal mass flowrate" annotation (
     Dialog(group = "Fluid parameters"));
-  parameter Types.HydraulicConductance G=0 "HydraulicConductance" annotation(
+  parameter Types.HydraulicConductance G=0 "HydraulicConductance" annotation (
     Dialog(group = "Fluid parameters"));
 
   // Variables
@@ -67,7 +67,7 @@ model SinkMassFlow "Mass flow rate sink for water/steam flows"
         origin={0,50},
         extent={{-10,10},{10,-10}},
         rotation=270)));
-  
+
 protected
   Modelica.Blocks.Interfaces.RealInput in_m_flow_internal;
   Modelica.Blocks.Interfaces.RealInput in_T_internal;
@@ -77,16 +77,16 @@ equation
     in_m_flow_internal = m_flow0 "Flow rate set by parameter";
   end if;
   m_flow = inlet.m_flow;
-  
+
   T = in_T_internal;
   if use_in_T == false then
     in_T_internal = T0 "Temperature set by parameter";
   end if;
-  
+
   //fluid = Medium.setState_pTX(p, T);
   fluid.p = p;
   fluid.T = T;
-  
+
   h = inlet.h_out;
   //inlet.h_out = Medium.specificEnthalpy_pTX(inlet.p, in_T_internal, fill(0,0));
   inlet.h_out = fluid.h;

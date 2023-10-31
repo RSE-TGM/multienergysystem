@@ -7,5 +7,4 @@ package CylinderFourier
       thickBoth
         "Quadratically distributed node radii - thickest at both extremes")
     "Type, constants and menu choices for node distribution";
-
 end CylinderFourier;

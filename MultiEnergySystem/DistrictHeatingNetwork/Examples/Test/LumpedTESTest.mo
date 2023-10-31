@@ -15,20 +15,19 @@ model LumpedTESTest
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -14}, {10, 14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sink_mflow(T0 = 68 + 273.15, p0 = 99999.99999999999, pin_start = 99999.99999999999, m_flow0 = 0.5)  annotation (
     Placement(visible = true, transformation(origin = {20, 42}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0=338.15)
-                                                                                                           annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0=338.15)                       annotation (
     Placement(visible = true, transformation(origin = {20, -44}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
 equation
   connect(sinkP.inlet, tank.outlet) annotation (
-    Line(points = {{-50, 40}, {-60, 40}, {-60, 6}, {-50, 6}}, color = {168, 168, 168}));
+    Line(points={{-50,40},{-60,40},{-60,5.25},{-50,5.25}},    color = {168, 168, 168}));
   connect(sourceW.outlet, tank.inlet) annotation (
-    Line(points = {{-60, -30}, {-60, -6}, {-50, -6}}, color = {168, 168, 168}));
+    Line(points={{-60,-30},{-60,-5.25},{-50,-5.25}},  color = {168, 168, 168}));
   connect(m_flow.y, sourceW.in_m_flow) annotation (
     Line(points = {{-71, -46}, {-65, -46}}, color = {0, 0, 127}));
   connect(sink_mflow.inlet, tank2.outlet) annotation (
-    Line(points = {{20, 32}, {20, 6}, {30, 6}}, color = {168, 168, 168}));
+    Line(points={{20,32},{20,5.25},{30,5.25}},  color = {168, 168, 168}));
   connect(sourceP.outlet, tank2.inlet) annotation (
-    Line(points = {{20, -34}, {20, -6}, {30, -6}}, color = {168, 168, 168}));
+    Line(points={{20,-34},{20,-5.25},{30,-5.25}},  color = {168, 168, 168}));
   annotation (
     Diagram(coordinateSystem(extent = {{-100, -80}, {100, 80}})));
 end LumpedTESTest;

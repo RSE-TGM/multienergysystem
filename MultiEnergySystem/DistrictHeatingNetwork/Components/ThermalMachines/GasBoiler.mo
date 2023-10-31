@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model GasBoiler
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialBoiler;
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialBoiler;
   parameter SI.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Boiler Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (

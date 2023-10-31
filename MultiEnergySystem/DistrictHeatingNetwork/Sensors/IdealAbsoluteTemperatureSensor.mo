@@ -10,6 +10,6 @@ model IdealAbsoluteTemperatureSensor
 equation
   T = inStream(inlet.h_out)/cp;
   T_meas = T;
-annotation(
+annotation (
     Icon(graphics = {Text(origin = {0, 60}, textColor = {140, 56, 54}, extent = {{-20, 20}, {20, -20}}, textString = "T")}));
 end IdealAbsoluteTemperatureSensor;

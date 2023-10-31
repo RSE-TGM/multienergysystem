@@ -1,33 +1,33 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model SourcePressure "Pressure source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
-  
+
   // Water model
   //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
   //  choicesAllMatching = true);
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
-  
+
   // Definition of System
   outer System system "System wide properties";
-  
+
   // Initial choices
-  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation(
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation (
     Evaluate=true, Dialog(group = "Choices"));
 
   // External input conditions
-  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(
+  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation (
     Dialog(group="External inputs"), choices(checkBox=true));
-  parameter Boolean use_in_T0 = false "Use connector input for the temperature" annotation(
+  parameter Boolean use_in_T0 = false "Use connector input for the temperature" annotation (
     Dialog(group="External inputs"), choices(checkBox=true));
-  
+
   // Nominal parameters
-  parameter Types.Pressure p0=1.01325e5 "Nominal pressure" annotation(
+  parameter Types.Pressure p0=1.01325e5 "Nominal pressure" annotation (
     Dialog(group = "Fluid parameters"));
-  parameter Types.Temperature T0=298.15 "Nominal temperature" annotation(
+  parameter Types.Temperature T0=298.15 "Nominal temperature" annotation (
     Dialog(group="Fluid parameters"));
-  parameter Types.SpecificEnthalpy h0=1e5 "Nominal specific enthalpy" annotation(
+  parameter Types.SpecificEnthalpy h0=1e5 "Nominal specific enthalpy" annotation (
     Dialog(group="Fluid parameters"));
-  parameter Types.HydraulicResistance R=0 "Hydraulic resistance" annotation(
+  parameter Types.HydraulicResistance R=0 "Hydraulic resistance" annotation (
     Dialog(group="Fluid parameters"));
 
   // Variables
@@ -38,11 +38,11 @@ model SourcePressure "Pressure source for water/steam flows"
   Types.Pressure p;
   Types.Temperature T;
   Types.SpecificEnthalpy h;
-  
+
   // Outlet fluid connector
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
     transformation(extent={{80,-20},{120,20}}, rotation=0)));
-  
+
   // Input connectors
   Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation (Placement(
         transformation(
@@ -72,20 +72,20 @@ equation
   if not use_in_p0 then
     in_p0_internal = p0 "Pressure set by parameter";
   end if;
-  
+
   T = in_T0_internal;
   if not use_in_T0 then
     in_T0_internal = T0;
   end if;
   //in_T_internal = T0 "Temperature set by parameter";
-  
-  
+
+
   //fluid = Medium.setState_pTX(p, T0);
   fluid.p = p;
   fluid.T = T;
-  
+
   h = fluid.h;
-  
+
   outlet.h_out = h;
 
   // Connect protected connectors to public conditional connectors

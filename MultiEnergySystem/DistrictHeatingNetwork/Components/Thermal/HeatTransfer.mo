@@ -92,5 +92,4 @@ import AllamCycle.Types;
     end for;
 
   end FlowPressureDependentHeatTransferCoefficient;
-
 end HeatTransfer;

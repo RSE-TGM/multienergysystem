@@ -152,7 +152,8 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Placement(visible = true, transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, Tstart1 = 333.15, TstartN = 303.15, Tstartbar = 318.15, cm = cpWall) annotation (
     Placement(visible = true, transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Thermal.HeatExchangerTopologyFV topology(redeclare model HeatExchangerTopology =
+  Thermal.HeatExchangerTopologyFV topology(redeclare model
+      HeatExchangerTopology =
         DistrictHeatingNetwork.Components.Thermal.HeatExchangerTopologies.CounterCurrentFlow,
       Nw = n) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -26}, {10, -6}}, rotation = -90)));

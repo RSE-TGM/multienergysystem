@@ -23,15 +23,20 @@ partial model PartialValve
   parameter Types.Pressure pin_start = 2e5;
 
   // Final parameters
-  final parameter Types.MassFlowRate m_flow_nom = 2.7778e-5*Kv*sqrt(dp_nom)*sqrt(990) "Peak mass flow rate at full opening";
+  final parameter Types.MassFlowRate m_flow_nom = 2.7778e-5*Kv*sqrt(dp_nom)*sqrt(rho_nom) "Peak mass flow rate at full opening";
   final parameter Types.Temperature Tout_start =  Tin_start;
   final parameter Types.Pressure pout_start = pin_start - dp_nom;
 
   // Variables
   Types.Area A_v = 2.7778e-5*Kv "Opening area of the valve";
-  Types.MassFlowRate m_flow(start = m_flow_nom) "mass flow rate through the valve";
+  Types.MassFlowRate m_flow(start = m_flow_nom) "Mass flow rate through the valve";
+  Types.VolumeFlowRate q_flow "Volumetric flow rate";
+  Real q_flow_inm3h(unit = "m3/h") "Volumetric flow rate in m3/h";
   Types.Temperature Tin(start = Tin_start);
   Types.Temperature Tout(start = Tout_start);
+  Types.Pressure pin(start = pin_start);
+  Types.Pressure pout;
+  Types.Pressure dp(start = dp_nom);
 
   // Medium
   Medium fluidIn(T_start = Tin_start, p_start = pin_start);
@@ -64,6 +69,11 @@ equation
 
   Tin = fluidIn.T;
   Tout = fluidOut.T;
+  pin = fluidIn.p;
+  pout = fluidOut.p;
+  q_flow = m_flow/fluidIn.rho;
+  q_flow_inm3h = q_flow*3600;
+  dp = pin - pout;
 
   annotation (
     Icon);

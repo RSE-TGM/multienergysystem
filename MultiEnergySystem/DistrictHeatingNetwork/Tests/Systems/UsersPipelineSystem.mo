@@ -552,41 +552,41 @@ model UsersPipelineSystem
         origin={190,-50})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     TCV701(
-    allowFlowReversal=true,
-    Kv=12,
-    dp_nom(displayUnit="Pa") = 0.17e5,
-    Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+      Kv=Valve.TCV701.Kv,
+      dp_nom=Valve.TCV701.dp_nom,
+      rho_nom=Valve.TCV701.rho_nom,
+      Tin_start=Valve.TCV701.Tin_start,
+      pin_start=Valve.TCV701.pin_start) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-140,-50})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     TCV711(
-    allowFlowReversal=true,
-    Kv=12,
-    dp_nom(displayUnit="Pa") = 0.17e5,
-    Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+      Kv=Valve.TCV711.Kv,
+      dp_nom=Valve.TCV711.dp_nom,
+      rho_nom=Valve.TCV711.rho_nom,
+      Tin_start=Valve.TCV711.Tin_start,
+      pin_start=Valve.TCV711.pin_start) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,-50})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     TCV721(
-    allowFlowReversal=true,
-    Kv=12,
-    dp_nom(displayUnit="Pa") = 0.17e5,
-    Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+      Kv=Valve.TCV721.Kv,
+      dp_nom=Valve.TCV721.dp_nom,
+      rho_nom=Valve.TCV721.rho_nom,
+      Tin_start=Valve.TCV721.Tin_start,
+      pin_start=Valve.TCV721.pin_start) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={20,-50})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     TCV731(
-    allowFlowReversal=true,
-    Kv=12,
-    dp_nom(displayUnit="Pa") = 0.17e5,
-    Tin_start(displayUnit="K") = 36.7 + 273.15,
-    pin_start=200000) annotation (Placement(transformation(
+      Kv=Valve.TCV731.Kv,
+      dp_nom=Valve.TCV731.dp_nom,
+      rho_nom=Valve.TCV731.rho_nom,
+      Tin_start=Valve.TCV731.Tin_start,
+      pin_start=Valve.TCV731.pin_start) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={100,-50})));

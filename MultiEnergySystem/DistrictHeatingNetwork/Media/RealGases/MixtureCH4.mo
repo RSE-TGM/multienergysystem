@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.RealGases;
-
 model MixtureCH4 "Mixture real gas model for fuel using PR EoS"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PengRobinsonMixture(
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PengRobinsonMixture(
       reducedX = false,
       computeEnthalpyCondensation = false,
       computehidealComp = false,

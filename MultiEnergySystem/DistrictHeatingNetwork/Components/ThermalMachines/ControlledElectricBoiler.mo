@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledElectricBoiler
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialBoiler;
+  extends
+    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialBoiler;
   parameter Integer nR = 5 "Total number of resistors";
   parameter SI.Power Pmaxres = 10e3 "Electric power of each resistor";
   parameter SI.Resistance R = 47.56 "Nominal resistance of each resistor";

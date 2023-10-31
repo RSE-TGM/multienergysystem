@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model RoundPipe1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
+  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube(T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal);
   import Modelica.Fluid.Utilities.regSquare;
   import Modelica.Fluid.Utilities.regStep;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
@@ -88,7 +88,7 @@ model RoundPipe1DFV
     S = Stot,
     A = Atot,
     Twall = Twall,
-    Tmean = (fluid[1:end-1].T + fluid[2:end].T)/2,
+    Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
     m_flow = regStep(dp, m_flow[2:end], m_flow[1:end-1]),
     p = pout,
     cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),

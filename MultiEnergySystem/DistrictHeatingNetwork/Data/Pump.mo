@@ -7,7 +7,12 @@ record Pump
   SI.Efficiency etanom "Nominal efficiency of the pump";
   SI.Power Wnom "Nominal power";
   Modelica.Units.SI.Length headnom "Head";
-  Modelica.Units.SI.VolumeFlowRate qnom "Volumetric flow rate at the inlet";
+  Modelica.Units.SI.Length headnommin "Minimum Head";
+  Modelica.Units.SI.Length headnommax "Maximum Head";
+  Real qnom_inm3h(unit = "m3/h") "Nominal volumetric flowrate in m3/h ";
+  Real qnommin_inm3h(unit = "m3/h") "Minimum volumetric flowrate in m3/h";
+  Real qnommax_inm3h(unit = "m3/h") "Maximum volumetric flowrate in m3/h";
+  Modelica.Units.SI.VolumeFlowRate qnom = qnom_inm3h/3600 "Nominal Volumetric flow rate at the inlet";
   //Modelica.Units.SI.Pressure dpnom = headnom*rhonom*9.81 "Nomimal difference pressure";
   Modelica.Units.SI.Pressure dpnom = Wnom*etanom/qnom "Nomimal difference pressure";
   Modelica.Units.SI.Pressure pout_start = pin_start + dpnom "Nominal Outlet pressure";

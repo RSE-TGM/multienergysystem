@@ -5,6 +5,8 @@ model PowerTransfer
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import MultiEnergySystem.DistrictHeatingNetwork.Types;
 
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+
   parameter Types.MassFlowRate b = 0.001 "Regularization mass flow rate, avoid null division. Try to keep it low in accordance to the expected mass flow.";
   parameter Types.Temperature Tin_start = 36+273.15;
   parameter Types.Temperature Tout_start = 28+273.15;
@@ -18,6 +20,8 @@ model PowerTransfer
   Types.Pressure pin(start = pin_start) "inlet pressure";
   Types.Pressure pout "Outlet pressure";
   Types.MassFlowRate m_flow "Mass Flow Rate across the component";
+
+  Medium fluidIn(p_start = pin_start, T_start = Tin_start), fluidOut(p_start = pin_start, T_start = Tout_start);
 
   Modelica.Blocks.Interfaces.RealInput Ptransfer "if positive then power entering else power leaving the component/fluid." annotation (
     Placement(
@@ -39,11 +43,18 @@ equation
   inStream(inlet.h_out) + Ptransfer/max(inlet.m_flow, b) = outlet.h_out;
   inlet.h_out =inStream(outlet.h_out) + Ptransfer/max(outlet.m_flow, b);
 
+  fluidIn.p = pin;
+  fluidIn.h = hin;
+  fluidOut.p = pout;
+  fluidOut.h = hout;
+
   //Definition of variables
   hin = inStream(inlet.h_out);
   hout = outlet.h_out;
-  Tin = hin/cp;
-  Tout = hout/cp;
+//   Tin = hin/cp;
+//   Tout = hout/cp;
+  Tin = fluidIn.T;
+  Tout = fluidOut.T;
   pin = inlet.p;
   pout = outlet.p;
   m_flow = inlet.m_flow;

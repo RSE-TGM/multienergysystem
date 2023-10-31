@@ -28,6 +28,8 @@ model GasBoilerCompleteSystem
 
   parameter Types.MassFlowRate m_flow_start_cooling = 2;
   parameter Types.Pressure pin_start_CoolingValve = 3.6e5;
+  parameter Types.Pressure pin_start_CoolingPipes = 5e5;
+  parameter Types.Temperature Tin_start_CoolingPipes = 28+273.15;
 
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;
@@ -43,7 +45,7 @@ model GasBoilerCompleteSystem
   parameter Types.Pressure dp_nom_UsersValve = 0.5e5;
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
-    Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={329,182},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     P101(
     Tin_start(displayUnit="K") = 80 + 273.15,
@@ -423,7 +425,7 @@ model GasBoilerCompleteSystem
         rotation=0,
         origin={160,130})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=1)
-    annotation (Placement(transformation(extent={{299,0},{279,20}})));
+    annotation (Placement(transformation(extent={{271,0},{251,20}})));
   Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
     annotation (Placement(transformation(extent={{-180,0},{-200,20}})));
   Modelica.Blocks.Sources.RealExpression FCV901_theta(y=1) annotation (
@@ -564,10 +566,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.1e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.1e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)   annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
@@ -577,10 +579,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.1e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.1e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)   annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
@@ -590,10 +592,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.1e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.1e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)   annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
@@ -603,10 +605,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.1e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.1e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)   annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
@@ -616,10 +618,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.01e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.01e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)    annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
@@ -629,10 +631,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling*2,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.01e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.01e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)    annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
@@ -642,10 +644,10 @@ model GasBoilerCompleteSystem
     L=L_Users,
     t=t_Users,
     m_flow_start=m_flow_start_cooling*3,
-    pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.01e5,
-    Tin_start=Tin_start_Users,
-    Tout_start=Tin_start_Users,
+    pin_start=pin_start_CoolingPipes,
+    pout_start=pin_start_CoolingPipes - 0.01e5,
+    Tin_start=Tin_start_CoolingPipes,
+    Tout_start=Tin_start_CoolingPipes,
     Di=Di_Users)    annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=0,
@@ -727,12 +729,12 @@ model GasBoilerCompleteSystem
     R=1e-3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={278,-178})));
+        origin={281,-178})));
   Sources.SourcePressure sourceColdP_HX(
     p0(displayUnit="Pa") = 2e5,
     T0(displayUnit="K") = 28 + 273.15,
     h0=BPHE.E701.hin_start_cold,
-    R=1e-3) annotation (Placement(transformation(extent={{320,-68},{300,-48}})));
+    R=1e-3) annotation (Placement(transformation(extent={{320,-80},{300,-60}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -863,13 +865,16 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCV_thetaconsumers.y, FCV731.opening)
-    annotation (Line(points={{278,10},{228,10}}, color={0,0,127}));
-  connect(FCV721.opening, FCV731.opening) annotation (Line(points={{148,10},{160,
-          10},{160,30},{270,30},{270,10},{228,10}}, color={0,0,127}));
-  connect(FCV711.opening, FCV731.opening) annotation (Line(points={{68,10},{80,10},
-          {80,30},{270,30},{270,10},{228,10}}, color={0,0,127}));
-  connect(FCV701.opening, FCV731.opening) annotation (Line(points={{-12,10},{0,10},
-          {0,30},{270,30},{270,10},{228,10}}, color={0,0,127}));
+    annotation (Line(points={{250,10},{228,10}}, color={0,0,127}));
+  connect(FCV721.opening, FCV731.opening) annotation (Line(points={{148,10},{
+          160,10},{160,30},{240,30},{240,10},{228,10}},
+                                                    color={0,0,127}));
+  connect(FCV711.opening, FCV731.opening) annotation (Line(points={{68,10},{80,
+          10},{80,30},{240,30},{240,10},{228,10}},
+                                               color={0,0,127}));
+  connect(FCV701.opening, FCV731.opening) annotation (Line(points={{-12,10},{0,
+          10},{0,30},{240,30},{240,10},{228,10}},
+                                              color={0,0,127}));
   connect(FCV101_theta.y, FCV101.opening)
     annotation (Line(points={{-201,10},{-212,10}}, color={0,0,127}));
   connect(FCV901_theta.y, FCV901.opening)
@@ -1016,15 +1021,15 @@ equation
   connect(FCV_thetaconsumers1.y, TCV731.opening) annotation (Line(points={{-89,-80},
           {-80,-80},{-80,-60},{160,-60},{160,-80},{172,-80}}, color={0,0,127}));
   connect(roundPipe1DFV15.outlet, sinkCold_HX.inlet) annotation (Line(
-      points={{150,-178},{268,-178}},
+      points={{150,-178},{271,-178}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01.inlet, sourceColdP_HX.outlet) annotation (Line(
-      points={{270,-77.6},{270,-58},{300,-58}},
+  connect(sourceColdP_HX.outlet, PR01.inlet) annotation (Line(
+      points={{300,-70},{270,-70},{270,-77.6}},
       color={140,56,54},
       thickness=0.5));
   annotation (
-    Diagram(coordinateSystem(extent={{-400,-200},{400,200}})),             Icon(
+    Diagram(coordinateSystem(extent={{-400,-200},{400,200}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})),
     experiment(
       StopTime=5000,

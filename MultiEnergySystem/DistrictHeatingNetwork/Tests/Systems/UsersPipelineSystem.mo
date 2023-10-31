@@ -848,5 +848,6 @@ equation
           -50},{-160,-50},{-160,-34},{-80,-34},{-80,-50},{-68,-50}}, color={0,0,
           127}));
   annotation (
-    Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})));
+    Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
+      experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
 end UsersPipelineSystem;

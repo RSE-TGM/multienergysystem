@@ -9,15 +9,16 @@ model ControlledElectricBoiler
   parameter Real bandwidth = 2 "Bandwidth for the on/off temperature controller";
   SI.Power Pheat_ref(start = 50e3) "Reference value for computed Heat Power required";
   SI.SpecificEnthalpy hout_ref "Reference required temperature";
-  Medium.ThermodynamicState fluidOut_ref "Reference outlet fluid";
+  Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   DistrictHeatingNetwork.Actuators.DaisyChainMO actuator(n = nR, Umax = ones(nR)*Pmaxres, Umin = zeros(nR)) "Daisy Chain with n actuators";
   Modelica.Blocks.Logical.Greater comparison[nR] "Comparison component for nR outputs";
   Modelica.Blocks.Logical.TriggeredTrapezoid triggeredTrapezoid[nR](each amplitude = Pmaxres, each rising = trise);
   Modelica.Blocks.Logical.OnOffController onoff(bandwidth = bandwidth, pre_y_start = true) "On/Off controller";
   MultiEnergySystem.DistrictHeatingNetwork.Actuators.TriggerGenerator trigger "Trigger reference";
 equation
-  fluidOut_ref = Medium.setState_pTX(pout, Tout_ref);
-  hout_ref = Medium.specificEnthalpy(fluidOut_ref);
+  fluidOut_ref.p = pout;
+  fluidOut_ref.T = Tout_ref;
+  hout_ref = fluidOut_ref.h;
   0 = outlet.m_flow*(hout_ref - hin) + Pheat_ref - Q_amb;
   0 = outlet.p - inlet.p "Momentum Balance";
   sum(triggeredTrapezoid.y) = Pheat "Sum of all real actuator outputs is equal to the full Heat Power";

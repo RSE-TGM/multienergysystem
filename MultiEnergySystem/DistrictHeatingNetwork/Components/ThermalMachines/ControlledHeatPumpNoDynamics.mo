@@ -1,14 +1,16 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
-
 model ControlledHeatPumpNoDynamics
   extends DistrictHeatingNetwork.Icons.ThermalMachines.HeatPump;
-  replaceable package Medium = MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+  //replaceable package Medium =
+  //    MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater                          constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
+  //   choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
      choicesAllMatching = true);
   // Declaration of fluid models
-  Medium.ThermodynamicState fluidInHot "Hot inlet fluid";
-  Medium.ThermodynamicState fluidOutHot "Hot outlet fluid";
-  Medium.ThermodynamicState fluidInCold "Cold inlet fluid";
-  Medium.ThermodynamicState fluidOutCold "Cold outlet fluid";
+  Medium fluidInHot(T_start = Tin_hot_start, p_start = pin_hot_start) "Hot inlet fluid";
+  Medium fluidOutHot(T_start = Tout_hot_start, p_start = pout_hot_start) "Hot outlet fluid";
+  Medium fluidInCold(T_start = Tin_cold_start, p_start = pin_cold_start) "Cold inlet fluid";
+  Medium fluidOutCold(T_start = Tout_cold_start, p_start = pout_cold_start) "Cold outlet fluid";
   parameter SI.PerUnit COP_nom = 2.7 "Nominal coefficient of performance";
   parameter SI.Temperature Tin_hot_start = 30 + 273.15 "Start/Nominal value for Hot side inlet temperature";
   final parameter SI.Temperature Tout_hot_start = Tout_hot_set "Start/Nominal value for Hot side outlet temperature";
@@ -45,20 +47,24 @@ model ControlledHeatPumpNoDynamics
   SI.Power Pcomp "Compression Power";
   SI.Power Pcold "Thermal Power cold side (lato surgente)";
   SI.Power Phot "Themal Power hot side (lato utenze)";
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold annotation (
     Placement(visible = true, transformation(origin = {-76, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation (
     Placement(visible = true, transformation(origin = {-76, -56}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot annotation (
     Placement(visible = true, transformation(origin = {60, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, 60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot annotation (
     Placement(visible = true, transformation(origin = {60, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, 60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
 // Fluid Definition
-  fluidInHot = Medium.setState_phX(pin_hot, hin_hot);
-  fluidInCold = Medium.setState_phX(pin_cold, hin_cold);
-  fluidOutHot = Medium.setState_phX(pout_hot, hout_hot);
-  fluidOutCold = Medium.setState_phX(pout_cold, hout_cold);
+  //fluidInHot = Medium.setState_phX(pin_hot, hin_hot);
+  {fluidInHot.p, fluidInHot.h} = {pin_hot, hin_hot};
+  //fluidInCold = Medium.setState_phX(pin_cold, hin_cold);
+  {fluidInCold.p, fluidInCold.h} = {pin_cold, hin_cold};
+  //fluidOutHot = Medium.setState_phX(pout_hot, hout_hot);
+  {fluidOutHot.p, fluidOutHot.h} = {pout_hot, hout_hot};
+  //fluidOutCold = Medium.setState_phX(pout_cold, hout_cold);
+  {fluidOutCold.p, fluidOutCold.h} = {pout_cold, hout_cold};
 // Assignation of name variables
   pin_hot = inhot.p;
   pout_hot = outhot.p;
@@ -68,10 +74,14 @@ equation
   hin_cold = inStream(incold.h_out);
   hout_hot = outhot.h_out;
   hout_cold = outcold.h_out;
-  Tin_hot = Medium.temperature(fluidInHot);
-  Tout_hot = Medium.temperature(fluidOutHot);
-  Tin_cold = Medium.temperature(fluidInCold);
-  Tout_cold = Medium.temperature(fluidOutCold);
+//   Tin_hot = Medium.temperature(fluidInHot);
+//   Tout_hot = Medium.temperature(fluidOutHot);
+//   Tin_cold = Medium.temperature(fluidInCold);
+//   Tout_cold = Medium.temperature(fluidOutCold);
+  Tin_hot = fluidInHot.T;
+  Tout_hot = fluidOutHot.T;
+  Tin_cold = fluidInCold.T;
+  Tout_cold = fluidOutCold.T;
   m_flow_hot = inhot.m_flow;
   m_flow_cold = incold.m_flow;
 // Ideal Controlled variables
@@ -92,6 +102,6 @@ equation
 // Dummy equations for energy balance
   inhot.h_out = inStream(inhot.h_out);
   incold.h_out = inStream(incold.h_out);
-  annotation(
+  annotation (
     Icon);
 end ControlledHeatPumpNoDynamics;

@@ -3,12 +3,14 @@ partial model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import MultiEnergySystem.DistrictHeatingNetwork.Types;
-  
+
   // Definition of System
   outer System system "system object for global defaults";
 
   //Fluid model
-  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
+//   replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
+//     choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
     choicesAllMatching = true);
 
   // Parameters

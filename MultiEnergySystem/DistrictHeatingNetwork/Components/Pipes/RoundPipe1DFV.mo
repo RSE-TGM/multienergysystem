@@ -88,15 +88,17 @@ model RoundPipe1DFV
     S = Stot,
     A = Atot,
     Twall = Twall,
-    Tmean = regStep(dp, fluid[2:end].T, fluid[1:end-1].T),
+    Tmean = (fluid[1:end-1].T + fluid[2:end].T)/2,
     m_flow = regStep(dp, m_flow[2:end], m_flow[1:end-1]),
     p = pout,
-    cp = fluid[2:end].cp,
+    cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
     mu = fluid[2:end].mu,
     k = fluid[2:end].kappa,
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
+    //cp = fluid[2:end].cp,
+    //Tmean = regStep(dp, fluid[2:end].T, fluid[1:end-1].T),
     //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
@@ -121,11 +123,16 @@ equation
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
   M = Vi*rhotilde;
   Ttilde = regStep(dp, T[2:n+1], T[1:n], Tin_start*1e-5);
-  ptilde = pout;
+  //ptilde = pout;
 
   // Momentum Balance
   //pin - pout = rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
-  pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+  //pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+
+  pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+  ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+
+
 
   // Equations to set the fluid properties
   fluid.T = T;

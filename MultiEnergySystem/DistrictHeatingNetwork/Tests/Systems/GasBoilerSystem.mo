@@ -427,7 +427,7 @@ model GasBoilerSystem
     p0=BPHE.E701.pout_start_cold,
     pin_start=BPHE.E701.pout_start_cold) annotation (Placement(visible=true,
         transformation(
-        origin={-60,-83},
+        origin={-61,-90},
         extent={{13,-13},{-13,13}},
         rotation=90)));
   Sources.SourcePressure sourceCold_701(
@@ -435,7 +435,7 @@ model GasBoilerSystem
     p0=BPHE.E701.pin_start_cold,
     h0=BPHE.E701.hin_start_cold)
     annotation (Placement(visible=true, transformation(
-        origin={-20,-80},
+        origin={-20,-88},
         extent={{-10,-10},{10,10}},
         rotation=90)));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=1)
@@ -658,36 +658,36 @@ equation
   connect(P101.in_m_flow, P101_m_flow.y) annotation (Line(points={{-214.48,
           -25.8},{-201,-25.8},{-201,-26}}, color={0,0,127}));
   connect(sinkCold_HX.inlet, EX701.outcold) annotation (Line(
-      points={{-60,-70},{-60,-54},{-74,-54},{-74,-39.25},{-60.3,-39.25}},
+      points={{-61,-77},{-61,-39.25},{-60.3,-39.25}},
       color={140,56,54},
       thickness=0.5));
   connect(sinkCold_HX.inlet, EX711.outcold) annotation (Line(
-      points={{-60,-70},{-60,-56},{19.7,-56},{19.7,-38.25}},
+      points={{-61,-77},{-61,-56},{19.7,-56},{19.7,-38.25}},
       color={140,56,54},
       thickness=0.5));
   connect(sinkCold_HX.inlet, EX721.outcold) annotation (Line(
-      points={{-60,-70},{-60,-57},{99.7,-57},{99.7,-38.25}},
+      points={{-61,-77},{-61,-56},{99.7,-56},{99.7,-38.25}},
       color={140,56,54},
       thickness=0.5));
   connect(sinkCold_HX.inlet, EX731.outcold) annotation (Line(
-      points={{-60,-70},{-60,-57},{179.7,-57},{179.7,-39.25}},
+      points={{-61,-77},{-61,-56},{179,-56},{179,-39.25},{179.7,-39.25}},
       color={140,56,54},
       thickness=0.5));
   connect(sourceCold_701.outlet, EX701.incold) annotation (Line(
-      points={{-20,-70},{-20,-54},{-4,-54},{-4,-39.25},{-19.7,-39.25}},
+      points={{-20,-78},{-20,-39.25},{-19.7,-39.25}},
       color={140,56,54},
       thickness=0.5));
   connect(sourceCold_701.outlet, EX711.incold) annotation (Line(
-      points={{-20,-70},{-20,-60},{-19,-60},{-19,-64},{60.3,-64},{60.3,-38.25}},
-
+      points={{-20,-78},{-20,-64},{60.3,-64},{60.3,-38.25}},
       color={140,56,54},
       thickness=0.5));
+
   connect(sourceCold_701.outlet, EX721.incold) annotation (Line(
-      points={{-20,-70},{-20,-65},{140.3,-65},{140.3,-38.25}},
+      points={{-20,-78},{-20,-64},{140.3,-64},{140.3,-38.25}},
       color={140,56,54},
       thickness=0.5));
   connect(sourceCold_701.outlet, EX731.incold) annotation (Line(
-      points={{-20,-70},{-21,-70},{-21,-65},{220.3,-65},{220.3,-39.25}},
+      points={{-20,-78},{-20,-64},{221,-64},{221,-39.25},{220.3,-39.25}},
       color={140,56,54},
       thickness=0.5));
   annotation (

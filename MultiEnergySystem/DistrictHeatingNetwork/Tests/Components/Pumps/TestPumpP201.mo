@@ -3,9 +3,7 @@ model TestPumpP201
   "Testing PumpP201 of test facility using nominal information"
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
-    m_flow_set(
-      height = 12,
-      offset = 2),
+    m_flow_set(height=8, offset=1),
     sourceP(
       p0 = Pump.P201.pin_start,
       T0 = Pump.P201.Tin_start,
@@ -30,11 +28,12 @@ model TestPumpP201
     etaelec =      Pump.P201.etaelec,
     etamech =      Pump.P201.etamech,
     etanom =      Pump.P201.etanom,
-    headmax =      35, headmin =      15,
+      headmax=Pump.P201.headnommax,
+      headmin=Pump.P201.headnommin,
     m_flow_nom =      Pump.P201.m_flow_nom,
     omeganom =      Pump.P201.omeganom,
-    qnom_inm3h =      32.34652403,
-    qnom_inm3h_min =      15,
+      qnom_inm3h=Pump.P201.qnom_inm3h,
+      qnom_inm3h_min=Pump.P201.qnommin_inm3h,
     rhonom =      Pump.P201.rhonom));
 equation
 

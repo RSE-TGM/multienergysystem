@@ -1280,5 +1280,9 @@ equation
       thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-440,-240},{440,240}}, grid={1,1})), Icon(
-        coordinateSystem(extent={{-440,-240},{440,240}})));
+        coordinateSystem(extent={{-440,-240},{440,240}})),
+    experiment(
+      StopTime=100,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end WaterTanksSystem;

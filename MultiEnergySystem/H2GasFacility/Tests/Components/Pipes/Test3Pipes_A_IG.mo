@@ -4,7 +4,7 @@ model Test3Pipes_A_IG
     redeclare model MediumPipes =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2, sourceP1(X0 = X_start),
     redeclare model MediumBoundaries =
-        MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2_ND);
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2_ND(computeEnergyVariables = false));
 equation
 
 end Test3Pipes_A_IG;

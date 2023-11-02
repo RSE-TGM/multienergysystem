@@ -12,8 +12,9 @@ model PaperCaseI_Demand
     user13(massflowratedemand=residentialDemand13));
 
 equation
-  connect(H2_Production.y, sourceH2_A.in_m_flow0) annotation (Line(points={{-159,-60},{-140,
-          -60},{-140,-28},{-120,-28},{-120,-35}}, color={0,0,127}));
+  connect(H2_Production.y, sourceH2_A.in_m_flow0) annotation (Line(points={{-149,
+          -60},{-140,-60},{-140,-28},{-110,-28},{-110,-35}},
+                                                  color={0,0,127}));
  annotation (experiment(StopTime = 86400, Interval = 44, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"),
   Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})));
 end PaperCaseI_Demand;

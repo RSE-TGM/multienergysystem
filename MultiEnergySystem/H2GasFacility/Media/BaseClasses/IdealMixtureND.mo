@@ -62,7 +62,7 @@ partial model IdealMixtureND
   Types.DerPressurebySpecificVolume dp_dv(start = dp_dv_start) "Specific volumen derivative of Pressure at constant temperature";
   Types.PerUnit Z(start = 1) "Compressibility factor of the fluid";
 
-//  **Energy Variables**
+  //  **Energy Variables**
   Types.PerUnit Z0(start = 1) "Compressibility factor of the mixture at Standard Conditions";
   Real HHV_mix(unit = "J/kg", start = HHV*X_start) "Higher Heating Value of the fluid in mass units";
   Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
@@ -131,9 +131,11 @@ initial equation
 
 equation
   X[1:nXi] = Xi;
-  X[nX] = 1 - sum(Xi);
-  //X[1] = 1-sum(Xi);
-  //X[2:nX] = Xi;
+  if nX > 1 then
+    X[nX] = 1 - sum(Xi);
+  else
+    X[1] = 1;
+  end if;
 
   assert(sum(X) > 0, "error1");
   assert(sum(MM) > 0, "error2");

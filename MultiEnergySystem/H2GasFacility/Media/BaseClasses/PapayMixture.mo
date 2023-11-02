@@ -17,18 +17,18 @@ partial model PapayMixture
   parameter Real LHV[nX](each unit = "J/kg") "Lower Heating Value of each component in mass units";
   parameter Real HHV_SCM[nX](each unit = "J/m3") "Higher Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
   parameter Real LHV_SCM[nX](each unit = "J/m3") "Lower Heating Value of each component in J/Sm3 units T = 15°C, p = 1.01325 bar";
-  parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
   parameter Types.Temperature T0 = 15 + 273.15 "Reference temperature";
   parameter Types.Pressure p0 = 101325; //1e5 "Reference pressure";
+  parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
 
   // Final parameters
+  final parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
   final parameter Types.MolarMass MM_mix_start = MM*Y_start;
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
   final parameter Types.PerUnit T_red_start = T_start/T_c[posDom] "Reduced temperature of the main component of the gas, which is the dominant component";
   final parameter Types.PerUnit p_red_start = p_start/p_c[posDom] "Reduced pressure of of the main component of the gas, which is the dominant component";
-  final parameter Types.Density rho_start = MM[posDom]/v_mol_start;
-  final parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
+  final parameter Types.Density rho_start = MM_mix_start/v_mol_start;
   final parameter Types.SpecificHeatCapacity cp_id_start = X_start*{cp_T(T_start, cp_coeff[i]) for i in 1:nX} "Ideal Specific heat capacity of the fluid";
   final parameter Types.SpecificEnthalpy h_star_start[nX] = {Hf[i] + h_T(T_start, cp_coeff[i]) - h_T(T0, cp_coeff[i]) for i in 1:nX};
   final parameter Types.SpecificEnthalpy h_id_start = X_start*h_star_start;

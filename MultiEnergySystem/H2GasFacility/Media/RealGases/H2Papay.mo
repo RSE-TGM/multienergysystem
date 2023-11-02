@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
 model H2Papay
-  extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
+  extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixtureND(
       nXi = 0,
       nX = 1,
       X_start = {1},

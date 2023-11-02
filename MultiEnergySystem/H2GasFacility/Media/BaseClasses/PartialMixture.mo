@@ -45,6 +45,58 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
   Types.Density rho "Density";
+
+protected
+  function cp_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificHeatCapacity cp;
+  algorithm
+    cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
+    annotation (
+      Inline = true);
+  end cp_T;
+
+  function h_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificEnthalpy h;
+  algorithm
+    h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
+    annotation (
+      Inline = true);
+  end h_T;
+
+  function s_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificEntropy s;
+  algorithm
+    s := a[4]*log(T) + T*(a[3] + T*(a[2]/2 + T*a[1]/3));
+    annotation (
+      Inline = true);
+  end s_T;
+
+  function massToMoleFractions "Return mole fractions from mass fractions X"
+    extends Modelica.Icons.Function;
+    input Types.MassFraction X[:] "Mass fractions of mixture";
+    input Types.MolarMass[:] MMX "Molar masses of components";
+    output Types.MoleFraction moleFractions[size(X, 1)] "Mole fractions of gas mixture";
+  protected
+    Real invMMX[size(X, 1)] "Inverses of molar weights";
+    Types.MolarMass Mmix "Molar mass of mixture";
+  algorithm
+    for i in 1:size(X, 1) loop
+      invMMX[i] := 1/MMX[i];
+    end for;
+    Mmix := 1/(X*invMMX + eps);
+    for i in 1:size(X, 1) loop
+      moleFractions[i] := Mmix*X[i]/MMX[i];
+    end for;
+    annotation (
+      smoothOrder = 5);
+  end massToMoleFractions;
+
   annotation (
     Documentation(info = "<html><head></head><body><p><b><span style=\"font-size: 13pt;\">Interface for ideal/real mixture gas models</span></b></p>
 <p>The objetive of this model is to have an interface and use it as a base model for any<b> ideal/real &nbsp;single/mixture&nbsp;</b><b>gas&nbsp;</b><b>model.</b> In this first version of the library, ideal gas is the one to be considered, however, it is possible to develop different real fluid models such as Papay, Peng Robinson, etc..</p>

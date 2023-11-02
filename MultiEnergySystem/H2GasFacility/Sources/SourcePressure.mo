@@ -5,10 +5,14 @@ model SourcePressure "Pressure source for water/steam flows"
       MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
+
+  // Nominal Parameters
   parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure";
-  parameter HydraulicResistance R = 0 "Hydraulic resistance";
   parameter Types.Temperature T0 = 25 + 273.15 "Nominal temperature";
   parameter Types.MassFraction X0[fluid.nX] "Nominal mass fraction";
+  parameter HydraulicResistance R = 0 "Hydraulic resistance";
+
+  // Boolean Parameters
   parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
@@ -18,7 +22,9 @@ model SourcePressure "Pressure source for water/steam flows"
   parameter Boolean use_in_X0 = false "Use connector input for the mass fraction" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean computeEnergyVariables = false;
+  parameter Boolean computeTransport = true "Used to calculate the transport properties";
+  parameter Boolean computeEntropy = false "Used to calculate the specific entropy";
+  parameter Boolean computeEnergyVariables = false "Used to calculate HHV, SG & WI";
 
   //Variables
   Types.Pressure p "Actual pressure";
@@ -29,6 +35,8 @@ model SourcePressure "Pressure source for water/steam flows"
     T_start = T0,
     p_start = p0,
     X_start = X0,
+    computeTransport = computeTransport,
+    computeEntropy = computeEntropy,
     computeEnergyVariables = computeEnergyVariables);
   H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluid.nXi) annotation (
     Placement(transformation(extent = {{80, -20}, {120, 20}}, rotation = 0)));

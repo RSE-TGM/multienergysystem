@@ -120,57 +120,6 @@ partial model PengRobinsonMixture
   Types.PerUnit SG "Specific gravity of the fluid mixture";
   Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
 
-  //Functions to compute cp, h and s using the coefficients obtained through Utilities.ComputegGasCoefficients
-protected
-  function cp_T
-    input Types.Temperature T;
-    input Real a[4];
-    output Types.SpecificHeatCapacity cp;
-  algorithm
-    cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
-    annotation (
-      Inline = true);
-  end cp_T;
-
-  function h_T
-    input Types.Temperature T;
-    input Real a[4];
-    output Types.SpecificEnthalpy h;
-  algorithm
-    h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    annotation (
-      Inline = true);
-  end h_T;
-
-  function s_T
-    input Types.Temperature T;
-    input Real a[4];
-    output Types.SpecificEntropy s;
-  algorithm
-    s := a[4]*log(T) + T*(a[3] + T*(a[2]/2 + T*a[1]/3));
-    annotation (
-      Inline = true);
-  end s_T;
-
-  function massToMoleFractions "Return mole fractions from mass fractions X"
-    extends Modelica.Icons.Function;
-    input Types.MassFraction X[:] "Mass fractions of mixture";
-    input Types.MolarMass[:] MMX "Molar masses of components";
-    output Types.MoleFraction moleFractions[size(X, 1)] "Mole fractions of gas mixture";
-  protected
-    Real invMMX[size(X, 1)] "Inverses of molar weights";
-    Types.MolarMass Mmix "Molar mass of mixture";
-  algorithm
-    for i in 1:size(X, 1) loop
-      invMMX[i] := 1/MMX[i];
-    end for;
-    Mmix := 1/(X*invMMX);
-    for i in 1:size(X, 1) loop
-      moleFractions[i] := Mmix*X[i]/MMX[i];
-    end for;
-    annotation (
-      smoothOrder = 5);
-  end massToMoleFractions;
 initial equation
   assert(abs(p/p_start - 1) < 0.25, "Please check p_start, you may get convergence to wrong solution of P-R EoS", AssertionLevel.warning);
 equation

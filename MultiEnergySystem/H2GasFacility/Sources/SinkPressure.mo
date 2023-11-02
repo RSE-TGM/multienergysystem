@@ -2,19 +2,21 @@ within MultiEnergySystem.H2GasFacility.Sources;
 model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR                        constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
+
   // Real Parameters
-  parameter HydraulicResistance R = 0 "Hydraulic resistance" annotation (
-    Evaluate = true);
   parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure";
   parameter Types.Temperature T0 = 25 + 237.15 "Nominal temperature";
   parameter Types.MassFraction X0[fluid.nX] = fluid.X_start "Nominal mass fraction";
+  parameter HydraulicResistance R = 0 "Hydraulic resistance" annotation (
+    Evaluate = true);
+
   // Boolean Parameters
-  parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the transport properties";
-  parameter Boolean computeEnergyVariables = false;
+  parameter Boolean computeTransport = true "Used to calculate the transport properties";
+  parameter Boolean computeEntropy = false "Used to to calculate specific entropy";
+  parameter Boolean computeEnergyVariables = false "Used to calculate HHV, SG & WI";
   parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
@@ -24,6 +26,7 @@ model SinkPressure "Pressure sink for water/steam flows"
   parameter Boolean use_in_X0 = false "Use connector input for the mass fraction" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
+
   // Variables
   Types.Pressure p(start = p0) "Actual pressure";
   Types.Temperature T(start = T0) "Actual temperature";

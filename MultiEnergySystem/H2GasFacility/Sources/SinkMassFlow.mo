@@ -3,16 +3,21 @@ model SinkMassFlow
   extends DistrictHeatingNetwork.Icons.Gas.SourceW;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR                        constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
-    "Fluid model"  annotation(choicesAllMatching=true);
+    "Medium model"  annotation(choicesAllMatching=true);
 
-  //Nominal Values
+  // Nominal Values
   parameter Types.Pressure pin_start = 8e6 "Pressure start value of outgoing fluid";
   parameter Types.Pressure p0 = 1e5 "Pressure start value of outgoing fluid DIFFERENCE";
   parameter Types.Temperature T0 = 15 + 273.15 "Nominal temperature and starting value for fluid";
+  parameter Types.MassFraction X0[fluid.nX] "Nominal mass fraction";
   parameter Types.MassFlowRate m_flow0 = 20 "Nominal mass flowrate";
-  parameter Types.MassFraction[fluid.nX] X0 "Nominal mass fraction";
-  final parameter Types.MassFraction[fluid.nXi] Xi_start = X0[1:fluid.nXi] "Nominal mass fraction of independent variables";
   parameter Types.HydraulicConductance G=1000 "Hydraulic Conductance";
+  final parameter Types.MassFraction[fluid.nXi] Xi_start = X0[1:fluid.nXi] "Nominal mass fraction of independent variables";
+
+  // Boolean Parameters
+  parameter Boolean computeTransport = false "Used to calculate the transport properties";
+  parameter Boolean computeEntropy = false "Used to calculate specific entropy";
+  parameter Boolean computeEnergyVariables = false "Used to calculate HHV, SG & WI";
   parameter Boolean use_in_m_flow0 = false "Use connector input for the nominal flow rate" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
@@ -21,12 +26,13 @@ model SinkMassFlow
     choices(checkBox = true));
   parameter Boolean use_in_X0 = false "Use connector input for the composition" annotation (
   Dialog(group="External inputs"), choices(checkBox=true));
-  parameter Boolean computeEnergyVariables = false;
 
   Medium fluid(
     T_start = T0,
     p_start = p0,
     X_start = X0,
+    computeTransport = computeTransport,
+    computeEntropy = computeEntropy,
     computeEnergyVariables = computeEnergyVariables);
 
   // Variables

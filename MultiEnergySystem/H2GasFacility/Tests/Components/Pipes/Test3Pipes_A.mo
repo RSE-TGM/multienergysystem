@@ -4,7 +4,7 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
   replaceable model MediumPipes =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumBoundaries =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
 
 
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";

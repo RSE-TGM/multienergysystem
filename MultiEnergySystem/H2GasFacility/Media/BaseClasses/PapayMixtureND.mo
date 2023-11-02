@@ -102,29 +102,28 @@ equation
   rho = 1/v;
   v_mol = v*MM_mix;
 
+  //Specific Heat Capacity & Specific Enthalpy
   for i in 1:nX loop
     h_star[i] = Hf[i] + h_T(T, cp_coeff[i]) - h_T(T0, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
-    //h_star[i] = h_T(T, cp_coeff[i]) "Ideal specific enthalpy of each component in unit mass";
     cp_star[i] = cp_T(T, cp_coeff[i]) "Ideal specific heat capacity of each component in unit mass";
   end for;
 
-  //Specific Enthalpy
   h_id = X*h_star "Ideal Specific Enthalpy of the fluid in unit mass";
-  h - h_id = 0;
-
-  //Specific Heat Capacity
   cp_id = X*cp_star;
+
+  h = h_id;
   cp = cp_id;
-  cp = cv - (T*(dp_dT^2)/dp_dv) "in unit mass, from(2)-Equation S2.126";
 
   //Thermodynamic variables
   h = u + p*v "in unit mass";
-
+  cp = cv - (T*(dp_dT^2)/dp_dv) "in unit mass, from(2)-Equation S2.126";
   dp_dv = p/(((-Zcoeff[1]*exp(-Zcoeff[2]*Tr_mix) + 2*pr_mix*Zcoeff[3]*exp(-Zcoeff[4]*Tr_mix))/p_c_mix) - v) "in mass units";
   dp_dT = ((R/MM_mix)*T*(Zcoeff[1]*Zcoeff[2]*pr_mix*exp(-Zcoeff[2]*Tr_mix)/p_c_mix - Zcoeff[3]*Zcoeff[4]*pr_mix^2*exp(-Zcoeff[4]*Tr_mix)/T_c_mix) + Z*(R/MM_mix)) / (v - (R/MM_mix)*T*(-Zcoeff[1]*exp(-Zcoeff[2]*Tr_mix)/p_c_mix + Zcoeff[3]*exp(-Zcoeff[4]*Tr_mix)*2*pr_mix/p_c_mix));
 
+
+  // Transport properties
   mu = if computeTransport then mu_start else 0;
-  k = 0 "computation not included in the model";
+  k = if computeTransport then 0 else 0 "computation not included in the model";
 
   //Entropy
   if computeEntropy then

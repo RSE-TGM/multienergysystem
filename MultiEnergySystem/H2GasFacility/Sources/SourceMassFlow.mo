@@ -5,6 +5,7 @@ model SourceMassFlow
       MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR                        constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
     "Medium model" annotation (
      choicesAllMatching = true);
+
   // Real Type Parameters
   parameter Types.Pressure p0 = 0.1e5 "Nominal pressure starting value";
   parameter Types.Temperature T0 = 15 + 273.15 "Nominal temperature and starting value for fluid";
@@ -14,7 +15,7 @@ model SourceMassFlow
 
   // Boolean Type  parameters
   parameter Boolean computeTransport = false "Used to calculate the transport properties";
-  parameter Boolean computeEntropy = false "Used to calculate the transport properties";
+  parameter Boolean computeEntropy = false "Used to calculate specific entropy";
   parameter Boolean computeEnthalpyWithFixedPressure = false "True if fluid enthalpy is computed with p_start";
   parameter Boolean computeEnergyVariables = false "Used to calculate HHV, WI, SG";
   parameter Boolean use_in_m_flow0 = false "Use connector input for the nominal flow rate" annotation (

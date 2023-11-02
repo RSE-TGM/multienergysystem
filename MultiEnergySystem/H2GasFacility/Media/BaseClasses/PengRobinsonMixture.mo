@@ -2,9 +2,6 @@
 partial model PengRobinsonMixture
   extends PartialMixture(Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
-  replaceable package MediumH2O = Modelica.Media.Water.StandardWater;
-
-
 
   constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
   constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";

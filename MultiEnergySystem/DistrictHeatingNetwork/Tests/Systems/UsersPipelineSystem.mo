@@ -568,6 +568,20 @@ model UsersPipelineSystem
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers4(y=if time < 100
          then 1 else 0.42)
     annotation (Placement(transformation(extent={{-191,-104},{-171,-84}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    FCVR01(
+    Kv=9.5339,
+    dp_nom(displayUnit="Pa") = 1.09928e5,
+    rho_nom(displayUnit="kg/m3") = 1000,
+    Tin_start(displayUnit="K") = 7 + 273.15,
+    pin_start(displayUnit="Pa") = 2.77476e5) annotation (Placement(
+        transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=0,
+        origin={210,-80})));
+  Modelica.Blocks.Sources.RealExpression Ptransfer1(y=if time < 800 then 0
+         else 0.5)                                              annotation (Placement(transformation(extent={{183,
+            -108},{199,-92}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-100,20},{-100,0.25},{-100.7,0.25}},
@@ -840,6 +854,16 @@ equation
   connect(FCV_thetaconsumers4.y, TCV731.opening) annotation (Line(points={{-170,
           -94},{-160,-94},{-160,-34},{86,-34},{86,-50},{92,-50}}, color={0,0,
           127}));
+  connect(FCVR01.inlet, PL721_ColdSide_ColdIn_PL731.inlet) annotation (Line(
+      points={{200,-80},{90,-80}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCVR01.outlet, powerTransfer.inlet) annotation (Line(
+      points={{220,-80},{230,-80},{230,-20},{220,-20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(Ptransfer1.y, FCVR01.opening) annotation (Line(points={{199.8,-100},{
+          205,-100},{205,-101},{210,-101},{210,-88}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
       experiment(

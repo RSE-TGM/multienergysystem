@@ -71,6 +71,8 @@ partial model PapayMixture
   Real drho_dp(unit = "kg/(Pa.m3)") "Pressure derivative at constant temperature, per each component";
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
   Types.PerUnit Z(start = 1) "Compressibility factor of the mixture";
+
+  //** Energy Variables
   Types.PerUnit Z0(start = 1) "Compressibility factor of the mixture at Standard Conditions";
   Real HHV_mix(unit = "J/kg") "Higher Heating Value of the fluid in mass units";
   Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
@@ -80,6 +82,8 @@ partial model PapayMixture
   Types.MolarVolume v_mol_0(start = 0.0244) "Molar volume of the fluid mixture at reference temperature and pressure";
   Types.PerUnit SG "Specific gravity of the fluid mixture";
   Real WI(unit = "J/m3") "Wobbex Index of the fluid mixture";
+
+
   Real dZ_dp(unit = "Pa-1") "Pressure derivative at constant T, X of compressibility factor";
   Real dZ_dT(unit = "K-1") "Temperature derivative at constant p, X of compressibility factor";
   Types.PerUnit dZ_dX[nX] "Mass fraction derivative at constant p, T of compressibility factor, per each component";
@@ -134,7 +138,7 @@ protected
     for i in 1:size(X, 1) loop
       invMMX[i] := 1/MMX[i];
     end for;
-    Mmix := 1/(X*invMMX);
+    Mmix := 1/(X*invMMX + eps);
     for i in 1:size(X, 1) loop
       moleFractions[i] := Mmix*X[i]/MMX[i];
     end for;
@@ -152,7 +156,7 @@ equation
   end if;
 //  X[1:nXi] = Xi;
 //  X[nX] = 1 - sum(Xi);
-  
+
   assert(sum(X) > 0, "error1");
   assert(sum(MM) > 0, "error2");
 
@@ -160,15 +164,14 @@ equation
   MM_mix = MM*Y "molar mass of the fluid";
   Tr = T./T_c;
   pr = p./p_c;
-  T_c_mix = X*T_c;
-  p_c_mix = X*p_c;
+  T_c_mix = X*T_c + eps;
+  p_c_mix = X*p_c + eps;
   Tr_mix = T/T_c_mix;
   pr_mix = p/p_c_mix;
   Tr0 = T0./T_c;
 
   p*v_mol = Z*R*T;
   Z = 1 - Zcoeff[1]*pr_mix*exp(-Zcoeff[2]*Tr_mix) + Zcoeff[3]*pr_mix*pr_mix*exp(-Zcoeff[4]*Tr_mix);
-  Z0 = 1 - Zcoeff[1]*(p0/p_c_mix)*exp(-Zcoeff[2]*T0/T_c_mix) + Zcoeff[3]*(p0/p_c_mix)*(p0/p_c_mix)*exp(-Zcoeff[4]*T0/T_c_mix);
   rho = 1/v;
   v_mol = v*MM_mix;
 
@@ -243,14 +246,24 @@ equation
   s - s_id = 0;
 
   // Energy variables
-  HHV_mix = HHV*X;
-  LHV_mix = LHV*X;
-  HHV_SCM_mix = HHV_SCM*Y;
-  LHV_SCM_mix = LHV_SCM*Y;
+  Z0 = 1 - Zcoeff[1]*(p0/p_c_mix)*exp(-Zcoeff[2]*T0/T_c_mix) + Zcoeff[3]*(p0/p_c_mix)*(p0/p_c_mix)*exp(-Zcoeff[4]*T0/T_c_mix);
   p0*v_mol_0 = Z0*R*T0;
   rho0 = MM_mix/v_mol_0;
-  SG = rho0/rhoair;
-  WI = HHV_SCM_mix/sqrt(SG);
+  if computeEnergyVariables then
+    HHV_mix = HHV*X;
+    LHV_mix = LHV*X;
+    HHV_SCM_mix = HHV_SCM*Y;
+    LHV_SCM_mix = LHV_SCM*Y;
+    SG = rho0/rhoair;
+    WI = HHV_SCM_mix/sqrt(SG);
+  else
+    HHV_mix = 0;
+    LHV_mix = 0;
+    HHV_SCM_mix = 0;
+    LHV_SCM_mix = 0;
+    SG = 0;
+    WI = 0;
+  end if;
 
   annotation (
     Documentation(info = "<html><head></head><body><h3>Model of a gas fluid using Peng Robinson EoS</h3><div class=\"htmlDoc\"><p>The objetive of this model is to obtain approximately the thermodynamic properties of the mixture gas to use it in the modeling of the Allam Cycle. The following references has been used:</p><p></p><p>(1)&nbsp;<a href=\"https://www.researchgate.net/publication/231293953_New_Two-Constant_Equation_of_State\">Peng, Ding-yu &amp; Robinson, Donald. (1976). New Two-Constant Equation of State. Industrial &amp; Engineering Chemistry Fundamentals. 15. 10.1021/i160057a011.&nbsp;</a></p><p>(2)&nbsp;<a href=\"https://ars.els-cdn.com/content/image/1-s2.0-S0896844618307903-mmc1.pdf\">\"Equation of State and Thermodynamic Properties for Mixtures of H2O, O2, N2 and CO2 from Ambient up to 1000K and 280MPa - S. Supporting Information\" - F. Mangold, St. Pilz, S. Beljic, F. Vogel - 2019,&nbsp;pp 19-20</a></p><p>(3)&nbsp;<a href=\"https://www.researchgate.net/publication/327832564_Thermodynamics_Fundamentals_and_Engineering_Applications\">Colonna, Piero &amp; Reynolds, William. (2018). Thermodynamics: Fundamentals and Engineering Applications. 10.1017/9781139050616.&nbsp;</a></p><p>(4)&nbsp;<a href=\"http://web.nchu.edu.tw/pweb/users/cmchang/lesson/10174.pdf\">Chapter 6 \"Calculation of Properties of Pure Fluids\" - CM. J. Chang from National Chung Hsing University - 2012, pp 59-64</a></p><p>(5)&nbsp;<a href=\"http://www.sciencedirect.com/science/article/pii/S0306261916308352\">R. Scaccabarozzi, M. Gatti, E. Martelli. (2016). Thermodynamic analysis and numerical optimization of the NET Power oxy-combustion cycle, Applied Energy, Volume 178. Pages 505-526. ISSN 0306-2619. https://doi.org/10.1016/j.apenergy.2016.06.060.</a></p></div></body></html>"));

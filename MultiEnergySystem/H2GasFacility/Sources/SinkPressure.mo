@@ -29,7 +29,13 @@ model SinkPressure "Pressure sink for water/steam flows"
   Types.Temperature T(start = T0) "Actual temperature";
   Types.MassFraction X[fluid.nX] "Actual mass fraction";
   Types.MassFlowRate m_flow "Actual mass flow rate";
-  Medium fluid(T_start = T0, p_start = p0, X_start = X0, computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables);
+  Medium fluid(
+    T_start = T0,
+    p_start = p0,
+    X_start = X0,
+    computeTransport = computeTransport,
+    computeEntropy = computeEntropy,
+    computeEnergyVariables = computeEnergyVariables);
   H2GasFacility.Interfaces.FluidPortInlet inlet(nXi = fluid.nXi) annotation (
     Placement(transformation(extent = {{-120, -20}, {-80, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation (

@@ -23,7 +23,11 @@ model SinkMassFlow
   Dialog(group="External inputs"), choices(checkBox=true));
   parameter Boolean computeEnergyVariables = false;
 
-  Medium fluid(T_start = T0, p_start = p0, X_start = X0, computeEnergyVariables = computeEnergyVariables);
+  Medium fluid(
+    T_start = T0,
+    p_start = p0,
+    X_start = X0,
+    computeEnergyVariables = computeEnergyVariables);
 
   // Variables
   Types.MassFlowRate m_flow "Actual mass flow rate";

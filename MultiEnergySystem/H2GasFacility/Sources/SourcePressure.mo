@@ -19,11 +19,17 @@ model SourcePressure "Pressure source for water/steam flows"
     Dialog(group = "External inputs"),
     choices(checkBox = true));
   parameter Boolean computeEnergyVariables = false;
+
+  //Variables
   Types.Pressure p "Actual pressure";
   Types.Temperature T "Actual temperature";
   Types.MassFraction X[fluid.nX] "Actual mass fraction";
   Types.MassFlowRate m_flow "Actual mass flow rate";
-  Medium fluid(T_start = T0, p_start = p0, X_start = X0, computeEnergyVariables = computeEnergyVariables);
+  Medium fluid(
+    T_start = T0,
+    p_start = p0,
+    X_start = X0,
+    computeEnergyVariables = computeEnergyVariables);
   H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluid.nXi) annotation (
     Placement(transformation(extent = {{80, -20}, {120, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation (

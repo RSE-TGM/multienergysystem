@@ -1,12 +1,9 @@
-﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
+within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PengRobinsonMixture
   extends PartialMixture(Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
 
-  constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
-  constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
-  constant Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
-
+  // Parameters
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
   parameter Types.PerUnit w[nX] "Acentric factors";
   parameter Types.PerUnit delta[nX, nX] "Binary interaction parameters (BIP) from ASPEN simulation";

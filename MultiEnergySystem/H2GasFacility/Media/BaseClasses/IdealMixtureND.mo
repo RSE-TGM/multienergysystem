@@ -3,11 +3,6 @@ partial model IdealMixtureND
   extends PartialMixture(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start), computeDerivatives = false);
   import Modelica.Fluid.Utilities.regStep;
 
-  // Constants
-  constant Types.Density rhoair = 1.2250 "Reference density of air at T = 15°C and p = 1atm";
-  constant Integer ord_cp_ideal = 3 "order of the polynomial for ideal cp(T)";
-  constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
-
   // Parameters
   parameter Integer posDom = 1 "Position of the dominant component, usually 1";
   parameter Types.MolarMass MM[nX] "Molar mass of the gas components";

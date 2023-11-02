@@ -1,7 +1,11 @@
-within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
+﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
 
+  // Constants
+  constant Integer ord_cp_ideal = 3 "order of the polynomial for ideal cp(T)";
+  constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
+  constant Types.Density rhoair = 1.2250 "Reference density of air at T = 15°C and p = 1atm";
   constant Types.SpecificHeatCapacityMol R = Modelica.Constants.R "Universal gas constant per unit mol";
 
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";

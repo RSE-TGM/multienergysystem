@@ -25,14 +25,14 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.MassFraction X[nX](start = X_start) "Mass fraction vector";
   Types.SpecificEnergy u "Specific Internal Energy";
   Types.SpecificEnthalpy h "Specific Enthalpy";
-  Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy";
-  Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
-  Types.SpecificEnergy du_dX[nX] "Mass fraction derivative of Specific Internal Energy at constant pressure vector";
+  Types.DerSpecEnergyByPressure du_dp if computeDerivatives "Pressure derivative of the Specific Internal Energy";
+  Types.DerSpecEnergyByTemperature du_dT if computeDerivatives "Temperature derivative of the Specific Internal Energy";
+  Types.SpecificEnergy du_dX[nX] if computeDerivatives "Mass fraction derivative of Specific Internal Energy at constant pressure vector";
   Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid at constant pressure";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid at constant volume";
-  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature";
-  Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure";
-  Types.SpecificVolume dv_dX[nX] "Mass fraction derivative of specific volume, per each component";
+  Types.DerSpecificVolumeByPressure dv_dp if computeDerivatives "Pressure derivative of specific volume at constant Temperature";
+  Types.DerSpecificVolumeByTemperature dv_dT if computeDerivatives "Temperature derivative of specific volume at constant pressure";
+  Types.SpecificVolume dv_dX[nX] if computeDerivatives "Mass fraction derivative of specific volume, per each component";
   Types.SpecificEntropy s "Specific Entropy" annotation (
     HideResult = not ComputeEntropy);
   Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (

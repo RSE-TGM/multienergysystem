@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
-
 partial model PartialSubstance
   extends Modelica.Icons.MaterialProperty;
   parameter Boolean computeTransport = true "Used to decide if it is necessary to calculate the transport properties";
@@ -22,23 +21,23 @@ partial model PartialSubstance
   Types.MolarVolume v_mol "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
-  Types.SpecificEntropy s "Specific Entropy" annotation(
+  Types.SpecificEntropy s "Specific Entropy" annotation (
     HideResult = not ComputeEntropy);
   Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
   Real dv_dX[nX](each unit = "m3/kg") "Mass fraction derivative of specific volumen, per each component";
   Types.SpecificEnergy du_dX[nX] "Mass fraction derivative of Specific Internal Energy at constant pressure, per each component";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
-  Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation(
+  Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation (
     HideResult = not CompressibilityEffect);
   Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure";
-  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation(
+  Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation (
     HideResult = not CompressibilityEffect);
-  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation(
+  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (
     HideResult = not ComputeTransport);
-  Types.ThermalConductivity k "Thermal Conductivity" annotation(
+  Types.ThermalConductivity k "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
-  annotation(
+  annotation (
     Documentation(info = "<HTML>
         <p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature.
         <p>From that reference point the water is modeled as an incompressible liquid with the density of the saturated liquid, so it obeys the following equations of state:

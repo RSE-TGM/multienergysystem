@@ -5,7 +5,6 @@ partial model PapayMixture
 
   // Constants
   constant Real eps = 1e-9 "small constant to avoid 'log(0)' when a gas component molar mass is zero";
-  constant Types.TemperatureDifference dT_smooth = 1 "Smoothing temperature interval for cp_cond calculation";
   constant Integer ord_cp_ideal = 3 "order of the polynomial ideal cp(T)";
   constant Types.Density rhoair = 1.2250 "Density of air at T = 15°C and p = 1atm";
   constant Real Zcoeff[4] = {1, 3.52, 2.2660, 1.878};

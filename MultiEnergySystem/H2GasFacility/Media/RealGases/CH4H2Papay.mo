@@ -2,6 +2,7 @@ within MultiEnergySystem.H2GasFacility.Media.RealGases;
 model CH4H2Papay
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
       nXi = 1,
+      nX = 2,
       X_start = {0.9, 0.1},
       T_start = 25 + 273.15,
       p_start = 1e5,

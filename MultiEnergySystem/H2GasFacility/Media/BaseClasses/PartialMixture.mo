@@ -6,6 +6,7 @@ partial model PartialMixture "Interface for real mixture gas models"
 
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
+  parameter Boolean computeDerivatives = false "Used to decide if it is necessary to calculate all thermodynamic derivatives";
   parameter Integer nXi = 0 "Number of independent elements in the mass fraction array that influence fluid properties";
   parameter Integer nX = nXi + 1 "Number of elements in the mass fraction array that influence fluid properties";
   parameter Types.MassFraction Xi_start[nXi] "Start value of the indepentend elements of fluid mass composition";

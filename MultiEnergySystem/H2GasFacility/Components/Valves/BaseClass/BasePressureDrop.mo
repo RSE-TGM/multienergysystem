@@ -1,11 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Components.Valves.BaseClass;
 partial model BasePressureDrop
-  extends H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(
-                                                            nXi       = fluidIn.nXi), outlet(
-                                                                                     nXi        = fluidOut.nXi));
+  extends H2GasFacility.Interfaces.PartialHorizontalTwoPort(
+    inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
 
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4PR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
-    "fluid model";
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.RealGases.CH4Papay
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+      "fluid model";
 
   // Basic parameters for declaring fluids
   parameter Boolean computeTransport = false
@@ -47,16 +48,11 @@ partial model BasePressureDrop
     computeEntropy = computeEntropy)
     "outlet fluid";
 
-  Types.Density rhoin
-    "Density at the inlet";
-  Types.Pressure pin
-    "Actual inlet pressure";
-  Types.Pressure pout
-    "Actual outlet pressure";
-  Types.Temperature Tin
-    "Actual inlet temperature";
-  Types.Temperature Tout
-    "Actual outlet temperature";
+  Types.Density rhoin "Density at the inlet";
+  Types.Pressure pin "Actual inlet pressure";
+  Types.Pressure pout "Actual outlet pressure";
+  Types.Temperature Tin "Actual inlet temperature";
+  Types.Temperature Tout "Actual outlet temperature";
 
 equation
 

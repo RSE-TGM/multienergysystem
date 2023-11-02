@@ -1,35 +1,36 @@
 within MultiEnergySystem.H2GasFacility.Sources;
-
 model SourcePressure "Pressure source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation(
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
   parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure";
   parameter HydraulicResistance R = 0 "Hydraulic resistance";
   parameter Types.Temperature T0 = 25 + 273.15 "Nominal temperature";
   parameter Types.MassFraction X0[fluid.nX] "Nominal mass fraction";
-  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation(
+  parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean use_in_T0 = false "Use connector input for the temperature" annotation(
+  parameter Boolean use_in_T0 = false "Use connector input for the temperature" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
-  parameter Boolean use_in_X0 = false "Use connector input for the mass fraction" annotation(
+  parameter Boolean use_in_X0 = false "Use connector input for the mass fraction" annotation (
     Dialog(group = "External inputs"),
     choices(checkBox = true));
+  parameter Boolean computeEnergyVariables = false;
   Types.Pressure p "Actual pressure";
   Types.Temperature T "Actual temperature";
   Types.MassFraction X[fluid.nX] "Actual mass fraction";
   Types.MassFlowRate m_flow "Actual mass flow rate";
-  Medium fluid(T_start = T0, p_start = p0, X_start = X0);
-  H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluid.nXi) annotation(
+  Medium fluid(T_start = T0, p_start = p0, X_start = X0, computeEnergyVariables = computeEnergyVariables);
+  H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluid.nXi) annotation (
     Placement(transformation(extent = {{80, -20}, {120, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation(
+  Modelica.Blocks.Interfaces.RealInput in_p0 if use_in_p0 "Externally supplied pressure" annotation (
     Placement(transformation(origin = {-40, 92}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(extent = {{-16, -16}, {16, 16}}, rotation = 270, origin = {-40, 84})));
-  Modelica.Blocks.Interfaces.RealInput in_T0 if use_in_T0 "Externally supplied temperature" annotation(
+  Modelica.Blocks.Interfaces.RealInput in_T0 if use_in_T0 "Externally supplied temperature" annotation (
     Placement(visible = true, transformation(origin = {0, 92}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {0, 96}, extent = {{-16, -16}, {16, 16}}, rotation = 270)));
-  Modelica.Blocks.Interfaces.RealInput in_X0[fluid.nX] if use_in_X0 "Externally supplied mass fraction" annotation(
+  Modelica.Blocks.Interfaces.RealInput in_X0[fluid.nX] if use_in_X0 "Externally supplied mass fraction" annotation (
     Placement(visible = true, transformation(origin = {40, 92}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {40, 84}, extent = {{-16, -16}, {16, 16}}, rotation = 270)));
 protected
   Modelica.Blocks.Interfaces.RealInput in_p0_internal;
@@ -65,7 +66,7 @@ equation
   connect(in_p0, in_p0_internal);
   connect(in_T0, in_T0_internal);
   connect(in_X0, in_X0_internal);
-  annotation(
+  annotation (
     Documentation(info = "<html><head></head><body><p><b>Modelling options</b></p>
 <p>If <tt>R</tt> is set to zero, the pressure source is ideal; otherwise, the outlet pressure decreases proportionally to the outgoing flowrate.</p>
 <p>The pressure, temperature and mass fraction vector can be supplied from external inputs by setting to true the corresponding <code>use_in_XX</code> parameter and connecting an external signal to the input connector.</p>

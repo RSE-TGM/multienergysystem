@@ -1,6 +1,6 @@
 ﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model IdealMixture
-  extends PartialMixture(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start), computeDerivatives = true);
+  extends PartialMixture(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
 
   // Constants
@@ -75,6 +75,7 @@ partial model IdealMixture
   Real drho_dX[nX](each unit = "kg/m3") "Mass fraction derivative of the density per each component";
 
 //  **Energy Variables**
+  Types.PerUnit Z0(start = 1) "Compressibility factor of the mixture at Standard Conditions";
   Real HHV_mix(unit = "J/kg", start = HHV*X_start) "Higher Heating Value of the fluid in mass units";
   Real LHV_mix(unit = "J/kg") "Lower Heating Value of the fluid in mass units";
   Real HHV_SCM_mix(unit = "J/m3") "Higher Heating Value of the fluid mixture in Standard conditions";
@@ -263,14 +264,24 @@ equation
 
 
   // Energy variables
-  HHV_mix = HHV*X;
-  LHV_mix = LHV*X;
-  HHV_SCM_mix = HHV_SCM*Y;
-  LHV_SCM_mix = LHV_SCM*Y;
-  p0*v_mol_0 = Z*R*T0;
+  Z0 =  1;
+  p0*v_mol_0 = Z0*R*T0;
   rho0 = MM_mix/v_mol_0;
-  SG = rho0/rhoair;
-  WI = HHV_SCM_mix/sqrt(SG);
+  if computeEnergyVariables then
+    HHV_mix = HHV*X;
+    LHV_mix = LHV*X;
+    HHV_SCM_mix = HHV_SCM*Y;
+    LHV_SCM_mix = LHV_SCM*Y;
+    SG = rho0/rhoair;
+    WI = HHV_SCM_mix/sqrt(SG);
+  else
+    HHV_mix = 0;
+    LHV_mix = 0;
+    HHV_SCM_mix = 0;
+    LHV_SCM_mix = 0;
+    SG = 0;
+    WI = 0;
+  end if;
 
 
 //  dXi_dXi = {if i==j then 1 else -1 for j in 1:nXi, i in 1:nXi};

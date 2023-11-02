@@ -1,5 +1,4 @@
 within MultiEnergySystem.H2GasFacility;
-
 package Components
   extends Modelica.Icons.Package;
   import ConstantHTC = MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient;

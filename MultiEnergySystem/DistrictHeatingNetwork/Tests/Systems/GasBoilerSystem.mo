@@ -24,7 +24,7 @@ model GasBoilerSystem
   parameter Types.Length L_S9 = 10;
   parameter Types.Length Di_S9 = 51e-3;
   parameter Types.Length t_S9 = 1.5e-3;
-  parameter Types.MassFlowRate m_flow_total = 1.6;
+  parameter Types.MassFlowRate m_flow_total = 2.4095388;
 
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;

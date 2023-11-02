@@ -24,7 +24,7 @@ model GasBoilerOLSystem
   parameter Types.Length L_S9 = 10;
   parameter Types.Length Di_S9 = 51e-3;
   parameter Types.Length t_S9 = 1.5e-3;
-  parameter Types.MassFlowRate m_flow_total = 1.6;
+  parameter Types.MassFlowRate m_flow_total = 2.4095388;
 
   parameter Types.Pressure pin_start_Boiler = 1.85e5;
 
@@ -507,7 +507,8 @@ model GasBoilerOLSystem
         origin={-140,60})));
   Modelica.Blocks.Sources.RealExpression P101_m_flow(y=m_flow_total)
     annotation (Placement(transformation(extent={{-271,-36},{-251,-16}})));
-  Modelica.Blocks.Sources.RealExpression P901_omega(y=0.6*Pump.P901.omeganom)
+  Modelica.Blocks.Sources.RealExpression P901_omega(y=if time < 100 then 0.6*
+        Pump.P901.omeganom else 0.7*Pump.P901.omeganom)
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
@@ -708,5 +709,8 @@ equation
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})),
-    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+    experiment(
+      StopTime=500,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end GasBoilerOLSystem;

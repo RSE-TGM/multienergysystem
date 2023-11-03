@@ -1,30 +1,34 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
 model GasBoilerTest
   extends Modelica.Icons.Example;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler gasBoiler(Tin_start = 60 + 273.15, pin_start = 300000, pout_start = 289999.9999999999) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler gasBoiler(
+    Tin_start=333.15,
+    pin_start=200000,
+    pout_start=190000,
+    HH=55.5e6)                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-8.88178e-16, 8.88178e-16}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
   Sources.SourceMassFlow CH4(T0 = 60 + 273.15, m_flow0 = 0.002370206, p0(displayUnit = "Pa") = 2000, use_in_m_flow = true) annotation (
     Placement(visible = true, transformation(origin = {-20, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true) annotation (
-    Placement(visible = true, transformation(origin = {-48, 10}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={-48,10},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(
     use_in_T0=true,
     T0=333.15,
     p0=180000)                                                                                          annotation (
     Placement(visible = true, transformation(origin = {-48, -12}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp fuel_flow(duration = 20,
-    height=0.002370206*0.57,                                                      offset = 0.002370206,
+    height=0.002370206*0.391,                                                         offset = 0.002370206+0.002370206*0.175,
     startTime=50)                                                                                                       annotation (
     Placement(visible = true, transformation(origin = {-50, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin(duration = 20,
     height=0,
-    offset=53 + 273.15,                                                              startTime = 40) annotation (
+    offset=60 + 273.15,                                                              startTime = 40) annotation (
     Placement(visible = true, transformation(origin = {-70, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(
-    duration=0,
-    height=0,
-    offset=1.6,
-    startTime=100)                                                                              annotation (
+    duration=100,
+    height=-2.4095388*0.3*0,
+    offset=2.4095388,
+    startTime=1000)                                                                             annotation (
     Placement(visible = true, transformation(origin = {-70, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

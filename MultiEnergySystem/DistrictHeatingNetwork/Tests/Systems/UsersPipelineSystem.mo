@@ -559,15 +559,12 @@ model UsersPipelineSystem
     annotation (Placement(transformation(extent={{220,-30},{200,-10}})));
   Modelica.Blocks.Sources.RealExpression Ptransfer4(y=Pchiller) annotation (Placement(transformation(extent={{177,-15},
             {193,1}})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers2(y=if time < 100
-         then 1 else 0.87)
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers2(y=0.87)
     annotation (Placement(transformation(extent={{-190,-75},{-170,-55}})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers3(y=if time < 100
-         then 1 else 0.6)
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers3(y=0.6)
     annotation (Placement(transformation(extent={{-190,-89},{-170,-69}})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers4(y=if time < 100
-         then 1 else 0.42)
-    annotation (Placement(transformation(extent={{-191,-104},{-171,-84}})));
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers4(y=0.42)
+    annotation (Placement(transformation(extent={{-190,-104},{-170,-84}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCVR01(
     Kv=9.5339,
@@ -851,7 +848,7 @@ equation
           -65},{-79,-65},{-79,-50},{-68,-50}}, color={0,0,127}));
   connect(FCV_thetaconsumers3.y, TCV721.opening) annotation (Line(points={{-169,
           -79},{-156,-79},{-156,-36},{0,-36},{0,-50},{12,-50}}, color={0,0,127}));
-  connect(FCV_thetaconsumers4.y, TCV731.opening) annotation (Line(points={{-170,
+  connect(FCV_thetaconsumers4.y, TCV731.opening) annotation (Line(points={{-169,
           -94},{-160,-94},{-160,-34},{86,-34},{86,-50},{92,-50}}, color={0,0,
           127}));
   connect(FCVR01.inlet, PL721_ColdSide_ColdIn_PL731.inlet) annotation (Line(

@@ -438,7 +438,8 @@ model GasBoilerSystem
         origin={-20,-88},
         extent={{-10,-10},{10,10}},
         rotation=90)));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=1)
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=if time < 200
+         then 1 else 0.95)
     annotation (Placement(transformation(extent={{311,0},{291,20}})));
   Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
     annotation (Placement(transformation(extent={{-180,0},{-200,20}})));
@@ -448,7 +449,7 @@ model GasBoilerSystem
         rotation=-90,
         origin={-140,60})));
   Modelica.Blocks.Sources.RealExpression P101_m_flow(y=if time < 60 then
-        m_flow_total else m_flow_total*1.05)
+        m_flow_total else m_flow_total)
     annotation (Placement(transformation(extent={{-180,-36},{-200,-16}})));
   Modelica.Blocks.Sources.RealExpression P901_omega(y=0.6*Pump.P901.omeganom)
     annotation (Placement(transformation(
@@ -459,7 +460,8 @@ model GasBoilerSystem
     GB101(
     Tin_start=333.15,
     pin_start=180000,
-    pout_start=179000) annotation (Placement(visible=true, transformation(
+    pout_start=179000,
+    HH=55.5e6)         annotation (Placement(visible=true, transformation(
         origin={-230,-95},
         extent={{-25,-25},{25,25}},
         rotation=-90)));
@@ -473,14 +475,14 @@ model GasBoilerSystem
   Modelica.Blocks.Sources.Ramp fuel_flow(
     duration=20,
     height=0.002370206*0.2*0,
-    offset=0.0037212234,
+    offset=0.003711743,
     startTime=50)                                                                                                       annotation (
     Placement(visible = true, transformation(origin={-180,-130}, extent={{10,-10},
             {-10,10}},                                                                            rotation=-90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
     closedLoopInitializer(
     p_start(displayUnit="Pa") = 2.333038e5,
-    T_start(displayUnit="K") = 80.32302 + 273.15,
+    T_start(displayUnit="K") = 80 + 273.15,
     m_flow_start=m_flow_total) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,

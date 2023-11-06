@@ -930,6 +930,7 @@ model WaterTanksSystem "System of two tanks"
     D201(H=4, D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000,
+    m_flow_start=0.1,
     n=3)
     annotation (Placement(transformation(extent={{-296,-154},{-248,-78}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
@@ -962,6 +963,7 @@ model WaterTanksSystem "System of two tanks"
     D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000,
+    m_flow_start=0.1,
     n=3) annotation (Placement(transformation(extent={{-225,-154},{-177,-78}})));
 equation
   connect(P101.inlet,roundPipe1DFV. outlet) annotation (Line(

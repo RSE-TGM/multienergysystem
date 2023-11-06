@@ -5,7 +5,7 @@ model ControlledElectricBoilerTest
     Tin_start=333.15,                                                                                                                                                                 etanom = 0.98, h = 1.25, m_flow_nom = 1,
     pin_start=300000,
     pout_start=290000,
-    T_bandwidth=4)                                                                                                                                                                                                         annotation (
+    T_bandwidth=7)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {28, 8}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true) annotation (
     Placement(visible = true, transformation(origin = {-20, 18}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -14,7 +14,8 @@ model ControlledElectricBoilerTest
     T0=333.15,
     p0=310000)                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-10, -4}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp Tin(duration = 100, height = -12, offset = 65 + 273.15, startTime = 250) annotation (
+  Modelica.Blocks.Sources.Ramp Tin(duration = 100,
+    height=-5,                                                   offset = 65 + 273.15, startTime = 250) annotation (
     Placement(visible = true, transformation(origin = {-62, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(duration = 100,
     height=0.25*0,
@@ -22,7 +23,8 @@ model ControlledElectricBoilerTest
     Placement(visible = true, transformation(origin = {-42, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp Tin_up(duration = 100, height = 15, offset = 0, startTime = 500) annotation (
+  Modelica.Blocks.Sources.Ramp Tin_up(duration = 100,
+    height=10,                                                     offset = 0, startTime = 500) annotation (
     Placement(visible = true, transformation(origin = {-62, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Add add annotation (
     Placement(visible = true, transformation(origin = {-30, -22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

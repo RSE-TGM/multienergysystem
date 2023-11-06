@@ -2,3 +2,4 @@ ControlledHeatPumpNoDynamics
 GasBoiler
 ElectricBoiler
 ControlledElectricBoiler
+ControlledGasBoiler

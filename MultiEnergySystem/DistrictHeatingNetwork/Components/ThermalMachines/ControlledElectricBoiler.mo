@@ -23,7 +23,7 @@ equation
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
   0 = outlet.p - inlet.p "Momentum Balance";
 
-  Pheat = delay(if heat_on then Pmaxres*nR else 0,5);
+  Pheat = delay(if heat_on then Pmaxres*nR else 0, tdelay);
 
   when Tout_ref - T_bandwidth > Tout and pre(heat_on)==false then
     heat_on=  true;

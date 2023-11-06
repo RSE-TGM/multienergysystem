@@ -2,3 +2,4 @@ PipeTestBase
 PumpTestBase
 PipePumpTestBase
 ValveTestBase
+BoilerTestBase

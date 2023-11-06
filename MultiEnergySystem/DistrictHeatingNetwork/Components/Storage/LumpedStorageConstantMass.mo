@@ -19,7 +19,7 @@ equation
   M_id * cp * der(Ttilde) = m_flow_in * cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
 
   // Pressure at the bottom of the tank is increased as Stevino
-  inlet.p - outlet.p = rho0*H*Modelica.Constants.g_n;
+  inlet.p - outlet.p = rho0*H*g_n;
 
   // Computation of heat loss to ambient
   Q_amb = 1/(R_lateral + 2*R_flat)*(Ttilde - T_ext) "Insulation all around";

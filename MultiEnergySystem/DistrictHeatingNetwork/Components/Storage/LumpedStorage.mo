@@ -8,8 +8,10 @@ model LumpedStorage "Model a perfectly mixed thermal storage with insulation all
   parameter Modelica.Units.SI.Length dIns = 0.15 "Insulation thickness";
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
-  Modelica.Units.SI.Mass M "Total mass in the tank";
-  Modelica.Units.SI.Density rho "Density of the fluid in the tank";
+
+  //Variables
+  Modelica.Units.SI.Mass M(start = M_id) "Total mass in the tank";
+  Modelica.Units.SI.Density rho "Density of the fluid in the tank (at the outlet)";
   Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
 equation
 // Fluid
@@ -34,7 +36,7 @@ equation
   M*fluidOut.cp*der(Ttilde) = m_flow_in*fluidOut.cp*(Tin - Tout) - Q_amb;
 
   // Pressure at the bottom of the tank is increased as Stevino
-  pin - pout = rho*H*Modelica.Constants.g_n;
+  pin - pout = rho*H*g_n;
 
   // Computation of heat loss to ambient
   Q_amb = 1/(R_lateral + 2*R_flat)*(Ttilde - T_ext) "Insulation all around";

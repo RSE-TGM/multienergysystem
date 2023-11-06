@@ -1,7 +1,11 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model ControlledElectricBoilerTest
   extends Modelica.Icons.Example;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler eBoiler(D = 0.4, Pmaxnom = 50e3, Pnimnom = 10e3, Pnom = 50e3, Tin_start = 60 + 273.15, etanom = 0.98, h = 1.25, m_flow_nom = 1, pin_start = 300000, pout_start = 289999.9999999999) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler eBoiler(D = 0.4, Pmaxnom = 50e3, Pnimnom = 10e3, Pnom = 50e3,
+    Tin_start=333.15,                                                                                                                                                                 etanom = 0.98, h = 1.25, m_flow_nom = 1,
+    pin_start=300000,
+    pout_start=290000,
+    T_bandwidth=4)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {28, 8}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true) annotation (
     Placement(visible = true, transformation(origin = {-20, 18}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -12,7 +16,9 @@ model ControlledElectricBoilerTest
     Placement(visible = true, transformation(origin = {-10, -4}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin(duration = 100, height = -12, offset = 65 + 273.15, startTime = 250) annotation (
     Placement(visible = true, transformation(origin = {-62, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = 0.25, offset = 0.7, startTime = 1800) annotation (
+  Modelica.Blocks.Sources.Ramp m_flow(duration = 100,
+    height=0.25*0,
+    offset=0.7,                                                                    startTime = 1800) annotation (
     Placement(visible = true, transformation(origin = {-42, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

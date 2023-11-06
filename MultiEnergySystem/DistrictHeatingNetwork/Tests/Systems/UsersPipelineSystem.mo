@@ -546,7 +546,7 @@ model UsersPipelineSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={100,-50})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers1(y=1)
+  Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers1(y=1)
     annotation (Placement(transformation(extent={{-190,-60},{-170,-40}})));
   Modelica.Blocks.Sources.Ramp ramp(
     height=m_flow_Users_total*m_flow_factor*0,
@@ -559,11 +559,11 @@ model UsersPipelineSystem
     annotation (Placement(transformation(extent={{220,-30},{200,-10}})));
   Modelica.Blocks.Sources.RealExpression Ptransfer4(y=Pchiller) annotation (Placement(transformation(extent={{177,-15},
             {193,1}})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers2(y=0.87)
+  Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers2(y=0.87)
     annotation (Placement(transformation(extent={{-190,-75},{-170,-55}})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers3(y=0.6)
+  Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers3(y=0.6)
     annotation (Placement(transformation(extent={{-190,-89},{-170,-69}})));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers4(y=0.42)
+  Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers4(y=0.42)
     annotation (Placement(transformation(extent={{-190,-104},{-170,-84}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCVR01(
@@ -830,7 +830,7 @@ equation
       points={{100,-60},{100,-100}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV_thetaconsumers1.y, TCV701.opening)
+  connect(TCV_thetaconsumers1.y, TCV701.opening)
     annotation (Line(points={{-169,-50},{-148,-50}}, color={0,0,127}));
   connect(ramp.y, sourceHot.in_m_flow) annotation (Line(points={{-229,74},{-229,
           78},{-221.8,78},{-221.8,83.5}}, color={0,0,127}));
@@ -844,11 +844,11 @@ equation
       thickness=0.5));
   connect(Ptransfer4.y, powerTransfer.Ptransfer)
     annotation (Line(points={{193.8,-7},{210,-7},{210,-12}}, color={0,0,127}));
-  connect(FCV_thetaconsumers2.y, TCV711.opening) annotation (Line(points={{-169,
+  connect(TCV_thetaconsumers2.y, TCV711.opening) annotation (Line(points={{-169,
           -65},{-79,-65},{-79,-50},{-68,-50}}, color={0,0,127}));
-  connect(FCV_thetaconsumers3.y, TCV721.opening) annotation (Line(points={{-169,
+  connect(TCV_thetaconsumers3.y, TCV721.opening) annotation (Line(points={{-169,
           -79},{-156,-79},{-156,-36},{0,-36},{0,-50},{12,-50}}, color={0,0,127}));
-  connect(FCV_thetaconsumers4.y, TCV731.opening) annotation (Line(points={{-169,
+  connect(TCV_thetaconsumers4.y, TCV731.opening) annotation (Line(points={{-169,
           -94},{-160,-94},{-160,-34},{86,-34},{86,-50},{92,-50}}, color={0,0,
           127}));
   connect(FCVR01.inlet, PL721_ColdSide_ColdIn_PL731.inlet) annotation (Line(

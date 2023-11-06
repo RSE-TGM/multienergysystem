@@ -45,7 +45,7 @@ partial model PartialBoiler
   SI.MassFlowRate m_flow "mass flowrate of the fluid";
   SI.Pressure pin(start = pin_start) "inlet pressure of fluid";
   SI.Pressure pout "Outlet pressure of fluid";
-  SI.Temperature Tin "inlet temperature fluid";
+  SI.Temperature Tin(start = Tin_start) "inlet temperature fluid";
   SI.Temperature Tout(start = Tout_start) "Outlet temperature cold fluid";
   SI.SpecificEnthalpy hin "inlet specific enthalpy cold fluid";
   SI.SpecificEnthalpy hout "Outlet specific enthalpy cold fluid";
@@ -68,7 +68,7 @@ equation
   assert(10e5 >= inlet.p, "Actual heat power is higher than Maximum heat power", AssertionLevel.warning);
 
   // Balance equations
-  V*fluidOut.drho_dT*der(Tout) = inlet.m_flow + outlet.m_flow;
+  V*(fluidOut.drho_dT*der(Tout)) = inlet.m_flow + outlet.m_flow;
   M = rho*V;
   M*cp*der(Tout) = outlet.m_flow*hout + inlet.m_flow*hin + Pheat - Q_amb;
   Q_amb = 1/(R_lateral + 2*R_flat)*(Tout - T_ext) "Insulation all around, computation of heat loss to ambient";

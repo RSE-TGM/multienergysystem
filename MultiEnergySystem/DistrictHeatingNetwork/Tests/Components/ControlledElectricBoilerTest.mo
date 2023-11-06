@@ -14,7 +14,7 @@ model ControlledElectricBoilerTest
     Placement(visible = true, transformation(origin = {-62, -52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = 0.25, offset = 0.7, startTime = 1800) annotation (
     Placement(visible = true, transformation(origin = {-42, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)  annotation (
+  inner MultiEnergySystem.DistrictHeatingNetwork.System system                                                                                      annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tin_up(duration = 100, height = 15, offset = 0, startTime = 500) annotation (
     Placement(visible = true, transformation(origin = {-62, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

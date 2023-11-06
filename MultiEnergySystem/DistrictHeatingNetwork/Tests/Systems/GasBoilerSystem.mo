@@ -24,7 +24,7 @@ model GasBoilerSystem
   parameter Types.Length L_S9 = 10;
   parameter Types.Length Di_S9 = 51e-3;
   parameter Types.Length t_S9 = 1.5e-3;
-  parameter Types.MassFlowRate m_flow_total = 2.4095388;
+  parameter Types.MassFlowRate m_flow_total = 2.42;
 
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;
@@ -35,9 +35,9 @@ model GasBoilerSystem
   parameter Types.Length Di_Users = 32e-3;
   parameter Types.Length t_Users = 1.5e-3;
 
-  parameter Real Kv_UsersValve(unit = "m3/h") = 2.5 "Metri Flow Coefficient ";
+  parameter Real Kv_UsersValve(unit = "m3/h") = 2.04 "Metri Flow Coefficient ";
   parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
-  parameter Types.Pressure dp_nom_UsersValve = 0.5e5;
+  parameter Types.Pressure dp_nom_UsersValve = 50000;
 
 
 
@@ -57,7 +57,7 @@ model GasBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV101(
     allowFlowReversal=true,
-    Kv=12,
+    Kv=9.69,
     dp_nom(displayUnit="Pa") = 0.1e5,
     Tin_start(displayUnit="K") = 80 + 273.15,
     pin_start=200000)
@@ -438,8 +438,8 @@ model GasBoilerSystem
         origin={-20,-88},
         extent={{-10,-10},{10,10}},
         rotation=90)));
-  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers(y=if time < 200
-         then 1 else 0.95)
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers4(y=if time < 200
+         then 1 else 0.9)
     annotation (Placement(transformation(extent={{311,0},{291,20}})));
   Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
     annotation (Placement(transformation(extent={{-180,0},{-200,20}})));
@@ -487,6 +487,15 @@ model GasBoilerSystem
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-80,90})));
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers2(y=if time < 200
+         then 1 else 0.95)
+    annotation (Placement(transformation(extent={{312,24},{292,44}})));
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers1(y=if time < 200
+         then 1 else 0.95)
+    annotation (Placement(transformation(extent={{313,37},{293,57}})));
+  Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers3(y=if time < 200
+         then 1 else 0.9)
+    annotation (Placement(transformation(extent={{312,12},{292,32}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(
       points={{-220,-30.6},{-220,-40}},
@@ -616,14 +625,8 @@ equation
       points={{220,100},{220,20}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV_thetaconsumers.y, FCV731.opening)
+  connect(FCV_thetaconsumers4.y, FCV731.opening)
     annotation (Line(points={{290,10},{228,10}}, color={0,0,127}));
-  connect(FCV721.opening, FCV731.opening) annotation (Line(points={{148,10},{160,
-          10},{160,30},{270,30},{270,10},{228,10}}, color={0,0,127}));
-  connect(FCV711.opening, FCV731.opening) annotation (Line(points={{68,10},{80,10},
-          {80,30},{270,30},{270,10},{228,10}}, color={0,0,127}));
-  connect(FCV701.opening, FCV731.opening) annotation (Line(points={{-12,10},{0,10},
-          {0,30},{270,30},{270,10},{228,10}}, color={0,0,127}));
   connect(FCV101_theta.y, FCV101.opening)
     annotation (Line(points={{-201,10},{-212,10}}, color={0,0,127}));
   connect(FCV901_theta.y, FCV901.opening)
@@ -692,6 +695,12 @@ equation
       points={{-20,-78},{-20,-64},{221,-64},{221,-39.25},{220.3,-39.25}},
       color={140,56,54},
       thickness=0.5));
+  connect(FCV_thetaconsumers3.y, FCV721.opening) annotation (Line(points={{291,22},
+          {160,22},{160,10},{148,10}}, color={0,0,127}));
+  connect(FCV_thetaconsumers2.y, FCV711.opening) annotation (Line(points={{291,34},
+          {80,34},{80,10},{68,10}}, color={0,0,127}));
+  connect(FCV_thetaconsumers1.y, FCV701.opening) annotation (Line(points={{292,47},
+          {-1,47},{-1,10},{-12,10}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})),

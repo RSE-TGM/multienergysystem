@@ -3,8 +3,8 @@ model TestPumpP901
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
     m_flow_set(
-      height=4.85,
-      offset=2.7,
+      height=5.45,
+      offset=2.1,
       startTime=50),
     sourceP(
       p0 = Pump.P901.pin_start,
@@ -37,7 +37,59 @@ model TestPumpP901
       qnom_inm3h=Pump.P901.qnom_inm3h,
       qnom_inm3h_min=Pump.P901.qnommin_inm3h,
       rhonom = Pump.P901.rhonom,
-      qnom_inm3h_max=Pump.P901.qnommax_inm3h));
+      qnom_inm3h_max=Pump.P901.qnommax_inm3h),
+    pump_40Hz(
+      Tin_start = Pump.P901.Tin_start,
+      Tout_start = Pump.P901.Tout_start,
+      hin_start = Pump.P901.hin_start,
+      pin_start = Pump.P901.pin_start,
+      pout_start = Pump.P901.pout_start,
+      a = Pump.P901.a,
+      b = Pump.P901.b,
+      dpnom = Pump.P901.dpnom,
+      etaelec = Pump.P901.etaelec,
+      etamech = Pump.P901.etamech,
+      etanom = Pump.P901.etanom,
+      headmax=Pump.P901.headnommax,
+      headmin=Pump.P901.headnommin,
+      m_flow_nom = Pump.P901.m_flow_nom,
+      omeganom = Pump.P901.omeganom,
+      qnom_inm3h=Pump.P901.qnom_inm3h,
+      qnom_inm3h_min=Pump.P901.qnommin_inm3h,
+      rhonom = Pump.P901.rhonom,
+      qnom_inm3h_max=Pump.P901.qnommax_inm3h),
+    pump_30Hz(
+      Tin_start = Pump.P901.Tin_start,
+      Tout_start = Pump.P901.Tout_start,
+      hin_start = Pump.P901.hin_start,
+      pin_start = Pump.P901.pin_start,
+      pout_start = Pump.P901.pout_start,
+      a = Pump.P901.a,
+      b = Pump.P901.b,
+      dpnom = Pump.P901.dpnom,
+      etaelec = Pump.P901.etaelec,
+      etamech = Pump.P901.etamech,
+      etanom = Pump.P901.etanom,
+      headmax=Pump.P901.headnommax,
+      headmin=Pump.P901.headnommin,
+      m_flow_nom = Pump.P901.m_flow_nom,
+      omeganom = Pump.P901.omeganom,
+      qnom_inm3h=Pump.P901.qnom_inm3h,
+      qnom_inm3h_min=Pump.P901.qnommin_inm3h,
+      rhonom = Pump.P901.rhonom,
+      qnom_inm3h_max=Pump.P901.qnommax_inm3h),
+    omega_40Hz(offset=Pump.P901.omeganom*4/5),
+    omega_30Hz(offset=Pump.P901.omeganom*3/5),
+    m_flow_set_40Hz(
+      height=4.05,
+      offset=2.1,
+      startTime=50),
+    m_flow_set_30Hz(
+      height=1.5,
+      offset=2.1,
+      startTime=50),
+    cvalve_40Hz(Kv=12),
+    cvalve_30Hz(Kv=12));
 equation
 
 annotation (

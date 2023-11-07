@@ -94,8 +94,10 @@ partial model PumpBase "Base model to develop water pump models"
 equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
-  assert(headmax > head and headmin < head, "Head is outside the operating range", AssertionLevel.error);
-  assert(qnom_inm3h_max > q_m3hr and qnom_inm3h_min < q_m3hr, "Volumetric flowrate is outside the operating range", AssertionLevel.error);
+  assert(headmax > head, "Head is outside the operating range", AssertionLevel.error);
+  assert(headmin < head, "Head is outside the operating range", AssertionLevel.error);
+  assert(qnom_inm3h_max > q_m3hr, "Volumetric flowrate is higher than its maximum operating value", AssertionLevel.error);
+  assert(qnom_inm3h_min < q_m3hr, "Volumetric flowrate is lower than its minimum operating value", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;

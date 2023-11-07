@@ -136,6 +136,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   SI.Pressure pin_cold;
   SI.Pressure pout_cold;
   SI.TemperatureDifference LMTD;
+  SI.Power Pt;
 
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet of the hot fluid" annotation (
@@ -167,6 +168,7 @@ equation
   pin_cold = coldside.inlet.p;
   pout_cold = coldside.outlet.p;
   LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log((Tin_hot - Tout_cold)/(Tout_hot - Tin_cold));
+  Pt = inhot.m_flow*(hotside.fluid[1].h - hotside.fluid[n+1].h);
   connect(wall.int, hotside.wall) annotation (
     Line(points = {{23, 0}, {64.9, 0}}, color = {255, 238, 44}));
   connect(coldside.outlet, outcold) annotation (

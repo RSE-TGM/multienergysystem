@@ -2,14 +2,16 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pumps;
 model TestPumpP901
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
-    m_flow_set(height=7, offset=2),
+    m_flow_set(
+      height=4.85,
+      offset=2.7,
+      startTime=50),
     sourceP(
       p0 = Pump.P901.pin_start,
       T0 = Pump.P901.Tin_start,
       h0 = Pump.P901.hin_start),
-    cvalve(
-      Kv = 72.29759327),
-    omega(
+    cvalve(Kv=12),
+    omega(height=-0.1*Pump.P901.omeganom*0,
       offset = Pump.P901.omeganom),
     sink(
       T0 = Pump.P901.Tout_start,
@@ -34,7 +36,8 @@ model TestPumpP901
       omeganom = Pump.P901.omeganom,
       qnom_inm3h=Pump.P901.qnom_inm3h,
       qnom_inm3h_min=Pump.P901.qnommin_inm3h,
-      rhonom = Pump.P901.rhonom));
+      rhonom = Pump.P901.rhonom,
+      qnom_inm3h_max=Pump.P901.qnommax_inm3h));
 equation
 
 annotation (

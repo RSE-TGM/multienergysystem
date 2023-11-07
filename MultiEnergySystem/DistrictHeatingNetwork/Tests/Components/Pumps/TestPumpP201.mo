@@ -34,7 +34,8 @@ model TestPumpP201
     omeganom =      Pump.P201.omeganom,
       qnom_inm3h=Pump.P201.qnom_inm3h,
       qnom_inm3h_min=Pump.P201.qnommin_inm3h,
-    rhonom =      Pump.P201.rhonom));
+    rhonom =      Pump.P201.rhonom,
+      qnom_inm3h_max=Pump.P201.qnommax_inm3h));
 equation
 
 annotation (

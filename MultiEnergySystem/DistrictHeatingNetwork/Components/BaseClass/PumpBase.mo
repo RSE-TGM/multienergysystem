@@ -52,7 +52,10 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(group = "Pump Characteristics"));
   parameter Types.Length headmin = 2.5 "minimum head" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Real qnom_inm3h_min(unit = "m3/h") = 5.5;
+  parameter Real qnom_inm3h_min(unit = "m3/h") = 5.5 "minimum volumetric flowrate in m3/h" annotation (
+    Dialog(group = "Pump Characteristics"));
+  parameter Real qnom_inm3h_max(unit = "m3/h") = 20 "minimum volumetric flowrate in m3/h" annotation (
+    Dialog(group = "Pump Characteristics"));
 
   Medium fluidIn(T_start = Tin_start, p_start = pin_start);
   Medium fluidOut(T_start = Tout_start, p_start = pout_start);
@@ -92,6 +95,7 @@ equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
   assert(headmax > head or headmin < head, "Head is outside the operating range", AssertionLevel.error);
+  assert(qnom_inm3h_max > q_m3hr or qnom_inm3h_min < q_m3hr, "Volumetric flowrate is outside the operating range", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;

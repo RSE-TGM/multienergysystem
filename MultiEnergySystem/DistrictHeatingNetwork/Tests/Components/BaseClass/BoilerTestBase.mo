@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass;
 model BoilerTestBase
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler
+  extends Modelica.Icons.Example;
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler
     Boiler(trise=60)
     annotation (Placement(transformation(extent={{-22,-24},{24,22}})));
   Sources.SinkMassFlow                                          sinkM(

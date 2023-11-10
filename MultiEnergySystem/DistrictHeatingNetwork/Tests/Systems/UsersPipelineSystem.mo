@@ -5,13 +5,13 @@ model UsersPipelineSystem
   parameter Integer n = 3 "Number of volumes";
   parameter Real m_flow_factor = 0.5;
 
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
+  parameter Integer gammahotovercold_factor = 1;
   parameter Integer n_E301 = 5;
+  parameter SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
+  parameter SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
   parameter SI.CoefficientOfHeatTransfer gamma_cold_E301 = 11682.24;
   parameter SI.CoefficientOfHeatTransfer gamma_hot_E301 = gamma_cold_E301*gammahotovercold_factor;
   parameter SI.CoefficientOfHeatTransfer U_E301 = BPHE.E301.Unom;
-  parameter Integer gammahotovercold_factor = 1;
   parameter SI.CoefficientOfHeatTransfer U_E501 = BPHE.E501.Unom;
   parameter SI.CoefficientOfHeatTransfer U_E601 = BPHE.E601.Unom;
   parameter SI.CoefficientOfHeatTransfer U_E701 = BPHE.E701.Unom;
@@ -557,8 +557,8 @@ model UsersPipelineSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer
     powerTransfer
     annotation (Placement(transformation(extent={{220,-30},{200,-10}})));
-  Modelica.Blocks.Sources.RealExpression Ptransfer4(y=Pchiller) annotation (Placement(transformation(extent={{177,-15},
-            {193,1}})));
+  Modelica.Blocks.Sources.RealExpression CoolingPower(y=Pchiller)
+    annotation (Placement(transformation(extent={{177,-15},{193,1}})));
   Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers2(y=0.87)
     annotation (Placement(transformation(extent={{-190,-75},{-170,-55}})));
   Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers3(y=0.6)
@@ -576,9 +576,9 @@ model UsersPipelineSystem
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={210,-80})));
-  Modelica.Blocks.Sources.RealExpression Ptransfer1(y=if time < 800 then 0
-         else 0.5)                                              annotation (Placement(transformation(extent={{183,
-            -108},{199,-92}})));
+  Modelica.Blocks.Sources.RealExpression FCVR01_theta(y=if time < 800 then 0
+         else 0.5)
+    annotation (Placement(transformation(extent={{183,-109},{199,-93}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-100,20},{-100,0.25},{-100.7,0.25}},
@@ -842,7 +842,7 @@ equation
       points={{135,-140},{230,-140},{230,-20},{220,-20}},
       color={140,56,54},
       thickness=0.5));
-  connect(Ptransfer4.y, powerTransfer.Ptransfer)
+  connect(CoolingPower.y, powerTransfer.Ptransfer)
     annotation (Line(points={{193.8,-7},{210,-7},{210,-12}}, color={0,0,127}));
   connect(TCV_thetaconsumers2.y, TCV711.opening) annotation (Line(points={{-169,
           -65},{-79,-65},{-79,-50},{-68,-50}}, color={0,0,127}));
@@ -859,8 +859,8 @@ equation
       points={{220,-80},{230,-80},{230,-20},{220,-20}},
       color={140,56,54},
       thickness=0.5));
-  connect(Ptransfer1.y, FCVR01.opening) annotation (Line(points={{199.8,-100},{
-          205,-100},{205,-101},{210,-101},{210,-88}}, color={0,0,127}));
+  connect(FCVR01_theta.y, FCVR01.opening) annotation (Line(points={{199.8,-101},
+          {210,-101},{210,-88}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
       experiment(

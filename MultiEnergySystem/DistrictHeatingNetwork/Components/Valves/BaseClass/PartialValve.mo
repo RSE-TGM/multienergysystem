@@ -59,6 +59,8 @@ equation
     m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.Quadratic then
     m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+  elseif openingChar == Components.Types.valveOpeningChar.Square then
+    m_flow = homotopy((BaseClass.ValveCharacteristics.square(opening) + minimumOpening)*A_v*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
 
   // Definition of fluids

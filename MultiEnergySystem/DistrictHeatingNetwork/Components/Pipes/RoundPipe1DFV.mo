@@ -102,7 +102,7 @@ model RoundPipe1DFV
     //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
-    Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,51},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,43},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
 equation
 
 // Assertations

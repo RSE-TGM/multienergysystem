@@ -251,7 +251,7 @@ package PumpData
     qnommin_inm3h = 7.5,
     qnommax_inm3h = 28,
     headnom = 22.50,
-    headnommin = 10,
+    headnommin = 7,
     headnommax = 27,
     omeganom = 2*3.141592654*50/60,
     Wnom = 1.75e3,

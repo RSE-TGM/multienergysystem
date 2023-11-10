@@ -33,19 +33,25 @@ package Icons "Icon package for DHN components"
     equation
 
       annotation (
-        Icon(graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent = {{-40, -20}, {40, -60}}), Line(points = {{40, 60}, {60, 60}}, color = {140, 56, 54}), Ellipse(lineColor = {140, 56, 54}, extent = {{-40, 100}, {40, 20}}), Line(points = {{0, 20}, {0, -20}}, color = {140, 56, 54}), Text(origin = {0, -17}, textColor = {140, 56, 54}, extent = {{-100, -63}, {100, -83}}, textString = "%name")}));
+        Icon(graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent = {{-40, -20}, {40, -60}}), Line(points = {{40, 60}, {60, 60}}, color = {140, 56, 54}), Ellipse(lineColor = {140, 56, 54}, extent = {{-40, 100}, {40, 20}}), Line(points = {{0, 20}, {0, -20}}, color = {140, 56, 54}), Text(origin={0,66},     textColor = {140, 56, 54}, extent={{-100,
+                  -126},{100,-166}},                                                                                                                                                                                                        textString = "%name")}));
     end ThroughSensor;
 
     partial model OnePointSensor
     equation
 
       annotation (
-        Icon(graphics={  Line(points = {{0, 20}, {0, -20}}, color = {140, 56, 54}), Line(points = {{40, 60}, {60, 60}}, color = {140, 56, 54}), Ellipse(lineColor = {140, 56, 54}, extent = {{-40, 100}, {40, 20}}), Text(origin = {0, 3}, textColor = {140, 56, 54}, extent = {{-100, -63}, {100, -83}}, textString = "%name")}));
+        Icon(graphics={  Line(points = {{0, 20}, {0, -20}}, color = {140, 56, 54}), Line(points={{-10,0},
+                  {10,0}},                                                                                              color = {140, 56, 54},
+              origin={0,110},
+              rotation=90),                                                                                                                     Ellipse(lineColor = {140, 56, 54}, extent = {{-40, 100}, {40, 20}}), Text(origin={0,66},   textColor = {140, 56, 54}, extent={{-100,
+                  -126},{100,-166}},                                                                                                                                                                                                        textString = "%name")}));
     end OnePointSensor;
 
     partial model Pipe
       annotation (
-        Icon(graphics={  Rectangle(fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent = {{-100, 40}, {100, -40}}), Text(origin = {0, 14}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+        Icon(graphics={  Rectangle(fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent={{-100,32},
+                  {100,-32}}),                                                                                                     Text(origin = {0, 14}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
     end Pipe;
   end Water;
 

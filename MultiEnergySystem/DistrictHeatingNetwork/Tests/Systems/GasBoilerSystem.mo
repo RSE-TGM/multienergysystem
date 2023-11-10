@@ -439,7 +439,7 @@ model GasBoilerSystem
         extent={{-10,-10},{10,10}},
         rotation=90)));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers4(y=if time < 200
-         then 1 else 0.9)
+         then 1 else 1)
     annotation (Placement(transformation(extent={{311,0},{291,20}})));
   Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
     annotation (Placement(transformation(extent={{-180,0},{-200,20}})));
@@ -494,7 +494,7 @@ model GasBoilerSystem
          then 1 else 0.95)
     annotation (Placement(transformation(extent={{313,37},{293,57}})));
   Modelica.Blocks.Sources.RealExpression FCV_thetaconsumers3(y=if time < 200
-         then 1 else 0.9)
+         then 1 else 1)
     annotation (Placement(transformation(extent={{312,12},{292,32}})));
 equation
   connect(P101.inlet, roundPipe1DFV.outlet) annotation (Line(

@@ -1,5 +1,7 @@
 RackCDSystem
 GasBoilerSystem
+ElectricBoilerSystem
+PumpingCirculationSystem
 GasBoilerOLSystem
 GasBoilerOLSystem2
 ControlledGasBoilerSystem

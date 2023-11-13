@@ -631,13 +631,13 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(wall_FixedT.MultiPort, roundPipe1DFV20.wall) annotation (Line(points={{-40,150},
-          {-40,144},{-160,144},{-160,135.1}},          color={255,238,44}));
+          {-40,144},{-160,144},{-160,134.3}},          color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV21.wall) annotation (Line(points={{-40,150},
-          {-40,144},{-80,144},{-80,135.1}},          color={255,238,44}));
+          {-40,144},{-80,144},{-80,134.3}},          color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV31.wall) annotation (Line(points={{-40,150},
-          {-40,145},{0,145},{0,135.1}},                   color={255,238,44}));
+          {-40,145},{0,145},{0,134.3}},                   color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV40.wall) annotation (Line(points={{-40,150},
-          {-40,144},{80,144},{80,135.1}},          color={255,238,44}));
+          {-40,144},{80,144},{80,134.3}},          color={255,238,44}));
   connect(EX701.outcold, roundPipe1DFV1.inlet) annotation (Line(
       points={{-141.3,-17.25},{-140,-17.25},{-140,-100}},
       color={140,56,54},

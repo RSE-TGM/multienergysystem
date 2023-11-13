@@ -644,13 +644,13 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(wall_FixedT.MultiPort, roundPipe1DFV20.wall) annotation (Line(points={{30,120},
-          {30,114},{-90,114},{-90,105.1}},             color={255,238,44}));
+          {30,114},{-90,114},{-90,104.3}},             color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV21.wall) annotation (Line(points={{30,120},
-          {30,114},{-10,114},{-10,105.1}},           color={255,238,44}));
+          {30,114},{-10,114},{-10,104.3}},           color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV31.wall) annotation (Line(points={{30,120},
-          {30,115},{70,115},{70,105.1}},                  color={255,238,44}));
+          {30,115},{70,115},{70,104.3}},                  color={255,238,44}));
   connect(wall_FixedT.MultiPort, roundPipe1DFV40.wall) annotation (Line(points={{30,120},
-          {30,114},{150,114},{150,105.1}},         color={255,238,44}));
+          {30,114},{150,114},{150,104.3}},         color={255,238,44}));
   connect(roundPipe1DFV1.outlet,sinkPressure. inlet) annotation (Line(
       points={{-240,-123},{-240,-133}},
       color={140,56,54},

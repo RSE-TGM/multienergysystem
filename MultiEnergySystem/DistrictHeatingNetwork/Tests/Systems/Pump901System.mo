@@ -3,10 +3,12 @@ model Pump901System
   parameter Types.Length t = 1.5e-3;
   parameter Types.Length Di = 51e-3;
   parameter Types.Length L_v = 1;
+  parameter Types.Length L_RL2L3 = 4.53;
+  parameter Types.Length L_RL3L4 = 3.02;
   parameter Types.Length L_RL4L5 = 2.5;
   parameter Types.Length L_RL5L6 = 2.5;
   parameter Types.Length L_RL6L7 = 3;
-  parameter Types.Pressure pin_start = 1.65e5;
+  parameter Types.Pressure pin_start = 1.69e5;
   parameter Types.Pressure pout_start = 3e5;
   parameter Types.Temperature T_start = 25 + 273.15;
   parameter Types.MassFlowRate m_flow_start = 4.04;
@@ -95,20 +97,20 @@ model Pump901System
         rotation=90,
         origin={-20,-27.5})));
   Modelica.Blocks.Sources.Ramp theta_sp(
-    height=-0.2,
+    height=-0.2*0,
     duration=100,
     offset=1,
     startTime=100)
     annotation (Placement(transformation(extent={{0,-10},{-10,0}})));
   Modelica.Blocks.Sources.Ramp m_flow_Pump(
-    height=-0.5*0,
+    height=-1.25,
     duration=100,
     offset=4.04,
     startTime=100)
     annotation (Placement(transformation(extent={{-40,-30},{-50,-20}})));
   inner System system(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState)
     annotation (Placement(transformation(extent={{-120.5,80},{-100.5,100}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL4L5(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL4L5_hot(
     L=L_RL4L5,
     h=0,
     t=t,
@@ -121,8 +123,8 @@ model Pump901System
     nPipes=1) "Pipe located in rack L4L5" annotation (Placement(transformation(
         extent={{7.5,7.5},{-7.5,-7.5}},
         rotation=180,
-        origin={-2.5,55})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL5L6(
+        origin={42.5,55})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL5L6_hot(
     L=L_RL5L6,
     h=0,
     t=t,
@@ -135,8 +137,8 @@ model Pump901System
     nPipes=1) "Pipe located in rack L5L6" annotation (Placement(transformation(
         extent={{7.5,7.5},{-7.5,-7.5}},
         rotation=180,
-        origin={22.5,55})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL6L7(
+        origin={67.5,55})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL6L7_hot(
     L=L_RL6L7,
     h=0,
     t=t,
@@ -149,7 +151,7 @@ model Pump901System
     nPipes=1) "Pipe located in rack L6L7" annotation (Placement(transformation(
         extent={{7.5,7.5},{-7.5,-7.5}},
         rotation=180,
-        origin={47.5,55})));
+        origin={92.5,55})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL4L5_cold(
     L=L_RL4L5,
     h=0,
@@ -163,7 +165,7 @@ model Pump901System
     nPipes=1) "Pipe located in rack L4L5" annotation (Placement(transformation(
         extent={{-7.5,-7.5},{7.5,7.5}},
         rotation=180,
-        origin={-2.5,65})));
+        origin={42.5,80})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL5L6_cold(
     L=L_RL5L6,
     h=0,
@@ -177,7 +179,7 @@ model Pump901System
     nPipes=1) "Pipe located in rack L5L6" annotation (Placement(transformation(
         extent={{-7.5,-7.5},{7.5,7.5}},
         rotation=180,
-        origin={22.5,65})));
+        origin={67.5,80})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL6L7_cold(
     L=L_RL6L7,
     h=0,
@@ -191,7 +193,7 @@ model Pump901System
     nPipes=1) "Pipe located in rack L6L7" annotation (Placement(transformation(
         extent={{-7.5,-7.5},{7.5,7.5}},
         rotation=180,
-        origin={47.5,65})));
+        origin={92.5,80})));
   Sources.SourcePressure sourcePressure(p0=pin_start, T0=T_start)
     annotation (Placement(transformation(extent={{-103,-5.5},{-92.5,5}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
@@ -202,6 +204,62 @@ model Pump901System
         extent={{4.5,-4.5},{-4.5,4.5}},
         rotation=90,
         origin={-85,38.5})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL2L3_hot(
+    L=L_RL2L3,
+    h=0,
+    t=t,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,
+    pout_start=pin_start,
+    Tin_start=T_start,
+    Tout_start=T_start,
+    Di=Di,
+    nPipes=1) "Pipe located in rack L2L3" annotation (Placement(transformation(
+        extent={{7.5,7.5},{-7.5,-7.5}},
+        rotation=180,
+        origin={-7.5,55})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL3L4_hot(
+    L=L_RL3L4,
+    h=0,
+    t=t,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,
+    pout_start=pin_start,
+    Tin_start=T_start,
+    Tout_start=T_start,
+    Di=Di,
+    nPipes=1) "Pipe located in rack L3L4" annotation (Placement(transformation(
+        extent={{7.5,7.5},{-7.5,-7.5}},
+        rotation=180,
+        origin={17.5,55})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL2L3_cold(
+    L=L_RL2L3,
+    h=0,
+    t=t,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,
+    pout_start=pin_start,
+    Tin_start=T_start,
+    Tout_start=T_start,
+    Di=Di,
+    nPipes=1) "Pipe located in rack L2L3" annotation (Placement(transformation(
+        extent={{7.5,-7.5},{-7.5,7.5}},
+        rotation=180,
+        origin={-7.5,80})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe_rackL3L4_cold(
+    L=L_RL3L4,
+    h=0,
+    t=t,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,
+    pout_start=pin_start,
+    Tin_start=T_start,
+    Tout_start=T_start,
+    Di=Di,
+    nPipes=1) "Pipe located in rack L2L3" annotation (Placement(transformation(
+        extent={{7.5,-7.5},{-7.5,7.5}},
+        rotation=180,
+        origin={17.5,80})));
 equation
   connect(pipe_P901_FCV901.outlet, valve.inlet) annotation (Line(
       points={{-20,-20},{-20,-10}},
@@ -221,26 +279,24 @@ equation
       thickness=0.5));
   connect(theta_sp.y, valve.opening)
     annotation (Line(points={{-10.5,-5},{-16,-5}},color={0,0,127}));
-  connect(m_flow_Pump.y, pump.in_m_flow) annotation (Line(points={{-50.5,-25},{
-          -55,-25},{-55,-39.25}},              color={0,0,127}));
-  connect(pipe_rackL4L5.outlet, pipe_rackL5L6.inlet) annotation (Line(
-      points={{5,55},{15,55}},
+  connect(pipe_rackL4L5_hot.outlet, pipe_rackL5L6_hot.inlet) annotation (Line(
+      points={{50,55},{60,55}},
       color={140,56,54},
       thickness=0.5));
-  connect(pipe_rackL5L6.outlet, pipe_rackL6L7.inlet) annotation (Line(
-      points={{30,55},{40,55}},
+  connect(pipe_rackL5L6_hot.outlet, pipe_rackL6L7_hot.inlet) annotation (Line(
+      points={{75,55},{85,55}},
       color={140,56,54},
       thickness=0.5));
   connect(pipe_rackL5L6_cold.outlet, pipe_rackL4L5_cold.inlet) annotation (Line(
-      points={{15,65},{5,65}},
+      points={{60,80},{50,80}},
       color={140,56,54},
       thickness=0.5));
   connect(pipe_rackL6L7_cold.outlet, pipe_rackL5L6_cold.inlet) annotation (Line(
-      points={{40,65},{30,65}},
+      points={{85,80},{75,80}},
       color={140,56,54},
       thickness=0.5));
-  connect(pipe_rackL6L7.outlet, pipe_rackL6L7_cold.inlet) annotation (Line(
-      points={{55,55},{60.5,55},{60.5,65},{55,65}},
+  connect(pipe_rackL6L7_hot.outlet, pipe_rackL6L7_cold.inlet) annotation (Line(
+      points={{100,55},{105.5,55},{105.5,80},{100,80}},
       color={140,56,54},
       thickness=0.5));
   connect(sourcePressure.outlet, pipe_rackCD_P901.inlet) annotation (Line(
@@ -255,16 +311,35 @@ equation
       points={{-40,-45},{-20,-45},{-20,-35}},
       color={140,56,54},
       thickness=0.5));
-  connect(pipe_rackL4L5_cold.outlet, CLInit.inlet) annotation (Line(
-      points={{-10,65},{-85,65},{-84.91,43}},
-      color={140,56,54},
-      thickness=0.5));
   connect(CLInit.outlet, pipe_rackCD_P901.inlet) annotation (Line(
       points={{-85,34},{-85,-20}},
       color={140,56,54},
       thickness=0.5));
-  connect(pipe_rackL4L5.inlet, TT902.inlet) annotation (Line(
-      points={{-10,55},{-19.85,55},{-19.85,27.75}},
+  connect(m_flow_Pump.y, pump.in_m_flow) annotation (Line(points={{-50.5,-25},{-55,
+          -25},{-55,-39.25}}, color={0,0,127}));
+  connect(pipe_rackL2L3_hot.inlet, TT902.inlet) annotation (Line(
+      points={{-15,55},{-19.85,55},{-19.85,27.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(pipe_rackL4L5_hot.inlet, pipe_rackL3L4_hot.outlet) annotation (Line(
+      points={{35,55},{25,55}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(pipe_rackL3L4_hot.inlet, pipe_rackL2L3_hot.outlet) annotation (Line(
+      points={{10,55},{-8.88178e-16,55}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(pipe_rackL3L4_cold.inlet, pipe_rackL2L3_cold.outlet) annotation (Line(
+      points={{10,80},{0,80}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(pipe_rackL2L3_cold.inlet, CLInit.inlet) annotation (Line(
+      points={{-15,80},{-84.91,80},{-84.91,43}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(pipe_rackL3L4_cold.outlet, pipe_rackL4L5_cold.outlet) annotation (
+      Line(
+      points={{25,80},{35,80}},
       color={140,56,54},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

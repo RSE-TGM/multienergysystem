@@ -1,5 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model RackCDSystem
+  extends Modelica.Icons.Example;
   parameter Types.Length t = 1.5e-3;
   parameter Types.Length Di = 51e-3;
   parameter Types.Length L_v = 1;

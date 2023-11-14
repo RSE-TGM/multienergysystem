@@ -41,11 +41,16 @@ model CoolingSystem
   parameter Types.MassFlowRate m_flow_Users_total = 5.553528*3600/1000;
   final parameter Types.MassFlowRate m_flow_Users = m_flow_Users_total/4;
 
-  parameter Types.Power Pchiller = -200251.2;
+  parameter Real q_m3h(unit = "m3/h") = 7*3600/1000;
+
+  parameter Types.Power Pchiller = -148751;
+  parameter Types.Power Pchillervar = 0;
 
   parameter Types.Length L_Users = 4;
   parameter Types.Length Di_Users = 32e-3;
   parameter Types.Length t_Users = 1.5e-3;
+
+
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -476,7 +481,7 @@ model CoolingSystem
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={80,-80})));
-  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=m_flow_Users_total)
+  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=q_m3h)
     annotation (Placement(transformation(extent={{207,-1},{187,19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     PR01(
@@ -496,6 +501,10 @@ model CoolingSystem
     pout_start(displayUnit="Pa") = 2.6e5,
     qnom_inm3h=Pump.PR01.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
+    headmax=Pump.PR01.headnommax,
+    headmin=Pump.PR01.headnommin,
+    qnom_inm3h_min=Pump.PR01.qnommin_inm3h,
+    qnom_inm3h_max=Pump.PR01.qnommax_inm3h,
     use_q_m3hr=true) annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
@@ -571,13 +580,19 @@ model CoolingSystem
         rotation=0,
         origin={210,-80})));
   Modelica.Blocks.Sources.RealExpression FCVR01_theta(y=if time < 800 then 0
-         else 0.1)
+         else 0)
     annotation (Placement(transformation(extent={{183,-109},{199,-93}})));
   Sources.SourcePressure VER901(p0=250000, T0(displayUnit="K") = 30 + 273.15)
     "Expansion Vessel for cooling circuit" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={164,-51})));
+  Modelica.Blocks.Sources.Ramp CoolingP(
+    height=Pchillervar,
+    duration=100,
+    offset=Pchiller,
+    startTime=200)
+    annotation (Placement(transformation(extent={{250,-10},{230,10}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-100,20},{-100,0.25},{-100.7,0.25}},
@@ -830,8 +845,6 @@ equation
       points={{200,-20},{190,-20},{190,-39.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(CoolingPower.y, powerTransfer.Ptransfer)
-    annotation (Line(points={{193.8,-7},{210,-7},{210,-12}}, color={0,0,127}));
   connect(TCV_thetaconsumers2.y, TCV711.opening) annotation (Line(points={{-169,
           -65},{-79,-65},{-79,-50},{-68,-50}}, color={0,0,127}));
   connect(TCV_thetaconsumers3.y, TCV721.opening) annotation (Line(points={{-169,
@@ -858,8 +871,10 @@ equation
       points={{164,-61},{164,-80},{90,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y, PR01.in_q_m3hr) annotation (Line(points={{186,9},{166,
-          9},{166,-33},{179,-33},{179,-44.8},{184.02,-44.8}}, color={0,0,127}));
+  connect(PR01_m_flow.y, PR01.in_q_m3hr) annotation (Line(points={{186,9},{166,9},
+          {166,-33},{179,-33},{179,-44.8},{184.02,-44.8}}, color={0,0,127}));
+  connect(CoolingP.y, powerTransfer.Ptransfer)
+    annotation (Line(points={{229,0},{210,0},{210,-12}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
       experiment(

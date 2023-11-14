@@ -38,7 +38,7 @@ model CoolingSystem
 
   parameter Types.Temperature T_start_cold_Users = 7 + 273.15;
   parameter Types.Temperature T_start_hot_Users = 15.6 + 273.15;
-  parameter Types.MassFlowRate m_flow_Users_total = 5.553528;
+  parameter Types.MassFlowRate m_flow_Users_total = 5.553528*3600/1000;
   final parameter Types.MassFlowRate m_flow_Users = m_flow_Users_total/4;
 
   parameter Types.Power Pchiller = -200251.2;
@@ -477,13 +477,7 @@ model CoolingSystem
         rotation=0,
         origin={80,-80})));
   Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=m_flow_Users_total)
-    annotation (Placement(transformation(extent={{209,-1},{189,19}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
-    coolingInit(
-    p_start(displayUnit="Pa") = 2e5,
-    T_start(displayUnit="K") = 15.7 + 273.15,
-    m_flow_start=5.553528)
-    annotation (Placement(transformation(extent={{115,-150},{135,-130}})));
+    annotation (Placement(transformation(extent={{207,-1},{187,19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     PR01(
     Tin_start(displayUnit="K") = 15 + 273.15,
@@ -502,7 +496,7 @@ model CoolingSystem
     pout_start(displayUnit="Pa") = 2.6e5,
     qnom_inm3h=Pump.PR01.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    use_q_m3hr=true) annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={190,-50})));
@@ -579,6 +573,11 @@ model CoolingSystem
   Modelica.Blocks.Sources.RealExpression FCVR01_theta(y=if time < 800 then 0
          else 0.1)
     annotation (Placement(transformation(extent={{183,-109},{199,-93}})));
+  Sources.SourcePressure VER901(p0=250000, T0(displayUnit="K") = 30 + 273.15)
+    "Expansion Vessel for cooling circuit" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=-90,
+        origin={164,-51})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{-100,20},{-100,0.25},{-100.7,0.25}},
@@ -787,17 +786,10 @@ equation
       points={{140,-60},{140,-80},{90,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL721_ColdSide_HotOut_PL731.outlet, coolingInit.inlet) annotation (
-      Line(
-      points={{70,-140},{108,-140},{108,-140.2},{115,-140.2}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PR01.outlet, PL721_ColdSide_ColdIn_PL731.inlet) annotation (Line(
       points={{190,-60.4},{190,-80},{90,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{188,9},{173,
-          9},{173,-44.8},{184.02,-44.8}},              color={0,0,127}));
   connect(EX701.outcold, TCV701.inlet) annotation (Line(
       points={{-141.3,-17.25},{-140,-17.25},{-140,-40}},
       color={140,56,54},
@@ -838,10 +830,6 @@ equation
       points={{200,-20},{190,-20},{190,-39.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(coolingInit.outlet, powerTransfer.inlet) annotation (Line(
-      points={{135,-140},{230,-140},{230,-20},{220,-20}},
-      color={140,56,54},
-      thickness=0.5));
   connect(CoolingPower.y, powerTransfer.Ptransfer)
     annotation (Line(points={{193.8,-7},{210,-7},{210,-12}}, color={0,0,127}));
   connect(TCV_thetaconsumers2.y, TCV711.opening) annotation (Line(points={{-169,
@@ -861,6 +849,17 @@ equation
       thickness=0.5));
   connect(FCVR01_theta.y, FCVR01.opening) annotation (Line(points={{199.8,-101},
           {210,-101},{210,-88}}, color={0,0,127}));
+  connect(PL721_ColdSide_HotOut_PL731.outlet, powerTransfer.inlet) annotation (
+      Line(
+      points={{70,-140},{230,-140},{230,-20},{220,-20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(VER901.outlet, PL721_ColdSide_ColdIn_PL731.inlet) annotation (Line(
+      points={{164,-61},{164,-80},{90,-80}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PR01_m_flow.y, PR01.in_q_m3hr) annotation (Line(points={{186,9},{166,
+          9},{166,-33},{179,-33},{179,-44.8},{184.02,-44.8}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
       experiment(

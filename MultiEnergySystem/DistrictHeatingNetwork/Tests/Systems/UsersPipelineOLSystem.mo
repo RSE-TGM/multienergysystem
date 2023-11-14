@@ -729,5 +729,9 @@ equation
   connect(FCV_thetaconsumers1.y, sourceMassFlow.in_m_flow)
     annotation (Line(points={{209,-60},{176,-60},{176,-75}}, color={0,0,127}));
   annotation (
-    Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})));
+    Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
+      experiment(
+      StopTime=1000,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end UsersPipelineOLSystem;

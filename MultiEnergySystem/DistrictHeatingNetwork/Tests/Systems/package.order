@@ -4,6 +4,7 @@ ElectricBoilerSystem
 PumpingCirculationSystem
 WaterTankSystem
 UsersPipelineSystem
+GasBoilerHeatingSystem
 GasBoilerOLSystem
 GasBoilerOLSystem2
 ControlledGasBoilerSystem

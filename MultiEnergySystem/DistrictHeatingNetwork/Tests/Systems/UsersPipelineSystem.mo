@@ -476,7 +476,8 @@ model UsersPipelineSystem
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={80,-80})));
-  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=m_flow_Users_total)
+  Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=m_flow_Users_total*3600/
+        1000)
     annotation (Placement(transformation(extent={{209,-1},{189,19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
     coolingInit(
@@ -502,7 +503,7 @@ model UsersPipelineSystem
     pout_start(displayUnit="Pa") = 2.6e5,
     qnom_inm3h=Pump.PR01.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    use_q_m3hr=true) annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={190,-50})));
@@ -796,8 +797,6 @@ equation
       points={{190,-60.4},{190,-80},{90,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y, PR01.in_m_flow) annotation (Line(points={{188,9},{173,
-          9},{173,-44.8},{184.02,-44.8}},              color={0,0,127}));
   connect(EX701.outcold, TCV701.inlet) annotation (Line(
       points={{-141.3,-17.25},{-140,-17.25},{-140,-40}},
       color={140,56,54},
@@ -861,6 +860,8 @@ equation
       thickness=0.5));
   connect(FCVR01_theta.y, FCVR01.opening) annotation (Line(points={{199.8,-101},
           {210,-101},{210,-88}}, color={0,0,127}));
+  connect(PR01_m_flow.y, PR01.in_q_m3hr) annotation (Line(points={{188,9},{178,
+          9},{178,8},{169,8},{169,-44.8},{184.02,-44.8}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),
       experiment(

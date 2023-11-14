@@ -2,6 +2,7 @@ RackCDSystem
 GasBoilerSystem
 ElectricBoilerSystem
 PumpingCirculationSystem
+WaterTankSystem
 GasBoilerOLSystem
 GasBoilerOLSystem2
 ControlledGasBoilerSystem
@@ -11,4 +12,3 @@ UsersSystem
 UsersPipelineOLSystem
 UsersPipelineSystem
 CirculationPumpWithUsers
-Pump901System

@@ -5,12 +5,13 @@ model AWPIContinuous
   parameter Real Ti = 1 "Integral Time";
   parameter Real Umax = 1 "Maximum control action";
   parameter Real Umin = 0 "Minimum control action";
+  parameter Real y_start = 1 "Nominal output";
   Modelica.Blocks.Interfaces.RealInput REF annotation (
-      Placement(visible = true, transformation(origin = {-100, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-86, 38}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+      Placement(visible = true, transformation(origin = {-100, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-86,40},    extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput FeedBack annotation (
-        Placement(visible = true, transformation(origin = {-100, -32}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-86, -30}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {-100, -32}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-86,-40},    extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealOutput controlAction annotation (
-        Placement(visible = true, transformation(origin = {110, 34}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {86, 0}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {110, 34}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={94,0},    extent = {{-14, -14}, {14, 14}}, rotation = 0)));
   Modelica.Blocks.Math.Feedback feedback annotation (
         Placement(visible = true, transformation(origin = {-50, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = Kp)  annotation (
@@ -21,8 +22,8 @@ model AWPIContinuous
         Placement(visible = true, transformation(origin = {62, 34}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Continuous.FirstOrder firstOrder(T = Ti,
   initType=Modelica.Blocks.Types.Init.SteadyState,                                                       k = 1,
-  y_start=0)                                                                                                                  annotation (
-        Placement(visible = true, transformation(origin={40,-8},     extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+    y_start=y_start)                                                                                                          annotation (
+        Placement(visible = true, transformation(origin={40,-10},    extent = {{-10, -10}, {10, 10}}, rotation = 180)));
 equation
   connect(REF, feedback.u1) annotation (
         Line(points = {{-100, 40}, {-58, 40}}, color = {0, 0, 127}));
@@ -37,10 +38,16 @@ equation
   connect(limiter.y, controlAction) annotation (
         Line(points={{73,34},{110,34}},      color = {0, 0, 127}));
   connect(firstOrder.y, add.u2) annotation (
-        Line(points={{29,-8},{0,-8},{0,28},{12,28}},            color = {0, 0, 127}));
-connect(firstOrder.u, controlAction) annotation (Line(points={{52,-8},{80,-8},
-        {80,34},{110,34}}, color={0,0,127}));
+        Line(points={{29,-10},{0,-10},{0,28},{12,28}},          color = {0, 0, 127}));
+connect(firstOrder.u, controlAction) annotation (Line(points={{52,-10},{80,-10},
+          {80,34},{110,34}},
+                           color={0,0,127}));
   annotation (
-      Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-100, 60}, {100, -60}}), Text(extent = {{-38, 12}, {38, -12}}, textString = "PI AW")}),
+      Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,
+              100},{100,-104}}),                                                                                                                            Text(extent={{-100,
+              100},{100,-104}},
+          textColor={0,0,0},
+          textString="PI
+AW")}),
       Diagram(coordinateSystem(extent = {{-120, 60}, {120, -60}})));
 end AWPIContinuous;

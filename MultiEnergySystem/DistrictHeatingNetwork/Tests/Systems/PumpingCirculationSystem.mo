@@ -46,7 +46,7 @@ model PumpingCirculationSystem
     qnom_inm3h_min=Pump.P901.qnommin_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P901.rhonom,
     qnom_inm3h_max=Pump.P901.qnommax_inm3h,
-    use_m_flow=true)                                                                                                                                                                                                         annotation (
+    use_q_m3hr=true)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(                 extent={{-10,10},{
             10,-10}},                                                                          rotation=90,
         origin={-20,-48})));
@@ -144,10 +144,10 @@ model PumpingCirculationSystem
     p0=pout_start_S9,
     T0=Tout_start_S9,
     R=1) annotation (Placement(transformation(extent={{-6,74},{6,86}})));
-  Modelica.Blocks.Sources.Ramp theta_sp1(
-    height=5*1000/3600,
+  Modelica.Blocks.Sources.Ramp q_inm3h(
+    height=5,
     duration=100,
-    offset=9*1000/3600,
+    offset=9,
     startTime=300)
     annotation (Placement(transformation(extent={{12,-58},{0,-46}})));
 equation
@@ -199,7 +199,7 @@ equation
       thickness=0.5));
   connect(m_flow_Pump.y, sinkValve.in_p0) annotation (Line(points={{15.5,94.5},{
           -2.4,94.5},{-2.4,85.04}}, color={0,0,127}));
-  connect(P901.in_m_flow, theta_sp1.y)
+  connect(P901.in_q_m3hr, q_inm3h.y)
     annotation (Line(points={{-15.4,-52},{-0.6,-52}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(extent={{-160,-160},{160,160}})),

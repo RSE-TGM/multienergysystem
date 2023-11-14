@@ -82,7 +82,7 @@ package ValveData
     Tin_start = 80 + 273.15,
     pin_start = 3e5);
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCV711(
-    Name = "TCV711",
+    Name = "FCV711",
     Tin_nom = 60 + 273.15,
     q_nom_inm3h = 4.15,
     dp_nom = 1.035e5,
@@ -91,7 +91,7 @@ package ValveData
     Tin_start = 60 + 273.15,
     pin_start = 3e5);
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCV721(
-    Name = "TCV721",
+    Name = "FCV721",
     Tin_nom = 60 + 273.15,
     q_nom_inm3h = 4.15,
     dp_nom = 1.035e5,
@@ -100,7 +100,7 @@ package ValveData
     Tin_start = 60 + 273.15,
     pin_start = 3e5);
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCV731(
-    Name = "TCV731",
+    Name = "FCV731",
     Tin_nom = 60 + 273.15,
     q_nom_inm3h = 4.15,
     dp_nom = 1.035e5,

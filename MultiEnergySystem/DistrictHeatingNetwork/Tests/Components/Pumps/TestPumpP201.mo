@@ -77,8 +77,8 @@ model TestPumpP201
     rhonom =      Pump.P201.rhonom,
       qnom_inm3h_max=Pump.P201.qnommax_inm3h),
     omega_30Hz(offset=Pump.P201.omeganom),
-    m_flow_set_40Hz(offset=2),
-    m_flow_set_30Hz(offset=2));
+    m_flow_set_40Hz(height=0, offset=2),
+    m_flow_set_30Hz(height=0, offset=2));
 equation
 
 annotation (

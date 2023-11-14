@@ -69,7 +69,7 @@ model PumpingCirculationSystem
         rotation=90,
         origin={-21.75,61.25})));
   Modelica.Blocks.Sources.Ramp theta_sp(
-    height=-0.15,
+    height=-0.13,
     duration=100,
     offset=1,
     startTime=500)

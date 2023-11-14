@@ -86,6 +86,7 @@ partial model PumpBase "Base model to develop water pump models"
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
   Modelica.Units.SI.Power Pm "mechanical power";
   Modelica.Units.SI.Power Pe "electrical power";
+  Modelica.Units.SI.Frequency f "frequency";
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-100, 0}, {-60, 40}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{-100, 0}, {-60, 40}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
@@ -98,8 +99,8 @@ equation
   assert(headmin < head, "Head is lower than its minimum value", AssertionLevel.error);
   assert(qnom_inm3h_max > q_m3hr, "Volumetric flowrate is higher than its maximum operating value", AssertionLevel.error);
   assert(qnom_inm3h_min < q_m3hr, "Volumetric flowrate is lower than its minimum operating value", AssertionLevel.error);
-  assert(2*3.14159*51/60 > omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
-  assert(2*3.14159*29/60 < omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
+  assert(2*3.14159*50.1 > omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
+  assert(2*3.14159*29.9 < omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
 
 
 
@@ -126,6 +127,7 @@ equation
   dp = pout - pin;
   q = m_flow/rhoin;
   q_m3hr = q*3600;
+  f = omega/(2*3.14159);
   W = homotopy((omega/omeganom)^3*(a[1] + q_m3hr*(omeganom/omega)*(a[2] + a[3]*q_m3hr*(omeganom/omega))),
                ((a[1] + q_m3hr*(omeganom/omega)*(a[2] + a[3]*q_m3hr*(omeganom/omega)))))  "Power Characteristic equation";
   head = if q_m3hr >= qnom_inm3h_min then homotopy((omega/omeganom)^2*(b[1]+ q_m3hr*(omeganom/omega)*(b[2] + b[3]*q_m3hr*(omeganom/omega))),

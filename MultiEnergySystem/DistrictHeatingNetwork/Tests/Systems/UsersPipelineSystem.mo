@@ -577,7 +577,7 @@ model UsersPipelineSystem
         rotation=0,
         origin={210,-80})));
   Modelica.Blocks.Sources.RealExpression FCVR01_theta(y=if time < 800 then 0
-         else 0.5)
+         else 0.1)
     annotation (Placement(transformation(extent={{183,-109},{199,-93}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(

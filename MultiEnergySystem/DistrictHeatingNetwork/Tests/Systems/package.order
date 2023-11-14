@@ -3,6 +3,7 @@ GasBoilerSystem
 ElectricBoilerSystem
 PumpingCirculationSystem
 WaterTankSystem
+UsersPipelineSystem
 GasBoilerOLSystem
 GasBoilerOLSystem2
 ControlledGasBoilerSystem
@@ -10,5 +11,4 @@ GasBoilerCompleteSystem
 WaterTanksSystem
 UsersSystem
 UsersPipelineOLSystem
-UsersPipelineSystem
 CirculationPumpWithUsers

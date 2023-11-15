@@ -109,7 +109,7 @@ model GasBoilerHeatingSystem
   parameter Types.Temperature Tout_cold = 32.09+273.15;
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
-    Placement(visible = true, transformation(origin={388,288},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={470,290},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV
     roundPipe1DFV5(
     L=L_S9,
@@ -620,9 +620,9 @@ model GasBoilerHeatingSystem
         origin={-162,-118})));
   Modelica.Blocks.Sources.Ramp FCV101_theta_(
     height=0,
-    duration=500,
+    duration=50,
     offset=1,
-    startTime=500)
+    startTime=100)
     annotation (Placement(transformation(extent={{-84,-110},{-104,-90}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FV933(
@@ -939,9 +939,6 @@ model GasBoilerHeatingSystem
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={410,-20})));
-  Modelica.Blocks.Sources.RealExpression FCVR01_theta(y=if time < 800 then 0
-         else 0)
-    annotation (Placement(transformation(extent={{383,-49},{399,-33}})));
   Sources.SourcePressure VER901(p0=250000, T0(displayUnit="K") = 30 + 273.15)
     "Expansion Vessel for cooling circuit" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -951,10 +948,10 @@ model GasBoilerHeatingSystem
     powerTransfer
     annotation (Placement(transformation(extent={{418,22},{398,42}})));
   Modelica.Blocks.Sources.Ramp CoolingP(
-    height=Pchillervar,
+    height=-Pchiller,
     duration=100,
     offset=Pchiller,
-    startTime=200)
+    startTime=100)
     annotation (Placement(transformation(extent={{440,40},{420,60}})));
   Modelica.Blocks.Sources.Ramp FCV711_theta(
     height=theta2change,
@@ -988,9 +985,9 @@ model GasBoilerHeatingSystem
     annotation (Placement(transformation(extent={{265,20},{285,40}})));
   Modelica.Blocks.Sources.Ramp FV933_theta(
     height=0,
-    duration=100,
+    duration=50,
     offset=1,
-    startTime=600)
+    startTime=100)
     annotation (Placement(transformation(extent={{-61,10},{-81,30}})));
   Modelica.Blocks.Sources.Ramp FCV901_theta(
     height=0,
@@ -1038,6 +1035,12 @@ model GasBoilerHeatingSystem
     offset=0.69,
     startTime=600)
     annotation (Placement(transformation(extent={{21,20},{41,40}})));
+  Modelica.Blocks.Sources.Ramp FCVR01_theta(
+    height=0.2,
+    duration=100,
+    offset=0,
+    startTime=100)
+    annotation (Placement(transformation(extent={{348,-50},{368,-30}})));
 equation
   connect(FCV701.inlet, EX701.outhot) annotation (Line(
       points={{100,110},{100,88.25},{100.3,88.25}},
@@ -1393,8 +1396,6 @@ equation
       points={{420,-20},{428,-20},{428,32},{418,32}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCVR01_theta.y,FCVR01. opening) annotation (Line(points={{399.8,-41},{
-          410,-41},{410,-28}},   color={0,0,127}));
   connect(PL721_ColdSide_HotOut_PL731.outlet, powerTransfer.inlet) annotation (
       Line(
       points={{270,-80},{428,-80},{428,32},{418,32}},
@@ -1414,8 +1415,9 @@ equation
     annotation (Line(points={{-82,20},{-88,20}}, color={0,0,127}));
   connect(FCV901_theta.y, FCV901.opening)
     annotation (Line(points={{-342,106},{-351,106}}, color={0,0,127}));
-  connect(PR01_q_m3h.y, PR01.in_q_m3hr) annotation (Line(points={{439,10},{417.49,
-          10},{417.49,11.2},{395.98,11.2}}, color={0,0,127}));
+  connect(PR01_q_m3h.y, PR01.in_q_m3hr) annotation (Line(points={{439,10},{
+          417.49,10},{417.49,11.2},{395.98,11.2}},
+                                            color={0,0,127}));
   connect(EX701.outcold, TT704.inlet) annotation (Line(
       points={{59.7,70.75},{60,70.75},{59.6,52}},
       color={140,56,54},
@@ -1440,6 +1442,8 @@ equation
     annotation (Line(points={{206,30},{212,30}}, color={0,0,127}));
   connect(TCV731_theta.y, TCV731.opening)
     annotation (Line(points={{286,30},{292,30}}, color={0,0,127}));
+  connect(FCVR01_theta.y, FCVR01.opening)
+    annotation (Line(points={{369,-40},{410,-40},{410,-28}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-480,-300},{480,300}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

@@ -7,10 +7,10 @@ model ComputeIdealH2OCoefficients
 
   parameter Types.Temperature T_min = 5 + 273.15;
   parameter Types.Temperature T_max = 95 + 273.15;
-  parameter Types.Pressure p = 5e5 "Reference pressure";
+  parameter Types.Pressure p = 2.5e5 "Reference pressure";
   parameter Integer N = 50;
-  parameter Integer ord_cp = 3;
-  parameter Integer ord_d = 3;
+  parameter Integer ord_cp = 2;
+  parameter Integer ord_d = 2;
   constant Types.Time t0 = 1;
 
   Types.Temperature T;
@@ -53,5 +53,6 @@ algorithm
   end when;
 
 annotation (
-    Documentation(info = "<html><head></head><body>Based Partial Model to compute the coefficients of the cp curve of ideal gases. The most important considerations:<div>- Temperature range of the working fluid, defining T_min and T_max.</div><div>- Order of equation of the curve defining ord_cp.</div></body></html>"));
+    Documentation(info = "<html><head></head><body>Based Partial Model to compute the coefficients of the cp curve of ideal gases. The most important considerations:<div>- Temperature range of the working fluid, defining T_min and T_max.</div><div>- Order of equation of the curve defining ord_cp.</div></body></html>"),
+      experiment(__Dymola_Algorithm="Dassl"));
 end ComputeIdealH2OCoefficients;

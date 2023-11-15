@@ -58,20 +58,20 @@ protected
 
   function rho_T
     input Types.Temperature T;
-    input Real a[4];
+    input Real a[3];
     output Types.Density rho;
   algorithm
-    rho := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
+    rho := a[3] + T*(a[2] + T*(a[1]));
     annotation (
       Inline = true);
   end rho_T;
 
   function drhodT_T
     input Types.Temperature T;
-    input Real a[4];
+    input Real a[3];
     output Real drho_dT(unit = "kg/(m3.K)");
   algorithm
-    drho_dT := a[3] + T*(2*a[2] + 3*T*a[1]);
+    drho_dT := a[2] + T*(2*a[1]);
     annotation (
       Inline = true);
   end drhodT_T;

@@ -4,7 +4,7 @@ model WaterLiquid
     h(start = h_start),
     mu_start = 0,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,
-    rho_coeff = {1.4496006460422e-05,-0.017530234889523,6.3355709390869,282.3634495117},
+    rho_coeff = {-0.0034821889243192,1.8159726369743,764.95410451574},
     cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755});
 
   parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) - u_bias;

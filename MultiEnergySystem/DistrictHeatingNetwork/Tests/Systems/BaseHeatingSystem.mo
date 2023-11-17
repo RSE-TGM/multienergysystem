@@ -10,8 +10,6 @@ model BaseHeatingSystem
   parameter Types.Temperature T_start_hot = T_start;
   parameter Types.Temperature T_start = 15 + 273.15;
 
-  parameter Types.Length L_S1 = 10;
-  parameter Types.Length L_S9 = 10;
   parameter Types.MassFlowRate m_flow_total = 2.5;
 
 
@@ -26,6 +24,36 @@ model BaseHeatingSystem
   // Rack CD
 
   parameter Types.Length t_rackCD = 1.5e-3;
+  parameter Types.Length Di_rackCD = 51e-3;
+    // Cold Side Rack CD
+  parameter Types.Length L_rCD_C1 = 1.0;
+  parameter Types.Length L_rCD_C2 = 1.2;
+  parameter Types.Length L_rCD_C3 = 1.5;
+  parameter Types.Length L_rCD_C4 = 0.65;
+  parameter Types.Length L_rCD_C5 = 0.84;
+  parameter Types.Length L_rCD_C6 = 0.84;
+  parameter Types.Length L_rCD_C7 = 2.85;
+  parameter Types.Length L_rCD_C8 = 3 "To be define";
+
+
+    // Hot Side Rack CD
+  parameter Types.Length L_rCD_H1 = 1;
+  parameter Types.Length L_rCD_H2 = 0.6;
+  parameter Types.Length L_rCD_H3 = 2;
+  parameter Types.Length L_rCD_H4 = 1.37;
+  parameter Types.Length L_rCD_H5 = 1.4;
+  parameter Types.Length L_rCD_H6 = 1.25;
+  parameter Types.Length L_rCD_H7 = 15;
+
+  //rackCD_Cold_S100_FV933
+  //rackCD_Cold_S400_S100
+  //rackCD_Cold_S300_S400
+  //rackCD_Cold_S300_S300
+  //rackCD_Cold_S500_S300
+  //rackCD_Cold_S500_S500
+  //rackCD_Cold_S200_S500
+  //rackCD_Cold_S900_S200
+
   parameter Types.Length t = 1.5e-3;
   parameter Types.Length Di = 51e-3;
   parameter Types.Length L_v = 1;
@@ -49,6 +77,7 @@ model BaseHeatingSystem
   parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
   parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
 
+  parameter Types.Length L_S1 = 10;
   parameter Types.Length L_S1_PL1 = 0.4;
   parameter Types.Length L_S1_PL2 = 0.8;
   parameter Types.Length L_S1_PL3 = 1.5;
@@ -63,6 +92,7 @@ model BaseHeatingSystem
   parameter Types.Temperature Tin_start_S9 = 80 + 273.15;
   parameter Types.Temperature Tout_start_S9 = 80 + 273.15;
 
+  parameter Types.Length L_S9 = 10;
   parameter Types.Length L_S9_PL1 = 0.82;
   parameter Types.Length L_S9_PL2 = 2.3;
   parameter Types.Length L_S9_PL3 = 1.5;
@@ -370,7 +400,7 @@ model BaseHeatingSystem
         extent={{-10,10},{10,-10}},
         rotation=270)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S100_S400(
-    L=1,
+    L=L_rCD_H1,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -388,7 +418,7 @@ model BaseHeatingSystem
         rotation=180,
         origin={-169.75,19.75})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S400_S300(
-    L=4.5,
+    L=L_rCD_H2,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -406,7 +436,7 @@ model BaseHeatingSystem
         rotation=180,
         origin={-250,20})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S300_S500(
-    L=4.5,
+    L=L_rCD_H3,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -424,7 +454,7 @@ model BaseHeatingSystem
         rotation=180,
         origin={-330,20})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S500_SXXX(
-    L=4.5,
+    L=L_rCD_H4,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -440,9 +470,9 @@ model BaseHeatingSystem
     annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=180,
-        origin={-410,20})));
+        origin={-412,20})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_SXXX_SYYY(
-    L=4.5,
+    L=L_rCD_H5,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -460,7 +490,7 @@ model BaseHeatingSystem
         rotation=180,
         origin={-490,20})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_SYYY_S200(
-    L=4.5,
+    L=L_rCD_H6,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -478,7 +508,7 @@ model BaseHeatingSystem
         rotation=180,
         origin={-570,19.75})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(
-    L=4.5,
+    L=L_rCD_H7,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -513,7 +543,7 @@ model BaseHeatingSystem
         rotation=180,
         origin={-239.25,-19.75})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S100_FV933(
-    L=0.8,
+    L=L_rCD_C1,
     h=0,
     t=t_rackCD,
     m_flow_start=m_flow_start,
@@ -815,12 +845,12 @@ equation
       thickness=0.5));
   connect(rackCD_Hot_S300_S500.outlet, rackCD_Hot_S500_SXXX.inlet) annotation (
       Line(
-      points={{-340,20},{-400,20}},
+      points={{-340,20},{-402,20}},
       color={140,56,54},
       thickness=0.5));
   connect(rackCD_Hot_S500_SXXX.outlet, rackCD_Hot_SXXX_SYYY.inlet) annotation (
       Line(
-      points={{-420,20},{-480,20}},
+      points={{-422,20},{-480,20}},
       color={140,56,54},
       thickness=0.5));
   connect(rackCD_Hot_SXXX_SYYY.outlet, rackCD_Hot_SYYY_S200.inlet) annotation (

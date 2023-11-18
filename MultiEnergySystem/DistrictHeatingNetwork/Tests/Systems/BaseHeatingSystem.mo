@@ -72,20 +72,7 @@ model BaseHeatingSystem
   parameter Types.Pressure pin_start = 1.69e5;
   parameter Types.Pressure pout_start = 3e5;
 
-  // System S100
 
-  parameter Types.Pressure pin_start_S1 = 1.695e5;
-  parameter Types.Pressure pout_start_S1 = 1.6e5;
-  parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
-  parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
-
-  parameter Types.Length L_S1 = 10;
-  parameter Types.Length L_S1_PL1 = 0.4;
-  parameter Types.Length L_S1_PL2 = 0.8;
-  parameter Types.Length L_S1_PL3 = 1.5;
-  parameter Types.Length L_S1_PL4 = 0.7;
-  parameter Types.Length Di_S1 = 51e-3;
-  parameter Types.Length t_S1 = 1.5e-3;
 
   // System S900
 
@@ -103,6 +90,22 @@ model BaseHeatingSystem
   parameter Types.Length t_S9 = 1.5e-3;
   parameter Types.MassFlowRate m_flow_S9 = 4.04;
   parameter Types.VolumeFlowRate q_P901_computed = 8.1;
+
+  // System S100
+
+  parameter Types.Pressure pin_start_S1 = 1.695e5;
+  parameter Types.Pressure pout_start_S1 = 1.6e5;
+  parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
+  parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
+
+  parameter Types.Length L_S1 = 10;
+  parameter Types.Length L_S1_PL1 = 0.4;
+  parameter Types.Length L_S1_PL2 = 0.8;
+  parameter Types.Length L_S1_PL3 = 1.5;
+  parameter Types.Length L_S1_PL4 = 0.7;
+  parameter Types.Length Di_S1 = 51e-3;
+  parameter Types.Length t_S1 = 1.5e-3;
+
 
   // Cooling System
 

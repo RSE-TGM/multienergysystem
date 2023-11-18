@@ -6,6 +6,7 @@ WaterTankSystem
 UsersPipelineSystem
 CoolingSystem
 BaseHeatingSystem
+GasBoilerPumpingSystem
 BaseHeatingandCoolingSystem
 GasBoilerHeatingSystem
 GasBoilerHeatingSystem_CaseI

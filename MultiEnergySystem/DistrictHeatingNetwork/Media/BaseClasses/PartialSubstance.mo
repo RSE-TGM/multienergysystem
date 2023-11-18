@@ -8,7 +8,7 @@ partial model PartialSubstance
   parameter Types.Temperature T_start "Start value of the fluid temperature";
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.MolarMass MM "Molar mass of the fluid";
-  parameter Real rho_coeff[4] "Coefficients to compute fluid density";
+  parameter Real rho_coeff[3] "Coefficients to compute fluid density";
   parameter Real cp_coeff[4] "Coefficients to compute specific heat capacity";
 
   //Variables

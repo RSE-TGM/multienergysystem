@@ -128,7 +128,7 @@ model BaseHeatingSystem
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-760,180})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P901(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P901(
     Tin_start=Pump.P901.Tin_start,
     Tout_start=Pump.P901.Tout_start,
     hin_start=Pump.P901.hin_start,
@@ -148,7 +148,7 @@ model BaseHeatingSystem
     qnom_inm3h_min=Pump.P901.qnommin_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P901.rhonom,
     qnom_inm3h_max=Pump.P901.qnommax_inm3h,
-    use_q_m3hr=true)                                                                                                                                                                                                         annotation (
+    use_in_omega=true)                              annotation (
     Placement(visible = true, transformation(                 extent={{-10,10},{
             10,-10}},                                                                          rotation=90,
         origin={-659,58})));
@@ -225,7 +225,7 @@ model BaseHeatingSystem
     duration=100,
     offset=q_P901_computed,
     startTime=400)
-    annotation (Placement(transformation(extent={{-620,40},{-641,60}})));
+    annotation (Placement(transformation(extent={{-580,40},{-601,60}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FV933(
     Kv=15,
@@ -260,7 +260,7 @@ model BaseHeatingSystem
         rotation=-90,
         origin={760,210})));
   Modelica.Blocks.Sources.Ramp FCVC02_theta(
-    height=-0.4,
+    height=-0.4*0,
     duration=0,
     offset=1,
     startTime=200)
@@ -760,6 +760,12 @@ model BaseHeatingSystem
 
 
 
+  Modelica.Blocks.Sources.Ramp omega_P901(
+    height=-2*3.141592654*6.5,
+    duration=100,
+    offset=2*3.141592654*40,
+    startTime=200)
+    annotation (Placement(transformation(extent={{-620,44},{-641,64}})));
 equation
   connect(rackL2L3_rackL3L4_cold.outlet,S900_rackL2L3_cold. inlet) annotation (
       Line(
@@ -810,9 +816,6 @@ equation
       points={{-659,66},{-659,76}},
       color={140,56,54},
       thickness=0.5));
-  connect(q_P901.y, P901.in_q_m3hr)
-    annotation (Line(points={{-642.05,50},{-654.4,50},{-654.4,54}},
-                                                         color={0,0,127}));
   connect(rackCD_Cold_S100_FV933.inlet, rackCD_Cold_S400_S100.outlet)
     annotation (Line(
       points={{-170,-19.75},{-228.5,-19.75}},
@@ -988,6 +991,8 @@ equation
       thickness=0.5));
   connect(wall_FixedT.MultiPort, rackL3L4_FCVC01_cold.wall) annotation (Line(
         points={{270,268},{270,260},{290,260},{290,244.3}}, color={255,238,44}));
+  connect(omega_P901.y, P901.in_omega)
+    annotation (Line(points={{-642.05,54},{-654,54}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-800,-300},{800,300}}), graphics={
         Text(

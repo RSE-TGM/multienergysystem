@@ -17,10 +17,12 @@ model RoundPipe1DFV
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
 
   constant Types.Acceleration g = Modelica.Constants.g_n;
-  parameter Boolean computePressureDifference = true;
+
 // Flow parameter
   parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure";
-  parameter Boolean computeLinearPressureDrop = true "If true, then the pressure drop is linear, else the pressure drop is non-linear computed as a function of cp and u";
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
+    Dialog(group = "Initialisation"));
   parameter Integer n = 3 "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
@@ -31,9 +33,6 @@ model RoundPipe1DFV
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.PerUnit kc=1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
-    Dialog(group = "Initialisation"));
   parameter Real k(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation (
     Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Density rho_nom = 997 "Nominal density of the fluid" annotation (
@@ -71,7 +70,7 @@ model RoundPipe1DFV
   Types.Mass M[n] "Mass of fluid in each finite volume";
   Types.Mass Mtot "Total Mass in the pipe";
   Types.SpecificHeatCapacity cp[n+1] "Specific heat capacity at each fluid";
-  Types.Density rho[n+1] "Density at each fluid";
+  Types.Density rho[n+1](each start = rho_nom) "Density at each fluid";
   Types.Density rhotilde[n](each start = rho_nom);
 
   //   Types.Power Q_int[n] "Heat dissipation out of each volume into the wall";
@@ -113,7 +112,7 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    m_flow[i]- m_flow[i+1] = Vi*(regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-5*der(ptilde));
+    m_flow[i]- m_flow[i+1] = Vi*(regStep(dp, fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-5*der(ptilde));
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
     //(Vi*regStep(dp,fluid[i+1].h,fluid[i].h)*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
 
@@ -123,15 +122,16 @@ equation
   rhotilde = regStep(dp, rho[2:n+1], rho[1:n], rho_nom*1e-5);
   M = Vi*rhotilde;
   Ttilde = regStep(dp, T[2:n+1], T[1:n], Tin_start*1e-5);
-  //ptilde = pout;
+
 
   // Momentum Balance
-  //pin - pout = rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
-  //pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
-
-  pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
-  ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
-
+  if hctype == Choices.Pipe.HCtypes.Middle then
+    pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+    ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+  else
+    pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+    ptilde = pout;
+  end if;
 
 
   // Equations to set the fluid properties
@@ -156,7 +156,8 @@ equation
   end if;
 
   fluid_temp.p = ptilde;
-  fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), hin_start*1e-5), hin_start);
+  //fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5), hin_start);
+  fluid_temp.h = regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5);
 
   // Boundary conditions
   inlet.m_flow = m_flow[1];

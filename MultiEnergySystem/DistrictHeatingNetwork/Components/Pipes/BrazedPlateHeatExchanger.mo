@@ -135,7 +135,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   SI.Pressure pout_hot;
   SI.Pressure pin_cold;
   SI.Pressure pout_cold;
-  SI.TemperatureDifference LMTD;
+  //SI.TemperatureDifference LMTD;
   SI.Power Pt;
 
 
@@ -167,10 +167,10 @@ equation
   pout_hot = hotside.outlet.p;
   pin_cold = coldside.inlet.p;
   pout_cold = coldside.outlet.p;
-  LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log((Tin_hot - Tout_cold)/(Tout_hot - Tin_cold));
+  //LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log(abs((Tin_hot - Tout_cold)/(Tout_hot - Tin_cold)));
   Pt = inhot.m_flow*(hotside.fluid[1].h - hotside.fluid[n+1].h);
   connect(wall.int, hotside.wall) annotation (
-    Line(points = {{23, 0}, {64.9, 0}}, color = {255, 238, 44}));
+    Line(points={{23,0},{65.7,0}},      color = {255, 238, 44}));
   connect(coldside.outlet, outcold) annotation (
     Line(points = {{-70, 10}, {-70, 70}}, color = {168, 168, 168}));
   connect(coldside.inlet, incold) annotation (
@@ -180,7 +180,7 @@ equation
   connect(hotside.outlet, outhot) annotation (
     Line(points = {{70, -10}, {70, -70}}, color = {168, 168, 168}));
   connect(coldside.wall, topology.side2) annotation (
-    Line(points = {{-64.9, 0}, {-19.1, 0}}, color = {255, 238, 44}));
+    Line(points={{-65.7,0},{-19.1,0}},      color = {255, 238, 44}));
   connect(topology.side1, wall.ext) annotation (
     Line(points = {{-13, 0}, {16.9, 0}}, color = {255, 238, 44}));
   annotation (

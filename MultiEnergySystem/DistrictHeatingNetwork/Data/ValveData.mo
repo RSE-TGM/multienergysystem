@@ -108,4 +108,22 @@ package ValveData
     Kv = 4,
     Tin_start = 60 + 273.15,
     pin_start = 3e5);
+  constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCVC01(
+    Name = "FCVC01",
+    Tin_nom = 60 + 273.15,
+    q_nom_inm3h = 4.15,
+    dp_nom = 1.035e5,
+    rho_nom = 985,
+    Kv = 14,
+    Tin_start = 60 + 273.15,
+    pin_start = 3e5);
+  constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCVC02(
+    Name = "FCVC02",
+    Tin_nom = 60 + 273.15,
+    q_nom_inm3h = 4.15,
+    dp_nom = 1.035e5,
+    rho_nom = 985,
+    Kv = 14,
+    Tin_start = 80 + 273.15,
+    pin_start = 3e5);
 end ValveData;

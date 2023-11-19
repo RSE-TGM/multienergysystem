@@ -52,8 +52,8 @@ model GasBoilerOLSystem
     headmax=Pump.P101.headnommax,
     headmin=Pump.P101.headnommin,
     qnom_inm3h_min=Pump.P101.qnommin_inm3h,
-    qnom_inm3h_max=Pump.P101.qnommax_inm3h,
-    use_m_flow=true) annotation (Placement(transformation(
+    qnom_inm3h_max=Pump.P101.qnommax_inm3h)
+                     annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
         origin={-220,-21})));
@@ -719,8 +719,6 @@ equation
       points={{220.3,-39.25},{220.3,-38},{220,-38},{220,-70}},
       color={140,56,54},
       thickness=0.5));
-  connect(P101_m_flow.y, P101.in_m_flow) annotation (Line(points={{-285,-26},{-255.26,
-          -26},{-255.26,-25.8},{-225.52,-25.8}}, color={0,0,127}));
   connect(P901_omega_ramp.y, P901.in_omega) annotation (Line(points={{-184,50},{
           -173.8,50},{-173.8,84}}, color={0,0,127}));
   connect(VE901.inlet, roundPipe1DFV20.outlet) annotation (Line(

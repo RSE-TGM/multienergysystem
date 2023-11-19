@@ -64,8 +64,8 @@ model GasBoilerCompleteSystem
     Tout_start=(80 + 273.15) + 273.15,                                       a = Pump.P101.a, b = Pump.P101.b,
     m_flow_start=m_flow_total,                                                                                 dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom,
     pin_start(displayUnit="Pa") = 1.8400803e5,
-    pout_start(displayUnit="Pa") = 1.9920743e5,                                                                                                                                                                                                        qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    pout_start(displayUnit="Pa") = 1.9920743e5,                                                                                                                                                                                                        qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom)
+                     annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-220,-21})));
@@ -848,8 +848,8 @@ model GasBoilerCompleteSystem
     pin_start(displayUnit="Pa") = 2e5,
     pout_start(displayUnit="Pa") = 2.6e5,
     qnom_inm3h=Pump.PR01.qnom_inm3h,
-    rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom)
+                     annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={297,-49})));
@@ -974,8 +974,6 @@ equation
       thickness=0.5));
   connect(CH4.in_m_flow, fuel_flow.y)
     annotation (Line(points={{-180,-100},{-180,-119}}, color={0,0,127}));
-  connect(P101.in_m_flow, P101_m_flow.y) annotation (Line(points={{-214.48,-25.8},
-          {-201,-25.8},{-201,-26}}, color={0,0,127}));
   connect(FCV701.inlet,EX701. outhot) annotation (Line(
       points={{7,21},{7,1.25},{6.3,1.25}},
       color={140,56,54},
@@ -1184,8 +1182,6 @@ equation
       points={{297,-59.4},{297,-79},{197,-79}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y,PR01. in_m_flow) annotation (Line(points={{295,10},{280,
-          10},{280,-43.8},{291.02,-43.8}},             color={0,0,127}));
   connect(EX701.outcold,TCV701. inlet) annotation (Line(
       points={{-34.3,-16.25},{-33,-16.25},{-33,-39}},
       color={140,56,54},

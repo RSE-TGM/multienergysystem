@@ -42,8 +42,8 @@ model GasBoilerOLSystem2
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
-    P101(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    P101(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom)
+                     annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
         origin={-220,-21})));
@@ -708,8 +708,6 @@ equation
       points={{220.3,-39.25},{220.3,-38},{220,-38},{220,-70}},
       color={140,56,54},
       thickness=0.5));
-  connect(P101_m_flow.y, P101.in_m_flow) annotation (Line(points={{-250,-26},{-237.76,
-          -26},{-237.76,-25.8},{-225.52,-25.8}}, color={0,0,127}));
   connect(P901.in_omega, P901_omega.y) annotation (Line(points={{-173.8,84},{
           -173.8,77.5},{-174,77.5},{-174,71}}, color={0,0,127}));
 

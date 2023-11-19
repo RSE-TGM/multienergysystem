@@ -62,8 +62,8 @@ model WaterTanksSystem "System of two tanks"
     pin_start(displayUnit="Pa") = 1.8400803e5,
     pout_start(displayUnit="Pa") = 1.9920743e5,
     qnom_inm3h=15.60340167,
-    rhonom(displayUnit="kg/m3") = Pump.P101.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    rhonom(displayUnit="kg/m3") = Pump.P101.rhonom)
+                     annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-124,-39})));
@@ -860,8 +860,8 @@ model WaterTanksSystem "System of two tanks"
     pin_start(displayUnit="Pa") = 2e5,
     pout_start(displayUnit="Pa") = 2.7e5,
     qnom_inm3h=32.34652403,
-    rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
-    use_m_flow=true) annotation (Placement(transformation(
+    rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom)
+                     annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={366,-106})));
@@ -951,8 +951,7 @@ model WaterTanksSystem "System of two tanks"
       pout_start(displayUnit="Pa") = 1.9920743e5,
     qnom_inm3h=16.5,
       rhonom(displayUnit="kg/m3") = Pump.P201.rhonom,
-    headmax=15.5,
-      use_m_flow=true) annotation (Placement(transformation(
+    headmax=15.5)      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=-90,
         origin={-326,-31})));
@@ -1135,8 +1134,6 @@ equation
       thickness=0.5));
   connect(CH4.in_m_flow,fuel_flow. y)
     annotation (Line(points={{-84,-118},{-84,-137}},   color={0,0,127}));
-  connect(P101.in_m_flow,P101_m_flow. y) annotation (Line(points={{-118.48,-43.8},
-          {-105,-43.8},{-105,-44}}, color={0,0,127}));
   connect(roundPipe1DFV2.outlet,roundPipe1DFV10. inlet) annotation (Line(
       points={{36,-176},{36,-196},{66,-196}},
       color={140,56,54},
@@ -1205,9 +1202,6 @@ equation
       points={{366,-116.4},{366,-136},{266,-136}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_m_flow.y,PR01. in_m_flow) annotation (Line(points={{362,-44},{361,
-          -44},{361,-43},{351,-43},{351,-100.8},{360.02,-100.8}},
-                                                                color={0,0,127}));
   connect(EX701.outcold,TCV701. inlet) annotation (Line(
       points={{35.7,-57.25},{36,-57.25},{36,-88}},
       color={140,56,54},
@@ -1268,8 +1262,6 @@ equation
       points={{-296,-101.75},{-310,-101.75},{-310,72},{-114,72}},
       color={140,56,54},
       thickness=0.5));
-  connect(P201_m_flow.y, P201.in_m_flow) annotation (Line(points={{-343,-26},{
-          -343,-26.2},{-331.52,-26.2}}, color={0,0,127}));
   connect(D202.inlet, D201.inlet) annotation (Line(
       points={{-225,-130.25},{-233,-130.25},{-233,-130},{-239,-130},{-239,-172},
           {-327,-172},{-327,-130.25},{-296,-130.25}},

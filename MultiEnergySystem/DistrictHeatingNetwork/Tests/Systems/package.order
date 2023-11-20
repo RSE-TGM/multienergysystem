@@ -3,6 +3,7 @@ GasBoilerSystem
 ElectricBoilerSystem
 PumpingCirculationSystem
 WaterTankSystem
+StratifiedWaterTankSystem
 UsersPipelineSystem
 CoolingSystem
 BaseHeatingSystem

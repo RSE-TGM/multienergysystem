@@ -2,9 +2,10 @@ within MultiEnergySystem.DistrictHeatingNetwork.Examples.Test;
 model StratifiedTESTest
   extends Modelica.Icons.Example;
   MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=
-        10, Tnom=353.15)                                                                   annotation (
+        5, Tnom=353.15)                                                                    annotation (
     Placement(visible = true, transformation(origin={-40,0},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(T = 353.15) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(p=300000,
+      T=353.15)                                                                               annotation (
     Placement(visible = true, transformation(origin={40,22},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.Stratified1DStorage stratified1DStorage(
     D=1.7,

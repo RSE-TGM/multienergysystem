@@ -34,8 +34,6 @@ partial model PartialLumpedVolume
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.MassFlowRate m_flow_start = 1 "Start mass flow rate through the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter Integer n = 2 "Number of volumes (min = 2)" annotation (
-    Dialog(tab = "Data", group = "Fluid"));
 
   // Final parameters
   final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
@@ -47,17 +45,15 @@ partial model PartialLumpedVolume
 
   // Variables
   SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";
-  SI.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
   SI.Temperature Tin "Temperatue of the water entering/leaving the volume";
   SI.Temperature Tout "Temperatue of the water entering/leaving the volume";
-  SI.HeatFlowRate Q_amb "Heat losses to ambient";
   SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
   SI.Pressure pout "Pressure in the high part of the tank";
 
   // Connectors
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet(m_flow(start = m_flow_start))  annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet(m_flow(start = -m_flow_start)) annotation (Placement(
       visible=true,
       transformation(
         origin={100,0},

@@ -3,8 +3,12 @@ model WaterTankSystem "System of two tanks"
   extends Modelica.Icons.Example;
   parameter Types.Pressure pin_start_S2 = 1.79e5;
   parameter Types.Pressure pout_start_S2 = 2.5e5;
+  parameter Types.Pressure pin_start_S2_pump = 1.79e5;
+  parameter Types.Pressure pout_start_S2_pump = 3e5;
+  final parameter Types.Pressure pin_start_S2_tank = pout_start_S2_pump;
+  final parameter Types.Pressure pout_start_S2_tank = pin_start_S2_tank - 9.81*4*990;
   parameter Types.Temperature Tin_start_S2 = 60 + 273.15;
-  parameter Types.Temperature Tout_start_S2 = 80 + 273.15;
+  parameter Types.Temperature Tout_start_S2 = 60 + 273.15;
   parameter Types.Length L_S2 = 10;
   parameter Types.Length Di_S2 = 51e-3;
   parameter Types.Length t_S2 = 1.5e-3;
@@ -22,12 +26,11 @@ model WaterTankSystem "System of two tanks"
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={-170,170},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage
     D201(H=4, D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
-    pin_start=200000,
-    m_flow_start=m_flow_S2,
-    n=3)
+    pin_start=pin_start_S2_tank,
+    m_flow_start=m_flow_S2/2)
     annotation (Placement(transformation(extent={{-20,-114},{-68,-38}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P201(
@@ -57,13 +60,13 @@ model WaterTankSystem "System of two tanks"
         origin={-34,29})));
   Modelica.Blocks.Sources.RealExpression P201_m_flow(y=0.15)
     annotation (Placement(transformation(extent={{-158,96},{-138,116}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage D202(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage D202(
     H=4,
     D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
-    pin_start=200000,
-    m_flow_start=m_flow_S2,
-    n=3) annotation (Placement(transformation(extent={{75,-114},{27,-38}})));
+    pin_start=pin_start_S2_tank,
+    m_flow_start=m_flow_S2/2)
+         annotation (Placement(transformation(extent={{75,-114},{27,-38}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT201(T_start=Tin_start_S2, p_start=pin_start_S2)
     "Temperature sensor at the inlet of pump 201" annotation (Placement(
@@ -89,7 +92,7 @@ model WaterTankSystem "System of two tanks"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-34,72})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV201(
     Kv=Valve.FCV101.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV101.dp_nom,
@@ -115,8 +118,8 @@ model WaterTankSystem "System of two tanks"
     L=L_S2_PL2,
     t=t_S2,
     m_flow_start=m_flow_S2,
-    pin_start=pin_start_S2,
-    pout_start=pin_start_S2,
+    pin_start=pout_start_S2_pump,
+    pout_start=pout_start_S2_pump - 0.01e5,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2) annotation (Placement(transformation(
@@ -139,8 +142,8 @@ model WaterTankSystem "System of two tanks"
     L=L_S2_PL5,
     t=t_S2,
     m_flow_start=m_flow_S2,
-    pin_start=pin_start_S2,
-    pout_start=pin_start_S2,
+    pin_start=pout_start_S2_pump,
+    pout_start=pout_start_S2_pump - 0.01e5,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2) annotation (Placement(transformation(
@@ -151,8 +154,8 @@ model WaterTankSystem "System of two tanks"
     L=L_S2_PL6,
     t=t_S2,
     m_flow_start=m_flow_S2,
-    pin_start=pout_start_S2,
-    pout_start=pout_start_S2,
+    pin_start=pout_start_S2_tank,
+    pout_start=pout_start_S2_tank - 0.01e5,
     Tin_start=Tout_start_S2,
     Tout_start=Tout_start_S2,
     Di=Di_S2) annotation (Placement(transformation(
@@ -160,7 +163,7 @@ model WaterTankSystem "System of two tanks"
         rotation=90,
         origin={100,62})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT202(T_start=Tout_start_S2, p_start=pout_start_S2)
+    TT202(T_start=Tout_start_S2, p_start=pout_start_S2_tank)
     "Temperature sensor at the outlet of System 200"         annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
@@ -182,8 +185,8 @@ model WaterTankSystem "System of two tanks"
     annotation (Placement(transformation(extent={{-70,130},{-50,150}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,
-    pin_start=pout_start_S2,
-    p0=pout_start_S2,
+    pin_start=pout_start_S2_tank,
+    p0=pout_start_S2_tank,
     T0=Tout_start_S2,
     m_flow0=m_flow_S2)
     annotation (Placement(transformation(extent={{106,130},{126,150}})));

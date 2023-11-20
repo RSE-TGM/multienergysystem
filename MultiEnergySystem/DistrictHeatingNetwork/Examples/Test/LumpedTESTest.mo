@@ -11,7 +11,9 @@ model LumpedTESTest
     Placement(visible = true, transformation(origin = {-82, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner System system annotation (
     Placement(visible = true, transformation(origin = {88, 68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage tank2(D = 1.7, T_start(displayUnit = "K") = 338.15, allowFlowReversal = false, H = 4, pin_start = 99999.99999999999) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage tank2(D = 1.7, T_start(displayUnit = "K") = 338.15, allowFlowReversal = false, H = 4,
+    pin_start=100000,
+    n=4)                                                                                                                                                                                             annotation (
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -14}, {10, 14}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sink_mflow(T0 = 68 + 273.15, p0 = 99999.99999999999, pin_start = 99999.99999999999, m_flow0 = 0.5)  annotation (
     Placement(visible = true, transformation(origin = {20, 42}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
@@ -29,5 +31,6 @@ equation
   connect(sourceP.outlet, tank2.inlet) annotation (
     Line(points={{20,-34},{20,-5.25},{30,-5.25}},  color = {168, 168, 168}));
   annotation (
-    Diagram(coordinateSystem(extent = {{-100, -80}, {100, 80}})));
+    Diagram(coordinateSystem(extent = {{-100, -80}, {100, 80}})), experiment(
+        StopTime=100, __Dymola_Algorithm="Dassl"));
 end LumpedTESTest;

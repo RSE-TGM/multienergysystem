@@ -9,6 +9,11 @@ model LumpedStorageConstantMass "Model a perfectly mixed thermal storage with in
   parameter Modelica.Units.SI.Length dIns = 0.15 "Insulation thickness";
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
+
+  // Variables
+  SI.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
+  SI.HeatFlowRate Q_amb "Heat losses to ambient";
+
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation

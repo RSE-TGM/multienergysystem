@@ -12,7 +12,12 @@ model LumpedStorage "Model a perfectly mixed thermal storage with insulation all
   //Variables
   Modelica.Units.SI.Mass M(start = M_id) "Total mass in the tank";
   Modelica.Units.SI.Density rho "Density of the fluid in the tank (at the outlet)";
+  SI.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
+  SI.HeatFlowRate Q_amb "Heat losses to ambient";
+
   Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
+
+
 equation
 // Fluid
 //   fluidIn = Medium.setState_phX(pin, inlet.h_out);

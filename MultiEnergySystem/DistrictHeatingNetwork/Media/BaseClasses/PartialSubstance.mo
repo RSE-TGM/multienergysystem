@@ -10,6 +10,7 @@ partial model PartialSubstance
   parameter Types.MolarMass MM "Molar mass of the fluid";
   parameter Real rho_coeff[3] "Coefficients to compute fluid density";
   parameter Real cp_coeff[4] "Coefficients to compute specific heat capacity";
+  parameter Real kappa_coeff[3] "Coefficients to compute thermal conductivity";
 
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
@@ -55,6 +56,17 @@ protected
     h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
   annotation(Inline = true);
   end h_T;
+
+  function kappa_T
+    input Types.Temperature T;
+    input Real a[3];
+    output Types.ThermalConductivity kappa;
+  algorithm
+    kappa := a[3] + T*(a[2] + T*(a[1]));
+    annotation (
+      Inline = true);
+  end kappa_T;
+
 
   function rho_T
     input Types.Temperature T;
@@ -112,4 +124,5 @@ protected
         <li>h = u + p / d</li>
         </ul>
         </HTML>"));
+
 end PartialSubstance;

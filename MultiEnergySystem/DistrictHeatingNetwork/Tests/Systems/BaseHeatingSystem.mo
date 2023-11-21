@@ -239,6 +239,7 @@ model BaseHeatingSystem
     FCV901(
     Kv=Valve.FCV901.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV901.dp_nom,
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot,
     Tin_start(displayUnit="K") = Tout_start_S9,
     pin_start=pout_start_S9) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},

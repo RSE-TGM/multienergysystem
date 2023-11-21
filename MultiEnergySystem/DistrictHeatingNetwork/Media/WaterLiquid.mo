@@ -5,7 +5,8 @@ model WaterLiquid
     mu_start = 0,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,
     rho_coeff = {-0.0034821889243192,1.8159726369743,764.95410451574},
-    cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755});
+    cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755},
+    kappa_coeff = {-8.1509980345909e-06,0.0063995962643842,-0.57622073567604});
 
   parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) - u_bias;
   parameter Types.SpecificEnergy u_bias = 1.492354e+06;
@@ -40,7 +41,7 @@ equation
 //p_sat = ((((+0.000342217) * T + (-0.295484)) * T + 85.5469) * T + (-8298.06)) * T + (-104.079);
   if computeTransport == true then
     mu = 0.001;
-    kappa = 0.62;
+    kappa = kappa_T(T, kappa_coeff);
   else
     mu = 0;
     kappa = 0;

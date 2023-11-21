@@ -26,10 +26,10 @@ package ValveCharacteristics
   rp := pos*pos;
   end quadratic;
 
-  function square "Square opening char."
+  function squareRoot "Square opening char."
     extends
       MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
   algorithm
-  rp := sqrt(pos);
-  end square;
+  rp := sqrt(pos+1e-3);
+  end squareRoot;
 end ValveCharacteristics;

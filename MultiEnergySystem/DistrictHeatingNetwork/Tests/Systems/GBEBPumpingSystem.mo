@@ -9,7 +9,8 @@ model GBEBPumpingSystem
     FCVC01_theta(
       height=1,
       duration=50,
-      startTime=600));
+      startTime=600),
+    omega_P901(height=2*3.141592654*5));
 
   parameter Types.Pressure pin_start_S4 = 1.695e5;
   parameter Types.Pressure pout_start_S4 = 1.6e5;

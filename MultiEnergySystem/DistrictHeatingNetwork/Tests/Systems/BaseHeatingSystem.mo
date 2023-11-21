@@ -14,9 +14,9 @@ model BaseHeatingSystem
 
 
   parameter Types.MassFlowRate m_flow_start_Users = m_flow_total/4;
-  parameter Types.Length L_Users = 2;
-  parameter Types.Length Di_Users = 32e-3;
-  parameter Types.Length t_Users = 1.5e-3;
+//   parameter Types.Length L_Users = 2;
+//   parameter Types.Length Di_Users = 32e-3;
+//   parameter Types.Length t_Users = 1.5e-3;
 
   parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
   parameter Types.Pressure dp_nom_UsersValve = 50000;
@@ -47,6 +47,27 @@ model BaseHeatingSystem
   parameter Types.Length L_rCD_H5 = 1.4;
   parameter Types.Length L_rCD_H6 = 1.25;
   parameter Types.Length L_rCD_H7 = 15;
+
+    // Cold Side L2-L3-L4-L5-L6-L7
+  parameter Types.Length L_rL2L3_rL3L4_C = 4.5;
+  parameter Types.Length L_rL3L4_FCVC01_C = 3;
+  parameter Types.Length L_FCVC01_rL4L5_C = 1.5;
+  parameter Types.Length L_rL4L5_rL5L6_C = 3;
+  parameter Types.Length L_rL5L6_rL6L7_C = 3;
+  parameter Types.Length L_rL6L7_FCVC02_C = 1.8;
+  parameter Types.Length t_rL_C = 1.5e-3;
+  parameter Types.Length Di_rL_C = 51e-3;
+
+    // Hot side Rack L2-L3-L4-L5-L6-L7
+  parameter Types.Length L_rL2L3_rL3L4_H = 4.5;
+  parameter Types.Length L_rL3L4_FCVC01_H = 3;
+  parameter Types.Length L_FCVC01_rL4L5_H = 1.5;
+  parameter Types.Length L_rL4L5_rL5L6_H = 3;
+  parameter Types.Length L_rL5L6_rL6L7_H = 3;
+  parameter Types.Length L_rL6L7_FCVC02_H = 1.8;
+  parameter Types.Length t_rL_H = 1.5e-3;
+  parameter Types.Length Di_rL_H = 51e-3;
+
 
   //rackCD_Cold_S100_FV933
   //rackCD_Cold_S400_S100
@@ -570,182 +591,182 @@ model BaseHeatingSystem
         rotation=0,
         origin={20,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL2L3_rackL3L4_hot(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL2L3_rL3L4_H,
+    t=t_rL_H,
     m_flow_start=m_flow_start_Users*3,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.01e5,
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
-    Di=Di_Users,
+    Di=Di_rL_H,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={140,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_hot(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL3L4_FCVC01_H,
+    t=t_rL_H,
     m_flow_start=m_flow_start_Users*2,
     pin_start=pin_start_Users - 0.01e5,
     pout_start=pin_start_Users - 0.02e5,
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
-    Di=Di_Users,
+    Di=Di_rL_H,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={260,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV FCVC01_rackL4L5_hot(
-    L=L_Users,
-    t=t_Users,
+    L=L_FCVC01_rL4L5_H,
+    t=t_rL_H,
     m_flow_start=m_flow_start_Users*2,
     pin_start=pin_start_Users - 0.01e5,
     pout_start=pin_start_Users - 0.02e5,
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
-    Di=Di_Users,
+    Di=Di_rL_H,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={360,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_hot(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL4L5_rL5L6_H,
+    t=t_rL_H,
     m_flow_start=m_flow_start_Users,
     pin_start=pin_start_Users - 0.02e5,
     pout_start=pin_start_Users - 0.03e5,
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
-    Di=Di_Users,
+    Di=Di_rL_H,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={480,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL5L6_rackL6L7_hot(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL5L6_rL6L7_H,
+    t=t_rL_H,
     m_flow_start=m_flow_start_Users,
     pin_start=pin_start_Users - 0.02e5,
     pout_start=pin_start_Users - 0.03e5,
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
-    Di=Di_Users,
+    Di=Di_rL_H,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={600,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_hot(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL6L7_FCVC02_H,
+    t=t_rL_H,
     m_flow_start=m_flow_start_Users,
     pin_start=pin_start_Users - 0.02e5,
     pout_start=pin_start_Users - 0.03e5,
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
-    Di=Di_Users,
+    Di=Di_rL_H,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={720,180})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL2L3_cold(
-    L=L_S1,
-    t=t_S1,
+    L=L_S9,
+    t=t_S9,
     m_flow_start=m_flow_total,
     pin_start=pout_start_Users - 0.03e5,
     pout_start=pout_start_Users - 0.04e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_S1,
+    Di=Di_S9,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={50,240})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL2L3_rackL3L4_cold(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL2L3_rL3L4_C,
+    t=t_rL_C,
     m_flow_start=m_flow_start_Users*3,
     pin_start=pout_start_Users - 0.02e5,
     pout_start=pout_start_Users - 0.03e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_Users,
+    Di=Di_rL_C,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={170,240})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_cold(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL3L4_FCVC01_C,
+    t=t_rL_C,
     m_flow_start=m_flow_start_Users*2,
     pin_start=pout_start_Users - 0.01e5,
     pout_start=pout_start_Users - 0.02e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_Users,
+    Di=Di_rL_C,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={290,240})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV FCVC01_rackL4L5_cold(
-    L=L_Users,
-    t=t_Users,
+    L=L_FCVC01_rL4L5_C,
+    t=t_rL_C,
     m_flow_start=m_flow_start_Users*2,
     pin_start=pin_start_Users - 0.01e5,
     pout_start=pin_start_Users - 0.02e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_Users,
+    Di=Di_rL_C,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={390,240})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_cold(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL4L5_rL5L6_C,
+    t=t_rL_C,
     m_flow_start=m_flow_start_Users,
     pin_start=pout_start_Users,
     pout_start=pout_start_Users - 0.01e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_Users,
+    Di=Di_rL_C,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={510,240})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL5L6_rackL6L7_cold(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL5L6_rL6L7_C,
+    t=t_rL_C,
     m_flow_start=m_flow_start_Users,
     pin_start=pin_start_Users - 0.02e5,
     pout_start=pin_start_Users - 0.03e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_Users,
+    Di=Di_rL_C,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={630,240})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_cold(
-    L=L_Users,
-    t=t_Users,
+    L=L_rL6L7_FCVC02_C,
+    t=t_rL_C,
     m_flow_start=m_flow_start_Users,
     pin_start=pin_start_Users - 0.02e5,
     pout_start=pin_start_Users - 0.03e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
-    Di=Di_Users,
+    Di=Di_rL_C,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},

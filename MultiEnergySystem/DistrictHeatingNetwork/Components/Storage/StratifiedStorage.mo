@@ -33,7 +33,8 @@ model StratifiedStorage
   //Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
   Medium fluid[n+1](
     T_start = linspace(T_start, T_start - 1, n+1),
-    p_start = linspace(pin_start, pout_start, n+1));
+    p_start = linspace(pin_start, pout_start, n+1),
+    each computeTransport = true);
 //   Medium fluid_temp(
 //     T_start = T_start,
 //     p_start = pin_start);
@@ -85,17 +86,20 @@ equation
       // Heat exchange with the ambient from flat top face
       Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(Ttilde[i] - T_ext);
       // Heat exchange with 2nd volume
-      Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
+      //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
+      Q_cond[i] = fluid[1].kappa*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
     elseif i == n then
       // Heat exchange with ambient
       Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(Ttilde[i] - T_ext);
       // Heat exchange with N-1th volume
-      Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
+      //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
+      Q_cond[i] = fluid[i-1].kappa*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
     else
       // Heat exchange with the ambient from lateral faces
       Q_amb[i] = 1/R_lateral*(Ttilde[i] - T_ext);
       // Heat exchange with layer above and below
-      Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
+      //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
+      Q_cond[i] = fluid[i].kappa*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
     end if;
 
   end for;

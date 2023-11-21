@@ -10,6 +10,7 @@ BaseHeatingSystem
 GasBoilerPumpingSystem
 ElectricBoilerPumpingSystem
 GBEBPumpingSystem
+GBEBTanksPumpingSystem
 BaseHeatingandCoolingSystem
 GasBoilerHeatingSystem
 GasBoilerHeatingSystem_CaseI

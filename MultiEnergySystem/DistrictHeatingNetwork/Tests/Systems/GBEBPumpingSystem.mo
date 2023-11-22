@@ -164,18 +164,18 @@ model GBEBPumpingSystem
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-264,-140})));
-  Modelica.Blocks.Sources.Ramp FCV101_theta_1(
+  Modelica.Blocks.Sources.Ramp FCV401_theta(
     height=0,
     duration=1500,
     offset=1,
     startTime=3000)
-    annotation (Placement(transformation(extent={{-186,-132},{-206,-112}})));
+    annotation (Placement(transformation(extent={{-190,-132},{-210,-112}})));
   Modelica.Blocks.Sources.Ramp omega_P401(
     offset=2*3.141592654*50,
     height=-2*3.141592654*10*0,
     duration=50,
     startTime=100)
-    annotation (Placement(transformation(extent={{-186,-174},{-207,-154}})));
+    annotation (Placement(transformation(extent={{-190,-174},{-211,-154}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
       points={{-228,-168.6},{-228,-188}},
@@ -213,8 +213,8 @@ equation
       points={{-263.6,-58},{-263.6,-46}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV101_theta_1.y, FCV401.opening)
-    annotation (Line(points={{-207,-122},{-220,-122}}, color={0,0,127}));
+  connect(FCV401_theta.y, FCV401.opening)
+    annotation (Line(points={{-211,-122},{-220,-122}}, color={0,0,127}));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
       points={{-264,-210},{-264,-231.6},{-263.6,-231.6}},
       color={140,56,54},
@@ -231,7 +231,7 @@ equation
       points={{-263.6,-46},{-264,-46},{-264,-19.75},{-310.5,-19.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(omega_P401.y,P401. in_omega) annotation (Line(points={{-208.05,-164},{
-          -215.025,-164},{-215.025,-163.8},{-222,-163.8}}, color={0,0,127}));
+  connect(omega_P401.y,P401. in_omega) annotation (Line(points={{-212.05,-164},
+          {-219.025,-164},{-219.025,-163.8},{-222,-163.8}},color={0,0,127}));
   annotation (experiment(StopTime=800, __Dymola_Algorithm="Dassl"));
 end GBEBPumpingSystem;

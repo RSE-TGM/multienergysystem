@@ -140,13 +140,13 @@ model GasBoilerPumpingSystem
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-174,-134})));
-  Modelica.Blocks.Sources.Ramp FCV101_theta_(
+  Modelica.Blocks.Sources.Ramp FCV101_theta(
     height=-0.2*0,
     duration=1500,
     offset=1,
     startTime=3000)
     annotation (Placement(transformation(extent={{-96,-126},{-116,-106}})));
-  Modelica.Blocks.Sources.Ramp omega_P1(
+  Modelica.Blocks.Sources.Ramp omega_P101(
     offset=2*3.141592654*50,
     height=-2*3.141592654*10,
     duration=50,
@@ -197,9 +197,8 @@ equation
       points={{-173.6,-52},{-173.6,-40}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV101_theta_.y,FCV101. opening)
-    annotation (Line(points={{-117,-116},{-130,-116}},
-                                               color={0,0,127}));
+  connect(FCV101_theta.y, FCV101.opening)
+    annotation (Line(points={{-117,-116},{-130,-116}}, color={0,0,127}));
   connect(TT102.inlet, FV933.inlet) annotation (Line(
       points={{-138.4,-40},{-138.4,20},{-120,20},{-120,5}},
       color={140,56,54},
@@ -208,6 +207,6 @@ equation
       points={{-173.6,-40},{-174,-40},{-174,-19.75},{-228.5,-19.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(omega_P1.y, P101.in_omega) annotation (Line(points={{-118.05,-158},{
-          -125.025,-158},{-125.025,-157.8},{-132,-157.8}}, color={0,0,127}));
+  connect(omega_P101.y, P101.in_omega) annotation (Line(points={{-118.05,-158},
+          {-125.025,-158},{-125.025,-157.8},{-132,-157.8}}, color={0,0,127}));
 end GasBoilerPumpingSystem;

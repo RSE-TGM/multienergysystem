@@ -4,34 +4,45 @@ model HP301System
   parameter Integer n = 3 "Number of volumes in each pipe";
 
   final parameter Types.Pressure pin_start_S3_tank = pout_User_start_S3_pump;
-  final parameter Types.Pressure pout_start_S3_tank = pin_start_S3_tank - 9.81*1*990;
+  final parameter Types.Pressure pout_start_S3_tank = pin_start_S3_tank - 9.81*2*990;
 
-
-  // Heat Pump
+  // Boundary parameters
   parameter Types.Pressure pin_Source_start_S3 = 1.79e5;
   parameter Types.Pressure pout_Source_start_S3 = 2.5e5;
   parameter Types.Temperature Tin_Source_start_S3 = 45 + 273.15;
-  parameter Types.Temperature Tout_Source_start_S3 = 30 + 273.15;
+  parameter Types.Temperature Tout_Source_start_S3 = 40 + 273.15;
 
-  parameter Types.Pressure pin_User_start_S3 = 1.79e5;
+  parameter Types.Pressure pin_User_start_S3 = 1.69e5;
   parameter Types.Pressure pout_User_start_S3 = 2.5e5;
   parameter Types.Temperature Tin_User_start_S3 = 65 + 273.15;
   parameter Types.Temperature Tout_User_start_S3 = 80 + 273.15;
 
+
+  // Heat Pump
+  parameter Types.Pressure pin_Source_start_S3_hp = 1.79e5;
+  parameter Types.Pressure pout_Source_start_S3_hp = 2.5e5;
+  parameter Types.Temperature Tin_Source_start_S3_hp = 45 + 273.15;
+  parameter Types.Temperature Tout_Source_start_S3_hp = 40 + 273.15;
+
+  parameter Types.Pressure pin_User_start_S3_hp = 1.79e5;
+  parameter Types.Pressure pout_User_start_S3_hp = 2.5e5;
+  parameter Types.Temperature Tin_User_start_S3_hp = 65 + 273.15;
+  parameter Types.Temperature Tout_User_start_S3_hp = 80 + 273.15;
+
   // Water Pump P301
-  parameter Types.Pressure pin_User_start_S3_pump = 1.79e5;
-  parameter Types.Pressure pout_User_start_S3_pump = 3e5;
+  parameter Types.Pressure pin_User_start_S3_pump = pin_User_start_S3;
+  parameter Types.Pressure pout_User_start_S3_pump = pin_User_start_S3_pump + 1.22e5;
 
   // Water Pump P302
   parameter Types.Pressure pin_Source_start_S3_pump = 1.79e5;
-  parameter Types.Pressure pout_Source_start_S3_pump = 3e5;
+  parameter Types.Pressure pout_Source_start_S3_pump = pin_Source_start_S3_pump + 0.88e5;
 
 
   // General Pipeline Data
   parameter Types.Length Di_S3 = 51e-3;
   parameter Types.Length t_S3 = 1.5e-3;
-  parameter Types.MassFlowRate m_flow_Source_S3 = 4.5;
-  parameter Types.MassFlowRate m_flow_User_S3 = 4.5;
+  parameter Types.MassFlowRate m_flow_Source_S3 = 2.444444444;
+  parameter Types.MassFlowRate m_flow_User_S3 = 0.47;
 
   // Pipe length
   parameter Types.Length L_S3_PL1 = 3;
@@ -46,11 +57,24 @@ model HP301System
   parameter Types.Length L_S3_PL10 = 3;
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledHeatPumpNoDynamics
-    HP301 annotation (Placement(transformation(extent={{-17,-66},{17,-32}})));
+    HP301(
+    Tin_hot_start=Tin_User_start_S3_hp,
+    Tin_cold_start=Tin_Source_start_S3_hp,
+    Tout_cold_start=Tout_Source_start_S3_hp,
+    Tout_hot_set=Tout_User_start_S3_hp,
+    m_flow_hot_start=m_flow_User_S3,
+    m_flow_cold_start=m_flow_Source_S3,
+    k_hot=8000,
+    k_cold=8000)
+          annotation (Placement(transformation(extent={{-17,-66},{17,-32}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_UserOut(
     L=L_S3_PL6,
     t=t_S3,
     m_flow_start=m_flow_User_S3,
+    pin_start=pin_User_start_S3 - 0.04e5,
+    pout_start=pin_User_start_S3 - 0.05e5,
+    Tin_start=Tout_User_start_S3,
+    Tout_start=Tout_User_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -77,13 +101,18 @@ model HP301System
       headmax=Pump.P301.headnommax,
       headmin=Pump.P301.headnommin,
       qnom_inm3h_min=Pump.P301.qnommin_inm3h,
-      qnom_inm3h_max=Pump.P301.qnommax_inm3h)
+      qnom_inm3h_max=Pump.P301.qnommax_inm3h,
+    use_in_omega=true)
      "Pump of System 300" annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-10,10},{10,-10}},
         rotation=90,
         origin={10,15})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage
-    D301 annotation (Placement(transformation(extent={{37,46},{67,94}})));
+    D301(
+    H=2,      T_start=Tout_User_start_S3,
+    pin_start=pout_User_start_S3_pump,
+    m_flow_start=m_flow_User_S3)
+         annotation (Placement(transformation(extent={{37,46},{67,94}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT302 annotation (Placement(transformation(
         extent={{-5.5,5.5},{5.5,-5.5}},
@@ -98,6 +127,10 @@ model HP301System
     L=L_S3_PL4,
     t=t_S3,
     m_flow_start=m_flow_User_S3,
+    pin_start=pout_User_start_S3_pump,
+    pout_start=pout_User_start_S3_pump - 0.01e5,
+    Tin_start=Tout_User_start_S3,
+    Tout_start=Tout_User_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -107,6 +140,10 @@ model HP301System
     L=L_S3_PL3,
     t=t_S3,
     m_flow_start=m_flow_User_S3,
+    pin_start=pout_User_start_S3_pump - 0.2e5,
+    pout_start=pout_User_start_S3_pump - 0.21e5,
+    Tin_start=Tout_User_start_S3,
+    Tout_start=Tout_User_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -116,6 +153,10 @@ model HP301System
     L=L_S3_PL1,
     t=t_S3,
     m_flow_start=m_flow_User_S3,
+    pin_start=pout_User_start_S3_pump - 0.21e5,
+    pout_start=pout_User_start_S3_pump - 0.22e5,
+    Tin_start=Tout_User_start_S3,
+    Tout_start=Tout_User_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -127,7 +168,8 @@ model HP301System
         rotation=90,
         origin={-12.5,60.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT301 annotation (Placement(transformation(
+    TT301(T_start=Tin_User_start_S3, p_start=pin_User_start_S3)
+          annotation (Placement(transformation(
         extent={{-5.5,-5.5},{5.5,5.5}},
         rotation=90,
         origin={-12.5,51.5})));
@@ -140,6 +182,10 @@ model HP301System
     L=L_S3_PL7,
     t=t_S3,
     m_flow_start=m_flow_User_S3,
+    pin_start=pin_User_start_S3 - 0.02e5,
+    pout_start=pin_User_start_S3 - 0.03e5,
+    Tin_start=Tin_User_start_S3,
+    Tout_start=Tin_User_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -149,6 +195,10 @@ model HP301System
     L=L_S3_PL5,
     t=t_S3,
     m_flow_start=m_flow_User_S3,
+    pin_start=pin_User_start_S3 - 0.01e5,
+    pout_start=pin_User_start_S3 - 0.02e5,
+    Tin_start=Tin_User_start_S3,
+    Tout_start=Tin_User_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -156,7 +206,13 @@ model HP301System
         origin={-10,31})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S300_rCD_C(L=
         L_S3_PL2,
-      m_flow_start=m_flow_User_S3) annotation (Placement(transformation(
+      m_flow_start=m_flow_User_S3,
+    pin_start=pin_User_start_S3,
+    pout_start=pin_User_start_S3 - 0.01e5,
+    Tin_start=Tin_User_start_S3,
+    Tout_start=Tin_User_start_S3,
+    Di=Di_S3,
+    n=n)                           annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,141})));
@@ -181,8 +237,9 @@ model HP301System
       headmax=Pump.P302.headnommax,
       headmin=Pump.P302.headnommin,
       qnom_inm3h_min=Pump.P302.qnommin_inm3h,
-      qnom_inm3h_max=Pump.P302.qnommax_inm3h) "Pump of System 300" annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+      qnom_inm3h_max=Pump.P302.qnommax_inm3h,
+    use_in_omega=true)                        "Pump of System 300" annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
         rotation=90,
         origin={10,-100})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
@@ -199,6 +256,10 @@ model HP301System
     L=L_S3_PL9,
     t=t_S3,
     m_flow_start=m_flow_Source_S3,
+    pin_start=pout_Source_start_S3_pump - 0.1e5,
+    pout_start=pout_Source_start_S3_pump,
+    Tin_start=Tin_Source_start_S3,
+    Tout_start=Tin_Source_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -218,16 +279,24 @@ model HP301System
     L=L_S3_PL8,
     t=t_S3,
     m_flow_start=m_flow_Source_S3,
+    pin_start=pout_Source_start_S3_pump + 0.2e5,
+    pout_start=pout_Source_start_S3_pump + 0.1e5,
+    Tin_start=Tout_Source_start_S3,
+    Tout_start=Tout_Source_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-84})));
-  Sources.SinkPressure sinkPressure
-    annotation (Placement(transformation(extent={{-20,-169},{-40,-149}})));
-  Sources.SourceMassFlow sourceMassFlow(m_flow0=m_flow_Source_S3)
-    annotation (Placement(transformation(extent={{38,-169},{18,-149}})));
-  Sources.SourcePressure sourcePressure
+  Sources.SinkPressure sinkPressure(p0=pout_Source_start_S3_pump, T0=
+        Tout_Source_start_S3)
+    annotation (Placement(transformation(extent={{-20,-170},{-40,-150}})));
+  Sources.SourceMassFlow sourceMassFlow(
+    p0=pin_Source_start_S3_pump,
+    T0=Tin_Source_start_S3_hp,          m_flow0=m_flow_Source_S3)
+    annotation (Placement(transformation(extent={{38,-170},{18,-150}})));
+  Sources.SourcePressure sourcePressure(p0=pin_User_start_S3, T0=
+        Tin_User_start_S3)
     annotation (Placement(transformation(extent={{-40,160},{-20,180}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=false,
@@ -240,11 +309,29 @@ model HP301System
     L=L_S3_PL10,
     t=t_S3,
     m_flow_start=m_flow_Source_S3,
+    pin_start=pout_Source_start_S3_pump + 0.1e5,
+    pout_start=pout_Source_start_S3_pump,
+    Tin_start=Tout_Source_start_S3,
+    Tout_start=Tout_Source_start_S3,
     Di=Di_S3,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-140})));
+  inner System system
+    annotation (Placement(transformation(extent={{120,160},{140,180}})));
+  Modelica.Blocks.Sources.Ramp omega_P301(
+    offset=2*3.141592654*40,
+    height=-2*3.141592654*5,
+    duration=50,
+    startTime=100)
+    annotation (Placement(transformation(extent={{46,1},{25,21}})));
+  Modelica.Blocks.Sources.Ramp omega_P302(
+    offset=2*3.141592654*50,
+    height=2*3.141592654*0,
+    duration=50,
+    startTime=100)
+    annotation (Placement(transformation(extent={{47,-114},{26,-94}})));
 equation
   connect(PT301.inlet, TT301.inlet) annotation (Line(
       points={{-10.3,60.5},{-10.3,51.5}},
@@ -303,7 +390,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(sourceMassFlow.outlet, S3_PL_S600_S300_H.inlet) annotation (Line(
-      points={{18,-159},{14,-159},{14,-150},{10,-150}},
+      points={{18,-160},{10,-160},{10,-150}},
       color={140,56,54},
       thickness=0.5));
   connect(sink.inlet, S3_PL_S300_rCD_H.outlet) annotation (Line(
@@ -323,7 +410,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_S600_S300_C.outlet, sinkPressure.inlet) annotation (Line(
-      points={{-10,-150},{-10,-159},{-20,-159}},
+      points={{-10,-150},{-10,-160},{-20,-160}},
       color={140,56,54},
       thickness=0.5));
   connect(sourcePressure.outlet, S3_PL_S300_rCD_C.inlet) annotation (Line(
@@ -350,6 +437,10 @@ equation
       points={{-10,-24},{-10,-31.4},{-10.2,-31.4},{-10.2,-38.8}},
       color={140,56,54},
       thickness=0.5));
+  connect(omega_P301.y, P301.in_omega)
+    annotation (Line(points={{23.95,11},{15,11}}, color={0,0,127}));
+  connect(omega_P302.y, P302.in_omega)
+    annotation (Line(points={{24.95,-104},{15,-104}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(
         preserveAspectRatio=false,

@@ -87,7 +87,7 @@ equation
 // Ideal Controlled variables
   Tout_hot_max = max(Tout_hot_start, Tin_hot);
   Tout_hot = Tout_hot_max "Fixed hot side outlet temperature";
-  Tin_cold - Tout_cold = 5 "Fixed delta temperature in the hot side";
+  Tin_cold - Tout_cold = 5 "Fixed delta temperature in the cold side";
 // Balance equation
   inhot.m_flow + outhot.m_flow = 0 "Mass Balance hot side";
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";

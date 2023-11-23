@@ -331,7 +331,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL9_S201.outlet, rackCD_Hot_S200_S900.inlet) annotation (Line(
-      points={{-580,-36},{-580,0},{-600,0},{-600,19.75},{-628,19.75}},
+      points={{-580,-36},{-580,0},{-600,0},{-600,19.75},{-629,19.75}},
       color={140,56,54},
       thickness=0.5));
 end GBEBTanksPumpingSystem;

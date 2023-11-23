@@ -233,12 +233,6 @@ model BaseHeatingSystem
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-659,86})));
-  Modelica.Blocks.Sources.Ramp q_P901(
-    height=q_P901_computed*0.5*0,
-    duration=100,
-    offset=q_P901_computed,
-    startTime=400)
-    annotation (Placement(transformation(extent={{-580,40},{-601,60}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FV933(
     Kv=15,

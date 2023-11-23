@@ -27,6 +27,5 @@ model Sequence3
       height=-1,
       duration=5,
       offset=1,
-      startTime=120),
-    FCVC01(Kv=Kv_FCVC01/2));
+      startTime=120));
 end Sequence3;

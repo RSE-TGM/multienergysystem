@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model HP301System
-
+  extends Modelica.Icons.Example;
   parameter Integer n = 3 "Number of volumes in each pipe";
 
   final parameter Types.Pressure pin_start_S3_tank = pout_User_start_S3_pump;

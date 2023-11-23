@@ -4,6 +4,7 @@ ElectricBoilerSystem
 PumpingCirculationSystem
 WaterTankSystem
 StratifiedWaterTankSystem
+HP301System
 UsersPipelineSystem
 CoolingSystem
 BaseHeatingSystem
@@ -22,4 +23,5 @@ WaterTanksSystem
 UsersSystem
 UsersPipelineOLSystem
 CirculationPumpWithUsers
-HP301System
+HP601System
+Sequences

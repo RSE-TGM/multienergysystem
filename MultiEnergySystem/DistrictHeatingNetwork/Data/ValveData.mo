@@ -123,7 +123,7 @@ package ValveData
     q_nom_inm3h = 4.15,
     dp_nom = 1.035e5,
     rho_nom = 985,
-    Kv = 30.55,
+    Kv = 30.55/2,
     Tin_start = 60 + 273.15,
     pin_start = 3e5);
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCVC02(

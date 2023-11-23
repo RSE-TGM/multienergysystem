@@ -138,7 +138,8 @@ model GasBoilerPumpingSystem
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-176,-84})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT101
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT101(T_start=
+        Tin_start_S1, p_start=pin_start_S1)
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,

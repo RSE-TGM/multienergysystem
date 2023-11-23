@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
+﻿within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model HP301System
   extends Modelica.Icons.Example;
   parameter Integer n = 3 "Number of volumes in each pipe";
@@ -445,5 +445,23 @@ equation
         coordinateSystem(
         preserveAspectRatio=false,
         extent={{-140,-180},{140,180}},
-        grid={1,1})));
+        grid={1,1}), graphics={
+        Line(
+          points={{50,-122},{50,-92}},
+          color={28,108,200},
+          thickness=0.5,
+          arrow={Arrow.None,Arrow.Filled}),
+        Text(
+          extent={{53,-93},{83,-123}},
+          textColor={28,108,200},
+          textString="45°C"),
+        Line(
+          points={{-23,-96},{-23,-126}},
+          color={28,108,200},
+          thickness=0.5,
+          arrow={Arrow.None,Arrow.Filled}),
+        Text(
+          extent={{-55,-98},{-25,-128}},
+          textColor={28,108,200},
+          textString="41°C")}));
 end HP301System;

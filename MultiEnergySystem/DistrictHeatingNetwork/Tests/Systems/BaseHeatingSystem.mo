@@ -22,8 +22,8 @@ model BaseHeatingSystem
   parameter Types.Pressure dp_nom_UsersValve = 50000;
 
   // Rack CD
-  parameter Types.Length t_rCD = 1.5e-3;
-  parameter Types.Length Di_rCD = 51e-3;
+  parameter Types.Length t_rCD = 2e-3;
+  parameter Types.Length Di_rCD = 72e-3;
   parameter Types.Pressure pin_start_rCD = 1.69e5;
   parameter Types.Pressure pout_start_rCD = 1.60e5;
   parameter Types.Pressure pin_start_rCD_cold = 1.69e5;
@@ -112,20 +112,7 @@ model BaseHeatingSystem
   parameter Types.MassFlowRate m_flow_S9 = 4.04;
   parameter Types.VolumeFlowRate q_P901_computed = 8.1;
 
-  // System S100
 
-  parameter Types.Pressure pin_start_S1 = 1.695e5;
-  parameter Types.Pressure pout_start_S1 = 1.6e5;
-  parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
-  parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
-
-  parameter Types.Length L_S1 = 10;
-  parameter Types.Length L_S1_PL1 = 0.4;
-  parameter Types.Length L_S1_PL2 = 0.8;
-  parameter Types.Length L_S1_PL3 = 1.5;
-  parameter Types.Length L_S1_PL4 = 0.7;
-  parameter Types.Length Di_S1 = 51e-3;
-  parameter Types.Length t_S1 = 1.5e-3;
 
 
   // Cooling System
@@ -141,7 +128,7 @@ model BaseHeatingSystem
 
 
   // Valves Nominal Data
-  parameter Real Kv_FCVC01(unit = "m3/h") = 30.55;
+  parameter Real Kv_FCVC01(unit = "m3/h") = 30.55/2;
   parameter Real Kv_FCVC02(unit = "m3/h") = 30.55;
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
@@ -1019,7 +1006,8 @@ equation
   connect(omega_P901.y, P901.in_omega)
     annotation (Line(points={{-642.05,54},{-654,54}}, color={0,0,127}));
   annotation (
-    Diagram(coordinateSystem(extent={{-800,-300},{800,300}}), graphics={
+    Diagram(coordinateSystem(extent={{-800,-320},{800,320}}, grid={1,1}),
+                                                              graphics={
         Text(
           extent={{50,192},{110,154}},
           textColor={28,108,200},

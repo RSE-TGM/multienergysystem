@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass;
 partial model PartialValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Water.Valve;
-  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort(allowFlowReversal = true);
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regRoot;
   import Modelica.Fluid.Utilities.regStep;

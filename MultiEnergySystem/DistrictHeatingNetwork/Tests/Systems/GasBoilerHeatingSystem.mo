@@ -1194,11 +1194,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL3_S101.inlet,GB101. outlet) annotation (Line(
-      points={{-126,-186},{-126,-200.2},{-125.6,-200.2},{-125.6,-214.4}},
+      points={{-126,-186},{-126,-200.2},{-107.2,-200.2},{-107.2,-255.8}},
       color={140,56,54},
       thickness=0.5));
   connect(GB101.inlet,PL2_S101. outlet) annotation (Line(
-      points={{-162.4,-214.4},{-162,-214.4},{-162,-188}},
+      points={{-107.2,-228.2},{-162,-228.2},{-162,-188}},
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S101.inlet,FCV101. outlet) annotation (Line(

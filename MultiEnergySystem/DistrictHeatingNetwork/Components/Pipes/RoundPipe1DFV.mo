@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model RoundPipe1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube(T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal);
+  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube(T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal, hin_start = fluid[1].h_start);
   import Modelica.Fluid.Utilities.regSquare;
   import Modelica.Fluid.Utilities.regStep;
   //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
@@ -102,6 +102,17 @@ model RoundPipe1DFV
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,43},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
+
+protected
+  function h_T
+    input Types.Temperature T;
+    input Real a[4];
+    output Types.SpecificEnthalpy h;
+  algorithm
+    h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
+  annotation(Inline = true);
+  end h_T;
+
 equation
 
 // Assertations
@@ -112,7 +123,7 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    m_flow[i]- m_flow[i+1] = Vi*(regStep(dp, fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-3*der(ptilde));
+    m_flow[i]- m_flow[i+1] = Vi*(regStep(dp, fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-6*der(ptilde));
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
     //(Vi*regStep(dp,fluid[i+1].h,fluid[i].h)*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
 
@@ -156,8 +167,8 @@ equation
   end if;
 
   fluid_temp.p = ptilde;
-  //fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5), hin_start);
-  fluid_temp.h = regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-6);
+  fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5), hin_start);
+  //fluid_temp.h = regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-6);
 
   // Boundary conditions
   inlet.m_flow = m_flow[1];

@@ -62,8 +62,8 @@ model PowerTransferTest "3 tests using Ideal Power Transfer component"
             {-32,0}})));
   Modelica.Blocks.Sources.RealExpression Ptransfer3(y=-4186*5)  annotation (Placement(transformation(extent={{-48,-56},
             {-32,-40}})));
-  Components.BaseClass.PowerTransfer                                          Pt4(pin_start
-      =200000)                                                                    annotation (Placement(
+  Components.BaseClass.PowerTransfer                                          Pt4(pin_start=
+       200000)                                                                    annotation (Placement(
         visible=true, transformation(
         origin={-20,-100},
         extent={{10,10},{-10,-10}},

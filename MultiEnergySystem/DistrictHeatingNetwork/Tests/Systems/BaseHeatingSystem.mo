@@ -753,12 +753,13 @@ model BaseHeatingSystem
     annotation (Placement(transformation(extent={{-100,-10},{-120,10}})));
   Modelica.Blocks.Sources.TimeTable P901_omega(table=P901omega)
     annotation (Placement(transformation(extent={{-630,44},{-650,64}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08
+    "Pressure sensor at the inlet of valve FCVC01"
+    annotation (Placement(transformation(extent={{280,182},{288,174}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07
+    "Pressure sensor at the outlet of valve FCVC01"
+    annotation (Placement(transformation(extent={{294,238},{302,246}})));
 equation
-  connect(rackL2L3_rackL3L4_cold.outlet,S900_rackL2L3_cold. inlet) annotation (
-      Line(
-      points={{150,240},{50,240}},
-      color={140,56,54},
-      thickness=0.5));
   connect(rackL3L4_FCVC01_cold.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
       points={{270,240},{170,240}},
@@ -953,11 +954,6 @@ equation
       points={{490,240},{390,240}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCVC01_rackL4L5_cold.outlet, rackL3L4_FCVC01_cold.inlet) annotation (
-      Line(
-      points={{370,240},{290,240}},
-      color={140,56,54},
-      thickness=0.5));
   connect(FTA12.outlet, FCVC02.inlet) annotation (Line(
       points={{732.4,179.6},{750,179.6},{750,200}},
       color={140,56,54},
@@ -978,6 +974,24 @@ equation
     annotation (Line(points={{-91,0},{-98,0}}, color={255,0,255}));
   connect(P901_omega.y, P901.in_omega)
     annotation (Line(points={{-651,54},{-664,54}}, color={0,0,127}));
+  connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (Line(
+      points={{260,180},{272,180},{272,179.6},{284,179.6}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCVC01.outlet, PTA07.inlet) annotation (Line(
+      points={{310,220},{310,240},{298,240.4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCVC01_rackL4L5_cold.outlet, rackL3L4_FCVC01_cold.inlet) annotation (
+      Line(
+      points={{370,240},{290,240}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S900_rackL2L3_cold.inlet, rackL2L3_rackL3L4_cold.outlet) annotation (
+      Line(
+      points={{50,240},{150,240}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-800,-320},{800,320}}, grid={1,1}),
                                                               graphics={

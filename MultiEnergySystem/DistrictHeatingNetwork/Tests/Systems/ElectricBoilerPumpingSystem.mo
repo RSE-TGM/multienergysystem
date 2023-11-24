@@ -1,9 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model ElectricBoilerPumpingSystem
-  extends BaseHeatingSystem(FV933_theta(
-      height=0,
-      offset=1,
-      startTime=350), omega_P901(height=-2*3.141592654*10));
+  extends BaseHeatingSystem;
   parameter Types.Pressure pin_start_S4 = 1.695e5;
   parameter Types.Pressure pout_start_S4 = 1.6e5;
   parameter Types.Temperature Tin_start_S4 = 17 + 273.15;
@@ -209,19 +206,19 @@ equation
     annotation (Line(points={{-201,-124},{-214,-124}},
                                                color={0,0,127}));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
-      points={{-258,-212},{-258,-233.6},{-257.6,-233.6}},
+      points={{-258,-212},{-258,-246.8},{-204.8,-246.8}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet,PL3_S401. inlet) annotation (Line(
-      points={{-222.4,-233.6},{-222.4,-232},{-222,-232},{-222,-210}},
+      points={{-204.8,-273.2},{-204.8,-232},{-222,-232},{-222,-210}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
-      points={{-222.4,-48},{-222,-48},{-222,20},{-240,20}},
+      points={{-222.4,-48},{-222,-48},{-222,20},{-250,20}},
       color={140,56,54},
       thickness=0.5));
   connect(TT401.inlet, rackCD_Cold_S300_S400.outlet) annotation (Line(
-      points={{-257.6,-48},{-258,-48},{-258,-19.75},{-310.5,-19.75}},
+      points={{-257.6,-48},{-258,-48},{-258,-19.75},{-320.5,-19.75}},
       color={140,56,54},
       thickness=0.5));
   connect(omega_P401.y, P401.in_omega) annotation (Line(points={{-202.05,-166},{

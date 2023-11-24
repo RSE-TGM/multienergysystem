@@ -1,23 +1,19 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
 model Sequence1
   extends GBEBPumpingSystem(
-    omega_P901(
-      height=2*3.141592654*5,
-      duration=5,
-      offset=2*3.141592654*35,
-      startTime=60),
-    omega_P101(
-      height=-2*3.141592654*5,
-      duration=10,
-      offset=2*3.141592654*50,
-      startTime=120),
-    omega_P401(
-      height=-2*3.141592654*5,
-      duration=10,
-      offset=2*3.141592654*50,
-      startTime=180),
-    FCVC02_theta(height=0, offset=1),
-    FCVC01_theta(height=1, offset=0),
-    FCV901_theta(height=0, offset=1),
-    VE901(p0=220000));
+    m_flow_total = 3.89,
+    m_flow_S4 = 1.67,
+    pin_start_rCD_cold = 2.2e5,
+    FV933_state = false,
+    P901omega = [0, 2*3.141592654*40;  60, 2*3.141592654*40;  60, 2*3.141592654*35; 300, 2*3.141592654*35; 300, 2*3.141592654*40; 500, 2*3.141592654*40],
+    P101omega = [0, 2*3.141592654*50; 120, 2*3.141592654*50; 120, 2*3.141592654*45; 300, 2*3.141592654*45; 300, 2*3.141592654*50; 500, 2*3.141592654*50],
+    P401omega = [0, 2*3.141592654*50; 180, 2*3.141592654*50; 180, 2*3.141592654*45; 300, 2*3.141592654*45; 300, 2*3.141592654*50; 500, 2*3.141592654*50],
+    FCVC01theta = [0, 0; 660, 0;   660, 0.5; 720, 0.5; 720, 1; 1000, 1],
+    FCVC02theta = [0, 1; 840, 1;   900, 0.5; 960, 0.5; 960, 0; 1000, 0],
+    FCV901theta = [0, 1; 360, 1; 360, 0.8; 600, 0.8; 600, 1;   1000, 1],
+    FCV101theta = [0, 1; 420, 1; 420, 0.8; 600, 0.8; 600, 1;   1000, 1],
+    FCV401theta = [0, 1; 480, 1; 480, 0.8; 600, 0.8; 600, 1;   1000, 1],
+    VE901(p0(displayUnit="Pa") = 220000));
+
+  annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
 end Sequence1;

@@ -1,14 +1,14 @@
 ﻿within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model HP601System
-
+  extends Modelica.Icons.Example;
   parameter Integer n = 3 "Number of volumes in each pipe";
 
   final parameter Types.Pressure pin_start_S6_tank = pout_User_start_S6_pump;
   final parameter Types.Pressure pout_start_S6_tank = pin_start_S6_tank - 9.81*2*990;
 
   // Boundary parameters
-  parameter Types.Pressure pin_Source_start_S6 = 1.79e5;
-  parameter Types.Pressure pout_Source_start_S6 = 2.5e5;
+  parameter Types.Pressure pin_Source_start_S6 = 1.79e5+1.21e5;
+  parameter Types.Pressure pout_Source_start_S6 = 2.5e5+1.21e5;
   parameter Types.Temperature Tin_Source_start_S6 = 14 + 273.15;
   parameter Types.Temperature Tout_Source_start_S6 = 7 + 273.15;
 

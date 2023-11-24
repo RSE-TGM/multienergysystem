@@ -5,6 +5,8 @@ PumpingCirculationSystem
 WaterTankSystem
 StratifiedWaterTankSystem
 HP301System
+HP601System
+HeatPumpsSystem
 UsersPipelineSystem
 CoolingSystem
 BaseHeatingSystem
@@ -23,5 +25,4 @@ WaterTanksSystem
 UsersSystem
 UsersPipelineOLSystem
 CirculationPumpWithUsers
-HP601System
 Sequences

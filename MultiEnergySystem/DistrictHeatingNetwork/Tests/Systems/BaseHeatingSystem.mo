@@ -69,15 +69,6 @@ model BaseHeatingSystem
   parameter Types.Length Di_rL_H = 51e-3;
 
 
-  //rackCD_Cold_S100_FV933
-  //rackCD_Cold_S400_S100
-  //rackCD_Cold_S300_S400
-  //rackCD_Cold_S300_S300
-  //rackCD_Cold_S500_S300
-  //rackCD_Cold_S500_S500
-  //rackCD_Cold_S200_S500
-  //rackCD_Cold_S900_S200
-
   parameter Types.Length t = 1.5e-3;
   parameter Types.Length Di = 51e-3;
   parameter Types.Length L_v = 1;
@@ -92,7 +83,6 @@ model BaseHeatingSystem
 
   parameter Types.Pressure pin_start = 1.69e5;
   parameter Types.Pressure pout_start = 3e5;
-
 
 
   // System S900
@@ -113,10 +103,7 @@ model BaseHeatingSystem
   parameter Types.VolumeFlowRate q_P901_computed = 8.1;
 
 
-
-
   // Cooling System
-
   parameter Types.Pressure pin_start_Users = 3e5;
   parameter Types.Pressure pout_start_Users = 2.5e5;
   parameter Types.MassFlowRate m_flow_Source_total = 2.4095388;

@@ -961,11 +961,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV1.outlet, GB101.inlet) annotation (Line(
-      points={{-240,-60},{-240,-80}},
+      points={{-240,-60},{-240,-74},{-240,-87.5},{-210,-87.5}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV.inlet, GB101.outlet) annotation (Line(
-      points={{-220,-60},{-220,-80}},
+      points={{-220,-60},{-220,-81},{-220,-102.5},{-210,-102.5}},
       color={140,56,54},
       thickness=0.5));
   connect(CH4.outlet, GB101.inletfuel) annotation (Line(

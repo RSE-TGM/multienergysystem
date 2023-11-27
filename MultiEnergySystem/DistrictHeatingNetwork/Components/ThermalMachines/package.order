@@ -1,5 +1,7 @@
 ControlledHeatPumpNoDynamics
+ControlledChillerNoDynamics
 GasBoiler
 ElectricBoiler
 ControlledElectricBoiler
 ControlledGasBoiler
+ChillerNoDynamics

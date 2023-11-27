@@ -8,3 +8,4 @@ ElectricBoilerTest
 ControlledElectricBoilerTest
 ControlledHeatPumpNoDynamicsTest
 BaseClass
+ThermalMachines

@@ -8,6 +8,7 @@ HP301System
 HP601System
 HeatPumpsSystem
 UsersPipelineSystem
+UsersSystem
 CoolingSystem
 BaseHeatingSystem
 GasBoilerPumpingSystem

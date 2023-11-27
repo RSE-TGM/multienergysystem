@@ -1,5 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model UsersSystem "Case in which the gas boiler is the only source of heat"
+model UsersReducedSystem
+  "Case in which the gas boiler is the only source of heat"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
@@ -276,4 +277,4 @@ equation
   annotation (
     Diagram(coordinateSystem(extent={{-260,-120},{260,120}})),             Icon(
         coordinateSystem(grid={0.5,0.5})));
-end UsersSystem;
+end UsersReducedSystem;

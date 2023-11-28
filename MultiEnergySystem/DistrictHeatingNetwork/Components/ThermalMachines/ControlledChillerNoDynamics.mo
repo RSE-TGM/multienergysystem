@@ -19,23 +19,26 @@ model ControlledChillerNoDynamics
   final parameter SI.Pressure pout_cold_start = pin_cold_start - dp_cold_start "Start/Nominal value for Cold side outlet pressure";
   parameter SI.MassFlowRate m_flow_cold_start = 1 "Cold fluid mass flow rate";
   parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_cold_start - pout_cold_start)/m_flow_cold_start "Pressure loss across the cold side";
+  parameter SI.Volume V = 0.1;
 
   SI.Pressure pin_cold "Cold side inlet pressure";
   SI.Pressure pout_cold "Cold side outlet pressure";
 
-  SI.Temperature Tin_cold "Cold side inlet temperature";
-  SI.Temperature Tout_cold "Cold side outlet temperature";
+  SI.Temperature Tin_cold(start = Tin_cold_start) "Cold side inlet temperature";
+  SI.Temperature Tout_cold(start = Tout_cold_start) "Cold side outlet temperature";
   SI.Temperature Tout_cold_min "Minimum possible cold side outlet temperature";
 
   SI.SpecificEnthalpy hin_cold "Cold side inlet Specific Enthalpy";
   SI.SpecificEnthalpy hout_cold "Cold side outlet Specific Enthalpy";
 
-  SI.MassFlowRate m_flow_cold "Cold fluid mass flow rate";
+  SI.MassFlowRate m_flow_cold(start = m_flow_cold_start) "Cold fluid mass flow rate";
   SI.VolumeFlowRate q_m3h_cold "Cold volumetric flow rate in m3h";
   //SI.PerUnit COP "Coefficient of performance";
   //SI.Power Pcomp "Compression Power";
   SI.Power Pcold "Thermal Power cold side (lato surgente)";
   //SI.Power Phot "Themal Power hot side (lato utenze)";
+  SI.Mass M;
+
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold annotation (
     Placement(visible = true, transformation(origin = {-76, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation (
@@ -64,7 +67,10 @@ equation
   Tout_cold = Tout_cold_min "Fixed hot side outlet temperature";
 // Balance equation
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";
-  pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side";
+  M = V*fluidInCold.rho;
+  //der(M) = incold.m_flow + outcold.m_flow;
+  //pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side";
+  pin_cold = pout_cold;
   Pcold = m_flow_cold*(hin_cold - hout_cold) "Themal Power Cold side";
 //  Phot = Pcomp + Pcold "Energy Balance";
 //Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;
@@ -73,6 +79,10 @@ equation
 // Dummy equations for energy balance
 
   incold.h_out = inStream(incold.h_out);
+
+// initial equation
+//   der(M) = 0;
+
   annotation (
     Icon);
 end ControlledChillerNoDynamics;

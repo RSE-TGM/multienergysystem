@@ -88,7 +88,7 @@ model RoundPipe1DFV
     A = Atot,
     Twall = Twall,
     Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
-    m_flow = regStep(dp, m_flow[2:end], m_flow[1:end-1]),
+    m_flow = regStep(inlet.m_flow, m_flow[2:end], m_flow[1:end-1]),
     p = pout,
     cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
     mu = fluid[2:end].mu,
@@ -123,16 +123,16 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    m_flow[i]- m_flow[i+1] = Vi*(regStep(dp, fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-6*der(ptilde));
+    m_flow[i]- m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT)*der(Ttilde[i]) +  1e-6*der(ptilde));
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
     //(Vi*regStep(dp,fluid[i+1].h,fluid[i].h)*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
 
-    (Vi*regStep(dp,fluid[i+1].drho_dT, fluid[i].drho_dT)*regStep(dp,fluid[i+1].u,fluid[i].u) + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
+    (Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u) + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   end for;
 
-  rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*1e-6);
+  rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], dp_nom*1e-6);
   M = Vi*rhotilde;
-  Ttilde = regStep(dp, T[2:n+1], T[1:n], dp_nom*1e-6);
+  Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], dp_nom*1e-6);
 
 
   // Momentum Balance
@@ -160,14 +160,14 @@ equation
 
   dp = pin-pout;
 
-  if noEvent(dp > 0) then
+  if noEvent(inlet.m_flow > 0) then
     T[1] = fluid_temp.T;
   else
     T[end] = fluid_temp.T;
   end if;
 
   fluid_temp.p = ptilde;
-  fluid_temp.h = homotopy(regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5), hin_start);
+  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-5), hin_start);
   //fluid_temp.h = regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-6);
 
   // Boundary conditions

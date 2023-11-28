@@ -76,10 +76,10 @@ model TestPumpPR01
       qnom_inm3h_min=Pump.PR01.qnommin_inm3h,
       rhonom = Pump.PR01.rhonom,
       qnom_inm3h_max=Pump.PR01.qnommax_inm3h),
-    omega_40Hz(offset=Pump.PR01.omeganom),
-    m_flow_set_40Hz(height=8, offset=4.18),
-    m_flow_set_30Hz(height=8, offset=4.18),
-    omega_30Hz(offset=Pump.PR01.omeganom));
+    omega_40Hz(offset=Pump.PR01.omeganom*4/5),
+    m_flow_set_40Hz(height=9, offset=2),
+    m_flow_set_30Hz(height=5, offset=2),
+    omega_30Hz(offset=Pump.PR01.omeganom*3/5));
 equation
 
 annotation (

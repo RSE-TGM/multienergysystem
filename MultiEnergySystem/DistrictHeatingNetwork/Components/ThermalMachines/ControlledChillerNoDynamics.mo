@@ -69,8 +69,8 @@ equation
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";
   M = V*fluidInCold.rho;
   //der(M) = incold.m_flow + outcold.m_flow;
-  //pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side";
-  pin_cold = pout_cold;
+  pin_cold - pout_cold = k_cold*m_flow_cold "Momentum balance cold side";
+  //pin_cold = pout_cold;
   Pcold = m_flow_cold*(hin_cold - hout_cold) "Themal Power Cold side";
 //  Phot = Pcomp + Pcold "Energy Balance";
 //Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;

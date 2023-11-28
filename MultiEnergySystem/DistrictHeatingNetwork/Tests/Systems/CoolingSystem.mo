@@ -26,10 +26,10 @@ model CoolingSystem
   parameter Types.Pressure pin_start_Source = 2e5;
   parameter Types.Pressure pout_start_Source = 1.8e5;
 
-  parameter Types.Pressure pin_start_Cool = 1.9e5;
-  parameter Types.Pressure pout_start_Cool = 1.8e5;
-  parameter Types.Pressure pin_start_PR01 = 1.8e5;
-  parameter Types.Pressure pout_start_PR01 = 2.5e5;
+  parameter Types.Pressure pin_start_Cool = 0.92e5;
+  parameter Types.Pressure pout_start_Cool = 0.92e5;
+  parameter Types.Pressure pin_start_PR01 = pout_start_Cool;
+  parameter Types.Pressure pout_start_PR01 = 2e5;
 
   parameter Types.Temperature Tin_start_Cool = 35 + 273.15;
   parameter Types.Temperature Tout_start_Cool = 25 + 273.15;
@@ -49,23 +49,23 @@ model CoolingSystem
   parameter Types.Power Pchiller = -148751;
   parameter Types.Power Pchillervar = 0;
 
-  parameter Types.Length L_Users = 4;
+  parameter Types.Length L_Users = 3;
   parameter Types.Length Di_Users = 32e-3;
   parameter Types.Length t_Users = 1.5e-3;
 
   parameter Types.Length t_RR = 1.5e-3;
   parameter Types.Length Di_RR = 85e-3;
-  parameter Types.MassFlowRate m_flow_Cool = 5.553528*3600/1000;
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter Types.MassFlowRate m_flow_Cool = 8.88;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state";
 
 
   parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
   parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
   parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
   parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCVR01theta[:,:] = [0, 0; 100, 0];
+  parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
 
-  parameter Real PR01omega[:,:] = [0, 2*3.141592654*40; 100, 2*3.141592654*40; 100, 2*3.141592654*42.5; 200, 2*3.141592654*42.5; 200, 2*3.141592654*45; 300, 2*3.141592654*45];
+  parameter Real PR01omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
 
   // Lengths of pipelines source side
   parameter Types.Length L_VER901_FCVR01 = 1;
@@ -75,13 +75,13 @@ model CoolingSystem
   parameter Types.Length L_FTR03_PTR01 = 1;
   parameter Types.Length h_FTR03_PTR01 = 0.265;
   parameter Types.Length L_PTR01_FTR01 = 1.85+0.50;
-  parameter Types.Length h_PTR01_FTR01 = 1.85;
+  parameter Types.Length h_PTR01_FTR01 = -1.8;
   parameter Types.Length L_FTR01_RR01 = 0.72;
   parameter Types.Length h_FTR01_RR01 = -0.72;
   parameter Types.Length L_RR01_PR01 = 1.275;
   parameter Types.Length h_RR01_PR01 = 0.000;
-  parameter Types.Length L_PR01_PTR02 = 0.425+1.275+0.850;
-  parameter Types.Length h_PR01_PTR02 = 1.275;
+  parameter Types.Length L_PR01_PTR02 = 0.425+1.242+0.850;
+  parameter Types.Length h_PR01_PTR02 = 1.242;
   parameter Types.Length L_TTR02_VER901 = 1.062;
   parameter Types.Length h_TTR02_VER901 = 0;
 
@@ -314,11 +314,11 @@ model CoolingSystem
         origin={10,-30})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     PR01(
-    Tin_start(displayUnit="K") = 15 + 273.15,
-    Tout_start(displayUnit="K") = 16 + 273.15,
+    Tin_start(displayUnit="K") = Tout_start_Cool,
+    Tout_start(displayUnit="K") = Tout_start_Cool,
     a=Pump.PR01.a,
     b=Pump.PR01.b,
-    m_flow_start=8.977481,
+    m_flow_start=m_flow_Cool,
     dpnom=Pump.PR01.dpnom,
     etaelec=Pump.PR01.etaelec,
     etamech=Pump.PR01.etamech,
@@ -338,7 +338,7 @@ model CoolingSystem
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={150,75})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV701(
       Kv=Valve.TCV701.Kv,
       dp_nom=Valve.TCV701.dp_nom,
@@ -348,7 +348,7 @@ model CoolingSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-240,0})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV711(
       Kv=Valve.TCV711.Kv,
       dp_nom=Valve.TCV711.dp_nom,
@@ -358,7 +358,7 @@ model CoolingSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-150,0})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV721(
       Kv=Valve.TCV721.Kv,
       dp_nom=Valve.TCV721.dp_nom,
@@ -368,7 +368,7 @@ model CoolingSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,0})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV731(
       Kv=Valve.TCV731.Kv,
       dp_nom=Valve.TCV731.dp_nom,
@@ -378,12 +378,9 @@ model CoolingSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={30,0})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer RR01(Tin_start=
-       Tin_start_Cool, Tout_start=Tout_start_Cool)                                 "Chiller"
-    annotation (Placement(transformation(extent={{220,115},{190,145}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCVR01(
-    Kv=9.5339,
+    Kv=15,
     dp_nom(displayUnit="Pa") = 1.09928e5,
     rho_nom(displayUnit="kg/m3") = 1000,
     Tin_start(displayUnit="K") = Tout_start_Cool,
@@ -392,17 +389,11 @@ model CoolingSystem
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={200,-30})));
-  Sources.SourcePressure VER901(p0=250000, T0(displayUnit="K") = 30 + 273.15)
+  Sources.SinkPressure VER901(p0=200000, T0(displayUnit="K") = 30 + 273.15)
     "Expansion Vessel for cooling circuit" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=-90,
+        rotation=90,
         origin={120,10})));
-  Modelica.Blocks.Sources.Ramp CoolingP(
-    height=Pchillervar,
-    duration=100,
-    offset=Pchiller,
-    startTime=200)
-    annotation (Placement(transformation(extent={{250,150},{230,170}})));
   Modelica.Blocks.Sources.TimeTable TCV701_theta(table=TCV701theta)
     annotation (Placement(transformation(extent={{-274,-10},{-254,10}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
@@ -427,7 +418,7 @@ model CoolingSystem
   Modelica.Blocks.Sources.TimeTable TCV731_theta(table=TCV731theta)
     annotation (Placement(transformation(extent={{-6,-10},{14,10}})));
   Modelica.Blocks.Sources.TimeTable FCVR01_theta(table=FCVR01theta)
-    annotation (Placement(transformation(extent={{240,10},{220,30}})));
+    annotation (Placement(transformation(extent={{241,10},{221,30}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT713(T_start=Tout_start_Cool,p_start=pin_start_Users)
     "Temperature sensor at the inlet of EX711 - cold side" annotation (
@@ -501,7 +492,7 @@ model CoolingSystem
         rotation=0,
         origin={230,-30})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR03(T_start=
-        Tout_start_Cool)
+        Tout_start_Cool, p_start=pin_start_Cool)
     "Flow Sensor at the outlet of valve FCVR01" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
@@ -523,7 +514,7 @@ model CoolingSystem
         rotation=-90,
         origin={260,60})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TTR01(T_start=Tin_start_Cool, p_start=pin_start_Users)
+    TTR01(T_start=Tin_start_Cool, p_start=pin_start_Cool)
     "Temperature sensor at the inlet of chiller RR01" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
@@ -536,7 +527,7 @@ model CoolingSystem
         rotation=-90,
         origin={262,35})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR01(T_start=
-        Tin_start_Cool)
+        Tin_start_Cool, p_start=pin_start_Cool)
     "Flow Sensor at the inlet of chiller RR01" annotation (Placement(
         transformation(
         extent={{5,-5},{-5,5}},
@@ -677,6 +668,10 @@ model CoolingSystem
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-203,139})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
+    RR01(Tout_cold_set=Tout_start_Cool,
+    dp_cold_start=20000,                m_flow_cold_start=m_flow_Cool)
+    annotation (Placement(transformation(extent={{170,134},{241,205}})));
 equation
   connect(PL701_ColdSide_HotOut.outlet, PL701_ColdSide_HotOut_PL711.inlet)
     annotation (Line(
@@ -830,16 +825,6 @@ equation
       points={{180,-30},{190,-30}},
       color={140,56,54},
       thickness=0.5));
-  connect(CoolingP.y, RR01.Ptransfer)
-    annotation (Line(points={{229,160},{205,160},{205,142}}, color={0,0,127}));
-  connect(RR01.outlet, SR00_PL_RR01_PR01.inlet) annotation (Line(
-      points={{190,130},{150,130},{150,120}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(SR00_PL_FTR01_RR01.outlet, RR01.inlet) annotation (Line(
-      points={{260,120},{260,130},{220,130}},
-      color={140,56,54},
-      thickness=0.5));
   connect(SR00_PL_RR01_PR01.outlet, PR01.inlet) annotation (Line(
       points={{150,100},{150,85.4}},
       color={140,56,54},
@@ -877,10 +862,6 @@ equation
       points={{253,-30},{260,-30},{260,-20}},
       color={140,56,54},
       thickness=0.5));
-  connect(SR00_PL_FTR03_PTR01.outlet, TTR01.inlet) annotation (Line(
-      points={{260,0},{260,25},{259.6,25}},
-      color={140,56,54},
-      thickness=0.5));
   connect(TTR01.inlet, PTR01.inlet) annotation (Line(
       points={{259.6,25},{259.6,35}},
       color={140,56,54},
@@ -898,7 +879,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCVR01_theta.y, FCVR01.opening)
-    annotation (Line(points={{219,20},{200,20},{200,-22}}, color={0,0,127}));
+    annotation (Line(points={{220,20},{200,20},{200,-22}}, color={0,0,127}));
   connect(PL721_ColdSide_ColdIn_PL3.outlet, PL721_ColdSide_ColdIn_PL731.inlet)
     annotation (Line(
       points={{80,-30},{20,-30}},
@@ -907,10 +888,6 @@ equation
   connect(PL721_ColdSide_ColdIn_PL3.inlet, SR00_PL_VER901_FCVR01.inlet)
     annotation (Line(
       points={{100,-30},{160,-30}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(VER901.outlet, SR00_PL_VER901_FCVR01.inlet) annotation (Line(
-      points={{120,-3.55271e-15},{120,-30},{160,-30}},
       color={140,56,54},
       thickness=0.5));
   connect(PR01_omega.y, PR01.in_omega) annotation (Line(points={{131,80},{137.25,
@@ -957,11 +934,24 @@ equation
       points={{28.7,75.25},{28.7,98},{-61.3,98},{-61.3,76.25}},
       color={140,56,54},
       thickness=0.5));
+  connect(TTR01.inlet, SR00_PL_FTR03_PTR01.outlet) annotation (Line(
+      points={{259.6,25},{260,25},{260,-3.55271e-15}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(VER901.inlet, SR00_PL_VER901_FCVR01.inlet) annotation (Line(
+      points={{120,0},{120,-30},{160,-30}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(SR00_PL_FTR01_RR01.outlet, RR01.incold) annotation (Line(
+      points={{260,120},{260,131},{227,131},{227,148.2},{226.8,148.2}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(RR01.outcold, SR00_PL_RR01_PR01.inlet) annotation (Line(
+      points={{184.2,148.2},{184.2,130},{150,130},{150,120}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
-      experiment(
-      StopTime=500,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"),
+      experiment(StopTime=300, __Dymola_Algorithm="Dassl"),
     Icon(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})));
 end CoolingSystem;

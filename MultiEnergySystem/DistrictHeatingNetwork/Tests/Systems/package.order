@@ -10,6 +10,7 @@ HeatPumpsSystem
 UsersPipelineSystem
 UsersSystem
 CoolingSystem
+HXCoolingSystem
 BaseHeatingSystem
 GasBoilerPumpingSystem
 ElectricBoilerPumpingSystem
@@ -28,3 +29,4 @@ UsersPipelineOLSystem
 CirculationPumpWithUsers
 Sequences
 GBEBCompleteSystem
+BaseTestSystem

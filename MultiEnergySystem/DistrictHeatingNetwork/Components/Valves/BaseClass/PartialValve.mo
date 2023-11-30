@@ -14,29 +14,35 @@ partial model PartialValve
   parameter Types.PerUnit nomOpening = 1 "Nominal valve opening";
   parameter Real Kv(unit = "m3/h") = 12 "Metri Flow Coefficient ";
   parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter";
-  parameter Modelica.Units.SI.PressureDifference dp_nom = 4e5 "Pressure drop between supply and return, as imposed by the differential pump";
-  parameter Modelica.Units.SI.Density rho_nom = 998 "Nominal fluid density at supply";
+  parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump";
+  parameter Modelica.Units.SI.PressureDifference dp_start = 0.5e5 "Start value valve pressure drop";
+  parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply";
+
+
   parameter Components.Types.valveOpeningChar openingChar = Components.Types.valveOpeningChar.Linear "opening characteristic";
 
   // Start values
   parameter Types.Temperature Tin_start = 20 + 273.15;
   parameter Types.Pressure pin_start = 2e5;
+  parameter Types.Density rho_start = 985 "Start value fluid density at the inlet";
+  parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate";
 
   // Final parameters
-  final parameter Types.MassFlowRate m_flow_nom = 2.7778e-5*Kv*sqrt(dp_nom)*sqrt(rho_nom) "Peak mass flow rate at full opening";
+  final parameter Types.MassFlowRate m_flow_start = q_m3h_start*rho_start;
+  final parameter Types.MassFlowRate m_flow_nom = 2.7778e-5*Kv*sqrt(dp_nom)*sqrt(rho_start) "Peak mass flow rate at full opening";
   final parameter Types.Temperature Tout_start =  Tin_start;
   final parameter Types.Pressure pout_start = pin_start - dp_nom;
-
+  final parameter Types.Area A_v = 2.7778e-5*Kv "Opening area of the valve";
   // Variables
-  Types.Area A_v = 2.7778e-5*Kv "Opening area of the valve";
   Types.MassFlowRate m_flow(start = m_flow_nom) "Mass flow rate through the valve";
-  Types.VolumeFlowRate q_flow "Volumetric flow rate";
-  Real q_flow_inm3h(unit = "m3/h") "Volumetric flow rate in m3/h";
+  Types.VolumeFlowRate q "Volumetric flow rate";
+  Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/h";
   Types.Temperature Tin(start = Tin_start);
   Types.Temperature Tout(start = Tout_start);
   Types.Pressure pin(start = pin_start);
   Types.Pressure pout;
   Types.Pressure dp(start = dp_nom);
+  Types.Density rho(start = rho_start, nominal = rho_nom);
 
   // Medium
   Medium fluidIn(T_start = Tin_start, p_start = pin_start);
@@ -73,8 +79,9 @@ equation
   Tout = fluidOut.T;
   pin = fluidIn.p;
   pout = fluidOut.p;
-  q_flow = m_flow/fluidIn.rho;
-  q_flow_inm3h = q_flow*3600;
+  rho = fluidIn.rho;
+  q = m_flow/fluidIn.rho;
+  q_m3h = q*3600;
   dp = pin - pout;
 
   annotation (

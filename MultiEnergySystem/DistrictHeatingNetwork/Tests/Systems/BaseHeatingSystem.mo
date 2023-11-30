@@ -750,9 +750,9 @@ model BaseHeatingSystem
   Modelica.Blocks.Sources.TimeTable FCVC02_theta(table=FCVC02theta)
     annotation (Placement(transformation(extent={{800,260},{780,280}})));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=FV933_state)
-    annotation (Placement(transformation(extent={{-70,-10},{-90,10}})));
+    annotation (Placement(transformation(extent={{-45,-10},{-65,10}})));
   Modelica.Blocks.Math.BooleanToReal FV933_Command(realTrue=1, realFalse=0)
-    annotation (Placement(transformation(extent={{-100,-10},{-120,10}})));
+    annotation (Placement(transformation(extent={{-75,-10},{-95,10}})));
   Modelica.Blocks.Sources.TimeTable P901_omega(table=P901omega)
     annotation (Placement(transformation(extent={{-630,44},{-650,64}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08
@@ -761,6 +761,8 @@ model BaseHeatingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07
     "Pressure sensor at the outlet of valve FCVC01"
     annotation (Placement(transformation(extent={{294,238},{302,246}})));
+  Modelica.Blocks.Interaction.Show.BooleanValue booleanValue
+    annotation (Placement(transformation(extent={{-111,-8},{-147,27}})));
 equation
   connect(rackL3L4_FCVC01_cold.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
@@ -970,10 +972,11 @@ equation
           270},{330,210},{318,210}}, color={0,0,127}));
   connect(FCVC02_theta.y, FCVC02.opening) annotation (Line(points={{779,270},{770,
           270},{770,210},{758,210}}, color={0,0,127}));
-  connect(FV933_Command.y, FV933.opening) annotation (Line(points={{-121,0},{-123.5,
-          0},{-123.5,-2.22045e-16},{-126,-2.22045e-16}}, color={0,0,127}));
+  connect(FV933_Command.y, FV933.opening) annotation (Line(points={{-96,0},{
+          -123.5,0},{-123.5,-2.22045e-16},{-126,-2.22045e-16}},
+                                                         color={0,0,127}));
   connect(FV933_OnOff.y, FV933_Command.u)
-    annotation (Line(points={{-91,0},{-98,0}}, color={255,0,255}));
+    annotation (Line(points={{-66,0},{-73,0}}, color={255,0,255}));
   connect(P901_omega.y, P901.in_omega)
     annotation (Line(points={{-651,54},{-664,54}}, color={0,0,127}));
   connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (Line(
@@ -994,6 +997,8 @@ equation
       points={{50,240},{150,240}},
       color={140,56,54},
       thickness=0.5));
+  connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{
+          -108.3,9.5},{-108.3,-20},{-73,-20},{-73,0}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-800,-320},{800,320}}, grid={1,1}),
                                                               graphics={
@@ -1040,7 +1045,12 @@ equation
         Text(
           extent={{642,266},{702,226}},
           textColor={28,108,200},
-          textString="RackL6L7_cold")}),                                   Icon(
+          textString="RackL6L7_cold"),
+        Text(
+          extent={{-154,-27},{-54,-47}},
+          textColor={28,108,200},
+          textStyle={TextStyle.Bold},
+          textString="FV933 State")}),                                     Icon(
         coordinateSystem(grid={0.5,0.5})),
     experiment(StopTime=500, __Dymola_Algorithm="Dassl"));
 end BaseHeatingSystem;

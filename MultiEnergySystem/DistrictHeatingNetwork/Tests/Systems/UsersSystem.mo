@@ -3,20 +3,8 @@ model UsersSystem
   "Users Systems and some pipelines connected on the heating side"
 
   parameter Integer n = 3 "Number of volumes";
-  parameter Real m_flow_factor = 0.5;
-
-  parameter Integer gammahotovercold_factor = 1;
-  parameter Integer n_E301 = 5;
-  parameter SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
-  parameter SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
-  parameter SI.CoefficientOfHeatTransfer gamma_cold_E301 = 11682.24;
-  parameter SI.CoefficientOfHeatTransfer gamma_hot_E301 = gamma_cold_E301*gammahotovercold_factor;
-  parameter SI.CoefficientOfHeatTransfer U_E301 = BPHE.E301.Unom;
-  parameter SI.CoefficientOfHeatTransfer U_E501 = BPHE.E501.Unom;
-  parameter SI.CoefficientOfHeatTransfer U_E601 = BPHE.E601.Unom;
-  parameter SI.CoefficientOfHeatTransfer U_E701 = BPHE.E701.Unom;
-  parameter Real CorrectFactorHot = 1;
-  parameter Real CorrectFactorCold = 1;
+  parameter Types.MassFlowRate m_flow_Cool = 8.88;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state";
 
   // Pressures
   parameter Types.Pressure pin_start_Users = 3e5;
@@ -94,18 +82,6 @@ model UsersSystem
   // Internal diameters & thickness
   parameter Types.Length t_Source = 1.5e-3;
   parameter Types.Length Di_Source = 32e-3;
-
-
-
-
-  parameter Types.MassFlowRate m_flow_Cool = 8.88;
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state";
-
-  parameter Types.Pressure pin_start_Cool = 0.92e5;
-  parameter Types.Pressure pout_start_Cool = 0.92e5;
-
-  parameter Types.Temperature Tin_start_Cool = 35 + 273.15;
-  parameter Types.Temperature Tout_start_Cool = 25 + 273.15;
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={250,210},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));

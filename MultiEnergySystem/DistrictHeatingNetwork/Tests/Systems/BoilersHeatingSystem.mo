@@ -193,11 +193,11 @@ equation
     annotation (Line(points={{-201,-108},{-214,-108}},
                                                      color={0,0,127}));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
-      points={{-258,-196},{-258,-217.6},{-257.6,-217.6}},
+      points={{-258,-196},{-258,-230.8},{-204.8,-230.8}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet,PL3_S401. inlet) annotation (Line(
-      points={{-222.4,-217.6},{-222.4,-216},{-222,-216},{-222,-194}},
+      points={{-204.8,-257.2},{-204.8,-216},{-222,-216},{-222,-194}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet, pipe2.inlet) annotation (Line(

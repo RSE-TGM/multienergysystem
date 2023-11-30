@@ -3,81 +3,39 @@ model CoolingSystem
   "Users Systems and some pipelines connected on the heating side"
 
   parameter Integer n = 3 "Number of volumes";
-  parameter Real m_flow_factor = 0.5;
   parameter Types.MassFlowRate m_flow_total = 2.4;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state";
 
-  parameter Integer gammahotovercold_factor = 1;
-  parameter Integer n_E301 = 5;
-  parameter SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
-  parameter SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
-  parameter SI.CoefficientOfHeatTransfer gamma_cold_E301 = 11682.24;
-  parameter SI.CoefficientOfHeatTransfer gamma_hot_E301 = gamma_cold_E301*gammahotovercold_factor;
-  parameter SI.CoefficientOfHeatTransfer U_E301 = BPHE.E301.Unom;
-  parameter SI.CoefficientOfHeatTransfer U_E501 = BPHE.E501.Unom;
-  parameter SI.CoefficientOfHeatTransfer U_E601 = BPHE.E601.Unom;
-  parameter SI.CoefficientOfHeatTransfer U_E701 = BPHE.E701.Unom;
-  parameter Real CorrectFactorHot = 1;
-  parameter Real CorrectFactorCold = 1;
-
-
-  // Pressures
-  parameter Types.Pressure pin_start_Users = 3e5;
-  parameter Types.Pressure pout_start_Users = 2.5e5;
-  parameter Types.Pressure pin_start_Source = 2e5;
-  parameter Types.Pressure pout_start_Source = 1.8e5;
+  //1. Cooling System
 
   parameter Types.Pressure pin_start_Cool = 0.92e5;
   parameter Types.Pressure pout_start_Cool = 0.92e5;
   parameter Types.Pressure pin_start_PR01 = pout_start_Cool;
   parameter Types.Pressure pout_start_PR01 = 2e5;
-
   parameter Types.Temperature Tin_start_Cool = 16 + 273.15;
   parameter Types.Temperature Tout_start_Cool = 8 + 273.15;
+  parameter Types.MassFlowRate m_flow_Cool = 8.88;
+  parameter Real q_Cool(unit = "m3/h") = 32;
+  parameter Types.Length t_RR = 1.5e-3;
+  parameter Types.Length Di_RR = 85e-3;
+  parameter Real Kvalve = 15;
+  parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
+  parameter Real PR01omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
 
-
-  parameter Types.Temperature T_start_SourceIn = 80 + 273.15;
-  parameter Types.Temperature T_start_SourceOut = 60 + 273.15;
-  parameter Types.MassFlowRate m_flow_Source_total = 2.4095388;
-  final parameter Types.MassFlowRate  m_flow_Source = m_flow_Source_total/4;
-
+  //2. Users System
+  parameter Types.Pressure pin_start_Users = 3e5;
+  parameter Types.Pressure pout_start_Users = 2.5e5;
   parameter Types.Temperature T_start_UserIn = 7 + 273.15;
   parameter Real q_Users_total(unit = "m3/h") = 20;
   parameter Real q_Users(unit = "m3/h") = q_Users_total/4;
-  parameter Types.MassFlowRate m_flow_Users_total = 5.553528*3600/1000;
-  final parameter Types.MassFlowRate m_flow_Users = m_flow_Users_total/4;
-
-  parameter Real q_m3h(unit = "m3/h") = 8*3600/1000;
-
-  parameter Types.Power Pchiller = -148751;
-  parameter Types.Power Pchillervar = 0;
-
-  //parameter Types.Length L_Users = 3;
   parameter Types.Length t_Users = 1.5e-3;
   parameter Types.Length Di_Users = 32e-3;
-
-
   parameter Types.Length t_Rack = 1.5e-3;
   parameter Types.Length Di_Rack = 51e-3;
-
-  parameter Types.Length t_RR = 1.5e-3;
-  parameter Types.Length Di_RR = 85e-3;
-
-
-
-
-  parameter Types.MassFlowRate m_flow_Cool = 8.88;
-  parameter Real q_Cool(unit = "m3/h") = 32;
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state";
-
-
   parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
   parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
   parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
   parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
-
-  parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
-
-  parameter Real PR01omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
 
   // Lengths of pipelines source side
   parameter Types.Length L_VER901_FCVR01 = 1;
@@ -115,7 +73,6 @@ model CoolingSystem
   parameter Types.Length L_EX701_EX731_hot = 0.50;
   parameter Types.Length h_EX701_EX731_hot = 0;
 
-
   parameter Types.Length L_TT704_TCV701 = 0.65;
   parameter Types.Length h_TT704_TCV701 = 0.65;
   parameter Types.Length L_TT714_TCV711 = 0.65;
@@ -134,7 +91,6 @@ model CoolingSystem
   parameter Types.Length L_TCV731_rUsersOut = 1 + 0.66 + 0.66;
   parameter Types.Length h_TCV731_rUsersOut = 1;
 
-
   parameter Types.Length L_rUsersIn_TT703 = 1.65 + 0.45;
   parameter Types.Length h_rUsersIn_TT703 = -1.65;
   parameter Types.Length L_rUsersIn_TT713 = 1.65 + 0.45;
@@ -144,17 +100,11 @@ model CoolingSystem
   parameter Types.Length L_rUsersIn_TT733 = 1.65 + 0.66 + 0.66;
   parameter Types.Length h_rUsersIn_TT733 = -1.65;
 
-
-
   parameter Types.Length L_RR_UsersIn = 0.8+1.2+0.5+2;
   parameter Types.Length h_RR_UsersIn = 0.8+0.6;
 
   parameter Types.Length L_RR_UsersOut = 2;
   parameter Types.Length h_RR_UsersOut = 0;
-
-  parameter Real Kvalve = 15;
-  // Internal diameters & thickness
-
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={290,210},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -214,7 +164,6 @@ model CoolingSystem
     L=L_TCV721_rUsersOut,
     h=h_TCV721_rUsersOut,
     t=t_Users,
-    m_flow_start=m_flow_Users,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -285,7 +234,6 @@ model CoolingSystem
     L=L_rUsersIn_TT713,
     h=h_rUsersIn_TT713,
     t=t_Users,
-    m_flow_start=m_flow_Users,
     pin_start=pin_start_Users,
     pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tout_start_Cool,
@@ -656,9 +604,7 @@ model CoolingSystem
     L=L_TTR02_VER901,
     h=h_TTR02_VER901,
     t=t_RR,
-    m_flow_start=m_flow_Cool,
     pin_start=pin_start_Users,
-    pout_start=pin_start_Users - 0.1e5,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
     Di=Di_RR,
@@ -825,6 +771,23 @@ model CoolingSystem
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={100,-100})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
+    annotation (Placement(transformation(extent={{278,68},{319,103}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_1(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{270,-57},{311,-22}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_3(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-184,29},{-213,53}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_4(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-96,31},{-125,55}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_5(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-6,26},{-35,50}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_2(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-279,29},{-308,53}})));
 equation
   connect(PL_TCV721_rackUsersOut.outlet, PL_EX721_EX711_hot.outlet) annotation (
      Line(
@@ -1124,6 +1087,18 @@ equation
       points={{110,-100},{260,-100},{260,-30}},
       color={140,56,54},
       thickness=0.5));
+  connect(FTR01.q_m3hr, FTR01_.numberPort) annotation (Line(points={{268.5,85},
+          {271.712,85},{271.712,85.5},{274.925,85.5}}, color={0,0,127}));
+  connect(FTR03.q_m3hr, FTR01_1.numberPort) annotation (Line(points={{250,-31.5},
+          {250,-46},{258,-46},{258,-39.5},{266.925,-39.5}}, color={0,0,127}));
+  connect(TT704.T, FTR01_3.numberPort)
+    annotation (Line(points={{-179.8,41},{-181.825,41}}, color={0,0,127}));
+  connect(FTR01_4.numberPort, TT714.T) annotation (Line(points={{-93.825,43},{
+          -92,43},{-92,42},{-89.8,42}}, color={0,0,127}));
+  connect(FTR01_5.numberPort, TT724.T)
+    annotation (Line(points={{-3.825,38},{0.2,38}}, color={0,0,127}));
+  connect(TT734.T, FTR01_2.numberPort) annotation (Line(points={{-269.65,40.5},
+          {-269.65,41},{-276.825,41}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(

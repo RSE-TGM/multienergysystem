@@ -100,7 +100,7 @@ model BaseHeatingSystem
   parameter Types.Length Di_S9 = 51e-3;
   parameter Types.Length t_S9 = 1.5e-3;
   parameter Types.MassFlowRate m_flow_S9 = 4.04;
-  parameter Types.VolumeFlowRate q_P901_computed = 8.1;
+  parameter Real q_m3h_S9(unit = "m3/h") = 14;
 
 
   // Cooling System
@@ -185,10 +185,10 @@ model BaseHeatingSystem
     t=t_S9,
     m_flow_start=m_flow_S9,
     pin_start=pout_start_S9,
-    pout_start=pout_start_S9,
     Tin_start=Tout_start_S9,
     Tout_start=Tout_start_S9,
     Di=Di_S9,
+    q_m3h_start=q_m3h_S9,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -216,6 +216,7 @@ model BaseHeatingSystem
     Tin_start=Tin_start_S9,
     Tout_start=Tin_start_S9,
     Di=Di_S9,
+    q_m3h_start=q_m3h_S9,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -229,7 +230,8 @@ model BaseHeatingSystem
     rho_nom=Valve.FCV901.rho_nom,
     q_m3h_nom=Valve.FCV901.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S9,
-    pin_start=pout_start_S9) annotation (Placement(transformation(
+    pin_start=pout_start_S9,
+    q_m3h_start=q_m3h_S9)  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-669,86})));
@@ -391,6 +393,7 @@ model BaseHeatingSystem
     Tin_start=T_start_hot,
     Tout_start=T_start_hot,
     Di=Di,
+    q_m3h_start=q_m3h_S9,
     nPipes=1,
     n=n,
     hctype=hctype)
@@ -972,9 +975,8 @@ equation
           270},{330,210},{318,210}}, color={0,0,127}));
   connect(FCVC02_theta.y, FCVC02.opening) annotation (Line(points={{779,270},{770,
           270},{770,210},{758,210}}, color={0,0,127}));
-  connect(FV933_Command.y, FV933.opening) annotation (Line(points={{-96,0},{
-          -123.5,0},{-123.5,-2.22045e-16},{-126,-2.22045e-16}},
-                                                         color={0,0,127}));
+  connect(FV933_Command.y, FV933.opening) annotation (Line(points={{-96,0},{-123.5,
+          0},{-123.5,-2.22045e-16},{-126,-2.22045e-16}}, color={0,0,127}));
   connect(FV933_OnOff.y, FV933_Command.u)
     annotation (Line(points={{-66,0},{-73,0}}, color={255,0,255}));
   connect(P901_omega.y, P901.in_omega)
@@ -997,8 +999,8 @@ equation
       points={{50,240},{150,240}},
       color={140,56,54},
       thickness=0.5));
-  connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{
-          -108.3,9.5},{-108.3,-20},{-73,-20},{-73,0}}, color={255,0,255}));
+  connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{-108.3,
+          9.5},{-108.3,-20},{-73,-20},{-73,0}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-800,-320},{800,320}}, grid={1,1}),
                                                               graphics={
@@ -1047,7 +1049,7 @@ equation
           textColor={28,108,200},
           textString="RackL6L7_cold"),
         Text(
-          extent={{-154,-27},{-54,-47}},
+          extent={{-132,-27},{-32,-47}},
           textColor={28,108,200},
           textStyle={TextStyle.Bold},
           textString="FV933 State")}),                                     Icon(

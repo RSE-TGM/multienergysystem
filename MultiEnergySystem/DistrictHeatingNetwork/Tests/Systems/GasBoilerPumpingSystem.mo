@@ -21,6 +21,7 @@ model GasBoilerPumpingSystem
   parameter Types.Length t_S1 = 1.5e-3;
 
   parameter Types.MassFlowRate m_flow_S1 = m_flow_total;
+  parameter Real q_m3h_S1 = 9;
 
 
   parameter Real P101omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*40; 200, 2*3.141592654*40];
@@ -69,12 +70,11 @@ model GasBoilerPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S101(
     L=L_S1_PL3,
     t=t_S1,
-    m_flow_start=m_flow_S1,
     pin_start=pout_start_S1,
-    pout_start=pout_start_S1,
     Tin_start=Tout_start_S1,
     Tout_start=Tout_start_S1,
     Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -83,12 +83,11 @@ model GasBoilerPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S101(
     L=L_S1_PL2,
     t=t_S1,
-    m_flow_start=m_flow_S1,
     pin_start=pin_start_S1,
-    pout_start=pin_start_S1,
     Tin_start=Tin_start_S1,
     Tout_start=Tin_start_S1,
     Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -97,12 +96,11 @@ model GasBoilerPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S101(
     L=L_S1_PL3,
     t=t_S1,
-    m_flow_start=m_flow_S1,
     pin_start=pout_start_S1,
-    pout_start=pout_start_S1,
     Tin_start=Tout_start_S1,
     Tout_start=Tout_start_S1,
     Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -154,12 +152,11 @@ model GasBoilerPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S101(
     L=L_S1_PL1,
     t=t_S1,
-    m_flow_start=m_flow_S1,
     pin_start=pin_start_S1,
-    pout_start=pin_start_S1,
     Tin_start=Tin_start_S1,
     Tout_start=Tin_start_S1,
     Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -168,12 +165,11 @@ model GasBoilerPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
     L=L_S1_rCD_hot,
     t=t_S1,
-    m_flow_start=m_flow_S1,
     pin_start=pout_start_S1,
-    pout_start=pout_start_S1,
     Tin_start=Tout_start_S1,
     Tout_start=Tout_start_S1,
     Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -182,12 +178,11 @@ model GasBoilerPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
     L=L_S1_rCD_cold,
     t=t_S1,
-    m_flow_start=m_flow_S1,
     pin_start=pin_start_S1,
-    pout_start=pin_start_S1,
     Tin_start=Tin_start_S1,
     Tout_start=Tin_start_S1,
     Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},

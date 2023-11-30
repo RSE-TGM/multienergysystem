@@ -397,8 +397,10 @@ model CoolingSystem
       Kv=Valve.TCV701.Kv,
       dp_nom=Valve.TCV701.dp_nom,
       rho_nom=Valve.TCV701.rho_nom,
+    q_m3h_nom=Valve.TCV701.q_nom_m3h,
       Tin_start=Valve.TCV701.Tin_start,
-      pin_start=Valve.TCV701.pin_start) annotation (Placement(transformation(
+      pin_start=Valve.TCV701.pin_start,
+    q_m3h_start=q_Users)                annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-170,-10})));
@@ -407,28 +409,34 @@ model CoolingSystem
       Kv=Valve.TCV711.Kv,
       dp_nom=Valve.TCV711.dp_nom,
       rho_nom=Valve.TCV711.rho_nom,
+    q_m3h_nom=Valve.TCV711.q_nom_m3h,
       Tin_start=Valve.TCV711.Tin_start,
-      pin_start=Valve.TCV711.pin_start) annotation (Placement(transformation(
+      pin_start=Valve.TCV711.pin_start,
+    q_m3h_start=q_Users)                annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-80,-10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV721(
       Kv=Valve.TCV721.Kv,
-      dp_nom=Valve.TCV721.dp_nom,
-      rho_nom=Valve.TCV721.rho_nom,
+    dp_nom=Valve.TCV721.dp_nom,
+    rho_nom=Valve.TCV721.rho_nom,
+    q_m3h_nom=Valve.TCV721.q_nom_m3h,
       Tin_start=Valve.TCV721.Tin_start,
-      pin_start=Valve.TCV721.pin_start) annotation (Placement(transformation(
+      pin_start=Valve.TCV721.pin_start,
+    q_m3h_start=q_Users)                annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
-        origin={10,-10})));
+        origin={11,-10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV731(
       Kv=Valve.TCV731.Kv,
       dp_nom=Valve.TCV731.dp_nom,
       rho_nom=Valve.TCV731.rho_nom,
+    q_m3h_nom=Valve.TCV731.q_nom_m3h,
       Tin_start=Valve.TCV731.Tin_start,
-      pin_start=Valve.TCV731.pin_start) annotation (Placement(transformation(
+      pin_start=Valve.TCV731.pin_start,
+    q_m3h_start=q_Users)                annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-260,-10})));
@@ -861,7 +869,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TCV721.outlet, PL_TCV721_rackUsersOut.inlet) annotation (Line(
-      points={{10,-20},{10,-59}},
+      points={{11,-20},{11,-40},{10,-40},{10,-59}},
       color={140,56,54},
       thickness=0.5));
   connect(TCV701_theta.y, TCV701.opening)
@@ -877,7 +885,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TCV721.opening, TCV721_theta.y)
-    annotation (Line(points={{2,-10},{-4,-10}},  color={0,0,127}));
+    annotation (Line(points={{3,-10},{-4,-10}},  color={0,0,127}));
   connect(TCV731.opening, TCV731_theta.y)
     annotation (Line(points={{-268,-10},{-275,-10}},
                                                    color={0,0,127}));
@@ -1019,7 +1027,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_TT724_TCV721.outlet, TCV721.inlet) annotation (Line(
-      points={{10,10},{10,0}},
+      points={{10,10},{10,0},{11,0}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_EX701_EX731_hot.inlet, PL_TCV731_rackUsersOut.outlet) annotation (

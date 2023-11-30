@@ -57,8 +57,11 @@ model GasBoilerPumpingSystem
     FCV101(
     Kv=Valve.FCV101.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV101.dp_nom,
+    rho_nom=Valve.FCV101.rho_nom,
+    q_m3h_nom=Valve.FCV101.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S1,
-    pin_start=pout_start_S1)
+    pin_start=pout_start_S1,
+    q_m3h_start=Pump.P101.qnom_inm3h)
            annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,

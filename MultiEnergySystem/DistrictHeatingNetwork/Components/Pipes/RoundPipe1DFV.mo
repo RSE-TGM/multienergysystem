@@ -15,23 +15,23 @@ model RoundPipe1DFV
 
   constant Types.Acceleration g = Modelica.Constants.g_n;
 
-// Flow parameter  
-  parameter Types.Density rho_start = 985 "Density start/reference value" annotation(
+// Flow parameter
+  parameter Types.Density rho_start = 985 "Density start/reference value" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real q_m3h_start(unit = "m3/h") = 8 "volumetric flowrate start/Reference value" annotation(
+  parameter Real q_m3h_start(unit = "m3/h") = 8 "volumetric flowrate start/Reference value" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation(
-    Dialog(group = "Initialisation"));  
+  parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation (
+    Dialog(group = "Initialisation"));
   parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure" annotation (
-    Dialog(group = "Initialisation"));    
+    Dialog(group = "Initialisation"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
-    
+
   parameter Integer n = 3 "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.Density rho_nom = 1e3 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.Velocity u_nom = 1 "Nominal fluid velocity" annotation (
+  parameter Types.Velocity u_nom = 10 "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state" annotation (
     Dialog(tab = "Data", group = "Fluid"));
@@ -43,7 +43,7 @@ model RoundPipe1DFV
   parameter Types.Area Stot = S * nPipes "Total surface of the wall" annotation (
     Dialog(tab = "Data", group = "Pipe"));
   parameter Real k(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation (
-    Dialog(tab = "Data", group = "Pipe"));    
+    Dialog(tab = "Data", group = "Pipe"));
 
   parameter Types.PerUnit kc=1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
@@ -100,7 +100,6 @@ model RoundPipe1DFV
     A = Atot,
     Twall = Twall,
     Tmean = 0.5*(fluid[1:end-1].T + fluid[2:end].T),
-    //m_flow = regStep(inlet.m_flow, m_flow[2:end], m_flow[1:end-1]),
     m_flow = 0.5*(m_flow[2:end] + m_flow[1:end-1]),
     p = pout,
     cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
@@ -109,6 +108,7 @@ model RoundPipe1DFV
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
+    //m_flow = regStep(inlet.m_flow, m_flow[2:end], m_flow[1:end-1]),
     //cp = fluid[2:end].cp,
     //Tmean = regStep(dp, fluid[2:end].T, fluid[1:end-1].T),
     //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),

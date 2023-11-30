@@ -10,38 +10,50 @@ partial model PartialValve
 
   constant Types.PerUnit pr = 0.85 "Pressure recovery coefficient";
 
-  // Nominal Parameters
-  parameter Types.PerUnit nomOpening = 1 "Nominal valve opening";
-  parameter Real Kv(unit = "m3/h") = 12 "Metri Flow Coefficient ";
-  parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter";
+
+  parameter Types.PerUnit nomOpening = 1 "Nominal valve opening" annotation (
+    Dialog(group = "Valve characteristics"));
+  parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter" annotation (
+    Dialog(group = "Valve characteristics"));
+  parameter Real Kv(unit = "m3/h") = 12 "Metri Flow Coefficient" annotation (
+    Dialog(group = "Valve characteristics"));
+  parameter Components.Types.valveOpeningChar openingChar = Components.Types.valveOpeningChar.Linear "opening characteristic" annotation (
+    Dialog(group = "Valve characteristics"));
+
+  // Nominal Values
   parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump";
-  parameter Modelica.Units.SI.PressureDifference dp_start = 0.5e5 "Start value valve pressure drop";
   parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply";
-
-
-  parameter Components.Types.valveOpeningChar openingChar = Components.Types.valveOpeningChar.Linear "opening characteristic";
+  parameter Real q_m3h_nom = 6 "Nominal volumetric flowrate in m3h";
 
   // Start values
-  parameter Types.Temperature Tin_start = 20 + 273.15;
-  parameter Types.Pressure pin_start = 2e5;
-  parameter Types.Density rho_start = 985 "Start value fluid density at the inlet";
-  parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate";
+  parameter Types.Temperature Tin_start = 20 + 273.15 annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.Pressure pin_start = 2e5 annotation (
+    Dialog(group = "Initialisation"));
+  final parameter Modelica.Units.SI.PressureDifference dp_start = m_flow_start^2/(Av^2*rho_start) "Start value valve pressure drop" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.Density rho_start = 985 "Start value fluid density at the inlet" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate" annotation (
+    Dialog(group = "Initialisation"));
 
   // Final parameters
-  final parameter Types.MassFlowRate m_flow_start = q_m3h_start*rho_start;
+  final parameter Types.MassFlowRate m_flow_start = q_start*rho_start;
   final parameter Types.MassFlowRate m_flow_nom = 2.7778e-5*Kv*sqrt(dp_nom)*sqrt(rho_start) "Peak mass flow rate at full opening";
+  final parameter Types.VolumeFlowRate q_start = q_m3h_start/3600;
   final parameter Types.Temperature Tout_start =  Tin_start;
   final parameter Types.Pressure pout_start = pin_start - dp_nom;
-  final parameter Types.Area A_v = 2.7778e-5*Kv "Opening area of the valve";
+  final parameter Types.Area Av = 2.7778e-5*Kv "Opening area of the valve";
+
   // Variables
-  Types.MassFlowRate m_flow(start = m_flow_nom) "Mass flow rate through the valve";
+  Types.MassFlowRate m_flow(start = m_flow_start) "Mass flow rate through the valve";
   Types.VolumeFlowRate q "Volumetric flow rate";
-  Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/h";
+  Real q_m3h(unit = "m3/h", start = q_m3h_start) "Volumetric flow rate in m3/h";
   Types.Temperature Tin(start = Tin_start);
   Types.Temperature Tout(start = Tout_start);
   Types.Pressure pin(start = pin_start);
   Types.Pressure pout;
-  Types.Pressure dp(start = dp_nom);
+  Types.Pressure dp(start = dp_start);
   Types.Density rho(start = rho_start, nominal = rho_nom);
 
   // Medium
@@ -62,18 +74,18 @@ equation
 
   // Momentum balance
   if openingChar == Components.Types.valveOpeningChar.Linear then
-    m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.Quadratic then
-    m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.SquareRoot then
-    m_flow = homotopy((BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)*A_v*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
 
   // Definition of fluids
   fluidIn.p = inlet.p;
-  fluidIn.h = regStep(m_flow, inStream(inlet.h_out), inlet.h_out, m_flow_nom*1e-5);
+  fluidIn.h = regStep(m_flow, inStream(inlet.h_out), inlet.h_out, m_flow_nom*1e-6);
   fluidOut.p = outlet.p;
-  fluidOut.h = regStep(m_flow, outlet.h_out, inStream(outlet.h_out), m_flow_nom*1e-5);
+  fluidOut.h = regStep(m_flow, outlet.h_out, inStream(outlet.h_out), m_flow_nom*1e-6);
 
   Tin = fluidIn.T;
   Tout = fluidOut.T;

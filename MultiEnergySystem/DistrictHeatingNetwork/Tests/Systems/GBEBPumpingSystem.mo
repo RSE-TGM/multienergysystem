@@ -68,8 +68,12 @@ model GBEBPumpingSystem
     FCV401(
     Kv=Valve.FCV401.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV401.dp_nom,
+    rho_nom=Valve.FCV401.rho_nom,
+    q_m3h_nom=Valve.FCV401.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S4,
-    pin_start=pout_start_S4) annotation (Placement(transformation(
+    pin_start=pout_start_S4,
+    q_m3h_start=Pump.P401.qnom_inm3h)
+                             annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-236,-130})));

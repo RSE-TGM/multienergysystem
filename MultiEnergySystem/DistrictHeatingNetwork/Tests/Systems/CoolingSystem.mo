@@ -4,7 +4,7 @@ model CoolingSystem
 
   parameter Integer n = 3 "Number of volumes";
   parameter Real m_flow_factor = 0.5;
-  parameter Types.MassFlowRate m_flow_total = 1.6;
+  parameter Types.MassFlowRate m_flow_total = 2.4;
 
   parameter Integer gammahotovercold_factor = 1;
   parameter Integer n_E301 = 5;
@@ -682,7 +682,7 @@ model CoolingSystem
         extent={{-13,-13},{13,13}},
         rotation=-90,
         origin={-260,130})));
-  Sources.SinkPressure sinkHot(p0=200000, T0=(60 + 273.15) + 273.15)
+  Sources.SinkPressure sinkHot(p0=200000, T0(displayUnit="K") = 60 + 273.15)
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,

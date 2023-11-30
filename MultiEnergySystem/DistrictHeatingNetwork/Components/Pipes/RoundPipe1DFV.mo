@@ -20,6 +20,8 @@ model RoundPipe1DFV
     Dialog(group = "Initialisation"));
   parameter Real q_m3h_start(unit = "m3/h") = 8 "volumetric flowrate start/Reference value" annotation(
     Dialog(group = "Initialisation"));
+  parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation(
+    Dialog(group = "Initialisation"));  
   parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure" annotation (
     Dialog(group = "Initialisation"));    
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
@@ -67,7 +69,7 @@ model RoundPipe1DFV
   Types.MassFlowRate m_flow[n + 1](each start = m_flow_start, each nominal = m_flow_nom) "Mass flow rate in each section across the pipe";
   Types.VolumeFlowRate q[n + 1] "Volumetric flowrate in each section across the pipe";
   Real q_m3h[n + 1](each unit = "m3/h") "Volumetric flowrate in each section in m3/h";
-  Types.Velocity u[n + 1](each start = u_nom, each nominal = u_nom) "Velocity in each volume across the pipe";
+  Types.Velocity u[n + 1](each start = u_start, each nominal = u_nom) "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "State variable temperatures";
   Types.Temperature Twall[n] "Pipe wall temperature";
   Types.Power Qtot "Total heat";

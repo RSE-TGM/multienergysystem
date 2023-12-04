@@ -249,7 +249,7 @@ model BaseHeatingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCVC02(
     allowFlowReversal=system.allowFlowReversal,
-    Kv=Kv_FCVC02,
+    Kv=Valve.FCVC02.Kv,
     dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000) annotation (Placement(transformation(
@@ -259,7 +259,7 @@ model BaseHeatingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCVC01(
     allowFlowReversal=system.allowFlowReversal,
-    Kv=Kv_FCVC01,
+    Kv=Valve.FCVC01.Kv,
     dp_nom(displayUnit="Pa") = dp_nom_UsersValve,
     Tin_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000) annotation (Placement(transformation(

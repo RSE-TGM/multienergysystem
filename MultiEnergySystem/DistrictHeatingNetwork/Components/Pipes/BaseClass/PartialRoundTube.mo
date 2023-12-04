@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 partial model PartialRoundTube
   extends PartialInsulatedTube;
 
-  parameter Types.Length Di "Internal Diameter of a single tube" annotation (
+  parameter Types.Length Di = 51e-3 "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
 
   // Compute final parameters assuming the tube has cilindrical shape

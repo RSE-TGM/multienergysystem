@@ -706,7 +706,7 @@ model BaseHeatingSystem
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={500,240})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL5L6_rackL6L7_cold(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV rackL5L6_rackL6L7_cold(
     L=L_rL5L6_rL6L7_C,
     t=t_rL_C,
     m_flow_start=m_flow_start_Users,

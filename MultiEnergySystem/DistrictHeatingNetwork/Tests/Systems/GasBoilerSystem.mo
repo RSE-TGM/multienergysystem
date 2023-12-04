@@ -34,8 +34,6 @@ model GasBoilerSystem
   parameter Types.Length L_P101_FCV101 = 1;
   parameter Types.Length h_P101_FCV101 = 1;
 
-
-
   parameter Types.Length L_S1_rCD_cold = 0.66+0.25+0.54+0.5+1.3+1+3+4+0.5+0.2+0.3 "12.25";
   parameter Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
   parameter Types.Length L_S1_rCD_hot = 1 + 3 + 3.2 + 1.1 + 1.2 + 0.5 + 0.25 + 0.6;

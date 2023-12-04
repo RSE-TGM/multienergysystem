@@ -17,8 +17,6 @@ model Sequence1
     FCV401theta = [0, 1; 480, 1; 480, 0.8; 600, 0.8; 600, 1;   1000, 1],
     VE901(p0(displayUnit="Pa") = 220000));
 
-  annotation (experiment(
-      StopTime=1000,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime = 1000, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"),
+  Diagram(coordinateSystem(extent = {{-800, -320}, {800, 320}})));
 end Sequence1;

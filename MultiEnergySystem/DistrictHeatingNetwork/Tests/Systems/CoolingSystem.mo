@@ -18,9 +18,10 @@ model CoolingSystem
   parameter Real q_Cool(unit = "m3/h") = 32;
   parameter Types.Length t_RR = 1.5e-3;
   parameter Types.Length Di_RR = 85e-3;
-  parameter Real Kvalve = 15;
+  parameter Real Kvalve = 90;
   parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
-  parameter Real PR01omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
+  //parameter Real PR01omega[:,:] = [0, 2*3.141592654*40; 100, 2*3.141592654*40; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
+  parameter Real PR01omega[:,:] = [0, 32.5; 100, 32.5];
 
   //2. Users System
   parameter Types.Pressure pin_start_Users = 3e5;
@@ -314,7 +315,7 @@ model CoolingSystem
         extent={{10,10},{-10,-10}},
         rotation=0,
         origin={80,-40})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
+  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     PR01(
     Tin_start(displayUnit="K") = Tout_start_Cool,
     Tout_start(displayUnit="K") = Tout_start_Cool,
@@ -336,7 +337,7 @@ model CoolingSystem
     headmin=Pump.PR01.headnommin,
     qnom_inm3h_min=Pump.PR01.qnommin_inm3h,
     qnom_inm3h_max=Pump.PR01.qnommax_inm3h,
-    use_in_omega=true)                      annotation (Placement(transformation(
+    use_q_m3hr=true)                                             annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={150,75})));
@@ -399,7 +400,7 @@ model CoolingSystem
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={200,-40})));
-  Sources.SinkPressure VER901(p0=199000, T0(displayUnit="K") = 30 + 273.15)
+  Sources.SinkPressure VER901(p0=310000, T0(displayUnit="K") = 30 + 273.15)
     "Expansion Vessel for cooling circuit" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -643,7 +644,7 @@ model CoolingSystem
         origin={-220,131})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(Tout_cold_set=Tout_start_Cool,
-    dp_cold_start=20000,                m_flow_cold_start=m_flow_Cool)
+    dp_cold_start=10000,                m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{170,134},{241,205}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
     L=L_EX701_EX731_cold,
@@ -788,6 +789,12 @@ model CoolingSystem
   Modelica.Blocks.Interaction.Show.RealValue FTR01_2(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{-279,29},{-308,53}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_6(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{281,8},{322,43}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTR01_7(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{130,20},{89,55}})));
 equation
   connect(PL_TCV721_rackUsersOut.outlet, PL_EX721_EX711_hot.outlet) annotation (
      Line(
@@ -935,8 +942,6 @@ equation
       thickness=0.5));
   connect(FCVR01_theta.y, FCVR01.opening)
     annotation (Line(points={{220,10},{200,10},{200,-32}}, color={0,0,127}));
-  connect(PR01_omega.y, PR01.in_omega) annotation (Line(points={{131,80},{137.25,
-          80},{137.25,80.2},{143.5,80.2}}, color={0,0,127}));
   connect(TTR01.inlet, RR00_PL_FTR03_PTR01.outlet) annotation (Line(
       points={{259.6,15},{260,15},{260,-10}},
       color={140,56,54},
@@ -1099,6 +1104,12 @@ equation
     annotation (Line(points={{-3.825,38},{0.2,38}}, color={0,0,127}));
   connect(TT734.T, FTR01_2.numberPort) annotation (Line(points={{-269.65,40.5},
           {-269.65,41},{-276.825,41}}, color={0,0,127}));
+  connect(PR01_omega.y, PR01.in_q_m3hr) annotation (Line(points={{131,80},{137.51,
+          80},{137.51,80.2},{144.02,80.2}}, color={0,0,127}));
+  connect(PTR01.p, FTR01_6.numberPort) annotation (Line(points={{269.8,25},{
+          273.862,25},{273.862,25.5},{277.925,25.5}}, color={0,0,127}));
+  connect(FTR01_7.numberPort, PTR02.p) annotation (Line(points={{133.075,37.5},
+          {139.2,37.5},{139.2,10}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(

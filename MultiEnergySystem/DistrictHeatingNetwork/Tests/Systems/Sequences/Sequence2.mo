@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence2
+partial model Sequence2
   extends Sequence1(hctype = Choices.Pipe.HCtypes.Downstream);
 
   // EX701
@@ -297,19 +297,6 @@ model Sequence2
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={100,22})));
-  Sources.SinkPressure sinkCold(p0=EX701_pout_cold, T0=EX701_Tout_cold)
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={73,-199})));
-  Sources.SourceMassFlow sourceCold(
-    p0=EX701_pin_cold,
-    T0(displayUnit="K") = EX701_Tin_cold,
-    m_flow0=m_flow_EX701_cold)
-                          annotation (Placement(transformation(
-        extent={{13,-13},{-13,13}},
-        rotation=0,
-        origin={165,-200})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
     EX711(
     Di_cold=BPHE.E701.Di_cold,
@@ -459,13 +446,13 @@ model Sequence2
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={398,-50})));
+        origin={398,-20})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT712
     "Pressure sensor at the inlet of EX711 - hot side" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={398,-40})));
+        origin={398,-10})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(
     L=L_rackL3L4_TT712,
     h=h_rackL3L4_TT712,
@@ -481,19 +468,6 @@ model Sequence2
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={400,24})));
-  Sources.SourceMassFlow sourceCold1(
-    p0=EX711_pin_cold,
-    T0(displayUnit="K") = EX711_Tin_cold,
-    m_flow0=m_flow_EX711_cold)
-                          annotation (Placement(transformation(
-        extent={{13,-13},{-13,13}},
-        rotation=0,
-        origin={461,-200})));
-  Sources.SinkPressure sinkCold1(p0=EX711_pout_cold, T0=EX711_Tout_cold)
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={383,-201})));
 equation
   connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
       points={{140,-52},{140,-60}},
@@ -551,14 +525,6 @@ equation
       points={{140,32},{140,80},{80,80},{80,240},{150,240}},
       color={140,56,54},
       thickness=0.5));
-  connect(sinkCold.inlet, EX701.outcold) annotation (Line(
-      points={{83,-199},{98.7,-199},{98.7,-144.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(sourceCold.outlet, EX701.incold) annotation (Line(
-      points={{152,-200},{148,-200},{148,-202},{139.3,-202},{139.3,-144.25}},
-      color={140,56,54},
-      thickness=0.5));
 
   connect(PL711_FCV711_FT711.inlet,FCV711. outlet) annotation (Line(
       points={{440,-50},{440,-60}},
@@ -589,15 +555,15 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL711_TT712_SourceIn.inlet,TT712. inlet) annotation (Line(
-      points={{400,-60},{400,-50}},
+      points={{400,-60},{400,-20}},
       color={140,56,54},
       thickness=0.5));
   connect(TT712.inlet,PT712. inlet) annotation (Line(
-      points={{400,-50},{400,-40}},
+      points={{400,-20},{400,-10}},
       color={140,56,54},
       thickness=0.5));
   connect(PT712.inlet,PL711_rackL3L4_TT712. outlet) annotation (Line(
-      points={{400,-40},{400,14}},
+      points={{400,-10},{400,14}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_TT712_SourceIn.outlet,EX711. inhot) annotation (Line(
@@ -614,14 +580,6 @@ equation
   connect(PL711_FT711_rackL3L4.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
       points={{440,34},{440,120},{180,120},{180,240},{170,240}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(sinkCold1.inlet, EX711.outcold) annotation (Line(
-      points={{393,-201},{400.7,-201},{400.7,-147.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(sourceCold1.outlet, EX711.incold) annotation (Line(
-      points={{448,-200},{441.3,-200},{441.3,-147.25}},
       color={140,56,54},
       thickness=0.5));
   annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));

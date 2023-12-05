@@ -1,4 +1,507 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
 model Sequence3
-  extends Sequence1;
+  extends Sequence2(
+    EB401(nR=5, Tout_ref=333.15),
+    GB101(Tout_ref=333.15),
+    FCVC01theta = [0, 0; 660, 0],
+    FCVC02theta = [0, 0; 780, 0]);
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
+    EX721(
+    Di_cold=BPHE.E701.Di_cold,
+    Di_hot=BPHE.E701.Di_hot,
+    L_cold=BPHE.E701.L_cold,
+    L_hot=BPHE.E701.L_hot,
+    MWall=BPHE.E701.MWall,
+    Stot_cold=BPHE.E701.Stot_cold,
+    Stot_hot=BPHE.E701.Stot_hot,
+    Tin_start_cold=BPHE.E701.Tin_start_cold,
+    Tin_start_hot=BPHE.E701.Tin_start_hot,
+    Tout_start_cold=BPHE.E701.Tout_start_cold,
+    Tout_start_hot=BPHE.E701.Tout_start_hot,
+    cpm_cold=BPHE.E701.cpm_cold,
+    cpm_hot=BPHE.E701.cpm_hot,
+    t_cold=BPHE.E701.t_cold,
+    t_hot=BPHE.E701.t_hot,
+    gamma_nom_cold=BPHE.E701.gamma_nom_cold,
+    gamma_nom_hot=BPHE.E701.gamma_nom_hot,
+    h_cold=BPHE.E701.h_cold,
+    h_hot=BPHE.E701.h_hot,
+    hin_start_cold=BPHE.E701.hin_start_cold,
+    hin_start_hot=BPHE.E701.hin_start_hot,
+    k_cold=BPHE.E701.k_cold,
+    k_hot=BPHE.E701.k_hot,
+    kc_cold=1,
+    kc_hot=1,
+    lambdam_cold=BPHE.E701.lambdam_cold,
+    lambdam_hot=BPHE.E701.lambdam_hot,
+    m_flow_start_cold=BPHE.E701.m_flow_start_cold,
+    m_flow_start_hot=BPHE.E701.m_flow_start_hot,
+    n=5,
+    nPipes_cold=BPHE.E701.nPipes_cold,
+    nPipes_hot=BPHE.E701.nPipes_hot,
+    nPlates=BPHE.E701.nPlates,
+    pin_start_cold=BPHE.E701.pin_start_cold,
+    pin_start_hot=BPHE.E701.pin_start_hot,
+    pout_start_cold=BPHE.E701.pout_start_cold,
+    pout_start_hot=BPHE.E701.pout_start_hot,
+    rho_nom_cold=(BPHE.E701.rhoin_nom_cold + BPHE.E701.rhoout_nom_cold)/2,
+    rho_nom_hot=(BPHE.E701.rhoin_nom_hot + BPHE.E701.rhoout_nom_hot)/2,
+    rhom_cold(displayUnit="kg/m3") = BPHE.E701.rhom_cold,
+    rhom_hot(displayUnit="g/cm3") = BPHE.E701.rhom_hot,
+    thermalInertia=false,
+    u_nom_cold=BPHE.E701.u_nom_cold,
+    u_nom_hot=BPHE.E701.u_nom_hot)                                                                                                                                                                                                         annotation (Placement(transformation(
+        extent={{17.5,29},{-17.5,-29}},
+        rotation=-90,
+        origin={579,-138.5})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    FCV721(
+    allowFlowReversal=system.allowFlowReversal,
+    Kv=Valve.FCV721.Kv,
+    dp_nom(displayUnit="Pa") = Valve.FCV721.dp_nom,
+    Tin_start(displayUnit="K") = EX721_Tout_hot,
+    pin_start=EX721_pout_hot,
+    q_m3h_start=EX721_q_m3h_cold)
+           annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=-90,
+        origin={600,-70})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FCV721_FT721(
+    L=L_FCV721_FT721,
+    h=h_FCV721_FT721,
+    t=t_S700,
+    pin_start=FCV721_pout,
+    Tin_start=EX721_Tout_hot,
+    Tout_start=EX721_Tout_hot,
+    Di=Di_S700,
+    q_m3h_start=EX721_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+                  annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={600,-42})));
+  Modelica.Blocks.Sources.TimeTable FCV721_theta(table=FCV721theta)
+    annotation (Placement(transformation(extent={{639,-80},{619,-60}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_SourceOut_FCV721(
+    L=L_HX721_SourceOut_FCV721,
+    h=h_HX721_SourceOut_FCV721,
+    t=t_S700,
+    pin_start=EX721_pout_hot,
+    Tin_start=EX721_Tout_hot,
+    Tout_start=EX721_Tout_hot,
+    Di=Di_S700,
+    q_m3h_start=EX721_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+                 annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={600,-100})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT721(T_start=
+        EX721_Tout_hot, p_start=FCV721_pout)
+    "Flow sensor at the outlet outlet of EX721 - hot side"   annotation (
+      Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={598,-20})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
+    TT721(T_start=EX721_Tout_hot, p_start=FCV721_pout)
+    "Temperature sensor at the outlet of EX721 - hot side" annotation (
+      Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={598,-10})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
+    PT721 "Pressure sensor at the outlet of EX721 - hot side" annotation (
+      Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={598,0})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(
+    L=L_FT721_rackL4L5,
+    h=h_FT721_rackL4L5,
+    t=t_S700,
+    pin_start=FCV721_pout,
+    Tin_start=EX721_Tout_hot,
+    Tout_start=EX721_Tout_hot,
+    Di=Di_S700,
+    q_m3h_start=EX721_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={600,24})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_TT722_SourceIn(
+    L=L_HX721_TT722_SourceIn,
+    h=h_HX721_TT722_SourceIn,
+    t=t_S700,
+    pin_start=EX721_pin_hot,
+    Tin_start=EX721_Tin_hot,
+    Tout_start=EX721_Tin_hot,
+    Di=Di_S700,
+    q_m3h_start=EX721_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+                 annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={560,-70})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
+    TT722(T_start=EX721_Tin_hot, p_start=EX721_pin_hot)
+    "Temperature sensor at the inlet of EX721 - hot side" annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={558,-50})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT722
+    "Pressure sensor at the inlet of EX721 - hot side" annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={558,-40})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(
+    L=L_rackL4L5_TT722,
+    h=h_rackL4L5_TT722,
+    t=t_S700,
+    pin_start=EX721_pin_hot,
+    Tin_start=EX721_Tin_hot,
+    Tout_start=EX721_Tin_hot,
+    Di=Di_S700,
+    q_m3h_start=EX721_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={560,24})));
+  Sources.SinkPressure sinkCold2(p0=EX721_pout_cold, T0=EX721_Tout_cold)
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={537,-201})));
+  Sources.SourceMassFlow sourceCold2(
+    p0=EX721_pin_cold,
+    T0(displayUnit="K") = EX721_Tin_cold,
+    m_flow0=m_flow_EX721_cold)
+                          annotation (Placement(transformation(
+        extent={{13,-13},{-13,13}},
+        rotation=0,
+        origin={623,-200})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
+    EX731(
+    Di_cold=BPHE.E701.Di_cold,
+    Di_hot=BPHE.E701.Di_hot,
+    L_cold=BPHE.E701.L_cold,
+    L_hot=BPHE.E701.L_hot,
+    MWall=BPHE.E701.MWall,
+    Stot_cold=BPHE.E701.Stot_cold,
+    Stot_hot=BPHE.E701.Stot_hot,
+    Tin_start_cold=BPHE.E701.Tin_start_cold,
+    Tin_start_hot=BPHE.E701.Tin_start_hot,
+    Tout_start_cold=BPHE.E701.Tout_start_cold,
+    Tout_start_hot=BPHE.E701.Tout_start_hot,
+    cpm_cold=BPHE.E701.cpm_cold,
+    cpm_hot=BPHE.E701.cpm_hot,
+    t_cold=BPHE.E701.t_cold,
+    t_hot=BPHE.E701.t_hot,
+    gamma_nom_cold=BPHE.E701.gamma_nom_cold,
+    gamma_nom_hot=BPHE.E701.gamma_nom_hot,
+    h_cold=BPHE.E701.h_cold,
+    h_hot=BPHE.E701.h_hot,
+    hin_start_cold=BPHE.E701.hin_start_cold,
+    hin_start_hot=BPHE.E701.hin_start_hot,
+    k_cold=BPHE.E701.k_cold,
+    k_hot=BPHE.E701.k_hot,
+    kc_cold=1,
+    kc_hot=1,
+    lambdam_cold=BPHE.E701.lambdam_cold,
+    lambdam_hot=BPHE.E701.lambdam_hot,
+    m_flow_start_cold=BPHE.E701.m_flow_start_cold,
+    m_flow_start_hot=BPHE.E701.m_flow_start_hot,
+    n=7,
+    nPipes_cold=BPHE.E701.nPipes_cold,
+    nPipes_hot=BPHE.E701.nPipes_hot,
+    nPlates=BPHE.E701.nPlates,
+    pin_start_cold=BPHE.E701.pin_start_cold,
+    pin_start_hot=BPHE.E701.pin_start_hot,
+    pout_start_cold=BPHE.E701.pout_start_cold,
+    pout_start_hot=BPHE.E701.pout_start_hot,
+    rho_nom_cold=(BPHE.E701.rhoin_nom_cold + BPHE.E701.rhoout_nom_cold)/2,
+    rho_nom_hot=(BPHE.E701.rhoin_nom_hot + BPHE.E701.rhoout_nom_hot)/2,
+    rhom_cold(displayUnit="kg/m3") = BPHE.E701.rhom_cold,
+    rhom_hot(displayUnit="g/cm3") = BPHE.E701.rhom_hot,
+    thermalInertia=false,
+    u_nom_cold=BPHE.E701.u_nom_cold,
+    u_nom_hot=BPHE.E701.u_nom_hot)                                                                                                                                                                                                         annotation (Placement(transformation(
+        extent={{17.5,29},{-17.5,-29}},
+        rotation=-90,
+        origin={279,-137.5})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+    FCV731(
+    allowFlowReversal=system.allowFlowReversal,
+    Kv=Valve.FCV731.Kv,
+    dp_nom(displayUnit="Pa") = Valve.FCV731.dp_nom,
+    Tin_start(displayUnit="K") = EX731_Tout_hot,
+    pin_start=EX731_pout_hot,
+    q_m3h_start=EX731_q_m3h_cold)
+           annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=-90,
+        origin={300,-70})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FCV731_FT731(
+    L=L_FCV731_FT731,
+    h=h_FCV731_FT731,
+    t=t_S700,
+    pin_start=FCV731_pout,
+    Tin_start=EX731_Tout_hot,
+    Tout_start=EX731_Tout_hot,
+    Di=Di_S700,
+    q_m3h_start=EX731_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+                  annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={300,-44})));
+  Modelica.Blocks.Sources.TimeTable FCV731_theta(table=FCV731theta)
+    annotation (Placement(transformation(extent={{340,-80},{320,-60}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_SourceOut_FCV731(
+    L=L_HX731_SourceOut_FCV731,
+    h=h_HX731_SourceOut_FCV731,
+    t=t_S700,
+    pin_start=EX731_pout_hot,
+    Tin_start=EX731_Tout_hot,
+    Tout_start=EX731_Tout_hot,
+    Di=Di_S700,
+    q_m3h_start=EX731_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+                 annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={300,-100})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT731(T_start=
+        EX731_Tout_hot, p_start=FCV731_pout)
+    "Flow sensor at the outlet outlet of EX731 - hot side"   annotation (
+      Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={298,-24})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
+    TT731(T_start=EX731_Tout_hot, p_start=FCV731_pout)
+    "Temperature sensor at the outlet of EX731 - hot side" annotation (
+      Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={298,-14})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
+    PT731 "Pressure sensor at the outlet of EX731 - hot side" annotation (
+      Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={298,-4})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(
+    L=L_FT731_rackL6L7,
+    h=h_FT731_rackL6L7,
+    t=t_S700,
+    pin_start=FCV731_pout,
+    Tin_start=EX731_Tout_hot,
+    Tout_start=EX731_Tout_hot,
+    Di=Di_S700,
+    q_m3h_start=EX731_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={300,20})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_TT732_SourceIn(
+    L=L_HX731_TT732_SourceIn,
+    h=h_HX731_TT732_SourceIn,
+    t=t_S700,
+    pin_start=EX731_pin_hot,
+    Tin_start=EX731_Tin_hot,
+    Tout_start=EX731_Tin_hot,
+    Di=Di_S700,
+    q_m3h_start=EX731_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+                 annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={260,-70})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
+    TT732(T_start=EX731_Tin_hot, p_start=EX731_pin_hot)
+    "Temperature sensor at the inlet of EX731 - hot side" annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={258,-20})));
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT732
+    "Pressure sensor at the inlet of EX731 - hot side" annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=90,
+        origin={258,-10})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(
+    L=L_rackL6L7_TT732,
+    h=h_rackL6L7_TT732,
+    t=t_S700,
+    pin_start=EX731_pin_hot,
+    Tin_start=EX731_Tin_hot,
+    Tout_start=EX731_Tin_hot,
+    Di=Di_S700,
+    q_m3h_start=EX731_q_m3h_cold,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={260,20})));
+  Sources.SinkPressure sinkCold3(p0=EX731_pout_cold, T0=EX731_Tout_cold)
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={241,-201})));
+  Sources.SourceMassFlow sourceCold3(
+    p0=EX731_pin_cold,
+    T0(displayUnit="K") = EX731_Tin_cold,
+    m_flow0=m_flow_EX731_cold)
+                          annotation (Placement(transformation(
+        extent={{13,-13},{-13,13}},
+        rotation=0,
+        origin={327,-200})));
+equation
+  connect(PL721_FCV721_FT721.inlet,FCV721. outlet) annotation (Line(
+      points={{600,-52},{600,-60}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV721_theta.y,FCV721.opening) annotation (Line(points={{618,-70},{608,-70}},
+                                               color={0,0,127}));
+  connect(FCV721.inlet,PL721_SourceOut_FCV721.outlet) annotation (Line(
+      points={{600,-80},{600,-90}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL721_SourceOut_FCV721.inlet,EX721.outhot) annotation (Line(
+      points={{600,-110},{600,-119.875},{599.3,-119.875},{599.3,-129.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT721.inlet,PL721_FCV721_FT721. outlet) annotation (Line(
+      points={{600,-23},{600,-32}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL721_FT721_rackL4L5.inlet,PT721. inlet) annotation (Line(
+      points={{600,14},{600,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT721.inlet,TT721.inlet) annotation (Line(
+      points={{600,0},{600,-10}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT721.inlet,FT721.outlet) annotation (Line(
+      points={{600,-10},{600,-17}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL721_TT722_SourceIn.inlet,TT722.inlet) annotation (Line(
+      points={{560,-60},{560,-50}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT722.inlet,PT722.inlet) annotation (Line(
+      points={{560,-50},{560,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT722.inlet,PL721_rackL4L5_TT722.outlet) annotation (Line(
+      points={{560,-40},{560,14}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL721_TT722_SourceIn.outlet, EX721.inhot) annotation (Line(
+      points={{560,-80},{560,-130},{558,-130},{558,-129.75},{558.7,-129.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sourceCold2.outlet, EX721.incold) annotation (Line(
+      points={{610,-200},{606,-200},{606,-198},{599.3,-198},{599.3,-147.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sinkCold2.inlet, EX721.outcold) annotation (Line(
+      points={{547,-201},{558.7,-201},{558.7,-147.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL721_rackL4L5_TT722.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (
+      Line(
+      points={{560,34},{560,140},{380,140},{380,180},{460,180}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL721_FT721_rackL4L5.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
+      Line(
+      points={{600,34},{600,160},{400,160},{400,240},{390,240}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_FCV731_FT731.inlet,FCV731. outlet) annotation (Line(
+      points={{300,-54},{300,-60}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV731_theta.y,FCV731. opening)
+    annotation (Line(points={{319,-70},{308,-70}},
+                                                 color={0,0,127}));
+  connect(FCV731.inlet,PL731_SourceOut_FCV731. outlet) annotation (Line(
+      points={{300,-80},{300,-90}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_SourceOut_FCV731.inlet,EX731. outhot) annotation (Line(
+      points={{300,-110},{300,-117.875},{299.3,-117.875},{299.3,-128.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT731.inlet,PL731_FCV731_FT731. outlet) annotation (Line(
+      points={{300,-27},{300,-34}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_FT731_rackL6L7.inlet,PT731. inlet) annotation (Line(
+      points={{300,10},{300,-4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT731.inlet,TT731. inlet) annotation (Line(
+      points={{300,-4},{300,-14}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT731.inlet,FT731. outlet) annotation (Line(
+      points={{300,-14},{300,-21}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_TT732_SourceIn.inlet,TT732. inlet) annotation (Line(
+      points={{260,-60},{260,-20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT732.inlet,PT732. inlet) annotation (Line(
+      points={{260,-20},{260,-10}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_TT732_SourceIn.outlet,EX731. inhot) annotation (Line(
+      points={{260,-80},{260,-114},{258.7,-114},{258.7,-128.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_rackL6L7_TT732.outlet,PT732. inlet) annotation (Line(
+      points={{260,10},{260,-10}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sinkCold3.inlet, EX731.outcold) annotation (Line(
+      points={{251,-201},{258.7,-201},{258.7,-146.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sourceCold3.outlet, EX731.incold) annotation (Line(
+      points={{314,-200},{299.3,-200},{299.3,-146.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_rackL6L7_TT732.inlet, rackL6L7_FCVC02_hot.inlet) annotation (
+      Line(
+      points={{260,30},{260,78},{620,78},{620,180},{700,180}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation
+    (Line(
+      points={{300,30},{300,60},{640,60},{640,240},{710,240}},
+      color={140,56,54},
+      thickness=0.5));
+  annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
 end Sequence3;

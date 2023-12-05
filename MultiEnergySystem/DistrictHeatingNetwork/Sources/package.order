@@ -8,3 +8,4 @@ VariableMassFlowPump
 FixedDifferentialPressurePump
 VariableDifferentialPressurePump
 BaseClass
+PumpInput

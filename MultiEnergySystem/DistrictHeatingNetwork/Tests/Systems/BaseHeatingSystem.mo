@@ -138,7 +138,7 @@ model BaseHeatingSystem
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={-770,180})));
+        origin={-780,111})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P901(
     Tin_start=Pump.P901.Tin_start,
     Tout_start=Pump.P901.Tout_start,
@@ -723,7 +723,7 @@ model BaseHeatingSystem
     annotation (Placement(transformation(extent={{726,182},{734,174}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PTA20 "Pressure sensor at the inlet of valve FCVC02"
-    annotation (Placement(transformation(extent={{742,182},{750,174}})));
+    annotation (Placement(transformation(extent={{737,182},{745,174}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PTA19 "Pressure sensor at the outlet of valve FCVC02"
     annotation (Placement(transformation(extent={{738,238},{746,246}})));
@@ -750,6 +750,36 @@ model BaseHeatingSystem
     annotation (Placement(transformation(extent={{-111,-8},{-147,27}})));
   Sources.PumpInput P901_input(omega=P901omega, q_m3h=P901qm3h)
     annotation (Placement(transformation(extent={{-630,43},{-650,64}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT901_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-752,137},{-799,171}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT901_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-752,118},{-799,152}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT902_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-650,153},{-603,187}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT902_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-650,139},{-603,173}})));
+  Modelica.Blocks.Interaction.Show.RealValue FT901_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-650,125},{-603,159}})));
+  Modelica.Blocks.Interaction.Show.RealValue PTA07_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{293,147},{340,181}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT902_2(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{284,254},{237,288}})));
+  Modelica.Blocks.Interaction.Show.RealValue PTA20_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{753,147},{800,181}})));
+  Modelica.Blocks.Interaction.Show.RealValue FTA12_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{753,129},{800,163}})));
+  Modelica.Blocks.Interaction.Show.RealValue PTA19_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{729,247},{682,281}})));
 equation
   connect(rackL3L4_FCVC01_cold.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
@@ -801,7 +831,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(VE901.outlet, PT901.inlet) annotation (Line(
-      points={{-770,170},{-770,112},{-729,112},{-729,137.5}},
+      points={{-780,101},{-780,96},{-759,96},{-759,102},{-729,102},{-729,137.5}},
       color={140,56,54},
       thickness=0.5));
   connect(TT902.inlet, S900_rackL3L4_hot.inlet) annotation (Line(
@@ -950,7 +980,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FTA12.outlet, PTA20.inlet) annotation (Line(
-      points={{732.4,179.6},{746,179.6}},
+      points={{732.4,179.6},{741,179.6}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV901_theta.y, FCV901.opening)
@@ -983,6 +1013,26 @@ equation
       thickness=0.5));
   connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{-108.3,
           9.5},{-108.3,-20},{-73,-20},{-73,0}}, color={255,0,255}));
+  connect(PT901.p, PT901_.numberPort) annotation (Line(points={{-737.5,137.5},{
+          -741,137.5},{-741,135},{-748.475,135}}, color={0,0,127}));
+  connect(TT901.T, TT901_.numberPort) annotation (Line(points={{-736.925,147.25},
+          {-742,147.25},{-742,154},{-748.475,154}}, color={0,0,127}));
+  connect(FT901.q_m3hr, FT901_.numberPort) annotation (Line(points={{-677.5,152},
+          {-681,152},{-681,142},{-653.525,142}}, color={0,0,127}));
+  connect(TT902.T, TT902_.numberPort) annotation (Line(points={{-676.925,167.25},
+          {-680,167.25},{-680,170},{-653.525,170}}, color={0,0,127}));
+  connect(PT902.p, PT902_.numberPort) annotation (Line(points={{-677.5,159.5},{
+          -681,159.5},{-681,155},{-653.525,155},{-653.525,156}}, color={0,0,127}));
+  connect(PT902_2.numberPort, PTA07.p) annotation (Line(points={{287.525,271},{
+          294,271},{294,270},{298,270},{298,247.2}}, color={0,0,127}));
+  connect(PTA07_.numberPort, PTA08.p) annotation (Line(points={{289.475,164},{
+          284,164},{284,172.8}}, color={0,0,127}));
+  connect(FTA12.q_m3hr, FTA12_.numberPort) annotation (Line(points={{730,172.8},
+          {730,146},{749.475,146}}, color={0,0,127}));
+  connect(PTA20.p, PTA20_.numberPort) annotation (Line(points={{741,172.8},{742,
+          172.8},{742,164},{749.475,164}}, color={0,0,127}));
+  connect(PTA19.p, PTA19_.numberPort) annotation (Line(points={{742,247.2},{743,
+          247.2},{743,264},{732.525,264}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-800,-320},{800,320}}, grid={1,1}),
                                                               graphics={

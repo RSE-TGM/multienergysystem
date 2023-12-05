@@ -338,19 +338,19 @@ model Sequence5
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={297,-174})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_21(use_numberPort=true,
+        origin={297,-190})));
+  Modelica.Blocks.Interaction.Show.RealValue TT704_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{80,-201},{51,-177}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_22(use_numberPort=true,
+    annotation (Placement(transformation(extent={{80,-211},{42,-166}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT734_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{236,-201},{207,-177}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_23(use_numberPort=true,
+    annotation (Placement(transformation(extent={{240,-211},{200,-166}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT714_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{380,-201},{351,-177}})));
+    annotation (Placement(transformation(extent={{380,-214},{342,-172}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_24(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{538,-203},{509,-179}})));
+    annotation (Placement(transformation(extent={{538,-203},{498,-164}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX721_EX711_cold(
     L=L_EX721_EX711_cold,
     h=h_EX721_EX711_cold,
@@ -605,13 +605,7 @@ model Sequence5
         origin={820,-290})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_25(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{831,-285},{860,-261}})));
-  Sources.SinkMassFlow sinkMassFlow(
-    pin_start=115000,
-    p0=115000,
-    m_flow0=m_flow_Cool,
-    G=1)
-    annotation (Placement(transformation(extent={{836,-90},{864,-62}})));
+    annotation (Placement(transformation(extent={{844,-296},{890,-254}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PTR01_FTR01(
     L=L_PTR01_FTR01,
     h=h_PTR01_FTR01,
@@ -677,10 +671,10 @@ model Sequence5
         rotation=-90,
         origin={828,-254})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
-    annotation (Placement(transformation(extent={{846,-166},{887,-131}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_26(use_numberPort=true,
+    annotation (Placement(transformation(extent={{846,-166},{888,-116}})));
+  Modelica.Blocks.Interaction.Show.RealValue PTR01_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{849,-226},{890,-191}})));
+    annotation (Placement(transformation(extent={{853,-212},{894,-168}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TTR02(T_start=Tout_start_Cool, p_start=pin_start_Users)
     "Temperature sensor at the outlet of chiller RR01" annotation (Placement(
@@ -725,10 +719,10 @@ model Sequence5
         origin={706,-226})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_27(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{682,-224},{641,-189}})));
+    annotation (Placement(transformation(extent={{682,-242},{640,-198}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_28(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{682,-204},{641,-169}})));
+    annotation (Placement(transformation(extent={{682,-214},{640,-168}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     PR01(
     Tin_start(displayUnit="K") = Tout_start_Cool,
@@ -772,16 +766,27 @@ model Sequence5
         origin={706,-98})));
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{666,-138},{686,-118}})));
-  Sources.SourcePressure sourcePressure(
-    p0=110000,
-    T0=EX721_Tin_cold,
-    R=1) annotation (Placement(transformation(extent={{676,-82},{696,-62}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(
     Tout_cold_set=Tout_start_Cool,
     dp_cold_start=50000,
     m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{734,-74},{805,-3}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT703_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{147,-185},{188,-146}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT733_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{309,-189},{348,-148}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT713_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{451,-189},{488,-152}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT723_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{608,-188},{648,-144}})));
+  Modelica.Blocks.Interaction.Show.RealValue TTR01_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{853,-242},{894,-196}})));
 equation
   connect(TCV731.opening,TCV731_theta. y)
     annotation (Line(points={{252,-240},{245,-240}},
@@ -865,7 +870,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EX731.incold,TT733. inlet) annotation (Line(
-      points={{299.3,-146.25},{299.3,-160.125},{299.4,-160.125},{299.4,-174}},
+      points={{299.3,-146.25},{299.3,-168.125},{299.4,-168.125},{299.4,-190}},
       color={140,56,54},
       thickness=0.5));
   connect(TCV721_theta.y, TCV721.opening)
@@ -874,14 +879,12 @@ equation
       points={{560,-220},{560,-225},{559.5,-225},{559.5,-230}},
       color={140,56,54},
       thickness=0.5));
-  connect(TT704.T, FTR01_21.numberPort)
-    annotation (Line(points={{90.2,-189},{82.175,-189}}, color={0,0,127}));
-  connect(TT734.T, FTR01_22.numberPort) annotation (Line(points={{250.35,-189.5},
-          {244.263,-189.5},{244.263,-189},{238.175,-189}}, color={0,0,127}));
-  connect(TT714.T, FTR01_23.numberPort) annotation (Line(points={{390.2,-188},{
-          386,-188},{386,-189},{382.175,-189}}, color={0,0,127}));
+  connect(TT734.T, TT734_.numberPort) annotation (Line(points={{250.35,-189.5},
+          {246.675,-189.5},{246.675,-188.5},{243,-188.5}}, color={0,0,127}));
+  connect(TT714.T, TT714_.numberPort) annotation (Line(points={{390.2,-188},{
+          390.2,-193},{382.85,-193}}, color={0,0,127}));
   connect(TT724.T, FTR01_24.numberPort) annotation (Line(points={{550.2,-192},{
-          545.188,-192},{545.188,-191},{540.175,-191}}, color={0,0,127}));
+          541,-192},{541,-183.5}},                      color={0,0,127}));
   connect(PL_EX721_EX711_cold.outlet, PL_rackUsersIn_TT713.inlet) annotation (
       Line(
       points={{478,-292},{440,-292},{440,-249}},
@@ -1001,8 +1004,9 @@ equation
       points={{817,-292},{808,-292}},
       color={140,56,54},
       thickness=0.5));
-  connect(FTR01_25.numberPort, FTR03.q_m3hr) annotation (Line(points={{828.825,-273},
-          {820,-273},{820,-283.5}}, color={0,0,127}));
+  connect(FTR01_25.numberPort, FTR03.q_m3hr) annotation (Line(points={{840.55,
+          -275},{840.55,-283.5},{820,-283.5}},
+                                    color={0,0,127}));
   connect(TTR01.inlet,PTR01. inlet) annotation (Line(
       points={{827.6,-219},{827.6,-209}},
       color={140,56,54},
@@ -1024,10 +1028,9 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FTR01.q_m3hr,FTR01_. numberPort) annotation (Line(points={{836.5,-149},
-          {839.712,-149},{839.712,-148.5},{842.925,-148.5}},
-                                                       color={0,0,127}));
-  connect(PTR01.p, FTR01_26.numberPort) annotation (Line(points={{837.8,-209},{841.862,
-          -209},{841.862,-208.5},{845.925,-208.5}}, color={0,0,127}));
+          {836.5,-145},{842.85,-145},{842.85,-141}},   color={0,0,127}));
+  connect(PTR01.p, PTR01_.numberPort) annotation (Line(points={{837.8,-209},{
+          837.8,-190},{849.925,-190}}, color={0,0,127}));
   connect(RR00_PL_FTR03_PTR01.inlet, FTR03.outlet) annotation (Line(
       points={{828,-264},{828,-292},{823,-292}},
       color={140,56,54},
@@ -1048,10 +1051,10 @@ equation
       points={{706,-236},{706,-292},{674,-292}},
       color={140,56,54},
       thickness=0.5));
-  connect(FTR01_27.numberPort, TTR02.T) annotation (Line(points={{685.075,-206.5},
-          {690,-206.5},{690,-206},{695.2,-206}}, color={0,0,127}));
-  connect(PTR02.p, FTR01_28.numberPort) annotation (Line(points={{695.2,-196},{692,
-          -196},{692,-186.5},{685.075,-186.5}}, color={0,0,127}));
+  connect(FTR01_27.numberPort, TTR02.T) annotation (Line(points={{685.15,-220},
+          {685.15,-206},{695.2,-206}},           color={0,0,127}));
+  connect(PTR02.p, FTR01_28.numberPort) annotation (Line(points={{695.2,-196},{
+          692,-196},{692,-191},{685.15,-191}},  color={0,0,127}));
   connect(RR00_PL_RR01_PR01.outlet,PR01. inlet) annotation (Line(
       points={{706,-108},{706,-122.6}},
       color={140,56,54},
@@ -1072,5 +1075,17 @@ equation
       color={140,56,54},
       thickness=0.5));
 
+  connect(TT704.T, TT704_.numberPort) annotation (Line(points={{90.2,-189},{
+          82.85,-189},{82.85,-188.5}}, color={0,0,127}));
+  connect(TT703.T, TT703_.numberPort) annotation (Line(points={{128.2,-184},{
+          143.925,-184},{143.925,-165.5}}, color={0,0,127}));
+  connect(TT733_.numberPort, TT733.T) annotation (Line(points={{306.075,-168.5},
+          {306.075,-184},{289.2,-184},{289.2,-190}}, color={0,0,127}));
+  connect(TT713.T, TT713_.numberPort) annotation (Line(points={{429.2,-188},{
+          428,-188},{428,-170},{448.225,-170},{448.225,-170.5}}, color={0,0,127}));
+  connect(TT723_.numberPort, TT723.T) annotation (Line(points={{605,-166},{605,
+          -184},{589.2,-184},{589.2,-191}}, color={0,0,127}));
+  connect(TTR01.T, TTR01_.numberPort)
+    annotation (Line(points={{837.8,-219},{849.925,-219}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-800,-380},{800,380}})));
 end Sequence5;

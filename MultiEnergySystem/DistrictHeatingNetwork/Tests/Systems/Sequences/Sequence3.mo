@@ -353,10 +353,10 @@ partial model Sequence3
   Modelica.Blocks.Interaction.Show.RealValue FTR01_12(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{78,-31},{49,-7}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_1(use_numberPort=true,
+  Modelica.Blocks.Interaction.Show.RealValue PT732_(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{236,-21},{207,3}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_2(use_numberPort=true,
+  Modelica.Blocks.Interaction.Show.RealValue TT732_(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{236,-33},{207,-9}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_3(use_numberPort=true,
@@ -529,10 +529,6 @@ equation
           389.837,-20},{389.837,-21},{386.175,-21}}, color={0,0,127}));
   connect(PT712.p, FTR01_3.numberPort) annotation (Line(points={{391.5,-10},{
           389.837,-10},{389.837,-9},{386.175,-9}}, color={0,0,127}));
-  connect(TT732.T, FTR01_2.numberPort) annotation (Line(points={{251.5,-20},{
-          244.838,-20},{244.838,-21},{238.175,-21}}, color={0,0,127}));
-  connect(PT732.p, FTR01_1.numberPort) annotation (Line(points={{251.5,-10},{
-          244.838,-10},{244.838,-9},{238.175,-9}}, color={0,0,127}));
   connect(FT701.q_m3hr, FTR01_10.numberPort) annotation (Line(points={{131.5,
           -22},{126,-22},{126,-16},{146,-16},{146,-21},{150.825,-21}}, color={0,
           0,127}));
@@ -562,5 +558,9 @@ equation
           85.8375,-20},{85.8375,-19},{80.175,-19}}, color={0,0,127}));
   connect(PT702.p, FTR01_11.numberPort) annotation (Line(points={{91.5,-10},{
           85.8375,-10},{85.8375,-7},{80.175,-7}}, color={0,0,127}));
+  connect(PT732.p, PT732_.numberPort) annotation (Line(points={{251.5,-10},{
+          244.838,-10},{244.838,-9},{238.175,-9}}, color={0,0,127}));
+  connect(TT732.T, TT732_.numberPort) annotation (Line(points={{251.5,-20},{
+          244.838,-20},{244.838,-21},{238.175,-21}}, color={0,0,127}));
   annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
 end Sequence3;

@@ -12,7 +12,7 @@ package Types
   type HeatCapacity =
       Modelica.Units.SI.HeatCapacity (              nominal = 1e3);
   type Temperature =
-      Modelica.Units.SI.Temperature (             nominal = 300);
+      Modelica.Units.SI.Temperature (             nominal = 370);
   type Pressure = Modelica.Units.SI.Pressure (
                                             nominal = 1e5);
   type Density = Modelica.Units.SI.Density (

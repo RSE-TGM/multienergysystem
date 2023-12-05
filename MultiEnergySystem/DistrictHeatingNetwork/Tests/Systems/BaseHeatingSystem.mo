@@ -640,9 +640,7 @@ model BaseHeatingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL2L3_rackL3L4_cold(
     L=L_rL2L3_rL3L4_C,
     t=t_rL_C,
-    m_flow_start=m_flow_start_Users*3,
     pin_start=pout_start_Users - 0.02e5,
-    pout_start=pout_start_Users - 0.03e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
     Di=Di_rL_C,

@@ -19,6 +19,7 @@ model GBEBPumpingSystem
 
   parameter Types.MassFlowRate m_flow_S4 = 1.2;
   parameter Real P401omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*40; 200, 2*3.141592654*40];
+  parameter Real P401qm3h[:,:] = [0, 7.5; 100, 7.5];
   parameter Real FCV401theta[:,:] = [0, 1];
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler
@@ -59,12 +60,11 @@ model GBEBPumpingSystem
     headmax=Pump.P401.headnommax,
     headmin=Pump.P401.headnommin,
     qnom_inm3h_min=Pump.P401.qnommin_inm3h,
-    qnom_inm3h_max=Pump.P401.qnommax_inm3h,
-    use_in_omega=true)                      annotation (Placement(transformation(
+    qnom_inm3h_max=Pump.P401.qnommax_inm3h)                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-236,-165})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV401(
     Kv=Valve.FCV401.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV401.dp_nom,
@@ -193,9 +193,11 @@ model GBEBPumpingSystem
         rotation=90,
         origin={-276,-44})));
   Modelica.Blocks.Sources.TimeTable P401_omega(table=P401omega)
-    annotation (Placement(transformation(extent={{-200,-180},{-220,-160}})));
+    annotation (Placement(transformation(extent={{-196,-246},{-216,-226}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=FCV401theta)
     annotation (Placement(transformation(extent={{-200,-140},{-220,-120}})));
+  Sources.PumpInput P401_input(omega=P401omega, q_m3h=P401qm3h)
+    annotation (Placement(transformation(extent={{-198,-175},{-218,-154}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
       points={{-236,-174.6},{-236,-204}},
@@ -258,8 +260,6 @@ equation
       points={{-276,-34},{-276,-19.75},{-320.5,-19.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(P401_omega.y, P401.in_omega) annotation (Line(points={{-221,-170},{-228.5,
-          -170},{-228.5,-169.8},{-230,-169.8}}, color={0,0,127}));
   connect(FCV401_theta.y, FCV401.opening)
     annotation (Line(points={{-221,-130},{-228,-130}}, color={0,0,127}));
   annotation (experiment(StopTime=800, __Dymola_Algorithm="Dassl"));

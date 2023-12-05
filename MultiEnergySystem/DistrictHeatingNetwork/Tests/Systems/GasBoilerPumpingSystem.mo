@@ -25,6 +25,8 @@ model GasBoilerPumpingSystem
 
 
   parameter Real P101omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*40; 200, 2*3.141592654*40];
+  parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
+
   parameter Real FCV101theta[:,:] = [0, 1];
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
@@ -48,13 +50,12 @@ model GasBoilerPumpingSystem
     headmax=Pump.P101.headnommax,
     headmin=Pump.P101.headnommin,
     qnom_inm3h_min=Pump.P101.qnommin_inm3h,
-    qnom_inm3h_max=Pump.P101.qnommax_inm3h,
-    use_in_omega=true)
+    qnom_inm3h_max=Pump.P101.qnommax_inm3h)
                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-152,-165})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV101(
     Kv=Valve.FCV101.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV101.dp_nom,
@@ -191,7 +192,9 @@ model GasBoilerPumpingSystem
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
     annotation (Placement(transformation(extent={{-110,-140},{-130,-120}})));
   Modelica.Blocks.Sources.TimeTable P101_omega(table=P101omega)
-    annotation (Placement(transformation(extent={{-110,-180},{-130,-160}})));
+    annotation (Placement(transformation(extent={{-44,-164},{-64,-144}})));
+  Sources.PumpInput P101_input(omega=P101omega, q_m3h=P101qm3h)
+    annotation (Placement(transformation(extent={{-106,-181},{-126,-160}})));
 equation
   connect(P101.inlet,PL3_S101. outlet) annotation (Line(
       points={{-152,-174.6},{-152,-198}},
@@ -254,8 +257,6 @@ equation
       points={{-152,-218},{-152,-232},{-158.5,-232},{-158.5,-251}},
       color={140,56,54},
       thickness=0.5));
-  connect(P101_omega.y, P101.in_omega) annotation (Line(points={{-131,-170},{-143.5,
-          -170},{-143.5,-169.8},{-146,-169.8}}, color={0,0,127}));
   connect(FCV101_theta.y, FCV101.opening)
     annotation (Line(points={{-131,-130},{-144,-130}}, color={0,0,127}));
 end GasBoilerPumpingSystem;

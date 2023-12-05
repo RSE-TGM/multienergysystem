@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sources;
 model PumpInput
   extends Modelica.Blocks.Interfaces.SignalSource;
+    parameter Boolean startSwitch = useOmega;
     parameter Boolean useOmega = true;
     parameter Real omega[:,:] = [0, 2*3.141592654*50];
     parameter Real q_m3h[:,:] = [0, 4];
@@ -9,7 +10,7 @@ model PumpInput
     annotation (Placement(transformation(extent={{-60,40},{-40,60}})));
   Modelica.Blocks.Sources.TimeTable pump_q_m3h(table=q_m3h)
     annotation (Placement(transformation(extent={{-60,-60},{-40,-40}})));
-  Modelica.Blocks.Logical.Switch switch
+  Modelica.Blocks.Logical.Switch switch(u2(start = startSwitch))
     annotation (Placement(transformation(extent={{20,-10},{40,10}})));
   Modelica.Blocks.Sources.BooleanExpression selectInput(y=useOmega)
     annotation (Placement(transformation(extent={{-28,-10},{-8,10}})));

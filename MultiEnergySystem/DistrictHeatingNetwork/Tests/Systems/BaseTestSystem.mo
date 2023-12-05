@@ -1767,9 +1767,8 @@ equation
   connect(FTR01.q_m3hr,FTR01_. numberPort) annotation (Line(points={{728.5,-109},
           {731.712,-109},{731.712,-108.5},{734.925,-108.5}},
                                                        color={0,0,127}));
-  connect(FTR03.q_m3hr,FTR01_1. numberPort) annotation (Line(points={{710,-225.5},
-          {710,-240},{718,-240},{718,-233.5},{726.925,-233.5}},
-                                                            color={0,0,127}));
+  connect(FTR03.q_m3hr, PT901_.numberPort) annotation (Line(points={{710,-225.5},
+          {710,-240},{718,-240},{718,-233.5},{726.925,-233.5}}, color={0,0,127}));
   connect(TT704.T,FTR01_3. numberPort)
     annotation (Line(points={{246.2,-153},{244.175,-153}},
                                                          color={0,0,127}));
@@ -1779,9 +1778,8 @@ equation
   connect(FTR01_5.numberPort,TT724. T)
     annotation (Line(points={{422.175,-156},{426.2,-156}},
                                                     color={0,0,127}));
-  connect(TT734.T,FTR01_2. numberPort) annotation (Line(points={{156.35,-153.5},
-          {156.35,-153},{149.175,-153}},
-                                       color={0,0,127}));
+  connect(TT734.T, TT902_.numberPort) annotation (Line(points={{156.35,-153.5},
+          {156.35,-153},{149.175,-153}}, color={0,0,127}));
   connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
       points={{294,-38},{294,-48}},
       color={140,56,54},

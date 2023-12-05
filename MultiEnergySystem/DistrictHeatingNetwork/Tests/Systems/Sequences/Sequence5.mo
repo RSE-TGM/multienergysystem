@@ -9,7 +9,7 @@ model Sequence5
   parameter Types.Pressure pin_start_PR01 = pout_start_Cool;
   parameter Types.Pressure pout_start_PR01 = 2e5;
   parameter Types.Temperature Tin_start_Cool = 16 + 273.15;
-  parameter Types.Temperature Tout_start_Cool = 8 + 273.15;
+  parameter Types.Temperature Tout_start_Cool = 7 + 273.15;
   parameter Types.MassFlowRate m_flow_Cool = 8.88+0.3;
   parameter Real q_Cool(unit = "m3/h") = 32;
   parameter Types.Length t_RR = 1.5e-3;
@@ -339,22 +339,6 @@ model Sequence5
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={297,-174})));
-  Sources.SourceMassFlow sourceCold2(
-    p0=EX721_pin_cold,
-    T0(displayUnit="K") = EX721_Tin_cold,
-    m_flow0=m_flow_Cool,
-    G=1e-3)               annotation (Placement(transformation(
-        extent={{13,-13},{-13,13}},
-        rotation=0,
-        origin={745,-72})));
-  Sources.SinkPressure sinkCold3(
-    p0=115000,
-    T0(displayUnit="K") = 15 + 273.15,
-    R=1)
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={747,-391})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_21(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{80,-201},{51,-177}})));
@@ -625,7 +609,8 @@ model Sequence5
   Sources.SinkMassFlow sinkMassFlow(
     pin_start=115000,
     p0=115000,
-    m_flow0=m_flow_Cool)
+    m_flow0=m_flow_Cool,
+    G=1)
     annotation (Placement(transformation(extent={{836,-90},{864,-62}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PTR01_FTR01(
     L=L_PTR01_FTR01,
@@ -791,6 +776,12 @@ model Sequence5
     p0=110000,
     T0=EX721_Tin_cold,
     R=1) annotation (Placement(transformation(extent={{676,-82},{696,-62}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
+    RR01(
+    Tout_cold_set=Tout_start_Cool,
+    dp_cold_start=50000,
+    m_flow_cold_start=m_flow_Cool)
+    annotation (Placement(transformation(extent={{734,-74},{805,-3}})));
 equation
   connect(TCV731.opening,TCV731_theta. y)
     annotation (Line(points={{252,-240},{245,-240}},
@@ -1035,8 +1026,8 @@ equation
   connect(FTR01.q_m3hr,FTR01_. numberPort) annotation (Line(points={{836.5,-149},
           {839.712,-149},{839.712,-148.5},{842.925,-148.5}},
                                                        color={0,0,127}));
-  connect(PTR01.p, FTR01_26.numberPort) annotation (Line(points={{837.8,-209},{
-          841.862,-209},{841.862,-208.5},{845.925,-208.5}}, color={0,0,127}));
+  connect(PTR01.p, FTR01_26.numberPort) annotation (Line(points={{837.8,-209},{841.862,
+          -209},{841.862,-208.5},{845.925,-208.5}}, color={0,0,127}));
   connect(RR00_PL_FTR03_PTR01.inlet, FTR03.outlet) annotation (Line(
       points={{828,-264},{828,-292},{823,-292}},
       color={140,56,54},
@@ -1057,28 +1048,29 @@ equation
       points={{706,-236},{706,-292},{674,-292}},
       color={140,56,54},
       thickness=0.5));
-  connect(FTR01_27.numberPort, TTR02.T) annotation (Line(points={{685.075,
-          -206.5},{690,-206.5},{690,-206},{695.2,-206}}, color={0,0,127}));
-  connect(PTR02.p, FTR01_28.numberPort) annotation (Line(points={{695.2,-196},{
-          692,-196},{692,-186.5},{685.075,-186.5}}, color={0,0,127}));
+  connect(FTR01_27.numberPort, TTR02.T) annotation (Line(points={{685.075,-206.5},
+          {690,-206.5},{690,-206},{695.2,-206}}, color={0,0,127}));
+  connect(PTR02.p, FTR01_28.numberPort) annotation (Line(points={{695.2,-196},{692,
+          -196},{692,-186.5},{685.075,-186.5}}, color={0,0,127}));
   connect(RR00_PL_RR01_PR01.outlet,PR01. inlet) annotation (Line(
       points={{706,-108},{706,-122.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_omega.y,PR01. in_q_m3hr) annotation (Line(points={{687,-128},{
-          693.51,-128},{693.51,-127.8},{700.02,-127.8}},
+  connect(PR01_omega.y,PR01. in_q_m3hr) annotation (Line(points={{687,-128},{693.51,
+          -128},{693.51,-127.8},{700.02,-127.8}},
                                             color={0,0,127}));
   connect(PR01.outlet, RR00_PL_PR01_PTR02.inlet) annotation (Line(
       points={{706,-143.4},{706,-166}},
       color={140,56,54},
       thickness=0.5));
-  connect(sinkMassFlow.inlet, RR00_PL_FTR01_RR01.outlet) annotation (Line(
-      points={{836,-76},{828,-76},{828,-114}},
+  connect(RR00_PL_FTR01_RR01.outlet, RR01.incold) annotation (Line(
+      points={{828,-114},{828,-82},{792,-82},{792,-59.8},{790.8,-59.8}},
       color={140,56,54},
       thickness=0.5));
-  connect(sourcePressure.outlet, RR00_PL_RR01_PR01.inlet) annotation (Line(
-      points={{696,-72},{706,-72},{706,-88}},
+  connect(RR00_PL_RR01_PR01.inlet, RR01.outcold) annotation (Line(
+      points={{706,-88},{708,-88},{708,-78},{750,-78},{750,-59.8},{748.2,-59.8}},
       color={140,56,54},
       thickness=0.5));
+
   annotation (Diagram(coordinateSystem(extent={{-800,-380},{800,380}})));
 end Sequence5;

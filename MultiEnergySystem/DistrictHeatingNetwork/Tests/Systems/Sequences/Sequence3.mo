@@ -74,7 +74,7 @@ partial model Sequence3
     Tin_start=EX721_Tout_hot,
     Tout_start=EX721_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_cold,
+    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype)
                   annotation (Placement(transformation(
@@ -91,7 +91,7 @@ partial model Sequence3
     Tin_start=EX721_Tout_hot,
     Tout_start=EX721_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_cold,
+    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype)
                  annotation (Placement(transformation(
@@ -126,7 +126,7 @@ partial model Sequence3
     Tin_start=EX721_Tout_hot,
     Tout_start=EX721_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_cold,
+    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype)
          annotation (Placement(transformation(
@@ -141,7 +141,7 @@ partial model Sequence3
     Tin_start=EX721_Tin_hot,
     Tout_start=EX721_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_cold,
+    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype)
                  annotation (Placement(transformation(
@@ -169,7 +169,7 @@ partial model Sequence3
     Tin_start=EX721_Tin_hot,
     Tout_start=EX721_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_cold,
+    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype)
          annotation (Placement(transformation(
@@ -245,7 +245,7 @@ partial model Sequence3
     Tin_start=EX731_Tout_hot,
     Tout_start=EX731_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_cold,
+    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype)
                   annotation (Placement(transformation(
@@ -262,7 +262,7 @@ partial model Sequence3
     Tin_start=EX731_Tout_hot,
     Tout_start=EX731_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_cold,
+    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype)
                  annotation (Placement(transformation(
@@ -297,7 +297,7 @@ partial model Sequence3
     Tin_start=EX731_Tout_hot,
     Tout_start=EX731_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_cold,
+    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype)
          annotation (Placement(transformation(
@@ -312,7 +312,7 @@ partial model Sequence3
     Tin_start=EX731_Tin_hot,
     Tout_start=EX731_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_cold,
+    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype)
                  annotation (Placement(transformation(
@@ -340,7 +340,7 @@ partial model Sequence3
     Tin_start=EX731_Tin_hot,
     Tout_start=EX731_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_cold,
+    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype)
          annotation (Placement(transformation(

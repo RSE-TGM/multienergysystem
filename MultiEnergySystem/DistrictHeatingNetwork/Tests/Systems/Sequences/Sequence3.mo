@@ -1,6 +1,10 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
 partial model Sequence3
   extends Sequence2(
+    EX701_q_m3h_hot = 4,
+    EX711_q_m3h_hot = 4,
+    EX721_q_m3h_hot = 4,
+    EX731_q_m3h_hot = 4,
     EB401(nR=5, Tout_ref=333.15),
     GB101(Tout_ref=333.15),
     FCVC01theta = [0, 0; 660, 0],

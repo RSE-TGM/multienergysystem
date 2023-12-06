@@ -703,6 +703,7 @@ model Sequence5
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
     Di=Di_RR,
+    q_m3h_start=q_Cool,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -732,6 +733,7 @@ model Sequence5
     pout_start(displayUnit="Pa") = 2.6e5,
     qnom_inm3h=Pump.PR01.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
+    headnom=Pump.PR01.headnom,
     headmax=Pump.PR01.headnommax,
     headmin=Pump.PR01.headnommin,
     qnom_inm3h_min=Pump.PR01.qnommin_inm3h,

@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
 model Sequence5
-  extends Sequence3(GB101(Tout_ref=343.15), EB401(Tout_ref=343.15));
+  extends Sequence3(GB101(Tout_ref=353.15), EB401(Tout_ref=353.15));
 
   //1. Cooling System
 
@@ -103,15 +103,6 @@ model Sequence5
 
   parameter Types.Length L_RR_UsersOut = 2;
   parameter Types.Length h_RR_UsersOut = 0;
-
-
-
-
-
-
-
-
-
 
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
@@ -766,7 +757,7 @@ model Sequence5
         origin={706,-98})));
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{666,-138},{686,-118}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(
     Tout_cold_set=Tout_start_Cool,
     dp_cold_start=50000,
@@ -1087,5 +1078,5 @@ equation
           -184},{589.2,-184},{589.2,-191}}, color={0,0,127}));
   connect(TTR01.T, TTR01_.numberPort)
     annotation (Line(points={{837.8,-219},{849.925,-219}}, color={0,0,127}));
-  annotation (Diagram(coordinateSystem(extent={{-800,-380},{800,380}})));
+  annotation (Diagram(coordinateSystem(extent={{-900,-380},{900,380}})));
 end Sequence5;

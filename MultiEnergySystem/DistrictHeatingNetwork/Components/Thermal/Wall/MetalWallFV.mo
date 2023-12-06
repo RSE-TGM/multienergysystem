@@ -4,7 +4,7 @@ model MetalWallFV
   constant Real pi=Modelica.Constants.pi;
   parameter Integer Nw = 1
   "Number of volumes on the wall ports";
-  parameter Modelica.Units.SI.Mass M
+  parameter Types.Mass M
     "Mass of the metal wall";
   parameter Modelica.Units.SI.SpecificHeatCapacity cm
     "Specific heat capacity of metal wall";
@@ -16,13 +16,13 @@ model MetalWallFV
     "Equivalent thermal conductance of outer half-wall" annotation (Dialog(enable=WallRes));
   parameter Modelica.Units.SI.ThermalConductance UA_int=UA_ext
     "Equivalent thermal conductance of inner half-wall" annotation (Dialog(enable=WallRes));
-  parameter Modelica.Units.SI.Temperature Tstartbar
+  parameter Types.Temperature Tstartbar
     "Average temperature" annotation (Dialog(tab="Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tstart1
+  parameter Types.Temperature Tstart1
     "Temperature start value - first volume" annotation (Dialog(tab="Initialisation"));
-  parameter Modelica.Units.SI.Temperature TstartN
+  parameter Types.Temperature TstartN
     "Temperature start value - last volume" annotation (Dialog(tab="Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tvolstart[Nw]=
+  parameter Types.Temperature Tvolstart[Nw]=
       Utilities.linspaceExt(Tstart1,TstartN, Nw)
     "Temperature start value for all volumes of the metal wall" annotation (Dialog(tab="Initialisation"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt
@@ -31,7 +31,7 @@ model MetalWallFV
 
   outer DistrictHeatingNetwork.System system
     "System wide properties";
-  Modelica.Units.SI.Temperature Tvol[Nw](start=Tvolstart)
+  Types.Temperature Tvol[Nw](start=Tvolstart)
     "Volume temperatures";
   DistrictHeatingNetwork.Interfaces.MultiHeatPort int(final n=Nw, T(start=Tvolstart)) "Internal surface"
      annotation (Placement(transformation(extent={{-40,20},{40,40}}, rotation=0)));

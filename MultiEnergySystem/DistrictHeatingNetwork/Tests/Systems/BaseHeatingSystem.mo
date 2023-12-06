@@ -752,10 +752,10 @@ model BaseHeatingSystem
     annotation (Placement(transformation(extent={{-630,43},{-650,64}})));
   Modelica.Blocks.Interaction.Show.RealValue TT901_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{-752,137},{-799,171}})));
+    annotation (Placement(transformation(extent={{-752,137},{-799,183}})));
   Modelica.Blocks.Interaction.Show.RealValue PT901_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{-752,118},{-799,152}})));
+    annotation (Placement(transformation(extent={{-751,107},{-799,152}})));
   Modelica.Blocks.Interaction.Show.RealValue TT902_(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{-650,153},{-603,187}})));
@@ -1014,9 +1014,9 @@ equation
   connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{-108.3,
           9.5},{-108.3,-20},{-73,-20},{-73,0}}, color={255,0,255}));
   connect(PT901.p, PT901_.numberPort) annotation (Line(points={{-737.5,137.5},{
-          -741,137.5},{-741,135},{-748.475,135}}, color={0,0,127}));
+          -737.5,129.5},{-747.4,129.5}},          color={0,0,127}));
   connect(TT901.T, TT901_.numberPort) annotation (Line(points={{-736.925,147.25},
-          {-742,147.25},{-742,154},{-748.475,154}}, color={0,0,127}));
+          {-748.475,147.25},{-748.475,160}},        color={0,0,127}));
   connect(FT901.q_m3hr, FT901_.numberPort) annotation (Line(points={{-677.5,152},
           {-681,152},{-681,142},{-653.525,142}}, color={0,0,127}));
   connect(TT902.T, TT902_.numberPort) annotation (Line(points={{-676.925,167.25},

@@ -24,7 +24,7 @@ model SinkPressure "Pressure sink for water/steam flows"
   parameter Types.Pressure p0=1.01325e5 "Nominal pressure" annotation (
     Dialog(group = "Fluid parameters"));
   parameter Types.Temperature T0 = 298.15 "Nominal temperature" annotation (
-    Dialog(enable = use_T and not use_in_T, group = "Fluid parameters"));
+    Dialog(group = "Fluid parameters"));
   parameter Types.HydraulicResistance R=0 "Hydraulic resistance" annotation (
     Evaluate=true, Dialog(group = "Fluid parameters"));
 

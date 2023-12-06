@@ -5,3 +5,4 @@ ElectricBoiler
 ControlledElectricBoiler
 ControlledGasBoiler
 ChillerNoDynamics
+ControlledChillerNoDynamicsSP

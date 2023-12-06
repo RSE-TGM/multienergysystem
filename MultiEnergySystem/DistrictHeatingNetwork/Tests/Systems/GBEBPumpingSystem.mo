@@ -57,6 +57,7 @@ model GBEBPumpingSystem
     pout_start(displayUnit="Pa") = Pump.P401.pout_start,
     qnom_inm3h=Pump.P401.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P401.rhonom,
+    headnom=Pump.P401.headnom,
     headmax=Pump.P401.headnommax,
     headmin=Pump.P401.headnommin,
     qnom_inm3h_min=Pump.P401.qnommin_inm3h,
@@ -145,7 +146,8 @@ model GBEBPumpingSystem
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-278,-96})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT401
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT401(T_start=
+        Tin_start_S4, p_start=pin_start_S4)
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,

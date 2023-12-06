@@ -47,6 +47,7 @@ model GasBoilerPumpingSystem
     pout_start(displayUnit="Pa") = Pump.P101.pout_start,
     qnom_inm3h=Pump.P101.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P101.rhonom,
+    headnom=Pump.P101.headnom,
     headmax=Pump.P101.headnommax,
     headmin=Pump.P101.headnommin,
     qnom_inm3h_min=Pump.P101.qnommin_inm3h,

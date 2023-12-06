@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
+﻿within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model BaseHeatingSystem
   "Case in which there isn't any source of heat"
   extends Modelica.Icons.Example;
@@ -151,6 +151,7 @@ model BaseHeatingSystem
     etaelec=Pump.P901.etaelec,
     etamech=Pump.P901.etamech,
     etanom=Pump.P901.etanom,
+    headnom=Pump.P901.headnom,
     headmax=Pump.P901.headnommax,
     headmin=Pump.P901.headnommin,
     m_flow_nom=Pump.P901.m_flow_nom,
@@ -200,13 +201,13 @@ model BaseHeatingSystem
         transformation(
         extent={{-4.75,-4.75},{4.75,4.75}},
         rotation=90,
-        origin={-730.75,147.25})));
+        origin={-721.75,147.25})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT901
     "Pressure sensor at the outlet of pump 901" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={-731,137.5})));
+        origin={-722,137.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S901(
     L=L_S9_PL2,
     t=t_S9,
@@ -219,7 +220,7 @@ model BaseHeatingSystem
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-729,76})));
+        origin={-720,76})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     Kv=Valve.FCV901.Kv,
@@ -523,8 +524,8 @@ model BaseHeatingSystem
     m_flow_start=m_flow_start,
     pin_start=pin_start_rCD_cold,
     pout_start=pout_start_rCD_cold,
-    Tin_start=T_start,
-    Tout_start=T_start,
+    Tin_start=T_start_cold,
+    Tout_start=T_start_cold,
     Di=Di,
     nPipes=1,
     n=n,
@@ -810,11 +811,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.inlet,PT901. inlet) annotation (Line(
-      points={{-729,86},{-729,137.5}},
+      points={{-720,86},{-720,137.5}},
       color={140,56,54},
       thickness=0.5));
   connect(PT901.inlet,TT901. inlet) annotation (Line(
-      points={{-729,137.5},{-729,142.375},{-728.85,142.375},{-728.85,147.25}},
+      points={{-720,137.5},{-720,142.375},{-719.85,142.375},{-719.85,147.25}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV901.outlet,PL4_S901. inlet) annotation (Line(
@@ -831,7 +832,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(VE901.outlet, PT901.inlet) annotation (Line(
-      points={{-780,101},{-780,96},{-759,96},{-759,102},{-729,102},{-729,137.5}},
+      points={{-780,101},{-780,96},{-750,96},{-750,102},{-720,102},{-720,137.5}},
       color={140,56,54},
       thickness=0.5));
   connect(TT902.inlet, S900_rackL3L4_hot.inlet) annotation (Line(
@@ -839,7 +840,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TT901.inlet,S900_rackL2L3_cold. outlet) annotation (Line(
-      points={{-728.85,147.25},{-728.85,240},{30,240}},
+      points={{-719.85,147.25},{-719.85,240},{30,240}},
       color={140,56,54},
       thickness=0.5));
   connect(FCVC01.outlet, rackL3L4_FCVC01_cold.inlet) annotation (Line(
@@ -847,7 +848,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(Wall_S9.MultiPort, PL2_S901.wall)
-    annotation (Line(points={{-750,76},{-733.3,76}}, color={255,238,44}));
+    annotation (Line(points={{-750,76},{-724.3,76}}, color={255,238,44}));
   connect(rackCD_Hot_S400_S300.outlet, rackCD_Hot_S300_S500.inlet) annotation (
       Line(
       points={{-270,20},{-330,20}},
@@ -896,7 +897,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.outlet, rackCD_Cold_S900_S200.inlet) annotation (Line(
-      points={{-729,66},{-729,-19.75},{-650,-19.75}},
+      points={{-720,66},{-720,-19.75},{-650,-19.75}},
       color={140,56,54},
       thickness=0.5));
   connect(rackCD_Cold_S900_S200.outlet, rackCD_Cold_S200_S500.inlet)
@@ -1013,9 +1014,7 @@ equation
       thickness=0.5));
   connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{-108.3,
           9.5},{-108.3,-20},{-73,-20},{-73,0}}, color={255,0,255}));
-  connect(PT901.p, PT901_.numberPort) annotation (Line(points={{-737.5,137.5},{
-          -737.5,129.5},{-747.4,129.5}},          color={0,0,127}));
-  connect(TT901.T, TT901_.numberPort) annotation (Line(points={{-736.925,147.25},
+  connect(TT901.T, TT901_.numberPort) annotation (Line(points={{-727.925,147.25},
           {-748.475,147.25},{-748.475,160}},        color={0,0,127}));
   connect(FT901.q_m3hr, FT901_.numberPort) annotation (Line(points={{-677.5,152},
           {-681,152},{-681,142},{-653.525,142}}, color={0,0,127}));
@@ -1033,6 +1032,8 @@ equation
           172.8},{742,164},{749.475,164}}, color={0,0,127}));
   connect(PTA19.p, PTA19_.numberPort) annotation (Line(points={{742,247.2},{743,
           247.2},{743,264},{732.525,264}}, color={0,0,127}));
+  connect(PT901.p, PT901_.numberPort) annotation (Line(points={{-728.5,137.5},{
+          -747,137.5},{-747,129.5},{-747.4,129.5}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-800,-320},{800,320}}, grid={1,1}),
                                                               graphics={
@@ -1084,7 +1085,32 @@ equation
           extent={{-132,-27},{-32,-47}},
           textColor={28,108,200},
           textStyle={TextStyle.Bold},
-          textString="FV933 State")}),                                     Icon(
+          textString="FV933 State"),
+        Text(
+          extent={{-602,177},{-585,161}},
+          textColor={0,0,0},
+          textString="°C",
+          textStyle={TextStyle.Bold}),
+        Text(
+          extent={{-602,164},{-578,147}},
+          textColor={0,0,0},
+          textString="bar",
+          textStyle={TextStyle.Bold}),
+        Text(
+          extent={{-603,150},{-568,134}},
+          textColor={0,0,0},
+          textString="m3/h",
+          textStyle={TextStyle.Bold}),
+        Text(
+          extent={{-747,168},{-730,152}},
+          textColor={0,0,0},
+          textString="°C",
+          textStyle={TextStyle.Bold}),
+        Text(
+          extent={{-744,138},{-720,121}},
+          textColor={0,0,0},
+          textString="bar",
+          textStyle={TextStyle.Bold})}),                                   Icon(
         coordinateSystem(grid={0.5,0.5})),
     experiment(StopTime=500, __Dymola_Algorithm="Dassl"));
 end BaseHeatingSystem;

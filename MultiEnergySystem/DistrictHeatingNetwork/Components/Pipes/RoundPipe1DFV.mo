@@ -31,7 +31,7 @@ model RoundPipe1DFV
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.Density rho_nom = 1e3 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.Velocity u_nom = 10 "Nominal fluid velocity" annotation (
+  parameter Types.Velocity u_nom = 5 "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state" annotation (
     Dialog(tab = "Data", group = "Fluid"));
@@ -54,7 +54,8 @@ model RoundPipe1DFV
 
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid" annotation (
     Dialog(group = "Initialisation"));
-  final parameter Types.Pressure dp_start = rho_start * g * h + cf/2 * rho_start * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
+  //final parameter Types.Pressure dp_start = rho_start * g * h + cf/2 * rho_start * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
+  final parameter Types.Pressure dp_start = rho_start * g * h + cf/2 * rho_start * omega * L / A * u_start ^ 2 "Nominal pressure drop";
   final parameter Types.Pressure dp_nom = 2e5 "Nominal pressure drop";
   final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom "Nominal mass flow rate";
   final parameter Types.VolumeFlowRate q_start = q_m3h_start/3600 "Volumetric flowrate start value";
@@ -75,8 +76,8 @@ model RoundPipe1DFV
   Types.Temperature Twall[n] "Pipe wall temperature";
   Types.Power Qtot "Total heat";
   Types.Temperature T[n + 1](start = T_start) "Volume boundary temperatures";
-  Types.Pressure pin "Inlet pressure";
-  Types.Pressure pout "Outlet pressure";
+  Types.Pressure pin(nominal = 5e5) "Inlet pressure";
+  Types.Pressure pout(nominal = 5e5) "Outlet pressure";
   Types.Pressure ptilde "Pressure state the pipe";
   Types.Pressure dp(start = dp_start) "Delta pressure";
   Types.Mass M[n] "Mass of fluid in each finite volume";
@@ -136,10 +137,11 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    m_flow[i]- m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]) +  1e-6*der(ptilde));
+    m_flow[i]- m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]) +  4.4e-7*der(ptilde));
     //rhotilde[i]*Vi*cp[i+1]*der(Ttilde[i]) = cp[i]*m_flow[i]*(T[i] - T[i+1]) + wall.Q_flow[i] "Energy balance";
     //(Vi*regStep(dp,fluid[i+1].h,fluid[i].h)*rhotilde[i] + M[i]*regStep(dp,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
 
+    //(Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u, m_flow_nom*cons) + M[i]*regStep(inlet.m_flow,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
     (Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u, m_flow_nom*cons) + M[i]*regStep(inlet.m_flow,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   end for;
 
@@ -181,6 +183,9 @@ equation
 
   fluid_temp.p = ptilde;
   fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*cons), hin_start);
+  //fluid_temp.h = regStep(inlet.m_flow, homotopy(inStream(inlet.h_out), hin_start), homotopy(inStream(outlet.h_out), hin_start));
+  //fluid_temp.h = inStream(inlet.h_out);
+  //fluid_temp.h = regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*cons);
   //fluid_temp.h = regStep(dp, inStream(inlet.h_out), inStream(outlet.h_out), dp_nom*1e-6);
 
   // Boundary conditions

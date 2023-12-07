@@ -8,7 +8,8 @@ model WaterLiquid
     cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755},
     kappa_coeff = {-8.1509980345909e-06,0.0063995962643842,-0.57622073567604});
 
-  parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) - u_bias;
+  //parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) - u_bias;
+  parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff);
   parameter Types.SpecificEnergy u_bias = 1.492354e+06;
   Real drho_dT(unit = "kg/(m3.K)");
   //Real drhodv(unit = "mol/m3");
@@ -27,7 +28,8 @@ equation
   //u = (((+0.00393447)*T + (-3.7185))*T + 5350.25)*T + (-1.26407e+006);
   //u = u_T(T,cp_coeff) - u_bias;
   h = u + p/rho;
-  h = h_T(T,cp_coeff) - u_bias;
+  //h = h_T(T,cp_coeff) - u_bias;
+  h = h_T(T,cp_coeff);
   cp = du_dT;
   cp = cp_T(T, cp_coeff);
   cv = cp;

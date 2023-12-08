@@ -20,9 +20,11 @@ initial equation
   assert(computeEntropy == false, "This model is not able to compute entropy");
 equation
   //rho = (((+1.48186e-005)*T + (-0.0177278))*T + 6.36275)*T + 283.08;
-  rho = rho_T(T,rho_coeff);
+  //rho = rho_T(T,rho_coeff);
+  rho = 985;
+  drho_dT = 0;
   rho = 1/v;
-  drho_dT = drhodT_T(T, rho_coeff);
+  //drho_dT = drhodT_T(T, rho_coeff);
   //dTdv = drhodv/drhodT;
   //dpdT = (p/rho)*drhodT;
   //u = (((+0.00393447)*T + (-3.7185))*T + 5350.25)*T + (-1.26407e+006);

@@ -41,12 +41,9 @@ model StratifiedStorage
 //  Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
 
 equation
-// Fluid
+  // Fluid
   fluid.T = T;
   fluid.p = p;
-
-//  {fluidIn.p, fluidIn.h} = {pin, inlet.h_out};
-//  {fluidOut.p, fluidOut.T} = {pout, Tout};
 
   // Boundary equations
   inlet.m_flow = m_flow[1];

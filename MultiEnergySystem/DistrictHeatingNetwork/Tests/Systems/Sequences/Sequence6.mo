@@ -35,7 +35,7 @@ equation
   connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (Line(points={{729,40},{769.5,
           40},{769.5,-17.2}}, color={0,0,127}));
   annotation (experiment(
-      StopTime=50,
+      StopTime=2500,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end Sequence6;

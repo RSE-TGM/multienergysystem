@@ -27,7 +27,7 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(tab = "Initialisation"));
 
   //Nominal parameters
-  parameter Types.MassFlowRate m_flow_nom "nomimal outlet mass flowrate" annotation (
+  parameter Types.MassFlowRate m_flow_nom = qnom_inm3h_max*985/3600 "nomimal outlet mass flowrate" annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Types.Density rhonom = 1000 "Nominal Liquid Density" annotation (
     Dialog(group = "Pump Characteristics"));
@@ -49,7 +49,7 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(group = "Pump Characteristics"));
   parameter Types.Length headmax = 13.5 "maximum head" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Real qnom_inm3h(unit = "m3/h") "nominal volumetric flowrate in m3/h " annotation (
+  parameter Real qnom_inm3h(unit = "m3/h") = 13 "nominal volumetric flowrate in m3/h " annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Real qnom_inm3h_min(unit = "m3/h") = 5.5 "minimum volumetric flowrate in m3/h" annotation (
     Dialog(group = "Pump Characteristics"));
@@ -79,7 +79,7 @@ partial model PumpBase "Base model to develop water pump models"
   Types.Density rhoout(nominal = 1e3) "Density of outgoing fluid";
   Types.Temperature Tin(start = Tin_start) "Liquid inlet temperature";
   Types.Temperature Tout "Liquid outlet temperature";
-  Modelica.Units.SI.AngularVelocity omega(min = 0, nominal = 2*pi*50, start = omeganom) "Shaft rad/s.";
+  Modelica.Units.SI.AngularVelocity omega(min = 2*pi*30, nominal = 2*pi*50, start = omeganom) "Shaft rad/s.";
   Modelica.Units.SI.Power W "Power Consumption";
   Modelica.Units.SI.Power Qloss = 0 "Heat loss (single pump)";
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
@@ -126,8 +126,8 @@ equation
   q_m3h = q*3600;
   f = omega/(2*pi);
 
-  //head = dp/(rhoin*g);
-  dp = head*rhoin*g;
+  head = dp/(rhoin*g);
+  //dp = head*rhoin*g;
   //head = homotopy(dp/(rhoin*g), headnom/2*dp/dpnom);
   W = dp*q/eta;
 //eta = 0.6;

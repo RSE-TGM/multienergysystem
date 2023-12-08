@@ -128,16 +128,15 @@ equation
 
   head = dp/(rhoin*g);
   //dp = head*rhoin*g;
-  //head = homotopy(dp/(rhoin*g), headnom/2*dp/dpnom);
   W = dp*q/eta;
 //eta = 0.6;
 //eta = dp*q/W;
 //dp = W*eta/q;
-// Mass Balance
+  // Mass Balance
   inlet.m_flow + outlet.m_flow = 0;
-// Energy Balance
-  //0 = outlet.m_flow*hout + inlet.m_flow*hin + W - Qloss "Energy balance";
-  Tin = Tout;
+
+  // Energy Balance
+  0 = outlet.m_flow*hout + inlet.m_flow*hin + W - Qloss "Energy balance";
   Pm = W/etamech;
   Pe = Pm/etaelec;
   //inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";

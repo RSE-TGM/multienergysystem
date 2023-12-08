@@ -109,7 +109,8 @@ model HP301System
         origin={10,15})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage
     D301(
-    H=2,      T_start=Tout_User_start_S3,
+    H=2,
+    T_start=Tout_User_start_S3,
     pin_start=pout_User_start_S3_pump,
     m_flow_start=m_flow_User_S3)
          annotation (Placement(transformation(extent={{37,46},{67,94}})));

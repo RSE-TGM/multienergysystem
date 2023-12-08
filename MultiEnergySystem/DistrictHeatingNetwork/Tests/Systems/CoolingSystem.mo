@@ -376,7 +376,7 @@ model CoolingSystem
     q_m3h_start=q_Users)                annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
-        origin={11,-10})));
+        origin={10,-11})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV731(
       Kv=Valve.TCV731.Kv,
@@ -644,7 +644,7 @@ model CoolingSystem
         origin={-220,131})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(Tout_cold_set=Tout_start_Cool,
-    dp_cold_start=10000,                m_flow_cold_start=m_flow_Cool)
+    dp_cold_start=50000,                m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{170,134},{241,205}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
     L=L_EX701_EX731_cold,
@@ -839,7 +839,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TCV721.outlet, PL_TCV721_rackUsersOut.inlet) annotation (Line(
-      points={{11,-20},{11,-40},{10,-40},{10,-59}},
+      points={{10,-21},{10,-59}},
       color={140,56,54},
       thickness=0.5));
   connect(TCV701_theta.y, TCV701.opening)
@@ -855,7 +855,8 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TCV721.opening, TCV721_theta.y)
-    annotation (Line(points={{3,-10},{-4,-10}},  color={0,0,127}));
+    annotation (Line(points={{2,-11},{-1,-11},{-1,-10},{-4,-10}},
+                                                 color={0,0,127}));
   connect(TCV731.opening, TCV731_theta.y)
     annotation (Line(points={{-268,-10},{-275,-10}},
                                                    color={0,0,127}));
@@ -995,7 +996,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_TT724_TCV721.outlet, TCV721.inlet) annotation (Line(
-      points={{10,10},{10,0},{11,0}},
+      points={{10,10},{10,-1}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_EX701_EX731_hot.inlet, PL_TCV731_rackUsersOut.outlet) annotation (

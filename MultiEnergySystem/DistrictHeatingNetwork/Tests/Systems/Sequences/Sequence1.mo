@@ -25,11 +25,11 @@ equation
           -127,-169.8},{-146,-169.8}}, color={0,0,127}));
   connect(P401_input.y, P401.in_omega) annotation (Line(points={{-219,-164.5},{
           -224,-164.5},{-224,-169.8},{-230,-169.8}}, color={0,0,127}));
-  connect(P901_input.y, P901.in_omega) annotation (Line(points={{-651,53.5},{
-          -651,54},{-664,54}}, color={0,0,127}));
+  connect(P901_input.y, P901.in_omega) annotation (Line(points={{-711,53.5},{
+          -711,54},{-724,54}}, color={0,0,127}));
   annotation (experiment(
       StopTime=1000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"),
-  Diagram(coordinateSystem(extent = {{-800, -320}, {800, 320}})));
+  Diagram(coordinateSystem(extent={{-900,-320},{900,320}}, grid={1,1})));
 end Sequence1;

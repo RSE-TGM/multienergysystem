@@ -55,7 +55,7 @@ model GasBoilerPumpingSystem
                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
-        origin={-152,-165})));
+        origin={-214,-165})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV101(
     Kv=Valve.FCV101.Kv,
@@ -68,7 +68,7 @@ model GasBoilerPumpingSystem
            annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-152,-130})));
+        origin={-214,-130})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S101(
     L=L_S1_PL3,
     t=t_S1,
@@ -81,7 +81,7 @@ model GasBoilerPumpingSystem
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-152,-208})));
+        origin={-214,-208})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S101(
     L=L_S1_PL2,
     t=t_S1,
@@ -94,7 +94,7 @@ model GasBoilerPumpingSystem
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-188,-210})));
+        origin={-250,-210})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S101(
     L=L_S1_PL3,
     t=t_S1,
@@ -107,7 +107,7 @@ model GasBoilerPumpingSystem
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-152,-96})));
+        origin={-214,-96})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler
     GB101(
     Tin_start=Tin_start_S1,
@@ -116,7 +116,7 @@ model GasBoilerPumpingSystem
     Tout_start=Tout_start_S1,
     HH=55.5e6,
     Tout_ref=290.15)   annotation (Placement(visible=true, transformation(
-        origin={-169,-279},
+        origin={-231,-279},
         extent={{-35,-35},{35,35}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
@@ -125,32 +125,32 @@ model GasBoilerPumpingSystem
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={-150,-62})));
+        origin={-212,-62})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT102 "Pressure sensor at the outlet of valve FCV101" annotation (Placement(
         transformation(
         extent={{6,6},{-6,-6}},
         rotation=90,
-        origin={-150,-74})));
+        origin={-212,-74})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT101 "Pressure sensor at the inlet of gas boiler" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-190,-96})));
+        origin={-252,-96})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT101(T_start=Tin_start_S1, p_start=pin_start_S1)
           "Temperature sensor at the outlet of valve FCV101" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-190,-84})));
+        origin={-252,-84})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT101(T_start=
         Tin_start_S1, p_start=pin_start_S1)
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
-        origin={-191,-179})));
+        origin={-253,-185})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S101(
     L=L_S1_PL1,
     t=t_S1,
@@ -163,7 +163,7 @@ model GasBoilerPumpingSystem
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-188,-150})));
+        origin={-250,-150})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
     L=L_S1_rCD_hot,
     t=t_S1,
@@ -176,7 +176,7 @@ model GasBoilerPumpingSystem
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-152,-42})));
+        origin={-214,-42})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
     L=L_S1_rCD_cold,
     t=t_S1,
@@ -189,75 +189,76 @@ model GasBoilerPumpingSystem
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-188,-42})));
+        origin={-250,-42})));
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
-    annotation (Placement(transformation(extent={{-110,-140},{-130,-120}})));
+    annotation (Placement(transformation(extent={{-172,-140},{-192,-120}})));
   Modelica.Blocks.Sources.TimeTable P101_omega(table=P101omega)
-    annotation (Placement(transformation(extent={{-44,-164},{-64,-144}})));
+    annotation (Placement(transformation(extent={{-106,-164},{-126,-144}})));
   Sources.PumpInput P101_input(omega=P101omega, q_m3h=P101qm3h)
-    annotation (Placement(transformation(extent={{-106,-181},{-126,-160}})));
+    annotation (Placement(transformation(extent={{-172,-181},{-192,-160}})));
 equation
   connect(P101.inlet,PL3_S101. outlet) annotation (Line(
-      points={{-152,-174.6},{-152,-198}},
+      points={{-214,-174.6},{-214,-198}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV101.inlet,P101. outlet) annotation (Line(
-      points={{-152,-140},{-152,-155.4}},
+      points={{-214,-140},{-214,-155.4}},
       color={140,56,54},
       thickness=0.5));
   connect(TT102.inlet,PT102. inlet) annotation (Line(
-      points={{-152.4,-62},{-152.4,-74}},
+      points={{-214.4,-62},{-214.4,-74}},
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S101.inlet,FCV101. outlet) annotation (Line(
-      points={{-152,-106},{-152,-120}},
+      points={{-214,-106},{-214,-120}},
       color={140,56,54},
       thickness=0.5));
   connect(PT102.inlet,PL4_S101. outlet) annotation (Line(
-      points={{-152.4,-74},{-152.4,-83},{-152,-83},{-152,-86}},
+      points={{-214.4,-74},{-214.4,-83},{-214,-83},{-214,-86}},
       color={140,56,54},
       thickness=0.5));
   connect(FT101.outlet,PL2_S101. inlet) annotation (Line(
-      points={{-188.2,-183.2},{-188.2,-191.6},{-188,-191.6},{-188,-200}},
+      points={{-250.2,-189.2},{-250.2,-191.6},{-250,-191.6},{-250,-200}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S101.outlet,FT101. inlet) annotation (Line(
-      points={{-188,-160},{-188,-167.4},{-188.2,-167.4},{-188.2,-174.8}},
+      points={{-250,-160},{-250,-167.4},{-250.2,-167.4},{-250.2,-180.8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S101.inlet,PT101. inlet) annotation (Line(
-      points={{-188,-140},{-188,-96},{-187.6,-96}},
+      points={{-250,-140},{-250,-96},{-249.6,-96}},
       color={140,56,54},
       thickness=0.5));
   connect(PT101.inlet,TT101. inlet) annotation (Line(
-      points={{-187.6,-96},{-187.6,-84}},
+      points={{-249.6,-96},{-249.6,-84}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S100_rCD_hot.inlet, TT102.inlet) annotation (Line(
-      points={{-152,-52},{-152,-62},{-152.4,-62}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S100_rCD_hot.outlet, FV933.inlet) annotation (Line(
-      points={{-152,-32},{-152,19.75},{-130,19.75},{-130,5}},
+      points={{-214,-52},{-214,-62},{-214.4,-62}},
       color={140,56,54},
       thickness=0.5));
   connect(TT101.inlet, PL_S100_rCD_cold.outlet) annotation (Line(
-      points={{-187.6,-84},{-187.6,-79},{-188,-79},{-188,-52}},
+      points={{-249.6,-84},{-249.6,-79},{-250,-79},{-250,-52}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
       Line(
-      points={{-188,-32},{-188,-19.75},{-238.5,-19.75}},
+      points={{-250,-32},{-250,-19.75},{-298.5,-19.75}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S101.outlet, GB101.inlet) annotation (Line(
-      points={{-188,-220},{-188,-232},{-179.5,-232},{-179.5,-251}},
+      points={{-250,-220},{-250,-232},{-241.5,-232},{-241.5,-251}},
       color={140,56,54},
       thickness=0.5));
   connect(PL3_S101.inlet, GB101.outlet) annotation (Line(
-      points={{-152,-218},{-152,-232},{-158.5,-232},{-158.5,-251}},
+      points={{-214,-218},{-214,-232},{-220.5,-232},{-220.5,-251}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV101_theta.y, FCV101.opening)
-    annotation (Line(points={{-131,-130},{-144,-130}}, color={0,0,127}));
+    annotation (Line(points={{-193,-130},{-206,-130}}, color={0,0,127}));
+  connect(PL_S100_rCD_hot.outlet, FV933.inlet) annotation (Line(
+      points={{-214,-32},{-214,20},{-212,20},{-212,19.75},{-190,19.75},{-190,5}},
+
+      color={140,56,54},
+      thickness=0.5));
 end GasBoilerPumpingSystem;

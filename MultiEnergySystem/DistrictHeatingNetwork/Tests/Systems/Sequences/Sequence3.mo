@@ -11,10 +11,12 @@ partial model Sequence3
     FCVC02theta = [0, 0; 780, 0]);
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
     EX721(
+    hctype_hot=hctype,
     Di_cold=BPHE.E701.Di_cold,
     Di_hot=BPHE.E701.Di_hot,
     L_cold=BPHE.E701.L_cold,
     L_hot=BPHE.E701.L_hot,
+    hctype_cold=hctype,
     MWall=BPHE.E701.MWall,
     Stot_cold=BPHE.E701.Stot_cold,
     Stot_hot=BPHE.E701.Stot_hot,
@@ -182,10 +184,12 @@ partial model Sequence3
         origin={560,24})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
     EX731(
+    hctype_hot=hctype,
     Di_cold=BPHE.E701.Di_cold,
     Di_hot=BPHE.E701.Di_hot,
     L_cold=BPHE.E701.L_cold,
     L_hot=BPHE.E701.L_hot,
+    hctype_cold=hctype,
     MWall=BPHE.E701.MWall,
     Stot_cold=BPHE.E701.Stot_cold,
     Stot_hot=BPHE.E701.Stot_hot,

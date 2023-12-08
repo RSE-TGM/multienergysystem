@@ -299,10 +299,12 @@ partial model Sequence2
         origin={100,22})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
     EX711(
+    hctype_hot=hctype,
     Di_cold=BPHE.E701.Di_cold,
     Di_hot=BPHE.E701.Di_hot,
     L_cold=BPHE.E701.L_cold,
     L_hot=BPHE.E701.L_hot,
+    hctype_cold=hctype,
     MWall=BPHE.E701.MWall,
     Stot_cold=BPHE.E701.Stot_cold,
     Stot_hot=BPHE.E701.Stot_hot,

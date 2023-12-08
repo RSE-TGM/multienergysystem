@@ -4,14 +4,16 @@ model Sequence6
     redeclare MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamicsSP RR01,
     T_start_hot = 80+273.15,
     T_start_cold = 60+273.15,
+    Tout_start_Cool = 7+273.15,
     EX701_Tin_hot = T_start_hot,
-    EX701_Tin_cold = T_start_cold,
+    EX701_Tout_hot = T_start_cold,
+    EX701_Tin_cold = Tout_start_Cool,
     EX711_Tin_hot = T_start_hot,
-    EX711_Tin_cold = T_start_cold,
+    EX711_Tin_cold = Tout_start_Cool,
     EX721_Tin_hot = T_start_hot,
-    EX721_Tin_cold = T_start_cold,
+    EX721_Tin_cold = Tout_start_Cool,
     EX731_Tin_hot = T_start_hot,
-    EX731_Tin_cold = T_start_cold,
+    EX731_Tin_cold = Tout_start_Cool,
     Tin_start_S1 = T_start_cold,
     Tout_start_S1 = T_start_hot,
     Tin_start_S4 = T_start_cold,
@@ -32,5 +34,8 @@ model Sequence6
 equation
   connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (Line(points={{729,40},{769.5,
           40},{769.5,-17.2}}, color={0,0,127}));
-  annotation (experiment(StopTime=50, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(
+      StopTime=50,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end Sequence6;

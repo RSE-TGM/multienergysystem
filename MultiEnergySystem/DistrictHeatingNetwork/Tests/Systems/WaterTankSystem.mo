@@ -29,7 +29,7 @@ model WaterTankSystem "System of two tanks"
   final parameter Types.VolumeFlowRate q = q_m3h_S2/3600;
   final parameter Types.MassFlowRate m_flow_S2 = q*985;
 
-  parameter Real FCV201theta[:,:] = [0, 0.5; 100, 0.5];
+  parameter Real FCV201theta[:,:] = [0, 0.5; 100, 0.5; 105, 0.8; 200, 0.8];
 
 
   // Pipe length
@@ -50,6 +50,9 @@ model WaterTankSystem "System of two tanks"
   parameter Types.Length h_S2_Tanks_High = -2.5;
   parameter Types.Length L_S2_S201_FT201 = 1;
   parameter Types.Length h_S2_S201_FT201 = 0;
+  parameter Types.Length L_S2_D201_FT201 = 2;
+  parameter Types.Length h_S2_D201_FT201 = 0;
+
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={270,230},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -152,7 +155,7 @@ model WaterTankSystem "System of two tanks"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-40})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S201(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV209_FCV201(
     L=L_S2_PL4,
     t=t_S2,
     pin_start=pin_start_S2,
@@ -160,25 +163,10 @@ model WaterTankSystem "System of two tanks"
     Tout_start=Tin_start_S2,
     Di=Di_S2,
     n=n,
-    hctype=hctype)
-              annotation (Placement(transformation(
+    hctype=hctype) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-140,-30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL5_S201(
-    L=L_S2_PL5,
-    t=t_S2,
-    pin_start=pout_start_S2_pump,
-    Tin_start=Tin_start_S2,
-    Tout_start=Tin_start_S2,
-    Di=Di_S2,
-    q_m3h_start=q_m3h_S2,
-    n=n,
-    hctype=hctype)
-              annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=270,
-        origin={-140,-130})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT202(T_start=Tout_start_S2, p_start=pout_start_S2)
     "Temperature sensor at the outlet of System 200"         annotation (
@@ -289,7 +277,7 @@ model WaterTankSystem "System of two tanks"
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={160,-126})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL6_S4(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV209_D201(
     L=L_S2_PL6,
     t=t_S2,
     pin_start=pout_start_S2_pump,
@@ -298,14 +286,13 @@ model WaterTankSystem "System of two tanks"
     Di=Di_S2,
     q_m3h_start=q_m3h_S2,
     n=n,
-    hctype=hctype)
-              annotation (Placement(transformation(
+    hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
-        origin={40,-180})));
+        origin={42,-168})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_FT201(
-    L=L_S2_S201_FT201,
-    h=h_S2_S201_FT201,
+    L=L_S2_D201_FT201,
+    h=h_S2_D201_FT201,
     t=t_S2,
     pin_start=pout_start_S2_pump,
     Tin_start=Tout_start_S2,
@@ -438,6 +425,8 @@ model WaterTankSystem "System of two tanks"
         origin={-52,-70})));
   Modelica.Blocks.Sources.TimeTable FCV201_theta(table=FCV201theta)
     annotation (Placement(transformation(extent={{-180,-10},{-160,10}})));
+  Modelica.Blocks.Sources.BooleanExpression booleanExpression
+    annotation (Placement(transformation(extent={{-50,38},{-30,58}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-80,115.5},{-80,120.375},{-79.85,120.375},{-79.85,125.25}},
@@ -495,30 +484,22 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.inlet, D201.inlet) annotation (Line(
-      points={{150,-126},{118,-126}},
+      points={{150,-126},{134,-126},{134,-126},{118,-126}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.outlet, D202.inlet) annotation (Line(
-      points={{170,-126},{202,-126}},
+      points={{170,-126},{186,-126},{186,-126},{202,-126}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL6_S4.outlet, D201.inlet) annotation (Line(
-      points={{50,-180},{132,-180},{132,-126},{118,-126}},
+  connect(PL_S200_FV209_D201.outlet, D201.inlet) annotation (Line(
+      points={{52,-168},{128,-168},{128,-126},{118,-126}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_FT201.outlet, PL_S200_D201_High.outlet) annotation (Line(
       points={{50,-108},{132,-108},{132,-100}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL5_S201.outlet, PL6_S4.inlet) annotation (Line(
-      points={{-140,-140},{-140,-180},{30,-180}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL4_S201.inlet, PL5_S201.inlet) annotation (Line(
-      points={{-140,-40},{-140,-120}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL4_S201.outlet, FCV201.inlet) annotation (Line(
+  connect(PL_S200_FV209_FCV201.outlet, FCV201.inlet) annotation (Line(
       points={{-140,-20},{-140,-10}},
       color={140,56,54},
       thickness=0.5));
@@ -554,10 +535,6 @@ equation
       points={{-80,-50},{-80,-64}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV209.outlet, PL5_S201.inlet) annotation (Line(
-      points={{-80,-76},{-80,-100},{-140,-100},{-140,-120}},
-      color={140,56,54},
-      thickness=0.5));
   connect(FV207.inlet, FV209.inlet) annotation (Line(
       points={{-58,-56},{-80,-56},{-80,-64}},
       color={140,56,54},
@@ -586,7 +563,7 @@ equation
           {-36.6,18}},
                 color={255,0,255}));
   connect(FV206.u, FV206_Status.activePort) annotation (Line(points={{-50,13.92},
-          {-54,13.92},{-54,18.65},{-51,18.65}},        color={255,0,255}));
+          {-50,18.65},{-51,18.65}},                    color={255,0,255}));
   connect(FV202_OnOff.y, FV202.u) annotation (Line(points={{-119.4,74},{-110,74},
           {-110,71.92}},
                       color={255,0,255}));
@@ -611,10 +588,19 @@ equation
   connect(FV203.u, FV203_Status.activePort) annotation (Line(points={{-18.08,-20},
           {-16,-20},{-16,-14},{0,-14},{0,-20},{-1.00625,-20},{-1.00625,-20.25},{
           -4.4625,-20.25}}, color={255,0,255}));
+  connect(PL_S200_FV209_FCV201.inlet, PL_S200_FV209_D201.inlet) annotation (
+      Line(
+      points={{-140,-40},{-140,-168},{32,-168}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV209.outlet, PL_S200_FV209_D201.inlet) annotation (Line(
+      points={{-80,-76},{-80,-108},{-140,-108},{-140,-168},{32,-168}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-280,-240},{280,240}})),
     experiment(
-      StopTime=100,
+      StopTime=300,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end WaterTankSystem;

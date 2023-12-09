@@ -2,9 +2,9 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model StratifiedWaterTankSystem
   extends WaterTankSystem(
     redeclare DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(H=4,
-                 n=4),
+                 n=3),
     redeclare DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(H=4,
-                 n=4),
+                 n=3),
     Tin_start_S2 = 60 + 273.15,
     Tout_start_S2 = 60 + 273.15,
     P201(pout_start=3e5),

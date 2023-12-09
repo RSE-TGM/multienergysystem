@@ -40,6 +40,16 @@ model StratifiedStorage
 //     p_start = pin_start);
 //  Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
 
+  Modelica.Blocks.Interfaces.RealOutput T1 annotation (Placement(transformation(
+          extent={{94,-100},{114,-80}}), iconTransformation(extent={{94,-100},{114,
+            -80}})));
+  Modelica.Blocks.Interfaces.RealOutput T2 annotation (Placement(transformation(
+          extent={{92,-40},{112,-20}}), iconTransformation(extent={{92,-40},{112,
+            -20}})));
+  Modelica.Blocks.Interfaces.RealOutput T3 annotation (Placement(transformation(
+          extent={{92,20},{112,40}}), iconTransformation(extent={{92,20},{112,40}})));
+  Modelica.Blocks.Interfaces.RealOutput T4 annotation (Placement(transformation(
+          extent={{92,80},{112,100}}), iconTransformation(extent={{92,80},{112,100}})));
 equation
   // Fluid
   fluid.T = T;
@@ -104,6 +114,11 @@ equation
   // Momentum Balance
   //pin - pout = rho[n+1]*H*g_n;
   p[1:n] - p[2:n+1] = rho[2:n+1]*(H/n)*g_n;
+
+  T1 = T[1];
+  T2 = T[2];
+  T3 = T[3];
+  T4 = T[4];
 
 
 initial equation

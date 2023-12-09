@@ -52,7 +52,8 @@ partial model PartialLumpedVolume
 
   // Connectors
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet(m_flow(start = m_flow_start))  annotation (
-    Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-100,
+            -100},                                                                                                                                        extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet(m_flow(start = -m_flow_start)) annotation (Placement(
       visible=true,
       transformation(
@@ -60,7 +61,7 @@ partial model PartialLumpedVolume
         extent={{-10,-10},{10,10}},
         rotation=0),
       iconTransformation(
-        origin={-100,60},
+        origin={-100,100},
         extent={{-20,-20},{20,20}},
         rotation=0)));
 equation
@@ -74,5 +75,5 @@ equation
   inlet.h_out = inStream(inlet.h_out);
 
   annotation (
-    Icon(coordinateSystem(extent = {{-100, -140}, {100, 140}})));
+    Icon(coordinateSystem(extent={{-100,-200},{100,200}})));
 end PartialLumpedVolume;

@@ -7,22 +7,20 @@ model StratifiedWaterTankSystem
                  n=4),
     Tin_start_S2 = 60 + 273.15,
     Tout_start_S2 = 60 + 273.15,
-    theta = 0,
     P201(pout_start=3e5),
     source(
       use_in_T0=true,
       T0=288.15,
            R=1e-3),
-    sink(T0=333.15));
-  Modelica.Blocks.Sources.Ramp T_in(
-    height=45,
-    duration=0,
-    offset=15 + 273.15,
-    startTime=1500)
-    annotation (Placement(transformation(extent={{-112,150},{-92,170}})));
+    sink(T0=333.15),
+    ramp(height=-0.8*m_flow_S2, startTime=2e4));
+
+  parameter Real Tin[:,:] = [0, 15+273.15; 1e3, 15+273.15; 1e3, 60 + 273.15; 1e5, 60 + 273.15; 1e5, 30 + 273.15; 3e5, 30+273.15];
+  Modelica.Blocks.Sources.TimeTable T_in(table=Tin)
+    annotation (Placement(transformation(extent={{-140,180},{-120,200}})));
 equation
-  connect(T_in.y, source.in_T0) annotation (Line(points={{-91,160},{-56,160},{
-          -56,148.4}}, color={0,0,127}));
+  connect(T_in.y, source.in_T0) annotation (Line(points={{-119,190},{-104,190},{
+          -104,174.4}}, color={0,0,127}));
   annotation (experiment(
       StopTime=10000,
       Tolerance=1e-06,

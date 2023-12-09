@@ -51,7 +51,7 @@ package Icons "Icon package for DHN components"
     partial model Pipe
       annotation (
         Icon(graphics={  Rectangle(fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent={{-100,32},
-                  {100,-32}}),                                                                                                     Text(origin = {0, 14}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+                  {100,-32}}),                                                                                                     Text(origin={0,34},    textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
     end Pipe;
   end Water;
 

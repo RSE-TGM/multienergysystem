@@ -234,9 +234,9 @@ model BaseHeatingSystem
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-729,86})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV933(
-    Kv=15,
+    Kv=33,
     dp_nom=50000,
     Tin_start=T_start,
     pin_start=pin_start) annotation (Placement(visible=true,
@@ -738,17 +738,15 @@ model BaseHeatingSystem
   Modelica.Blocks.Sources.TimeTable FCVC02_theta(table=FCVC02theta)
     annotation (Placement(transformation(extent={{740,260},{720,280}})));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=FV933_state)
-    annotation (Placement(transformation(extent={{-105,-10},{-125,10}})));
-  Modelica.Blocks.Math.BooleanToReal FV933_Command(realTrue=1, realFalse=0)
-    annotation (Placement(transformation(extent={{-135,-10},{-155,10}})));
+    annotation (Placement(transformation(extent={{-160,10},{-180,30}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08
     "Pressure sensor at the inlet of valve FCVC01"
     annotation (Placement(transformation(extent={{220,182},{228,174}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07
     "Pressure sensor at the outlet of valve FCVC01"
     annotation (Placement(transformation(extent={{234,238},{242,246}})));
-  Modelica.Blocks.Interaction.Show.BooleanValue booleanValue
-    annotation (Placement(transformation(extent={{-171,-8},{-207,27}})));
+  Modelica.Blocks.Interaction.Show.BooleanValue FV933_Status
+    annotation (Placement(transformation(extent={{-179,-17},{-144,17}})));
   Sources.PumpInput P901_input(omega=P901omega, q_m3h=P901qm3h)
     annotation (Placement(transformation(extent={{-690,43},{-710,64}})));
   Modelica.Blocks.Interaction.Show.RealValue TT901_(use_numberPort=true,
@@ -992,12 +990,6 @@ equation
   connect(FCVC02_theta.y, FCVC02.opening) annotation (Line(points={{719,270},{
           710,270},{710,210},{698,210}},
                                      color={0,0,127}));
-  connect(FV933_Command.y, FV933.opening) annotation (Line(points={{-156,0},{
-          -183.5,0},{-183.5,-2.22045e-16},{-186,-2.22045e-16}},
-                                                         color={0,0,127}));
-  connect(FV933_OnOff.y, FV933_Command.u)
-    annotation (Line(points={{-126,0},{-133,0}},
-                                               color={255,0,255}));
   connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (Line(
       points={{200,180},{212,180},{212,179.6},{224,179.6}},
       color={140,56,54},
@@ -1016,9 +1008,6 @@ equation
       points={{-10,240},{90,240}},
       color={140,56,54},
       thickness=0.5));
-  connect(booleanValue.activePort, FV933_Command.u) annotation (Line(points={{-168.3,
-          9.5},{-168.3,-20},{-133,-20},{-133,0}},
-                                                color={255,0,255}));
   connect(TT901.T, TT901_.numberPort) annotation (Line(points={{-787.925,147.25},
           {-808.475,147.25},{-808.475,160}},        color={0,0,127}));
   connect(FT901.q_m3hr, FT901_.numberPort) annotation (Line(points={{-737.5,152},
@@ -1039,6 +1028,12 @@ equation
           247.2},{683,264},{672.525,264}}, color={0,0,127}));
   connect(PT901.p, PT901_.numberPort) annotation (Line(points={{-788.5,137.5},{
           -807,137.5},{-807,129.5},{-807.4,129.5}}, color={0,0,127}));
+  connect(FV933.u, FV933_Status.activePort) annotation (Line(points={{-188.4,
+          -5.55112e-17},{-182.05,-5.55112e-17},{-182.05,0},{-181.625,0}}, color
+        ={255,0,255}));
+  connect(FV933_OnOff.y, FV933_Status.activePort) annotation (Line(points={{
+          -181,20},{-186,20},{-186,-5.55112e-17},{-182.05,-5.55112e-17},{
+          -182.05,0},{-181.625,0}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-900,-320},{900,320}}, grid={1,1}),
                                                               graphics={
@@ -1087,7 +1082,7 @@ equation
           textColor={28,108,200},
           textString="RackL6L7_cold"),
         Text(
-          extent={{-192,-27},{-92,-47}},
+          extent={{-185,-7},{-85,-27}},
           textColor={28,108,200},
           textStyle={TextStyle.Bold},
           textString="FV933 State"),

@@ -21,10 +21,10 @@ model Sequence1
     P901(use_in_omega=true));
 
 equation
-  connect(P101_input.y, P101.in_omega) annotation (Line(points={{-127,-170.5},{
-          -127,-169.8},{-146,-169.8}}, color={0,0,127}));
-  connect(P401_input.y, P401.in_omega) annotation (Line(points={{-219,-164.5},{
-          -224,-164.5},{-224,-169.8},{-230,-169.8}}, color={0,0,127}));
+  connect(P101_input.y, P101.in_omega) annotation (Line(points={{-193,-170.5},{
+          -193,-169.8},{-208,-169.8}}, color={0,0,127}));
+  connect(P401_input.y, P401.in_omega) annotation (Line(points={{-281,-168.5},{
+          -224,-168.5},{-224,-169.8},{-288,-169.8}}, color={0,0,127}));
   connect(P901_input.y, P901.in_omega) annotation (Line(points={{-711,53.5},{
           -711,54},{-724,54}}, color={0,0,127}));
   annotation (experiment(

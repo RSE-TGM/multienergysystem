@@ -88,7 +88,7 @@ model GasBoilerSystem
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={18,42})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S101(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
     L=L_GB101_P101,
     h=h_GB101_P101,
     t=t_S1,
@@ -96,7 +96,8 @@ model GasBoilerSystem
     Tin_start=Tout_start_S1,
     Tout_start=Tout_start_S1,
     Di=Di_S1,
-    n=n)      annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S1,
+    n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={18,-50})));
@@ -160,7 +161,9 @@ model GasBoilerSystem
     pin_start=pin_start_S1,
     Tin_start=Tin_start_S1,
     Tout_start=Tin_start_S1,
-    Di=Di_S1) annotation (Placement(transformation(
+    Di=Di_S1,
+    q_m3h_start=q_m3h_S1)
+              annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-18,10})));
@@ -191,7 +194,7 @@ model GasBoilerSystem
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-16,120})));
+        origin={-18,120})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
     L=L_S1_rCD_hot,
     t=t_S1,
@@ -222,7 +225,7 @@ model GasBoilerSystem
         rotation=90,
         origin={18,10})));
 equation
-  connect(P101.inlet, PL3_S101.outlet) annotation (Line(
+  connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (Line(
       points={{18,-26.6},{18,-40}},
       color={140,56,54},
       thickness=0.5));
@@ -231,7 +234,7 @@ equation
       points={{17.6,100},{17.6,88}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL3_S101.inlet, GB101.outlet) annotation (Line(
+  connect(PL_S100_GB101_P101.inlet, GB101.outlet) annotation (Line(
       points={{18,-60},{18,-70.2},{13.8,-70.2},{13.8,-79.2}},
       color={140,56,54},
       thickness=0.5));
@@ -258,15 +261,15 @@ equation
   connect(ramp.y, sink.in_m_flow) annotation (Line(points={{59,160},{26,160},{26,
           153}},          color={0,0,127}));
   connect(source.outlet, PL_S100_rCD_cold.inlet) annotation (Line(
-      points={{-32,148},{-16,148},{-16,130}},
+      points={{-32,148},{-18,148},{-18,130}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S100_rCD_cold.outlet, TT101.inlet) annotation (Line(
-      points={{-16,110},{-16,44},{-17.6,44}},
+      points={{-18,110},{-18,44},{-17.6,44}},
       color={140,56,54},
       thickness=0.5));
   connect(sink.inlet, PL_S100_rCD_hot.outlet) annotation (Line(
-      points={{22,148},{17.6,148},{18,130}},
+      points={{22,148},{18,148},{18,130}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S100_rCD_hot.inlet, TT102.inlet) annotation (Line(

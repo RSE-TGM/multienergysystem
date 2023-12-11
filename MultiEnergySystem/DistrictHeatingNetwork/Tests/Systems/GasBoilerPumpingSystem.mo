@@ -258,7 +258,7 @@ equation
     annotation (Line(points={{-193,-130},{-206,-130}}, color={0,0,127}));
   connect(PL_S100_rCD_hot.outlet, FV933.inlet) annotation (Line(
       points={{-214,-32},{-214,20},{-212,20},{-212,19.75},{-190,19.75},{-190,5}},
-
       color={140,56,54},
       thickness=0.5));
+
 end GasBoilerPumpingSystem;

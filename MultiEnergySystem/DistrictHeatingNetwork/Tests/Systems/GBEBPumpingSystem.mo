@@ -17,7 +17,9 @@ model GBEBPumpingSystem
   parameter Types.Length Di_S4 = 51e-3;
   parameter Types.Length t_S4 = 1.5e-3;
 
-  parameter Types.MassFlowRate m_flow_S4 = 1.2;
+  parameter Real q_m3h_S4 = 9;
+  parameter Types.MassFlowRate m_flow_S4 = q_m3h_S4*990/3600;
+
   parameter Real P401omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*40; 200, 2*3.141592654*40];
   parameter Real P401qm3h[:,:] = [0, 7.5; 100, 7.5];
   parameter Real FCV401theta[:,:] = [0, 1];
@@ -73,20 +75,18 @@ model GBEBPumpingSystem
     q_m3h_nom=Valve.FCV401.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S4,
     pin_start=pout_start_S4,
-    q_m3h_start=Pump.P401.qnom_inm3h)
-                             annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-294,-130})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(
     L=L_S4_PL3,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
-    pout_start=pout_start_S4,
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
     Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -109,12 +109,11 @@ model GBEBPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(
     L=L_S4_PL3,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
-    pout_start=pout_start_S4,
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
     Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -155,12 +154,11 @@ model GBEBPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
-    pout_start=pin_start_S4,
     Tin_start=Tin_start_S4,
     Tout_start=Tin_start_S4,
     Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
     hctype=hctype,
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -169,12 +167,11 @@ model GBEBPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_hot(
     L=L_S4_rCD_hot,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
-    pout_start=pout_start_S4,
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
     Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -183,12 +180,11 @@ model GBEBPumpingSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(
     L=L_S4_rCD_cold,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
-    pout_start=pin_start_S4,
     Tin_start=Tin_start_S4,
     Tout_start=Tin_start_S4,
     Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},

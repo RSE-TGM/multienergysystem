@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
 model Sequence7
-  extends Sequence6;
+  extends Sequence6(q_m3h_S1 = 9, q_m3h_S4 = 2, q_m3h_S9 = 17);
   parameter Boolean FV201_state = true;
   parameter Boolean FV202_state = true;
   parameter Boolean FV203_state = true;
@@ -22,7 +22,7 @@ model Sequence7
   parameter Types.Length L_S2 = 10;
   parameter Types.Length Di_S2 = 51e-3;
   parameter Types.Length t_S2 = 1.5e-3;
-  parameter Real q_m3h_S2(unit = "m3/h") = 2;
+  parameter Real q_m3h_S2(unit = "m3/h") = 6;
   final parameter Types.VolumeFlowRate q = q_m3h_S2/3600;
   final parameter Types.MassFlowRate m_flow_S2 = q*985;
 

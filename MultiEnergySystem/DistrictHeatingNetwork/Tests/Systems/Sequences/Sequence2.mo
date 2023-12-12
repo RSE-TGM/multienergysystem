@@ -519,12 +519,12 @@ equation
       thickness=0.5));
   connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
       Line(
-      points={{100,32},{100,60},{60,60},{60,180},{60,180}},
+      points={{100,32},{100,60},{60,60},{60,205},{60,205}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_FT701_rackL2L3.outlet, rackL2L3_rackL3L4_cold.outlet)
     annotation (Line(
-      points={{140,32},{140,80},{80,80},{80,240},{90,240}},
+      points={{140,32},{140,80},{80,80},{80,265},{90,265}},
       color={140,56,54},
       thickness=0.5));
 
@@ -576,12 +576,12 @@ equation
     annotation (Line(points={{448,-70},{458,-70}}, color={0,0,127}));
   connect(PL711_rackL3L4_TT712.inlet, rackL3L4_FCVC01_hot.inlet) annotation (
       Line(
-      points={{400,34},{400,100},{160,100},{160,180},{180,180}},
+      points={{400,34},{400,100},{160,100},{160,205},{180,205}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_FT711_rackL3L4.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
-      points={{440,34},{440,120},{180,120},{180,240},{110,240}},
+      points={{440,34},{440,120},{180,120},{180,265},{110,265}},
       color={140,56,54},
       thickness=0.5));
   annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));

@@ -246,7 +246,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S400_rCD_hot.outlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
-      points={{-294,-32},{-294,20},{-310,20}},
+      points={{-294,-32},{-294,45},{-310,45}},
       color={140,56,54},
       thickness=0.5));
   connect(TT401.inlet, PL_S400_rCD_cold.outlet) annotation (Line(
@@ -255,7 +255,7 @@ equation
       thickness=0.5));
   connect(PL_S400_rCD_cold.inlet, rackCD_Cold_S300_S400.outlet) annotation (
       Line(
-      points={{-334,-34},{-334,-19.75},{-380.5,-19.75}},
+      points={{-334,-34},{-334,5.25},{-380.5,5.25}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV401_theta.y, FCV401.opening)

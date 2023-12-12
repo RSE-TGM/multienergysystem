@@ -243,7 +243,7 @@ equation
       thickness=0.5));
   connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
       Line(
-      points={{-250,-32},{-250,-19.75},{-298.5,-19.75}},
+      points={{-250,-32},{-250,5.25},{-298.5,5.25}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S101.outlet, GB101.inlet) annotation (Line(
@@ -256,9 +256,9 @@ equation
       thickness=0.5));
   connect(FCV101_theta.y, FCV101.opening)
     annotation (Line(points={{-193,-130},{-206,-130}}, color={0,0,127}));
+
   connect(PL_S100_rCD_hot.outlet, FV933.inlet) annotation (Line(
-      points={{-214,-32},{-214,20},{-212,20},{-212,19.75},{-190,19.75},{-190,5}},
+      points={{-214,-32},{-214,44.75},{-190,44.75},{-190,30}},
       color={140,56,54},
       thickness=0.5));
-
 end GasBoilerPumpingSystem;

@@ -2,12 +2,13 @@
 model HP301System
   extends Modelica.Icons.Example;
   parameter Integer n = 3 "Number of volumes in each pipe";
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
 
   final parameter Types.Pressure pin_start_S3_tank = pout_User_start_S3_pump;
   final parameter Types.Pressure pout_start_S3_tank = pin_start_S3_tank - 9.81*2*990;
 
   // Boundary parameters
-  parameter Types.Pressure pin_Source_start_S3 = 1.79e5;
+  parameter Types.Pressure pin_Source_start_S3 = 1.75e5;
   parameter Types.Pressure pout_Source_start_S3 = 2.5e5;
   parameter Types.Temperature Tin_Source_start_S3 = 45 + 273.15;
   parameter Types.Temperature Tout_Source_start_S3 = 40 + 273.15;
@@ -41,8 +42,10 @@ model HP301System
   // General Pipeline Data
   parameter Types.Length Di_S3 = 51e-3;
   parameter Types.Length t_S3 = 1.5e-3;
-  parameter Types.MassFlowRate m_flow_Source_S3 = 2.444444444;
-  parameter Types.MassFlowRate m_flow_User_S3 = 0.47;
+  parameter Types.MassFlowRate m_flow_Source_S3 = q_m3h_S3_Source*990/3600;
+  parameter Real q_m3h_S3_Source = 7;
+  parameter Types.MassFlowRate m_flow_User_S3 = q_m3h_S3_User*990/3600;
+  parameter Real q_m3h_S3_User = 2.23;
 
   // Pipe length
   parameter Types.Length L_S3_PL1 = 3;
@@ -70,13 +73,14 @@ model HP301System
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_UserOut(
     L=L_S3_PL6,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3 - 0.04e5,
-    pout_start=pin_User_start_S3 - 0.05e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={10,-14})));
@@ -127,39 +131,42 @@ model HP301System
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_P301_D301(
     L=L_S3_PL4,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pout_User_start_S3_pump,
-    pout_start=pout_User_start_S3_pump - 0.01e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={10,40})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_D301out(
     L=L_S3_PL3,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pout_User_start_S3_pump - 0.2e5,
-    pout_start=pout_User_start_S3_pump - 0.21e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={10,94})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S300_rCD_H(
     L=L_S3_PL1,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pout_User_start_S3_pump - 0.21e5,
-    pout_start=pout_User_start_S3_pump - 0.22e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={10,141})));
@@ -182,41 +189,43 @@ model HP301System
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_UserIn(
     L=L_S3_PL7,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3 - 0.02e5,
-    pout_start=pin_User_start_S3 - 0.03e5,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-14})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301Sensors_C(
     L=L_S3_PL5,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3 - 0.01e5,
-    pout_start=pin_User_start_S3 - 0.02e5,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-10,31})));
+        origin={-10,30})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S300_rCD_C(L=
         L_S3_PL2,
-      m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3,
-    pout_start=pin_User_start_S3 - 0.01e5,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
-    n=n)                           annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)                 annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-10,141})));
+        origin={-10,140})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P302(
       Tin_start(displayUnit="K") = Pump.P302.Tin_start,
@@ -262,7 +271,10 @@ model HP301System
     Tin_start=Tin_Source_start_S3,
     Tout_start=Tin_Source_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={10,-140})));
@@ -285,7 +297,10 @@ model HP301System
     Tin_start=Tout_Source_start_S3,
     Tout_start=Tout_Source_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-84})));
@@ -309,13 +324,14 @@ model HP301System
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S600_S300_C(
     L=L_S3_PL10,
     t=t_S3,
-    m_flow_start=m_flow_Source_S3,
     pin_start=pout_Source_start_S3_pump + 0.1e5,
-    pout_start=pout_Source_start_S3_pump,
     Tin_start=Tout_Source_start_S3,
     Tout_start=Tout_Source_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-140})));
@@ -351,11 +367,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_P301_D301.outlet, D301.inlet) annotation (Line(
-      points={{10,50},{10,61},{37,61}},
+      points={{10,50},{10,58},{37,58}},
       color={140,56,54},
       thickness=0.5));
   connect(D301.outlet, S3_PL_D301out.inlet) annotation (Line(
-      points={{37,79},{10,79},{10,84}},
+      points={{37,82},{10,82},{10,84}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_D301out.outlet, TT302.inlet) annotation (Line(
@@ -415,19 +431,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(sourcePressure.outlet, S3_PL_S300_rCD_C.inlet) annotation (Line(
-      points={{-20,170},{-10,170},{-10,151}},
+      points={{-20,170},{-10,170},{-10,150}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_S300_rCD_C.outlet, PT301.inlet) annotation (Line(
-      points={{-10,131},{-10,60.5},{-10.3,60.5}},
+      points={{-10,130},{-10,60.5},{-10.3,60.5}},
       color={140,56,54},
       thickness=0.5));
   connect(TT301.inlet, S3_PL_HP301Sensors_C.inlet) annotation (Line(
-      points={{-10.3,51.5},{-10.3,46.25},{-10,46.25},{-10,41}},
+      points={{-10.3,51.5},{-10.3,46.25},{-10,46.25},{-10,40}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_HP301Sensors_C.outlet, FT301.inlet) annotation (Line(
-      points={{-10,21},{-10,12}},
+      points={{-10,20},{-10,12}},
       color={140,56,54},
       thickness=0.5));
   connect(FT301.outlet, S3_PL_HP301_UserIn.inlet) annotation (Line(
@@ -464,5 +480,9 @@ equation
         Text(
           extent={{-55,-98},{-25,-128}},
           textColor={28,108,200},
-          textString="41°C")}));
+          textString="41°C")}),
+    experiment(
+      StopTime=100,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end HP301System;

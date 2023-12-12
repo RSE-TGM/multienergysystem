@@ -18,7 +18,7 @@ model ElectricBoilerSystem
   parameter Types.MassFlowRate m_flow_S4 = 1.2;
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
-    Placement(visible = true, transformation(origin={150,150},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={150,190},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler
     EB401(
@@ -32,9 +32,9 @@ model ElectricBoilerSystem
     m_flow_nom=1,
     pin_start=300000,
     pout_start=290000) annotation (Placement(visible=true, transformation(
-        origin={0,-106},
-        extent={{-44,-44},{44,44}},
-        rotation=-90)));
+        origin={0,-158},
+        extent={{-52,-52},{52,52}},
+        rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P401(
     Tin_start(displayUnit="K") = Pump.P401.Tin_start,
@@ -57,7 +57,7 @@ model ElectricBoilerSystem
     qnom_inm3h_max=Pump.P401.qnommax_inm3h) annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
-        origin={18,-7})));
+        origin={20,-7})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV401(
     Kv=Valve.FCV101.Kv,
@@ -66,19 +66,17 @@ model ElectricBoilerSystem
     pin_start=pout_start_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={18,30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(
+        origin={20,30})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_EB401_P401(
     L=L_S4_PL3,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
-    pout_start=pout_start_S4,
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
     Di=Di_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={18,-46})));
+        origin={20,-46})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
@@ -90,7 +88,7 @@ model ElectricBoilerSystem
     Di=Di_S4) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-18,-48})));
+        origin={-20,-48})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(
     L=L_S4_PL3,
     t=t_S4,
@@ -102,40 +100,40 @@ model ElectricBoilerSystem
     Di=Di_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={18,66})));
+        origin={20,66})));
   Modelica.Blocks.Sources.RealExpression FCV101_theta(y=1)
-    annotation (Placement(transformation(extent={{60,-10},{40,10}})));
+    annotation (Placement(transformation(extent={{62,-10},{42,10}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT402(T_start=Tout_start_S4, p_start=pout_start_S4)
     "Temperature sensor at the outlet of valve FCV401"       annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={20,106})));
+        origin={22,106})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT402 "Pressure sensor at the outlet of valve FCV401" annotation (Placement(
         transformation(
         extent={{6,6},{-6,-6}},
         rotation=90,
-        origin={20,94})));
+        origin={22,94})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT401 "Pressure sensor at the inlet of gas boiler" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-20,94})));
+        origin={-22,94})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT401(T_start=Tin_start_S4, p_start=pin_start_S4)
     "Temperature sensor at the inlet of electrib boiler"     annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-20,106})));
+        origin={-22,106})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT401
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
-        origin={-21,-17})));
+        origin={-23,-17})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
@@ -147,88 +145,106 @@ model ElectricBoilerSystem
     Di=Di_S4) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-18,12})));
+        origin={-20,12})));
   Sources.SourcePressure source(p0=pin_start_S4, T0=Tin_start_S4)
-    annotation (Placement(transformation(extent={{-52,118},{-32,138}})));
+    annotation (Placement(transformation(extent={{-54,166},{-34,186}})));
   Modelica.Blocks.Sources.Ramp ramp(
     height=m_flow_S4*1.5,
     duration=1500,
     offset=m_flow_S4,
     startTime=1000)
-    annotation (Placement(transformation(extent={{80,130},{60,150}})));
+    annotation (Placement(transformation(extent={{82,178},{62,198}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,
     pin_start=pout_start_S4,
     p0=pout_start_S4,
     T0=Tout_start_S4,
     m_flow0=m_flow_S4)
-    annotation (Placement(transformation(extent={{22,118},{42,138}})));
+    annotation (Placement(transformation(extent={{24,166},{44,186}})));
   Modelica.Blocks.Sources.Ramp FCV101_theta_(
     height=-0.2,
     duration=1500,
     offset=1,
     startTime=3000)
-    annotation (Placement(transformation(extent={{60,20},{40,40}})));
+    annotation (Placement(transformation(extent={{62,20},{42,40}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
+    flowCoefficientOnOffValve annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={-20,130})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
+    flowCoefficientOnOffValve1 annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={20,130})));
 equation
-  connect(P401.inlet,PL3_S401. outlet) annotation (Line(
-      points={{18,-16.6},{18,-36}},
+  connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
+      points={{20,-16.6},{20,-36}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV401.inlet,P401. outlet) annotation (Line(
-      points={{18,20},{18,2.6}},
+      points={{20,20},{20,2.6}},
       color={140,56,54},
       thickness=0.5));
 
   connect(TT402.inlet,PT402. inlet) annotation (Line(
-      points={{17.6,106},{17.6,94}},
+      points={{19.6,106},{19.6,94}},
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S401.inlet,FCV401. outlet) annotation (Line(
-      points={{18,56},{18,40}},
+      points={{20,56},{20,40}},
       color={140,56,54},
       thickness=0.5));
   connect(PT402.inlet,PL4_S401. outlet) annotation (Line(
-      points={{17.6,94},{17.6,85},{18,85},{18,76}},
+      points={{19.6,94},{19.6,85},{20,85},{20,76}},
       color={140,56,54},
       thickness=0.5));
   connect(FT401.outlet,PL2_S401. inlet) annotation (Line(
-      points={{-18.2,-21.2},{-18.2,-29.6},{-18,-29.6},{-18,-38}},
+      points={{-20.2,-21.2},{-20.2,-29.6},{-20,-29.6},{-20,-38}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.outlet,FT401. inlet) annotation (Line(
-      points={{-18,2},{-18,-5.4},{-18.2,-5.4},{-18.2,-12.8}},
+      points={{-20,2},{-20,-5.4},{-20.2,-5.4},{-20.2,-12.8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.inlet,PT401. inlet) annotation (Line(
-      points={{-18,22},{-18,94},{-17.6,94}},
+      points={{-20,22},{-20,94},{-19.6,94}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401.inlet,TT401. inlet) annotation (Line(
-      points={{-17.6,94},{-17.6,106}},
+      points={{-19.6,94},{-19.6,106}},
       color={140,56,54},
       thickness=0.5));
-  connect(source.outlet,TT401. inlet) annotation (Line(
-      points={{-32,128},{-17.6,128},{-17.6,106}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(sink.inlet,TT402. inlet) annotation (Line(
-      points={{22,128},{17.6,128},{17.6,106}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(ramp.y, sink.in_m_flow) annotation (Line(points={{59,140},{26,140},{26,
-          133},{26,133}}, color={0,0,127}));
+  connect(ramp.y, sink.in_m_flow) annotation (Line(points={{61,188},{28,188},{
+          28,181}},       color={0,0,127}));
   connect(FCV101_theta_.y,FCV401. opening)
-    annotation (Line(points={{39,30},{26,30}}, color={0,0,127}));
+    annotation (Line(points={{41,30},{28,30}}, color={0,0,127}));
   connect(PL2_S401.outlet, EB401.inlet) annotation (Line(
-      points={{-18,-58},{-18,-79.6},{-17.6,-79.6}},
+      points={{-20,-58},{-20,-115.8},{-15.6,-115.8},{-15.6,-116.4}},
       color={140,56,54},
       thickness=0.5));
-  connect(EB401.outlet,PL3_S401. inlet) annotation (Line(
-      points={{17.6,-79.6},{17.6,-78},{18,-78},{18,-56}},
+  connect(EB401.outlet, PL_S400_EB401_P401.inlet) annotation (Line(
+      points={{15.6,-116.4},{15.6,-116},{20,-116},{20,-56}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(source.outlet, flowCoefficientOnOffValve.inlet) annotation (Line(
+      points={{-34,176},{-20,176},{-20,140}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(flowCoefficientOnOffValve.outlet, TT401.inlet) annotation (Line(
+      points={{-20,120},{-20,113},{-19.6,113},{-19.6,106}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sink.inlet, flowCoefficientOnOffValve1.outlet) annotation (Line(
+      points={{24,176},{19.6,176},{20,140}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(flowCoefficientOnOffValve1.inlet, TT402.inlet) annotation (Line(
+      points={{20,120},{20,113},{19.6,113},{19.6,106}},
       color={140,56,54},
       thickness=0.5));
   annotation (
-    Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
+    Diagram(coordinateSystem(extent={{-160,-200},{160,200}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),
     experiment(
       StopTime=6000,

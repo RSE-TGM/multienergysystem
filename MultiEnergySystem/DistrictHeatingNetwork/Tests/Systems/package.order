@@ -6,7 +6,8 @@ WaterTankSystem
 StratifiedWaterTankSystem
 HP301System
 HP601System
-HeatPumpsSystem
+HPSystem
+HeatPumpsEBSystem
 UsersPipelineSystem
 UsersSystem
 CoolingSystem

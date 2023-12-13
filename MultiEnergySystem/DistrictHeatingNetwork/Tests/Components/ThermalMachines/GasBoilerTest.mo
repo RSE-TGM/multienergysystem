@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines;
 model GasBoilerTest
   extends Modelica.Icons.Example;
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler gasBoiler(
@@ -36,10 +36,10 @@ equation
   connect(CH4.outlet, gasBoiler.inletfuel) annotation (
     Line(points={{-10,50},{0,50},{0,20.8}},      color = {136, 136, 136}));
   connect(sinkM.inlet, gasBoiler.outlet) annotation (
-    Line(points={{-38,10},{-26,10},{-26,10.4},{-15.6,10.4}},
+    Line(points={{-38,10},{-26,10},{-26,20.8},{7.8,20.8}},
                                           color = {136, 136, 136}));
   connect(sourceP.outlet, gasBoiler.inlet) annotation (
-    Line(points={{-38,-12},{-15.6,-12},{-15.6,-10.4}},  color = {136, 136, 136}));
+    Line(points={{-38,-12},{-7.8,-12},{-7.8,20.8}},     color = {136, 136, 136}));
   connect(fuel_flow.y, CH4.in_m_flow) annotation (
     Line(points={{-39,70},{-26,70},{-26,55}},        color = {0, 0, 127}));
   connect(m_flow.y, sinkM.in_m_flow) annotation (

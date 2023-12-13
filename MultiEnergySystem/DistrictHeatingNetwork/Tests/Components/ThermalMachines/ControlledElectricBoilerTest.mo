@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines;
 model ControlledElectricBoilerTest
   extends Modelica.Icons.Example;
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler eBoiler(D = 0.4, Pmaxnom = 50e3, Pnimnom = 10e3, Pnom = 50e3, Tin_start = 60 + 273.15, etanom = 0.98, h = 1.25, m_flow_nom = 1, pin_start = 300000, pout_start = 289999.9999999999) annotation (
@@ -22,10 +22,10 @@ model ControlledElectricBoilerTest
     Placement(visible = true, transformation(origin = {-30, -22}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(sinkM.inlet, eBoiler.outlet) annotation (
-    Line(points={{-10,18},{2,18},{2,18.4},{12.4,18.4}},
+    Line(points={{-10,18},{2,18},{2,28.8},{35.8,28.8}},
                                          color = {136, 136, 136}));
   connect(sourceP.outlet, eBoiler.inlet) annotation (
-    Line(points={{0,-4},{12.4,-4},{12.4,-2.4}},  color = {136, 136, 136}));
+    Line(points={{0,-4},{20.2,-4},{20.2,28.8}},  color = {136, 136, 136}));
   connect(m_flow.y, sinkM.in_m_flow) annotation (
     Line(points={{-31,38},{-14,38},{-14,23}},        color = {0, 0, 127}));
   connect(Tin_up.y, add.u1) annotation (

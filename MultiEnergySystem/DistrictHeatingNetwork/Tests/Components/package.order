@@ -1,11 +1,5 @@
 Pipes
 Pumps
 Valves
-RoundPipeTest
-BPHETest
-GasBoilerTest
-ElectricBoilerTest
-ControlledElectricBoilerTest
-ControlledHeatPumpNoDynamicsTest
-BaseClass
 ThermalMachines
+BaseClass

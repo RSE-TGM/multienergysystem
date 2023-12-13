@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pipes;
 model BPHETest
   "Test that includes all 04 heat exchanger of the RSE DistrictHeatingNetwork at Nominal Conditions"
   extends Modelica.Icons.Example;

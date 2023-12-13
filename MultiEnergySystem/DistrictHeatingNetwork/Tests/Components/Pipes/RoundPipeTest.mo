@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pipes;
 model RoundPipeTest
   extends Modelica.Icons.Example;
   parameter Integer n = 7 "number of volumes";
@@ -111,7 +111,7 @@ model RoundPipeTest
                annotation (Placement(transformation(extent={{82,10},{62,30}})));
 equation
   connect(wall_FixedT.MultiPort, rpipe1.wall)
-    annotation (Line(points={{0,124},{0,105.1}},
+    annotation (Line(points={{0,124},{0,104.3}},
                                                color={255,238,44}));
   connect(sourceP.outlet, rpipe1.inlet) annotation (Line(points={{-60,80},{-40,80},
           {-40,100},{-10,100}},
@@ -120,7 +120,7 @@ equation
           {40,80},{58,80}},
                          color={168,168,168}));
   connect(wall_inputQ.MultiPort, rpipe2.wall)
-    annotation (Line(points={{0,54},{0,45.1}},color={255,238,44}));
+    annotation (Line(points={{0,54},{0,44.3}},color={255,238,44}));
   connect(Q.y, wall_inputQ.S) annotation (Line(points={{-11,68},{0,68},{0,58}},
                           color={0,0,127}));
   connect(sourceP.outlet, rpipe2.inlet)
@@ -134,11 +134,11 @@ equation
   connect(sinkHot.inlet, hotside.outlet)
     annotation (Line(points={{62,-32},{10,-32}}, color={168,168,168}));
   connect(heatExchangerTopologyFV.side2, hotside.wall)
-    annotation (Line(points={{0,-19.1},{0,-26.9}}, color={255,238,44}));
+    annotation (Line(points={{0,-19.1},{0,-27.7}}, color={255,238,44}));
   connect(metalWallFV.ext, heatExchangerTopologyFV.side1)
     annotation (Line(points={{0,-3.1},{0,-13}},  color={255,238,44}));
   connect(coldside.wall, metalWallFV.int)
-    annotation (Line(points={{0,14.9},{0,3}},    color={255,238,44}));
+    annotation (Line(points={{0,15.7},{0,3}},    color={255,238,44}));
   connect(sinkCold.inlet, coldside.outlet)
     annotation (Line(points={{-60,20},{-10,20}},   color={168,168,168}));
   connect(coldside.inlet, sourceCold.outlet)

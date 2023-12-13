@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components;
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines;
 model ControlledHeatPumpNoDynamicsTest
   extends Modelica.Icons.Example;
   parameter SI.MassFlowRate m_flow_hot = 0.56;

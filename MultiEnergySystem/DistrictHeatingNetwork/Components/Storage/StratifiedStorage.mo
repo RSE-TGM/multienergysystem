@@ -81,11 +81,13 @@ equation
   // Energy balance
   for i in 1:n loop
     // Mass Balance
-    m_flow[i] - m_flow[i+1] = (V/n)*(fluid[i+1].drho_dT*der(Ttilde[i]) + 1e-5*der(ptilde[i]));
-    //0 = m_flow[i] - m_flow[i+1];
+    //m_flow[i] - m_flow[i+1] = (V/n)*(fluid[i+1].drho_dT*der(Ttilde[i]) + 1e-5*der(ptilde[i]));
+    m_flow[i] - m_flow[i+1] = 0;
     // Volume energy balance
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
-    ((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+    //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+    (M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+
 
     //Q_amb[i] = 0;
     //Q_cond[i] = 0;
@@ -123,7 +125,7 @@ equation
 
 initial equation
   der(Ttilde) = zeros(n);
-  der(ptilde) = zeros(n);
+  //der(ptilde) = zeros(n);
   annotation (
     Icon(graphics={  Rectangle(origin={76,-140},    fillColor={140,56,54},       fillPattern=
               FillPattern.Solid,                                                                                  extent = {{-4, 20}, {4, -20}}), Rectangle(origin={-76,-140},    fillColor={140,56,

@@ -192,10 +192,14 @@ model GasBoilerPumpingSystem
         origin={-250,-42})));
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
     annotation (Placement(transformation(extent={{-172,-140},{-192,-120}})));
-  Modelica.Blocks.Sources.TimeTable P101_omega(table=P101omega)
-    annotation (Placement(transformation(extent={{-106,-164},{-126,-144}})));
   Sources.PumpInput P101_input(omega=P101omega, q_m3h=P101qm3h)
     annotation (Placement(transformation(extent={{-172,-181},{-192,-160}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT102_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-194,-89},{-146,-36}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT101_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-270,-113},{-318,-60}})));
 equation
   connect(P101.inlet,PL3_S101. outlet) annotation (Line(
       points={{-214,-174.6},{-214,-198}},
@@ -261,4 +265,8 @@ equation
       points={{-214,-32},{-214,44.75},{-190,44.75},{-190,30}},
       color={140,56,54},
       thickness=0.5));
+  connect(TT102.T, TT102_.numberPort) annotation (Line(points={{-204.2,-62},{
+          -200.9,-62},{-200.9,-62.5},{-197.6,-62.5}}, color={0,0,127}));
+  connect(TT101.T, TT101_.numberPort) annotation (Line(points={{-259.8,-84},{
+          -262.1,-84},{-262.1,-86.5},{-266.4,-86.5}}, color={0,0,127}));
 end GasBoilerPumpingSystem;

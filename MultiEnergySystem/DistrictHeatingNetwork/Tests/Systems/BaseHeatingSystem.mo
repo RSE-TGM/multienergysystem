@@ -738,7 +738,7 @@ model BaseHeatingSystem
   Modelica.Blocks.Sources.TimeTable FCVC02_theta(table=FCVC02theta)
     annotation (Placement(transformation(extent={{740,285},{720,305}})));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=FV933_state)
-    annotation (Placement(transformation(extent={{-160,35},{-180,55}})));
+    annotation (Placement(transformation(extent={{-162,15},{-182,35}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08
     "Pressure sensor at the inlet of valve FCVC01"
     annotation (Placement(transformation(extent={{220,207},{228,199}})));
@@ -1034,9 +1034,10 @@ equation
   connect(FV933.u, FV933_Status.activePort) annotation (Line(points={{-188.4,25},
           {-181.625,25}},                                                 color=
          {255,0,255}));
-  connect(FV933_OnOff.y, FV933_Status.activePort) annotation (Line(points={{-181,45},
-          {-186,45},{-186,25},{-181.625,25}},
-                                    color={255,0,255}));
+  connect(FV933_OnOff.y, FV933_Status.activePort) annotation (Line(points={{-183,25},
+          {-181.625,25}},           color={255,0,255}));
+  connect(FV933.u, FV933_OnOff.y)
+    annotation (Line(points={{-188.4,25},{-183,25}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-900,-320},{900,320}}, grid={1,1}),
                                                               graphics={
@@ -1084,11 +1085,6 @@ equation
           extent={{582,291},{642,251}},
           textColor={28,108,200},
           textString="RackL6L7_cold"),
-        Text(
-          extent={{-185,18},{-85,-2}},
-          textColor={28,108,200},
-          textStyle={TextStyle.Bold},
-          textString="FV933 State"),
         Text(
           extent={{-662,202},{-645,186}},
           textColor={0,0,0},

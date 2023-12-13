@@ -58,7 +58,7 @@ model Sequence7
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
     m_flow_start=m_flow_S2/2)
-    annotation (Placement(transformation(extent={{-624,-354},{-680,-242}})));
+    annotation (Placement(transformation(extent={{-748,-466},{-804,-354}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P201(
     pout_start(displayUnit="Pa") = 3e5,
@@ -93,7 +93,7 @@ model Sequence7
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
     m_flow_start=m_flow_S2/2)
-         annotation (Placement(transformation(extent={{-540,-354},{-484,-242}})));
+         annotation (Placement(transformation(extent={{-686,-466},{-630,-354}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT201(T_start=Tin_start_S2, p_start=pin_start_S2)
     "Temperature sensor at the inlet of pump 201" annotation (Placement(
@@ -206,7 +206,7 @@ model Sequence7
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-554,-290})));
+        origin={-700,-402})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_cold(
     L=L_S2_PL0,
     t=t_S2,
@@ -234,7 +234,7 @@ model Sequence7
          annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
-        origin={-610,-290})));
+        origin={-734,-402})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_D202_High(
     L=L_S2_S201_S202,
     h=h_S2_S201_S202,
@@ -247,7 +247,7 @@ model Sequence7
               annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
-        origin={-582,-308})));
+        origin={-716,-430})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_D202_Low(
     L=L_S2_S201_S202,
     h=h_S2_S201_S202,
@@ -260,7 +260,7 @@ model Sequence7
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
-        origin={-582,-326})));
+        origin={-716,-446})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV209_D201(
     L=L_S2_PL6,
     t=t_S2,
@@ -273,7 +273,7 @@ model Sequence7
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
-        origin={-700,-368})));
+        origin={-808,-480})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_FT201(
     L=L_S2_D201_FT201,
     h=h_S2_D201_FT201,
@@ -287,7 +287,7 @@ model Sequence7
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=0,
-        origin={-712,-308})));
+        origin={-820,-430})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV201_P201(
     L=L_S2_PL1,
     t=t_S2,
@@ -311,11 +311,13 @@ model Sequence7
         rotation=0,
         origin={-810,-130})));
   Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k=FV202_state)
-    annotation (Placement(transformation(extent={{-832,-126},{-820,-114}})));
-  Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status
-    annotation (Placement(transformation(extent={{9,-9},{-9,9}},
+    annotation (Placement(transformation(extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={-809,-113})));
+        origin={-810,-118})));
+  Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status
+    annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+        rotation=-90,
+        origin={-810,-112})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV201(
     Kv=Valve.FCV101.Kv,
@@ -326,9 +328,9 @@ model Sequence7
         rotation=-90,
         origin={-780,-150})));
   Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k=FV201_state)
-    annotation (Placement(transformation(extent={{-814,-156},{-802,-144}})));
+    annotation (Placement(transformation(extent={{-798,-156},{-786,-144}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status
-    annotation (Placement(transformation(extent={{-792,-158},{-774,-140}})));
+    annotation (Placement(transformation(extent={{-788,-160},{-808,-140}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV206(
     Kv=Valve.FCV101.Kv,
@@ -340,13 +342,13 @@ model Sequence7
         rotation=180,
         origin={-760,-188})));
   Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k=FV206_state)
-    annotation (Placement(transformation(extent={{-5,5},{5,-5}},
-        rotation=180,
-        origin={-749,-181})));
+    annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+        rotation=270,
+        origin={-760,-174})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV206_Status
-    annotation (Placement(transformation(extent={{8,-8},{-8,8}},
+    annotation (Placement(transformation(extent={{10,-10},{-10,10}},
         rotation=-90,
-        origin={-760,-170})));
+        origin={-760,-168})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV209(
     Kv=Valve.FCV101.Kv,
@@ -358,8 +360,8 @@ model Sequence7
         origin={-780,-270})));
   Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k=FV209_state)
     annotation (Placement(transformation(extent={{-5.5,-6},{5.5,6}},
-        rotation=90,
-        origin={-784.5,-286})));
+        rotation=0,
+        origin={-792.5,-270})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
       Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -386,11 +388,11 @@ model Sequence7
         rotation=90,
         origin={-740,-220})));
   Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k=FV203_state)
-    annotation (Placement(transformation(extent={{-706,-226},{-717,-214}})));
+    annotation (Placement(transformation(extent={{-720,-226},{-731,-214}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV203_Status
-    annotation (Placement(transformation(extent={{10.25,-10.25},{-10.25,10.25}},
+    annotation (Placement(transformation(extent={{-12,-12},{12,12}},
         rotation=0,
-        origin={-736.25,-220.25})));
+        origin={-718,-220})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT201(T_start=
         Tout_start_S2)
     "Flow sensor at the outlet of system S200"
@@ -399,7 +401,9 @@ model Sequence7
         rotation=90,
         origin={-737,-281})));
   Modelica.Blocks.Sources.BooleanConstant FV207_OnOff(k=FV207_state)
-    annotation (Placement(transformation(extent={{-744,-264},{-750,-258}})));
+    annotation (Placement(transformation(extent={{4,-4},{-4,4}},
+        rotation=-90,
+        origin={-760,-266})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV207_Status annotation (
       Placement(transformation(
         extent={{-8,-8},{8,8}},
@@ -407,6 +411,12 @@ model Sequence7
         origin={-760,-270})));
   Modelica.Blocks.Sources.TimeTable FCV201_theta(table=FCV201theta)
     annotation (Placement(transformation(extent={{-880,-210},{-860,-190}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT202_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-720,-129},{-672,-76}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT202_1(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-796,-103},{-844,-50}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-780,-84.5},{-780,-79.625},{-779.85,-79.625},{-779.85,-74.75}},
@@ -433,37 +443,33 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(D201.outlet,PL_S200_D201_High. inlet) annotation (Line(
-      points={{-624,-263},{-610,-263},{-610,-280}},
+      points={{-748,-375},{-734,-375},{-734,-392}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_High.inlet,PL_S200_D202_High. outlet) annotation (
       Line(
-      points={{-572,-308},{-554,-308},{-554,-300}},
+      points={{-706,-430},{-700,-430},{-700,-412}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_High.outlet,PL_S200_D201_High. outlet) annotation (
       Line(
-      points={{-592,-308},{-610,-308},{-610,-300}},
+      points={{-726,-430},{-734,-430},{-734,-412}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D202_High.inlet,D202. outlet) annotation (Line(
-      points={{-554,-280},{-554,-263},{-540,-263}},
+      points={{-700,-392},{-700,-375},{-686,-375}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.inlet,D201. inlet) annotation (Line(
-      points={{-592,-326},{-608,-326},{-608,-333},{-624,-333}},
+      points={{-726,-446},{-742,-446},{-742,-445},{-748,-445}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.outlet,D202. inlet) annotation (Line(
-      points={{-572,-326},{-556,-326},{-556,-333},{-540,-333}},
+      points={{-706,-446},{-702,-446},{-702,-445},{-686,-445}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_FV209_D201.outlet,D201. inlet) annotation (Line(
-      points={{-690,-368},{-614,-368},{-614,-333},{-624,-333}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S200_D201_FT201.outlet,PL_S200_D201_High. outlet) annotation (Line(
-      points={{-702,-308},{-610,-308},{-610,-300}},
+      points={{-798,-480},{-734,-480},{-734,-445},{-748,-445}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_FV209_FCV201.outlet,FCV201. inlet) annotation (Line(
@@ -522,55 +528,26 @@ equation
       points={{-739.8,-276.8},{-740,-256},{-740,-226}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT201.inlet,PL_S200_D201_FT201. inlet) annotation (Line(
-      points={{-739.8,-285.2},{-739.8,-308},{-722,-308}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FV206.u,FV206_OnOff. y) annotation (Line(points={{-760,-186.08},{-760,
-          -181},{-754.5,-181}},
-                color={255,0,255}));
-  connect(FV206.u,FV206_Status. activePort) annotation (Line(points={{-760,
-          -186.08},{-760,-179.2}},                     color={255,0,255}));
-  connect(FV202_OnOff.y,FV202. u) annotation (Line(points={{-819.4,-120},{-810,
-          -120},{-810,-128.08}},
+  connect(FV202_OnOff.y,FV202. u) annotation (Line(points={{-810,-124.6},{-810,
+          -128.08},{-810,-128.08}},
                       color={255,0,255}));
   connect(FCV201_theta.y,FCV201. opening) annotation (Line(points={{-859,-200},
           {-848,-200}},                                color={0,0,127}));
   connect(FV209.u,FV209_Status. activePort)
     annotation (Line(points={{-781.92,-270},{-786.5,-270}},
                                                         color={255,0,255}));
-  connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-784.5,
-          -279.95},{-784.5,-270},{-786.5,-270}},
-                                            color={255,0,255}));
+  connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-786.45,
+          -270},{-786.5,-270}},             color={255,0,255}));
   connect(FV207.u,FV207_Status. activePort)
     annotation (Line(points={{-760,-257.92},{-760,-260.8}},
                                                         color={255,0,255}));
-  connect(FV207_OnOff.y,FV207_Status. activePort) annotation (Line(points={{-750.3,
-          -261},{-756,-261},{-756,-260},{-760,-260},{-760,-260.8}},
-                                                           color={255,0,255}));
-  connect(FV202_Status.activePort,FV202. u) annotation (Line(points={{-809,
-          -123.35},{-809,-126},{-810,-126},{-810,-128.08}},
-                                             color={255,0,255}));
-  connect(FV201_OnOff.y,FV201_Status. activePort) annotation (Line(points={{-801.4,
-          -150},{-800,-150},{-800,-149},{-793.35,-149}},
-                                              color={255,0,255}));
-  connect(FV201_OnOff.y,FV201. u) annotation (Line(points={{-801.4,-150},{-796,
-          -150},{-796,-154},{-784,-154},{-784,-150},{-781.92,-150}},
-                                                  color={255,0,255}));
-  connect(FV203_OnOff.y,FV203_Status. activePort) annotation (Line(points={{-717.55,
-          -220},{-719.006,-220},{-719.006,-220.25},{-724.462,-220.25}},
-                                                                 color={255,0,255}));
-  connect(FV203.u,FV203_Status. activePort) annotation (Line(points={{-738.08,
-          -220},{-736,-220},{-736,-214},{-720,-214},{-720,-220},{-721.006,-220},
-          {-721.006,-220.25},{-724.462,-220.25}},
-                            color={255,0,255}));
+  connect(FV207_OnOff.y,FV207_Status. activePort) annotation (Line(points={{-760,
+          -261.6},{-760,-260.8}},                          color={255,0,255}));
+  connect(FV202_Status.activePort,FV202. u) annotation (Line(points={{-810,
+          -123.5},{-810,-128.08}},           color={255,0,255}));
   connect(PL_S200_FV209_FCV201.inlet,PL_S200_FV209_D201. inlet) annotation (
       Line(
-      points={{-840,-240},{-840,-368},{-710,-368}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FV209.outlet,PL_S200_FV209_D201. inlet) annotation (Line(
-      points={{-780,-276},{-780,-308},{-840,-308},{-840,-368},{-710,-368}},
+      points={{-840,-240},{-840,-480},{-818,-480}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_rCD_cold.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
@@ -581,4 +558,44 @@ equation
       points={{-740,-40},{-740,-34},{-672,-34},{-672,44.75},{-699,44.75}},
       color={140,56,54},
       thickness=0.5));
+  connect(FV202_OnOff.y, FV202_Status.activePort)
+    annotation (Line(points={{-810,-124.6},{-810,-123.5}}, color={255,0,255}));
+  connect(FV201.u, FV201_Status.activePort) annotation (Line(points={{-781.92,
+          -150},{-786.5,-150}}, color={255,0,255}));
+  connect(FV201_OnOff.y, FV201_Status.activePort)
+    annotation (Line(points={{-785.4,-150},{-786.5,-150}}, color={255,0,255}));
+  connect(FV201.u, FV201_OnOff.y) annotation (Line(points={{-781.92,-150},{
+          -785.4,-150}}, color={255,0,255}));
+  connect(FV206_OnOff.y, FV206_Status.activePort)
+    annotation (Line(points={{-760,-180.6},{-760,-179.5}}, color={255,0,255}));
+  connect(FV206_OnOff.y, FV206.u) annotation (Line(points={{-760,-180.6},{-760,
+          -186.08}}, color={255,0,255}));
+  connect(FV203_OnOff.y, FV203.u) annotation (Line(points={{-731.55,-220},{
+          -738.08,-220}}, color={255,0,255}));
+  connect(FV203_OnOff.y, FV203_Status.activePort) annotation (Line(points={{
+          -731.55,-220},{-731.8,-220}}, color={255,0,255}));
+  connect(FV209.u, FV209_OnOff.y) annotation (Line(points={{-781.92,-270},{
+          -786.45,-270}}, color={255,0,255}));
+  connect(PL_S200_D201_FT201.inlet, FT201.inlet) annotation (Line(
+      points={{-830,-430},{-834,-430},{-834,-340},{-739.8,-340},{-739.8,-285.2}},
+      color={140,56,54},
+      thickness=0.5));
+
+  connect(PL_S200_D201_FT201.outlet, PL_S200_D201_High.outlet) annotation (Line(
+      points={{-810,-430},{-734,-430},{-734,-412}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV209.outlet, PL_S200_FV209_D201.inlet) annotation (Line(
+      points={{-780,-276},{-780,-320},{-840,-320},{-840,-480},{-818,-480}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT202.T, TT202_.numberPort) annotation (Line(points={{-730.2,-102},{
+          -726.9,-102},{-726.9,-102.5},{-723.6,-102.5}}, color={0,0,127}));
+  connect(TT201.T, TT202_1.numberPort) annotation (Line(points={{-787.925,
+          -74.75},{-787.925,-76.5},{-792.4,-76.5}}, color={0,0,127}));
+  annotation (experiment(
+      StopTime=50,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"), Diagram(coordinateSystem(extent={{-900,-500},
+            {900,320}})));
 end Sequence7;

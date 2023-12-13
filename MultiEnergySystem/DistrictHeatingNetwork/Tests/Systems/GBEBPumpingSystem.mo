@@ -1,6 +1,9 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model GBEBPumpingSystem
   extends GasBoilerPumpingSystem(FCVC01theta = [0, 0;600, 0;600, 1; 800, 1], FCVC02theta = [0, 1; 700, 1; 700, 0; 800, 0]);
+  Modelica.Blocks.Interaction.Show.RealValue TT402_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-276,-91},{-228,-38}})));
 
   parameter Types.Pressure pin_start_S4 = 1.695e5;
   parameter Types.Pressure pout_start_S4 = 1.6e5;
@@ -23,6 +26,9 @@ model GBEBPumpingSystem
   parameter Real P401omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*40; 200, 2*3.141592654*40];
   parameter Real P401qm3h[:,:] = [0, 7.5; 100, 7.5];
   parameter Real FCV401theta[:,:] = [0, 1];
+  parameter Boolean FV401_state = true;
+  parameter Boolean FV402_state = true;
+
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler
     EB401(
@@ -38,7 +44,7 @@ model GBEBPumpingSystem
     pin_start=pin_start_S4,
     pout_start=160000,
     nR=0)              annotation (Placement(visible=true, transformation(
-        origin={-316,-280},
+        origin={-314,-280},
         extent={{-34,-34},{34,34}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
@@ -196,6 +202,37 @@ model GBEBPumpingSystem
     annotation (Placement(transformation(extent={{-260,-140},{-280,-120}})));
   Sources.PumpInput P401_input(omega=P401omega, q_m3h=P401qm3h)
     annotation (Placement(transformation(extent={{-260,-179},{-280,-158}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
+    FV401(
+    Kv=Valve.FCV401.Kv,
+    Tin_start=Tin_start_S4,
+    pin_start=pin_start_S4,
+    q_m3h_start=q_m3h_S4)
+          "On-Off valve connecting inlet S400 & S900 " annotation (Placement(
+        transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=-90,
+        origin={-334,-10})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
+    FV402(
+    Kv=Valve.FCV401.Kv,
+    Tin_start=Tout_start_S4,
+    pin_start=pout_start_S4,
+    q_m3h_start=q_m3h_S4) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={-294,-10})));
+  Modelica.Blocks.Sources.BooleanConstant FV401_OnOff(k=FV401_state)
+    annotation (Placement(transformation(extent={{-364,-20},{-344,0}})));
+  Modelica.Blocks.Interaction.Show.BooleanValue FV401_Status
+    annotation (Placement(transformation(extent={{-346,-28},{-383,8}})));
+  Modelica.Blocks.Sources.BooleanConstant FV402_OnOff(k=FV402_state)
+    annotation (Placement(transformation(extent={{-264,-20},{-284,0}})));
+  Modelica.Blocks.Interaction.Show.BooleanValue FV401_Status1
+    annotation (Placement(transformation(extent={{-281,-28},{-244,8}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT401_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{-352,-70},{-400,-123}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
       points={{-294,-174.6},{-294,-204}},
@@ -234,31 +271,50 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
-      points={{-334,-226},{-334,-236},{-326.2,-236},{-326.2,-252.8}},
+      points={{-334,-226},{-334,-236},{-324.2,-236},{-324.2,-252.8}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet,PL3_S401. inlet) annotation (Line(
-      points={{-305.8,-252.8},{-305.8,-236},{-294,-236},{-294,-224}},
+      points={{-303.8,-252.8},{-303.8,-236},{-294,-236},{-294,-224}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet, PL_S400_rCD_hot.inlet) annotation (Line(
       points={{-294.4,-64},{-294,-64},{-294,-52}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S400_rCD_hot.outlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
-      points={{-294,-32},{-294,45},{-310,45}},
-      color={140,56,54},
-      thickness=0.5));
   connect(TT401.inlet, PL_S400_rCD_cold.outlet) annotation (Line(
       points={{-333.6,-96},{-334,-96},{-334,-54}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S400_rCD_cold.inlet, rackCD_Cold_S300_S400.outlet) annotation (
-      Line(
-      points={{-334,-34},{-334,5.25},{-380.5,5.25}},
-      color={140,56,54},
-      thickness=0.5));
   connect(FCV401_theta.y, FCV401.opening)
     annotation (Line(points={{-281,-130},{-286,-130}}, color={0,0,127}));
+  connect(PL_S400_rCD_cold.inlet, FV401.outlet) annotation (Line(
+      points={{-334,-34},{-334,-20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV401.inlet, rackCD_Cold_S300_S400.outlet) annotation (Line(
+      points={{-334,-1.77636e-15},{-334,5.25},{-380.5,5.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV401_OnOff.y, FV401.u)
+    annotation (Line(points={{-343,-10},{-337.2,-10}}, color={255,0,255}));
+  connect(FV401_OnOff.y, FV401_Status.activePort)
+    annotation (Line(points={{-343,-10},{-343.225,-10}}, color={255,0,255}));
+  connect(PL_S400_rCD_hot.outlet, FV402.inlet) annotation (Line(
+      points={{-294,-32},{-294,-20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV402.outlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
+      points={{-294,0},{-294,45},{-310,45}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV402_OnOff.y, FV402.u)
+    annotation (Line(points={{-285,-10},{-290.8,-10}}, color={255,0,255}));
+  connect(FV402.u, FV401_Status1.activePort)
+    annotation (Line(points={{-290.8,-10},{-283.775,-10}}, color={255,0,255}));
+  connect(TT402.T, TT402_.numberPort) annotation (Line(points={{-284.2,-64},{
+          -280.9,-64},{-280.9,-64.5},{-279.6,-64.5}}, color={0,0,127}));
+  connect(TT401.T, TT401_.numberPort) annotation (Line(points={{-343.8,-96},{
+          -347.1,-96},{-347.1,-96.5},{-348.4,-96.5}}, color={0,0,127}));
   annotation (experiment(StopTime=800, __Dymola_Algorithm="Dassl"));
 end GBEBPumpingSystem;

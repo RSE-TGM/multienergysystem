@@ -137,7 +137,8 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    m_flow[i] - m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]) +  4.4e-7*der(ptilde));
+    //m_flow[i] - m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]) +  4.4e-7*der(ptilde));
+    m_flow[i] - m_flow[i+1] = 0;
     //(Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u, m_flow_nom*cons) + M[i]*regStep(inlet.m_flow,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
     (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   end for;
@@ -194,7 +195,7 @@ equation
 initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Ttilde) = zeros(n);
-    der(ptilde) = 0;
+    //der(ptilde) = 0;
     if not noInitialPressure then
       //der(ptilde) = 0;
     else

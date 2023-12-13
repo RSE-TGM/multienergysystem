@@ -738,7 +738,7 @@ model BaseHeatingSystem
   Modelica.Blocks.Sources.TimeTable FCVC02_theta(table=FCVC02theta)
     annotation (Placement(transformation(extent={{740,285},{720,305}})));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=FV933_state)
-    annotation (Placement(transformation(extent={{-162,15},{-182,35}})));
+    annotation (Placement(transformation(extent={{-161,15},{-181,35}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08
     "Pressure sensor at the inlet of valve FCVC01"
     annotation (Placement(transformation(extent={{220,207},{228,199}})));
@@ -746,7 +746,7 @@ model BaseHeatingSystem
     "Pressure sensor at the outlet of valve FCVC01"
     annotation (Placement(transformation(extent={{234,263},{242,271}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV933_Status
-    annotation (Placement(transformation(extent={{-179,8},{-144,42}})));
+    annotation (Placement(transformation(extent={{-178,8},{-143,42}})));
   Sources.PumpInput P901_input(omega=P901omega, q_m3h=P901qm3h)
     annotation (Placement(transformation(extent={{-690,68},{-710,89}})));
   Modelica.Blocks.Interaction.Show.RealValue TT901_(use_numberPort=true,
@@ -1031,13 +1031,10 @@ equation
           272.2},{683,289},{672.525,289}}, color={0,0,127}));
   connect(PT901.p, PT901_.numberPort) annotation (Line(points={{-788.5,162.5},{
           -807,162.5},{-807,154.5},{-807.4,154.5}}, color={0,0,127}));
-  connect(FV933.u, FV933_Status.activePort) annotation (Line(points={{-188.4,25},
-          {-181.625,25}},                                                 color=
-         {255,0,255}));
-  connect(FV933_OnOff.y, FV933_Status.activePort) annotation (Line(points={{-183,25},
-          {-181.625,25}},           color={255,0,255}));
-  connect(FV933.u, FV933_OnOff.y)
-    annotation (Line(points={{-188.4,25},{-183,25}}, color={255,0,255}));
+  connect(FV933_OnOff.y, FV933.u)
+    annotation (Line(points={{-182,25},{-188.4,25}}, color={255,0,255}));
+  connect(FV933_OnOff.y, FV933_Status.activePort)
+    annotation (Line(points={{-182,25},{-180.625,25}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-900,-320},{900,320}}, grid={1,1}),
                                                               graphics={

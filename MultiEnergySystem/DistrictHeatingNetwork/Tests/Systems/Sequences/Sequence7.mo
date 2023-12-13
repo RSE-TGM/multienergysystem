@@ -528,23 +528,13 @@ equation
       points={{-739.8,-276.8},{-740,-256},{-740,-226}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV202_OnOff.y,FV202. u) annotation (Line(points={{-810,-124.6},{-810,
-          -128.08},{-810,-128.08}},
-                      color={255,0,255}));
   connect(FCV201_theta.y,FCV201. opening) annotation (Line(points={{-859,-200},
           {-848,-200}},                                color={0,0,127}));
-  connect(FV209.u,FV209_Status. activePort)
-    annotation (Line(points={{-781.92,-270},{-786.5,-270}},
-                                                        color={255,0,255}));
-  connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-786.45,
-          -270},{-786.5,-270}},             color={255,0,255}));
   connect(FV207.u,FV207_Status. activePort)
     annotation (Line(points={{-760,-257.92},{-760,-260.8}},
                                                         color={255,0,255}));
   connect(FV207_OnOff.y,FV207_Status. activePort) annotation (Line(points={{-760,
           -261.6},{-760,-260.8}},                          color={255,0,255}));
-  connect(FV202_Status.activePort,FV202. u) annotation (Line(points={{-810,
-          -123.5},{-810,-128.08}},           color={255,0,255}));
   connect(PL_S200_FV209_FCV201.inlet,PL_S200_FV209_D201. inlet) annotation (
       Line(
       points={{-840,-240},{-840,-480},{-818,-480}},
@@ -558,14 +548,6 @@ equation
       points={{-740,-40},{-740,-34},{-672,-34},{-672,44.75},{-699,44.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV202_OnOff.y, FV202_Status.activePort)
-    annotation (Line(points={{-810,-124.6},{-810,-123.5}}, color={255,0,255}));
-  connect(FV201.u, FV201_Status.activePort) annotation (Line(points={{-781.92,
-          -150},{-786.5,-150}}, color={255,0,255}));
-  connect(FV201_OnOff.y, FV201_Status.activePort)
-    annotation (Line(points={{-785.4,-150},{-786.5,-150}}, color={255,0,255}));
-  connect(FV201.u, FV201_OnOff.y) annotation (Line(points={{-781.92,-150},{
-          -785.4,-150}}, color={255,0,255}));
   connect(FV206_OnOff.y, FV206_Status.activePort)
     annotation (Line(points={{-760,-180.6},{-760,-179.5}}, color={255,0,255}));
   connect(FV206_OnOff.y, FV206.u) annotation (Line(points={{-760,-180.6},{-760,
@@ -574,8 +556,6 @@ equation
           -738.08,-220}}, color={255,0,255}));
   connect(FV203_OnOff.y, FV203_Status.activePort) annotation (Line(points={{
           -731.55,-220},{-731.8,-220}}, color={255,0,255}));
-  connect(FV209.u, FV209_OnOff.y) annotation (Line(points={{-781.92,-270},{
-          -786.45,-270}}, color={255,0,255}));
   connect(PL_S200_D201_FT201.inlet, FT201.inlet) annotation (Line(
       points={{-830,-430},{-834,-430},{-834,-340},{-739.8,-340},{-739.8,-285.2}},
       color={140,56,54},
@@ -593,6 +573,18 @@ equation
           -726.9,-102},{-726.9,-102.5},{-723.6,-102.5}}, color={0,0,127}));
   connect(TT201.T, TT202_1.numberPort) annotation (Line(points={{-787.925,
           -74.75},{-787.925,-76.5},{-792.4,-76.5}}, color={0,0,127}));
+  connect(FV201_OnOff.y, FV201.u) annotation (Line(points={{-785.4,-150},{
+          -781.92,-150}}, color={255,0,255}));
+  connect(FV201_OnOff.y, FV201_Status.activePort)
+    annotation (Line(points={{-785.4,-150},{-786.5,-150}}, color={255,0,255}));
+  connect(FV202_OnOff.y, FV202.u) annotation (Line(points={{-810,-124.6},{-810,
+          -128.08}}, color={255,0,255}));
+  connect(FV202_OnOff.y, FV202_Status.activePort)
+    annotation (Line(points={{-810,-124.6},{-810,-123.5}}, color={255,0,255}));
+  connect(FV209_OnOff.y, FV209.u) annotation (Line(points={{-786.45,-270},{
+          -781.92,-270}}, color={255,0,255}));
+  connect(FV209_OnOff.y, FV209_Status.activePort) annotation (Line(points={{
+          -786.45,-270},{-786.5,-270}}, color={255,0,255}));
   annotation (experiment(
       StopTime=50,
       Tolerance=1e-06,

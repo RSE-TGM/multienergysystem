@@ -568,12 +568,6 @@ model Sequence8
     duration=50,
     startTime=100)
     annotation (Placement(transformation(extent={{-383,-321},{-404,-301}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage D302(
-    H=1,
-    T_start(displayUnit="K") = 45 + 273.15,
-    pin_start=pout_User_start_S3_pump,
-    m_flow_start=m_flow_User_S3)
-    annotation (Placement(transformation(extent={{-436,-426},{-408,-370}})));
   Modelica.Blocks.Interaction.Show.RealValue TT301_(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{-454,-179},{-502,-126}})));
@@ -879,6 +873,46 @@ model Sequence8
   Modelica.Blocks.Interaction.Show.RealValue TT605_(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{628,-431},{676,-378}})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
+    FV603(
+    Kv=Valve.FCV401.Kv,
+    Tin_start=Tout_start_S4,
+    pin_start=pout_start_S4,
+    q_m3h_start=9) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=180,
+        origin={-130,-10})));
+  Modelica.Blocks.Sources.BooleanConstant FV402_OnOff1(k=FV402_state)
+    annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-130,10})));
+  Modelica.Blocks.Interaction.Show.BooleanValue FV401_Status2
+    annotation (Placement(transformation(extent={{-18.5,-18},{18.5,18}},
+        rotation=90,
+        origin={-130.5,24})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
+    FV604(
+    Kv=Valve.FCV401.Kv,
+    Tin_start=Tout_start_S4,
+    pin_start=pout_start_S4,
+    q_m3h_start=9) annotation (Placement(transformation(
+        extent={{10,10},{-10,-10}},
+        rotation=180,
+        origin={-96,-20})));
+  Modelica.Blocks.Sources.BooleanConstant FV402_OnOff2(k=FV402_state)
+    annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-96,10})));
+  Modelica.Blocks.Interaction.Show.BooleanValue FV401_Status3
+    annotation (Placement(transformation(extent={{-18.5,-18},{18.5,18}},
+        rotation=90,
+        origin={-96.5,22})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage D302(
+    H=1,
+    T_start(displayUnit="K") = 45 + 273.15,
+    pin_start=pout_User_start_S3_pump,
+    m_flow_start=m_flow_User_S3)
+    annotation (Placement(transformation(extent={{-372,-400},{-344,-344}})));
 equation
   connect(PL_rackUsersIn_TT605.outlet, EX601.inhot) annotation (Line(
       points={{688,-368},{688,-416},{609.001,-416},{609.001,-387}},
@@ -1024,14 +1058,6 @@ equation
   connect(TT304_.numberPort,TT304. T) annotation (Line(points={{-401.6,-284.5},{
           -401.6,-285.5},{-406.35,-285.5}},
                                    color={0,0,127}));
-  connect(S3_PL_S600_S300_H.inlet, D302.outlet) annotation (Line(
-      points={{-404,-353},{-404,-366},{-442,-366},{-442,-384},{-436,-384}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(S3_PL_S600_S300_C.outlet, D302.inlet) annotation (Line(
-      points={{-448,-353},{-448,-412},{-436,-412}},
-      color={140,56,54},
-      thickness=0.5));
   connect(S3_PL_S300_rCD_H.outlet, rackCD_Hot_S300_S500.inlet) annotation (Line(
       points={{-416,-38},{-416,-20},{-372,-20},{-372,45},{-390,45}},
       color={140,56,54},
@@ -1158,14 +1184,6 @@ equation
   connect(TT605.T, TT605_.numberPort) annotation (Line(points={{618.8,-405},{
           623.6,-405},{623.6,-404.5},{624.4,-404.5}},
                                                 color={0,0,127}));
-  connect(S6_PL_S600_rCD_H.outlet, D302.outlet) annotation (Line(
-      points={{-60,-31},{-60,-24},{-168,-24},{-168,-384},{-436,-384}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(S6_PL_S600_rCD_C.inlet, D302.inlet) annotation (Line(
-      points={{-80,-31},{-80,-30},{-162,-30},{-162,-412},{-436,-412}},
-      color={140,56,54},
-      thickness=0.5));
   connect(TTR05.inlet, FTR03.outlet) annotation (Line(
       points={{691,-480.6},{716,-480.6},{716,-320},{828,-320},{828,-280},{823,-280}},
       color={140,56,54},
@@ -1185,6 +1203,41 @@ equation
       thickness=0.5));
   connect(P302.inlet, S3_PL_S600_S300_H.outlet) annotation (Line(
       points={{-416,-315},{-416,-328},{-404,-328},{-404,-333}},
+      color={140,56,54},
+      thickness=0.5));
+
+  connect(S3_PL_S600_S300_H.inlet, FV603.outlet) annotation (Line(
+      points={{-404,-353},{-404,-358},{-152,-358},{-152,-10},{-140,-10}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV603.inlet, S6_PL_S600_rCD_H.outlet) annotation (Line(
+      points={{-120,-10},{-60,-10},{-60,-31}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV402_OnOff1.y, FV401_Status2.activePort) annotation (Line(points={{
+          -130,-1},{-128.25,-1},{-128.25,2.725},{-130.5,2.725}}, color={255,0,
+          255}));
+  connect(FV402_OnOff1.y, FV603.u)
+    annotation (Line(points={{-130,-1},{-130,-6.8}}, color={255,0,255}));
+  connect(FV604.outlet, S6_PL_S600_rCD_C.inlet) annotation (Line(
+      points={{-86,-20},{-80,-20},{-80,-31}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV402_OnOff2.y, FV604.u)
+    annotation (Line(points={{-96,-1},{-96,-16.8}}, color={255,0,255}));
+  connect(FV402_OnOff2.y, FV401_Status3.activePort) annotation (Line(points={{
+          -96,-1},{-96,0.725},{-96.5,0.725}}, color={255,0,255}));
+  connect(S3_PL_S600_S300_H.inlet, D302.outlet) annotation (Line(
+      points={{-404,-353},{-404,-358},{-372,-358}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S3_PL_S600_S300_C.outlet, D302.inlet) annotation (Line(
+      points={{-448,-353},{-448,-386},{-372,-386}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV604.inlet, D302.inlet) annotation (Line(
+      points={{-106,-20},{-116,-20},{-116,-406},{-400,-406},{-400,-386},{-372,
+          -386}},
       color={140,56,54},
       thickness=0.5));
   annotation (experiment(

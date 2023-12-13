@@ -21,7 +21,7 @@ model IdealMassFlowSensor
   Modelica.Blocks.Interfaces.RealOutput q_m3hr "Volumetric flowrate in m3/hr" annotation (Placement(
       visible=true,
       transformation(
-        origin={0,72},
+        origin={0,56},
         extent={{-10,-10},{10,10}},
         rotation=0),
       iconTransformation(

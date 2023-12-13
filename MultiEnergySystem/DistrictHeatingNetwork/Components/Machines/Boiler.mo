@@ -31,29 +31,37 @@ model Boiler
     dIns=dIns,
     H=H,
     lambdaIns=lambdaIns) annotation (Placement(visible=true, transformation(
-        origin={40,-2},
-        extent={{-10,-10},{10,10}},
+        origin={40,10},
+        extent={{-9.99999,-14},{10,14}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor boilerFeedback annotation (
       Placement(visible=true, transformation(
-        origin={74,0},
-        extent={{-10,-10},{10,10}},
+        origin={73,3},
+        extent={{-7,-7},{7,7}},
         rotation=0)));
 equation
   connect(gasBoilerPI.REF, T_Ref) annotation (
-    Line(points = {{-25, 30}, {-102, 30}}, color = {0, 0, 127}));
-  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-7,26},
+    Line(points={{-24,30},{-102,30}},      color = {0, 0, 127}));
+  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-8,26},
           {2,26},{2,8}},                                  color={0,0,127}));
-  connect(inlet, heatHX.inlet) annotation (
-    Line(points={{-100,0},{-8,0}},         color = {168, 168, 168}));
-  connect(boilerFeedback.outlet, outlet) annotation (
-    Line(points={{84,0},{100,0}},                           color = {168, 168, 168}));
   connect(boilerFeedback.T, gasBoilerPI.FeedBack) annotation (
-    Line(points={{74,9},{74,16},{-42,16},{-42,23},{-25,23}},          color = {0, 0, 127}));
-  connect(heatHX.outlet, gasBoilerInnerVolume.inlet) annotation (Line(points={{
-          12,0},{20,0},{20,-18},{40,-18},{40,-12}}, color={168,168,168}));
+    Line(points={{77.9,7.2},{77.9,12},{-42,12},{-42,22},{-24,22}},    color = {0, 0, 127}));
+  connect(heatHX.inlet, inlet) annotation (Line(
+      points={{-8,0},{-100,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(boilerFeedback.outlet, outlet) annotation (Line(
+      points={{77.2,0.2},{90,0.2},{90,0},{100,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(heatHX.outlet, gasBoilerInnerVolume.inlet) annotation (Line(
+      points={{12,0},{30,0}},
+      color={140,56,54},
+      thickness=0.5));
   connect(gasBoilerInnerVolume.outlet, boilerFeedback.inlet) annotation (Line(
-        points={{40,8},{40,14},{64,14},{64,0}}, color={168,168,168}));
+      points={{30,20},{30,28},{60,28},{60,0.2},{68.8,0.2}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Icon(graphics={  Rectangle(fillColor = {171, 171, 171}, fillPattern = FillPattern.Solid, extent = {{-84, 100}, {84, -100}}), Text(origin = {-1, 60}, extent = {{-61, 34}, {61, -34}}, textString = "Gas
 Boiler"), Ellipse(origin = {0, -48}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Polygon(origin = {-1, -45}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Polygon(origin = {-1, -45}, lineColor = {255, 0, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-15, -37}, {-23, -13}, {-15, -17}, {-15, 3}, {-9, -1}, {1, 25}, {9, -1}, {15, 3}, {17, -17}, {23, -13}, {15, -37}, {1, -43}, {-15, -37}})}),

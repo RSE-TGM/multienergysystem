@@ -8,8 +8,8 @@ model Sequence8
   final parameter Types.Pressure pout_start_S3_tank = pin_start_S3_tank - 9.81*2*990;
 
   // Boundary parameters
-  parameter Types.Pressure pin_Source_start_S3 = 1.75e5;
-  parameter Types.Pressure pout_Source_start_S3 = 2.5e5;
+  parameter Types.Pressure pin_Source_start_S3 = 2e5;
+  parameter Types.Pressure pout_Source_start_S3 = 1.9e5;
   parameter Types.Temperature Tin_Source_start_S3 = 45 + 273.15;
   parameter Types.Temperature Tout_Source_start_S3 = 40 + 273.15;
 
@@ -41,7 +41,7 @@ model Sequence8
   parameter Types.Length Di_S3 = 51e-3;
   parameter Types.Length t_S3 = 1.5e-3;
   parameter Types.MassFlowRate m_flow_Source_S3 = q_m3h_S3_Source*990/3600;
-  parameter Real q_m3h_S3_Source = 7;
+  parameter Real q_m3h_S3_Source = 6;
   parameter Types.MassFlowRate m_flow_User_S3 = q_m3h_S3_User*990/3600;
   parameter Real q_m3h_S3_User = 2.23;
 
@@ -72,7 +72,7 @@ model Sequence8
   parameter Types.Temperature Tout_User_start_S6 = 45 + 273.15;
 
   // Heat Pump
-  parameter Types.Pressure pin_Source_start_S6_hp = 1.79e5;
+  parameter Types.Pressure pin_Source_start_S6_hp = 1.9e5;
   parameter Types.Pressure pout_Source_start_S6_hp = 2.5e5;
   parameter Types.Temperature Tin_Source_start_S6_hp = 14 + 273.15;
   parameter Types.Temperature Tout_Source_start_S6_hp = 7 + 273.15;
@@ -102,6 +102,7 @@ model Sequence8
   parameter Types.Length t_S6 = 1.5e-3;
   parameter Types.MassFlowRate m_flow_Source_S6 = 1.369047619;
   parameter Types.MassFlowRate m_flow_User_S6 = 2.444444444;
+  parameter Real q_m3h_S6_Source(unit = "m3/h") = 6.3149476;
 
   // Pipe length
   parameter Types.Length L_S6_PL1 = 3;
@@ -297,6 +298,8 @@ model Sequence8
     Tin_cold_start=Tin_Source_start_S3_hp,
     Tout_cold_start=Tout_Source_start_S3_hp,
     Tout_hot_set=Tout_User_start_S3_hp,
+    pin_hot_start=pin_User_start_S3_hp,
+    pin_cold_start=pin_Source_start_S3_hp,
     m_flow_hot_start=m_flow_User_S3,
     m_flow_cold_start=m_flow_Source_S3,
     k_hot=8000,
@@ -305,13 +308,14 @@ model Sequence8
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_UserOut(
     L=L_S3_PL6,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3 - 0.04e5,
-    pout_start=pin_User_start_S3 - 0.05e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-416,-217})));
@@ -338,6 +342,7 @@ model Sequence8
     omeganom=Pump.P301.omeganom,
     pin_start(displayUnit="Pa") = 1.8400803e5,
     pout_start(displayUnit="Pa") = 1.9920743e5,
+    headnom=Pump.P301.headnom,
     qnom_inm3h=Pump.P301.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P301.rhonom,
     headmax=Pump.P301.headnommax,
@@ -355,46 +360,50 @@ model Sequence8
         rotation=90,
         origin={-413.5,-67.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT302 annotation (Placement(transformation(
+    TT302(T_start=Tout_User_start_S3)
+          annotation (Placement(transformation(
         extent={{-5.5,5.5},{5.5,-5.5}},
         rotation=90,
         origin={-413.5,-76.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_P301_D301(
     L=L_S3_PL4,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pout_User_start_S3_pump,
-    pout_start=pout_User_start_S3_pump - 0.01e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-416,-163})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_D301out(
     L=L_S3_PL3,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pout_User_start_S3_pump - 0.2e5,
-    pout_start=pout_User_start_S3_pump - 0.21e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-416,-109})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S300_rCD_H(
     L=L_S3_PL1,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pout_User_start_S3_pump - 0.21e5,
-    pout_start=pout_User_start_S3_pump - 0.22e5,
     Tin_start=Tout_User_start_S3,
     Tout_start=Tout_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-416,-48})));
@@ -409,7 +418,8 @@ model Sequence8
         extent={{-5.5,-5.5},{5.5,5.5}},
         rotation=90,
         origin={-438.5,-151.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT301
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT301(T_start=
+        Tin_User_start_S3, p_start=pin_User_start_S3)
     annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
         rotation=90,
@@ -417,38 +427,40 @@ model Sequence8
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_UserIn(
     L=L_S3_PL7,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3 - 0.02e5,
-    pout_start=pin_User_start_S3 - 0.03e5,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-436,-217})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301Sensors_C(
     L=L_S3_PL5,
     t=t_S3,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3 - 0.01e5,
-    pout_start=pin_User_start_S3 - 0.02e5,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-436,-172})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S300_rCD_C(
     L=L_S3_PL2,
-    m_flow_start=m_flow_User_S3,
     pin_start=pin_User_start_S3,
-    pout_start=pin_User_start_S3 - 0.01e5,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
-    n=n)                           annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_User,
+    n=n,
+    hctype=hctype)                 annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-436,-48})));
@@ -484,56 +496,62 @@ model Sequence8
         rotation=90,
         origin={-413.5,-276.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT304 annotation (Placement(transformation(
+    TT304(T_start=Tin_Source_start_S3, p_start=pin_Source_start_S3)
+          annotation (Placement(transformation(
         extent={{-5.5,5.5},{5.5,-5.5}},
         rotation=90,
         origin={-413.5,-285.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S600_S300_H(
     L=L_S3_PL9,
     t=t_S3,
-    m_flow_start=m_flow_Source_S3,
     pin_start=pout_Source_start_S3_pump - 0.1e5,
-    pout_start=pout_Source_start_S3_pump,
     Tin_start=Tin_Source_start_S3,
     Tout_start=Tin_Source_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-402,-343})));
+        origin={-404,-343})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT303 annotation (Placement(transformation(
+    TT303(T_start=Tout_Source_start_S3, p_start=pout_Source_start_S3)
+          annotation (Placement(transformation(
         extent={{-5.5,-5.5},{5.5,5.5}},
         rotation=90,
         origin={-438.5,-307.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT302
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT302(T_start=
+        Tout_Source_start_S3, p_start=pout_Source_start_S3)
     annotation (Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{5,-5},{-5,5}},
         rotation=90,
         origin={-438,-321})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_SourceOut(
     L=L_S3_PL8,
     t=t_S3,
-    m_flow_start=m_flow_Source_S3,
-    pin_start=pout_Source_start_S3_pump + 0.2e5,
-    pout_start=pout_Source_start_S3_pump + 0.1e5,
+    pin_start=pout_Source_start_S3,
     Tin_start=Tout_Source_start_S3,
     Tout_start=Tout_Source_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-436,-287})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_S600_S300_C(
     L=L_S3_PL10,
     t=t_S3,
-    m_flow_start=m_flow_Source_S3,
-    pin_start=pout_Source_start_S3_pump + 0.1e5,
-    pout_start=pout_Source_start_S3_pump,
+    pin_start=pout_Source_start_S3,
     Tin_start=Tout_Source_start_S3,
     Tout_start=Tout_Source_start_S3,
     Di=Di_S3,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S3_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-448,-343})));
@@ -587,7 +605,9 @@ model Sequence8
     Tin_start=Tout_User_start_S6,
     Tout_start=Tout_User_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-60,-155})));
@@ -624,7 +644,8 @@ model Sequence8
         rotation=90,
         origin={-57.5,-60.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT602 annotation (Placement(transformation(
+    TT602(T_start=Tout_User_start_S6, p_start=pout_User_start_S6)
+          annotation (Placement(transformation(
         extent={{-5.5,5.5},{5.5,-5.5}},
         rotation=90,
         origin={-57.5,-69.5})));
@@ -637,7 +658,9 @@ model Sequence8
     Tin_start=Tout_User_start_S6,
     Tout_start=Tout_User_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-60,-92})));
@@ -650,7 +673,9 @@ model Sequence8
     Tin_start=Tout_User_start_S6,
     Tout_start=Tout_User_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-60,-41})));
@@ -665,7 +690,8 @@ model Sequence8
         extent={{-5.5,-5.5},{5.5,5.5}},
         rotation=90,
         origin={-82.5,-89.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT601
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT601(T_start=
+        Tin_User_start_S6, p_start=pin_User_start_S6)
     annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
         rotation=90,
@@ -679,7 +705,9 @@ model Sequence8
     Tin_start=Tin_User_start_S6,
     Tout_start=Tin_User_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-155})));
@@ -692,7 +720,9 @@ model Sequence8
     Tin_start=Tin_User_start_S6,
     Tout_start=Tin_User_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-110})));
@@ -704,7 +734,9 @@ model Sequence8
     Tin_start=Tin_User_start_S6,
     Tout_start=Tin_User_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-41})));
@@ -742,7 +774,7 @@ model Sequence8
         rotation=90,
         origin={-57.5,-244.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT604(T_start=Tin_Source_start_S6_hp)
+    TT604(T_start=Tin_Source_start_S6_hp, p_start=pin_Source_start_S6_hp)
           annotation (Placement(transformation(
         extent={{-5.5,5.5},{5.5,-5.5}},
         rotation=90,
@@ -750,13 +782,14 @@ model Sequence8
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S6_PL_S600_S600_H(
     L=L_S6_PL9,
     t=t_S6,
-    m_flow_start=m_flow_Source_S6,
     pin_start=pout_Source_start_S6_pump - 0.1e5,
-    pout_start=pout_Source_start_S6_pump,
     Tin_start=Tin_Source_start_S6,
     Tout_start=Tin_Source_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S6_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-60,-325})));
@@ -775,26 +808,28 @@ model Sequence8
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S6_PL_HP601_SourceOut(
     L=L_S6_PL8,
     t=t_S6,
-    m_flow_start=m_flow_Source_S6,
     pin_start=pout_Source_start_S6_pump + 0.2e5,
-    pout_start=pout_Source_start_S6_pump + 0.1e5,
     Tin_start=Tout_Source_start_S6,
     Tout_start=Tout_Source_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S6_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-226})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S6_PL_S600_S600_C(
     L=L_S6_PL10,
     t=t_S6,
-    m_flow_start=m_flow_Source_S6,
     pin_start=pout_Source_start_S6_pump + 0.1e5,
-    pout_start=pout_Source_start_S6_pump,
     Tin_start=Tout_Source_start_S6,
     Tout_start=Tout_Source_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S6_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-325})));
@@ -813,13 +848,14 @@ model Sequence8
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S6_PL_S600_S600_H1(
     L=L_S6_PL9,
     t=t_S6,
-    m_flow_start=m_flow_Source_S6,
     pin_start=pout_Source_start_S6_pump - 0.1e5,
-    pout_start=pout_Source_start_S6_pump,
     Tin_start=Tin_Source_start_S6,
     Tout_start=Tin_Source_start_S6,
     Di=Di_S6,
-    n=n) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S6_Source,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-60,-226})));
@@ -837,10 +873,10 @@ model Sequence8
     annotation (Placement(transformation(extent={{-36,-275},{12,-222}})));
   Modelica.Blocks.Interaction.Show.RealValue TT606_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{534,-433},{486,-380}})));
+    annotation (Placement(transformation(extent={{548,-433},{500,-380}})));
   Modelica.Blocks.Interaction.Show.RealValue TT605_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{632,-431},{680,-378}})));
+    annotation (Placement(transformation(extent={{628,-431},{676,-378}})));
 equation
   connect(PL_rackUsersIn_TT605.outlet, EX601.inhot) annotation (Line(
       points={{688,-368},{688,-416},{609.001,-416},{609.001,-387}},
@@ -944,24 +980,12 @@ equation
       points={{-415.7,-285.5},{-415.7,-290.25},{-416,-290.25},{-416,-299}},
       color={140,56,54},
       thickness=0.5));
-  connect(P302.inlet,S3_PL_S600_S300_H. outlet) annotation (Line(
-      points={{-416,-315},{-416,-333},{-402,-333}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT302.outlet,TT303. inlet) annotation (Line(
-      points={{-436,-318},{-436,-314.25},{-436.3,-314.25},{-436.3,-307.5}},
-      color={140,56,54},
-      thickness=0.5));
   connect(HP301.outcold,S3_PL_HP301_SourceOut. inlet) annotation (Line(
       points={{-436.2,-262.2},{-436.2,-269.6},{-436,-269.6},{-436,-277}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_HP301_SourceOut.outlet,TT303. inlet) annotation (Line(
       points={{-436,-297},{-436,-302.25},{-436.3,-302.25},{-436.3,-307.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT302.inlet,S3_PL_S600_S300_C. inlet) annotation (Line(
-      points={{-436,-324},{-436,-333},{-448,-333}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_S300_rCD_C.outlet,PT301. inlet) annotation (Line(
@@ -987,9 +1011,6 @@ equation
   connect(omega_P301.y,P301. in_omega)
     annotation (Line(points={{-402.05,-192},{-411,-192}},
                                                   color={0,0,127}));
-  connect(omega_P302.y,P302. in_omega)
-    annotation (Line(points={{-405.05,-311},{-405.05,-310},{-408,-310},{-408,-311},
-          {-411,-311}},                               color={0,0,127}));
   connect(TT301.T,TT301_. numberPort) annotation (Line(points={{-445.65,-151.5},
           {-450.062,-151.5},{-450.062,-152.5},{-450.4,-152.5}},
                                                 color={0,0,127}));
@@ -1002,7 +1023,7 @@ equation
           -401.6,-285.5},{-406.35,-285.5}},
                                    color={0,0,127}));
   connect(S3_PL_S600_S300_H.inlet, D302.outlet) annotation (Line(
-      points={{-402,-353},{-402,-366},{-442,-366},{-442,-384},{-436,-384}},
+      points={{-404,-353},{-404,-366},{-442,-366},{-442,-384},{-436,-384}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_S600_S300_C.outlet, D302.inlet) annotation (Line(
@@ -1129,10 +1150,12 @@ equation
           -96.4,-251.5},{-96.4,-230.5}}, color={0,0,127}));
   connect(TT604.T, TT604_.numberPort) annotation (Line(points={{-50.35,-250.5},{
           -44.975,-250.5},{-44.975,-248.5},{-39.6,-248.5}}, color={0,0,127}));
-  connect(TT606.T, TT606_.numberPort) annotation (Line(points={{556.2,-406},{546.9,
-          -406},{546.9,-406.5},{537.6,-406.5}}, color={0,0,127}));
-  connect(TT605.T, TT605_.numberPort) annotation (Line(points={{618.8,-405},{623.6,
-          -405},{623.6,-404.5},{628.4,-404.5}}, color={0,0,127}));
+  connect(TT606.T, TT606_.numberPort) annotation (Line(points={{556.2,-406},{
+          546.9,-406},{546.9,-406.5},{551.6,-406.5}},
+                                                color={0,0,127}));
+  connect(TT605.T, TT605_.numberPort) annotation (Line(points={{618.8,-405},{
+          623.6,-405},{623.6,-404.5},{624.4,-404.5}},
+                                                color={0,0,127}));
   connect(S6_PL_S600_rCD_H.outlet, D302.outlet) annotation (Line(
       points={{-60,-31},{-60,-24},{-168,-24},{-168,-384},{-436,-384}},
       color={140,56,54},
@@ -1148,6 +1171,20 @@ equation
 
   connect(TT602.T, TT602_.numberPort) annotation (Line(points={{-50.35,-69.5},{-46.975,
           -69.5},{-46.975,-70.5},{-43.6,-70.5}}, color={0,0,127}));
+  connect(omega_P302.y, P302.in_omega)
+    annotation (Line(points={{-405.05,-311},{-411,-311}}, color={0,0,127}));
+  connect(TT303.inlet, FT302.inlet) annotation (Line(
+      points={{-436.3,-307.5},{-436.3,-318},{-436,-318}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT302.outlet, S3_PL_S600_S300_C.inlet) annotation (Line(
+      points={{-436,-324},{-436,-328},{-448,-328},{-448,-333}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(P302.inlet, S3_PL_S600_S300_H.outlet) annotation (Line(
+      points={{-416,-315},{-416,-328},{-404,-328},{-404,-333}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (experiment(
       StopTime=50,
       Tolerance=1e-06,

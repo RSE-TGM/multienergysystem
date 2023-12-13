@@ -300,10 +300,10 @@ model Sequence8
     Tout_hot_set=Tout_User_start_S3_hp,
     pin_hot_start=pin_User_start_S3_hp,
     pin_cold_start=pin_Source_start_S3_hp,
+    dp_hot_start=15000,
+    dp_cold_start=15000,
     m_flow_hot_start=m_flow_User_S3,
-    m_flow_cold_start=m_flow_Source_S3,
-    k_hot=8000,
-    k_cold=8000)
+    m_flow_cold_start=m_flow_Source_S3)
           annotation (Placement(transformation(extent={{-443,-269},{-409,-235}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301_UserOut(
     L=L_S3_PL6,
@@ -441,7 +441,7 @@ model Sequence8
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S3_PL_HP301Sensors_C(
     L=L_S3_PL5,
     t=t_S3,
-    pin_start=pin_User_start_S3 - 0.01e5,
+    pin_start=pin_User_start_S3,
     Tin_start=Tin_User_start_S3,
     Tout_start=Tin_User_start_S3,
     Di=Di_S3,
@@ -480,6 +480,7 @@ model Sequence8
     omeganom=Pump.P302.omeganom,
     pin_start(displayUnit="Pa") = 1.8400803e5,
     pout_start(displayUnit="Pa") = 1.9920743e5,
+    headnom=Pump.P302.headnom,
     qnom_inm3h=Pump.P302.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P302.rhonom,
     headmax=Pump.P302.headnommax,
@@ -627,6 +628,7 @@ model Sequence8
     omeganom=Pump.P601.omeganom,
     pin_start(displayUnit="Pa") = 1.8400803e5,
     pout_start(displayUnit="Pa") = 1.9920743e5,
+    headnom=Pump.P601.headnom,
     qnom_inm3h=Pump.P601.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.P601.rhonom,
     headmax=Pump.P601.headnommax,

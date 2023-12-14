@@ -33,7 +33,7 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(group = "Pump Characteristics"));
   parameter Types.Volume V = 0 "Pump Internal Volume" annotation (
     Evaluate = true);
-  parameter Types.Pressure dpnom "Nominal pressure increase" annotation (
+  parameter Types.Pressure dpnom = headmax*rhonom*g "Nominal pressure increase" annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Types.AngularVelocity omeganom = 2*pi*50 "Nominal angular velocity in rad/s" annotation (
     Dialog(group = "Pump Characteristics"));
@@ -68,8 +68,8 @@ partial model PumpBase "Base model to develop water pump models"
   Types.MassFlowRate m_flow "Mass flow rate";
   Types.VolumeFlowRate q(start = qnom) "Volume flow rate";
   Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/hr";
-  Modelica.Units.SI.Pressure dp(min = 0) "Outlet pressure minus inlet pressure";
-  Modelica.Units.SI.Length head "Pump head";
+  Modelica.Units.SI.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
+  Modelica.Units.SI.Length head(nominal = headmax) "Pump head";
   Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure of entering fluid";
   Modelica.Units.SI.Pressure pout "Pressure of outgoing fluid";
   Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start) "Enthalpy of entering fluid";

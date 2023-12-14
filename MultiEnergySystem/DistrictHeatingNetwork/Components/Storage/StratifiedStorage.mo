@@ -15,30 +15,25 @@ model StratifiedStorage
 
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
-  final parameter SI.Area A = Modelica.Constants.pi*(D/2)^2 "Cross section area of the TES";
+  final parameter Types.Area A = Modelica.Constants.pi*(D/2)^2 "Cross section area of the TES";
 
   //Variables
   //SI.Mass M(start = M_id) "Total mass in the tank";
-  SI.Density rho[n+1] "Density of the fluid in the tank (at the outlet)";
-  SI.MassFlowRate m_flow[n+1](each start = m_flow_start, each min = 0);
-  SI.Pressure p[n+1](start = linspace(pin_start, pout_start, n+1));
-  SI.Pressure ptilde[n](start = linspace(pin_start,pout_start,n));
-  SI.Temperature T[n+1](start = linspace(T_start, T_start-1, n+1)) "Temperatue of the water inside the volume";
-  SI.Temperature Ttilde[n](start = linspace(T_start, T_start-1,n),  each stateSelect = StateSelect.prefer) "Temperatue of the water inside the volume";
-  SI.HeatFlowRate Q_amb[n](each start = (R_flat + R_lateral)/(R_flat*R_lateral)*(T_start - T_ext)) "Heat losses to ambient";
-  SI.HeatFlowRate Q_cond[n] "Heat losses to other layers";
-  SI.Mass M[n] "Mass of fluid in each finite volume";
-  SI.Mass Mtot(start = M_id) "Total Mass in the pipe";
+  Types.Density rho[n+1] "Density of the fluid in the tank (at the outlet)";
+  Types.MassFlowRate m_flow[n+1](each start = m_flow_start, each min = 0);
+  Types.Pressure p[n+1](start = linspace(pin_start, pout_start, n+1));
+  Types.Pressure ptilde[n](start = linspace(pin_start, pout_start, n));
+  Types.Temperature T[n+1](start = linspace(T_start, T_start+0.5, n+1)) "Temperatue of the water inside the volume";
+  Types.Temperature Ttilde[n](start = linspace(T_start, T_start-1,n),  each stateSelect = StateSelect.prefer) "Temperatue of the water inside the volume";
+  Types.HeatFlowRate Q_amb[n](each start = (R_flat + R_lateral)/(R_flat*R_lateral)*(T_start - T_ext)) "Heat losses to ambient";
+  Types.HeatFlowRate Q_cond[n] "Heat losses to other layers";
+  Types.Mass M[n] "Mass of fluid in each finite volume";
+  Types.Mass Mtot(start = M_id) "Total Mass in the pipe";
 
-  //Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
   Medium fluid[n+1](
     T_start = linspace(T_start, T_start - 1, n+1),
     p_start = linspace(pin_start, pout_start, n+1),
     each computeTransport = true);
-//   Medium fluid_temp(
-//     T_start = T_start,
-//     p_start = pin_start);
-//  Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
 
   Modelica.Blocks.Interfaces.RealOutput T1 annotation (Placement(transformation(
           extent={{94,-100},{114,-80}}), iconTransformation(extent={{94,-100},{114,
@@ -87,7 +82,6 @@ equation
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
     (M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
-
 
     //Q_amb[i] = 0;
     //Q_cond[i] = 0;

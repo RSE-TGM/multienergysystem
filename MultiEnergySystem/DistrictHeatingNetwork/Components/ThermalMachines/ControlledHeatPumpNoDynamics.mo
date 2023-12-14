@@ -28,13 +28,13 @@ model ControlledHeatPumpNoDynamics
   parameter Real k_hot(unit = "Pa/(kg/s)") = (pin_hot_start - pout_hot_start)/m_flow_hot_start "Pressure loss across the hot side";
   parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_cold_start - pout_cold_start)/m_flow_cold_start "Pressure loss across the cold side";
   constant Real a[6] = {-172.6, -108.982, 0.0778191, 0.653687, 0.358927, -11.1119} "linear equation coefficients for Tin_cold vs COP relation";
-  SI.Pressure pin_hot "Hot side inlet pressure";
+  SI.Pressure pin_hot(start = pin_hot_start) "Hot side inlet pressure";
   SI.Pressure pout_hot "Hot side outlet pressure";
-  SI.Pressure pin_cold "Cold side inlet pressure";
+  SI.Pressure pin_cold(start = pin_cold_start) "Cold side inlet pressure";
   SI.Pressure pout_cold "Cold side outlet pressure";
-  SI.Temperature Tin_hot "Hot side inlet temperature";
+  SI.Temperature Tin_hot(start = Tin_hot_start) "Hot side inlet temperature";
   SI.Temperature Tout_hot "Hot side outlet temperature";
-  SI.Temperature Tin_cold "Cold side inlet temperature";
+  SI.Temperature Tin_cold(start = Tin_cold_start) "Cold side inlet temperature";
   SI.Temperature Tout_cold "Cold side outlet temperature";
   SI.Temperature Tout_hot_max "Maximum possible hot side outlet temperature";
   SI.SpecificEnthalpy hin_hot "Hot side inlet Specific Enthalpy";

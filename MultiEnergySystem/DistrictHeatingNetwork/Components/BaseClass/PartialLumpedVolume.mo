@@ -39,10 +39,6 @@ partial model PartialLumpedVolume
   final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
   final parameter Types.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
 
-  // Fluids
-  //Medium.ThermodynamicState fluid[n]
-  //  "Number of volumes in the vertical lumped volume";
-
   // Variables
   SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";
   SI.Temperature Tin "Temperatue of the water entering/leaving the volume";

@@ -15,15 +15,12 @@ model LumpedStorage "Model a perfectly mixed thermal storage with insulation all
   SI.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
   SI.HeatFlowRate Q_amb "Heat losses to ambient";
 
-  Medium fluidIn(T_start = T_start, p_start = pin_start), fluidOut(T_start = T_start, p_start = pin_start + 995*H*Modelica.Constants.g_n);
+  Medium fluidIn(T_start = T_start, p_start = pin_start);
+  Medium fluidOut(T_start = T_start, p_start = pin_start - 995*H*Modelica.Constants.g_n);
 
 
 equation
-// Fluid
-//   fluidIn = Medium.setState_phX(pin, inlet.h_out);
-//   fluidOut = Medium.setState_pTX(pout, Tout);
-//   rho = Medium.density(fluidOut);
-
+  // Fluid
   {fluidIn.p, fluidIn.h} = {pin, inlet.h_out};
   {fluidOut.p, fluidOut.T} = {pout, Tout};
   rho = fluidOut.rho;
@@ -34,7 +31,8 @@ equation
 
   // Mass Balance
   //der(M) = inlet.m_flow + outlet.m_flow;
-  V*(fluidOut.drho_dT*der(Ttilde) + 1e-5*der(pout)) = inlet.m_flow + outlet.m_flow;
+  //V*(fluidOut.drho_dT*der(Ttilde) + 1e-5*der(pout)) = inlet.m_flow + outlet.m_flow;
+  inlet.m_flow + outlet.m_flow = 0;
   M = rho*V;
 
   // Energy Balance
@@ -48,7 +46,7 @@ equation
 
 initial equation
   der(Ttilde) = 0;
-  der(pout) = 0;
+  //der(pout) = 0;
   annotation (
     Icon(graphics={  Rectangle(origin={76,-180},    fillColor={140,56,54},       fillPattern=
               FillPattern.Solid,                                                                                  extent = {{-4, 20}, {4, -20}}), Rectangle(origin={-76,-180},    fillColor={140,56,

@@ -343,7 +343,7 @@ model Sequence8
     T_start=Tout_User_start_S3,
     pin_start=pout_User_start_S3_pump,
     m_flow_start=m_flow_User_S3)
-         annotation (Placement(transformation(extent={{-399,-159},{-369,-111}})));
+         annotation (Placement(transformation(extent={{-400,-160},{-376,-114}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P301(
     Tin_start(displayUnit="K") = Pump.P301.Tin_start,
@@ -1046,12 +1046,8 @@ equation
       points={{-416,-180},{-416,-173}},
       color={140,56,54},
       thickness=0.5));
-  connect(S3_PL_P301_D301.outlet,D301. inlet) annotation (Line(
-      points={{-416,-153},{-410.5,-153},{-410.5,-147},{-399,-147}},
-      color={140,56,54},
-      thickness=0.5));
   connect(D301.outlet,S3_PL_D301out. inlet) annotation (Line(
-      points={{-399,-123},{-416,-123},{-416,-119}},
+      points={{-400,-125.5},{-416,-125.5},{-416,-119}},
       color={140,56,54},
       thickness=0.5));
   connect(S3_PL_D301out.outlet,TT302. inlet) annotation (Line(
@@ -1324,6 +1320,11 @@ equation
       thickness=0.5));
   connect(HP601.outcold, S6_PL_HP601_SourceOut.inlet) annotation (Line(
       points={{-80.2,-194.2},{-80.2,-202.1},{-80,-202.1},{-80,-210}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(D301.inlet, S3_PL_P301_D301.outlet) annotation (Line(
+      points={{-400,-148.5},{-410,-148.5},{-410,-148},{-416,-148},{-416,-153}},
+
       color={140,56,54},
       thickness=0.5));
   annotation (experiment(

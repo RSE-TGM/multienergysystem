@@ -108,22 +108,22 @@ partial model Sequence3
         EX721_Tout_hot, p_start=FCV721_pout)
     "Flow sensor at the outlet outlet of EX721 - hot side"   annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={598,-20})));
+        origin={602,-22})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT721(T_start=EX721_Tout_hot, p_start=FCV721_pout)
     "Temperature sensor at the outlet of EX721 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={598,-10})));
+        origin={602,-6})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT721 "Pressure sensor at the outlet of EX721 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={598,0})));
+        origin={602,8})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(
     L=L_FT721_rackL4L5,
     h=h_FT721_rackL4L5,
@@ -160,13 +160,13 @@ partial model Sequence3
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={558,-18})));
+        origin={558,-40})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT722
     "Pressure sensor at the inlet of EX721 - hot side" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={558,-8})));
+        origin={558,0})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(
     L=L_rackL4L5_TT722,
     h=h_rackL4L5_TT722,
@@ -281,22 +281,22 @@ partial model Sequence3
         EX731_Tout_hot, p_start=FCV731_pout)
     "Flow sensor at the outlet outlet of EX731 - hot side"   annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={298,-24})));
+        origin={302,-26})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT731(T_start=EX731_Tout_hot, p_start=FCV731_pout)
     "Temperature sensor at the outlet of EX731 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={298,-14})));
+        origin={302,-10})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT731 "Pressure sensor at the outlet of EX731 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={298,-4})));
+        origin={302,4})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(
     L=L_FT731_rackL6L7,
     h=h_FT731_rackL6L7,
@@ -333,13 +333,13 @@ partial model Sequence3
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={258,-20})));
+        origin={258,-40})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT732
     "Pressure sensor at the inlet of EX731 - hot side" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={258,-10})));
+        origin={258,0})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(
     L=L_rackL6L7_TT732,
     h=h_rackL6L7_TT732,
@@ -355,66 +355,66 @@ partial model Sequence3
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={260,20})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_11(use_numberPort=true,
+  Modelica.Blocks.Interaction.Show.RealValue PT702_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{78,-19},{49,5}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_12(use_numberPort=true,
-      significantDigits=4)
-    annotation (Placement(transformation(extent={{78,-31},{49,-7}})));
+    annotation (Placement(transformation(extent={{84,-12},{62,12}})));
   Modelica.Blocks.Interaction.Show.RealValue PT732_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{236,-21},{207,3}})));
-  Modelica.Blocks.Interaction.Show.RealValue TT732_(use_numberPort=true,
+    annotation (Placement(transformation(extent={{244,-14},{215,13}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT712_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{236,-33},{207,-9}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_3(use_numberPort=true,
+    annotation (Placement(transformation(extent={{384,-5},{355,19}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT722_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{384,-21},{355,3}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_4(use_numberPort=true,
-      significantDigits=4)
-    annotation (Placement(transformation(extent={{384,-33},{355,-9}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_5(use_numberPort=true,
-      significantDigits=4)
-    annotation (Placement(transformation(extent={{542,-19},{513,5}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_6(use_numberPort=true,
-      significantDigits=4)
-    annotation (Placement(transformation(extent={{542,-31},{513,-7}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_9(use_numberPort=true,
-      significantDigits=4)
-    annotation (Placement(transformation(extent={{153,-21},{182,3}})));
+    annotation (Placement(transformation(extent={{546,-13},{520,12}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_10(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{153,-33},{182,-9}})));
+    annotation (Placement(transformation(extent={{157,-39},{186,-15}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_7(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{153,-9},{182,15}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_8(use_numberPort=true,
+    annotation (Placement(transformation(extent={{157,-1},{186,23}})));
+  Modelica.Blocks.Interaction.Show.RealValue FT731_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{311,-21},{340,3}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_13(use_numberPort=true,
+    annotation (Placement(transformation(extent={{317,-39},{346,-15}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT731_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{311,-33},{340,-9}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_14(use_numberPort=true,
+    annotation (Placement(transformation(extent={{319,-3},{348,21}})));
+  Modelica.Blocks.Interaction.Show.RealValue FT711_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{311,-9},{340,15}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_15(use_numberPort=true,
+    annotation (Placement(transformation(extent={{457,-39},{486,-15}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT711_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{451,-17},{480,7}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_16(use_numberPort=true,
+    annotation (Placement(transformation(extent={{457,1},{486,25}})));
+  Modelica.Blocks.Interaction.Show.RealValue FT721_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{451,-29},{480,-5}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_17(use_numberPort=true,
+    annotation (Placement(transformation(extent={{620,-40},{650,-14}})));
+  Modelica.Blocks.Interaction.Show.RealValue PT721_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{451,-5},{480,19}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_18(use_numberPort=true,
+    annotation (Placement(transformation(extent={{619,1},{648,25}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT702_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{613,-17},{642,7}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_19(use_numberPort=true,
+    annotation (Placement(transformation(extent={{82,-67},{34,-14}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT721_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{613,-29},{642,-5}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_20(use_numberPort=true,
+    annotation (Placement(transformation(extent={{620,-33},{668,20}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT732_(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{613,-5},{642,19}})));
+    annotation (Placement(transformation(extent={{242,-67},{194,-14}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT732_1(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{160,-35},{208,18}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT712_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{380,-71},{332,-18}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT722_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{542,-67},{494,-14}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT711_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{458,-33},{506,20}})));
+  Modelica.Blocks.Interaction.Show.RealValue TT731_(use_numberPort=true,
+      significantDigits=4)
+    annotation (Placement(transformation(extent={{318,-37},{366,16}})));
 equation
   connect(PL721_FCV721_FT721.inlet,FCV721. outlet) annotation (Line(
       points={{600,-52},{600,-60}},
@@ -431,31 +431,23 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT721.inlet,PL721_FCV721_FT721. outlet) annotation (Line(
-      points={{600,-23},{600,-32}},
+      points={{600,-25},{600,-32}},
       color={140,56,54},
       thickness=0.5));
   connect(PL721_FT721_rackL4L5.inlet,PT721. inlet) annotation (Line(
-      points={{600,14},{600,0}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PT721.inlet,TT721.inlet) annotation (Line(
-      points={{600,0},{600,-10}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT721.inlet,FT721.outlet) annotation (Line(
-      points={{600,-10},{600,-17}},
+      points={{600,14},{600,8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL721_TT722_SourceIn.inlet,TT722.inlet) annotation (Line(
-      points={{560,-60},{560,-18}},
+      points={{560,-60},{560,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(TT722.inlet,PT722.inlet) annotation (Line(
-      points={{560,-18},{560,-8}},
+      points={{560,-40},{560,-2.22045e-16}},
       color={140,56,54},
       thickness=0.5));
   connect(PT722.inlet,PL721_rackL4L5_TT722.outlet) annotation (Line(
-      points={{560,-8},{560,14}},
+      points={{560,0},{560,14}},
       color={140,56,54},
       thickness=0.5));
   connect(PL721_TT722_SourceIn.outlet, EX721.inhot) annotation (Line(
@@ -488,27 +480,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT731.inlet,PL731_FCV731_FT731. outlet) annotation (Line(
-      points={{300,-27},{300,-34}},
+      points={{300,-29},{300,-34}},
       color={140,56,54},
       thickness=0.5));
   connect(PL731_FT731_rackL6L7.inlet,PT731. inlet) annotation (Line(
-      points={{300,10},{300,-4}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PT731.inlet,TT731. inlet) annotation (Line(
-      points={{300,-4},{300,-14}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT731.inlet,FT731. outlet) annotation (Line(
-      points={{300,-14},{300,-21}},
+      points={{300,10},{300,4}},
       color={140,56,54},
       thickness=0.5));
   connect(PL731_TT732_SourceIn.inlet,TT732. inlet) annotation (Line(
-      points={{260,-60},{260,-20}},
+      points={{260,-60},{260,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(TT732.inlet,PT732. inlet) annotation (Line(
-      points={{260,-20},{260,-10}},
+      points={{260,-40},{260,0}},
       color={140,56,54},
       thickness=0.5));
   connect(PL731_TT732_SourceIn.outlet,EX731. inhot) annotation (Line(
@@ -516,7 +500,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL731_rackL6L7_TT732.outlet,PT732. inlet) annotation (Line(
-      points={{260,10},{260,-10}},
+      points={{260,10},{260,0}},
       color={140,56,54},
       thickness=0.5));
   connect(PL731_rackL6L7_TT732.inlet, rackL6L7_FCVC02_hot.inlet) annotation (
@@ -529,46 +513,63 @@ equation
       points={{300,30},{300,60},{640,60},{640,265},{650,265}},
       color={140,56,54},
       thickness=0.5));
-  connect(TT722.T, FTR01_6.numberPort) annotation (Line(points={{551.5,-18},{
-          551.5,-19},{544.175,-19}}, color={0,0,127}));
-  connect(PT722.p, FTR01_5.numberPort) annotation (Line(points={{551.5,-8},{
-          547.837,-8},{547.837,-7},{544.175,-7}}, color={0,0,127}));
-  connect(TT712.T, FTR01_4.numberPort) annotation (Line(points={{391.5,-20},{
-          389.837,-20},{389.837,-21},{386.175,-21}}, color={0,0,127}));
-  connect(PT712.p, FTR01_3.numberPort) annotation (Line(points={{391.5,-10},{
-          389.837,-10},{389.837,-9},{386.175,-9}}, color={0,0,127}));
-  connect(FT701.q_m3hr, FTR01_10.numberPort) annotation (Line(points={{131.5,
-          -22},{126,-22},{126,-16},{146,-16},{146,-21},{150.825,-21}}, color={0,
+  connect(PT722.p, PT722_.numberPort) annotation (Line(points={{551.5,0},{
+          547.837,0},{547.837,-0.5},{547.95,-0.5}}, color={0,0,127}));
+  connect(PT712.p, PT712_.numberPort) annotation (Line(points={{391.5,
+          3.88578e-16},{388.837,3.88578e-16},{388.837,7},{386.175,7}}, color={0,
           0,127}));
-  connect(TT701.T, FTR01_9.numberPort) annotation (Line(points={{131.5,-12},{
-          126,-12},{126,-9},{150.825,-9}}, color={0,0,127}));
-  connect(PT701.p, FTR01_7.numberPort) annotation (Line(points={{131.5,-2},{128,
-          -2},{128,3},{150.825,3}}, color={0,0,127}));
-  connect(FT731.q_m3hr, FTR01_13.numberPort) annotation (Line(points={{291.5,
-          -24},{290,-24},{290,-21},{308.825,-21}}, color={0,0,127}));
-  connect(TT731.T, FTR01_8.numberPort) annotation (Line(points={{291.5,-14},{
-          288,-14},{288,-9},{308.825,-9}}, color={0,0,127}));
-  connect(PT731.p, FTR01_14.numberPort) annotation (Line(points={{291.5,-4},{
-          290,-4},{290,3},{308.825,3}}, color={0,0,127}));
-  connect(FT711.q_m3hr, FTR01_16.numberPort) annotation (Line(points={{431.5,
-          -20},{430,-20},{430,-17},{448.825,-17}}, color={0,0,127}));
-  connect(TT711.T, FTR01_15.numberPort) annotation (Line(points={{431.5,-10},{
-          430,-10},{430,-5},{448.825,-5}}, color={0,0,127}));
-  connect(PT711.p, FTR01_17.numberPort) annotation (Line(points={{431.5,0},{430,
-          0},{430,7},{448.825,7}}, color={0,0,127}));
-  connect(FT721.q_m3hr, FTR01_19.numberPort) annotation (Line(points={{591.5,
-          -20},{588,-20},{588,-17},{610.825,-17}}, color={0,0,127}));
-  connect(TT721.T, FTR01_18.numberPort) annotation (Line(points={{591.5,-10},{
-          588,-10},{588,-5},{610.825,-5}}, color={0,0,127}));
-  connect(PT721.p, FTR01_20.numberPort) annotation (Line(points={{591.5,0},{588,
-          0},{588,7},{610.825,7}}, color={0,0,127}));
-  connect(TT702.T, FTR01_12.numberPort) annotation (Line(points={{91.5,-20},{
-          85.8375,-20},{85.8375,-19},{80.175,-19}}, color={0,0,127}));
-  connect(PT702.p, FTR01_11.numberPort) annotation (Line(points={{91.5,-10},{
-          85.8375,-10},{85.8375,-7},{80.175,-7}}, color={0,0,127}));
-  connect(PT732.p, PT732_.numberPort) annotation (Line(points={{251.5,-10},{
-          244.838,-10},{244.838,-9},{238.175,-9}}, color={0,0,127}));
-  connect(TT732.T, TT732_.numberPort) annotation (Line(points={{251.5,-20},{
-          244.838,-20},{244.838,-21},{238.175,-21}}, color={0,0,127}));
+  connect(PT702.p, PT702_.numberPort)
+    annotation (Line(points={{91.5,0},{85.65,0}}, color={0,0,127}));
+  connect(PT721.inlet, TT721.inlet) annotation (Line(
+      points={{600,8},{600,-6}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT721.outlet, TT721.inlet) annotation (Line(
+      points={{600,-19},{600,-6}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT721.T, TT721_.numberPort) annotation (Line(points={{608.5,-6},{
+          611.45,-6},{611.45,-6.5},{616.4,-6.5}}, color={0,0,127}));
+  connect(PT721.p, PT721_.numberPort) annotation (Line(points={{608.5,8},{612,8},
+          {612,13},{616.825,13}}, color={0,0,127}));
+  connect(FT721.q_m3hr, FT721_.numberPort) annotation (Line(points={{608.5,-22},
+          {612,-22},{612,-27},{617.75,-27}}, color={0,0,127}));
+  connect(TT702.T, TT702_.numberPort) annotation (Line(points={{91.5,-40},{
+          88.55,-40},{88.55,-40.5},{85.6,-40.5}}, color={0,0,127}));
+  connect(TT732.T, TT732_.numberPort) annotation (Line(points={{251.5,-40},{
+          247.55,-40},{247.55,-40.5},{245.6,-40.5}}, color={0,0,127}));
+  connect(PT732.p, PT732_.numberPort) annotation (Line(points={{251.5,
+          3.88578e-16},{248.838,3.88578e-16},{248.838,-0.5},{246.175,-0.5}},
+        color={0,0,127}));
+  connect(TT722.T, TT722_.numberPort) annotation (Line(points={{551.5,-40},{
+          547.55,-40},{547.55,-40.5},{545.6,-40.5}}, color={0,0,127}));
+  connect(PT701.p, FTR01_7.numberPort) annotation (Line(points={{148.5,6},{150,
+          6},{150,11},{154.825,11}}, color={0,0,127}));
+  connect(FT701.q_m3hr, FTR01_10.numberPort) annotation (Line(points={{148.5,
+          -24},{150,-24},{150,-27},{154.825,-27}}, color={0,0,127}));
+  connect(TT712.T, TT712_.numberPort) annotation (Line(points={{391.5,-40},{
+          385.55,-40},{385.55,-44.5},{383.6,-44.5}}, color={0,0,127}));
+  connect(TT711.T, TT711_.numberPort) annotation (Line(points={{448.5,-6},{
+          452.45,-6},{452.45,-6.5},{454.4,-6.5}}, color={0,0,127}));
+  connect(PT711.p, PT711_.numberPort) annotation (Line(points={{448.5,8},{450,8},
+          {450,13},{454.825,13}}, color={0,0,127}));
+  connect(FT711.q_m3hr, FT711_.numberPort) annotation (Line(points={{448.5,-22},
+          {450,-22},{450,-27},{454.825,-27}}, color={0,0,127}));
+  connect(FT731.q_m3hr, FT731_.numberPort) annotation (Line(points={{308.5,-26},
+          {310,-26},{310,-27},{314.825,-27}}, color={0,0,127}));
+  connect(PT731.p, PT731_.numberPort) annotation (Line(points={{308.5,4},{312,4},
+          {312,9},{316.825,9}}, color={0,0,127}));
+  connect(PT731.inlet, TT731.inlet) annotation (Line(
+      points={{300,4},{300,-10}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT731.inlet, FT731.outlet) annotation (Line(
+      points={{300,-10},{300,-23}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT731.T, TT731_.numberPort) annotation (Line(points={{308.5,-10},{
+          311.45,-10},{311.45,-10.5},{314.4,-10.5}}, color={0,0,127}));
+  connect(TT701.T, TT732_1.numberPort) annotation (Line(points={{148.5,-8},{
+          153.45,-8},{153.45,-8.5},{156.4,-8.5}}, color={0,0,127}));
   annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
 end Sequence3;

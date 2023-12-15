@@ -223,22 +223,22 @@ partial model Sequence2
         EX701_Tout_hot,    p_start=FCV701_pout)
     "Flow sensor at the outlet outlet of EX701 - hot side"   annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={138,-22})));
+        origin={142,-24})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT701(T_start=EX701_Tout_hot,    p_start=FCV701_pout)
     "Temperature sensor at the outlet of EX701 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={138,-12})));
+        origin={142,-8})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT701 "Pressure sensor at the outlet of EX701 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={138,-2})));
+        origin={142,6})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
     L=L_FT701_rackL2L3,
     h=h_FT701_rackL2L3,
@@ -275,13 +275,13 @@ partial model Sequence2
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={98,-20})));
+        origin={98,-40})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT702
     "Pressure sensor at the inlet of EX701 - hot side" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={98,-10})));
+        origin={98,0})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
     L=L_rackL2L3_TT702,
     h=h_rackL2L3_TT702,
@@ -396,22 +396,22 @@ partial model Sequence2
         EX711_Tout_hot, p_start=FCV711_pout)
     "Flow sensor at the outlet outlet of EX711 - hot side"   annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={438,-20})));
+        origin={442,-22})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT711(T_start=EX711_Tout_hot, p_start=FCV711_pout)
     "Temperature sensor at the outlet of EX711 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={438,-10})));
+        origin={442,-6})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT711 "Pressure sensor at the outlet of EX711 - hot side" annotation (
       Placement(transformation(
-        extent={{-5,-5},{5,5}},
+        extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={438,0})));
+        origin={442,8})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FT711_rackL3L4(
     L=L_FT711_rackL3L4,
     h=h_FT711_rackL3L4,
@@ -448,13 +448,13 @@ partial model Sequence2
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={398,-20})));
+        origin={398,-40})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT712
     "Pressure sensor at the inlet of EX711 - hot side" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
-        origin={398,-10})));
+        origin={398,0})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(
     L=L_rackL3L4_TT712,
     h=h_rackL3L4_TT712,
@@ -486,27 +486,19 @@ equation
   connect(FCV701_theta.y,FCV701. opening)
     annotation (Line(points={{158,-70},{148,-70}}, color={0,0,127}));
   connect(FT701.inlet,PL701_FCV701_FT701. outlet) annotation (Line(
-      points={{140,-25},{140,-32}},
+      points={{140,-27},{140,-32}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_FT701_rackL2L3.inlet,PT701. inlet) annotation (Line(
-      points={{140,12},{140,-2}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PT701.inlet,TT701. inlet) annotation (Line(
-      points={{140,-2},{140,-12}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT701.inlet,FT701. outlet) annotation (Line(
-      points={{140,-12},{140,-19}},
+      points={{140,12},{140,6}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn.inlet,TT702. inlet) annotation (Line(
-      points={{100,-62},{100,-20}},
+      points={{100,-62},{100,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(TT702.inlet,PT702. inlet) annotation (Line(
-      points={{100,-20},{100,-10}},
+      points={{100,-40},{100,-2.22045e-16}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn.outlet,EX701. inhot) annotation (Line(
@@ -514,7 +506,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_rackL2L3_TT702.outlet,PT702. inlet) annotation (Line(
-      points={{100,12},{100,-10}},
+      points={{100,12},{100,-2.22045e-16}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
@@ -541,31 +533,23 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT711.inlet,PL711_FCV711_FT711. outlet) annotation (Line(
-      points={{440,-23},{440,-30}},
+      points={{440,-25},{440,-30}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_FT711_rackL3L4.inlet,PT711. inlet) annotation (Line(
-      points={{440,14},{440,0}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PT711.inlet,TT711. inlet) annotation (Line(
-      points={{440,0},{440,-10}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT711.inlet,FT711. outlet) annotation (Line(
-      points={{440,-10},{440,-17}},
+      points={{440,14},{440,8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_TT712_SourceIn.inlet,TT712. inlet) annotation (Line(
-      points={{400,-60},{400,-20}},
+      points={{400,-60},{400,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(TT712.inlet,PT712. inlet) annotation (Line(
-      points={{400,-20},{400,-10}},
+      points={{400,-40},{400,-2.22045e-16}},
       color={140,56,54},
       thickness=0.5));
   connect(PT712.inlet,PL711_rackL3L4_TT712. outlet) annotation (Line(
-      points={{400,-10},{400,14}},
+      points={{400,-2.22045e-16},{400,14}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_TT712_SourceIn.outlet,EX711. inhot) annotation (Line(
@@ -582,6 +566,22 @@ equation
   connect(PL711_FT711_rackL3L4.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
       points={{440,34},{440,120},{180,120},{180,265},{110,265}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT701.inlet, TT701.inlet) annotation (Line(
+      points={{140,6},{140,-8}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT701.inlet, FT701.outlet) annotation (Line(
+      points={{140,-8},{140,-21}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT711.inlet, TT711.inlet) annotation (Line(
+      points={{440,8},{440,-6}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT711.outlet, TT711.inlet) annotation (Line(
+      points={{440,-19},{440,-6}},
       color={140,56,54},
       thickness=0.5));
   annotation (experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));

@@ -31,7 +31,7 @@ model ElectricBoiler
     Placement(visible = true, transformation(origin={40,10},     extent={{10,-10},
             {-10,10}},                                                                           rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput referenceT annotation (
-    Placement(visible = true, transformation(origin = {-112, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-34, 100}, extent = {{-20, -20}, {20, 20}}, rotation = -90)));
+    Placement(visible = true, transformation(origin = {-112, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={0,100},      extent = {{-20, -20}, {20, 20}}, rotation = -90)));
 equation
   connect(triggeredTrapezoid.y, powerTransfer.Ptransfer)
     annotation (Line(points={{-19,34},{-12,34},{-12,8}}, color={0,0,127}));
@@ -40,17 +40,19 @@ equation
   connect(referenceT, onOffController.reference) annotation (
     Line(points = {{-112, 40}, {-78, 40}}, color = {0, 0, 127}));
 
-  connect(gasBoilerInnerVolume.outlet, outlet) annotation (Line(points={{50,14},
-          {50,24},{100,24},{100,0}},color={168,168,168}));
+  connect(gasBoilerInnerVolume.outlet, outlet) annotation (Line(points={{50,
+          17.1429},{50,24},{100,24},{100,0}},
+                                    color={168,168,168}));
   connect(powerTransfer.outlet, gasBoilerInnerVolume.inlet) annotation (Line(
-        points={{-2,0},{12,0},{12,-10}, {58, -10}, {58, 6},{50,6}},  color={168,168,168}));
+        points={{-2,0},{12,0},{12,-10},{58,-10},{58,2.85714},{50,2.85714}},
+                                                                     color={168,168,168}));
   connect(inlet, powerTransfer.inlet)
     annotation (Line(points={{-100,0},{-22,0}}, color={168,168,168}));
   connect(gasBoilerInnerVolume.temperatureMixVolume, onOffController.u)
-    annotation (Line(points={{30, 16},{-86,16},{-86,28},{-78,
-          28}}, color={0,0,127}));
+    annotation (Line(points={{30,15.7143},{-86,15.7143},{-86,28},{-78,28}},
+                color={0,0,127}));
 annotation (
     Diagram(coordinateSystem(extent = {{-120, 60}, {100, -20}})),
-    Icon(graphics={  Rectangle(fillColor = {173, 173, 173}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Ellipse(origin = {0, -54}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {1, 29}, extent = {{-55, 27}, {55, -27}}, textString = "OnOff
+    Icon(graphics={  Rectangle(fillColor = {173, 173, 173}, fillPattern = FillPattern.Solid, extent = {{-100, 100}, {100, -100}}), Ellipse(origin = {0, -54}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin={1,31},    extent = {{-55, 27}, {55, -27}}, textString = "OnOff
 Boiler"), Polygon(origin = {2, -56}, lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));
 end ElectricBoiler;

@@ -33,7 +33,7 @@ package PumpData
     headnom = 12.5,
     headnommin = 3,
     headnommax = 14.8,
-    omeganom = 2*3.14159*50,
+    omeganom = 2*3.141592654*50,
     Wnom = 0.89e3,
     etanom = 0.63,
     etaelec = 1,

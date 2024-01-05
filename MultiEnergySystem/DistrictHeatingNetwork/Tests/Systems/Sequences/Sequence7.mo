@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
 model Sequence7
-  extends Sequence6(q_m3h_S1 = 9, q_m3h_S4 = 2, q_m3h_S9 = 17);
+  extends Sequence6(q_m3h_S1 = 9, q_m3h_S4 = 2, q_m3h_S9 = 17, ToutcoolSP = [0, 15; 50, 15; 60, 20; 100, 20]);
   parameter Boolean FV201_state = true;
   parameter Boolean FV202_state = true;
   parameter Boolean FV203_state = true;

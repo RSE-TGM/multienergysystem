@@ -9,7 +9,7 @@ model GasBoiler
 
   SI.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
 
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inletfuel annotation (
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inletfuel annotation (
     Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-60,-2},  extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
   inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";

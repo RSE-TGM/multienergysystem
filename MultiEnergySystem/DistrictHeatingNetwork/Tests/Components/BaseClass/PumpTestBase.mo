@@ -1,8 +1,27 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass;
 model PumpTestBase "Base test model for pumps' tests"
   extends Modelica.Icons.Example;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump pump(Tin_start = Pump.P101.Tin_start, Tout_start = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start = Pump.P101.pin_start, pout_start = Pump.P101.pout_start, qnom_inm3h = 15.60340167, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom, use_in_omega = true) annotation (
-    Placement(visible = true, transformation(origin={-6,40},  extent = {{-18, -18}, {18, 18}}, rotation = 0)));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
+    pump_50Hz(
+    Tin_start=Pump.P101.Tin_start,
+    Tout_start=Pump.P101.Tout_start,
+    a=Pump.P101.a,
+    b=Pump.P101.b,
+    dpnom=Pump.P101.dpnom,
+    etaelec=Pump.P101.etaelec,
+    etamech=Pump.P101.etamech,
+    etanom=Pump.P101.etanom,
+    hin_start=Pump.P101.hin_start,
+    m_flow_nom=Pump.P101.m_flow_nom,
+    omeganom=Pump.P101.omeganom,
+    pin_start=Pump.P101.pin_start,
+    pout_start=Pump.P101.pout_start,
+    qnom_inm3h=15.60340167,
+    rhonom(displayUnit="kg/m3") = Pump.P101.rhonom,
+    use_in_omega=true) annotation (Placement(visible=true, transformation(
+        origin={-6,40},
+        extent={{-18,-18},{18,18}},
+        rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0 = Pump.P101.Tin_start, p0 = Pump.P101.pin_start) annotation (
     Placement(visible = true, transformation(origin={-62,40},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
@@ -123,8 +142,8 @@ model PumpTestBase "Base test model for pumps' tests"
         extent={{-10,-10},{10,10}},
         rotation=0)));
 equation
-  connect(omega.y, pump.in_omega) annotation (
-    Line(points={{-19,70},{-13.2,70},{-13.2,49}}, color = {0, 0, 127}));
+  connect(omega.y, pump_50Hz.in_omega) annotation (Line(points={{-19,70},{-13.2,
+          70},{-13.2,49}}, color={0,0,127}));
   connect(m_flow_set.y, sink.in_m_flow) annotation (
     Line(points={{79,80},{70,80},{70,55}},                  color = {0, 0, 127}));
   connect(theta.y, cvalve.opening) annotation (
@@ -137,7 +156,7 @@ equation
       points={{-52,40},{-40,40},{-40,-20},{-14.4,-20}},
       color={140,56,54},
       thickness=0.5));
-  connect(sourceP.outlet, pump.inlet) annotation (Line(
+  connect(sourceP.outlet, pump_50Hz.inlet) annotation (Line(
       points={{-52,40},{-20.4,40}},
       color={140,56,54},
       thickness=0.5));
@@ -155,7 +174,7 @@ equation
       points={{44,-70},{24,-70},{24,-80},{14.4,-80}},
       color={140,56,54},
       thickness=0.5));
-  connect(cvalve.inlet, pump.outlet) annotation (Line(
+  connect(cvalve.inlet, pump_50Hz.outlet) annotation (Line(
       points={{20,50},{16,50},{16,40},{8.4,40}},
       color={140,56,54},
       thickness=0.5));

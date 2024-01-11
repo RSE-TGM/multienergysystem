@@ -2,6 +2,7 @@ PowerCharacteristicLinear
 smoothSat
 linspaceExt
 GasPressureLosses
-LaceyEquationComputation
 sqrtReg
 squareReg
+LaceyEquationComputation
+ReadRealMatrixFromFile

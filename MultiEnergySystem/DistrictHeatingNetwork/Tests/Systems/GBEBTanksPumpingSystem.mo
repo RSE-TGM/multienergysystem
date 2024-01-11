@@ -302,13 +302,13 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL9_S201.outlet, rackCD_Hot_S200_S900.inlet) annotation (Line(
-      points={{-660,-36},{-660,44.75},{-699,44.75}},
+      points={{-660,-36},{-660,44.75},{-727,44.75}},
       color={140,56,54},
       thickness=0.5));
   connect(P201.in_omega, P201_omega.y) annotation (Line(points={{-766,-130.2},{-766,
           -130},{-743,-130}}, color={0,0,127}));
   connect(PL0_S201.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
-      points={{-772,-36},{-772,-32},{-674,-32},{-674,5.25},{-640,5.25}},
+      points={{-772,-36},{-772,-32},{-674,-32},{-674,5.25},{-668,5.25}},
       color={140,56,54},
       thickness=0.5));
   connect(PL6_S201.inlet, D201.inlet) annotation (Line(

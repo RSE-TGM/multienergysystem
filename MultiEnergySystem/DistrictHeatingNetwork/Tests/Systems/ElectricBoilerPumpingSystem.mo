@@ -214,11 +214,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
-      points={{-222.4,-48},{-222,-48},{-222,45},{-310,45}},
+      points={{-222.4,-48},{-222,-48},{-222,45},{-338,45}},
       color={140,56,54},
       thickness=0.5));
   connect(TT401.inlet, rackCD_Cold_S300_S400.outlet) annotation (Line(
-      points={{-257.6,-48},{-258,-48},{-258,5.25},{-380.5,5.25}},
+      points={{-257.6,-48},{-258,-48},{-258,5.25},{-408.5,5.25}},
       color={140,56,54},
       thickness=0.5));
   connect(omega_P401.y, P401.in_omega) annotation (Line(points={{-202.05,-166},{

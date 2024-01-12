@@ -55,7 +55,7 @@ equation
   connect(omega.y, pump.in_omega) annotation (
     Line(points={{-49,50},{-41.2,50},{-41.2,9}},     color = {0, 0, 127}));
   connect(wall_FixedT.MultiPort, pipe1.wall) annotation (
-    Line(points={{36,26},{36,17.14}},   color = {255, 238, 44}));
+    Line(points={{36,26},{36,16.02}},   color = {255, 238, 44}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})),

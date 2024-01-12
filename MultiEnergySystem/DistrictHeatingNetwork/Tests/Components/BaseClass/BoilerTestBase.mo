@@ -47,11 +47,11 @@ equation
     annotation (Line(points={{-83,-48},{-70,-48},{-70,-38.4}},
                                                              color={0,0,127}));
   connect(sourceP.outlet, Boiler.inlet) annotation (Line(
-      points={{-64,-30},{-26,-30},{-26,-10.2},{-12.8,-10.2}},
+      points={{-64,-30},{-26,-30},{-26,17.4},{-5.9,17.4}},
       color={140,56,54},
       thickness=0.5));
   connect(sinkM.inlet, Boiler.outlet) annotation (Line(
-      points={{-74,-8},{-56,-8},{-56,-6},{-36,-6},{-36,8.2},{-12.8,8.2}},
+      points={{-74,-8},{-56,-8},{-56,-6},{-36,-6},{-36,17.4},{7.9,17.4}},
       color={140,56,54},
       thickness=0.5));
   annotation (

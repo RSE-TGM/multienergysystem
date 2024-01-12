@@ -35,7 +35,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     pin_start=pin_start_S4,
     pout_start=160000,
     nR=0)              annotation (Placement(visible=true, transformation(
-        origin={-258,-280},
+        origin={-342,-280},
         extent={{-34,-34},{34,34}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
@@ -63,7 +63,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     use_in_omega=true)                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
-        origin={-236,-165})));
+        origin={-322,-175})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
     FCV401(
     Kv=Valve.FCV401.Kv,
@@ -72,7 +72,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     pin_start=pout_start_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-236,-130})));
+        origin={-322,-140})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(
     L=L_S4_PL3,
     t=t_S4,
@@ -86,7 +86,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-236,-214})));
+        origin={-322,-224})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
@@ -100,7 +100,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-276,-216})));
+        origin={-362,-226})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(
     L=L_S4_PL3,
     t=t_S4,
@@ -114,38 +114,38 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-236,-102})));
+        origin={-322,-112})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT402(T_start=Tout_start_S4, p_start=pout_start_S4)
     "Temperature sensor at the outlet of valve FCV401"       annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={-234,-64})));
+        origin={-320,-74})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT402 "Pressure sensor at the outlet of valve FCV401" annotation (Placement(
         transformation(
         extent={{6,6},{-6,-6}},
         rotation=90,
-        origin={-234,-76})));
+        origin={-320,-86})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT401 "Pressure sensor at the inlet of gas boiler" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-278,-108})));
+        origin={-364,-118})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT401(T_start=Tin_start_S4, p_start=pin_start_S4)
     "Temperature sensor at the inlet of electrib boiler"     annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-278,-96})));
+        origin={-364,-106})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT401
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
-        origin={-279,-185})));
+        origin={-365,-195})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
@@ -159,7 +159,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-276,-156})));
+        origin={-362,-166})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_hot(
     L=L_S4_rCD_hot,
     t=t_S4,
@@ -173,7 +173,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-236,-42})));
+        origin={-322,-52})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(
     L=L_S4_rCD_cold,
     t=t_S4,
@@ -187,76 +187,77 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-276,-44})));
+        origin={-362,-54})));
   Modelica.Blocks.Sources.TimeTable P401_omega(table=P401omega)
-    annotation (Placement(transformation(extent={{-200,-180},{-220,-160}})));
+    annotation (Placement(transformation(extent={{-286,-190},{-306,-170}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=FCV401theta)
-    annotation (Placement(transformation(extent={{-200,-140},{-220,-120}})));
+    annotation (Placement(transformation(extent={{-286,-150},{-306,-130}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
-      points={{-236,-174.6},{-236,-204}},
+      points={{-322,-184.6},{-322,-214}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV401.inlet,P401. outlet) annotation (Line(
-      points={{-236,-140},{-236,-155.4}},
+      points={{-322,-150},{-322,-165.4}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet,PT402. inlet) annotation (Line(
-      points={{-236.4,-64},{-236.4,-76}},
+      points={{-322.4,-74},{-322.4,-86}},
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S401.inlet,FCV401. outlet) annotation (Line(
-      points={{-236,-112},{-236,-120}},
+      points={{-322,-122},{-322,-130}},
       color={140,56,54},
       thickness=0.5));
   connect(PT402.inlet,PL4_S401. outlet) annotation (Line(
-      points={{-236.4,-76},{-236.4,-85},{-236,-85},{-236,-92}},
+      points={{-322.4,-86},{-322.4,-95},{-322,-95},{-322,-102}},
       color={140,56,54},
       thickness=0.5));
   connect(FT401.outlet,PL2_S401. inlet) annotation (Line(
-      points={{-276.2,-189.2},{-276.2,-197.6},{-276,-197.6},{-276,-206}},
+      points={{-362.2,-199.2},{-362.2,-207.6},{-362,-207.6},{-362,-216}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.outlet,FT401. inlet) annotation (Line(
-      points={{-276,-166},{-276,-173.4},{-276.2,-173.4},{-276.2,-180.8}},
+      points={{-362,-176},{-362,-183.4},{-362.2,-183.4},{-362.2,-190.8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.inlet,PT401. inlet) annotation (Line(
-      points={{-276,-146},{-276,-108},{-275.6,-108}},
+      points={{-362,-156},{-362,-118},{-361.6,-118}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401.inlet,TT401. inlet) annotation (Line(
-      points={{-275.6,-108},{-275.6,-96}},
+      points={{-361.6,-118},{-361.6,-106}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
-      points={{-276,-226},{-276,-236},{-268.2,-236},{-268.2,-252.8}},
+      points={{-362,-236},{-362,-242},{-352.2,-242},{-352.2,-252.8}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet,PL3_S401. inlet) annotation (Line(
-      points={{-247.8,-252.8},{-247.8,-236},{-236,-236},{-236,-224}},
+      points={{-331.8,-252.8},{-331.8,-242},{-322,-242},{-322,-234}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet, PL_S400_rCD_hot.inlet) annotation (Line(
-      points={{-236.4,-64},{-236,-64},{-236,-52}},
+      points={{-322.4,-74},{-322,-74},{-322,-62}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S400_rCD_hot.outlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
-      points={{-236,-32},{-236,20},{-250,20}},
+      points={{-322,-42},{-322,45},{-338,45}},
       color={140,56,54},
       thickness=0.5));
   connect(TT401.inlet, PL_S400_rCD_cold.outlet) annotation (Line(
-      points={{-275.6,-96},{-276,-96},{-276,-54}},
+      points={{-361.6,-106},{-362,-106},{-362,-64}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S400_rCD_cold.inlet, rackCD_Cold_S300_S400.outlet) annotation (
       Line(
-      points={{-276,-34},{-276,-19.75},{-320.5,-19.75}},
+      points={{-362,-44},{-362,5.25},{-408.5,5.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(P401_omega.y, P401.in_omega) annotation (Line(points={{-221,-170},{-228.5,
-          -170},{-228.5,-169.8},{-230,-169.8}}, color={0,0,127}));
+  connect(P401_omega.y, P401.in_omega) annotation (Line(points={{-307,-180},{
+          -314.5,-180},{-314.5,-179.8},{-316,-179.8}},
+                                                color={0,0,127}));
   connect(FCV401_theta.y, FCV401.opening)
-    annotation (Line(points={{-221,-130},{-228,-130}}, color={0,0,127}));
+    annotation (Line(points={{-307,-140},{-314,-140}}, color={0,0,127}));
   annotation (experiment(StopTime=800, __Dymola_Algorithm="Dassl"));
 end GBEBCompleteSystem;

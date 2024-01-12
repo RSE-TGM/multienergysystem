@@ -3,7 +3,8 @@ model WaterTest "Definition of two water states using temperature and density as
   extends Modelica.Icons.Example;
   replaceable package Medium = Water constrainedby
     Modelica.Media.Interfaces.PartialMedium                                                "Medium model";
-  replaceable model MediumReal = DistrictHeatingNetwork.Media.WaterLiquid;
+  replaceable model MediumReal =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity;
   //Declaration of water fluids
   Medium.ThermodynamicState fluidIn, fluidOut;
   MediumReal waterApprox(T_start = Tin, p_start = p_min);

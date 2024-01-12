@@ -5,7 +5,7 @@ model ModelicaVSPartialSubstance
       DistrictHeatingNetwork.Media.StandardWater "Modelica Water";
   replaceable model MediumReal = DistrictHeatingNetwork.Media.WaterLiquid "Simplified Water model";
   parameter Types.Temperature T_min = 10 + 273.15 "Minimum temperature of the temperature range";
-  parameter Types.Temperature T_max = 90 + 273.15 "Maximum temperature of the temperature range";
+  parameter Types.Temperature T_max = 80 + 273.15 "Maximum temperature of the temperature range";
   parameter Types.Pressure p = 0.1e6 "Pressure";
   constant Real T0(unit = "s") = 1 "Reference value for units";
   MediumIdeal.BaseProperties idealWater;

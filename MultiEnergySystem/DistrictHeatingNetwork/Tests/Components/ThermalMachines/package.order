@@ -1,5 +1,4 @@
 ControlledChillerNoDynamicsTest
-GasBoilerTest
 ElectricBoilerTest
 ControlledElectricBoilerTest
 ControlledHeatPumpNoDynamicsTest

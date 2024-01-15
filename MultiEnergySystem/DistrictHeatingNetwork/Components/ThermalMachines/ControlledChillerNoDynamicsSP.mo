@@ -72,7 +72,8 @@ equation
 
 // Ideal Controlled variables
   //Tout_cold_min = min(Tout_cold_set, Tin_cold);
-  Tout_cold_min = min(Tout_SP+273.15, Tin_cold);
+  //Tout_cold_min = min(Tout_SP+273.15, Tin_cold);
+  Tout_cold_min = min(max(Tout_SP+273.15, Tin_cold - (200e3/(m_flow_cold*4185))), Tin_cold);
   Tout_cold = Tout_cold_min "Fixed hot side outlet temperature";
 // Balance equation
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";

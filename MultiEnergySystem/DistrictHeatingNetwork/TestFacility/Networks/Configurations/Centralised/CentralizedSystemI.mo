@@ -6,8 +6,8 @@ partial model CentralizedSystemI
 
   parameter Types.Pressure pin_start_S1 = 1.695e5;
   parameter Types.Pressure pout_start_S1 = 1.6e5;
-  parameter Types.Temperature Tin_start_S1 = 17 + 273.15;
-  parameter Types.Temperature Tout_start_S1 = 17 + 273.15;
+  parameter Types.Temperature Tin_start_S1 = 30 + 273.15;
+  parameter Types.Temperature Tout_start_S1 = 30 + 273.15;
 
   parameter Types.Length L_S1 = 10;
   parameter Types.Length L_S1_PL1 = 0.4;
@@ -50,7 +50,8 @@ partial model CentralizedSystemI
     headmax=Pump.P101.headnommax,
     headmin=Pump.P101.headnommin,
     qnom_inm3h_min=Pump.P101.qnommin_inm3h,
-    qnom_inm3h_max=Pump.P101.qnommax_inm3h)  annotation (Placement(transformation(
+    qnom_inm3h_max=Pump.P101.qnommax_inm3h,
+    use_q_m3hr=true)                         annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-240,-175})));
@@ -246,8 +247,8 @@ equation
       points={{-240,-240},{-240,-254},{-246.5,-254},{-246.5,-273}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S100_rCD_hot.outlet, FV933.inlet) annotation (Line(
-      points={{-240,-30},{-240,44.75},{-218,44.75},{-218,30}},
+  connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+      points={{-240,-30},{-242,-30},{-242,44.75},{-257.5,44.75}},
       color={140,56,54},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

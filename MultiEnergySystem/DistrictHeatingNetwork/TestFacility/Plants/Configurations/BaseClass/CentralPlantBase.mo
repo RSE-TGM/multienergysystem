@@ -231,7 +231,7 @@ partial model CentralPlantBase
     pin_start=pin_start) annotation (Placement(visible=true,
         transformation(
         origin={-218,25},
-        extent={{5,5},{-5,-5}},
+        extent={{-5,5},{5,-5}},
         rotation=90)));
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
@@ -402,23 +402,6 @@ partial model CentralPlantBase
         extent={{10.75,10.25},{-10.75,-10.25}},
         rotation=180,
         origin={-337.25,5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S100_FV933(
-    L=L_rCD_C8,
-    h=0,
-    t=t_rCD,
-    m_flow_start=m_flow_start,
-    pin_start=pin_start_rCD_cold,
-    pout_start=pout_start_rCD_cold,
-    Tin_start=T_start_cold,
-    Tout_start=T_start_cold,
-    Di=Di,
-    nPipes=1,
-    n=n,
-    hctype=hctype) "Pipe connecting System 100 with valve cold side"
-    annotation (Placement(transformation(
-        extent={{10.5,10.25},{-10.5,-10.25}},
-        rotation=180,
-        origin={-257.5,5.25})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S300_S400(
     L=L_rCD_C6,
     h=0,
@@ -767,11 +750,6 @@ equation
       points={{-757,83},{-757,93}},
       color={140,56,54},
       thickness=0.5));
-  connect(rackCD_Cold_S100_FV933.inlet, rackCD_Cold_S400_S100.outlet)
-    annotation (Line(
-      points={{-268,5.25},{-326.5,5.25}},
-      color={140,56,54},
-      thickness=0.5));
   connect(TT902.inlet, S900_rackL3L4_hot.inlet) annotation (Line(
       points={{-756.65,190.25},{-756.65,205},{-60,205}},
       color={140,56,54},
@@ -810,14 +788,6 @@ equation
   connect(rackCD_Hot_S100_S400.outlet, rackCD_Hot_S400_S300.inlet) annotation (
       Line(
       points={{-278,44.75},{-308,44.75},{-308,45},{-338,45}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(rackCD_Hot_S100_S400.inlet, FV933.inlet) annotation (Line(
-      points={{-257.5,44.75},{-218,44.75},{-218,30}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(rackCD_Cold_S100_FV933.outlet, FV933.outlet) annotation (Line(
-      points={{-247,5.25},{-218,5.25},{-218,20}},
       color={140,56,54},
       thickness=0.5));
   connect(rackCD_Cold_S400_S100.inlet, rackCD_Cold_S300_S400.outlet)
@@ -942,6 +912,14 @@ equation
       thickness=0.5));
   connect(VE901.outlet, PT901.inlet) annotation (Line(
       points={{-839,131},{-808,131},{-808,162.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (Line(
+      points={{-326.5,5.25},{-218,5.25},{-218,20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV933.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+      points={{-218,30},{-218,44.75},{-257.5,44.75}},
       color={140,56,54},
       thickness=0.5));
   annotation (

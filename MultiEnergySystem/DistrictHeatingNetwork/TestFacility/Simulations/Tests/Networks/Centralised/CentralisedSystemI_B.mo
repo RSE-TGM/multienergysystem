@@ -2,12 +2,12 @@ within MultiEnergySystem.DistrictHeatingNetwork.TestFacility.Simulations.Tests.N
 model CentralisedSystemI_B
   extends Simulations.Tests.Networks.Centralised.CentralisedSystemI_A(
       FV933_state = false,
-      P901omega = [0, 2*3.141592654*32; 100, 2*3.141592654*32],
+      P901omega = [0, 2*3.141592654*35; 100, 2*3.141592654*35],
       pin_start_rCD_cold = 2.2e5,
       VE901(p0(displayUnit="Pa") = 220000),
       P101qm3h = [0, 14; 100, 14],
-      Tin_start_S1 = 32.5 + 273.15,
-      Tout_start_S1 = 51 + 273.15,
+      Tin_start_S1 = 70 + 273.15,
+      Tout_start_S1 = 80 + 273.15,
       FCVC01theta = [0, 0; 100, 0],
       FCVC02theta = [0, 0; 100, 0],
       FCV701theta = [0, 0.4; 100, 0.4],
@@ -15,9 +15,8 @@ model CentralisedSystemI_B
       FCV721theta = [0, 0.4; 100, 0.4],
       FCV731theta = [0, 0.4; 100, 0.4],
       sinkCold1(T0=15 + 273.15),
-      GB101(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-      Pmaxnom=147.6e3*0.79,
-      Tout_ref=353.15),
+      GB101(
+      Pmaxnom=147.6e3*0.79, Tout_ref=353.15),
       ToutcoolSP = [0, 18; 100, 18; 100, 18; 200, 18]);
 
 
@@ -25,8 +24,8 @@ model CentralisedSystemI_B
   // System 400
   parameter Types.Pressure pin_start_S4 = 1.695e5;
   parameter Types.Pressure pout_start_S4 = 1.6e5;
-  parameter Types.Temperature Tin_start_S4 = 32.5 + 273.15;
-  parameter Types.Temperature Tout_start_S4 = 38.5 + 273.15;
+  parameter Types.Temperature Tin_start_S4 = 70 + 273.15;
+  parameter Types.Temperature Tout_start_S4 = 80 + 273.15;
 
   parameter Types.Length L_S4_PL1 = 0.82;
   parameter Types.Length L_S4_PL2 = 0.47;
@@ -50,7 +49,6 @@ model CentralisedSystemI_B
   Components.ThermalMachines.ControlledElectricBoiler
     EB401(
     Tout_start=Tout_start_S4,
-    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
     D=0.4,
     Pmaxnom=50e3,
     Pnimnom=10e3,

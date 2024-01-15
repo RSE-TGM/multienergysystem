@@ -67,7 +67,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-124,-39})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV101(
     allowFlowReversal=true,
     Kv=12,
@@ -155,7 +155,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{-12,12},{12,-12}},
         rotation=0,
         origin={-73,72})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     allowFlowReversal=true,
     nomOpening=1,
@@ -193,7 +193,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={36,52})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -439,7 +439,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={296,-48.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -450,7 +450,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={156,-8})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -461,7 +461,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={236,-8})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -631,28 +631,14 @@ model WaterTanksSystem "System of two tanks"
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-78,42})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler
     GB101(
     Tin_start=333.15,
     pin_start=180000,
     pout_start=179000) annotation (Placement(visible=true, transformation(
         origin={-134,-113},
         extent={{-25,-25},{25,25}},
-        rotation=-90)));
-  Sources.SourceMassFlow CH4(
-    T0=333.15,
-    m_flow0=0.002370206,
-    p0(displayUnit="Pa") = 2000,
-    use_in_m_flow=true)                                                                                                    annotation (
-    Placement(visible = true, transformation(origin={-90,-113},  extent={{10,10},
-            {-10,-10}},                                                                           rotation = 0)));
-  Modelica.Blocks.Sources.Ramp fuel_flow(
-    duration=20,
-    height=0.002370206*0.2*0,
-    offset=0.0037212234*0.7,
-    startTime=50)                                                                                                       annotation (
-    Placement(visible = true, transformation(origin={-84,-148},  extent={{10,-10},
-            {-10,10}},                                                                            rotation=-90)));
+        rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.ClosedLoopInitializer
     closedLoopInitializer(
     p_start(displayUnit="Pa") = 2.333038e5,
@@ -868,7 +854,7 @@ model WaterTanksSystem "System of two tanks"
   Modelica.Blocks.Sources.RealExpression PR01_m_flow(y=if time < 100 then 9
          elseif time < 500 then 8 else 10)
     annotation (Placement(transformation(extent={{383,-54},{363,-34}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV701(
     allowFlowReversal=true,
     Kv=12,
@@ -879,7 +865,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={36,-98})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV711(
     allowFlowReversal=true,
     Kv=12,
@@ -890,7 +876,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={116,-98})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV721(
     allowFlowReversal=true,
     Kv=12,
@@ -901,7 +887,7 @@ model WaterTanksSystem "System of two tanks"
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={196,-98})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV731(
     allowFlowReversal=true,
     Kv=12,
@@ -930,8 +916,7 @@ model WaterTanksSystem "System of two tanks"
     D201(H=4, D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000,
-    m_flow_start=0.1,
-    n=3)
+    m_flow_start=0.1)
     annotation (Placement(transformation(extent={{-296,-154},{-248,-78}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     P201(
@@ -962,8 +947,8 @@ model WaterTanksSystem "System of two tanks"
     D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=200000,
-    m_flow_start=0.1,
-    n=3) annotation (Placement(transformation(extent={{-225,-154},{-177,-78}})));
+    m_flow_start=0.1)
+         annotation (Placement(transformation(extent={{-225,-154},{-177,-78}})));
 equation
   connect(P101.inlet,roundPipe1DFV. outlet) annotation (Line(
       points={{-124,-48.6},{-124,-58}},
@@ -1121,19 +1106,13 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV1.outlet,GB101. inlet) annotation (Line(
-      points={{-144,-78},{-144,-92},{-144,-105.5},{-114,-105.5}},
+      points={{-144,-78},{-144,-92},{-144,-93},{-141.5,-93}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV.inlet,GB101. outlet) annotation (Line(
-      points={{-124,-78},{-124,-99},{-124,-120.5},{-114,-120.5}},
+      points={{-124,-78},{-124,-99},{-124,-93},{-126.5,-93}},
       color={140,56,54},
       thickness=0.5));
-  connect(CH4.outlet,GB101. inletfuel) annotation (Line(
-      points={{-100,-113},{-114,-113}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(CH4.in_m_flow,fuel_flow. y)
-    annotation (Line(points={{-84,-118},{-84,-137}},   color={0,0,127}));
   connect(roundPipe1DFV2.outlet,roundPipe1DFV10. inlet) annotation (Line(
       points={{36,-176},{36,-196},{66,-196}},
       color={140,56,54},
@@ -1251,7 +1230,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(P201.outlet, D201.inlet) annotation (Line(
-      points={{-326,-40.6},{-327,-40.6},{-327,-130.25},{-296,-130.25}},
+      points={{-326,-40.6},{-327,-40.6},{-327,-135},{-296,-135}},
       color={140,56,54},
       thickness=0.5));
   connect(P201.inlet, roundPipe1DFV20.outlet) annotation (Line(
@@ -1259,17 +1238,16 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(D201.outlet, roundPipe1DFV4.inlet) annotation (Line(
-      points={{-296,-101.75},{-310,-101.75},{-310,72},{-114,72}},
+      points={{-296,-97},{-310,-97},{-310,72},{-114,72}},
       color={140,56,54},
       thickness=0.5));
   connect(D202.inlet, D201.inlet) annotation (Line(
-      points={{-225,-130.25},{-233,-130.25},{-233,-130},{-239,-130},{-239,-172},
-          {-327,-172},{-327,-130.25},{-296,-130.25}},
+      points={{-225,-135},{-233,-135},{-233,-130},{-239,-130},{-239,-172},{-327,
+          -172},{-327,-135},{-296,-135}},
       color={140,56,54},
       thickness=0.5));
   connect(D202.outlet, roundPipe1DFV4.inlet) annotation (Line(
-      points={{-225,-101.75},{-232,-101.75},{-232,-101},{-239,-101},{-239,72},{
-          -114,72}},
+      points={{-225,-97},{-232,-97},{-232,-101},{-239,-101},{-239,72},{-114,72}},
       color={140,56,54},
       thickness=0.5));
   annotation (

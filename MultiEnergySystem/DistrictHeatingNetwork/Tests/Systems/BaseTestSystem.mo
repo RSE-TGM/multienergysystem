@@ -11,8 +11,9 @@ model BaseTestSystem
     Tout_start_S4 = 80 + 273.15,
     hctype = Choices.Pipe.HCtypes.Downstream,
     EB401(nR=5),
-    GB101(Tout_ref=353.15));
-  parameter Integer n = 3 "Number of volumes";
+    GB101(Tout_ref=353.15),
+    n = 2);
+  //parameter Integer n = 3 "Number of volumes";
 
 
   // Pressures
@@ -1768,7 +1769,7 @@ equation
           {731.712,-109},{731.712,-108.5},{734.925,-108.5}},
                                                        color={0,0,127}));
   connect(FTR03.q_m3hr, PT901_.numberPort) annotation (Line(points={{710,-225.5},
-          {710,-240},{718,-240},{718,-233.5},{726.925,-233.5}}, color={0,0,127}));
+          {710,-240},{718,-240},{718,162.5},{-836.4,162.5}},    color={0,0,127}));
   connect(TT704.T,FTR01_3. numberPort)
     annotation (Line(points={{246.2,-153},{244.175,-153}},
                                                          color={0,0,127}));
@@ -1778,8 +1779,8 @@ equation
   connect(FTR01_5.numberPort,TT724. T)
     annotation (Line(points={{422.175,-156},{426.2,-156}},
                                                     color={0,0,127}));
-  connect(TT734.T, TT902_.numberPort) annotation (Line(points={{156.35,-153.5},
-          {156.35,-153},{149.175,-153}}, color={0,0,127}));
+  connect(TT734.T, TT902_.numberPort) annotation (Line(points={{156.35,-153.5},{
+          156.35,190},{-741.525,190}},   color={0,0,127}));
   connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
       points={{294,-38},{294,-48}},
       color={140,56,54},
@@ -1969,44 +1970,44 @@ equation
       thickness=0.5));
   connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
       Line(
-      points={{254,46},{256,46},{256,118},{56,118},{56,180},{120,180}},
+      points={{254,46},{256,46},{256,118},{56,118},{56,205},{60,205}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_FT701_rackL2L3.outlet, rackL2L3_rackL3L4_cold.outlet)
     annotation (Line(
-      points={{294,46},{296,46},{296,130},{72,130},{72,240},{150,240}},
+      points={{294,46},{296,46},{296,130},{72,130},{72,265},{90,265}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_rackL3L4_TT712.inlet, rackL3L4_FCVC01_hot.inlet) annotation (
       Line(
-      points={{344,46},{342,46},{342,98},{340,98},{340,136},{180,136},{180,180},
-          {240,180}},
+      points={{344,46},{342,46},{342,98},{340,98},{340,136},{180,136},{180,205},
+          {180,205}},
       color={140,56,54},
       thickness=0.5));
   connect(PL711_FT711_rackL3L4.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
-      points={{384,46},{382,46},{382,124},{378,124},{378,146},{200,146},{200,240},
-          {170,240}},
+      points={{384,46},{382,46},{382,124},{378,124},{378,146},{200,146},{200,265},
+          {110,265}},
       color={140,56,54},
       thickness=0.5));
   connect(PL721_rackL4L5_TT722.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (
       Line(
-      points={{434,46},{432,46},{432,124},{408,124},{408,180},{460,180}},
+      points={{434,46},{432,46},{432,124},{408,124},{408,205},{400,205}},
       color={140,56,54},
       thickness=0.5));
   connect(PL721_FT721_rackL4L5.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
       Line(
-      points={{474,46},{470,46},{470,128},{436,128},{436,240},{390,240}},
+      points={{474,46},{470,46},{470,128},{436,128},{436,265},{330,265}},
       color={140,56,54},
       thickness=0.5));
   connect(PL731_rackL6L7_TT732.inlet, rackL6L7_FCVC02_hot.inlet) annotation (
       Line(
-      points={{166,46},{164,46},{164,76},{648,76},{648,180},{700,180}},
+      points={{166,46},{164,46},{164,76},{648,76},{648,205},{640,205}},
       color={140,56,54},
       thickness=0.5));
   connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation (
      Line(
-      points={{206,46},{206,66},{662,66},{662,240},{710,240}},
+      points={{206,46},{206,66},{662,66},{662,265},{650,265}},
       color={140,56,54},
       thickness=0.5));
 end BaseTestSystem;

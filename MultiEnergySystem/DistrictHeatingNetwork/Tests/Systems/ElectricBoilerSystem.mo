@@ -167,16 +167,6 @@ model ElectricBoilerSystem
     offset=1,
     startTime=3000)
     annotation (Placement(transformation(extent={{62,20},{42,40}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
-    flowCoefficientOnOffValve annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=-90,
-        origin={-20,130})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
-    flowCoefficientOnOffValve1 annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=90,
-        origin={20,130})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
       points={{20,-16.6},{20,-36}},
@@ -227,20 +217,12 @@ equation
       points={{15.6,-116.4},{15.6,-116},{20,-116},{20,-56}},
       color={140,56,54},
       thickness=0.5));
-  connect(source.outlet, flowCoefficientOnOffValve.inlet) annotation (Line(
-      points={{-34,176},{-20,176},{-20,140}},
+  connect(TT402.inlet, sink.inlet) annotation (Line(
+      points={{19.6,106},{20,106},{20,176},{24,176}},
       color={140,56,54},
       thickness=0.5));
-  connect(flowCoefficientOnOffValve.outlet, TT401.inlet) annotation (Line(
-      points={{-20,120},{-20,113},{-19.6,113},{-19.6,106}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(sink.inlet, flowCoefficientOnOffValve1.outlet) annotation (Line(
-      points={{24,176},{19.6,176},{20,140}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(flowCoefficientOnOffValve1.inlet, TT402.inlet) annotation (Line(
-      points={{20,120},{20,113},{19.6,113},{19.6,106}},
+  connect(source.outlet, TT401.inlet) annotation (Line(
+      points={{-34,176},{-19.6,176},{-19.6,106}},
       color={140,56,54},
       thickness=0.5));
   annotation (

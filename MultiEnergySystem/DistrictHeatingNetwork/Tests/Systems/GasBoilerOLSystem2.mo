@@ -47,7 +47,7 @@ model GasBoilerOLSystem2
         extent={{-12,-12},{12,12}},
         rotation=90,
         origin={-220,-21})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV101(
     allowFlowReversal=true,
     Kv=12,
@@ -130,7 +130,7 @@ model GasBoilerOLSystem2
         extent={{-12,12},{12,-12}},
         rotation=0,
         origin={-169,90})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     allowFlowReversal=false,
     nomOpening=1,
@@ -237,7 +237,7 @@ model GasBoilerOLSystem2
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={200,-30.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -248,7 +248,7 @@ model GasBoilerOLSystem2
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={60,10})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -259,7 +259,7 @@ model GasBoilerOLSystem2
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={140,10})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,
@@ -497,28 +497,14 @@ model GasBoilerOLSystem2
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-174,60})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler
     GB101(
     Tin_start=333.15,
     pin_start=180000,
     pout_start=179000) annotation (Placement(visible=true, transformation(
         origin={-230,-95},
         extent={{-25,-25},{25,25}},
-        rotation=-90)));
-  Sources.SourceMassFlow CH4(
-    T0=60 + 273.15,
-    m_flow0=0.002370206,
-    p0(displayUnit="Pa") = 2000,
-    use_in_m_flow=true)                                                                                                    annotation (
-    Placement(visible = true, transformation(origin={-186,-95},  extent={{10,10},
-            {-10,-10}},                                                                           rotation = 0)));
-  Modelica.Blocks.Sources.Ramp fuel_flow(
-    duration=20,
-    height=0.002370206*0.2*0,
-    offset=0.0037212234,
-    startTime=50)                                                                                                       annotation (
-    Placement(visible = true, transformation(origin={-180,-130}, extent={{10,-10},
-            {-10,10}},                                                                            rotation=-90)));
+        rotation=0)));
   Sources.SourcePressure sourceP(T0(displayUnit="K") = 80 + 273.15, p0(
         displayUnit="bar") = 175549.79)
                                    annotation (Placement(visible=true,
@@ -720,19 +706,13 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV1.outlet, GB101.inlet) annotation (Line(
-      points={{-240,-60},{-240,-80}},
+      points={{-240,-60},{-240,-74},{-240,-75},{-237.5,-75}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV.inlet, GB101.outlet) annotation (Line(
-      points={{-220,-60},{-220,-80}},
+      points={{-220,-60},{-220,-81},{-220,-75},{-222.5,-75}},
       color={140,56,54},
       thickness=0.5));
-  connect(GB101.inletfuel, CH4.outlet) annotation (Line(
-      points={{-210,-95},{-196,-95}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(CH4.in_m_flow, fuel_flow.y)
-    annotation (Line(points={{-180,-100},{-180,-119}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-400,-160},{400,160}}, grid={1,1})), Icon(
         coordinateSystem(grid={0.5,0.5})),

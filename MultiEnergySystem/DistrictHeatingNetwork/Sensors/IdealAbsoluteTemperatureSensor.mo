@@ -18,7 +18,7 @@ equation
   fluid.h = inStream(inlet.h_out);
   fluid.p = inlet.p;
   //T = inStream(inlet.h_out)/cp;
-  T = fluid.T - 273.15;
+  T = fluid.T;
   T_meas = T;
 annotation (
     Icon(graphics={  Text(origin = {0, 60}, textColor = {140, 56, 54}, extent = {{-20, 20}, {20, -20}}, textString = "T")}));

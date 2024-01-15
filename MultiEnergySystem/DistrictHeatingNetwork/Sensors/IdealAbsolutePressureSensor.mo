@@ -8,7 +8,7 @@ model IdealAbsolutePressureSensor
   Real p_meas;
 equation
   //inlet.p = p;
-  p = inlet.p/1e5;
+  p = inlet.p;
   p_meas = p;
 annotation (
     Icon(graphics={  Text(origin = {2, 60}, textColor = {140, 56, 54}, extent = {{-20, 20}, {20, -20}}, textString = "P")}));

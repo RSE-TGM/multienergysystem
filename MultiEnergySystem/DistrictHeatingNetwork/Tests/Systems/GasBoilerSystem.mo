@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model GasBoilerSystem
-  "Main components of System 100 - Gas Boiler"
+  "Main components of System 100 - Gas Boiler of the RSE's distric heating network"
   extends Modelica.Icons.Example;
 
   parameter Integer n = 3;

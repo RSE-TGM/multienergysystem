@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model RackCDSystem
+model RackCDSystem "Test based on the rack CD of the RSE's district heating network"
   extends Modelica.Icons.Example;
   parameter Types.Length t = 1.5e-3;
   parameter Types.Length Di = 51e-3;
@@ -180,5 +180,8 @@ equation
     experiment(
       StopTime=500,
       Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p><span style=\"font-size: 10pt;\">The test consist of a centralised rack where one or more flows interact come from the &quot;Cold Side&quot; and then went back &quot;hotter&quot;, after getting heat from the different thermal machines, to the &quot;Hot Side&quot; of the rack</span></p>
+</html>"));
 end RackCDSystem;

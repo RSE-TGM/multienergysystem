@@ -16,5 +16,5 @@ model IdealPressureSensor
 equation
   p = inlet.p;
 annotation (
-    Icon(graphics = {Text(origin = {2, 60}, textColor = {140, 56, 54}, extent = {{-20, 24}, {20, -24}}, textString = "P")}));
+    Icon(graphics={  Text(origin = {2, 60}, textColor = {140, 56, 54}, extent = {{-20, 24}, {20, -24}}, textString = "P")}));
 end IdealPressureSensor;

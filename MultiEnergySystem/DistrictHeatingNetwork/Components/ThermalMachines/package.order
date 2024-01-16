@@ -4,5 +4,6 @@ GasBoiler
 ElectricBoiler
 ControlledElectricBoiler
 ControlledGasBoiler
+ControlledCHP
 ChillerNoDynamics
 ControlledChillerNoDynamicsSP

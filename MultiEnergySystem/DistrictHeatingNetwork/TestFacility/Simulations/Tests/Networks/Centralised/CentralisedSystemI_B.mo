@@ -16,7 +16,7 @@ model CentralisedSystemI_B
       FCV731theta = [0, 0.4; 100, 0.4],
       sinkCold1(T0=15 + 273.15),
       GB101(
-      Pmaxnom=147.6e3*0.79, Tout_ref=353.15),
+      Pmaxnom=147.6e3*0.79),
       ToutcoolSP = [0, 18; 100, 18; 100, 18; 200, 18]);
 
 
@@ -43,6 +43,7 @@ model CentralisedSystemI_B
   parameter Real P401omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
   parameter Real P401qm3h[:,:] = [0, 5; 100, 5];
   parameter Real FCV401theta[:,:] = [0, 1; 100, 1];
+  parameter Real EB401_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
   parameter Boolean FV401_state = true;
   parameter Boolean FV402_state = true;
 
@@ -242,6 +243,8 @@ model CentralisedSystemI_B
   Sources.PumpInput P401_input(
     useOmega=false,            omega=P401omega, q_m3h=P401qm3h)
     annotation (Placement(transformation(extent={{-284,-191},{-304,-170}})));
+  Modelica.Blocks.Sources.TimeTable EB401_Tout_SP(table=EB401_ToutSP)
+    annotation (Placement(transformation(extent={{-404,-310},{-384,-290}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
       points={{-318,-184.6},{-318,-226}},
@@ -319,6 +322,8 @@ equation
     annotation (Line(points={{-305,-140},{-310,-140}}, color={0,0,127}));
   connect(P401_input.y, P401.in_q_m3hr) annotation (Line(points={{-305,-180.5},{
           -312.48,-180.5},{-312.48,-179.8}}, color={0,0,127}));
+  connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (Line(points={{-383,-300},
+          {-383,-302},{-365.2,-302}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B;

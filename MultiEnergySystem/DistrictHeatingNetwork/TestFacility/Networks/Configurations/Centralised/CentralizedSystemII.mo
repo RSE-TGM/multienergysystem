@@ -24,6 +24,7 @@ partial model CentralizedSystemII
   parameter Real P401omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
   parameter Real P401qm3h[:,:] = [0, 7.5; 100, 7.5];
   parameter Real FCV401theta[:,:] = [0, 1];
+  parameter Real EB401_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
   parameter Boolean FV401_state = true;
   parameter Boolean FV402_state = true;
 

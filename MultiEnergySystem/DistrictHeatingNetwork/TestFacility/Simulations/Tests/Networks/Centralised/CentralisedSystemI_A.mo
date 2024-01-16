@@ -8,7 +8,7 @@ model CentralisedSystemI_A
       FCVC02theta = [0, 1; 100, 1],
       FCV901theta = [0, 1; 100, 1],
       P901omega = [0, 2*3.141592654*35; 100, 2*3.141592654*35],
-      FCV101theta = [0, 1; 100, 1],
+      FCV101theta = [0, 0.5; 100, 0.5],
       q_m3h_S9 = 10,
       P101qm3h = [0, 10; 100, 10],
       q_m3h_S1 = 10,
@@ -30,7 +30,7 @@ model CentralisedSystemI_A
     useOmega=true,
     omega=P901omega,
     q_m3h=P901qm3h)
-    annotation (Placement(transformation(extent={{-714,60},{-734,81}})));
+    annotation (Placement(transformation(extent={{-714,54},{-734,75}})));
   Modelica.Blocks.Sources.TimeTable FCVC01_theta(table=FCVC01theta)
     annotation (Placement(transformation(extent={{300,289},{280,309}})));
   Modelica.Blocks.Sources.TimeTable FCVC02_theta(table=FCVC02theta)
@@ -67,11 +67,15 @@ model CentralisedSystemI_A
   Modelica.Blocks.Sources.TimeTable Tout_cool_SP(table=ToutcoolSP)
     "Temperature in Celsius degrees"
     annotation (Placement(transformation(extent={{728,-70},{748,-50}})));
+  Modelica.Blocks.Sources.TimeTable GB101_Tout_SP(table=GB101_ToutSP)
+    annotation (Placement(transformation(extent={{-322,-310},{-302,-290}})));
 equation
   connect(FCV901_theta.y, FCV901.opening)
-    annotation (Line(points={{-735,103},{-749,103}}, color={0,0,127}));
-  connect(P901_input.y, P901.in_omega) annotation (Line(points={{-735,70.5},{-743.5,
-          70.5},{-743.5,71},{-752,71}}, color={0,0,127}));
+    annotation (Line(points={{-735,103},{-742,103},{-742,115},{-749,115}},
+                                                     color={0,0,127}));
+  connect(P901_input.y, P901.in_omega) annotation (Line(points={{-735,64.5},{
+          -743.5,64.5},{-743.5,66.3},{-747.25,66.3}},
+                                        color={0,0,127}));
   connect(FCVC01_theta.y, FCVC01.opening) annotation (Line(points={{279,299},{268,
           299},{268,235},{258,235}}, color={0,0,127}));
   connect(FCVC02_theta.y, FCVC02.opening) annotation (Line(points={{719,299},{710,
@@ -104,4 +108,6 @@ equation
           -208},{689.51,-207.8},{698.02,-207.8}}, color={0,0,127}));
   connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (Line(points={{749,-60},{767.5,
           -60},{767.5,-97.2}}, color={0,0,127}));
+  connect(GB101_Tout_SP.y, GB101.Tout_ref) annotation (Line(points={{-301,-300},
+          {-301,-301},{-285,-301}}, color={0,0,127}));
 end CentralisedSystemI_A;

@@ -149,28 +149,28 @@ partial model CentralPlantBase
     rhonom(displayUnit="kg/m3") = Pump.P901.rhonom,
     qnom_inm3h_max=Pump.P901.qnommax_inm3h,
     use_in_omega=true)                                                   annotation (
-    Placement(visible = true, transformation(                 extent={{-10,10},{
-            10,-10}},                                                                          rotation=90,
-        origin={-757,75})));
+    Placement(visible = true, transformation(                 extent={{-20.5,
+            20.5},{20.5,-20.5}},                                                               rotation=90,
+        origin={-757.5,74.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(T_start=
         Tout_start_S9, p_start=pout_start_S9)
     annotation (Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={-755,160})));
+        origin={-755,166})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT902 "Pressure sensor at the outlet of pump 901" annotation (Placement(
         transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
-        origin={-755,173.5})));
+        origin={-755,181.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT902(T_start=Tout_start_S9, p_start=pout_start_S9)
     "Temperature sensor at the outlet of pump 901"       annotation (Placement(
         transformation(
         extent={{-4.75,4.75},{4.75,-4.75}},
         rotation=90,
-        origin={-754.75,190.25})));
+        origin={-754.75,196.25})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S901(
     L=L_S9_PL3,
     t=t_S9,
@@ -183,7 +183,7 @@ partial model CentralPlantBase
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-757,140})));
+        origin={-757,146})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT901(T_start=Tin_start_S9, p_start=pin_start_S9)
     "Temperature sensor at the inlet of pump 901" annotation (Placement(
@@ -222,7 +222,7 @@ partial model CentralPlantBase
     q_m3h_start=q_m3h_S9)  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-757,103})));
+        origin={-757,115})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV933(
     Kv=33,
@@ -723,15 +723,15 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT901.outlet,PT902. inlet) annotation (Line(
-      points={{-757,163},{-757,173.5}},
+      points={{-757,169},{-757,181.5}},
       color={140,56,54},
       thickness=0.5));
   connect(PT902.inlet,TT902. inlet) annotation (Line(
-      points={{-757,173.5},{-757,186.875},{-756.65,186.875},{-756.65,190.25}},
+      points={{-757,181.5},{-757,194.875},{-756.65,194.875},{-756.65,196.25}},
       color={140,56,54},
       thickness=0.5));
   connect(FT901.inlet,PL4_S901. outlet) annotation (Line(
-      points={{-757,157},{-757,150}},
+      points={{-757,163},{-757,156}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.inlet,PT901. inlet) annotation (Line(
@@ -743,15 +743,15 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCV901.outlet,PL4_S901. inlet) annotation (Line(
-      points={{-757,113},{-757,130}},
+      points={{-757,125},{-757,136}},
       color={140,56,54},
       thickness=0.5));
   connect(P901.outlet,FCV901. inlet) annotation (Line(
-      points={{-757,83},{-757,93}},
+      points={{-757.5,90.9},{-757.5,98.15},{-757,98.15},{-757,105}},
       color={140,56,54},
       thickness=0.5));
   connect(TT902.inlet, S900_rackL3L4_hot.inlet) annotation (Line(
-      points={{-756.65,190.25},{-756.65,205},{-60,205}},
+      points={{-756.65,196.25},{-756.65,205},{-60,205}},
       color={140,56,54},
       thickness=0.5));
   connect(TT901.inlet,S900_rackL2L3_cold. outlet) annotation (Line(
@@ -801,7 +801,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(rackCD_Hot_S200_S900.outlet, P901.inlet) annotation (Line(
-      points={{-747,44.75},{-757,44.75},{-757,67}},
+      points={{-747,44.75},{-757.5,44.75},{-757.5,58.1}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.outlet, rackCD_Cold_S900_S200.inlet) annotation (Line(

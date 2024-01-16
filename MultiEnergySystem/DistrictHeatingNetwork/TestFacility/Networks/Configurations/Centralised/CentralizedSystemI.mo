@@ -27,6 +27,7 @@ partial model CentralizedSystemI
   parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
 
   parameter Real FCV101theta[:,:] = [0, 1];
+  parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
   Components.TurboMachines.ControlledPump
     P101(
@@ -113,8 +114,7 @@ partial model CentralizedSystemI
     pin_start=pin_start_S1,
     pout_start=pout_start_S1,
     Tout_start=Tout_start_S1,
-    HH=55.5e6,
-    Tout_ref=290.15)   annotation (Placement(visible=true, transformation(
+    HH=55.5e6)         annotation (Placement(visible=true, transformation(
         origin={-257,-301},
         extent={{-35,-35},{35,35}},
         rotation=0)));

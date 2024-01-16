@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.TestFacility.FMUExport.Centralised;
-partial model CentralisedSystemI_B_FMU
+model CentralisedSystemI_B_FMU
   extends TestFacility.Networks.Configurations.Centralised.CentralizedSystemI_B;
   Modelica.Blocks.Interfaces.RealInput EB401_Tout
     annotation (Placement(transformation(extent={{-418,-320},{-378,-280}})));
@@ -49,6 +49,20 @@ partial model CentralisedSystemI_B_FMU
     annotation (Placement(transformation(extent={{-284,-26},{-304,-6}})));
   Modelica.Blocks.Sources.BooleanConstant FV401_OnOff(k=FV401_state)
     annotation (Placement(transformation(extent={{-394,-26},{-374,-6}})));
+  Modelica.Blocks.Interfaces.RealOutput TT_902
+    annotation (Placement(transformation(extent={{-740,186},{-720,206}})));
+  Modelica.Blocks.Interfaces.RealOutput FT_901
+    annotation (Placement(transformation(extent={{-740,156},{-720,176}})));
+  Modelica.Blocks.Interfaces.RealOutput PT_902
+    annotation (Placement(transformation(extent={{-740,172},{-720,192}})));
+  Modelica.Blocks.Interfaces.RealOutput TT_702
+    annotation (Placement(transformation(extent={{80,-130},{60,-110}})));
+  Modelica.Blocks.Interfaces.RealOutput TT_732
+    annotation (Placement(transformation(extent={{240,-130},{220,-110}})));
+  Modelica.Blocks.Interfaces.RealOutput TT_712
+    annotation (Placement(transformation(extent={{380,-130},{360,-110}})));
+  Modelica.Blocks.Interfaces.RealOutput TT_722
+    annotation (Placement(transformation(extent={{540,-130},{520,-110}})));
 equation
   connect(P901.in_omega, q_P901) annotation (Line(points={{-747.25,66.3},{-728.625,
           66.3},{-728.625,66},{-710,66}}, color={0,0,127}));
@@ -78,12 +92,12 @@ equation
     annotation (Line(points={{390,-320},{358,-320}}, color={0,0,127}));
   connect(TCV721.opening, TCV_721)
     annotation (Line(points={{549.1,-320},{514,-320}}, color={0,0,127}));
-  connect(FCV_R01, FCVR01.opening) annotation (Line(points={{736,-330},{750,
-          -330},{750,-328},{766,-328},{766,-352}}, color={0,0,127}));
-  connect(q_PR01, PR01.in_q_m3hr) annotation (Line(points={{666,-208},{682.01,
-          -208},{682.01,-207.8},{698.02,-207.8}}, color={0,0,127}));
-  connect(RR01_Tout, RR01.Tout_SP) annotation (Line(points={{738,-58},{767.5,
-          -58},{767.5,-97.2}}, color={0,0,127}));
+  connect(FCV_R01, FCVR01.opening) annotation (Line(points={{736,-330},{750,-330},
+          {750,-328},{766,-328},{766,-352}}, color={0,0,127}));
+  connect(q_PR01, PR01.in_q_m3hr) annotation (Line(points={{666,-208},{682.01,-208},
+          {682.01,-207.8},{698.02,-207.8}}, color={0,0,127}));
+  connect(RR01_Tout, RR01.Tout_SP) annotation (Line(points={{738,-58},{767.5,-58},
+          {767.5,-97.2}}, color={0,0,127}));
   connect(FCV_701, FCV701.opening)
     annotation (Line(points={{176,-150},{146,-150}}, color={0,0,127}));
   connect(FCV731.opening, FCV_731)
@@ -98,6 +112,20 @@ equation
     annotation (Line(points={{-305,-16},{-314.8,-16}}, color={255,0,255}));
   connect(FV401_OnOff.y, FV401.u)
     annotation (Line(points={{-373,-16},{-361.2,-16}}, color={255,0,255}));
+  connect(TT902.T, TT_902) annotation (Line(points={{-748.575,196.25},{-739.288,
+          196.25},{-739.288,196},{-730,196}}, color={0,0,127}));
+  connect(FT901.q_m3hr, FT_901)
+    annotation (Line(points={{-748.5,166},{-730,166}}, color={0,0,127}));
+  connect(PT902.p, PT_902) annotation (Line(points={{-748.5,181.5},{-739.25,
+          181.5},{-739.25,182},{-730,182}}, color={0,0,127}));
+  connect(TT722.T, TT_722)
+    annotation (Line(points={{549.5,-120},{530,-120}}, color={0,0,127}));
+  connect(TT712.T, TT_712)
+    annotation (Line(points={{389.5,-120},{370,-120}}, color={0,0,127}));
+  connect(TT732.T, TT_732)
+    annotation (Line(points={{249.5,-120},{230,-120}}, color={0,0,127}));
+  connect(TT702.T, TT_702)
+    annotation (Line(points={{89.5,-120},{70,-120}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B_FMU;

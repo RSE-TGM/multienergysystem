@@ -7,8 +7,8 @@ model CentralisedSystemI_A
       FCVC01theta = [0, 0; 100, 0],
       FCVC02theta = [0, 1; 100, 1],
       FCV901theta = [0, 1; 100, 1],
-      P901omega = [0, 2*3.141592654*35; 100, 2*3.141592654*35],
-      FCV101theta = [0, 0.5; 100, 0.5],
+      P901omega = [0, 2*3.141592654*30; 100, 2*3.141592654*30],
+      FCV101theta = [0, 1; 100, 1],
       q_m3h_S9 = 10,
       P101qm3h = [0, 10; 100, 10],
       q_m3h_S1 = 10,
@@ -73,8 +73,8 @@ equation
   connect(FCV901_theta.y, FCV901.opening)
     annotation (Line(points={{-735,103},{-742,103},{-742,115},{-749,115}},
                                                      color={0,0,127}));
-  connect(P901_input.y, P901.in_omega) annotation (Line(points={{-735,64.5},{
-          -743.5,64.5},{-743.5,66.3},{-747.25,66.3}},
+  connect(P901_input.y, P901.in_omega) annotation (Line(points={{-735,64.5},{-743.5,
+          64.5},{-743.5,66.3},{-747.25,66.3}},
                                         color={0,0,127}));
   connect(FCVC01_theta.y, FCVC01.opening) annotation (Line(points={{279,299},{268,
           299},{268,235},{258,235}}, color={0,0,127}));

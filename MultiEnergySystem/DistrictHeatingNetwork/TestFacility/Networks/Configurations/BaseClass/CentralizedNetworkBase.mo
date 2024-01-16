@@ -20,8 +20,8 @@ equation
       points={{258,-50},{256,-50},{256,60},{618,60},{618,205},{640,205}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation
-    (Line(
+  connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation (
+     Line(
       points={{298,-50},{298,38},{636,38},{636,265},{650,265}},
       color={140,56,54},
       thickness=0.5));

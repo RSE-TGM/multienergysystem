@@ -5,7 +5,7 @@ model ControlledElectricBoiler
   parameter Integer nR = 5 "Total number of resistors";
   parameter SI.Power Pmaxres = 10e3 "Electric power of each resistor";
   parameter SI.Resistance R = 47.56 "Nominal resistance of each resistor";
-  parameter SI.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
+  //parameter SI.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
   parameter SI.Time trise = 15 "Rising time of heater from 0 to full power";
   parameter SI.Time tdelay = 10 "Delay time to obtain 100% thermal power";
   parameter Real T_bandwidth = 2 "Temperature Bandwidth for the on/off temperature controller";
@@ -16,6 +16,9 @@ model ControlledElectricBoiler
 
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
 
+  Modelica.Blocks.Interfaces.RealInput Tout_ref annotation (Placement(transformation(
+          extent={{-100,-20},{-60,20}}), iconTransformation(extent={{-100,-20},{
+            -60,20}})));
 equation
   fluidOut_ref.p = pin;
   fluidOut_ref.T = Tout_ref;
@@ -24,7 +27,7 @@ equation
   0 = outlet.p - inlet.p "Momentum Balance";
 
   //Pheat = delay(if heat_on then Pmaxres*nR else 0, tdelay);
-  Pheat = delay(if heat_on then   min(Pheat_ref, Pmaxres*nR) else 0, tdelay);
+  Pheat = delay(if heat_on then min(Pheat_ref, Pmaxres*nR) else 0, tdelay);
 
   when Tout_ref - T_bandwidth > Tout and pre(heat_on)== false then
     heat_on=  true;

@@ -6,13 +6,12 @@ model ControlledGasBoiler
     Dialog(tab = "Boiler Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
     Dialog(tab = "Boiler Data"));
-  parameter SI.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
+  //parameter SI.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
   parameter SI.Time trise = 15 "Rising time of heater from 0 to full power";
   parameter SI.Time tdelay = 10 "Delay time to obtain 100% thermal power";
   parameter Real T_bandwidth = 2 "Temperature Bandwidth for the on/off temperature controller";
 
-
-
+  // Variables
   Boolean heat_on(fixed = true, start = true);
   SI.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
   SI.Power Pheat_ref "Reference value for computed Heat Power required";
@@ -22,6 +21,9 @@ model ControlledGasBoiler
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
 
 
+  Modelica.Blocks.Interfaces.RealInput Tout_ref annotation (Placement(
+        transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent=
+           {{-100,-20},{-60,20}})));
 equation
   inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
   fluidOut_ref.p = pout;

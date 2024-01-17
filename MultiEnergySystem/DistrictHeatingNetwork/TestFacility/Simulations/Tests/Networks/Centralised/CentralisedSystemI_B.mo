@@ -47,6 +47,11 @@ model CentralisedSystemI_B
   parameter Real EB401_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
   parameter Boolean FV401_state = true;
   parameter Boolean FV402_state = true;
+  parameter Boolean FV401_startValue = true;
+  parameter Boolean FV402_startValue = true;
+  parameter Real FV401_s[:] = {1e6};
+  parameter Real FV402_s[:] = {1e6};
+
 
   Components.ThermalMachines.ControlledElectricBoiler
     EB401(
@@ -62,7 +67,7 @@ model CentralisedSystemI_B
     pin_start=pin_start_S4,
     pout_start=160000,
     nR=5)              annotation (Placement(visible=true, transformation(
-        origin={-338,-302},
+        origin={-342,-302},
         extent={{-34,-34},{34,34}},
         rotation=0)));
   Components.TurboMachines.ControlledPump
@@ -91,7 +96,7 @@ model CentralisedSystemI_B
     use_q_m3hr=true)                           annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
-        origin={-318,-175})));
+        origin={-322,-175})));
   Components.Valves.FlowCoefficientValve
     FCV401(
     Kv=Valve.FCV401.Kv,
@@ -103,7 +108,7 @@ model CentralisedSystemI_B
     q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-318,-140})));
+        origin={-322,-140})));
   Components.Pipes.RoundPipe1DFV                                          PL3_S401(
     L=L_S4_PL3,
     t=t_S4,
@@ -116,7 +121,7 @@ model CentralisedSystemI_B
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-318,-236})));
+        origin={-322,-236})));
   Components.Pipes.RoundPipe1DFV                                          PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
@@ -130,7 +135,7 @@ model CentralisedSystemI_B
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-358,-238})));
+        origin={-362,-238})));
   Components.Pipes.RoundPipe1DFV                                          PL4_S401(
     L=L_S4_PL3,
     t=t_S4,
@@ -143,39 +148,39 @@ model CentralisedSystemI_B
     n=n)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-318,-112})));
+        origin={-322,-112})));
   Sensors.IdealAbsoluteTemperatureSensor
     TT402(T_start=Tout_start_S4, p_start=pout_start_S4)
     "Temperature sensor at the outlet of valve FCV401"       annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={-316,-74})));
+        origin={-320,-74})));
   Sensors.IdealAbsolutePressureSensor
     PT402 "Pressure sensor at the outlet of valve FCV401" annotation (Placement(
         transformation(
         extent={{6,6},{-6,-6}},
         rotation=90,
-        origin={-316,-86})));
+        origin={-320,-86})));
   Sensors.IdealAbsolutePressureSensor
     PT401 "Pressure sensor at the inlet of gas boiler" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-360,-118})));
+        origin={-364,-118})));
   Sensors.IdealAbsoluteTemperatureSensor
     TT401(T_start=Tin_start_S4, p_start=pin_start_S4)
     "Temperature sensor at the inlet of electrib boiler"     annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={-360,-106})));
+        origin={-364,-106})));
   Sensors.IdealMassFlowSensor                                          FT401(T_start=
         Tin_start_S4, p_start=pin_start_S4)
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
-        origin={-361,-195})));
+        origin={-365,-195})));
   Components.Pipes.RoundPipe1DFV                                          PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
@@ -188,7 +193,7 @@ model CentralisedSystemI_B
     n=n)      annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-358,-166})));
+        origin={-362,-166})));
   Components.Pipes.RoundPipe1DFV                                          PL_S400_rCD_hot(
     L=L_S4_rCD_hot,
     t=t_S4,
@@ -201,7 +206,7 @@ model CentralisedSystemI_B
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-318,-52})));
+        origin={-322,-52})));
   Components.Pipes.RoundPipe1DFV                                          PL_S400_rCD_cold(
     L=L_S4_rCD_cold,
     t=t_S4,
@@ -214,7 +219,7 @@ model CentralisedSystemI_B
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-358,-54})));
+        origin={-362,-54})));
   Components.Valves.FlowCoefficientOnOffValve
     FV401(
     Kv=Valve.FCV401.Kv,
@@ -225,7 +230,7 @@ model CentralisedSystemI_B
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
-        origin={-358,-20})));
+        origin={-362,-20})));
   Components.Valves.FlowCoefficientOnOffValve
     FV402(
     Kv=Valve.FCV401.Kv,
@@ -234,97 +239,101 @@ model CentralisedSystemI_B
     q_m3h_start=q_m3h_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-318,-20})));
-  Modelica.Blocks.Sources.BooleanConstant FV401_OnOff(k=FV401_state)
-    annotation (Placement(transformation(extent={{-390,-30},{-370,-10}})));
-  Modelica.Blocks.Sources.BooleanConstant FV402_OnOff(k=FV402_state)
-    annotation (Placement(transformation(extent={{-286,-30},{-306,-10}})));
+        origin={-322,-20})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=FCV401theta)
-    annotation (Placement(transformation(extent={{-284,-150},{-304,-130}})));
+    annotation (Placement(transformation(extent={{-288,-150},{-308,-130}})));
   Sources.PumpInput P401_input(
     useOmega=false,            omega=P401omega, q_m3h=P401qm3h)
-    annotation (Placement(transformation(extent={{-284,-191},{-304,-170}})));
+    annotation (Placement(transformation(extent={{-288,-191},{-308,-170}})));
   Modelica.Blocks.Sources.TimeTable EB401_Tout_SP(table=EB401_ToutSP)
-    annotation (Placement(transformation(extent={{-404,-310},{-384,-290}})));
+    annotation (Placement(transformation(extent={{-408,-310},{-388,-290}})));
+  Modelica.Blocks.Sources.BooleanTable FV401_Status(table=FV401_s,
+                                                                 startValue=
+        FV401_startValue) "Input for the status (open/close) of valve FV401"
+    annotation (Placement(transformation(extent={{-394,-30},{-374,-10}})));
+  Modelica.Blocks.Sources.BooleanTable FV402_Status(table=FV402_s,
+                                                                 startValue=
+        FV402_startValue) "Input for the status (open/close) of valve FV402"
+    annotation (Placement(transformation(extent={{-290,-30},{-310,-10}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
-      points={{-318,-184.6},{-318,-226}},
+      points={{-322,-184.6},{-322,-226}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV401.inlet,P401. outlet) annotation (Line(
-      points={{-318,-150},{-318,-165.4}},
+      points={{-322,-150},{-322,-165.4}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet,PT402. inlet) annotation (Line(
-      points={{-318.4,-74},{-318.4,-86}},
+      points={{-322.4,-74},{-322.4,-86}},
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S401.inlet,FCV401. outlet) annotation (Line(
-      points={{-318,-122},{-318,-130}},
+      points={{-322,-122},{-322,-130}},
       color={140,56,54},
       thickness=0.5));
   connect(PT402.inlet,PL4_S401. outlet) annotation (Line(
-      points={{-318.4,-86},{-318.4,-95},{-318,-95},{-318,-102}},
+      points={{-322.4,-86},{-322.4,-95},{-322,-95},{-322,-102}},
       color={140,56,54},
       thickness=0.5));
   connect(FT401.outlet,PL2_S401. inlet) annotation (Line(
-      points={{-358.2,-199.2},{-358.2,-207.6},{-358,-207.6},{-358,-228}},
+      points={{-362.2,-199.2},{-362.2,-207.6},{-362,-207.6},{-362,-228}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.outlet,FT401. inlet) annotation (Line(
-      points={{-358,-176},{-358,-183.4},{-358.2,-183.4},{-358.2,-190.8}},
+      points={{-362,-176},{-362,-183.4},{-362.2,-183.4},{-362.2,-190.8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.inlet,PT401. inlet) annotation (Line(
-      points={{-358,-156},{-358,-118},{-357.6,-118}},
+      points={{-362,-156},{-362,-118},{-361.6,-118}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401.inlet,TT401. inlet) annotation (Line(
-      points={{-357.6,-118},{-357.6,-106}},
+      points={{-361.6,-118},{-361.6,-106}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
-      points={{-358,-248},{-358,-258},{-348.2,-258},{-348.2,-274.8}},
+      points={{-362,-248},{-362,-258},{-352.2,-258},{-352.2,-274.8}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet,PL3_S401. inlet) annotation (Line(
-      points={{-327.8,-274.8},{-327.8,-258},{-318,-258},{-318,-246}},
+      points={{-331.8,-274.8},{-331.8,-258},{-322,-258},{-322,-246}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet,PL_S400_rCD_hot. inlet) annotation (Line(
-      points={{-318.4,-74},{-318,-74},{-318,-62}},
+      points={{-322.4,-74},{-322,-74},{-322,-62}},
       color={140,56,54},
       thickness=0.5));
   connect(TT401.inlet,PL_S400_rCD_cold. outlet) annotation (Line(
-      points={{-357.6,-106},{-358,-106},{-358,-64}},
+      points={{-361.6,-106},{-362,-106},{-362,-64}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S400_rCD_cold.inlet,FV401. outlet) annotation (Line(
-      points={{-358,-44},{-358,-30}},
+      points={{-362,-44},{-362,-30}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S400_rCD_hot.outlet,FV402. inlet) annotation (Line(
-      points={{-318,-42},{-318,-30}},
+      points={{-322,-42},{-322,-30}},
       color={140,56,54},
       thickness=0.5));
   connect(FV401.inlet, rackCD_Cold_S300_S400.outlet) annotation (Line(
-      points={{-358,-10},{-358,6},{-360,6},{-360,5.25},{-408.5,5.25}},
+      points={{-362,-10},{-362,5.25},{-408.5,5.25}},
       color={140,56,54},
       thickness=0.5));
   connect(FV402.outlet, rackCD_Hot_S400_S300.inlet) annotation (Line(
-      points={{-318,-10},{-320,-10},{-320,45},{-338,45}},
+      points={{-322,-10},{-322,45},{-338,45}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV402_OnOff.y, FV402.u)
-    annotation (Line(points={{-307,-20},{-314.8,-20}}, color={255,0,255}));
-  connect(FV401_OnOff.y, FV401.u)
-    annotation (Line(points={{-369,-20},{-361.2,-20}}, color={255,0,255}));
   connect(FCV401_theta.y, FCV401.opening)
-    annotation (Line(points={{-305,-140},{-310,-140}}, color={0,0,127}));
-  connect(P401_input.y, P401.in_q_m3hr) annotation (Line(points={{-305,-180.5},{
-          -312.48,-180.5},{-312.48,-179.8}}, color={0,0,127}));
-  connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (Line(points={{-383,-300},
-          {-383,-302},{-365.2,-302}}, color={0,0,127}));
+    annotation (Line(points={{-309,-140},{-314,-140}}, color={0,0,127}));
+  connect(P401_input.y, P401.in_q_m3hr) annotation (Line(points={{-309,-180.5},{
+          -316.48,-180.5},{-316.48,-179.8}}, color={0,0,127}));
+  connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (Line(points={{-387,-300},
+          {-387,-302},{-369.2,-302}}, color={0,0,127}));
+  connect(FV401_Status.y, FV401.u)
+    annotation (Line(points={{-373,-20},{-365.2,-20}}, color={255,0,255}));
+  connect(FV402_Status.y, FV402.u)
+    annotation (Line(points={{-311,-20},{-318.8,-20}}, color={255,0,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));

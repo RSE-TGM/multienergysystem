@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.TestFacility.Simulations.Tests.Networks.Centralised;
 model CentralisedSystemI_C
   "Gas Boiler & Heat Storage Systems included in the model"
-  extends CentralisedSystemI_A(GB101(Tout_ref=353.15));
+  extends CentralisedSystemI_A;
 
   // System S200
 

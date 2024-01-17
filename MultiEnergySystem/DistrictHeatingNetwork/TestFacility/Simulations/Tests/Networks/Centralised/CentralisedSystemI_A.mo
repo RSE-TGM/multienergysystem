@@ -68,7 +68,7 @@ model CentralisedSystemI_A
     "Temperature in Celsius degrees"
     annotation (Placement(transformation(extent={{728,-70},{748,-50}})));
   Modelica.Blocks.Sources.TimeTable GB101_Tout_SP(table=GB101_ToutSP)
-    annotation (Placement(transformation(extent={{-322,-310},{-302,-290}})));
+    annotation (Placement(transformation(extent={{-318,-310},{-298,-290}})));
 equation
   connect(FCV901_theta.y, FCV901.opening)
     annotation (Line(points={{-735,103},{-742,103},{-742,115},{-749,115}},
@@ -108,6 +108,6 @@ equation
           -208},{689.51,-207.8},{698.02,-207.8}}, color={0,0,127}));
   connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (Line(points={{749,-60},{767.5,
           -60},{767.5,-97.2}}, color={0,0,127}));
-  connect(GB101_Tout_SP.y, GB101.Tout_ref) annotation (Line(points={{-301,-300},
-          {-301,-301},{-285,-301}}, color={0,0,127}));
+  connect(GB101_Tout_SP.y, GB101.Tout_ref) annotation (Line(points={{-297,-300},
+          {-297,-301},{-285,-301}}, color={0,0,127}));
 end CentralisedSystemI_A;

@@ -3,5 +3,5 @@ package MultiEnergySystem "Library the contains all required models to study the
   extends Modelica.Icons.Package;
 
   annotation (
-    uses(Modelica(version = "4.0.0")));
+    uses(Modelica(version = "4.0.0"), AllamCycle(version="1")));
 end MultiEnergySystem;

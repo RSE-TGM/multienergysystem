@@ -21,7 +21,7 @@ model CentralisedSystemI_A
     TCV721theta=[0,1; 100,1],
     TCV731theta=[0,1; 100,1],
     FCVR01theta=[0,0.2; 100,0.2],
-    PR01omega=[0,32; 100,32],
+    PR01omega=[0,2*Modelica.Constants.pi*50; 100,2*Modelica.Constants.pi*50],
     ToutcoolSP=[0,15; 100,15]);
 
   Modelica.Blocks.Sources.TimeTable FCV901_theta(table=FCV901theta)
@@ -104,10 +104,10 @@ equation
     annotation (Line(points={{540,-320},{549.1,-320}}, color={0,0,127}));
   connect(FCVR01_theta.y, FCVR01.opening) annotation (Line(points={{778,-330},{766,
           -330},{766,-352}}, color={0,0,127}));
-  connect(PR01_omega.y, PR01.in_q_m3hr) annotation (Line(points={{681,-208},{689.51,
-          -208},{689.51,-207.8},{698.02,-207.8}}, color={0,0,127}));
   connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (Line(points={{749,-60},{767.5,
           -60},{767.5,-97.2}}, color={0,0,127}));
   connect(GB101_Tout_SP.y, GB101.Tout_ref) annotation (Line(points={{-297,-300},
           {-297,-301},{-285,-301}}, color={0,0,127}));
+  connect(PR01_omega.y, PR01.in_omega) annotation (Line(points={{681,-208},{
+          689.25,-208},{689.25,-207.8},{697.5,-207.8}}, color={0,0,127}));
 end CentralisedSystemI_A;

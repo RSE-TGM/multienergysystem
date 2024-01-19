@@ -1,25 +1,24 @@
 within MultiEnergySystem.TestFacility.Simulations.Tests.Networks.Centralised;
 model CentralisedSystemI_B
   extends Simulations.Tests.Networks.Centralised.CentralisedSystemI_A(
-      FV933_state = false,
-      P901omega = [0, 2*3.141592654*40; 500, 2*3.141592654*40],
-      pin_start_rCD_cold = 2.2e5,
-      VE901(p0(displayUnit="Pa") = 220000),
-      P101qm3h = [0, 14; 100, 14],
-      Tin_start_S1 = 70 + 273.15,
-      Tout_start_S1 = 80 + 273.15,
-      FCV101theta = [0, 1; 100, 1],
-      FCVC01theta = [0, 0; 100, 0],
-      FCVC02theta = [0, 0; 100, 0],
-      FCV701theta = [0, 1; 100, 1],
-      FCV711theta = [0, 1; 100, 1],
-      FCV721theta = [0, 1; 100, 1],
-      FCV731theta = [0, 1; 100, 1],
-      FCVR01theta = [0, 0.2; 8000, 0.2; 8000, 0.5; 10000, 0.5],
-      sinkCold1(T0=15 + 273.15),
-      GB101(
-      Pmaxnom=147.6e3*0.79),
-      ToutcoolSP = [0, 25.5; 500, 25.5; 500, 12; 1000, 12]);
+    VER901(T0=15 + 273.15),
+    FV933_state=false,
+    P901omega=[0,2*3.141592654*40; 500,2*3.141592654*40],
+    pin_start_rCD_cold=2.2e5,
+    VE901(p0(displayUnit="Pa") = 220000),
+    P101qm3h=[0,14; 100,14],
+    Tin_start_S1=70 + 273.15,
+    Tout_start_S1=80 + 273.15,
+    FCV101theta=[0,1; 100,1],
+    FCVC01theta=[0,0; 100,0],
+    FCVC02theta=[0,0; 100,0],
+    FCV701theta=[0,1; 100,1],
+    FCV711theta=[0,1; 100,1],
+    FCV721theta=[0,1; 100,1],
+    FCV731theta=[0,1; 100,1],
+    FCVR01theta=[0,0.2; 8000,0.2; 8000,0.5; 10000,0.5],
+    GB101(Pmaxnom=147.6e3*0.79),
+    ToutcoolSP=[0,25.5; 500,25.5; 500,12; 1000,12]);
 
   // System 400
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4=1.695e5;
@@ -70,9 +69,7 @@ model CentralisedSystemI_B
         rotation=0)));
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P401(
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start,
-
     Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start,
-
     a=DistrictHeatingNetwork.Data.PumpData.P401.a,
     b=DistrictHeatingNetwork.Data.PumpData.P401.b,
     m_flow_start=m_flow_S4,
@@ -84,12 +81,9 @@ model CentralisedSystemI_B
     m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom,
     omeganom=DistrictHeatingNetwork.Data.PumpData.P401.omeganom,
     pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start,
-
     pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start,
-
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom,
-
     headnom=DistrictHeatingNetwork.Data.PumpData.P401.headnom,
     headmax=DistrictHeatingNetwork.Data.PumpData.P401.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
@@ -99,10 +93,10 @@ model CentralisedSystemI_B
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-322,-175})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV401.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom,
-
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom,
     q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S4,
@@ -111,6 +105,7 @@ model CentralisedSystemI_B
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-322,-140})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(
     L=L_S4_PL3,
     t=t_S4,

@@ -192,14 +192,15 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     Tin_start=Tin_start_S1,
     Tout_start=Tin_start_S1,
     Di=Di_S1,
-    q_m3h_start=q_m3h_S1)
-              annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S1) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20,30})));
   Sources.SourcePressure source(
     use_in_p0=true,
-    use_in_T0=true,             p0=pin_start_S1, T0=Tin_start_S1)
+    use_in_T0=true,
+    p0=pin_start_S1,
+    T0=Tin_start_S1)
     annotation (Placement(transformation(extent={{-50,142},{-30,122}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,

@@ -48,18 +48,20 @@ equation
     end for;
   end if;
   if m_flow > 0 or not allowFlowReversal then
-    T[1] = inStream(inlet.h_out)/cp + 273.15;
+    //T[1] = inStream(inlet.h_out)/cp;
+    T[1] = (inStream(inlet.h_out))/cp;
     T[2:end] = Ttilde;
   else
     T[1:end - 1] = Ttilde;
-    T[end] = inStream(outlet.h_out)/cp + 273.15;
+    //T[end] = inStream(outlet.h_out)/cp;
+    T[end] =(inStream(outlet.h_out))/cp;
   end if;
   // Boundary conditions
   m_flow = inlet.m_flow;
   inlet.h_out = Ttilde[1]*cp;
   outlet.h_out = Ttilde[N]*cp;
   for i in 1:N loop
-    section_T[i] = Ttilde[i] - 273.15;
+    section_T[i] = Ttilde[i];
   end for;
 initial equation
   der(Ttilde) = zeros(N);

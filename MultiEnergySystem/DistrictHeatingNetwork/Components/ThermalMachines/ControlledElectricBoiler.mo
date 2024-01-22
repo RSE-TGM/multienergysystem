@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledElectricBoiler
   extends
     MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialBoiler;
-  parameter Integer nR = 5 "Total number of resistors";
+  parameter Real nR = 5 "Total number of resistors";
   parameter SI.Power Pmaxres = 10e3 "Electric power of each resistor";
   parameter SI.Resistance R = 47.56 "Nominal resistance of each resistor";
   //parameter SI.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
@@ -24,7 +24,7 @@ equation
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
-  0 = outlet.p - inlet.p "Momentum Balance";
+  0.2e5 = inlet.p - outlet.p "Momentum Balance";
 
   //Pheat = delay(if heat_on then Pmaxres*nR else 0, tdelay);
   Pheat = delay(if heat_on then min(Pheat_ref, Pmaxres*nR) else 0, tdelay);

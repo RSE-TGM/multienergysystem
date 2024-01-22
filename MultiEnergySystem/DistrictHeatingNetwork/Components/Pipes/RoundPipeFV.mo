@@ -79,14 +79,15 @@ model RoundPipeFV
   Types.Pressure pout "Outlet pressure";
   Types.Pressure ptilde "Pressure state the pipe";
   Types.Pressure dp(start = dp_start) "Delta pressure";
-  Types.Mass Mi[n] "Mass of fluid in each finite volume";
+  Types.Mass M[n] "Mass of fluid in each finite volume";
   Types.Mass Mtot "Total Mass in the pipe";
+  Types.Mass Mwall = rhom*L*Am "Mass of the wall";
   Types.SpecificHeatCapacity cp[n + 1] "Specific heat capacity at each fluid";
   Types.Density rho[n + 1](each start = rho_start, each nominal = rho_nom) "Density at each fluid";
   Types.Density rhotilde[n](each start = rho_start, each nominal = rho_nom) "Density at each state fluid";
-
   Types.Power Q_int[n] "Heat dissipation out of each volume into the wall";
   Types.Power Q_ext[n] "Heat dissipation out of each wall cell to the ambient";
+  Types.Power Qtot = sum(Q_int) "Total heat";
 
   Medium fluid[n+1](T_start = T_start, p_start = linspace(pin_start, pout_start, n + 1));
   Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
@@ -111,14 +112,14 @@ equation
 // Mass & Energy Balance
   for i in 1:n loop
     //0 = m_flow[i]- m_flow[i+1];
-    m_flow[i]- m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]));
-
+   // m_flow[i]- m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]));
+    m_flow[i] - m_flow[i+1] = 0;
     //(Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u, m_flow_nom*cons) + M[i]*regStep(inlet.m_flow,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   end for;
 
   if thermalInertia then
     for i in 1:n loop
-      Mi[i]*cp[i+1]*der(Ttilde[i]) = m_flow[i + 1]*cp[i + 1]*(T[i] - T[i + 1]) - Q_int[i] "Energy balance water volume";
+      M[i]*cp[i+1]*der(Ttilde[i]) = m_flow[i + 1]*cp[i + 1]*(T[i] - T[i + 1]) - Q_int[i] "Energy balance water volume";
       L/n*rhom*cm*Am*der(Twall[i]) = Q_int[i] + Q_ext[i] "Energy balance wall";
       // Heat conduction through the internal half-thickness water to wall
       Q_int[i] = U_wm*L/n*(Ttilde[i] - Twall[i]);
@@ -127,7 +128,7 @@ equation
     end for;
   else
     for i in 1:n loop
-      Mi[i]*cp[i+1]*der(Ttilde[i]) = m_flow[i + 1]*cp[i + 1]*(T[i] - T[i + 1]) - Q_ext[i] "Energy balance water";
+      M[i]*cp[i+1]*der(Ttilde[i]) = m_flow[i + 1]*cp[i + 1]*(T[i] - T[i + 1]) - Q_ext[i] "Energy balance water";
       Q_int[i] = 0;
       der(Twall[i]) = 0;
       // Heat exchange outwards
@@ -136,7 +137,7 @@ equation
   end if;
 
   rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*cons);
-  Mi = Vi*rhotilde;
+  M = Vi*rhotilde;
   Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*cons);
 
   // Momentum Balance
@@ -157,7 +158,7 @@ equation
   q = m_flow./rho;
   q_m3h = q*3600;
 
-  Mtot = sum(Mi) "Total mass";
+  Mtot = sum(M) "Total mass";
   //Qtot = sum(wall.Q_flow) "Total heat";
 
   dp = pin-pout;
@@ -188,9 +189,9 @@ initial equation
     else
 //No initial pressure
     end if;
-  if thermalInertia then
-    der(Twall) = zeros(n);
-  end if;
+    if thermalInertia then
+      der(Twall) = zeros(n);
+    end if;
   elseif initOpt == Choices.Init.Options.fixedState then
     for i in 1:n loop
       fluid[i+1].T = T_start[i+1];

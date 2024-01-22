@@ -117,7 +117,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,62})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
     L=L_GB101_P101,
     h=h_GB101_P101,
     t=t_S1,
@@ -130,7 +130,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,-30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(
     L=L_FT101_GB101*0.1,
     h=h_FT101_GB101*0.1,
     t=t_S1,
@@ -184,7 +184,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
         extent={{7,-7},{-7,7}},
         rotation=90,
         origin={-23,1})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_TT101_FT101(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_TT101_FT101(
     L=L_TT101_FT101,
     h=h_TT101_FT101,
     t=t_S1,
@@ -210,7 +210,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     m_flow0=m_flow_S1,
     G=0)
     annotation (Placement(transformation(extent={{30,142},{50,122}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
     L=L_S1_rCD_cold*0.01,
     t=t_S1,
     pin_start=pin_start_S1,
@@ -223,7 +223,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20,110})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
     L=L_S1_rCD_hot,
     t=t_S1,
     pin_start=pout_start_S1,
@@ -240,7 +240,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     annotation (Placement(transformation(extent={{60,52},{40,72}})));
   Modelica.Blocks.Sources.TimeTable P101_omega(table=[t,omegaFCV101])
     annotation (Placement(transformation(extent={{60,-14},{40,6}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(
     L=L_P101_FCV101,
     h=h_P101_FCV101,
     t=t_S1,

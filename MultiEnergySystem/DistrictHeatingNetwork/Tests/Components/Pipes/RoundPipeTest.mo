@@ -2,11 +2,12 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pipes;
 model RoundPipeTest
   extends Modelica.Icons.Example;
   parameter Integer n = 7 "number of volumes";
+  parameter Modelica.Units.SI.Length L = 80;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_hot = 6000;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_cold = 2400;
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rpipe1(
-    L=2,
+    L=L,
     thermalInertia=false,
     rhom(displayUnit="kg/m3"),
     m_flow_start=5,
@@ -19,10 +20,12 @@ model RoundPipeTest
     n=n,
     nPipes=1,
     kc=1,
-    k=1500) annotation (Placement(transformation(extent={{-10,90},{10,110}})));
-  DistrictHeatingNetwork.Sources.SourcePressure sourceP(p0=110000, T0=323.15)
+    k=1500,
+    gamma_nom=5000)
+            annotation (Placement(transformation(extent={{-10,90},{10,110}})));
+  DistrictHeatingNetwork.Sources.SourcePressure sourceP(p0=200000, T0=323.15)
     annotation (Placement(transformation(extent={{-80,70},{-60,90}})));
-  DistrictHeatingNetwork.Sources.SinkPressure sinkP(p0=101000, T0=303.15)
+  DistrictHeatingNetwork.Sources.SinkPressure sinkP(p0=190000, T0=303.15)
     annotation (Placement(transformation(extent={{58,70},{78,90}})));
   DistrictHeatingNetwork.Components.Thermal.Wall.Wall_FixedT wall_FixedT(n=n, Twall=308.15)
     annotation (Placement(transformation(extent={{-10,114},{10,134}})));

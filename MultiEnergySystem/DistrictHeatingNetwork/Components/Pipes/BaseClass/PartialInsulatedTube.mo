@@ -29,17 +29,17 @@ partial model PartialInsulatedTube
 
   parameter Types.Temperature T_ext = 25 + 273.15 "External temperature" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.MassFlowRate m_flow_start "Start value for mass flow rate" annotation (
+  parameter Types.MassFlowRate m_flow_start = 1 "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pin_start "Pressure start value of outgoing fluid" annotation (
+  parameter Types.Pressure pin_start = 2e5 "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pout_start "Pressure start value of outgoing fluid" annotation (
+  parameter Types.Pressure pout_start = 1.8e5 "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.SpecificEnthalpy hin_start = 3.3e5 "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tin_start "Temperature start value of fluid at the start of the heat exchanger" annotation (
+  parameter Types.Temperature Tin_start = 25 + 273.15 "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tout_start "Temperature start value of fluid at the end of the heat exchanger" annotation (
+  parameter Types.Temperature Tout_start = 24.8 + 273.15 "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
 equation
 

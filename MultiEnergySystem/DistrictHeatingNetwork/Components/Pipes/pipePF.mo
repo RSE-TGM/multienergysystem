@@ -9,6 +9,8 @@ model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (P
   parameter SI.MassFlowRate m_flow_start = 1 "Starting mass flow";
   parameter SI.MassFlowRate m_flow_small = 0.01 "Minimum mass flow rate for regularization";
   parameter SI.PerUnit cf = 0.004 "Constant Fanning factor";
+  // Pressure initial parameteers
+  parameter SI.Pressure pin_start "Starting initial pressure";
   // Parameter
   parameter SI.Length L "Length";
   parameter SI.Length D "Internal diameter";
@@ -30,11 +32,17 @@ model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (P
   parameter SI.SpecificHeatCapacity cpm;
   final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((D/2 + t)^2 - (D/2)^2)*L*cpm*rhom/(cp*rho0) "Volume of water equivalent to the metal";
   final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*1) "Consider a diameter of 2, compute hight";
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow outletHeatLosses(Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow outletHeatLosses(
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,                                                                                           Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation (
     Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PlugFlowCore plugFlowCore(Di = D, L = L, T_ext = T_ext, T_start = T_start, cf = cf, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_small = m_flow_small, rhom = rhom, u_nom = u_nom) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PlugFlowCore plugFlowCore(
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,                                                                        Di = D, L = L, T_ext = T_ext, T_start = T_start, cf = cf, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_small = m_flow_small, rhom = rhom, u_nom = u_nom) annotation (
     Placement(visible = true, transformation(origin = {-10, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow inletHeatLosses(Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow inletHeatLosses(
+    m_flow_start=m_flow_start,
+    pout_start=pin_start,                                                                                         Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation (
     Placement(visible = true, transformation(origin={-70,0},    extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor massFlowSensor annotation (
     Placement(visible = true, transformation(origin = {-38, 4}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -58,9 +66,9 @@ equation
   connect(timeDelayPlugFlow.tau_rev, inletHeatLosses.tau) annotation (
     Line(points={{-4.5,22.5},{5.5,22.5},{5.5,12.5},{-62,12.5},{-62,6}},            color = {0, 0, 127}));
   connect(outletHeatLosses.outlet, metalInertiaEquivalent.inlet) annotation (
-    Line(points={{50,0},{54.5,0},{54.5,-4},{62.5714,-4}},     color = {168, 168, 168}));
+    Line(points={{50,0},{54.5,0},{54.5,-4},{60.2857,-4}},     color = {168, 168, 168}));
   connect(metalInertiaEquivalent.outlet, outlet) annotation (
-    Line(points={{69.4286,-4},{69.4286,2.28571},{100,2.28571},{100,0}},color = {168, 168, 168}));
+    Line(points={{71.7143,-4},{71.7143,2.28571},{100,2.28571},{100,0}},color = {168, 168, 168}));
   connect(timeDelayPlugFlow.tau, outletHeatLosses.tau) annotation (
     Line(points={{-4.7,30.3},{32,30.3},{32,6}},  color = {0, 0, 127}));
   annotation (

@@ -1,7 +1,10 @@
 RackCDSystem
 GasBoilerSystem
 GasBoilerSystemTest
+GasBoilerSystemTestB
 ElectricBoilerSystem
+ElectricBoilerSystemTest
+ElectricBoilerSystemTestB
 PumpingCirculationSystem
 WaterTankSystem
 StratifiedWaterTankSystem

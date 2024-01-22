@@ -32,7 +32,7 @@ model ElectricBoilerSystem
     m_flow_nom=1,
     pin_start=300000,
     pout_start=290000) annotation (Placement(visible=true, transformation(
-        origin={0,-158},
+        origin={0,-140},
         extent={{-52,-52},{52,52}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
@@ -58,7 +58,7 @@ model ElectricBoilerSystem
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={20,-7})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV401(
     Kv=Valve.FCV101.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV101.dp_nom,
@@ -167,6 +167,8 @@ model ElectricBoilerSystem
     offset=1,
     startTime=3000)
     annotation (Placement(transformation(extent={{62,20},{42,40}})));
+  Modelica.Blocks.Sources.TimeTable EB401_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
+    annotation (Placement(transformation(extent={{-90,-150},{-70,-130}})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
       points={{20,-16.6},{20,-36}},
@@ -210,11 +212,11 @@ equation
   connect(FCV101_theta_.y,FCV401. opening)
     annotation (Line(points={{41,30},{28,30}}, color={0,0,127}));
   connect(PL2_S401.outlet, EB401.inlet) annotation (Line(
-      points={{-20,-58},{-20,-115.8},{-15.6,-115.8},{-15.6,-116.4}},
+      points={{-20,-58},{-20,-80},{-15.6,-80},{-15.6,-98.4}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet, PL_S400_EB401_P401.inlet) annotation (Line(
-      points={{15.6,-116.4},{15.6,-116},{20,-116},{20,-56}},
+      points={{15.6,-98.4},{16,-98.4},{16,-80},{20,-80},{20,-56}},
       color={140,56,54},
       thickness=0.5));
   connect(TT402.inlet, sink.inlet) annotation (Line(
@@ -225,6 +227,8 @@ equation
       points={{-34,176},{-19.6,176},{-19.6,106}},
       color={140,56,54},
       thickness=0.5));
+  connect(EB401_ToutSP.y, EB401.Tout_ref)
+    annotation (Line(points={{-69,-140},{-41.6,-140}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-200},{160,200}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

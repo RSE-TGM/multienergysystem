@@ -120,18 +120,19 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
     pout_start=pin_start_S4,
     Tin_start=Tin_start_S4,
     Tout_start=Tin_start_S4,
-    Di=Di_S4) annotation (Placement(transformation(
+    Di=Di_S4,
+    q_m3h_start=q_m3h_S4)
+              annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20,-60})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL4_S401(
     L=L_S4_PL3,
-    h=0.2,
+    h=0.8,
     t=t_S4,
     m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
@@ -176,12 +177,13 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
-    m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
     pout_start=pin_start_S4,
     Tin_start=Tin_start_S4,
     Tout_start=Tin_start_S4,
-    Di=Di_S4) annotation (Placement(transformation(
+    Di=Di_S4,
+    q_m3h_start=q_m3h_S4)
+              annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20,0})));
@@ -190,7 +192,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     use_in_T0=true,
     p0=pin_start_S4,
     T0=Tin_start_S4)
-    annotation (Placement(transformation(extent={{-54,200},{-34,180}})));
+    annotation (Placement(transformation(extent={{-54,150},{-34,130}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,
     use_in_T=false,
@@ -198,15 +200,15 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     p0=pout_start_S4,
     T0=Tout_start_S4,
     m_flow0=m_flow_S4)
-    annotation (Placement(transformation(extent={{24,200},{44,180}})));
+    annotation (Placement(transformation(extent={{24,150},{44,130}})));
   Modelica.Blocks.Sources.TimeTable EB401ToutSP(table=EB401_ToutSP)
     annotation (Placement(transformation(extent={{-90,-150},{-70,-130}})));
   Modelica.Blocks.Sources.TimeTable TT401_profile(table=[t,TT_401])
-    annotation (Placement(transformation(extent={{-80,120},{-60,140}})));
+    annotation (Placement(transformation(extent={{-80,70},{-60,90}})));
   Modelica.Blocks.Sources.TimeTable PT401_profile(table=[t,PT_401])
-    annotation (Placement(transformation(extent={{-80,150},{-60,170}})));
+    annotation (Placement(transformation(extent={{-80,100},{-60,120}})));
   Modelica.Blocks.Sources.TimeTable FT401_profile(table=[t,FT_401])
-    annotation (Placement(transformation(extent={{60,150},{40,170}})));
+    annotation (Placement(transformation(extent={{60,100},{40,120}})));
   Modelica.Blocks.Sources.TimeTable P401_omega(table=[t,omegaFCV401])
     annotation (Placement(transformation(extent={{60,-36},{40,-16}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=[t,thetaFCV401])
@@ -260,19 +262,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT401_profile.y, sink.in_m_flow)
-    annotation (Line(points={{39,160},{28,160},{28,185}}, color={0,0,127}));
+    annotation (Line(points={{39,110},{28,110},{28,135}}, color={0,0,127}));
   connect(source.outlet, TT401.inlet) annotation (Line(
-      points={{-34,190},{-19.6,190},{-19.6,96}},
+      points={{-34,140},{-19.6,140},{-19.6,96}},
       color={140,56,54},
       thickness=0.5));
   connect(sink.inlet, TT402.inlet) annotation (Line(
-      points={{24,190},{19.6,190},{19.6,96}},
+      points={{24,140},{19.6,140},{19.6,96}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401_profile.y, source.in_p0)
-    annotation (Line(points={{-59,160},{-48,160},{-48,181.6}}, color={0,0,127}));
+    annotation (Line(points={{-59,110},{-48,110},{-48,131.6}}, color={0,0,127}));
   connect(TT401_profile.y, source.in_T0)
-    annotation (Line(points={{-59,130},{-40,130},{-40,181.6}}, color={0,0,127}));
+    annotation (Line(points={{-59,80},{-40,80},{-40,131.6}},   color={0,0,127}));
   connect(P401_omega.y, P401.in_omega)
     annotation (Line(points={{39,-26},{32.5,-26},{32.5,-25.8},{26,-25.8}}, color={0,0,127}));
   connect(FCV401_theta.y, FCV401.opening)

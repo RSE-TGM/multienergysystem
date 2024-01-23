@@ -27,7 +27,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
   parameter Types.Length L_TT101_FT101 = 0.7;
   parameter Types.Length h_TT101_FT101 = 0;
   parameter Types.Length L_FT101_GB101 = 1.25 + 0.7;
-  parameter Types.Length h_FT101_GB101 = -0.7;
+  parameter Types.Length h_FT101_GB101 = -0.7*0;
   parameter Types.Length L_GB101_P101 = 0.7 + 0.95;
   parameter Types.Length h_GB101_P101 = 0.7 + 0.95;
   parameter Types.Length L_P101_FCV101 = 1;
@@ -69,10 +69,10 @@ model GasBoilerSystemTest "Test of System 100 with real data"
   final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
   final parameter Real TT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT101,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
   final parameter Real TT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT102,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real FT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2])*985/3600 "Matrix data";
-  final parameter Real q_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2]) "Matrix data";
-  final parameter Real PT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT101,dim[1]+1,dim[2])*1e5 "Matrix data";
-  final parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1]+1,dim[2])*1e5 "Matrix data";
+  parameter Real FT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2])*985/3600 "Matrix data";
+  parameter Real q_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2]) "Matrix data";
+  parameter Real PT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT101,dim[1]+1,dim[2])*1e5 "Matrix data";
+  parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1]+1,dim[2])*1e5 "Matrix data";
   final parameter Real thetaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV101,dim[1],dim[2]) "Matrix data";
   final parameter Real omegaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixf_P101,dim[1],dim[2])*2*Modelica.Constants.pi "Matrix data";
 
@@ -211,7 +211,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     G=0)
     annotation (Placement(transformation(extent={{30,142},{50,122}})));
   replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
-    L=L_S1_rCD_cold*0.01,
+    L=L_S1_rCD_cold*0.001,
     t=t_S1,
     pin_start=pin_start_S1,
     Tin_start=Tin_start_S1,

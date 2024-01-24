@@ -55,7 +55,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
 
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
-    Placement(visible = true, transformation(origin={150,190},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={150,150},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler
     EB401(
@@ -70,8 +70,8 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     pin_start=300000,
     pout_start=290000,
     nR=3.5)            annotation (Placement(visible=true, transformation(
-        origin={0,-140},
-        extent={{-52,-52},{52,52}},
+        origin={0,-106},
+        extent={{-44,-44},{44,44}},
         rotation=0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P401(
@@ -97,7 +97,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     use_in_omega=true)                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
-        origin={20,-21})));
+        origin={20,-1})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV401(
     Kv=Valve.FCV401.Kv,
@@ -106,7 +106,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     pin_start=pout_start_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={20,10})));
+        origin={20,30})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL_S400_EB401_P401(
     L=L_S4_PL3,
     t=t_S4,
@@ -116,7 +116,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     Di=Di_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={20,-60})));
+        origin={20,-30})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
@@ -129,7 +129,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
               annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-20,-60})));
+        origin={-20,-30})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL4_S401(
     L=L_S4_PL3,
     h=0.8,
@@ -142,7 +142,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     Di=Di_S4) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={20,50})));
+        origin={20,64})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT402(T_start=Tout_start_S4, p_start=pout_start_S4)
     "Temperature sensor at the outlet of valve FCV401"       annotation (
@@ -173,7 +173,7 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
-        origin={-23,-29})));
+        origin={-23,-9})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
@@ -186,13 +186,13 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
               annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-20,0})));
+        origin={-20,30})));
   Sources.SourcePressure source(
     use_in_p0=true,
     use_in_T0=true,
     p0=pin_start_S4,
     T0=Tin_start_S4)
-    annotation (Placement(transformation(extent={{-54,150},{-34,130}})));
+    annotation (Placement(transformation(extent={{-54,130},{-34,110}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,
     use_in_T=false,
@@ -200,26 +200,26 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     p0=pout_start_S4,
     T0=Tout_start_S4,
     m_flow0=m_flow_S4)
-    annotation (Placement(transformation(extent={{24,150},{44,130}})));
+    annotation (Placement(transformation(extent={{36,130},{56,110}})));
   Modelica.Blocks.Sources.TimeTable EB401ToutSP(table=EB401_ToutSP)
-    annotation (Placement(transformation(extent={{-90,-150},{-70,-130}})));
+    annotation (Placement(transformation(extent={{-80,-116},{-60,-96}})));
   Modelica.Blocks.Sources.TimeTable TT401_profile(table=[t,TT_401])
-    annotation (Placement(transformation(extent={{-80,70},{-60,90}})));
+    annotation (Placement(transformation(extent={{-80,40},{-60,60}})));
   Modelica.Blocks.Sources.TimeTable PT401_profile(table=[t,PT_401])
-    annotation (Placement(transformation(extent={{-80,100},{-60,120}})));
+    annotation (Placement(transformation(extent={{-80,80},{-60,100}})));
   Modelica.Blocks.Sources.TimeTable FT401_profile(table=[t,FT_401])
-    annotation (Placement(transformation(extent={{60,100},{40,120}})));
+    annotation (Placement(transformation(extent={{80,80},{60,100}})));
   Modelica.Blocks.Sources.TimeTable P401_omega(table=[t,omegaFCV401])
-    annotation (Placement(transformation(extent={{60,-36},{40,-16}})));
+    annotation (Placement(transformation(extent={{60,-16},{40,4}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=[t,thetaFCV401])
-    annotation (Placement(transformation(extent={{60,0},{40,20}})));
+    annotation (Placement(transformation(extent={{60,20},{40,40}})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
-      points={{20,-30.6},{20,-50}},
+      points={{20,-10.6},{20,-20}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV401.inlet,P401. outlet) annotation (Line(
-      points={{20,0},{20,-11.4}},
+      points={{20,20},{20,8.6}},
       color={140,56,54},
       thickness=0.5));
 
@@ -228,19 +228,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S401.inlet,FCV401. outlet) annotation (Line(
-      points={{20,40},{20,20}},
+      points={{20,54},{20,40}},
       color={140,56,54},
       thickness=0.5));
   connect(PT402.inlet,PL4_S401. outlet) annotation (Line(
-      points={{19.6,84},{19.6,75},{20,75},{20,60}},
+      points={{19.6,84},{19.6,75},{20,75},{20,74}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.outlet,FT401. inlet) annotation (Line(
-      points={{-20,-10},{-20,-21.4},{-20.2,-21.4},{-20.2,-24.8}},
+      points={{-20,20},{-20,7.6},{-20.2,7.6},{-20.2,-4.8}},
       color={140,56,54},
       thickness=0.5));
   connect(PL1_S401.inlet,PT401. inlet) annotation (Line(
-      points={{-20,10},{-20,84},{-19.6,84}},
+      points={{-20,40},{-20,84},{-19.6,84}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401.inlet,TT401. inlet) annotation (Line(
@@ -248,40 +248,39 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S401.outlet, EB401.inlet) annotation (Line(
-      points={{-20,-70},{-20,-80},{-15.6,-80},{-15.6,-98.4}},
+      points={{-20,-40},{-20,-52.7},{-13.2,-52.7},{-13.2,-70.8}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401.outlet, PL_S400_EB401_P401.inlet) annotation (Line(
-      points={{15.6,-98.4},{16,-98.4},{16,-80},{20,-80},{20,-70}},
+      points={{13.2,-70.8},{14,-70.8},{14,-52},{20,-52},{20,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401ToutSP.y, EB401.Tout_ref)
-    annotation (Line(points={{-69,-140},{-41.6,-140}}, color={0,0,127}));
+    annotation (Line(points={{-59,-106},{-35.2,-106}}, color={0,0,127}));
   connect(PL2_S401.inlet, FT401.outlet) annotation (Line(
-      points={{-20,-50},{-20,-41.6},{-20.2,-41.6},{-20.2,-33.2}},
+      points={{-20,-20},{-20,-21.6},{-20.2,-21.6},{-20.2,-13.2}},
       color={140,56,54},
       thickness=0.5));
   connect(FT401_profile.y, sink.in_m_flow)
-    annotation (Line(points={{39,110},{28,110},{28,135}}, color={0,0,127}));
+    annotation (Line(points={{59,90},{40,90},{40,115}},   color={0,0,127}));
   connect(source.outlet, TT401.inlet) annotation (Line(
-      points={{-34,140},{-19.6,140},{-19.6,96}},
+      points={{-34,120},{-19.6,120},{-19.6,96}},
       color={140,56,54},
       thickness=0.5));
   connect(sink.inlet, TT402.inlet) annotation (Line(
-      points={{24,140},{19.6,140},{19.6,96}},
+      points={{36,120},{19.6,120},{19.6,96}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401_profile.y, source.in_p0)
-    annotation (Line(points={{-59,110},{-48,110},{-48,131.6}}, color={0,0,127}));
+    annotation (Line(points={{-59,90},{-48,90},{-48,111.6}},   color={0,0,127}));
   connect(TT401_profile.y, source.in_T0)
-    annotation (Line(points={{-59,80},{-40,80},{-40,131.6}},   color={0,0,127}));
+    annotation (Line(points={{-59,50},{-40,50},{-40,111.6}},   color={0,0,127}));
   connect(P401_omega.y, P401.in_omega)
-    annotation (Line(points={{39,-26},{32.5,-26},{32.5,-25.8},{26,-25.8}}, color={0,0,127}));
+    annotation (Line(points={{39,-6},{32.5,-6},{32.5,-5.8},{26,-5.8}},     color={0,0,127}));
   connect(FCV401_theta.y, FCV401.opening)
-    annotation (Line(points={{39,10},{28,10}}, color={0,0,127}));
+    annotation (Line(points={{39,30},{28,30}}, color={0,0,127}));
   annotation (
-    Diagram(coordinateSystem(extent={{-160,-200},{160,200}})),             Icon(
-        coordinateSystem(grid={0.5,0.5})),
+    Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),
     experiment(
       StopTime=7800,
       Tolerance=1e-06,

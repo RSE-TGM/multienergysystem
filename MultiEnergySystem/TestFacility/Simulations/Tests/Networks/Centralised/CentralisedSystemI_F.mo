@@ -68,9 +68,7 @@ model CentralisedSystemI_F
     lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_cold,
     lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_hot,
     m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_cold,
-
     m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_hot,
-
     n=5,
     nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_cold,
     nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_hot,
@@ -84,9 +82,7 @@ model CentralisedSystemI_F
     rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_hot +
         DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_cold,
-
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_hot,
-
     thermalInertia=false,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_hot) annotation (
@@ -94,6 +90,7 @@ model CentralisedSystemI_F
         origin={-636,-189},
         extent={{-17,-28.0002},{17,28.0001}},
         rotation=-90)));
+
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P501(
     Tin_start(displayUnit="K") = Tout_User_start_S5,
     Tout_start(displayUnit="K") = Tout_User_start_S5,
@@ -108,12 +105,9 @@ model CentralisedSystemI_F
     m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P501.m_flow_nom,
     omeganom=DistrictHeatingNetwork.Data.PumpData.P501.omeganom,
     pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pin_start,
-
     pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pout_start,
-
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P501.rhonom,
-
     headnom=DistrictHeatingNetwork.Data.PumpData.P501.headnom,
     headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
@@ -123,6 +117,7 @@ model CentralisedSystemI_F
         extent={{-14,14},{14,-14}},
         rotation=90,
         origin={-616,-142})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_cold(
     L=5,
     t=t_S5,
@@ -258,12 +253,9 @@ model CentralisedSystemI_F
     m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P501.m_flow_nom,
     omeganom=DistrictHeatingNetwork.Data.PumpData.P501.omeganom,
     pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pin_start,
-
     pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pout_start,
-
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P501.rhonom,
-
     headnom=DistrictHeatingNetwork.Data.PumpData.P501.headnom,
     headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
@@ -273,6 +265,7 @@ model CentralisedSystemI_F
         extent={{-12.5,12},{12.5,-12}},
         rotation=90,
         origin={-616,-291.5})));
+
   DistrictHeatingNetwork.Sources.PumpInput PCHP_input(
     useOmega=false,
     omega=Pchpomega,
@@ -281,7 +274,6 @@ model CentralisedSystemI_F
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV1(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV401.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom,
-
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom,
     q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S4,
@@ -290,6 +282,7 @@ model CentralisedSystemI_F
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-616,-264})));
+
   Modelica.Blocks.Sources.TimeTable FCVchp_theta(table=FCVchptheta)
     annotation (Placement(transformation(extent={{-580,-274},{-600,-254}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkCHP(

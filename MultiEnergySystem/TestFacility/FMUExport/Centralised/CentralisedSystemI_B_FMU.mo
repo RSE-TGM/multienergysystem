@@ -13,7 +13,7 @@ model CentralisedSystemI_B_FMU
     annotation (Placement(transformation(extent={{-692,94},{-732,134}})));
   Modelica.Blocks.Interfaces.RealInput q_P901
     annotation (Placement(transformation(extent={{-690,46},{-730,86}})));
-  Modelica.Blocks.Interfaces.RealInput q_PR01
+  Modelica.Blocks.Interfaces.RealInput omega_PR01
     annotation (Placement(transformation(extent={{646,-228},{686,-188}})));
   Modelica.Blocks.Interfaces.RealInput FCV_R01
     annotation (Placement(transformation(extent={{716,-350},{756,-310}})));
@@ -94,8 +94,6 @@ equation
     annotation (Line(points={{549.1,-320},{514,-320}}, color={0,0,127}));
   connect(FCV_R01, FCVR01.opening) annotation (Line(points={{736,-330},{750,-330},
           {750,-328},{766,-328},{766,-352}}, color={0,0,127}));
-  connect(q_PR01, PR01.in_q_m3hr) annotation (Line(points={{666,-208},{682.01,-208},
-          {682.01,-207.8},{698.02,-207.8}}, color={0,0,127}));
   connect(RR01_Tout, RR01.Tout_SP) annotation (Line(points={{738,-58},{767.5,-58},
           {767.5,-97.2}}, color={0,0,127}));
   connect(FCV_701, FCV701.opening)
@@ -126,6 +124,8 @@ equation
     annotation (Line(points={{249.5,-120},{230,-120}}, color={0,0,127}));
   connect(TT702.T, TT_702)
     annotation (Line(points={{89.5,-120},{70,-120}}, color={0,0,127}));
+  connect(omega_PR01, PR01.in_omega) annotation (Line(points={{666,-208},{681.75,-208},{681.75,
+          -207.8},{697.5,-207.8}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B_FMU;

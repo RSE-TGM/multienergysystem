@@ -25,13 +25,15 @@ model ControlledGasBoiler
         transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent=
            {{-100,-20},{-60,20}})));
 equation
-  inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
+  //inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
+  inlet.p - outlet.p = rho*9.81*h;
   fluidOut_ref.p = pout;
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
 
-  Pheat = delay(if heat_on then min(Pheat_ref, Pmaxnom) else 0, tdelay);
+  //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxnom) else 0, tdelay);
+  Pheat = min(Pheat_ref, Pmaxnom);
 
   when Tout_ref - T_bandwidth > Tout and pre(heat_on)==false then
     heat_on=  true;

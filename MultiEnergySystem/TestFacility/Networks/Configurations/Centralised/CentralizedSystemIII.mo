@@ -56,7 +56,6 @@ partial model CentralizedSystemIII
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P201(
     pout_start(displayUnit="Pa") = 3e5,
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P201.Tin_start,
-
     Tout_start=DistrictHeatingNetwork.Data.PumpData.P201.Tout_start,
     a=DistrictHeatingNetwork.Data.PumpData.P201.a,
     b=DistrictHeatingNetwork.Data.PumpData.P201.b,
@@ -72,7 +71,6 @@ partial model CentralizedSystemIII
     headnom=DistrictHeatingNetwork.Data.PumpData.P201.headnom,
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P201.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P201.rhonom,
-
     headmax=DistrictHeatingNetwork.Data.PumpData.P201.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P201.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h,
@@ -81,6 +79,7 @@ partial model CentralizedSystemIII
         extent={{-12,12},{12,-12}},
         rotation=-90,
         origin={-802,-206})));
+
               DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=4,
     n=3,
@@ -118,12 +117,12 @@ partial model CentralizedSystemIII
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-862,-196})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(
     L=L_S2_PL3,
     t=L_S2,
@@ -295,60 +294,60 @@ partial model CentralizedSystemIII
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-832,-126})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=-90,
         origin={-802,-146})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2/4) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=180,
         origin={-782,-184})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=-90,
         origin={-802,-266})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2/4) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=0,
         origin={-782,-252})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV201.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=90,
         origin={-762,-216})));
+
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT201(T_start=
         Tout_start_S2) "Flow sensor at the outlet of system S200" annotation (
       Placement(transformation(

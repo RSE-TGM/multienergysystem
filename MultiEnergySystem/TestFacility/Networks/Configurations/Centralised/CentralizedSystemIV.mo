@@ -62,9 +62,7 @@ partial model CentralizedSystemIV
     lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_cold,
     lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_hot,
     m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_cold,
-
     m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_hot,
-
     n=5,
     nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_cold,
     nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_hot,
@@ -78,9 +76,7 @@ partial model CentralizedSystemIV
     rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_hot +
         DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_cold,
-
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_hot,
-
     thermalInertia=false,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_hot) annotation (
@@ -88,6 +84,7 @@ partial model CentralizedSystemIV
         origin={-608,-197},
         extent={{-17,-28.0002},{17,28.0001}},
         rotation=-90)));
+
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P501(
     Tin_start(displayUnit="K") = Tout_User_start_S5,
     Tout_start(displayUnit="K") = Tout_User_start_S5,
@@ -102,12 +99,9 @@ partial model CentralizedSystemIV
     m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P501.m_flow_nom,
     omeganom=DistrictHeatingNetwork.Data.PumpData.P501.omeganom,
     pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pin_start,
-
     pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pout_start,
-
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P501.rhonom,
-
     headnom=DistrictHeatingNetwork.Data.PumpData.P501.headnom,
     headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
@@ -117,6 +111,7 @@ partial model CentralizedSystemIV
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-588,-153})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_cold(
     L=5,
     t=t_S5,

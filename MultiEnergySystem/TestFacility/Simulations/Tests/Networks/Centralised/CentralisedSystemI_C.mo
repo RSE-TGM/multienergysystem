@@ -68,7 +68,6 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P201(
     pout_start(displayUnit="Pa") = 3e5,
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P201.Tin_start,
-
     Tout_start=DistrictHeatingNetwork.Data.PumpData.P201.Tout_start,
     a=DistrictHeatingNetwork.Data.PumpData.P201.a,
     b=DistrictHeatingNetwork.Data.PumpData.P201.b,
@@ -84,7 +83,6 @@ model CentralisedSystemI_C
     headnom=DistrictHeatingNetwork.Data.PumpData.P201.headnom,
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P201.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P201.rhonom,
-
     headmax=DistrictHeatingNetwork.Data.PumpData.P201.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P201.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h,
@@ -93,6 +91,7 @@ model CentralisedSystemI_C
         extent={{-12,12},{12,-12}},
         rotation=-90,
         origin={-790,-208})));
+
               DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=4,
     n=3,
@@ -130,12 +129,12 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-850,-198})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(
     L=L_S2_PL3,
     t=L_S2,
@@ -307,12 +306,12 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-820,-128})));
+
   Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k=FV202_state)
     annotation (Placement(transformation(extent={{-6,-6},{6,6}},
         rotation=-90,
@@ -324,12 +323,12 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=-90,
         origin={-790,-148})));
+
   Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k=FV201_state)
     annotation (Placement(transformation(extent={{-808,-154},{-796,-142}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status
@@ -337,13 +336,13 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2/4) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=180,
         origin={-770,-186})));
+
   Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k=FV206_state)
     annotation (Placement(transformation(extent={{-6,6},{6,-6}},
         rotation=270,
@@ -355,12 +354,12 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=-90,
         origin={-790,-268})));
+
   Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k=FV209_state)
     annotation (Placement(transformation(extent={{-5.5,-6},{5.5,6}},
         rotation=0,
@@ -373,23 +372,23 @@ model CentralisedSystemI_C
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2/4) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=0,
         origin={-770,-254})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV201.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2) annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=90,
         origin={-750,-218})));
+
   Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k=FV203_state)
     annotation (Placement(transformation(extent={{-730,-224},{-741,-212}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV203_Status

@@ -24,10 +24,12 @@ equation
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
-  0.2e5 = inlet.p - outlet.p "Momentum Balance";
+  //0.2e5 = inlet.p - outlet.p "Momentum Balance";
+  990*9.81*h = inlet.p - outlet.p "Momentum Balance";
 
   //Pheat = delay(if heat_on then Pmaxres*nR else 0, tdelay);
-  Pheat = delay(if heat_on then min(Pheat_ref, Pmaxres*nR) else 0, tdelay);
+  //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxres*nR) else 0, tdelay);
+  Pheat = min(Pheat_ref, Pmaxres*nR);
 
   when Tout_ref - T_bandwidth > Tout and pre(heat_on)== false then
     heat_on=  true;

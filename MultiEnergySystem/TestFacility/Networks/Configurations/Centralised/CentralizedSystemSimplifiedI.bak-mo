@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.Networks.Configurations.Centralised;
-partial model CentralizedSystemI
+partial model CentralizedSystemSimplifiedI
   "System with only Gas Boiler as source of heat"
-  extends Networks.Configurations.BaseClass.CentralizedNetworkBase;
+  extends Networks.Configurations.BaseClass.CentralizedNetworkBaseLoadSimplified;
   // System S100
 
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1=1.695e5;
@@ -250,4 +250,4 @@ equation
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
-end CentralizedSystemI;
+end CentralizedSystemSimplifiedI;

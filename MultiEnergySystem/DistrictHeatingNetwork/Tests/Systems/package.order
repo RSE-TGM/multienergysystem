@@ -2,6 +2,7 @@ RackCDSystem
 GasBoilerSystem
 GasBoilerSystemTest
 GasBoilerSystemTestB
+GasBoilerSystemTestC
 ElectricBoilerSystem
 ElectricBoilerSystemTest
 ElectricBoilerSystemTestB
@@ -36,3 +37,6 @@ Sequences
 GBEBCompleteSystem
 BaseTestSystem
 CoolingSystemOpenLoop
+LoadPlantBase
+LoadPlant
+LoadPlantSimplified

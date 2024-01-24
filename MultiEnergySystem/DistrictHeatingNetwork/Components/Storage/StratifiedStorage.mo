@@ -2,7 +2,9 @@
 model StratifiedStorage
   "Model a perfectly mixed thermal storage with insulation all around. Output temperature in Celsius [°C]"
   extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
+    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume(redeclare
+      model Medium =
+        DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity);
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   parameter Integer n = 3 "Number of volumes (min = 2)" annotation (
     Dialog(tab = "Data", group = "Fluid"));

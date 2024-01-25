@@ -53,13 +53,13 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
     annotation (Placement(transformation(extent={{661,-160},{641,-140}})));
   Modelica.Blocks.Sources.TimeTable GB101_Tout_SP(table=GB101_ToutSP)
     annotation (Placement(transformation(extent={{-318,-310},{-298,-290}})));
-  Modelica.Blocks.Sources.TimeTable FT723_(table=EX721q_m3h_cold)
+  Modelica.Blocks.Sources.TimeTable FT723_(table=EX721q_m3h_cold*1000/3600)
     annotation (Placement(transformation(extent={{530,-340},{550,-320}})));
-  Modelica.Blocks.Sources.TimeTable FT713_(table=EX711q_m3h_cold)
+  Modelica.Blocks.Sources.TimeTable FT713_(table=EX711q_m3h_cold*1000/3600)
     annotation (Placement(transformation(extent={{370,-340},{390,-320}})));
-  Modelica.Blocks.Sources.TimeTable FT733_(table=EX731q_m3h_cold)
+  Modelica.Blocks.Sources.TimeTable FT733_(table=EX731q_m3h_cold*1000/3600)
     annotation (Placement(transformation(extent={{210,-340},{230,-320}})));
-  Modelica.Blocks.Sources.TimeTable FT703_(table=EX701q_m3h_cold)
+  Modelica.Blocks.Sources.TimeTable FT703_(table=EX701q_m3h_cold*1000/3600)
     annotation (Placement(transformation(extent={{50,-340},{70,-320}})));
   Modelica.Blocks.Sources.TimeTable TT703_(table=EX701_TinCold)
     annotation (Placement(transformation(extent={{192,-280},{172,-260}})));

@@ -34,5 +34,8 @@ equation
   inStream(inlet.h_out) = outlet.h_out;
   inStream(outlet.h_out) = inlet.h_out;
 annotation (
-    Icon(graphics={  Rectangle(origin = {-50, 0}, lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-50, 44}, {50, -44}}), Rectangle(origin = {50, -1}, lineColor = {102, 102, 102}, fillColor = {173, 173, 173}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-50, 23}, {50, -23}})}));
+    Icon(graphics={  Rectangle(origin = {-50, 0}, lineColor = {102, 102, 102}, fillColor={192,80,77},       fillPattern=
+              FillPattern.Solid,                                                                                                                          extent = {{-50, 44}, {50, -44}}), Rectangle(origin = {50, -1}, lineColor = {102, 102, 102}, fillColor={192,80,
+              77},                                                                                                                                                                                                        fillPattern=
+              FillPattern.Solid,                                                                                                                                                                                                        extent = {{-50, 23}, {50, -23}})}));
 end SuddenAreaChange;

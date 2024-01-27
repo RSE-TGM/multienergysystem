@@ -8,8 +8,6 @@ partial model PartialLumpedVolume
   outer System system "system object for global defaults";
 
   //Fluid model
-//   replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
-//     choicesAllMatching = true);
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
     choicesAllMatching = true);
 

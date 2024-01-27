@@ -30,7 +30,7 @@ model PumpTestBase "Base test model for pumps' tests"
     Placement(visible = true, transformation(origin={-30,70},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp theta(duration = 20, height = 0, offset = 1, startTime = 30) annotation (
     Placement(visible = true, transformation(origin={10,80},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale cvalve(Kv = 33.25192916, dp_nom = 20000) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve cvalve(Kv = 33.25192916, dp_nom = 20000) annotation (
     Placement(visible = true, transformation(origin={28,50},    extent = {{-8, -8}, {8, 8}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sink(T0 = 85 + 273.15, m_flow0 = 4, p0(displayUnit = "Pa") = 4e5, pin_start(displayUnit = "Pa") = 4e5, use_in_m_flow = true)  annotation (
     Placement(visible = true, transformation(origin={76,50},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -58,7 +58,7 @@ model PumpTestBase "Base test model for pumps' tests"
         origin={0,-20},
         extent={{-18,-18},{18,18}},
         rotation=0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     cvalve_40Hz(Kv=33.25192916, dp_nom=20000) annotation (Placement(visible=
           true, transformation(
         origin={40,-10},
@@ -94,7 +94,7 @@ model PumpTestBase "Base test model for pumps' tests"
         origin={0,-80},
         extent={{-18,-18},{18,18}},
         rotation=0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     cvalve_30Hz(Kv=33.25192916, dp_nom=20000) annotation (Placement(visible=
           true, transformation(
         origin={52,-70},

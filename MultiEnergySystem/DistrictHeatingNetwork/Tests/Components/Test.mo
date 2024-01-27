@@ -109,13 +109,13 @@ package Test "Package to test component equation and behaviour"
       Placement(visible = true, transformation(origin = {-28, 28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Sources.Constant minimumOpen(k = 0) annotation (
       Placement(visible = true, transformation(origin = {-24, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale halfOpenValve(Kv=12,
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve halfOpenValve(Kv=12,
         openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear)
       annotation (Placement(visible=true, transformation(
           origin={6,0},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale closedValve(Kv = 12)  annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve closedValve(Kv = 12)  annotation (
       Placement(visible = true, transformation(origin = {6, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(closedValve.outlet, HP.inlet) annotation (

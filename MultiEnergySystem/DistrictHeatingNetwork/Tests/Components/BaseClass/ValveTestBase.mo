@@ -8,7 +8,7 @@ model ValveTestBase "Base test model for valves' tests"
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp theta(duration = 20, height = 0, offset = 1, startTime = 30) annotation (
     Placement(visible = true, transformation(origin={-20,50},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale cvalve(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve cvalve(
     Kv=Valve.TCV701.Kv,
     dp_nom=Valve.TCV701.dp_nom,
     rho_nom=Valve.TCV701.rho_nom,
@@ -24,7 +24,7 @@ model ValveTestBase "Base test model for valves' tests"
     Placement(visible = true, transformation(origin={46,0},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_set(duration = 20,
     height=1*Valve.TCV701.m_flow_nom,
-    offset=0.5*Valve.TCV701.m_flow_nom,                                              startTime = 30) annotation (
+    offset=0.5*Valve.TCV701.m_flow_nom, startTime = 30) annotation (
     Placement(visible = true, transformation(origin={20,50},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(m_flow_set.y, sink.in_m_flow) annotation (

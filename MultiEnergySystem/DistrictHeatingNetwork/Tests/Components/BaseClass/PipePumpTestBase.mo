@@ -30,7 +30,7 @@ model PipePumpTestBase "Base test model for pumps' tests"
     Placement(visible = true, transformation(origin = {-60, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp theta(duration = 20, height = -0.5, offset = 1, startTime = 30) annotation (
     Placement(visible = true, transformation(origin = {-20, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale cvalve(Kv = 33.25192916, dp_nom = 20000) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve cvalve(Kv = 33.25192916, dp_nom = 20000) annotation (
     Placement(visible = true, transformation(origin = {0, 10}, extent = {{-8, -8}, {8, 8}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe1(Di = Di, L = L, Tin_start = Tin_start, Tout_start = Tin_start, allowFlowReversal = system.allowFlowReversal, cf = cf, h = H, hin_start = hin_start, k = Pipe.S100.k, kc = 1, m_flow_start = m_flow_start, n = n, pin_start = pin_start, pout_start = pout_start, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation (
     Placement(visible = true, transformation(origin = {36, 10}, extent = {{-14, -14}, {14, 14}}, rotation = 0)));

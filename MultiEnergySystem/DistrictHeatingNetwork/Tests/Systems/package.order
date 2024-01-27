@@ -23,10 +23,6 @@ GasBoilerPumpingSystem
 ElectricBoilerPumpingSystem
 GBEBPumpingSystem
 GBEBTanksPumpingSystem
-BaseHeatingandCoolingSystem
-GasBoilerHeatingSystem
-GasBoilerHeatingSystem_CaseI
-BoilersHeatingSystem
 GasBoilerOLSystem
 GasBoilerOLSystem2
 GasBoilerCompleteSystem

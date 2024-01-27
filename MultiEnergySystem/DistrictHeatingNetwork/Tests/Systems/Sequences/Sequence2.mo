@@ -124,7 +124,7 @@ partial model Sequence2
   parameter Types.Length Di_Source = 32e-3;
 
 
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV701.Kv,

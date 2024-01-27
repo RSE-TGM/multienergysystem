@@ -10,7 +10,7 @@ model FixedReturnPowerLoad
   Modelica.Units.SI.Temperature Tin "Inlet temperature of the load";
   Modelica.Units.SI.Temperature Tout "Outlet temperature of the load";
 
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     loadValve(
     Kv=Kv,
     dp_nom=dp_nominale,

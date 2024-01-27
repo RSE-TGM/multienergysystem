@@ -1034,7 +1034,7 @@ model BaseTestSystem
   Modelica.Blocks.Interaction.Show.RealValue FTR01_2(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{147,-165},{118,-141}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV701.Kv,
@@ -1045,7 +1045,7 @@ model BaseTestSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={294,-58})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV711.Kv,
@@ -1056,7 +1056,7 @@ model BaseTestSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={384,-58})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV721.Kv,
@@ -1067,7 +1067,7 @@ model BaseTestSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={474,-58})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV731.Kv,

@@ -76,7 +76,7 @@ model E700Test "HX70X test with real data"
     annotation (Placement(transformation(extent={{100,70},{80,90}})));
   Modelica.Blocks.Sources.TimeTable incold_T(table=[t,TT703])
     annotation (Placement(transformation(extent={{-100,0},{-80,20}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV701.Kv,

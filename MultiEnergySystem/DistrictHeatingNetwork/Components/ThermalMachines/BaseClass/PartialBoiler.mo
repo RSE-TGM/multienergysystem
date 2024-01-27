@@ -1,16 +1,19 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
+within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.BaseClass;
 partial model PartialBoiler
   extends DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
      choicesAllMatching = true);
 
-  parameter Types.Pressure pin_start = 1e5 "Start value Inlet pressure of the fluid" annotation (
-    Dialog(tab = "Initialisation", group = "fluid"));
-  parameter Types.Pressure pout_start = 0.9e5 "Start value Outlet pressure of the fluid" annotation (
-    Dialog(tab = "Initialisation", group = "fluid"));
-  parameter Types.Temperature Tin_start = 58 + 273.15 "Start value inlet temperature of the fluid" annotation (
-    Dialog(tab = "Initialisation", group = "fluid"));
+  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pin_start=1e5
+    "Start value Inlet pressure of the fluid"
+    annotation (Dialog(tab="Initialisation", group="fluid"));
+  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pout_start=0.9e5
+    "Start value Outlet pressure of the fluid"
+    annotation (Dialog(tab="Initialisation", group="fluid"));
+  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Temperature Tin_start=58 + 273.15
+    "Start value inlet temperature of the fluid"
+    annotation (Dialog(tab="Initialisation", group="fluid"));
   parameter SI.Temperature Tout_start = 80 + 273.15 "Start value outlet temperature of the fluid" annotation (
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter SI.Density rho_start = 1000 "Start value outlet density of the fluid" annotation (
@@ -35,11 +38,14 @@ partial model PartialBoiler
     Dialog(tab = "Boiler Data"));
   parameter SI.PerUnit etanom = 0.98 "Nominal useful efficiency" annotation (
     Dialog(tab = "Boiler Data"));
-  parameter SI.Volume V = h*pi*D^2/4 "Nominal volume of the fluid container (boiler)" annotation (
+  parameter SI.Volume V = h*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
+                              *D^2/4 "Nominal volume of the fluid container (boiler)" annotation (
     Dialog(tab = "Boiler Data"));
   parameter SI.Temperature T_ext = system.T_amb "Ambient temperature";
-  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + tIns)/(D/2))/(lambdaIns*2*pi*h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
-  final parameter Modelica.Units.SI.ThermalResistance R_flat = tIns/(lambdaIns*pi*(D/2)^2) "Flat Surface of the cylinder";
+  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + tIns)/(D/2))/(lambdaIns*2*
+      MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi                                   *h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
+  final parameter Modelica.Units.SI.ThermalResistance R_flat = tIns/(lambdaIns*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
+                                                                                 *(D/2)^2) "Flat Surface of the cylinder";
   outer DistrictHeatingNetwork.System system "system object for global defaults";
 
   SI.MassFlowRate m_flow "mass flowrate of the fluid";
@@ -57,7 +63,6 @@ partial model PartialBoiler
   SI.Power Q_amb "heat loss to ambient";
 
   Medium fluidIn(T_start = Tin_start, p_start = pin_start), fluidOut(T_start = Tout_start, p_start = pout_start);
-
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));

@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines;
 model PrescribedPump
-  extends BaseClass.PumpBase;
+  extends TurboMachines.BaseClass.PumpBase;
   parameter Boolean use_in_omega = false "Use connector input for the rotational speed" annotation (
     Dialog(group = "External inputs"), choices(checkBox = true));
   Modelica.Blocks.Interfaces.RealInput in_omega if use_in_omega "rad" annotation (

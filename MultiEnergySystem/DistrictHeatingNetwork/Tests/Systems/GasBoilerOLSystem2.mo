@@ -167,7 +167,7 @@ model GasBoilerOLSystem2
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,70})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Kv_UsersValve,

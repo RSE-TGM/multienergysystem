@@ -14,7 +14,7 @@ model RackCDSystem "Test based on the rack CD of the RSE's district heating netw
   parameter Types.Temperature T_start = 25 + 273.15;
   parameter Types.MassFlowRate m_flow_start = 4.04;
 
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FV933(
     Kv=11.5,
     dp_nom=50000,

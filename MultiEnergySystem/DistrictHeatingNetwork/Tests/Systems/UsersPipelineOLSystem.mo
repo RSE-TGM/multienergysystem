@@ -39,7 +39,7 @@ model UsersPipelineOLSystem
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=true,
     Kv=2.04,
@@ -81,7 +81,7 @@ model UsersPipelineOLSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-20,30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=true,
     Kv=2.04,
@@ -92,7 +92,7 @@ model UsersPipelineOLSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={60,30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=true,
     Kv=2.04,

@@ -109,11 +109,6 @@ model RoundPipe1DFV
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
-    //m_flow = regStep(inlet.m_flow, m_flow[2:end], m_flow[1:end-1]),
-    //cp = fluid[2:end].cp,
-    //Tmean = regStep(dp, fluid[2:end].T, fluid[1:end-1].T),
-    //cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
-
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,43},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
 
@@ -131,9 +126,6 @@ equation
 
 // Assertations
   assert(n > 1, "The number of volumes must be at least 2");
-  //assert(pin < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
-  //assert(pout < pmax, "The pressure in the pipe is higher than the maximum designed pressure");
-
 
 // Mass & Energy Balance
   for i in 1:n loop

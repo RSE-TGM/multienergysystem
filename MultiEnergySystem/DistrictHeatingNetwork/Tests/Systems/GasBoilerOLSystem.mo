@@ -57,7 +57,7 @@ model GasBoilerOLSystem
         extent={{-12,-12},{12,12}},
         rotation=90,
         origin={-220,-21})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV101(
     allowFlowReversal=true,
     Kv=9.69,
@@ -141,7 +141,7 @@ model GasBoilerOLSystem
         extent={{-12,12},{12,-12}},
         rotation=0,
         origin={-169,90})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     allowFlowReversal=false,
     nomOpening=1,
@@ -177,7 +177,7 @@ model GasBoilerOLSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,70})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV701.Kv,
@@ -188,7 +188,7 @@ model GasBoilerOLSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-20,10})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV711.Kv,
@@ -199,7 +199,7 @@ model GasBoilerOLSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={60,10})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV721.Kv,
@@ -210,7 +210,7 @@ model GasBoilerOLSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={140,10})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV731.Kv,

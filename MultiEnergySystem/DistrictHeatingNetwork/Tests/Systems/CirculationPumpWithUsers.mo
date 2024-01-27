@@ -41,7 +41,7 @@ model CirculationPumpWithUsers
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={293,152},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=true,
     Kv=2.04,
@@ -83,7 +83,7 @@ model CirculationPumpWithUsers
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={49,2})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=true,
     Kv=2.04,
@@ -94,7 +94,7 @@ model CirculationPumpWithUsers
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={129,2})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=true,
     Kv=2.04,
@@ -403,7 +403,7 @@ model CirculationPumpWithUsers
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-240,-143})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     allowFlowReversal=false,
     nomOpening=1,
@@ -483,7 +483,7 @@ model CirculationPumpWithUsers
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={-190,60})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV101(
     allowFlowReversal=false,
     Kv=12,

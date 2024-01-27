@@ -70,7 +70,7 @@ model UsersPipelineOLSystem
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={119,-8.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=true,
     Kv=2.04,

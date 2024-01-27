@@ -64,7 +64,7 @@ model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-322,-175})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV401(
     Kv=Valve.FCV401.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV401.dp_nom,

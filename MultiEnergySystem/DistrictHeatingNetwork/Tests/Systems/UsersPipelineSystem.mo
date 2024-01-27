@@ -49,7 +49,7 @@ model UsersPipelineSystem
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {290, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV701(
     allowFlowReversal=true,
     Kv=2.04,
@@ -80,7 +80,7 @@ model UsersPipelineSystem
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={119,-8.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=true,
     Kv=2.04,
@@ -91,7 +91,7 @@ model UsersPipelineSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={-20,30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV721(
     allowFlowReversal=true,
     Kv=2.04,
@@ -102,7 +102,7 @@ model UsersPipelineSystem
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={60,30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV731(
     allowFlowReversal=true,
     Kv=2.04,
@@ -507,7 +507,7 @@ model UsersPipelineSystem
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={190,-50})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV701(
       Kv=Valve.TCV701.Kv,
       dp_nom=Valve.TCV701.dp_nom,
@@ -517,7 +517,7 @@ model UsersPipelineSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-140,-50})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV711(
       Kv=Valve.TCV711.Kv,
       dp_nom=Valve.TCV711.dp_nom,
@@ -527,7 +527,7 @@ model UsersPipelineSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-60,-50})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV721(
       Kv=Valve.TCV721.Kv,
       dp_nom=Valve.TCV721.dp_nom,
@@ -537,7 +537,7 @@ model UsersPipelineSystem
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={20,-50})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV731(
       Kv=Valve.TCV731.Kv,
       dp_nom=Valve.TCV731.dp_nom,
@@ -566,7 +566,7 @@ model UsersPipelineSystem
     annotation (Placement(transformation(extent={{-190,-89},{-170,-69}})));
   Modelica.Blocks.Sources.RealExpression TCV_thetaconsumers4(y=0.42)
     annotation (Placement(transformation(extent={{-190,-104},{-170,-84}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCVR01(
     Kv=9.5339,
     dp_nom(displayUnit="Pa") = 1.09928e5,

@@ -432,7 +432,7 @@ model HPSystem
     Placement(visible = true, transformation(origin={198,-137.5},
                                                                 extent={{8.5,14},
             {-8.5,-14}},                                                                         rotation=90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     TCV601(
     Kv=Valve.TCV601.Kv,
     dp_nom(displayUnit="Pa") = Valve.TCV601.dp_nom,

@@ -119,7 +119,7 @@ model PumpingCirculationSystem
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-80,-30})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     Kv=Valve.FCV901.Kv,
     dp_nom(displayUnit="Pa") = Valve.FCV901.dp_nom,

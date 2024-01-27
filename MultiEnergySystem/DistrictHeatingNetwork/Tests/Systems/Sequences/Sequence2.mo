@@ -348,7 +348,7 @@ partial model Sequence2
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={421,-138.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientVale
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV711(
     allowFlowReversal=system.allowFlowReversal,
     Kv=Valve.FCV711.Kv,

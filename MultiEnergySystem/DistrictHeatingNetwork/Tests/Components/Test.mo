@@ -441,7 +441,7 @@ package Test "Package to test component equation and behaviour"
       Placement(visible = true, transformation(origin={40,22},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.Stratified1DStorage stratified1DStorage(
       D=1.7,
-      N=8,
+      N=21,
       T_ext=298.15,
       T_start=338.15,
       h=5) annotation (Placement(visible=true, transformation(

@@ -6,18 +6,23 @@ model StratifiedStorage
       model Medium =
         DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity);
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
-  parameter Integer n = 3 "Number of volumes (min = 2)" annotation (
-    Dialog(tab = "Data", group = "Fluid"));
+  import Modelica.Fluid.Utilities.regStep;
 
+  parameter Integer n = 4 "Number of volumes (min = 2)" annotation (
+    Dialog(tab = "Data", group = "Fluid"));
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
+    Dialog(group = "Initialisation"));
   // Insulation parameters
   parameter SI.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
   parameter SI.Length dIns = 0.15 "Insulation thickness";
   parameter SI.ThermalConductivity lambda_w = 0.4 "Water conductivity for heat exchange between volumes";
 
-
+  outer System system "system object for global defaults";
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
   final parameter Types.Area A = Modelica.Constants.pi*(D/2)^2 "Cross section area of the TES";
+  parameter Types.MassFlowRate m_flow_nom = 2 "Nominal mass flow rate";
+  parameter Types.SpecificEnthalpy hin_start = fluid[1].h_start;
 
   //Variables
   //SI.Mass M(start = M_id) "Total mass in the tank";
@@ -25,8 +30,8 @@ model StratifiedStorage
   Types.MassFlowRate m_flow[n+1](each start = m_flow_start, each min = 0);
   Types.Pressure p[n+1](start = linspace(pin_start, pout_start, n+1));
   Types.Pressure ptilde[n](start = linspace(pin_start, pout_start, n));
-  Types.Temperature T[n+1](start = linspace(T_start, T_start+0.5, n+1)) "Temperatue of the water inside the volume";
-  Types.Temperature Ttilde[n](start = linspace(T_start, T_start-1,n),  each stateSelect = StateSelect.prefer) "Temperatue of the water inside the volume";
+  Types.Temperature T[n+1](start = linspace(Tin_start, Tout_start, n+1)) "Temperatue of the water inside the volume";
+  Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer) "Temperatue of the water inside the volume";
   Types.HeatFlowRate Q_amb[n](each start = (R_flat + R_lateral)/(R_flat*R_lateral)*(T_start - T_ext)) "Heat losses to ambient";
   Types.HeatFlowRate Q_cond[n] "Heat losses to other layers";
   Types.Mass M[n] "Mass of fluid in each finite volume";
@@ -36,6 +41,7 @@ model StratifiedStorage
     T_start = linspace(T_start, T_start - 1, n+1),
     p_start = linspace(pin_start, pout_start, n+1),
     each computeTransport = true);
+  Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
 
   Modelica.Blocks.Interfaces.RealOutput T1 annotation (Placement(transformation(
           extent={{94,-100},{114,-80}}), iconTransformation(extent={{94,-100},{114,
@@ -56,10 +62,11 @@ equation
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n+1];
   outlet.h_out = fluid[n+1].h;
-  fluid[1].h = inStream(inlet.h_out);
+  //fluid[1].h = inStream(inlet.h_out);
 
   // State variables
-  Ttilde = T[2:n+1];
+  //Ttilde = T[2:n+1];
+  Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*1e-4);
   ptilde = p[2:n+1];
 
   // Other variables
@@ -73,55 +80,75 @@ equation
 
   // Mass Balance
   //inlet.m_flow + outlet.m_flow = 0;
-  M = rho[2:n+1]*(V/n);
+  M = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*1e-4)*(V/n);
 
   // Energy balance
   for i in 1:n loop
     // Mass Balance
     //m_flow[i] - m_flow[i+1] = (V/n)*(fluid[i+1].drho_dT*der(Ttilde[i]) + 1e-5*der(ptilde[i]));
-    m_flow[i] - m_flow[i+1] = 0;
+    //m_flow[i] - m_flow[i+1] = 0;
+    m_flow[i] - m_flow[i+1] = (V/n)*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*1e-4)*der(Ttilde[i]));
     // Volume energy balance
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
-    (M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+    //(M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+    (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-4))*der(Ttilde[i]) = m_flow[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-4)*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
 
-    //Q_amb[i] = 0;
-    //Q_cond[i] = 0;
     if i == 1 then
       // Heat exchange with the ambient from flat top face
       Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(Ttilde[i] - T_ext);
+      //Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(T[i] - T_ext);
       // Heat exchange with 2nd volume
       //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
-      Q_cond[i] = fluid[1].kappa*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
+      //Q_cond[i] = fluid[1].kappa*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
+      Q_cond[i] = fluid[i].kappa*A/(H/n)*(T[i] - T[i+1]);
     elseif i == n then
       // Heat exchange with ambient
       Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(Ttilde[i] - T_ext);
+      //Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(T[i] - T_ext);
       // Heat exchange with N-1th volume
       //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
-      Q_cond[i] = fluid[i-1].kappa*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
+      //Q_cond[i] = fluid[i-1].kappa*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
+      Q_cond[i] = fluid[i].kappa*A/(H/n)*(T[i] - T[i+1]);
     else
       // Heat exchange with the ambient from lateral faces
-      Q_amb[i] = 1/R_lateral*(Ttilde[i] - T_ext);
+      //Q_amb[i] = 1/R_lateral*(Ttilde[i] - T_ext);
+      Q_amb[i] = 1/R_lateral*(T[i] - T_ext);
       // Heat exchange with layer above and below
       //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
-      Q_cond[i] = fluid[i].kappa*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
+      //Q_cond[i] = fluid[i].kappa*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
+      Q_cond[i] = fluid[i].kappa*A/(H/n)*(T[i] - T[i+1]);
     end if;
 
   end for;
 
   // Momentum Balance
   //pin - pout = rho[n+1]*H*g_n;
-  p[1:n] - p[2:n+1] = rho[2:n+1]*(H/n)*g_n;
+  p[1:n] - p[2:n+1] = rho[1:n]*(H/n)*g_n;
 
-  T1 = T[1];
-  T2 = T[2];
-  T3 = T[3];
-  T4 = T[4];
+  if noEvent(inlet.m_flow > 0) then
+    T[1] = fluid_temp.T;
+  else
+    T[end] = fluid_temp.T;
+  end if;
 
+  fluid_temp.p = homotopy(regStep(inlet.m_flow, inlet.p, outlet.p, m_flow_nom*1e-4), pin_start*1e-4);
+  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*1e-4), hin_start);
+
+
+  T1 = (T[1]+T[2])/2;
+  T2 = (T[2]+T[3])/2;
+  T3 = (T[3]+T[4])/2;
+  T4 = (T[4]+T[5])/2;
 
 initial equation
-  der(Ttilde) = zeros(n);
-  //der(ptilde) = zeros(n);
+  if initOpt == Choices.Init.Options.steadyState then
+    der(Ttilde) = zeros(n);
+  elseif initOpt == Choices.Init.Options.fixedState then
+    Ttilde = linspace((Tout_start - Tin_start)/n + Tin_start, Tout_start, n);
+  else
+//No initial equations
+  end if;
   annotation (
     Icon(graphics={  Rectangle(origin={76,-140},    fillColor={140,56,54},       fillPattern=
               FillPattern.Solid,                                                                                  extent = {{-4, 20}, {4, -20}}), Rectangle(origin={-76,-140},    fillColor={140,56,

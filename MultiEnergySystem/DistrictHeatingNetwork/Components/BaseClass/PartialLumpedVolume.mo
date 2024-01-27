@@ -34,7 +34,8 @@ partial model PartialLumpedVolume
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.MassFlowRate m_flow_start = 1 "Start mass flow rate through the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-
+  parameter Types.Temperature Tin_start = T_start;
+  parameter Types.Temperature Tout_start = T_start;
   // Final parameters
   final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
   final parameter Types.Mass M_id = V * rho0 "Mass of water inside the mixing volume";

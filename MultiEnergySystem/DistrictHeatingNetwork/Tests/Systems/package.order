@@ -8,6 +8,7 @@ ElectricBoilerSystemTest
 ElectricBoilerSystemTestB
 PumpingCirculationSystem
 WaterTankSystem
+WaterTankSystemB
 StratifiedWaterTankSystem
 HP301System
 HP601System

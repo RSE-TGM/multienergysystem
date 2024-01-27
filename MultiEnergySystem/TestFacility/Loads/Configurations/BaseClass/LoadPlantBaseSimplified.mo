@@ -886,7 +886,7 @@ partial model LoadPlantBaseSimplified
   parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure dpRR = 1e5;
 
 
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_FT701_rackL2L3(
     L=L_FT701_rackL2L3,
     h=h_FT701_rackL2L3,
     t=t_S700,
@@ -900,7 +900,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={140,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_rackL2L3_TT702(
     L=L_rackL2L3_TT702,
     h=h_rackL2L3_TT702,
     t=t_S700,
@@ -914,7 +914,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={100,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FT711_rackL3L4(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_FT711_rackL3L4(
     L=L_FT711_rackL3L4,
     h=h_FT711_rackL3L4,
     t=t_S700,
@@ -928,7 +928,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={460,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_rackL3L4_TT712(
     L=L_rackL3L4_TT712,
     h=h_rackL3L4_TT712,
     t=t_S700,
@@ -942,7 +942,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={420,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_FT721_rackL4L5(
     L=L_FT721_rackL4L5,
     h=h_FT721_rackL4L5,
     t=t_S700,
@@ -956,7 +956,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={620,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_rackL4L5_TT722(
     L=L_rackL4L5_TT722,
     h=h_rackL4L5_TT722,
     t=t_S700,
@@ -970,7 +970,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={580,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_FT731_rackL6L7(
     L=L_FT731_rackL6L7,
     h=h_FT731_rackL6L7,
     t=t_S700,
@@ -984,7 +984,7 @@ partial model LoadPlantBaseSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={300,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_rackL6L7_TT732(
     L=L_rackL6L7_TT732,
     h=h_rackL6L7_TT732,
     t=t_S700,

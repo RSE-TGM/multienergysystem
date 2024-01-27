@@ -202,9 +202,10 @@ initial equation
 //No initial pressure
     end if;
   elseif initOpt == Choices.Init.Options.fixedState then
-    for i in 1:n loop
-      fluid[i+1].T = T_start[i+1];
-    end for;
+//     for i in 1:n loop
+//       fluid[i+1].T = T_start[i+1];
+//     end for;
+    Ttilde = T_start[2:n+1];
     if not noInitialPressure then
       ptilde = pout_start;
     else

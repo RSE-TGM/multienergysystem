@@ -1,36 +1,37 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model WaterTankSystem "System of two tanks"
+model WaterTankSystemB "System of two tanks"
   extends Modelica.Icons.Example;
 
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Boolean FV201_state = true;
+  parameter Boolean FV201_state = false;
   parameter Boolean FV202_state = true;
-  parameter Boolean FV203_state = true;
+  parameter Boolean FV203_state = false;
   parameter Boolean FV204_state = true;
   parameter Boolean FV205_state = true;
-  parameter Boolean FV206_state = false;
-  parameter Boolean FV207_state = false;
+  parameter Boolean FV206_state = true;
+  parameter Boolean FV207_state = true;
   parameter Boolean FV208_state = true;
-  parameter Boolean FV209_state = true;
+  parameter Boolean FV209_state = false;
 
   parameter Types.Pressure pin_start_S2 = 2.1e5;
-  parameter Types.Pressure pout_start_S2 = 2.5e5;
+  parameter Types.Pressure pout_start_S2 = 1.8e5;
   parameter Types.Pressure pin_start_S2_pump = 1.79e5;
   parameter Types.Pressure pout_start_S2_pump = 3e5;
   final parameter Types.Pressure pin_start_S2_tank = pout_start_S2_pump;
   final parameter Types.Pressure pout_start_S2_tank = pin_start_S2_tank - 9.81*4*990;
-  parameter Types.Temperature Tin_start_S2 = 60 + 273.15;
-  parameter Types.Temperature Tout_start_S2 = 60 + 273.15;
+  parameter Types.Temperature Tin_start_S2 = 25 + 273.15;
+  parameter Types.Temperature Tout_start_S2 = 26 + 273.15;
   parameter Types.Length L_S2 = 10;
   parameter Types.Length Di_S2 = 51e-3;
   parameter Types.Length t_S2 = 1.5e-3;
   parameter Real q_m3h_S2(unit = "m3/h") = 2;
   final parameter Types.VolumeFlowRate q = q_m3h_S2/3600;
   final parameter Types.MassFlowRate m_flow_S2 = q*985;
+  parameter Real P201omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+  parameter Real P201qm3h[:,:] = [0, 2.8289046; 100, 2.8289046];
 
-  parameter Real FCV201theta[:,:] = [0, 0.5; 100, 0.5; 105, 0.8; 200, 0.8];
-
+  parameter Real FCV201theta[:,:] = [0, 1; 100, 1; 105, 1; 200, 1];
 
   // Pipe length
   parameter Types.Length L_S2_PL0 = 24.5;
@@ -53,14 +54,17 @@ model WaterTankSystem "System of two tanks"
   parameter Types.Length L_S2_D201_FT201 = 2;
   parameter Types.Length h_S2_D201_FT201 = 0;
 
-
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={270,230},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage
     D201(H=4, D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
-    m_flow_start=m_flow_S2/2)
+    m_flow_start=m_flow_S2/2,
+    Tin_start=298.15,
+    Tout_start=299.15,
+    n=21,
+    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)
     annotation (Placement(transformation(extent={{118,-154},{62,-42}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P201(
@@ -84,16 +88,21 @@ model WaterTankSystem "System of two tanks"
       headmax=Pump.P201.headnommax,
       headmin=Pump.P201.headnommin,
       qnom_inm3h_min=Pump.P201.qnommin_inm3h,
-      qnom_inm3h_max=Pump.P201.qnommax_inm3h) annotation (Placement(transformation(
+      qnom_inm3h_max=Pump.P201.qnommax_inm3h,
+    use_in_omega=true)                        annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=-90,
         origin={-80,-4})));
-  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage D202(
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=4,
     D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
-    m_flow_start=m_flow_S2/2)
+    m_flow_start=m_flow_S2/2,
+    Tin_start=298.15,
+    Tout_start=299.15,
+    n=21,
+    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)
          annotation (Placement(transformation(extent={{202,-154},{258,-42}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT201(T_start=Tin_start_S2, p_start=pin_start_S2)
@@ -146,8 +155,8 @@ model WaterTankSystem "System of two tanks"
     L=L_S2_PL2,
     t=t_S2,
     pin_start=pout_start_S2_pump,
-    Tin_start=Tin_start_S2,
-    Tout_start=Tin_start_S2,
+    Tin_start=Tout_start_S2,
+    Tout_start=Tout_start_S2,
     Di=Di_S2,
     n=n,
     hctype=hctype)
@@ -180,21 +189,15 @@ model WaterTankSystem "System of two tanks"
         extent={{6,6},{-6,-6}},
         rotation=90,
         origin={-18,86})));
-  Sources.SourcePressure source(p0=pin_start_S2, T0=Tin_start_S2)
-    annotation (Placement(transformation(extent={{-118,156},{-98,176}})));
-  Sources.SinkMassFlow sink(
-    use_in_m_flow=true,
-    pin_start=pout_start_S2_tank,
-    p0=pout_start_S2_tank,
-    T0=Tout_start_S2,
-    m_flow0=m_flow_S2)
-    annotation (Placement(transformation(extent={{4,156},{24,176}})));
+  Sources.SourcePressure source(
+    use_in_p0=true,             p0=pin_start_S2, T0=Tin_start_S2)
+    annotation (Placement(transformation(extent={{-118,160},{-98,180}})));
   Modelica.Blocks.Sources.Ramp ramp(
-    height=m_flow_S2*0.8*0,
-    duration=1500,
-    offset=m_flow_S2,
+    height=20,
+    duration=1500*0,
+    offset=26 + 273.15,
     startTime=1000)
-    annotation (Placement(transformation(extent={{40,192},{20,212}})));
+    annotation (Placement(transformation(extent={{40,190},{20,210}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_hot(
     L=L_S2_PL9,
     t=t_S2,
@@ -427,6 +430,19 @@ model WaterTankSystem "System of two tanks"
     annotation (Placement(transformation(extent={{-180,-10},{-160,10}})));
   Modelica.Blocks.Sources.BooleanExpression booleanExpression
     annotation (Placement(transformation(extent={{-50,38},{-30,58}})));
+  Sources.SinkPressure sink(
+    use_in_p0=false,
+    use_in_T0=true,
+    p0=pout_start_S2)
+    annotation (Placement(transformation(extent={{2,160},{22,180}})));
+  Sources.PumpInput P201_input(omega=P201omega, q_m3h=P201qm3h)
+    annotation (Placement(transformation(extent={{-118,-10},{-98,10}})));
+  Modelica.Blocks.Sources.Ramp ramp1(
+    height=0.08e5,
+    duration=2000,
+    offset=pin_start_S2,
+    startTime=50000)
+    annotation (Placement(transformation(extent={{-158,184},{-138,204}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-80,115.5},{-80,120.375},{-79.85,120.375},{-79.85,125.25}},
@@ -446,19 +462,12 @@ equation
       color={140,56,54},
       thickness=0.5));
 
-  connect(ramp.y, sink.in_m_flow)
-    annotation (Line(points={{19,202},{0,202},{0,171},{8,171}},
-                                                             color={0,0,127}));
-  connect(sink.inlet, PL_S200_rCD_hot.outlet) annotation (Line(
-      points={{4,166},{-20,166},{-20,160}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S200_rCD_hot.inlet, TT202.inlet) annotation (Line(
       points={{-20,140},{-20,98},{-20.4,98}},
       color={140,56,54},
       thickness=0.5));
   connect(source.outlet, PL_S200_rCD_cold.inlet) annotation (Line(
-      points={{-98,166},{-80,166},{-80,160}},
+      points={{-98,170},{-80,170},{-80,160}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_rCD_cold.outlet, TT201.inlet) annotation (Line(
@@ -466,7 +475,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(D201.outlet, PL_S200_D201_High.inlet) annotation (Line(
-      points={{118,-70},{132,-70},{132,-80}},
+      points={{118,-63},{132,-63},{132,-80}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_High.inlet, PL_S200_D202_High.outlet) annotation (
@@ -480,19 +489,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D202_High.inlet, D202.outlet) annotation (Line(
-      points={{188,-80},{188,-70},{202,-70}},
+      points={{188,-80},{188,-63},{202,-63}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.inlet, D201.inlet) annotation (Line(
-      points={{150,-126},{134,-126},{134,-126},{118,-126}},
+      points={{150,-126},{134,-126},{134,-133},{118,-133}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.outlet, D202.inlet) annotation (Line(
-      points={{170,-126},{186,-126},{186,-126},{202,-126}},
+      points={{170,-126},{186,-126},{186,-133},{202,-133}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_FV209_D201.outlet, D201.inlet) annotation (Line(
-      points={{52,-168},{128,-168},{128,-126},{118,-126}},
+      points={{52,-168},{128,-168},{128,-133},{118,-133}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_FT201.outlet, PL_S200_D201_High.outlet) annotation (Line(
@@ -597,10 +606,20 @@ equation
       points={{-19.8,-76.8},{-20,-56},{-20,-26}},
       color={140,56,54},
       thickness=0.5));
+  connect(sink.inlet, PL_S200_rCD_hot.outlet) annotation (Line(
+      points={{2,170},{-20,170},{-20,160}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(ramp.y, sink.in_T0)
+    annotation (Line(points={{19,200},{12,200},{12,179.6}}, color={0,0,127}));
+  connect(P201_input.y, P201.in_omega)
+    annotation (Line(points={{-97,0},{-91.5,0},{-91.5,0.8},{-86,0.8}}, color={0,0,127}));
+  connect(ramp1.y, source.in_p0)
+    annotation (Line(points={{-137,194},{-112,194},{-112,178.4}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-280,-240},{280,240}})),
     experiment(
-      StopTime=300,
+      StopTime=90000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end WaterTankSystem;
+end WaterTankSystemB;

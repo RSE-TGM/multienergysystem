@@ -26,8 +26,8 @@ model StratifiedStorage
 
   //Variables
   //SI.Mass M(start = M_id) "Total mass in the tank";
-  Types.Density rho[n+1] "Density of the fluid in the tank (at the outlet)";
-  Types.MassFlowRate m_flow[n+1](each start = m_flow_start, each min = 0);
+  Types.Density rho[n+1](each nominal = 1000) "Density of the fluid in the tank (at the outlet)";
+  Types.MassFlowRate m_flow[n+1](each start = m_flow_start);
   Types.Pressure p[n+1](start = linspace(pin_start, pout_start, n+1));
   Types.Pressure ptilde[n](start = linspace(pin_start, pout_start, n));
   Types.Temperature T[n+1](start = linspace(Tin_start, Tout_start, n+1)) "Temperatue of the water inside the volume";
@@ -61,11 +61,10 @@ equation
   // Boundary equations
   inlet.m_flow = m_flow[1];
   outlet.m_flow = -m_flow[n+1];
+  inlet.h_out = fluid[1].h;
   outlet.h_out = fluid[n+1].h;
-  //fluid[1].h = inStream(inlet.h_out);
 
   // State variables
-  //Ttilde = T[2:n+1];
   Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*1e-4);
   ptilde = p[2:n+1];
 

@@ -26,6 +26,7 @@ equation
   rho = fluidOut.rho;
 
   Tin = fluidIn.T;
+  inlet.h_out = inStream(inlet.h_out);
   outlet.h_out = fluidOut.h;
   Ttilde = Tout;
 

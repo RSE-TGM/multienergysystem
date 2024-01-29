@@ -2,18 +2,9 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Storage;
 model StratifiedTankTest "System of two tanks"
   extends Modelica.Icons.Example;
 
-  parameter Integer n = 3 "Number of volumes in each pipe";
+  parameter Integer n = 21 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Boolean FV201_state = true;
-  parameter Boolean FV202_state = true;
-  parameter Boolean FV203_state = true;
-  parameter Boolean FV204_state = true;
-  parameter Boolean FV205_state = true;
-  parameter Boolean FV206_state = false;
-  parameter Boolean FV207_state = false;
-  parameter Boolean FV208_state = true;
-  parameter Boolean FV209_state = true;
-
+  
   parameter Types.Pressure pin_start_S2 = 2.1e5;
   parameter Types.Pressure pout_start_S2 = 2.5e5;
   parameter Types.Pressure pin_start_S2_pump = 1.79e5;
@@ -31,7 +22,7 @@ model StratifiedTankTest "System of two tanks"
 
   parameter Real FCV201theta[:,:] = [0, 0.5; 100, 0.5; 105, 0.8; 200, 0.8];
 
-  // Pipe length
+// Pipe length
   parameter Types.Length L_S2_PL0 = 24.5;
   parameter Types.Length L_S2_PL1 = 1.7;
   parameter Types.Length L_S2_PL2 = 1.5;
@@ -58,7 +49,7 @@ model StratifiedTankTest "System of two tanks"
     D201(H=4, D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
-    m_flow_start=m_flow_S2/2)
+    m_flow_start=m_flow_S2/2, n = n)
     annotation (Placement(transformation(extent={{-16,-50},{-58,18}})));
   Sources.SourcePressure source(p0=pin_start_S2, T0=Tin_start_S2)
     annotation (Placement(transformation(extent={{60,-48},{40,-28}})));
@@ -75,7 +66,7 @@ model StratifiedTankTest "System of two tanks"
     offset=m_flow_S2,
     startTime=1000)
     annotation (Placement(transformation(extent={{70,20},{50,40}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL_S200_rCD_hot(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_hot(
     L=L_S2_PL9,
     t=t_S2,
     pin_start=pout_start_S2,
@@ -89,7 +80,7 @@ model StratifiedTankTest "System of two tanks"
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={8,6})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL_S200_rCD_cold(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_cold(
     L=L_S2_PL0,
     t=t_S2,
     pin_start=pin_start_S2,
@@ -105,8 +96,7 @@ model StratifiedTankTest "System of two tanks"
 
 equation
 
-  connect(ramp.y, sink.in_m_flow)
-    annotation (Line(points={{49,30},{40,30},{40,11}},       color={0,0,127}));
+  connect(ramp.y, sink.in_m_flow) annotation (Line(points={{49,30},{40,30},{40,11}}, color={0,0,127}));
   connect(sink.inlet, PL_S200_rCD_hot.outlet) annotation (Line(
       points={{36,6},{18,6}},
       color={140,56,54},

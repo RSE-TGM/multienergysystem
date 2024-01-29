@@ -25,7 +25,7 @@ package Types
   type MolarVolume =
       Modelica.Units.SI.MolarVolume (             nominal = 1e-3);
   type MassFlowRate =
-      Modelica.Units.SI.MassFlowRate (              nominal = 100);
+      Modelica.Units.SI.MassFlowRate (nominal = 10);
   type HeatFlowRate =
       Modelica.Units.SI.HeatFlowRate (              nominal = 1e6);
   type SpecificEnthalpy = SpecificEnergy;

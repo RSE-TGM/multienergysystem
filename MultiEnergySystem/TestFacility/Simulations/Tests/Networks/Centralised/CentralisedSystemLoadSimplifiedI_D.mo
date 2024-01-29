@@ -39,7 +39,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   parameter Real q_m3h_S2(unit = "m3/h") = 6;
   final parameter DistrictHeatingNetwork.Types.VolumeFlowRate q=q_m3h_S2/3600;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2=q*985;
-  parameter Real P201omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35; 150, 2*3.141592654*35; 200, 2*3.141592654*35];
+  parameter Real P201omega[:,:] = [0, 2*3.141592654*30; 100, 2*3.141592654*30; 150, 2*3.141592654*30; 200, 2*3.141592654*30];
   parameter Real P201qm3h[:,:] = [0, 14.5; 100, 14.5];
 
   parameter Real FCV201theta[:,:] = [0, 0.2; 100, 0.2; 105, 0.2; 200, 0.2];
@@ -67,7 +67,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
 
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(
     H=4,
-    n=3,
+    n=4,
     D=1.7,
     T_start(displayUnit="K") = 70 + 273.15,
     pin_start=pin_start_S2_tank,
@@ -102,7 +102,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
 
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=4,
-    n=3,
+    n=4,
     D=1.7,
     T_start(displayUnit="K") = 70 + 273.15,
     pin_start=pin_start_S2_tank,

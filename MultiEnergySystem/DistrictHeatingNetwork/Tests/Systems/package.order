@@ -7,6 +7,10 @@ ElectricBoilerSystem
 ElectricBoilerSystemTest
 ElectricBoilerSystemTestB
 PumpingCirculationSystem
+PumpingCirculationSystemTest
+PumpingCirculationSystemTestB
+PumpingCirculationSystemTestC
+PumpingCirculationSystemTestD
 WaterTankSystem
 WaterTankSystemB
 StratifiedWaterTankSystem

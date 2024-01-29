@@ -8,9 +8,10 @@ partial model PumpBase "Base model to develop water pump models"
   //Constants
   parameter Real a[3] = {338.084416, 130887.059346, -8074937.668508} "value of coefficients for Linear Power Characteristic of pump model";
   parameter Real b[3] = {7.38557689, 617.03274734, -545218.57934041} "value of quadratic polynomial coefficients for head calculation";
-  constant Modelica.Units.SI.Power W_eps = 1e-8 "Small coefficient to avoid numerical singularities";
-  constant Modelica.Units.SI.AngularVelocity omega_eps = 1e-6 "Small coefficient to avoid numerical singularities";
-  constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n "constant gravity";
+  constant Types.Power W_eps = 1e-8 "Small coefficient to avoid numerical singularities";
+  constant Types.AngularVelocity omega_eps = 1e-6 "Small coefficient to avoid numerical singularities";
+  constant Types.Acceleration g = Modelica.Constants.g_n "constant gravity";
+  constant Real pi = Modelica.Constants.pi "pi";
 
   //Start Parameters
   parameter Modelica.Units.SI.Temperature Tin_start "Start value of the inlet temperature" annotation (
@@ -35,8 +36,7 @@ partial model PumpBase "Base model to develop water pump models"
     Evaluate = true);
   parameter Types.Pressure dpnom = headmax*rhonom*g "Nominal pressure increase" annotation (
     Dialog(group = "Pump Characteristics"));
-  parameter Types.AngularVelocity omeganom = 2*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
-                                                 *50 "Nominal angular velocity in rad/s" annotation (
+  parameter Types.AngularVelocity omeganom = 2*pi*50 "Nominal angular velocity in rad/s" annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Types.Efficiency etanom = 0.61524695 "Nominal efficiency" annotation (
     Dialog(group = "Pump Characteristics"));
@@ -69,9 +69,9 @@ partial model PumpBase "Base model to develop water pump models"
   Types.MassFlowRate m_flow "Mass flow rate";
   Types.VolumeFlowRate q(start = qnom) "Volume flow rate";
   Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/hr";
-  Modelica.Units.SI.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
-  Modelica.Units.SI.Length head(nominal = headmax) "Pump head";
-  Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure of entering fluid";
+  Types.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
+  Types.Length head(nominal = headmax) "Pump head";
+  Types.Pressure pin(start = pin_start) "Pressure of entering fluid";
   Modelica.Units.SI.Pressure pout "Pressure of outgoing fluid";
   Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start) "Enthalpy of entering fluid";
   Modelica.Units.SI.SpecificEnthalpy hout(start = hin_start, nominal = 1e5) "Enthalpy of outgoing fluid";
@@ -80,9 +80,7 @@ partial model PumpBase "Base model to develop water pump models"
   Types.Density rhoout(nominal = 1e3) "Density of outgoing fluid";
   Types.Temperature Tin(start = Tin_start) "Liquid inlet temperature";
   Types.Temperature Tout "Liquid outlet temperature";
-  Modelica.Units.SI.AngularVelocity omega(min = 2*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
-                                                    *30, nominal = 2*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
-                                                                       *50, start = omeganom) "Shaft rad/s.";
+  Modelica.Units.SI.AngularVelocity omega(min = 2*pi*30, nominal = 2*pi*50, start = omeganom) "Shaft rad/s.";
   Modelica.Units.SI.Power W "Power Consumption";
   Modelica.Units.SI.Power Qloss = 0 "Heat loss (single pump)";
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
@@ -101,8 +99,8 @@ equation
 //   assert(headmin < head, "Head is lower than its minimum value", AssertionLevel.error);
 //   assert(qnom_inm3h_max > q_m3h, "Volumetric flowrate is higher than its maximum operating value", AssertionLevel.error);
 //   assert(qnom_inm3h_min < q_m3h, "Volumetric flowrate is lower than its minimum operating value", AssertionLevel.error);
-//   assert(2*pi*50.1 > omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
-//   assert(2*pi*29.9 < omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
+   assert(2*pi*50 >= omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
+   assert(2*pi*30 <= omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;
@@ -127,7 +125,7 @@ equation
   dp = pout - pin;
   q = m_flow/rhoin;
   q_m3h = q*3600;
-  f = omega/(2*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi);
+  f = omega/(2*pi);
 
   head = dp/(rhoin*g);
   //dp = head*rhoin*g;

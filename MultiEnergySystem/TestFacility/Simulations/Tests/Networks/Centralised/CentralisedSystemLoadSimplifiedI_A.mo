@@ -39,7 +39,6 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
     annotation (Placement(transformation(extent={{-200,-150},{-220,-130}})));
   DistrictHeatingNetwork.Sources.PumpInput P101_input(
-    useOmega=false,
     omega=P101omega,
     q_m3h=P101qm3h)
     annotation (Placement(transformation(extent={{-200,-191},{-220,-170}})));
@@ -84,8 +83,6 @@ equation
     annotation (Line(points={{-210,25},{-216.4,25}}, color={255,0,255}));
   connect(FCV101_theta.y, FCV101.opening)
     annotation (Line(points={{-221,-140},{-232,-140}}, color={0,0,127}));
-  connect(P101_input.y, P101.in_q_m3hr) annotation (Line(points={{-221,-180.5},{
-          -234.48,-180.5},{-234.48,-179.8}}, color={0,0,127}));
   connect(FCV701_theta.y, FCV701.opening)
     annotation (Line(points={{158,-150},{148,-150}}, color={0,0,127}));
   connect(FCV711_theta.y, FCV711.opening)
@@ -113,4 +110,6 @@ equation
     annotation (Line(points={{651,-270},{641,-270},{641,-288.6}}, color={0,0,127}));
   connect(TT713_.y, VER1.in_T0)
     annotation (Line(points={{491,-270},{479,-270},{479,-290.6}}, color={0,0,127}));
+  connect(P101_input.y, P101.in_omega)
+    annotation (Line(points={{-221,-180.5},{-234,-180.5},{-234,-179.8}}, color={0,0,127}));
 end CentralisedSystemLoadSimplifiedI_A;

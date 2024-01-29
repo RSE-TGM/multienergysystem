@@ -28,7 +28,7 @@ partial model CentralizedSystemLoadSimplifiedI
   parameter Real FCV101theta[:,:] = [0, 1];
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
-  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(
+  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P101(
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P101.Tin_start,
     Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P101.Tout_start,
     a=DistrictHeatingNetwork.Data.PumpData.P101.a,
@@ -50,7 +50,7 @@ partial model CentralizedSystemLoadSimplifiedI
     headmin=DistrictHeatingNetwork.Data.PumpData.P101.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P101.qnommin_inm3h,
     qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h,
-    use_q_m3hr=true) annotation (Placement(transformation(
+    use_in_omega=true)                                                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-240,-175})));

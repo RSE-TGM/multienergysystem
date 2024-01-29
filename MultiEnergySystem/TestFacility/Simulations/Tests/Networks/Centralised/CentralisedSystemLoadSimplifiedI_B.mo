@@ -3,7 +3,8 @@ model CentralisedSystemLoadSimplifiedI_B
   extends Simulations.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_A(
     VER901(T0=15 + 273.15),
     FV933_state=false,
-    P901omega=[0,2*3.141592654*40; 500,2*3.141592654*40],
+    P901omega=[0,2*3.141592654*30; 500,2*3.141592654*30],
+    P101omega=[0,2*3.141592654*30; 1000,2*3.141592654*30],
     pin_start_rCD_cold=2.2e5,
     VE901(p0(displayUnit="Pa") = 220000),
     P101qm3h=[0,14; 100,14],
@@ -49,10 +50,9 @@ model CentralisedSystemLoadSimplifiedI_B
   parameter DistrictHeatingNetwork.Types.Length t_S4=1.5e-3;
 
   parameter Real q_m3h_S4 = 5;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/
-      3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
 
-  parameter Real P401omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
+  parameter Real P401omega[:,:] = [0, 2*3.141592654*30; 100, 2*3.141592654*30; 100, 2*3.141592654*30; 200, 2*3.141592654*30];
   parameter Real P401qm3h[:,:] = [0, 5; 100, 5];
   parameter Real FCV401theta[:,:] = [0, 1; 100, 1];
   parameter Real EB401_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
@@ -79,7 +79,7 @@ model CentralisedSystemLoadSimplifiedI_B
         origin={-342,-302},
         extent={{-34,-34},{34,34}},
         rotation=0)));
-  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P401(
+  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P401(
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start,
     Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start,
     a=DistrictHeatingNetwork.Data.PumpData.P401.a,
@@ -101,7 +101,7 @@ model CentralisedSystemLoadSimplifiedI_B
     headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h,
     qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h,
-    use_q_m3hr=true) annotation (Placement(transformation(
+    use_in_omega=true)                                                      annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-322,-175})));
@@ -248,7 +248,6 @@ model CentralisedSystemLoadSimplifiedI_B
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=FCV401theta)
     annotation (Placement(transformation(extent={{-288,-150},{-308,-130}})));
   DistrictHeatingNetwork.Sources.PumpInput P401_input(
-    useOmega=false,
     omega=P401omega,
     q_m3h=P401qm3h)
     annotation (Placement(transformation(extent={{-288,-191},{-308,-170}})));
@@ -333,14 +332,14 @@ equation
       thickness=0.5));
   connect(FCV401_theta.y, FCV401.opening)
     annotation (Line(points={{-309,-140},{-314,-140}}, color={0,0,127}));
-  connect(P401_input.y, P401.in_q_m3hr) annotation (Line(points={{-309,-180.5},{
-          -316.48,-180.5},{-316.48,-179.8}}, color={0,0,127}));
   connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (Line(points={{-387,-300},
           {-387,-302},{-369.2,-302}}, color={0,0,127}));
   connect(FV401_Status.y, FV401.u)
     annotation (Line(points={{-373,-20},{-365.2,-20}}, color={255,0,255}));
   connect(FV402_Status.y, FV402.u)
     annotation (Line(points={{-311,-20},{-318.8,-20}}, color={255,0,255}));
+  connect(P401_input.y, P401.in_omega) annotation (Line(points={{-309,-180.5},{-312.5,-180.5},{-312.5,
+          -179.8},{-316,-179.8}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));

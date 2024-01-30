@@ -14,10 +14,21 @@ partial model CentralizedSystemLoadSimplifiedI
   parameter DistrictHeatingNetwork.Types.Length L_S1_PL2=0.8;
   parameter DistrictHeatingNetwork.Types.Length L_S1_PL3=1.5;
   parameter DistrictHeatingNetwork.Types.Length L_S1_PL4=0.7;
-  parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=3.5;
-  parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=3.5;
+  parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
+  parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
+  parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
+  parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
   parameter DistrictHeatingNetwork.Types.Length Di_S1=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S1=1.5e-3;
+
+  parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
+  parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+  parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
+  parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+  parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
+  parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
+  parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
+  parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
 
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1=m_flow_total;
   parameter Real q_m3h_S1 = 9;
@@ -66,47 +77,8 @@ partial model CentralizedSystemLoadSimplifiedI
     annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={-240,-140})));
+        origin={-240,-130})));
 
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S101(
-    L=L_S1_PL3,
-    t=t_S1,
-    pin_start=pout_start_S1,
-    Tin_start=Tout_start_S1,
-    Tout_start=Tout_start_S1,
-    Di=Di_S1,
-    q_m3h_start=q_m3h_S1,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=90,
-        origin={-240,-230})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S101(
-    L=L_S1_PL2,
-    t=t_S1,
-    pin_start=pin_start_S1,
-    Tin_start=Tin_start_S1,
-    Tout_start=Tin_start_S1,
-    Di=Di_S1,
-    q_m3h_start=q_m3h_S1,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=90,
-        origin={-276,-232})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S101(
-    L=L_S1_PL3,
-    t=t_S1,
-    pin_start=pout_start_S1,
-    Tin_start=Tout_start_S1,
-    Tout_start=Tout_start_S1,
-    Di=Di_S1,
-    q_m3h_start=q_m3h_S1,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=90,
-        origin={-240,-106})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(
     Tin_start=Tin_start_S1,
     pin_start=pin_start_S1,
@@ -147,21 +119,9 @@ partial model CentralizedSystemLoadSimplifiedI
         extent={{7,-7},{-7,7}},
         rotation=90,
         origin={-279,-195})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S101(
-    L=L_S1_PL1,
-    t=t_S1,
-    pin_start=pin_start_S1,
-    Tin_start=Tin_start_S1,
-    Tout_start=Tin_start_S1,
-    Di=Di_S1,
-    q_m3h_start=q_m3h_S1,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=90,
-        origin={-276,-160})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
     L=L_S1_rCD_hot,
+    h=h_S1_rCD_hot,
     t=t_S1,
     pin_start=pout_start_S1,
     Tin_start=Tout_start_S1,
@@ -175,6 +135,7 @@ partial model CentralizedSystemLoadSimplifiedI
         origin={-240,-40})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
     L=L_S1_rCD_cold,
+    h=h_S1_rCD_cold,
     t=t_S1,
     pin_start=pin_start_S1,
     Tin_start=Tin_start_S1,
@@ -186,37 +147,51 @@ partial model CentralizedSystemLoadSimplifiedI
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-276,-40})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV                   PL_S100_GB101_P101(
+    L=L_GB101_P101,
+    h=h_GB101_P101,
+    t=t_S1,
+    pin_start=pout_start_S1,
+    Tin_start=Tout_start_S1,
+    Tout_start=Tout_start_S1,
+    Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
+    n=n,
+    hctype=hctype)
+         annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={-240,-230})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV                   PL_S100_FT101_GB101(
+    L=L_FT101_GB101,
+    h=h_FT101_GB101,
+    t=t_S1,
+    pin_start=pin_start_S1,
+    Tin_start=Tin_start_S1,
+    Tout_start=Tin_start_S1,
+    Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
+    hctype=hctype)        annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-276,-230})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV                   PL_S100_TT101_FT101(
+    L=L_TT101_FT101,
+    h=h_TT101_FT101,
+    t=t_S1,
+    pin_start=pin_start_S1,
+    Tin_start=Tin_start_S1,
+    Tout_start=Tin_start_S1,
+    Di=Di_S1,
+    q_m3h_start=q_m3h_S1,
+    hctype=hctype)
+              annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-276,-162})));
 equation
-  connect(P101.inlet,PL3_S101. outlet) annotation (Line(
-      points={{-240,-184.6},{-240,-220}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FCV101.inlet,P101. outlet) annotation (Line(
-      points={{-240,-150},{-240,-165.4}},
-      color={140,56,54},
-      thickness=0.5));
   connect(TT102.inlet,PT102. inlet) annotation (Line(
       points={{-240.4,-72},{-240.4,-84}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL4_S101.inlet,FCV101. outlet) annotation (Line(
-      points={{-240,-116},{-240,-130}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PT102.inlet,PL4_S101. outlet) annotation (Line(
-      points={{-240.4,-84},{-240.4,-93},{-240,-93},{-240,-96}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT101.outlet,PL2_S101. inlet) annotation (Line(
-      points={{-276.2,-199.2},{-276.2,-201.6},{-276,-201.6},{-276,-222}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL1_S101.outlet,FT101. inlet) annotation (Line(
-      points={{-276,-170},{-276,-177.4},{-276.2,-177.4},{-276.2,-190.8}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL1_S101.inlet,PT101. inlet) annotation (Line(
-      points={{-276,-150},{-276,-130},{-275.6,-130}},
       color={140,56,54},
       thickness=0.5));
   connect(PT101.inlet,TT101. inlet) annotation (Line(
@@ -236,16 +211,40 @@ equation
       points={{-276,-30},{-276,5.25},{-326.5,5.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL2_S101.outlet,GB101. inlet) annotation (Line(
-      points={{-276,-242},{-276,-254},{-267.5,-254},{-267.5,-273}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL3_S101.inlet,GB101. outlet) annotation (Line(
-      points={{-240,-240},{-240,-254},{-246.5,-254},{-246.5,-273}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
       points={{-240,-30},{-242,-30},{-242,44.75},{-257.5,44.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (Line(
+      points={{-240,-184.6},{-240,-220}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT101.outlet, PL_S100_FT101_GB101.inlet) annotation (Line(
+      points={{-276.2,-199.2},{-276.2,-220},{-276,-220}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S100_FT101_GB101.outlet, GB101.inlet) annotation (Line(
+      points={{-276,-240},{-276,-252},{-267.5,-252},{-267.5,-273}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S100_GB101_P101.inlet, GB101.outlet) annotation (Line(
+      points={{-240,-240},{-240,-252},{-246.5,-252},{-246.5,-273}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV101.outlet, PT102.inlet) annotation (Line(
+      points={{-240,-120},{-240,-92},{-240.4,-92},{-240.4,-84}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT101.inlet, PL_S100_TT101_FT101.outlet) annotation (Line(
+      points={{-276.2,-190.8},{-276.2,-184},{-276,-184},{-276,-172}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S100_TT101_FT101.inlet, PT101.inlet) annotation (Line(
+      points={{-276,-152},{-276,-141},{-275.6,-141},{-275.6,-130}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV101.inlet, P101.outlet) annotation (Line(
+      points={{-240,-140},{-240,-165.4}},
       color={140,56,54},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

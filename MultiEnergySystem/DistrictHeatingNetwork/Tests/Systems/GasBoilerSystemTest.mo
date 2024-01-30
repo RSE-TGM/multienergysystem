@@ -234,6 +234,9 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     annotation (Placement(transformation(extent={{-80,100},{-60,120}})));
   Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
     annotation (Placement(transformation(extent={{-80,-116},{-60,-96}})));
+  Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
+    "Input to decide whether or nor the gas boiler is working"
+    annotation (Placement(transformation(extent={{-80,-148},{-60,-128}})));
 equation
   connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (Line(
       points={{20,-14.6},{20,-26}},
@@ -300,6 +303,8 @@ equation
       points={{30,126},{19.6,126},{19.6,86}},
       color={140,56,54},
       thickness=0.5));
+  connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-133.6},
+          {-36.8,-133.6}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

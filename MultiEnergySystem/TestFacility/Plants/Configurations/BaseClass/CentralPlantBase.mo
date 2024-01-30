@@ -32,7 +32,8 @@ partial model CentralPlantBase
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_rCD_cold=1.60e5;
 
     // Cold Side Rack CD
-  parameter DistrictHeatingNetwork.Types.Length L_rCD_C1=12 "To be define";
+  parameter DistrictHeatingNetwork.Types.Length L_rCD_C1=10.8;
+  parameter DistrictHeatingNetwork.Types.Length h_rCD_C1=-0.3+1.3;
   parameter DistrictHeatingNetwork.Types.Length L_rCD_C2=2.85;
   parameter DistrictHeatingNetwork.Types.Length L_rCD_C3=0.84;
   parameter DistrictHeatingNetwork.Types.Length L_rCD_C4=0.84;
@@ -49,6 +50,7 @@ partial model CentralPlantBase
   parameter DistrictHeatingNetwork.Types.Length L_rCD_H5=1.4;
   parameter DistrictHeatingNetwork.Types.Length L_rCD_H6=1.25;
   parameter DistrictHeatingNetwork.Types.Length L_rCD_H7=15;
+  parameter DistrictHeatingNetwork.Types.Length h_rCD_H7=1.8-0.3-2.2;
 
     // Cold Side L2-L3-L4-L5-L6-L7
   parameter DistrictHeatingNetwork.Types.Length L_rL2L3_rL3L4_C=4.5;
@@ -97,7 +99,9 @@ partial model CentralPlantBase
 
   parameter DistrictHeatingNetwork.Types.Length L_S9=10;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL1=0.82;
-  parameter DistrictHeatingNetwork.Types.Length L_S9_PL2=2.3;
+  //parameter DistrictHeatingNetwork.Types.Length L_S9_PL2=2.3;
+  parameter DistrictHeatingNetwork.Types.Length L_S9_PL2=0.5;
+  parameter DistrictHeatingNetwork.Types.Length h_S9_PL2=0.5;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL3=1.5;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL4=0.65;
   parameter DistrictHeatingNetwork.Types.Length Di_S9=51e-3;
@@ -201,6 +205,7 @@ partial model CentralPlantBase
         origin={-810,162.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S901(
     L=L_S9_PL2,
+    h=h_S9_PL2,
     t=t_S9,
     pin_start=pin_start_S9,
     Tin_start=Tin_start_S9,
@@ -232,9 +237,9 @@ partial model CentralPlantBase
     Tin_start=T_start,
     pin_start=pin_start) annotation (Placement(visible=true,
         transformation(
-        origin={-218,25},
+        origin={-218,45},
         extent={{-5,5},{5,-5}},
-        rotation=90)));
+        rotation=180)));
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCVC02(
@@ -256,12 +261,6 @@ partial model CentralPlantBase
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={250,235})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.Wall_FixedT Wall_S9(Twall(
-        displayUnit="K") = T_start, n=n) annotation (Placement(visible=true,
-        transformation(
-        origin={-838,101},
-        extent={{-10,10},{10,-10}},
-        rotation=270)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S100_S400(
     L=L_rCD_H1,
     h=0,
@@ -274,8 +273,7 @@ partial model CentralPlantBase
     Di=Di,
     nPipes=1,
     n=n,
-    hctype=hctype)
-    "Pipe connecting the outlet of gas boiler and the outlet of electric boiler"
+    hctype=hctype) "Pipe connecting the outlet of gas boiler and the outlet of electric boiler"
     annotation (Placement(transformation(
         extent={{-10.25,10.25},{10.25,-10.25}},
         rotation=180,
@@ -372,7 +370,7 @@ partial model CentralPlantBase
         origin={-668,44.75})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(
     L=L_rCD_H7,
-    h=0,
+    h=h_rCD_H7,
     t=t_rCD,
     pin_start=pin_start_rCD,
     Tin_start=T_start_hot,
@@ -707,6 +705,23 @@ partial model CentralPlantBase
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07
     "Pressure sensor at the outlet of valve FCVC01"
     annotation (Placement(transformation(extent={{234,263},{242,271}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_Cold(
+    L=0.5,
+    h=-0.5,
+    t=t_rCD,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start_rCD,
+    pout_start=pout_start_rCD,
+    Tin_start=T_start_hot,
+    Tout_start=T_start_hot,
+    Di=Di,
+    nPipes=1,
+    n=n,
+    hctype=hctype) "Pipe connecting the outlet of gas boiler and the outlet of electric boiler"
+    annotation (Placement(transformation(
+        extent={{-10.25,10.25},{10.25,-10.25}},
+        rotation=90,
+        origin={-191.75,24.75})));
 equation
   connect(rackL3L4_FCVC01_cold.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
@@ -764,9 +779,6 @@ equation
       points={{250,245},{250,265},{230,265}},
       color={140,56,54},
       thickness=0.5));
-  connect(Wall_S9.MultiPort, PL2_S901.wall)
-    annotation (Line(points={{-838,101},{-812.3,101}},
-                                                     color={255,238,44}));
   connect(rackCD_Hot_S400_S300.outlet, rackCD_Hot_S300_S500.inlet) annotation (
       Line(
       points={{-358,45},{-418,45}},
@@ -916,12 +928,16 @@ equation
       points={{-839,131},{-808,131},{-808,162.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (Line(
-      points={{-326.5,5.25},{-218,5.25},{-218,20}},
+  connect(FV933.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+      points={{-223,45},{-237.75,45},{-237.75,44.75},{-257.5,44.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV933.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
-      points={{-218,30},{-218,44.75},{-257.5,44.75}},
+  connect(rackCD_Cold_S400_S100.outlet, rackCD_Hot_Cold.inlet) annotation (Line(
+      points={{-326.5,5.25},{-192,5.25},{-191.75,14.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackCD_Hot_Cold.outlet, FV933.inlet) annotation (Line(
+      points={{-191.75,35},{-192,45},{-213,45}},
       color={140,56,54},
       thickness=0.5));
   annotation (

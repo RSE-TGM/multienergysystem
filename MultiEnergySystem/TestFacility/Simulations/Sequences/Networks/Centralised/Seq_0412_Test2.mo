@@ -10,10 +10,22 @@ model Seq_0412_Test2 "Sequence 2 done on 04/12/23"
     FT733_mflow(table=[0,1.3021*998/3600; 1e6,1.3021*998/3600]),
     FT703_mflow(table=[0,1.2941*998/3600; 1e6,1.2941*998/3600]),
     FCV401theta = [0, 0.1; 1e6, 0.1],
-    FCVC01theta = [0, 0; 1e6, 0],
+    FCVC01theta = [0, 1;  338, 1; 338, 0; 1e6, 0],
     FCVC02theta = [0, 1; 1e6, 1],
-    FCV101_theta(table=[t2,thetaFCV101]),
-    VE901(p0=1.76e5));
+    FCV101theta = [0, 0.8; 0.27e4, 0.8; 0.27e4, 0.7; 0.28e4, 0.7; 0.28e4, 0.6; 0.305e4, 0.6; 0.305e4, 0.5; 0.7740e4, 0.5; 0.7740e4, 1; 0.7761e4, 1; 0.7761e4, 0.8; 0.807e4, 0.8; 0.807e4, 1; 1e6, 1],
+    FCV701theta = [0, 0.6269; 1e6, 0.6269],
+    FCV731theta = [0, 0.9; 0.041e4, 0.9; 0.041e4, 1; 0.3684e4, 1; 0.5e4, 0.92; 1e6, 0.92],
+    VE901(p0=1.76e5),
+    Tout_start_S9 = 72 + 273.15,
+    T_start_hot = 72 + 273.15,
+    FCV901(Kv=20,
+           openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot),
+    FCV101(Kv=20),
+    GB101(Tout_start=346.15, initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState),
+    EB401(
+      Tout_start=342.15,
+      initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
+      nR=4));
 
   parameter String Temperatures = Modelica.Utilities.Files.loadResource("C://Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
   parameter String Pressures = Modelica.Utilities.Files.loadResource("C://Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));

@@ -2,9 +2,9 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Storage;
 model StratifiedTankTest "System of two tanks"
   extends Modelica.Icons.Example;
 
-  parameter Integer n = 21 "Number of volumes in each pipe";
+  parameter Integer n = 41 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  
+
   parameter Types.Pressure pin_start_S2 = 2.1e5;
   parameter Types.Pressure pout_start_S2 = 2.5e5;
   parameter Types.Pressure pin_start_S2_pump = 1.79e5;
@@ -46,7 +46,8 @@ model StratifiedTankTest "System of two tanks"
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={90,90},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage
-    D201(H=4, D=1.7,
+    D201(H=4,
+    D=1.75,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
     m_flow_start=m_flow_S2/2, n = n)
@@ -55,6 +56,7 @@ model StratifiedTankTest "System of two tanks"
     annotation (Placement(transformation(extent={{60,-48},{40,-28}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,
+    use_in_T=true,
     pin_start=pout_start_S2_tank,
     p0=pout_start_S2_tank,
     T0=Tout_start_S2,
@@ -94,6 +96,12 @@ model StratifiedTankTest "System of two tanks"
         rotation=0,
         origin={16,-38})));
 
+  Modelica.Blocks.Sources.Ramp ramp1(
+    height=15,
+    duration=1500,
+    offset=Tout_start_S2,
+    startTime=3e4)
+    annotation (Placement(transformation(extent={{70,52},{50,72}})));
 equation
 
   connect(ramp.y, sink.in_m_flow) annotation (Line(points={{49,30},{40,30},{40,11}}, color={0,0,127}));
@@ -113,9 +121,10 @@ equation
       points={{-2,6},{-9,6},{-9,5.25},{-16,5.25}},
       color={140,56,54},
       thickness=0.5));
+  connect(ramp1.y, sink.in_T) annotation (Line(points={{49,62},{46,62},{46,11}}, color={0,0,127}));
   annotation (
     experiment(
-      StopTime=10000,
+      StopTime=50000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end StratifiedTankTest;

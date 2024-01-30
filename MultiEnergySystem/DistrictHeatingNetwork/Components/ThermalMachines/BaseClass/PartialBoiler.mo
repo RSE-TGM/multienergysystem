@@ -92,10 +92,6 @@ equation
   hout = fluidOut.h;
   rho = fluidOut.rho;
   cp = fluidOut.cp;
-  //hin = Medium.specificEnthalpy(fluidIn);
-  //hout = Medium.specificEnthalpy(fluidOut);
-  //rho = Medium.density(fluidOut);
-  //cp = Medium.specificHeatCapacityCp(fluidOut);
 
   // Define variables
   m_flow = inlet.m_flow;

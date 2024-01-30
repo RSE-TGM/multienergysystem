@@ -47,7 +47,7 @@ model RoundPipeFV
 
   parameter Types.PerUnit kc=1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
-  parameter Types.CoefficientOfHeatTransfer gamma_nom = 1500 "nominal heat transfer coeffcient" annotation (
+  parameter Types.CoefficientOfHeatTransfer gamma_nom = 5 "nominal heat transfer coeffcient" annotation (
     Dialog(group = "Heat Transfer Model"));
 
   parameter Real cons = 1e-4;

@@ -428,8 +428,6 @@ model WaterTankSystemB "System of two tanks"
         origin={-52,-70})));
   Modelica.Blocks.Sources.TimeTable FCV201_theta(table=FCV201theta)
     annotation (Placement(transformation(extent={{-180,-10},{-160,10}})));
-  Modelica.Blocks.Sources.BooleanExpression booleanExpression
-    annotation (Placement(transformation(extent={{-50,38},{-30,58}})));
   Sources.SinkPressure sink(
     use_in_p0=false,
     use_in_T0=true,

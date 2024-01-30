@@ -8,7 +8,7 @@ model PumpingCirculationSystemTestD
     P901_omega(table=[t,omegaP901]),
     Kv = 20);
   annotation (experiment(
-      StopTime=12000,
+      StopTime=7000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end PumpingCirculationSystemTestD;

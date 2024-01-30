@@ -31,7 +31,8 @@ model CentralisedSystemLoadSimplifiedI_B
     GB101(Pmaxnom=147.6e3*0.8),
     ToutcoolSP=[0,25.5; 500,25.5; 500,12; 1000,12],
     EX701(Tin_start_hot=T_start_hot),
-    EX731(Tin_start_hot=T_start_hot));
+    EX731(Tin_start_hot=T_start_hot),
+    FCV901(Kv=20));
 
   // System 400
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4=1.695e5;
@@ -60,8 +61,8 @@ model CentralisedSystemLoadSimplifiedI_B
   parameter Boolean FV402_state = true;
   parameter Boolean FV401_startValue = true;
   parameter Boolean FV402_startValue = true;
-  parameter Real FV401_s[:] = {1e6};
-  parameter Real FV402_s[:] = {1e6};
+  parameter Real FV401_s[:] = {5e6};
+  parameter Real FV402_s[:] = {5e6};
 
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB401(
     Tout_start=Tout_start_S4,

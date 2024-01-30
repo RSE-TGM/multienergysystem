@@ -10,7 +10,7 @@ model ControlledElectricBoiler
   parameter SI.Time tdelay = 10 "Delay time to obtain 100% thermal power";
   parameter Real T_bandwidth = 2 "Temperature Bandwidth for the on/off temperature controller";
 
-  Boolean heat_on(fixed = true, start = true);
+  //Boolean heat_on(fixed = true, start = true);
   SI.Power Pheat_ref "Reference value for computed Heat Power required";
   SI.SpecificEnthalpy hout_ref "Reference required temperature";
 
@@ -19,6 +19,8 @@ model ControlledElectricBoiler
   Modelica.Blocks.Interfaces.RealInput Tout_ref annotation (Placement(transformation(
           extent={{-100,-20},{-60,20}}), iconTransformation(extent={{-100,-20},{
             -60,20}})));
+  Modelica.Blocks.Interfaces.BooleanInput heat_on annotation (Placement(
+        transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-100,-80},{-60,-40}})));
 equation
   fluidOut_ref.p = pin;
   fluidOut_ref.T = Tout_ref;
@@ -31,11 +33,11 @@ equation
   //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxres*nR) else 0, tdelay);
   Pheat = min(Pheat_ref, Pmaxres*nR);
 
-  when Tout_ref - T_bandwidth > Tout and pre(heat_on)== false then
-    heat_on=  true;
-  elsewhen Tout_ref + T_bandwidth <= Tout and pre(heat_on)==true then
-    heat_on=  false;
-  end when;
+//   when Tout_ref - T_bandwidth > Tout and pre(heat_on)== false then
+//     heat_on=  true;
+//   elsewhen Tout_ref + T_bandwidth <= Tout and pre(heat_on)==true then
+//     heat_on=  false;
+//   end when;
 
 annotation (
     Icon(graphics={  Polygon( lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));

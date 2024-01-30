@@ -12,7 +12,7 @@ model ControlledGasBoiler
   parameter Real T_bandwidth = 2 "Temperature Bandwidth for the on/off temperature controller";
 
   // Variables
-  Boolean heat_on(fixed = true, start = true);
+  //Boolean heat_on(fixed = true, start = true);
   SI.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
   SI.Power Pheat_ref "Reference value for computed Heat Power required";
   SI.SpecificEnthalpy hout_ref "Reference required temperature";
@@ -24,6 +24,8 @@ model ControlledGasBoiler
   Modelica.Blocks.Interfaces.RealInput Tout_ref annotation (Placement(
         transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent=
            {{-100,-20},{-60,20}})));
+  Modelica.Blocks.Interfaces.BooleanInput heat_on annotation (Placement(
+        transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-100,-80},{-60,-40}})));
 equation
   //inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
   inlet.p - outlet.p = rho*9.81*h;
@@ -35,11 +37,11 @@ equation
   //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxnom) else 0, tdelay);
   Pheat = min(Pheat_ref, Pmaxnom);
 
-  when Tout_ref - T_bandwidth > Tout and pre(heat_on)==false then
-    heat_on=  true;
-  elsewhen Tout_ref + T_bandwidth <= Tout and pre(heat_on)==true then
-    heat_on=  false;
-  end when;
+//   when Tout_ref - T_bandwidth > Tout and pre(heat_on)==false then
+//     heat_on=  true;
+//   elsewhen Tout_ref + T_bandwidth <= Tout and pre(heat_on)==true then
+//     heat_on=  false;
+//   end when;
 
 
   Pheat = m_flow_fuel*HH*etanom;

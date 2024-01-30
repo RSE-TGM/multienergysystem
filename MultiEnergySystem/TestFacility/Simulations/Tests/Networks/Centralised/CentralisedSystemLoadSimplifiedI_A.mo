@@ -36,9 +36,9 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
   Modelica.Blocks.Sources.TimeTable FCVC02_theta(table=FCVC02theta)
     annotation (Placement(transformation(extent={{740,289},{720,309}})));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=FV933_state)
-    annotation (Placement(transformation(extent={{-189,15},{-209,35}})));
+    annotation (Placement(transformation(extent={{-185,55},{-205,75}})));
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
-    annotation (Placement(transformation(extent={{-200,-150},{-220,-130}})));
+    annotation (Placement(transformation(extent={{-200,-140},{-220,-120}})));
   DistrictHeatingNetwork.Sources.PumpInput P101_input(
     omega=P101omega,
     q_m3h=P101qm3h)
@@ -69,6 +69,9 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
     annotation (Placement(transformation(extent={{672,-280},{652,-260}})));
   Modelica.Blocks.Sources.TimeTable TT713_SP(table=EX711_TinCold)
     annotation (Placement(transformation(extent={{512,-280},{492,-260}})));
+  Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e8}, startValue=true)
+    "Input to decide whether or nor the gas boiler is working"
+    annotation (Placement(transformation(extent={{-318,-344},{-298,-324}})));
 equation
   connect(FCV901_theta.y, FCV901.opening)
     annotation (Line(points={{-735,103},{-742,103},{-742,115},{-749,115}},
@@ -81,9 +84,11 @@ equation
   connect(FCVC02_theta.y, FCVC02.opening) annotation (Line(points={{719,299},{710,
           299},{710,234},{698,234},{698,235}}, color={0,0,127}));
   connect(FV933_OnOff.y, FV933.u)
-    annotation (Line(points={{-210,25},{-216.4,25}}, color={255,0,255}));
+    annotation (Line(points={{-206,65},{-218,65},{-218,46.6}},
+                                                     color={255,0,255}));
   connect(FCV101_theta.y, FCV101.opening)
-    annotation (Line(points={{-221,-140},{-232,-140}}, color={0,0,127}));
+    annotation (Line(points={{-221,-130},{-226,-130},{-226,-130},{-232,-130}},
+                                                       color={0,0,127}));
   connect(FCV701_theta.y, FCV701.opening)
     annotation (Line(points={{158,-150},{148,-150}}, color={0,0,127}));
   connect(FCV711_theta.y, FCV711.opening)
@@ -112,4 +117,6 @@ equation
     annotation (Line(points={{491,-270},{479,-270},{479,-290.6}}, color={0,0,127}));
   connect(P101_input.y, P101.in_omega)
     annotation (Line(points={{-221,-180.5},{-234,-180.5},{-234,-179.8}}, color={0,0,127}));
+  connect(GB101_Status.y, GB101.heat_on)
+    annotation (Line(points={{-297,-334},{-294,-334},{-294,-322},{-285,-322}}, color={255,0,255}));
 end CentralisedSystemLoadSimplifiedI_A;

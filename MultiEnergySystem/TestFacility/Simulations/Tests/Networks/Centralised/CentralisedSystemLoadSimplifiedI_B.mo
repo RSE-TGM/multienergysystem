@@ -262,6 +262,9 @@ model CentralisedSystemLoadSimplifiedI_B
                                                                  startValue=
         FV402_startValue) "Input for the status (open/close) of valve FV402"
     annotation (Placement(transformation(extent={{-290,-30},{-310,-10}})));
+  Modelica.Blocks.Sources.BooleanTable EB401_Status(table={1e8}, startValue=true)
+    "Input to decide whether or nor the electric boiler is working"
+    annotation (Placement(transformation(extent={{-408,-342},{-388,-322}})));
 equation
   connect(P401.inlet,PL3_S401. outlet) annotation (Line(
       points={{-322,-184.6},{-322,-226}},
@@ -341,6 +344,8 @@ equation
     annotation (Line(points={{-311,-20},{-318.8,-20}}, color={255,0,255}));
   connect(P401_input.y, P401.in_omega) annotation (Line(points={{-309,-180.5},{-312.5,-180.5},{-312.5,
           -179.8},{-316,-179.8}}, color={0,0,127}));
+  connect(EB401_Status.y, EB401.heat_on) annotation (Line(points={{-387,-332},{-380,-332},{-380,
+          -322.4},{-369.2,-322.4}}, color={255,0,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));

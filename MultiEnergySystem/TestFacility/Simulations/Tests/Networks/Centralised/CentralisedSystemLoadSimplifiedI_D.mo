@@ -337,11 +337,11 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k=FV202_state)
     annotation (Placement(transformation(extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={-824,-120})));
+        origin={-824,-96})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status
     annotation (Placement(transformation(extent={{10,-10},{-10,10}},
         rotation=-90,
-        origin={-824,-114})));
+        origin={-824,-106})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
@@ -569,10 +569,6 @@ equation
       points={{-794,-278},{-794,-334},{-854,-334},{-854,-494},{-832,-494}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV202_OnOff.y,FV202. u) annotation (Line(points={{-824,-126.6},{-824,
-          -130.08}}, color={255,0,255}));
-  connect(FV202_OnOff.y,FV202_Status. activePort)
-    annotation (Line(points={{-824,-126.6},{-824,-125.5}}, color={255,0,255}));
   connect(PL_S200_rCD_cold.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
       points={{-794,-42},{-796,-42},{-796,-8},{-708,-8},{-708,5.25},{-668,5.25}},
       color={140,56,54},
@@ -614,5 +610,9 @@ equation
           {-802,-272},{-795.92,-272}}, color={255,0,255}));
   connect(FV209_Status.activePort, FV209.u)
     annotation (Line(points={{-808.5,-272},{-795.92,-272}}, color={255,0,255}));
+  connect(not3.y, FV202.u) annotation (Line(points={{-659,-180},{-676,-180},{-676,-126},{-824,-126},
+          {-824,-130.08}}, color={255,0,255}));
+  connect(FV202_Status.activePort, FV202.u)
+    annotation (Line(points={{-824,-117.5},{-824,-130.08}}, color={255,0,255}));
   annotation (experiment(StopTime=800000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemLoadSimplifiedI_D;

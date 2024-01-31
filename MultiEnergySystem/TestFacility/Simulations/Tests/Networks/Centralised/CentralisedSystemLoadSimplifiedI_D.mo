@@ -3,7 +3,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   extends CentralisedSystemLoadSimplifiedI_B(
     P901omega=[0,2*pi*30; 500,2*pi*30],
     P101omega=[0,2*pi*40; 500,2*pi*40],
-    P401omega=[0,2*pi*40; 500,2*pi*40],
+    P401omega=[0,2*pi*35; 500,2*pi*35],
     q_m3h_S9 = 15,
     EB401_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 85+273.15; 1e6, 85+273.15],
     GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 85+273.15; 1e6, 85+273.15]);
@@ -31,6 +31,10 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   parameter Boolean FV208_state = true;
   parameter Boolean FV209_state = false;
 
+  parameter Boolean Load = true;
+  final parameter Boolean Unload = not Load;
+  parameter Real Load2Unload = 4e5;
+
   parameter Integer nTank = 4 "Number of volumes in stratified tank";
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2=2.1e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=1.8e5;
@@ -48,10 +52,10 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   parameter Real q_m3h_S2(unit = "m3/h") = 4;
   final parameter DistrictHeatingNetwork.Types.VolumeFlowRate q=q_m3h_S2/3600;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2=q*985;
-  parameter Real P201omega[:,:] = [0, 2*pi*30; 100, 2*pi*30; 150, 2*pi*30; 200, 2*pi*30];
+  parameter Real P201omega[:,:] = [0, 2*pi*30; 4.2e5, 2*pi*30; 4.2e5, 2*pi*45; 1e6, 2*pi*45];
   parameter Real P201qm3h[:,:] = [0, 14.5; 100, 14.5];
 
-  parameter Real FCV201theta[:,:] = [0, 1; 100, 1; 105, 1; 200, 1];
+  parameter Real FCV201theta[:,:] = [0, 1; 4.1e5, 1; 4.1e5, 0.5; 1e6, 0.5];
 
   // Pipe length
   parameter DistrictHeatingNetwork.Types.Length L_S2_PL0=24.5;
@@ -348,9 +352,9 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
         origin={-794,-152})));
 
   Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k=FV201_state)
-    annotation (Placement(transformation(extent={{-812,-158},{-800,-146}})));
+    annotation (Placement(transformation(extent={{-838,-158},{-826,-146}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status
-    annotation (Placement(transformation(extent={{-802,-162},{-822,-142}})));
+    annotation (Placement(transformation(extent={{-810,-162},{-830,-142}})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
@@ -364,11 +368,11 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k=FV206_state)
     annotation (Placement(transformation(extent={{-6,6},{6,-6}},
         rotation=270,
-        origin={-774,-176})));
+        origin={-774,-146})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV206_Status
     annotation (Placement(transformation(extent={{10,-10},{-10,10}},
         rotation=-90,
-        origin={-774,-170})));
+        origin={-774,-160})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
@@ -381,12 +385,12 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k=FV209_state)
     annotation (Placement(transformation(extent={{-5.5,-6},{5.5,6}},
         rotation=0,
-        origin={-806.5,-272})));
+        origin={-834.5,-272})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
       Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
-        origin={-812,-272})));
+        origin={-820,-272})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
@@ -408,7 +412,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
         origin={-754,-222})));
 
   Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k=FV203_state)
-    annotation (Placement(transformation(extent={{-734,-228},{-745,-216}})));
+    annotation (Placement(transformation(extent={{-708,-228},{-719,-216}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV203_Status
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=0,
@@ -422,12 +426,12 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   Modelica.Blocks.Sources.BooleanConstant FV207_OnOff(k=FV207_state)
     annotation (Placement(transformation(extent={{6,-6},{-6,6}},
         rotation=-90,
-        origin={-774,-270})));
+        origin={-774,-294})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV207_Status annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={-774,-276})));
+        origin={-774,-280})));
   Modelica.Blocks.Sources.TimeTable FCV201_theta(table=FCV201theta)
     annotation (Placement(transformation(extent={{-888,-212},{-868,-192}})));
   DistrictHeatingNetwork.Sources.PumpInput P201_input(
@@ -435,6 +439,14 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
     omega=P201omega,
     q_m3h=P201qm3h)
     annotation (Placement(transformation(extent={{-828,-218},{-808,-198}})));
+  Modelica.Blocks.Sources.BooleanTable Loading(table={Load2Unload},
+                                                            startValue=Load)
+    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=0,
+        origin={-606,-150})));
+  Modelica.Blocks.Logical.Not not3
+    annotation (Placement(transformation(extent={{-638,-190},{-658,-170}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-794,-90.5},{-794,-81.625},{-793.85,-81.625},{-793.85,-70.75}},
@@ -549,14 +561,6 @@ equation
       points={{-854,-242},{-854,-494},{-832,-494}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV206_OnOff.y,FV206_Status. activePort)
-    annotation (Line(points={{-774,-182.6},{-774,-181.5}}, color={255,0,255}));
-  connect(FV206_OnOff.y,FV206. u) annotation (Line(points={{-774,-182.6},{-774,
-          -188.08}}, color={255,0,255}));
-  connect(FV203_OnOff.y,FV203. u) annotation (Line(points={{-745.55,-222},{-752.08,-222}},
-                          color={255,0,255}));
-  connect(FV203_OnOff.y,FV203_Status. activePort) annotation (Line(points={{-745.55,-222},{-745.5,-222}},
-                                        color={255,0,255}));
   connect(PL_S200_D201_FT201.outlet,PL_S200_D201_High. outlet) annotation (Line(
       points={{-824,-444},{-748,-444},{-748,-426}},
       color={140,56,54},
@@ -565,18 +569,10 @@ equation
       points={{-794,-278},{-794,-334},{-854,-334},{-854,-494},{-832,-494}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV201_OnOff.y,FV201. u) annotation (Line(points={{-799.4,-152},{
-          -795.92,-152}}, color={255,0,255}));
-  connect(FV201_OnOff.y,FV201_Status. activePort)
-    annotation (Line(points={{-799.4,-152},{-800.5,-152}}, color={255,0,255}));
   connect(FV202_OnOff.y,FV202. u) annotation (Line(points={{-824,-126.6},{-824,
           -130.08}}, color={255,0,255}));
   connect(FV202_OnOff.y,FV202_Status. activePort)
     annotation (Line(points={{-824,-126.6},{-824,-125.5}}, color={255,0,255}));
-  connect(FV209_OnOff.y,FV209. u) annotation (Line(points={{-800.45,-272},{-795.92,-272}},
-                          color={255,0,255}));
-  connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-800.45,-272},{-800.5,-272}},
-                                        color={255,0,255}));
   connect(PL_S200_rCD_cold.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
       points={{-794,-42},{-796,-42},{-796,-8},{-708,-8},{-708,5.25},{-668,5.25}},
       color={140,56,54},
@@ -596,9 +592,27 @@ equation
       points={{-753.8,-278.8},{-754,-258},{-754,-228}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV207_OnOff.y, FV207_Status.activePort)
-    annotation (Line(points={{-774,-263.4},{-774,-264.5}}, color={255,0,255}));
-  connect(FV207_OnOff.y, FV207.u)
-    annotation (Line(points={{-774,-263.4},{-774,-259.92}}, color={255,0,255}));
-  annotation (experiment(StopTime=500000, __Dymola_Algorithm="Dassl"));
+  connect(Loading.y, not3.u)
+    annotation (Line(points={{-617,-150},{-630,-150},{-630,-180},{-636,-180}}, color={255,0,255}));
+  connect(Loading.y, FV206.u) annotation (Line(points={{-617,-150},{-724,-150},{-724,-180},{-774,-180},
+          {-774,-188.08}}, color={255,0,255}));
+  connect(Loading.y, FV207.u) annotation (Line(points={{-617,-150},{-724,-150},{-724,-264},{-774,-264},
+          {-774,-259.92}}, color={255,0,255}));
+  connect(FV206_Status.activePort, FV206.u)
+    annotation (Line(points={{-774,-171.5},{-774,-188.08}}, color={255,0,255}));
+  connect(FV207_Status.activePort, FV207.u)
+    annotation (Line(points={{-774,-268.5},{-774,-259.92}}, color={255,0,255}));
+  connect(not3.y, FV201.u) annotation (Line(points={{-659,-180},{-676,-180},{-676,-160},{-802,-160},
+          {-802,-152},{-795.92,-152}}, color={255,0,255}));
+  connect(not3.y, FV203.u) annotation (Line(points={{-659,-180},{-676,-180},{-676,-200},{-748,-200},
+          {-748,-222},{-752.08,-222}}, color={255,0,255}));
+  connect(FV203_Status.activePort, FV203.u)
+    annotation (Line(points={{-745.5,-222},{-752.08,-222}}, color={255,0,255}));
+  connect(FV201_Status.activePort, FV201.u)
+    annotation (Line(points={{-808.5,-152},{-795.92,-152}}, color={255,0,255}));
+  connect(not3.y, FV209.u) annotation (Line(points={{-659,-180},{-676,-180},{-676,-284},{-802,-284},
+          {-802,-272},{-795.92,-272}}, color={255,0,255}));
+  connect(FV209_Status.activePort, FV209.u)
+    annotation (Line(points={{-808.5,-272},{-795.92,-272}}, color={255,0,255}));
+  annotation (experiment(StopTime=800000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemLoadSimplifiedI_D;

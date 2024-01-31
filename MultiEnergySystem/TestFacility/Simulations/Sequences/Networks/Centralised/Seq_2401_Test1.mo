@@ -30,7 +30,7 @@ model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
     FCV901(Kv=20, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot),
     Tout_start_S9 = 41.87 + 273.15,
     T_start_hot = 41.87 + 273.15,
-    GB101(Tout_start=315.02),
+    GB101(Tout_start=315.02, initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState),
     FCVC02(Kv=25),
     FCV101(Kv=20),
     FCVC01(Kv=25),

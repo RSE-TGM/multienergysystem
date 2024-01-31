@@ -68,6 +68,7 @@ partial model CentralPlantBase
     // Hot side Rack L2-L3-L4-L5-L6-L7
   parameter DistrictHeatingNetwork.Types.Length L_rL2L3_rL3L4_H=4.5;
   parameter DistrictHeatingNetwork.Types.Length L_rL3L4_FCVC01_H=3;
+  parameter DistrictHeatingNetwork.Types.Length h_rL3L4_FCVC01_H=2.5;
   parameter DistrictHeatingNetwork.Types.Length L_FCVC01_rL4L5_H=1.5;
   parameter DistrictHeatingNetwork.Types.Length L_rL4L5_rL5L6_H=3;
   parameter DistrictHeatingNetwork.Types.Length L_rL5L6_rL6L7_H=3;
@@ -587,6 +588,7 @@ partial model CentralPlantBase
         origin={530,205})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_hot(
     L=L_rL6L7_FCVC02_H,
+    h=h_rL3L4_FCVC01_H,
     t=t_rL_H,
     pin_start=pin_start_Users - 0.02e5,
     Tin_start=T_start_hot,

@@ -5,8 +5,8 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
     P101omega=[0,2*pi*40; 500,2*pi*40],
     P401omega=[0,2*pi*35; 500,2*pi*35],
     q_m3h_S9 = 15,
-    EB401_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 85+273.15; 1e6, 85+273.15],
-    GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 85+273.15; 1e6, 85+273.15]);
+    EB401_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15],
+    GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15]);
   // System S200
   // Unloading
 //   parameter Boolean FV201_state = true;
@@ -35,7 +35,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   final parameter Boolean Unload = not Load;
   parameter Real Load2Unload = 4e5;
 
-  parameter Integer nTank = 4 "Number of volumes in stratified tank";
+  parameter Integer nTank = 9 "Number of volumes in stratified tank";
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2=2.1e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=1.8e5;
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump=1.79e5;

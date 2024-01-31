@@ -2,10 +2,13 @@ within MultiEnergySystem.TestFacility.Plants.Configurations.BaseClass;
 partial model CentralPlantBase
   "Base Case considering rack CD and the pipelines connecting to the loads"
 
+  //Constants
+  parameter Real pi = Modelica.Constants.pi;
+
   //General parameters of pipes
   parameter Integer n = 2 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle                                     "Location of pressure state";
+      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter DistrictHeatingNetwork.Types.Temperature T_start_cold=T_start;
   parameter DistrictHeatingNetwork.Types.Temperature T_start_hot=T_start;
   parameter DistrictHeatingNetwork.Types.Temperature T_start=15 + 273.15;
@@ -705,23 +708,6 @@ partial model CentralPlantBase
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07
     "Pressure sensor at the outlet of valve FCVC01"
     annotation (Placement(transformation(extent={{234,263},{242,271}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_Cold(
-    L=0.5,
-    h=-0.5,
-    t=t_rCD,
-    m_flow_start=m_flow_start,
-    pin_start=pin_start_rCD,
-    pout_start=pout_start_rCD,
-    Tin_start=T_start_hot,
-    Tout_start=T_start_hot,
-    Di=Di,
-    nPipes=1,
-    n=n,
-    hctype=hctype) "Pipe connecting the outlet of gas boiler and the outlet of electric boiler"
-    annotation (Placement(transformation(
-        extent={{-10.25,10.25},{10.25,-10.25}},
-        rotation=90,
-        origin={-191.75,24.75})));
 equation
   connect(rackL3L4_FCVC01_cold.outlet, rackL2L3_rackL3L4_cold.inlet)
     annotation (Line(
@@ -932,12 +918,8 @@ equation
       points={{-223,45},{-237.75,45},{-237.75,44.75},{-257.5,44.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(rackCD_Cold_S400_S100.outlet, rackCD_Hot_Cold.inlet) annotation (Line(
-      points={{-326.5,5.25},{-192,5.25},{-191.75,14.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(rackCD_Hot_Cold.outlet, FV933.inlet) annotation (Line(
-      points={{-191.75,35},{-192,45},{-213,45}},
+  connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (Line(
+      points={{-326.5,5.25},{-200,5.25},{-200,45},{-213,45}},
       color={140,56,54},
       thickness=0.5));
   annotation (

@@ -2,15 +2,15 @@ within MultiEnergySystem.TestFacility.Simulations.Sequences.Networks.Centralised
 model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
   extends Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_A(
     P101omega = [0, 2*pi*30; 1e6, 2*pi*30],
-    P901omega = [0, 2*pi*36.4; 0.8e3, 2*pi*36.4; 0.8e3, 2*pi*34.6; 1.76e3, 2*pi*34.6;1.76e3, 2*pi*30; 5.84e3, 2*pi*30],
-    FCV101theta = [0, 0.6; 1761, 0.6; 1761, 1; 1e6, 1],
+    P901omega = [0, 2*pi*36.4; 0.8e3, 2*pi*36.4; 0.8e3, 2*pi*34.6; 1.76e3, 2*pi*34.6;1.76e3, 2*pi*30; 5.84e3, 2*pi*30; 5.84e3, 2*pi*35; 1e6, 2*pi*35],
+    FCV101theta = [0, 0.6; 1760, 0.6; 1760, 1; 1e6, 1],
     FCV901theta = [0, 1; 1e6, 1],
     FCVC01theta = [0, 0.2; 800, 0.2; 800, 0; 1e6, 0],
     FCVC02theta = [0, 0; 800, 0; 800, 0.25; 1260, 0.25; 1265, 0.5; 2480, 0.5; 2480, 0.25; 1e6, 0.25],
     FCV701theta = [0, 0.7361; 1e6, 0.7361],
     FCV711theta = [0, 0.8267; 1e6, 0.8267],
     FCV721theta = [0, 0.9241; 1e6, 0.9241],
-    FCV731theta = [0, 0.5; 800, 0.5; 805, 0.85; 1e6, 0.85],
+    FCV731theta = [0, 0.9; 1e6, 0.9],
     EX701q_m3h_cold = [0, 1.2918; 1e6, 1.2918],
     EX711q_m3h_cold = [0, 1.5267; 1e6, 1.5267],
     EX721q_m3h_cold = [0, 1.0565; 1e6, 1.0565],
@@ -35,6 +35,7 @@ model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
     FCV101(Kv=20),
     FCVC01(Kv=25),
     VE901(p0=180000));
+    //FCV731theta = [0, 0.5; 800, 0.5; 805, 0.85; 1e6, 0.85],
     //FCV731theta = [0, 0.7222; 1e6, 0.7222],
 
 //     FCV701theta = [0, 0.1; 800, 0.1; 810, 0.7361; 1e6, 0.7361],

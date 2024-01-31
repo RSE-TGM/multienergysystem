@@ -13,6 +13,8 @@ model WaterTankSystemB "System of two tanks"
   parameter Boolean FV207_state = true;
   parameter Boolean FV208_state = true;
   parameter Boolean FV209_state = false;
+  parameter Boolean Load = true;
+  final parameter Boolean Unload = not Load;
 
   parameter Types.Pressure pin_start_S2 = 2.1e5;
   parameter Types.Pressure pout_start_S2 = 1.8e5;
@@ -132,8 +134,8 @@ model WaterTankSystemB "System of two tanks"
         origin={-80,90})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV201(
-    Kv=Valve.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = Valve.FCV101.dp_nom,
+    Kv=Valve.FCV201.Kv,
+    dp_nom(displayUnit="Pa") = Valve.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -345,10 +347,8 @@ model WaterTankSystemB "System of two tanks"
         extent={{-6,6},{6,-6}},
         rotation=-90,
         origin={-80,50})));
-  Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k=FV201_state)
-    annotation (Placement(transformation(extent={{-110,44},{-98,56}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status
-    annotation (Placement(transformation(extent={{-92,42},{-74,60}})));
+    annotation (Placement(transformation(extent={{-96,40},{-114,58}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV206(
     Kv=Valve.FCV101.Kv,
@@ -358,15 +358,11 @@ model WaterTankSystemB "System of two tanks"
     q_m3h_start=q_m3h_S2/4)  annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=180,
-        origin={-50,12})));
-  Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k=FV206_state)
-    annotation (Placement(transformation(extent={{-6,6},{6,-6}},
-        rotation=180,
-        origin={-30,18})));
+        origin={-52,12})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV206_Status
     annotation (Placement(transformation(extent={{9,-9},{-9,9}},
-        rotation=-90,
-        origin={-51,29})));
+        rotation=180,
+        origin={-39,23})));
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV209(
@@ -380,12 +376,12 @@ model WaterTankSystemB "System of two tanks"
   Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k=FV209_state)
     annotation (Placement(transformation(extent={{-5.5,-6},{5.5,6}},
         rotation=90,
-        origin={-84.5,-86})));
+        origin={-94.5,-92})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
       Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
-        origin={-98,-70})));
+        origin={-108,-70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve
     FV207(
     Kv=Valve.FCV101.Kv,
@@ -406,8 +402,6 @@ model WaterTankSystemB "System of two tanks"
         extent={{-6,6},{6,-6}},
         rotation=90,
         origin={-20,-20})));
-  Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k=FV203_state)
-    annotation (Placement(transformation(extent={{14,-26},{3,-14}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV203_Status
     annotation (Placement(transformation(extent={{10.25,-10.25},{-10.25,10.25}},
         rotation=0,
@@ -419,13 +413,11 @@ model WaterTankSystemB "System of two tanks"
         extent={{7,7},{-7,-7}},
         rotation=90,
         origin={-17,-81})));
-  Modelica.Blocks.Sources.BooleanConstant FV207_OnOff(k=FV207_state)
-    annotation (Placement(transformation(extent={{-38,-64},{-44,-58}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV207_Status annotation (
       Placement(transformation(
         extent={{-8,-8},{8,8}},
         rotation=-90,
-        origin={-52,-70})));
+        origin={-52,-76})));
   Modelica.Blocks.Sources.TimeTable FCV201_theta(table=FCV201theta)
     annotation (Placement(transformation(extent={{-180,-10},{-160,10}})));
   Sources.SinkPressure sink(
@@ -441,6 +433,33 @@ model WaterTankSystemB "System of two tanks"
     offset=pin_start_S2,
     startTime=50000)
     annotation (Placement(transformation(extent={{-158,184},{-138,204}})));
+  Modelica.Blocks.Sources.BooleanTable FV206_OnOff(table={3e4}, startValue=FV206_state)
+    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=-90,
+        origin={-52,84})));
+  Modelica.Blocks.Sources.BooleanTable FV203_OnOff(table={3e4 - 1}, startValue=FV203_state)
+    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={50,-20})));
+  Modelica.Blocks.Sources.BooleanTable FV207_OnOff(table={3e4}, startValue=FV207_state)
+    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={-52,-92})));
+  Modelica.Blocks.Sources.BooleanTable FV201_OnOff(table={3e4 - 1}, startValue=FV201_state)
+    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
+        extent={{10,10},{-10,-10}},
+        rotation=180,
+        origin={-168,52})));
+  Modelica.Blocks.Sources.BooleanTable Loading(table={3e4}, startValue=Load)
+    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=0,
+        origin={52,60})));
+  Modelica.Blocks.Logical.Not not3
+    annotation (Placement(transformation(extent={{20,20},{0,40}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-80,115.5},{-80,120.375},{-79.85,120.375},{-79.85,125.25}},
@@ -535,7 +554,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FV206.outlet, P201.inlet) annotation (Line(
-      points={{-56,12},{-80,12},{-80,5.6}},
+      points={{-58,12},{-80,12},{-80,5.6}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_P201_FV209.outlet, FV209.inlet) annotation (Line(
@@ -551,39 +570,26 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FV206.inlet, FV203.outlet) annotation (Line(
-      points={{-44,12},{-20,12},{-20,-14}},
+      points={{-46,12},{-20,12},{-20,-14}},
       color={140,56,54},
       thickness=0.5));
   connect(PT202.inlet, FV203.outlet) annotation (Line(
       points={{-20.4,86},{-20,86},{-20,-14}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV206.u, FV206_OnOff.y) annotation (Line(points={{-50,13.92},{-50,18},
-          {-36.6,18}},
-                color={255,0,255}));
-  connect(FV206.u, FV206_Status.activePort) annotation (Line(points={{-50,13.92},
-          {-50,18.65},{-51,18.65}},                    color={255,0,255}));
+  connect(FV206.u, FV206_Status.activePort) annotation (Line(points={{-52,13.92},{-52,18.46},{
+          -49.35,18.46},{-49.35,23}},                  color={255,0,255}));
   connect(FV202_OnOff.y, FV202.u) annotation (Line(points={{-119.4,74},{-110,74},
           {-110,71.92}},
                       color={255,0,255}));
   connect(FCV201_theta.y, FCV201.opening) annotation (Line(points={{-159,0},{-153.5,
           0},{-153.5,4.44089e-16},{-148,4.44089e-16}}, color={0,0,127}));
   connect(FV209.u, FV209_Status.activePort)
-    annotation (Line(points={{-81.92,-70},{-86.5,-70}}, color={255,0,255}));
-  connect(FV209_OnOff.y, FV209_Status.activePort) annotation (Line(points={{-84.5,
-          -79.95},{-84.5,-70},{-86.5,-70}}, color={255,0,255}));
+    annotation (Line(points={{-81.92,-70},{-96.5,-70}}, color={255,0,255}));
   connect(FV207.u, FV207_Status.activePort)
-    annotation (Line(points={{-52,-57.92},{-52,-60.8}}, color={255,0,255}));
-  connect(FV207_OnOff.y, FV207_Status.activePort) annotation (Line(points={{-44.3,
-          -61},{-48,-61},{-48,-60},{-52,-60},{-52,-60.8}}, color={255,0,255}));
+    annotation (Line(points={{-52,-57.92},{-52,-66.8}}, color={255,0,255}));
   connect(FV202_Status.activePort, FV202.u) annotation (Line(points={{-109,76.65},
           {-109,74},{-110,74},{-110,71.92}}, color={255,0,255}));
-  connect(FV201_OnOff.y, FV201_Status.activePort) annotation (Line(points={{-97.4,
-          50},{-96,50},{-96,51},{-93.35,51}}, color={255,0,255}));
-  connect(FV201_OnOff.y, FV201.u) annotation (Line(points={{-97.4,50},{-96,50},{
-          -96,46},{-84,46},{-84,50},{-81.92,50}}, color={255,0,255}));
-  connect(FV203_OnOff.y, FV203_Status.activePort) annotation (Line(points={{2.45,
-          -20},{0.99375,-20},{0.99375,-20.25},{-4.4625,-20.25}}, color={255,0,255}));
   connect(FV203.u, FV203_Status.activePort) annotation (Line(points={{-18.08,-20},
           {-16,-20},{-16,-14},{0,-14},{0,-20},{-1.00625,-20},{-1.00625,-20.25},{
           -4.4625,-20.25}}, color={255,0,255}));
@@ -614,6 +620,23 @@ equation
     annotation (Line(points={{-97,0},{-91.5,0},{-91.5,0.8},{-86,0.8}}, color={0,0,127}));
   connect(ramp1.y, source.in_p0)
     annotation (Line(points={{-137,194},{-112,194},{-112,178.4}}, color={0,0,127}));
+  connect(FV201_Status.activePort, FV201.u) annotation (Line(points={{-94.65,49},{-85.285,49},{
+          -85.285,50},{-81.92,50}},
+                            color={255,0,255}));
+  connect(Loading.y, not3.u)
+    annotation (Line(points={{41,60},{28,60},{28,30},{22,30}}, color={255,0,255}));
+  connect(not3.y, FV203_Status.activePort) annotation (Line(points={{-1,30},{-4,30},{-4,28},{-8,28},
+          {-8,-14},{0,-14},{0,-20},{-1.00625,-20},{-1.00625,-20.25},{-4.4625,-20.25}}, color={255,0,
+          255}));
+  connect(Loading.y, FV206.u)
+    annotation (Line(points={{41,60},{-52,60},{-52,13.92}}, color={255,0,255}));
+  connect(Loading.y, FV207_Status.activePort)
+    annotation (Line(points={{41,60},{-52,60},{-52,-66.8}}, color={255,0,255}));
+  connect(not3.y, FV201.u) annotation (Line(points={{-1,30},{-16,30},{-16,32},{-32,32},{-32,40},{
+          -90,40},{-90,48},{-88,48},{-88,49},{-85.285,49},{-85.285,50},{-81.92,50}}, color={255,0,
+          255}));
+  connect(not3.y, FV209_Status.activePort) annotation (Line(points={{-1,30},{-32,30},{-32,-62},{-88,
+          -62},{-88,-70},{-96.5,-70}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-280,-240},{280,240}})),
     experiment(

@@ -600,5 +600,5 @@ equation
     annotation (Line(points={{-774,-263.4},{-774,-264.5}}, color={255,0,255}));
   connect(FV207_OnOff.y, FV207.u)
     annotation (Line(points={{-774,-263.4},{-774,-259.92}}, color={255,0,255}));
-  annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=500000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemLoadSimplifiedI_D;

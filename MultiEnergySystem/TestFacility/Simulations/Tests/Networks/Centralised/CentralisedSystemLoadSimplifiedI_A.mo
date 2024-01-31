@@ -23,7 +23,7 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
     FCVR01theta=[0,0.2; 100,0.2],
     PR01omega=[0,2*Modelica.Constants.pi*50; 100,2*Modelica.Constants.pi*50],
     ToutcoolSP=[0,15; 100,15],
-    GB101(h=1.2*0.93, Pmaxnom=147.6e3*0.79));
+    GB101(h=1.2*0.93, Pmaxnom=147.6e3*0.8));
 
   Modelica.Blocks.Sources.TimeTable FCV901_theta(table=FCV901theta)
     annotation (Placement(transformation(extent={{-714,93},{-734,113}})));

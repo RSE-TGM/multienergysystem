@@ -73,6 +73,7 @@ partial model CentralPlantBase
   parameter DistrictHeatingNetwork.Types.Length L_rL4L5_rL5L6_H=3;
   parameter DistrictHeatingNetwork.Types.Length L_rL5L6_rL6L7_H=3;
   parameter DistrictHeatingNetwork.Types.Length L_rL6L7_FCVC02_H=1.8;
+  parameter DistrictHeatingNetwork.Types.Length h_rL6L7_FCVC02_H=1.4;
   parameter DistrictHeatingNetwork.Types.Length t_rL_H=1.5e-3;
   parameter DistrictHeatingNetwork.Types.Length Di_rL_H=51e-3;
 
@@ -588,7 +589,7 @@ partial model CentralPlantBase
         origin={530,205})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_hot(
     L=L_rL6L7_FCVC02_H,
-    h=h_rL3L4_FCVC01_H,
+    h=h_rL6L7_FCVC02_H,
     t=t_rL_H,
     pin_start=pin_start_Users - 0.02e5,
     Tin_start=T_start_hot,
@@ -629,9 +630,7 @@ partial model CentralPlantBase
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_cold(
     L=L_rL3L4_FCVC01_C,
     t=t_rL_C,
-    m_flow_start=m_flow_start_Users*2,
     pin_start=pout_start_Users - 0.01e5,
-    pout_start=pout_start_Users - 0.02e5,
     Tin_start=T_start_cold,
     Tout_start=T_start_cold,
     Di=Di_rL_C,

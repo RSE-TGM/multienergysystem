@@ -2,11 +2,11 @@ within MultiEnergySystem.TestFacility.Simulations.Sequences.Networks.Centralised
 model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
   extends Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_A(
     P101omega = [0, 2*pi*30; 1e6, 2*pi*30],
-    P901omega = [0, 2*pi*36.4; 0.8e3, 2*pi*36.4; 0.8e3, 2*pi*34.6; 1.76e3, 2*pi*34.6;1.76e3, 2*pi*30; 5.84e3, 2*pi*30; 5.84e3, 2*pi*35; 1e6, 2*pi*35],
-    FCV101theta = [0, 0.6; 1760, 0.6; 1760, 1; 1e6, 1],
+    P901omega = [0, 2*pi*36.4; 1.6e3, 2*pi*36.4; 1.6e3, 2*pi*34.6; 3.52e3, 2*pi*34.6; 3.52e3, 2*pi*30; 11.68e3, 2*pi*30; 11.68e3, 2*pi*35; 1e6, 2*pi*35],
+    FCV101theta = [0, 0.6; 3.52e3, 0.6; 3.52e3, 1; 1e6, 1],
     FCV901theta = [0, 1; 1e6, 1],
-    FCVC01theta = [0, 0.2; 800, 0.2; 800, 0; 1e6, 0],
-    FCVC02theta = [0, 0; 800, 0; 800, 0.25; 1260, 0.25; 1265, 0.5; 2480, 0.5; 2480, 0.25; 1e6, 0.25],
+    FCVC01theta = [0, 0.2; 1.6e3, 0.2; 1.6e3, 0; 1e6, 0],
+    FCVC02theta = [0, 0; 1.6e3, 0; 1.6e3, 0.25; 2.52e3, 0.25; 2.52e3, 0.5; 4.96e3, 0.5; 4.96e3, 0.25; 1e6, 0.25],
     FCV701theta = [0, 0.7361; 1e6, 0.7361],
     FCV711theta = [0, 0.8267; 1e6, 0.8267],
     FCV721theta = [0, 0.9241; 1e6, 0.9241],
@@ -43,5 +43,5 @@ model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
 //     FCV721theta = [0, 0.1; 800, 0.1; 810, 0.9241; 1e6, 0.9241],
 //     FCV731theta = [0, 0.1; 800, 0.1; 810, 0.7222; 1e6, 0.7222],
 
-  annotation (experiment(StopTime=6600, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=13100, __Dymola_Algorithm="Dassl"));
 end Seq_2401_Test1;

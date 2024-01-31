@@ -209,9 +209,9 @@ package Test "Package to test component equation and behaviour"
     connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet) annotation (
       Line(points = {{-29.8, 20}, {-10, 20}}, color = {168, 168, 168}));
     connect(m_flow_1.y, idealMassFlowSource.in_m_flow) annotation (
-      Line(points = {{-52, 82}, {-44, 82}, {-44, 66}}, color = {0, 0, 127}));
+      Line(points={{-53,82},{-45,82},{-45,66.2}},      color = {0, 0, 127}));
     connect(m_flow_2.y, idealMassFlowSource2.in_m_flow) annotation (
-      Line(points = {{-52, 40}, {-44, 40}, {-44, 26}}, color = {0, 0, 127}));
+      Line(points={{-53,40},{-45,40},{-45,26.2}},      color = {0, 0, 127}));
     annotation (
       Diagram(coordinateSystem(extent = {{-100, 0}, {100, 100}})));
   end PlugFlowCoreTest;
@@ -232,7 +232,8 @@ package Test "Package to test component equation and behaviour"
     MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=
           5, Tnom=353.15)                                                                     annotation (
       Placement(visible = true, transformation(origin={-68,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(Di = 0.0508, L = 50, N = 50, T_ext = 298.15, T_start(displayUnit = "degC") = 338.15, thermalInertia = true) annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(Di = 0.0508, L = 50, N = 50,
+      T_ext=298.15,                                                                                                            T_start(displayUnit = "degC") = 338.15, thermalInertia = true) annotation (
       Placement(visible = true, transformation(origin={-12,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
       Placement(visible = true, transformation(origin={92,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -254,9 +255,11 @@ package Test "Package to test component equation and behaviour"
     connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (
       Line(points={{-2,24},{92,24}}));
     connect(pipePF.outlet, pfOut.inlet) annotation (
-      Line(points={{10,70},{36,70}},      color = {168, 168, 168}));
+      Line(points={{10,70},{26,70},{26,66},{40,66}},
+                                          color = {168, 168, 168}));
     connect(pfOut.outlet, expansionTank.inlet) annotation (
-      Line(points={{56,70},{92,70}},      color = {168, 168, 168}));
+      Line(points={{52,66},{72,66},{72,70},{92,70}},
+                                          color = {168, 168, 168}));
     connect(idealMassFlowSource.outlet, pipePF.inlet)
       annotation (Line(points={{-59.8,70},{-10,70}}, color={168,168,168}));
     connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet)

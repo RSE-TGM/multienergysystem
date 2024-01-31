@@ -33,7 +33,7 @@ partial model CentralizedSystemLoadSimplifiedI
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1=m_flow_total;
   parameter Real q_m3h_S1 = 9;
 
-  parameter Real P101omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
+  parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50; 100, 2*pi*50; 200, 2*pi*50];
   parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
 
   parameter Real FCV101theta[:,:] = [0, 1];

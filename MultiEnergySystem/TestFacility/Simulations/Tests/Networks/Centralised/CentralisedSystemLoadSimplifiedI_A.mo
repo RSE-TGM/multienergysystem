@@ -6,7 +6,7 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
     FCVC01theta=[0,0; 100,0],
     FCVC02theta=[0,1; 100,1],
     FCV901theta=[0,1; 100,1],
-    P901omega=[0,2*3.141592654*30; 100,2*3.141592654*30],
+    P901omega=[0,2*Modelica.Constants.pi*30; 100,2*Modelica.Constants.pi*30],
     FCV101theta=[0,1; 100,1],
     q_m3h_S9=10,
     P101qm3h=[0,10; 100,10],

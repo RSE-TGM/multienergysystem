@@ -6,7 +6,8 @@ model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat sour
     FCVC01theta=[0,0; 100,0],
     FCVC02theta=[0,1; 100,1],
     FCV901theta=[0,1; 100,1],
-    P901omega=[0,2*Modelica.Constants.pi*30; 100,2*Modelica.Constants.pi*30],
+    P901omega = [0,2*pi*30; 100,2*pi*30],
+    P101omega = [0, 2*pi*30; 100, 2*pi*30; 100, 2*pi*30; 200, 2*pi*30],
     FCV101theta=[0,1; 100,1],
     q_m3h_S9=10,
     P101qm3h=[0,10; 100,10],
@@ -87,7 +88,7 @@ equation
     annotation (Line(points={{-206,65},{-218,65},{-218,46.6}},
                                                      color={255,0,255}));
   connect(FCV101_theta.y, FCV101.opening)
-    annotation (Line(points={{-221,-130},{-226,-130},{-226,-130},{-232,-130}},
+    annotation (Line(points={{-221,-130},{-226,-130},{-226,-110},{-232,-110}},
                                                        color={0,0,127}));
   connect(FCV701_theta.y, FCV701.opening)
     annotation (Line(points={{158,-150},{148,-150}}, color={0,0,127}));

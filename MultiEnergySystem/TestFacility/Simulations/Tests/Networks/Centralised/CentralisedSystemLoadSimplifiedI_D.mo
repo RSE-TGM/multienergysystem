@@ -1,48 +1,53 @@
 within MultiEnergySystem.TestFacility.Simulations.Tests.Networks.Centralised;
 model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Tanks"
-  extends CentralisedSystemLoadSimplifiedI_B;
+  extends CentralisedSystemLoadSimplifiedI_B(
+    P901omega=[0,2*pi*50; 500,2*pi*50],
+    q_m3h_S9 = 15);
   // System S200
-//
-  parameter Boolean FV201_state = true;
-  parameter Boolean FV202_state = true;
-  parameter Boolean FV203_state = true;
-  parameter Boolean FV204_state = true;
-  parameter Boolean FV205_state = true;
-  parameter Boolean FV206_state = false;
-  parameter Boolean FV207_state = false;
-  parameter Boolean FV208_state = true;
-  parameter Boolean FV209_state = true;
-
-//   parameter Boolean FV201_state = false;
+  // Unloading
+//   parameter Boolean FV201_state = true;
 //   parameter Boolean FV202_state = true;
-//   parameter Boolean FV203_state = false;
+//   parameter Boolean FV203_state = true;
 //   parameter Boolean FV204_state = true;
 //   parameter Boolean FV205_state = true;
-//   parameter Boolean FV206_state = true;
-//   parameter Boolean FV207_state = true;
+//   parameter Boolean FV206_state = false;
+//   parameter Boolean FV207_state = false;
 //   parameter Boolean FV208_state = true;
-//   parameter Boolean FV209_state = false;
+//   parameter Boolean FV209_state = true;
 
+
+  // Loading
+  parameter Boolean FV201_state = false;
+  parameter Boolean FV202_state = true;
+  parameter Boolean FV203_state = false;
+  parameter Boolean FV204_state = true;
+  parameter Boolean FV205_state = true;
+  parameter Boolean FV206_state = true;
+  parameter Boolean FV207_state = true;
+  parameter Boolean FV208_state = true;
+  parameter Boolean FV209_state = false;
+
+  parameter Integer nTank = 4 "Number of volumes in stratified tank";
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2=2.1e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=2.5e5;
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=1.8e5;
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump=1.79e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump=3e5;
   final parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_tank=
       pout_start_S2_pump;
   final parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_tank=
       pin_start_S2_tank - 9.81*4*990;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S2=72 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S2=72 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S2=80 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S2=70 + 273.15;
   parameter DistrictHeatingNetwork.Types.Length L_S2=10;
   parameter DistrictHeatingNetwork.Types.Length Di_S2=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S2=1.5e-3;
-  parameter Real q_m3h_S2(unit = "m3/h") = 6;
+  parameter Real q_m3h_S2(unit = "m3/h") = 4;
   final parameter DistrictHeatingNetwork.Types.VolumeFlowRate q=q_m3h_S2/3600;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2=q*985;
-  parameter Real P201omega[:,:] = [0, 2*3.141592654*30; 100, 2*3.141592654*30; 150, 2*3.141592654*30; 200, 2*3.141592654*30];
+  parameter Real P201omega[:,:] = [0, 2*pi*30; 100, 2*pi*30; 150, 2*pi*30; 200, 2*pi*30];
   parameter Real P201qm3h[:,:] = [0, 14.5; 100, 14.5];
 
-  parameter Real FCV201theta[:,:] = [0, 0.2; 100, 0.2; 105, 0.2; 200, 0.2];
+  parameter Real FCV201theta[:,:] = [0, 1; 100, 1; 105, 1; 200, 1];
 
   // Pipe length
   parameter DistrictHeatingNetwork.Types.Length L_S2_PL0=24.5;
@@ -67,12 +72,13 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
 
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(
     H=4,
-    n=4,
+    Tin_start=Tin_start_S2,
+    Tout_start=Tout_start_S2,
+    n=nTank,
     D=1.7,
     T_start(displayUnit="K") = 70 + 273.15,
     pin_start=pin_start_S2_tank,
-    m_flow_start=m_flow_S2/2)
-    annotation (Placement(transformation(extent={{-762,-480},{-818,-368}})));
+    m_flow_start=m_flow_S2/2) "Stratified tank 1" annotation (Placement(transformation(extent={{-762,-480},{-818,-368}})));
   DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P201(
     pout_start(displayUnit="Pa") = 3e5,
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P201.Tin_start,
@@ -95,19 +101,20 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
     headmin=DistrictHeatingNetwork.Data.PumpData.P201.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h,
     qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h,
-    use_in_omega=true)                                                      annotation (Placement(transformation(
+    use_in_omega=true) annotation (Placement(transformation(
         extent={{-12,12},{12,-12}},
         rotation=-90,
         origin={-794,-212})));
 
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=4,
-    n=4,
+    Tin_start=Tin_start_S2,
+    Tout_start=Tout_start_S2,
+    n=nTank,
     D=1.7,
     T_start(displayUnit="K") = 70 + 273.15,
     pin_start=pin_start_S2_tank,
-    m_flow_start=m_flow_S2/2)
-    annotation (Placement(transformation(extent={{-700,-480},{-644,-368}})));
+    m_flow_start=m_flow_S2/2) "Stratified tank 2" annotation (Placement(transformation(extent={{-700,-480},{-644,-368}})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT201(T_start=
         Tin_start_S2, p_start=pin_start_S2)
     "Temperature sensor at the inlet of pump 201" annotation (Placement(
@@ -142,7 +149,6 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-854,-202})));
-
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(
     L=L_S2_PL3,
     t=L_S2,
@@ -192,7 +198,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
         extent={{6,6},{-6,-6}},
         rotation=90,
         origin={-752,-142})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL_S200_rCD_hot(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_hot(
     L=L_S2_PL9,
     t=t_S2,
     pin_start=pout_start_S2,
@@ -406,7 +412,7 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT201(T_start=
         Tout_start_S2) "Flow sensor at the outlet of system S200" annotation (
       Placement(transformation(
-        extent={{-7,7},{7,-7}},
+        extent={{7,7},{-7,-7}},
         rotation=90,
         origin={-751,-283})));
   Modelica.Blocks.Sources.BooleanConstant FV207_OnOff(k=FV207_state)
@@ -532,10 +538,6 @@ equation
       points={{-754.4,-142},{-754,-142},{-754,-216}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT201.outlet,FV203. inlet) annotation (Line(
-      points={{-753.8,-278.8},{-754,-258},{-754,-228}},
-      color={140,56,54},
-      thickness=0.5));
   connect(FCV201_theta.y,FCV201. opening) annotation (Line(points={{-867,-202},
           {-862,-202}},                                color={0,0,127}));
   connect(FV207.u,FV207_Status. activePort)
@@ -556,10 +558,6 @@ equation
           -752.08,-222}}, color={255,0,255}));
   connect(FV203_OnOff.y,FV203_Status. activePort) annotation (Line(points={{-745.55,
           -222},{-745.8,-222}},         color={255,0,255}));
-  connect(PL_S200_D201_FT201.inlet,FT201. inlet) annotation (Line(
-      points={{-844,-444},{-848,-444},{-848,-354},{-753.8,-354},{-753.8,-287.2}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S200_D201_FT201.outlet,PL_S200_D201_High. outlet) annotation (Line(
       points={{-824,-444},{-748,-444},{-748,-426}},
       color={140,56,54},
@@ -591,5 +589,13 @@ equation
       thickness=0.5));
   connect(P201_input.y, P201.in_omega) annotation (Line(points={{-813,-208},{-806.5,-208},{-806.5,-207.2},
           {-800,-207.2}}, color={0,0,127}));
+  connect(PL_S200_D201_FT201.inlet, FT201.outlet) annotation (Line(
+      points={{-844,-444},{-848,-444},{-848,-344},{-753.8,-344},{-753.8,-287.2}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT201.inlet, FV203.inlet) annotation (Line(
+      points={{-753.8,-278.8},{-754,-258},{-754,-228}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemLoadSimplifiedI_D;

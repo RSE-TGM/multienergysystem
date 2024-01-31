@@ -151,10 +151,10 @@ partial model LoadPlantBaseSimplified
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-    Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-    Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-    Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-    Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+    Tin_start_cold=EX711_Tin_cold,
+    Tin_start_hot=EX711_Tin_hot,
+    Tout_start_cold=EX711_Tout_cold,
+    Tout_start_hot=EX711_Tout_hot,
     cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
@@ -291,10 +291,10 @@ partial model LoadPlantBaseSimplified
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-    Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-    Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-    Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-    Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+    Tin_start_cold=EX721_Tin_cold,
+    Tin_start_hot=EX721_Tin_hot,
+    Tout_start_cold=EX721_Tout_cold,
+    Tout_start_hot=EX721_Tout_hot,
     cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
@@ -431,10 +431,10 @@ partial model LoadPlantBaseSimplified
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-    Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-    Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-    Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-    Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+    Tin_start_cold=EX731_Tin_cold,
+    Tin_start_hot=EX731_Tin_hot,
+    Tout_start_cold=EX731_Tout_cold,
+    Tout_start_hot=EX731_Tout_hot,
     cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
@@ -746,18 +746,14 @@ partial model LoadPlantBaseSimplified
   parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-0.25 - 0.5;
 
   // Lengths of pipelines HOT SIDE
-  parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=1.5 + 1.0
-       + 0.4;
-  parameter DistrictHeatingNetwork.Types.Length L_HX711_TT712_SourceIn=1.5 + 1.0
-       + 0.4;
-  parameter DistrictHeatingNetwork.Types.Length L_HX721_TT722_SourceIn=1.5 + 1.0
-       + 0.4;
-  parameter DistrictHeatingNetwork.Types.Length L_HX731_TT732_SourceIn=1.5 + 1.0
-       + 0.4;
-  parameter DistrictHeatingNetwork.Types.Length h_HX701_TT702_SourceIn=1.5 + 1.0;
-  parameter DistrictHeatingNetwork.Types.Length h_HX711_TT712_SourceIn=1.5 + 1.0;
-  parameter DistrictHeatingNetwork.Types.Length h_HX721_TT722_SourceIn=1.5 + 1.0;
-  parameter DistrictHeatingNetwork.Types.Length h_HX731_TT732_SourceIn=1.5 + 1.0;
+  parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=2.9;
+  parameter DistrictHeatingNetwork.Types.Length L_HX711_TT712_SourceIn=2.9;
+  parameter DistrictHeatingNetwork.Types.Length L_HX721_TT722_SourceIn=2.9;
+  parameter DistrictHeatingNetwork.Types.Length L_HX731_TT732_SourceIn=2.9;
+  parameter DistrictHeatingNetwork.Types.Length h_HX701_TT702_SourceIn=2.5;
+  parameter DistrictHeatingNetwork.Types.Length h_HX711_TT712_SourceIn=2.5;
+  parameter DistrictHeatingNetwork.Types.Length h_HX721_TT722_SourceIn=2.5;
+  parameter DistrictHeatingNetwork.Types.Length h_HX731_TT732_SourceIn=2.5;
 
   parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1;
   parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1;
@@ -769,7 +765,7 @@ partial model LoadPlantBaseSimplified
   parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1;
   parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 +
       0.3 + 3 + 0.4 + 0.5;
-  parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5;
+  parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-1;
 
   // Internal diameters & thickness
   parameter DistrictHeatingNetwork.Types.Length t_Source=1.5e-3;

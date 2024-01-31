@@ -1,8 +1,12 @@
 within MultiEnergySystem.TestFacility.Simulations.Tests.Networks.Centralised;
 model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Tanks"
   extends CentralisedSystemLoadSimplifiedI_B(
-    P901omega=[0,2*pi*50; 500,2*pi*50],
-    q_m3h_S9 = 15);
+    P901omega=[0,2*pi*30; 500,2*pi*30],
+    P101omega=[0,2*pi*40; 500,2*pi*40],
+    P401omega=[0,2*pi*40; 500,2*pi*40],
+    q_m3h_S9 = 15,
+    EB401_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 85+273.15; 1e6, 85+273.15],
+    GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 85+273.15; 1e6, 85+273.15]);
   // System S200
   // Unloading
 //   parameter Boolean FV201_state = true;
@@ -406,9 +410,9 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
   Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k=FV203_state)
     annotation (Placement(transformation(extent={{-734,-228},{-745,-216}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV203_Status
-    annotation (Placement(transformation(extent={{-12,-12},{12,12}},
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-732,-222})));
+        origin={-734,-222})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT201(T_start=
         Tout_start_S2) "Flow sensor at the outlet of system S200" annotation (
       Placement(transformation(
@@ -416,21 +420,21 @@ model CentralisedSystemLoadSimplifiedI_D "Gas Boiler, Electric Boiler & Water Ta
         rotation=90,
         origin={-751,-283})));
   Modelica.Blocks.Sources.BooleanConstant FV207_OnOff(k=FV207_state)
-    annotation (Placement(transformation(extent={{4,-4},{-4,4}},
+    annotation (Placement(transformation(extent={{6,-6},{-6,6}},
         rotation=-90,
-        origin={-774,-268})));
+        origin={-774,-270})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV207_Status annotation (
       Placement(transformation(
-        extent={{-8,-8},{8,8}},
+        extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={-774,-272})));
+        origin={-774,-276})));
   Modelica.Blocks.Sources.TimeTable FCV201_theta(table=FCV201theta)
     annotation (Placement(transformation(extent={{-888,-212},{-868,-192}})));
   DistrictHeatingNetwork.Sources.PumpInput P201_input(
     useOmega=true,
     omega=P201omega,
     q_m3h=P201qm3h)
-    annotation (Placement(transformation(extent={{-834,-218},{-814,-198}})));
+    annotation (Placement(transformation(extent={{-828,-218},{-808,-198}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-794,-90.5},{-794,-81.625},{-793.85,-81.625},{-793.85,-70.75}},
@@ -540,11 +544,6 @@ equation
       thickness=0.5));
   connect(FCV201_theta.y,FCV201. opening) annotation (Line(points={{-867,-202},
           {-862,-202}},                                color={0,0,127}));
-  connect(FV207.u,FV207_Status. activePort)
-    annotation (Line(points={{-774,-259.92},{-774,-262.8}},
-                                                        color={255,0,255}));
-  connect(FV207_OnOff.y,FV207_Status. activePort) annotation (Line(points={{-774,
-          -263.6},{-774,-262.8}},                          color={255,0,255}));
   connect(PL_S200_FV209_FCV201.inlet,PL_S200_FV209_D201. inlet) annotation (
       Line(
       points={{-854,-242},{-854,-494},{-832,-494}},
@@ -554,10 +553,10 @@ equation
     annotation (Line(points={{-774,-182.6},{-774,-181.5}}, color={255,0,255}));
   connect(FV206_OnOff.y,FV206. u) annotation (Line(points={{-774,-182.6},{-774,
           -188.08}}, color={255,0,255}));
-  connect(FV203_OnOff.y,FV203. u) annotation (Line(points={{-745.55,-222},{
-          -752.08,-222}}, color={255,0,255}));
-  connect(FV203_OnOff.y,FV203_Status. activePort) annotation (Line(points={{-745.55,
-          -222},{-745.8,-222}},         color={255,0,255}));
+  connect(FV203_OnOff.y,FV203. u) annotation (Line(points={{-745.55,-222},{-752.08,-222}},
+                          color={255,0,255}));
+  connect(FV203_OnOff.y,FV203_Status. activePort) annotation (Line(points={{-745.55,-222},{-745.5,-222}},
+                                        color={255,0,255}));
   connect(PL_S200_D201_FT201.outlet,PL_S200_D201_High. outlet) annotation (Line(
       points={{-824,-444},{-748,-444},{-748,-426}},
       color={140,56,54},
@@ -574,10 +573,10 @@ equation
           -130.08}}, color={255,0,255}));
   connect(FV202_OnOff.y,FV202_Status. activePort)
     annotation (Line(points={{-824,-126.6},{-824,-125.5}}, color={255,0,255}));
-  connect(FV209_OnOff.y,FV209. u) annotation (Line(points={{-800.45,-272},{
-          -795.92,-272}}, color={255,0,255}));
-  connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-800.45,
-          -272},{-800.5,-272}},         color={255,0,255}));
+  connect(FV209_OnOff.y,FV209. u) annotation (Line(points={{-800.45,-272},{-795.92,-272}},
+                          color={255,0,255}));
+  connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-800.45,-272},{-800.5,-272}},
+                                        color={255,0,255}));
   connect(PL_S200_rCD_cold.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
       points={{-794,-42},{-796,-42},{-796,-8},{-708,-8},{-708,5.25},{-668,5.25}},
       color={140,56,54},
@@ -587,7 +586,7 @@ equation
       points={{-754,-42},{-754,-14},{-700,-14},{-700,44.75},{-727,44.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(P201_input.y, P201.in_omega) annotation (Line(points={{-813,-208},{-806.5,-208},{-806.5,-207.2},
+  connect(P201_input.y, P201.in_omega) annotation (Line(points={{-807,-208},{-806.5,-208},{-806.5,-207.2},
           {-800,-207.2}}, color={0,0,127}));
   connect(PL_S200_D201_FT201.inlet, FT201.outlet) annotation (Line(
       points={{-844,-444},{-848,-444},{-848,-344},{-753.8,-344},{-753.8,-287.2}},
@@ -597,5 +596,9 @@ equation
       points={{-753.8,-278.8},{-754,-258},{-754,-228}},
       color={140,56,54},
       thickness=0.5));
+  connect(FV207_OnOff.y, FV207_Status.activePort)
+    annotation (Line(points={{-774,-263.4},{-774,-264.5}}, color={255,0,255}));
+  connect(FV207_OnOff.y, FV207.u)
+    annotation (Line(points={{-774,-263.4},{-774,-259.92}}, color={255,0,255}));
   annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemLoadSimplifiedI_D;

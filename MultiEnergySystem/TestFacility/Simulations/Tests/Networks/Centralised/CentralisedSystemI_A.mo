@@ -1,8 +1,7 @@
 within MultiEnergySystem.TestFacility.Simulations.Tests.Networks.Centralised;
 model CentralisedSystemI_A
   "Sequence using Gas Boiler as heat source only"
-  extends
-    MultiEnergySystem.TestFacility.Networks.Configurations.Centralised.CentralizedSystemI(
+  extends MultiEnergySystem.TestFacility.Networks.Configurations.Centralised.CentralizedSystemI(
     FV933_state=false,
     FCVC01theta=[0,0; 100,0],
     FCVC02theta=[0,1; 100,1],

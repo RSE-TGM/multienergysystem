@@ -1,7 +1,6 @@
 within MultiEnergySystem.TestFacility.Simulations.Tests.Loads;
 model ParallelConfiguration4Loads
-  extends
-    MultiEnergySystem.TestFacility.Loads.Configurations.BaseClass.LoadPlantBase(
+  extends MultiEnergySystem.TestFacility.Loads.Configurations.BaseClass.LoadPlantBase(
     VER901(p0=219000),
     Kvalve=90,
     PL701_rackL2L3_TT702(L=0.001, h=0),

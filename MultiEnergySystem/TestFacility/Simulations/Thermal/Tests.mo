@@ -382,7 +382,7 @@ package Tests
           annotation (Line(points={{-210,25},{-216.4,25}}, color={255,0,255}));
         connect(FCV101_theta.y, FCV101.opening)
           annotation (Line(points={{-221,-140},{-232,-140}}, color={0,0,127}));
-        connect(P101_input.y, P101.in_q_m3hr) annotation (Line(points={{-221,-180.5},{
+        connect(P101_input.y,P101.in_m_flow)  annotation (Line(points={{-221,-180.5},{
                 -234.48,-180.5},{-234.48,-179.8}}, color={0,0,127}));
         connect(FCV701_theta.y, FCV701.opening)
           annotation (Line(points={{158,-150},{146,-150}}, color={0,0,127}));
@@ -732,7 +732,7 @@ package Tests
             thickness=0.5));
         connect(FCV401_theta.y, FCV401.opening)
           annotation (Line(points={{-309,-140},{-314,-140}}, color={0,0,127}));
-        connect(P401_input.y, P401.in_q_m3hr) annotation (Line(points={{-309,-180.5},{
+        connect(P401_input.y,P401.in_m_flow)  annotation (Line(points={{-309,-180.5},{
                 -316.48,-180.5},{-316.48,-179.8}}, color={0,0,127}));
         connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (Line(points={{-387,-300},
                 {-387,-302},{-369.2,-302}}, color={0,0,127}));
@@ -1326,7 +1326,7 @@ package Tests
                 -268}},         color={255,0,255}));
         connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-796.45,
                 -268},{-796.5,-268}},         color={255,0,255}));
-        connect(P201_input.y, P201.in_q_m3hr) annotation (Line(points={{-809,-204},{-802.26,
+        connect(P201_input.y,P201.in_m_flow)  annotation (Line(points={{-809,-204},{-802.26,
                 -204},{-802.26,-203.2},{-795.52,-203.2}}, color={0,0,127}));
         annotation (experiment(StopTime=50, __Dymola_Algorithm="Dassl"));
       end CentralisedSystemI_C;
@@ -1903,7 +1903,7 @@ package Tests
                 -795.92,-272}}, color={255,0,255}));
         connect(FV209_OnOff.y,FV209_Status. activePort) annotation (Line(points={{-800.45,
                 -272},{-800.5,-272}},         color={255,0,255}));
-        connect(P201_input.y,P201. in_q_m3hr) annotation (Line(points={{-813,-208},{
+        connect(P201_input.y,P201.in_m_flow)  annotation (Line(points={{-813,-208},{
                 -806.26,-208},{-806.26,-207.2},{-799.52,-207.2}},
                                                           color={0,0,127}));
         connect(PL_S200_rCD_cold.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
@@ -2292,9 +2292,9 @@ package Tests
             thickness=0.5));
         connect(Pe_CHP.y, CHP.PelectricRef) annotation (Line(points={{-669,-296},{-660.5,
                 -296},{-660.5,-296.2},{-652,-296.2}}, color={0,0,127}));
-        connect(P501_input.y, P501.in_q_m3hr) annotation (Line(points={{-597,-150.5},{
+        connect(P501_input.y,P501.in_m_flow)  annotation (Line(points={{-597,-150.5},{
                 -606.48,-150.5},{-606.48,-149.8}}, color={0,0,127}));
-        connect(P1.in_q_m3hr, PCHP_input.y) annotation (Line(points={{-576.48,-301.8},
+        connect(P1.in_m_flow, PCHP_input.y) annotation (Line(points={{-576.48,-301.8},
                 {-574.74,-301.8},{-574.74,-300.5},{-569,-300.5}}, color={0,0,127}));
         connect(P1.outlet, FCV1.inlet) annotation (Line(
             points={{-582,-287.4},{-582,-280}},
@@ -2679,9 +2679,9 @@ package Tests
             points={{-616,-153.2},{-616,-159.55},{-616.4,-159.55},{-616.4,-180.5}},
             color={140,56,54},
             thickness=0.5));
-        connect(P501_input.y,P501. in_q_m3hr) annotation (Line(points={{-601,-148.5},{
+        connect(P501_input.y,P501.in_m_flow)  annotation (Line(points={{-601,-148.5},{
                 -609.56,-148.5},{-609.56,-147.6}}, color={0,0,127}));
-        connect(P1.in_q_m3hr,PCHP_input. y) annotation (Line(points={{-610.48,-296.5},
+        connect(P1.in_m_flow,PCHP_input. y) annotation (Line(points={{-610.48,-296.5},
                 {-601,-296.5}},                                   color={0,0,127}));
         connect(P1.outlet,FCV1. inlet) annotation (Line(
             points={{-616,-281.5},{-616,-274}},

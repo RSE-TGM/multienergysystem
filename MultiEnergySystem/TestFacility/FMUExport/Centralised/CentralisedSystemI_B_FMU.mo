@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_FMU
-  extends TestFacility.Networks.Configurations.Centralised.CentralizedSystemI_B;
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemI_B;
   Modelica.Blocks.Interfaces.RealInput EB401_Tout
     annotation (Placement(transformation(extent={{-418,-320},{-378,-280}})));
   Modelica.Blocks.Interfaces.RealInput GB101_Tout

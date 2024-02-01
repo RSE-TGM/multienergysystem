@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 partial model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
-  extends TestFacility.Networks.Configurations.Centralised.CentralizedSystemI_B;
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemI_B;
   OffSetBlocks.InputOffset qP101Offset(
     fixInput=fixqP101,
     u_norm=qP101_nom,

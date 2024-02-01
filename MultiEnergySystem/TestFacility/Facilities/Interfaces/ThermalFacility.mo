@@ -6,8 +6,8 @@ partial model ThermalFacility
     "Connector for one component of the thermal facility" annotation (Placement(transformation(
           extent={{-60,-120},{-20,-80}}), iconTransformation(extent={{-60,-120},{-20,-80}})));
   H2GasFacility.Interfaces.FluidPortInlet inletGas2(nXi=nXi_in2)
-    "Connector for one component of the test facility" annotation (Placement(transformation(extent={
-            {-60,-120},{-20,-80}}), iconTransformation(extent={{20,-120},{60,-80}})));
+    "Connector for one component of the test facility" annotation (Placement(transformation(extent={{22,-120},
+            {62,-80}}),             iconTransformation(extent={{20,-120},{60,-80}})));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                      Rectangle(
           lineColor={140,56,54},

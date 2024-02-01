@@ -28,9 +28,7 @@ partial model CentralisedPlantI_A
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P101.Tin_start,
-
     Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P101.Tout_start,
-
     a=DistrictHeatingNetwork.Data.PumpData.P101.a,
     b=DistrictHeatingNetwork.Data.PumpData.P101.b,
     m_flow_start=m_flow_total,
@@ -42,12 +40,9 @@ partial model CentralisedPlantI_A
     m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P101.m_flow_nom,
     omeganom=DistrictHeatingNetwork.Data.PumpData.P101.omeganom,
     pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pin_start,
-
     pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pout_start,
-
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P101.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P101.rhonom,
-
     headnom=DistrictHeatingNetwork.Data.PumpData.P101.headnom,
     headmax=DistrictHeatingNetwork.Data.PumpData.P101.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P101.headnommin,
@@ -57,10 +52,10 @@ partial model CentralisedPlantI_A
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-230,-239})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV101(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV101.rho_nom,
     q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV101.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S1,
@@ -70,6 +65,7 @@ partial model CentralisedPlantI_A
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-230,-204})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S101(
     L=L_S1_PL3,
     t=t_S1,

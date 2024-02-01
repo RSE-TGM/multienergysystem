@@ -45,9 +45,7 @@ partial model CentralisedPlantI_B
         rotation=0)));
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P401(
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start,
-
     Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start,
-
     a=DistrictHeatingNetwork.Data.PumpData.P401.a,
     b=DistrictHeatingNetwork.Data.PumpData.P401.b,
     m_flow_start=m_flow_S4,
@@ -59,12 +57,9 @@ partial model CentralisedPlantI_B
     m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom,
     omeganom=DistrictHeatingNetwork.Data.PumpData.P401.omeganom,
     pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start,
-
     pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start,
-
     qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom,
-
     headnom=DistrictHeatingNetwork.Data.PumpData.P401.headnom,
     headmax=DistrictHeatingNetwork.Data.PumpData.P401.headnommax,
     headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
@@ -74,10 +69,10 @@ partial model CentralisedPlantI_B
         extent={{-12,12},{12,-12}},
         rotation=90,
         origin={-316,-235})));
+
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV401.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom,
-
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom,
     q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S4,
@@ -86,6 +81,7 @@ partial model CentralisedPlantI_B
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-316,-200})));
+
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(
     L=L_S4_PL3,
     t=t_S4,

@@ -860,7 +860,7 @@ equation
       thickness=0.5));
   connect(FCVR01_theta.y, FCVR01.opening) annotation (Line(points={{199.8,-101},
           {210,-101},{210,-88}}, color={0,0,127}));
-  connect(PR01_m_flow.y, PR01.in_q_m3hr) annotation (Line(points={{188,9},{178,
+  connect(PR01_m_flow.y,PR01.in_m_flow)  annotation (Line(points={{188,9},{178,
           9},{178,8},{169,8},{169,-44.8},{184.02,-44.8}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-260,-160},{260,160}}, grid={1,1})),

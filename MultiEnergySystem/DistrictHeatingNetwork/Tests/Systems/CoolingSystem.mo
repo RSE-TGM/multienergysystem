@@ -1105,7 +1105,7 @@ equation
     annotation (Line(points={{-3.825,38},{0.2,38}}, color={0,0,127}));
   connect(TT734.T, FTR01_2.numberPort) annotation (Line(points={{-269.65,40.5},
           {-269.65,41},{-276.825,41}}, color={0,0,127}));
-  connect(PR01_omega.y, PR01.in_q_m3hr) annotation (Line(points={{131,80},{137.51,
+  connect(PR01_omega.y,PR01.in_m_flow)  annotation (Line(points={{131,80},{137.51,
           80},{137.51,80.2},{144.02,80.2}}, color={0,0,127}));
   connect(PTR01.p, FTR01_6.numberPort) annotation (Line(points={{269.8,25},{
           273.862,25},{273.862,25.5},{277.925,25.5}}, color={0,0,127}));

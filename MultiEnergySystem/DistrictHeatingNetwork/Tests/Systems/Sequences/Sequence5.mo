@@ -1052,7 +1052,7 @@ equation
       points={{706,-108},{706,-122.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(PR01_omega.y,PR01. in_q_m3hr) annotation (Line(points={{687,-128},{693.51,
+  connect(PR01_omega.y,PR01.in_m_flow)  annotation (Line(points={{687,-128},{693.51,
           -128},{693.51,-127.8},{700.02,-127.8}},
                                             color={0,0,127}));
   connect(PR01.outlet, RR00_PL_PR01_PTR02.inlet) annotation (Line(

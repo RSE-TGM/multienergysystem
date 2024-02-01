@@ -76,9 +76,9 @@ equation
           -301},{-374.5,-300},{-398,-300}}, color={0,0,127}));
   connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-285,-301},{-285,
           -300},{-314,-300}}, color={0,0,127}));
-  connect(P101.in_q_m3hr, q_P101) annotation (Line(points={{-234.48,-179.8},{-216.24,
+  connect(P101.in_m_flow, q_P101) annotation (Line(points={{-234.48,-179.8},{-216.24,
           -179.8},{-216.24,-180},{-198,-180}}, color={0,0,127}));
-  connect(P401.in_q_m3hr, q_P401) annotation (Line(points={{-312.48,-175.8},{-299.24,
+  connect(P401.in_m_flow, q_P401) annotation (Line(points={{-312.48,-175.8},{-299.24,
           -175.8},{-299.24,-176},{-286,-176}}, color={0,0,127}));
   connect(FCV_101, FCV101.opening)
     annotation (Line(points={{-198,-140},{-232,-140}}, color={0,0,127}));

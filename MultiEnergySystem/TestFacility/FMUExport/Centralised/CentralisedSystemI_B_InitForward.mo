@@ -309,9 +309,9 @@ partial model CentralisedSystemI_B_InitForward
         extent={{-10,-10},{10,10}},
         rotation=0)));
 equation
-  connect(qP101Offset.u, P101.in_q_m3hr) annotation (Line(points={{-219,-180},{-229.74,-180},{-229.74,
+  connect(qP101Offset.u,P101.in_m_flow)  annotation (Line(points={{-219,-180},{-229.74,-180},{-229.74,
           -179.8},{-234.48,-179.8}}, color={0,0,127}));
-  connect(qP401Offset.u, P401.in_q_m3hr) annotation (Line(points={{-305,-176},{-307.84,-176},{-307.84,
+  connect(qP401Offset.u,P401.in_m_flow)  annotation (Line(points={{-305,-176},{-307.84,-176},{-307.84,
           -175.8},{-312.48,-175.8}}, color={0,0,127}));
   connect(FCV701.opening, thetaFCV701Offset.u)
     annotation (Line(points={{146,-150},{161,-150}}, color={0,0,127}));

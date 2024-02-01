@@ -162,8 +162,8 @@ package Configurations
         headmax=DistrictHeatingNetwork.Data.PumpData.P101.headnommax,
         headmin=DistrictHeatingNetwork.Data.PumpData.P101.headnommin,
         qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P101.qnommin_inm3h,
-        qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h,
-        use_q_m3hr=true) annotation (Placement(transformation(
+        qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h)
+                         annotation (Placement(transformation(
             extent={{-12,12},{12,-12}},
             rotation=90,
             origin={-240,-175})));

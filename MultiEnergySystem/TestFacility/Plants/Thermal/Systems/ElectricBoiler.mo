@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
-model GasBoiler "System 100"
+model ElectricBoiler "System 400"
   extends DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
 
   constant Real pi = Modelica.Constants.pi;
@@ -7,35 +7,6 @@ model GasBoiler "System 100"
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Integer n = 3 "Number of volumes in each pipe";
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 60 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
-
-  final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
-  final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
-
-  final parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
-  final parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
-  final parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
-  final parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
-  final parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
-  final parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
-  final parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
-  final parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
-  final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
-  final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
-  final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
-  final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
-
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = 2;
-  parameter Real q_m3h_S1 = 9;
-
-  parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
-  parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
-
-  parameter Real FCV101theta[:,:] = [0, 1];
-  parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
 
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
@@ -80,7 +51,7 @@ model GasBoiler "System 100"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,76})));
-  DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB(
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler EB(
     h=1.2*0.93,
     Pmaxnom=147.6e3*0.8,
     Tin_start=Tin_start_S1,
@@ -160,11 +131,11 @@ equation
       points={{20,-4.6},{20,-14}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S100_FT101_GB101.outlet, GB.inlet) annotation (Line(
+  connect(PL_S100_FT101_GB101.outlet,EB. inlet) annotation (Line(
       points={{-20,-34},{-20,-42},{-10.8,-42},{-10.8,-55.2}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S100_GB101_P101.inlet, GB.outlet) annotation (Line(
+  connect(PL_S100_GB101_P101.inlet,EB. outlet) annotation (Line(
       points={{20,-34},{20,-42},{10.8,-42},{10.8,-55.2}},
       color={140,56,54},
       thickness=0.5));
@@ -181,9 +152,9 @@ equation
       points={{-20,-4},{-20,-14}},
       color={140,56,54},
       thickness=0.5));
-  connect(Status, GB.heat_on) annotation (Line(points={{80,0},{40,0},{40,-130},{-48,-130},{-48,-105.6},
+  connect(Status,EB. heat_on) annotation (Line(points={{80,0},{40,0},{40,-130},{-48,-130},{-48,-105.6},
           {-28.8,-105.6}},                                                      color={255,0,255}));
-  connect(Tout_SP, GB.Tout_ref)
+  connect(Tout_SP,EB. Tout_ref)
     annotation (Line(points={{-80,-50},{-50,-50},{-50,-84},{-28.8,-84}}, color={0,0,127}));
   connect(theta, FCV101.opening) annotation (Line(points={{-80,50},{-34,50},{-34,76},{12,76}},
                                                                              color={0,0,127}));
@@ -206,4 +177,4 @@ equation
               {-23,-13},{-15,-17},{-15,3},{-9,-1},{1,25},{9,-1},{15,3},{17,-17},{23,-13},{15,-37},{1,
               -43},{-15,-35}})}),                                Diagram(coordinateSystem(
           preserveAspectRatio=false, extent={{-100,-140},{100,140}})));
-end GasBoiler;
+end ElectricBoiler;

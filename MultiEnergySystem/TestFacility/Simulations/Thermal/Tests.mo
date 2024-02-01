@@ -379,7 +379,8 @@ package Tests
         connect(FCVC02_theta.y, FCVC02.opening) annotation (Line(points={{719,299},{710,
                 299},{710,234},{698,234},{698,235}}, color={0,0,127}));
         connect(FV933_OnOff.y, FV933.u)
-          annotation (Line(points={{-210,25},{-216.4,25}}, color={255,0,255}));
+          annotation (Line(points={{-210,25},{-214,25},{-214,46.6},{-218,46.6}},
+                                                           color={255,0,255}));
         connect(FCV101_theta.y, FCV101.opening)
           annotation (Line(points={{-221,-140},{-232,-140}}, color={0,0,127}));
         connect(P101_input.y,P101.in_m_flow)  annotation (Line(points={{-221,-180.5},{
@@ -499,8 +500,8 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P401.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-12,12},{12,-12}},
               rotation=90,
               origin={-322,-175})));
@@ -805,7 +806,7 @@ package Tests
 
         DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(
           H=4,
-          n=3,
+          n=4,
           D=1.7,
           T_start(displayUnit="K") = 60 + 273.15,
           pin_start=pin_start_S2_tank,
@@ -832,15 +833,15 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P201.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P201.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-12,12},{12,-12}},
               rotation=-90,
               origin={-790,-208})));
 
                     DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
           H=4,
-          n=3,
+          n=4,
           D=1.7,
           T_start(displayUnit="K") = 60 + 273.15,
           pin_start=pin_start_S2_tank,
@@ -1390,7 +1391,7 @@ package Tests
 
         DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(
           H=4,
-          n=3,
+          n=4,
           D=1.7,
           T_start(displayUnit="K") = 60 + 273.15,
           pin_start=pin_start_S2_tank,
@@ -1417,15 +1418,15 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P201.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P201.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-12,12},{12,-12}},
               rotation=-90,
               origin={-794,-212})));
 
                     DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
           H=4,
-          n=3,
+          n=4,
           D=1.7,
           T_start(displayUnit="K") = 60 + 273.15,
           pin_start=pin_start_S2_tank,
@@ -2032,8 +2033,8 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-12,12},{12,-12}},
               rotation=90,
               origin={-612,-145})));
@@ -2182,8 +2183,8 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-12,12},{12,-12}},
               rotation=90,
               origin={-582,-297})));
@@ -2430,8 +2431,8 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-14,14},{14,-14}},
               rotation=90,
               origin={-616,-142})));
@@ -2578,8 +2579,8 @@ package Tests
           headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
           headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
           qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h,
-          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h,
-          use_q_m3hr=true) annotation (Placement(transformation(
+          qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h)
+                           annotation (Placement(transformation(
               extent={{-12.5,12},{12.5,-12}},
               rotation=90,
               origin={-616,-291.5})));
@@ -2719,7 +2720,8 @@ package Tests
             thickness=0.5));
 
         connect(CHP_Status.y, CHP.heat_on)
-          annotation (Line(points={{-593,-360},{-608.8,-360}}, color={255,0,255}));
+          annotation (Line(points={{-593,-360},{-628,-360},{-628,-380.4},{-663.2,-380.4}},
+                                                               color={255,0,255}));
         annotation (experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
       end CentralisedSystemI_F;
 

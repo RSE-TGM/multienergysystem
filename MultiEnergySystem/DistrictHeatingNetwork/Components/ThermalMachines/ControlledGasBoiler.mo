@@ -16,8 +16,6 @@ model ControlledGasBoiler
   SI.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
   SI.Power Pheat_ref "Reference value for computed Heat Power required";
   SI.SpecificEnthalpy hout_ref "Reference required temperature";
-
-
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
 
 

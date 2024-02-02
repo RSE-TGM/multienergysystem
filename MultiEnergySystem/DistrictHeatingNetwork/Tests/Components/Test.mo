@@ -238,10 +238,13 @@ package Test "Package to test component equation and behaviour"
     MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
       Placement(visible = true, transformation(origin={92,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF pipePF(
+      pin_start=100000,
       D=0.0508,
       L=50,
+      H=0.1,
       T_start(displayUnit="degC") = 338.15,
-      T_start_m(displayUnit="degC") = 338.15) annotation (Placement(visible=true,
+      T_start_m(displayUnit="degC") = 338.15,
+      cpm=880)                                annotation (Placement(visible=true,
           transformation(
           origin={0,70},
           extent={{-10,-10},{10,10}},
@@ -417,15 +420,15 @@ package Test "Package to test component equation and behaviour"
       Placement(visible = true, transformation(origin = {20, -44}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   equation
     connect(sinkP.inlet, tank.outlet) annotation (
-      Line(points={{-50,40},{-60,40},{-60,5.25},{-50,5.25}},    color = {168, 168, 168}));
+      Line(points={{-50,40},{-60,40},{-60,7},{-50,7}},          color = {168, 168, 168}));
     connect(sourceW.outlet, tank.inlet) annotation (
-      Line(points={{-60,-30},{-60,-5.25},{-50,-5.25}},  color = {168, 168, 168}));
+      Line(points={{-60,-30},{-60,-7},{-50,-7}},        color = {168, 168, 168}));
     connect(m_flow.y, sourceW.in_m_flow) annotation (
       Line(points = {{-71, -46}, {-65, -46}}, color = {0, 0, 127}));
     connect(sink_mflow.inlet, tank2.outlet) annotation (
-      Line(points={{20,32},{20,5.25},{30,5.25}},  color = {168, 168, 168}));
+      Line(points={{20,32},{20,8.75},{30,8.75}},  color = {168, 168, 168}));
     connect(sourceP.outlet, tank2.inlet) annotation (
-      Line(points={{20,-34},{20,-5.25},{30,-5.25}},  color = {168, 168, 168}));
+      Line(points={{20,-34},{20,-8.75},{30,-8.75}},  color = {168, 168, 168}));
     annotation (
       Diagram(coordinateSystem(extent = {{-100, -80}, {100, 80}})), experiment(
           StopTime=100, __Dymola_Algorithm="Dassl"));
@@ -1135,4 +1138,41 @@ package Test "Package to test component equation and behaviour"
 
 <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.GasBoiler\">GasBoiler</a>.<div><br></div><div>The test includes changes in:</div><div><ul><li>fuel flow mass flow rate&nbsp;</li><li>water flow mass flow rate</li><li>water inlet temperature</li></ul></div><div><div><br></div></div></body></html>"));
   end ControlledElectricBoilerTest;
+
+  model LumpedStorageConstantMassTest
+    extends Modelica.Icons.Example;
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
+      allowFlowReversal=false,
+      use_in_m_flow=false,                                                                   mflownom=
+          5,
+      Tnom=353.15)                                                                           annotation (
+        Placement(visible=true, transformation(
+          origin={-76,66},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(p=200000,
+        T=323.15)                                                                   annotation (Placement(
+          visible=true, transformation(
+          origin={78,86},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass
+      LumpedStorageConstantMass(H=0.01) annotation (Placement(transformation(
+          extent={{-10,-14},{10,14}},
+          rotation=0,
+          origin={-6,50})));
+  equation
+    connect(idealMassFlowSource.outlet, LumpedStorageConstantMass.inlet)
+      annotation (Line(
+        points={{-65.8,66},{-22,66},{-22,40},{-16,40}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(LumpedStorageConstantMass.outlet, expansionTank.inlet) annotation (
+        Line(
+        points={{-16,60},{-16,70},{68,70},{68,64},{78,64},{78,76}},
+        color={140,56,54},
+        thickness=0.5));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})));
+  end LumpedStorageConstantMassTest;
 end Test;

@@ -1,7 +1,12 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pumps;
 model TestPumpPR01
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
+  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
+    m_flow_set_50Hz(height=8, offset=4.18),
+    sink_50Hz(
+      T0=Pump.PR01.Tout_start,
+      p0=Pump.PR01.pout_start,
+      m_flow0=Pump.PR01.m_flow_nom,
+      pin_start=Pump.PR01.pout_start),
     pump_50Hz(
       Tin_start=Pump.PR01.Tin_start,
       Tout_start=Pump.PR01.Tout_start,
@@ -22,18 +27,12 @@ model TestPumpPR01
       qnom_inm3h_min=Pump.PR01.qnommin_inm3h,
       rhonom=Pump.PR01.rhonom,
       qnom_inm3h_max=Pump.PR01.qnommax_inm3h),
-    m_flow_set(height=8, offset=4.18),
     sourceP(
       p0=Pump.PR01.pin_start,
       T0=Pump.PR01.Tin_start,
       h0=Pump.PR01.hin_start),
     cvalve(Kv=72.29759327),
     omega(offset=Pump.PR01.omeganom),
-    sink(
-      T0=Pump.PR01.Tout_start,
-      p0=Pump.PR01.pout_start,
-      m_flow0=Pump.PR01.m_flow_nom,
-      pin_start=Pump.PR01.pout_start),
     pump_40Hz(
       Tin_start=Pump.PR01.Tin_start,
       Tout_start=Pump.PR01.Tout_start,

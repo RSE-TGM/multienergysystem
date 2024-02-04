@@ -2,10 +2,10 @@ within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 partial model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
   extends Networks.Thermal.Configurations.Centralised.CentralizedSystemI_B;
-  OffSetBlocks.InputOffset qP101Offset(
+  OffSetBlocks.InputOffset m_flowP101Offset(
     fixInput=fixqP101,
-    u_norm=qP101_nom,
-    u_start=qP101_nom) annotation (Placement(visible=true, transformation(
+    u_norm=m_flowP101_nom,
+    u_start=m_flowP101_nom) annotation (Placement(visible=true, transformation(
         origin={-210,-180},
         extent={{10,-10},{-10,10}},
         rotation=0)));
@@ -91,10 +91,10 @@ partial model CentralisedSystemI_B_InitForward
   parameter Real FTR01_des(unit = "m3/h") = 35 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
 
-  OffSetBlocks.InputOffset qP401Offset(
+  OffSetBlocks.InputOffset m_flowP401Offset(
     fixInput=fixqP401,
-    u_norm=qP401_nom,
-    u_start=qP401_nom) annotation (Placement(visible=true, transformation(
+    u_norm=m_flowP401_nom,
+    u_start=m_flowP401_nom) annotation (Placement(visible=true, transformation(
         origin={-296,-176},
         extent={{10,-10},{-10,10}},
         rotation=0)));
@@ -309,10 +309,10 @@ partial model CentralisedSystemI_B_InitForward
         extent={{-10,-10},{10,10}},
         rotation=0)));
 equation
-  connect(qP101Offset.u,P101.in_m_flow)  annotation (Line(points={{-219,-180},{-229.74,-180},{-229.74,
-          -179.8},{-234.48,-179.8}}, color={0,0,127}));
-  connect(qP401Offset.u,P401.in_m_flow)  annotation (Line(points={{-305,-176},{-307.84,-176},{-307.84,
-          -175.8},{-312.48,-175.8}}, color={0,0,127}));
+  connect(m_flowP101Offset.u, P101.in_m_flow) annotation (Line(points={{-219,-180},{-229.74,-180},{
+          -229.74,-179.8},{-234.48,-179.8}}, color={0,0,127}));
+  connect(m_flowP401Offset.u, P401.in_m_flow) annotation (Line(points={{-305,-176},{-307.84,-176},{
+          -307.84,-175.8},{-312.48,-175.8}}, color={0,0,127}));
   connect(FCV701.opening, thetaFCV701Offset.u)
     annotation (Line(points={{146,-150},{161,-150}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731.opening)

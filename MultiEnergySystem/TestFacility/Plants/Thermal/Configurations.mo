@@ -34,7 +34,7 @@ package Configurations
       // Rack CD
       parameter DistrictHeatingNetwork.Types.Length t_rCD=2e-3;
       parameter DistrictHeatingNetwork.Types.Length Di_rCD=72e-3;
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_rCD=1.69e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_rCD=p_VE901;
       parameter DistrictHeatingNetwork.Types.Pressure pout_start_rCD=1.60e5;
       parameter DistrictHeatingNetwork.Types.Pressure pin_start_rCD_cold=1.69e5;
       parameter DistrictHeatingNetwork.Types.Pressure pout_start_rCD_cold=1.60e5;
@@ -401,7 +401,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,
@@ -418,7 +417,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,
@@ -435,7 +433,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,
@@ -452,7 +449,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,
@@ -469,7 +465,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,
@@ -486,7 +481,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,
@@ -503,7 +497,6 @@ package Configurations
         t=t_rCD,
         m_flow_start=m_flow_start,
         pin_start=pin_start_rCD_cold,
-        pout_start=pout_start_rCD_cold,
         Tin_start=T_start_cold,
         Tout_start=T_start_cold,
         Di=Di,

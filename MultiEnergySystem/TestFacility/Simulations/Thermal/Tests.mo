@@ -3205,9 +3205,17 @@ package Tests
           P901omega=[0,2*pi*30; 500,2*pi*30],
           P101omega=[0,2*pi*40; 500,2*pi*40],
           P401omega=[0,2*pi*35; 500,2*pi*35],
+          p_VE901 = 2e5,
           q_m3h_S9 = 15,
           EB401_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15],
-          GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15]);
+          GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15],
+          EX701q_m3h_cold=[0,2.5; 100,2.5],
+          EX711q_m3h_cold=[0,2.5; 100,2.5],
+          EX721q_m3h_cold=[0,2.5; 100,2.5],
+          EX731q_m3h_cold=[0,2.5; 100,2.5],
+          FCVC01theta=[0,0; 1e6,0],
+          FCVC02theta=[0,0.5; 1e6,0.5],
+          VE901(p0=p_VE901));
         // System S200
         // Unloading
       //   parameter Boolean FV201_state = true;
@@ -3235,7 +3243,7 @@ package Tests
         final parameter Boolean Unload = not Load;
         parameter Real Load2Unload = 4e5;
 
-        parameter Integer nTank = 9 "Number of volumes in stratified tank";
+        parameter Integer nTank = 8 "Number of volumes in stratified tank";
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2=2.1e5;
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=1.8e5;
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump=1.79e5;
@@ -3810,10 +3818,10 @@ package Tests
                 {-802,-272},{-795.92,-272}}, color={255,0,255}));
         connect(FV209_Status.activePort, FV209.u)
           annotation (Line(points={{-808.5,-272},{-795.92,-272}}, color={255,0,255}));
-        connect(not3.y, FV202.u) annotation (Line(points={{-659,-180},{-676,-180},{-676,-126},{-824,-126},
-                {-824,-130.08}}, color={255,0,255}));
         connect(FV202_Status.activePort, FV202.u)
           annotation (Line(points={{-824,-117.5},{-824,-130.08}}, color={255,0,255}));
+        connect(FV202_OnOff.y, FV202.u) annotation (Line(points={{-824,-102.6},{-824,-106},{-834,-106},{-834,
+                -124},{-824,-124},{-824,-130.08}}, color={255,0,255}));
         annotation (experiment(StopTime=800000, __Dymola_Algorithm="Dassl"));
       end CentralisedSystemLoadSimplifiedI_D;
     end Centralised;

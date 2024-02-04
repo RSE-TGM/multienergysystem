@@ -67,7 +67,9 @@ package Configurations
         rackL5L6_rackL6L7_hot(q_m3h_start=q_m3h_rackHot/4),
         rackL4L5_rackL5L6_cold(q_m3h_start=q_m3h_rackCold/4),
         rackL5L6_rackL6L7_cold(q_m3h_start=q_m3h_rackCold/4),
-        FCVC01_rackL4L5_cold(q_m3h_start=q_m3h_rackCold/2));
+        FCVC01_rackL4L5_cold(q_m3h_start=q_m3h_rackCold/2),
+        rackL6L7_FCVC02_hot(q_m3h_start=q_m3h_rackHot/4),
+        FCVC02(q_m3h_start=q_m3h_rackHot/4));
        extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseSimplified;
       inner DistrictHeatingNetwork.System system annotation (Placement(visible=true,
             transformation(

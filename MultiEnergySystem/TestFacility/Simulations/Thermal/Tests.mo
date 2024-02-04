@@ -733,14 +733,14 @@ package Tests
             thickness=0.5));
         connect(FCV401_theta.y, FCV401.opening)
           annotation (Line(points={{-309,-140},{-314,-140}}, color={0,0,127}));
-        connect(P401_input.y,P401.in_m_flow)  annotation (Line(points={{-309,-180.5},{
-                -316.48,-180.5},{-316.48,-179.8}}, color={0,0,127}));
         connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (Line(points={{-387,-300},
                 {-387,-302},{-369.2,-302}}, color={0,0,127}));
         connect(FV401_Status.y, FV401.u)
           annotation (Line(points={{-373,-20},{-365.2,-20}}, color={255,0,255}));
         connect(FV402_Status.y, FV402.u)
           annotation (Line(points={{-311,-20},{-318.8,-20}}, color={255,0,255}));
+        connect(P401_input.y, P401.in_m_flow) annotation (Line(points={{-309,-180.5},{-316.48,
+                -180.5},{-316.48,-179.8}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
               coordinateSystem(preserveAspectRatio=false)),
           experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
@@ -3209,13 +3209,22 @@ package Tests
           q_m3h_S9 = 15,
           EB401_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15],
           GB101_ToutSP = [0, 80+273.15; 4000, 80+273.15; 4000, 90+273.15; 1e6, 90+273.15],
-          EX701q_m3h_cold=[0,2.5; 100,2.5],
-          EX711q_m3h_cold=[0,2.5; 100,2.5],
-          EX721q_m3h_cold=[0,2.5; 100,2.5],
-          EX731q_m3h_cold=[0,2.5; 100,2.5],
+          EX701q_m3h_cold=[0,2.2; 100,2.2],
+          EX711q_m3h_cold=[0,2.2; 100,2.2],
+          EX721q_m3h_cold=[0,2.2; 100,2.2],
+          EX731q_m3h_cold=[0,2.2; 100,2.2],
           FCVC01theta=[0,0; 1e6,0],
           FCVC02theta=[0,0.5; 1e6,0.5],
           VE901(p0=p_VE901));
+      //     EX701_Tin_cold= 20 + 273.15,
+      //     EX711_Tin_cold= 20 + 273.15,
+      //     EX721_Tin_cold= 20 + 273.15,
+      //     EX731_Tin_cold= 20 + 273.15,
+      //     EX701_Tout_cold= 35 + 273.15,
+      //     EX711_Tout_cold= 35 + 273.15,
+      //     EX721_Tout_cold= 35 + 273.15,
+      //     EX731_Tout_cold= 35 + 273.15,
+
         // System S200
         // Unloading
       //   parameter Boolean FV201_state = true;
@@ -3242,25 +3251,26 @@ package Tests
         parameter Boolean Load = true;
         final parameter Boolean Unload = not Load;
         parameter Real Load2Unload = 4e5;
+        parameter Real Unload2Load = 5e5;
 
-        parameter Integer nTank = 8 "Number of volumes in stratified tank";
+        parameter Integer nTank = 9 "Number of volumes in stratified tank";
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2=2.1e5;
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=1.8e5;
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump=1.79e5;
-        parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump=3e5;
+        parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump=2.5e5;
         final parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_tank=
             pout_start_S2_pump;
         final parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_tank=
             pin_start_S2_tank - 9.81*4*990;
         parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S2=80 + 273.15;
-        parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S2=70 + 273.15;
+        parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S2=79 + 273.15;
         parameter DistrictHeatingNetwork.Types.Length L_S2=10;
         parameter DistrictHeatingNetwork.Types.Length Di_S2=51e-3;
         parameter DistrictHeatingNetwork.Types.Length t_S2=1.5e-3;
         parameter Real q_m3h_S2(unit = "m3/h") = 4;
         final parameter DistrictHeatingNetwork.Types.VolumeFlowRate q=q_m3h_S2/3600;
         final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2=q*985;
-        parameter Real P201omega[:,:] = [0, 2*pi*30; 4.2e5, 2*pi*30; 4.2e5, 2*pi*45; 1e6, 2*pi*45];
+        parameter Real P201omega[:,:] = [0, 2*pi*30; 4.2e5, 2*pi*30; 1e6, 2*pi*30];
         parameter Real P201qm3h[:,:] = [0, 14.5; 100, 14.5];
 
         parameter Real FCV201theta[:,:] = [0, 1; 4.1e5, 1; 4.1e5, 0.5; 1e6, 0.5];
@@ -3431,7 +3441,7 @@ package Tests
           L=L_S2_Tanks_High,
           h=h_S2_Tanks_High,
           t=t_S2,
-          pin_start=pout_start_S2_pump,
+          pin_start=pout_start_S2_tank,
           Tin_start=Tout_start_S2,
           Tout_start=Tout_start_S2,
           Di=Di_S2,
@@ -3458,7 +3468,7 @@ package Tests
           L=L_S2_Tanks_High,
           h=h_S2_Tanks_High,
           t=t_S2,
-          pin_start=pout_start_S2_pump,
+          pin_start=pout_start_S2_tank,
           Tin_start=Tout_start_S2,
           Tout_start=Tout_start_S2,
           Di=Di_S2,
@@ -3517,9 +3527,9 @@ package Tests
           q_m3h_start=q_m3h_S2,
           n=n,
           hctype=hctype) annotation (Placement(transformation(
-              extent={{-10,10},{10,-10}},
+              extent={{10,10},{-10,-10}},
               rotation=0,
-              origin={-834,-444})));
+              origin={-832,-444})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV201_P201(
           L=L_S2_PL1,
           t=t_S2,
@@ -3647,7 +3657,7 @@ package Tests
           omega=P201omega,
           q_m3h=P201qm3h)
           annotation (Placement(transformation(extent={{-828,-218},{-808,-198}})));
-        Modelica.Blocks.Sources.BooleanTable Loading(table={Load2Unload},
+        Modelica.Blocks.Sources.BooleanTable Loading(table={Load2Unload,Unload2Load},
                                                                   startValue=Load)
           "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
               extent={{10,-10},{-10,10}},
@@ -3769,10 +3779,6 @@ package Tests
             points={{-854,-242},{-854,-494},{-832,-494}},
             color={140,56,54},
             thickness=0.5));
-        connect(PL_S200_D201_FT201.outlet,PL_S200_D201_High. outlet) annotation (Line(
-            points={{-824,-444},{-748,-444},{-748,-426}},
-            color={140,56,54},
-            thickness=0.5));
         connect(FV209.outlet,PL_S200_FV209_D201. inlet) annotation (Line(
             points={{-794,-278},{-794,-334},{-854,-334},{-854,-494},{-832,-494}},
             color={140,56,54},
@@ -3788,10 +3794,6 @@ package Tests
             thickness=0.5));
         connect(P201_input.y, P201.in_omega) annotation (Line(points={{-807,-208},{-806.5,-208},{-806.5,-207.2},
                 {-800,-207.2}}, color={0,0,127}));
-        connect(PL_S200_D201_FT201.inlet, FT201.outlet) annotation (Line(
-            points={{-844,-444},{-848,-444},{-848,-344},{-753.8,-344},{-753.8,-287.2}},
-            color={140,56,54},
-            thickness=0.5));
         connect(FT201.inlet, FV203.inlet) annotation (Line(
             points={{-753.8,-278.8},{-754,-258},{-754,-228}},
             color={140,56,54},
@@ -3820,8 +3822,16 @@ package Tests
           annotation (Line(points={{-808.5,-272},{-795.92,-272}}, color={255,0,255}));
         connect(FV202_Status.activePort, FV202.u)
           annotation (Line(points={{-824,-117.5},{-824,-130.08}}, color={255,0,255}));
-        connect(FV202_OnOff.y, FV202.u) annotation (Line(points={{-824,-102.6},{-824,-106},{-834,-106},{-834,
-                -124},{-824,-124},{-824,-130.08}}, color={255,0,255}));
+        connect(Loading.y, FV202.u) annotation (Line(points={{-617,-150},{-630,-150},{-630,-124},{-824,-124},
+                {-824,-130.08}}, color={255,0,255}));
+        connect(PL_S200_D201_High.outlet, PL_S200_D201_FT201.inlet) annotation (Line(
+            points={{-748,-426},{-748,-444},{-822,-444}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(PL_S200_D201_FT201.outlet, FT201.outlet) annotation (Line(
+            points={{-842,-444},{-846,-444},{-846,-344},{-753.8,-344},{-753.8,-287.2}},
+            color={140,56,54},
+            thickness=0.5));
         annotation (experiment(StopTime=800000, __Dymola_Algorithm="Dassl"));
       end CentralisedSystemLoadSimplifiedI_D;
     end Centralised;

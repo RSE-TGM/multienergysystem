@@ -57,7 +57,17 @@ package Configurations
     end CentralizedNetworkBase;
 
     partial model CentralizedNetworkBaseLoadSimplified
-       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase;
+       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase(
+        rackL2L3_rackL3L4_hot(q_m3h_start=q_m3h_rackHot*3/4),
+        rackL3L4_FCVC01_hot(q_m3h_start=q_m3h_rackHot/2),
+        FCVC01_rackL4L5_hot(q_m3h_start=q_m3h_rackHot/2),
+        rackL4L5_rackL5L6_hot(q_m3h_start=q_m3h_rackHot/4),
+        rackL2L3_rackL3L4_cold(q_m3h_start=q_m3h_rackCold*3/4),
+        rackL3L4_FCVC01_cold(q_m3h_start=q_m3h_rackCold/2),
+        rackL5L6_rackL6L7_hot(q_m3h_start=q_m3h_rackHot/4),
+        rackL4L5_rackL5L6_cold(q_m3h_start=q_m3h_rackCold/4),
+        rackL5L6_rackL6L7_cold(q_m3h_start=q_m3h_rackCold/4),
+        FCVC01_rackL4L5_cold(q_m3h_start=q_m3h_rackCold/2));
        extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseSimplified;
       inner DistrictHeatingNetwork.System system annotation (Placement(visible=true,
             transformation(

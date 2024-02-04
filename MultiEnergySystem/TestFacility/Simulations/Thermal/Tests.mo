@@ -3257,7 +3257,7 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2=2.1e5;
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2=1.8e5;
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump=1.79e5;
-        parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump=2.5e5;
+        parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump=3e5;
         final parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_tank=
             pout_start_S2_pump;
         final parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_tank=
@@ -3832,7 +3832,10 @@ package Tests
             points={{-842,-444},{-846,-444},{-846,-344},{-753.8,-344},{-753.8,-287.2}},
             color={140,56,54},
             thickness=0.5));
-        annotation (experiment(StopTime=800000, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(
+            StopTime=800000,
+            Tolerance=1e-05,
+            __Dymola_Algorithm="Dassl"));
       end CentralisedSystemLoadSimplifiedI_D;
     end Centralised;
   end Networks;

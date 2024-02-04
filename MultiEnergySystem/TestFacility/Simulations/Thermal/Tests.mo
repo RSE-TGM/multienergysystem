@@ -3213,17 +3213,17 @@ package Tests
           EX711q_m3h_cold=[0,2.2; 100,2.2],
           EX721q_m3h_cold=[0,2.2; 100,2.2],
           EX731q_m3h_cold=[0,2.2; 100,2.2],
+          EX701_Tin_cold= 20 + 273.15,
+          EX711_Tin_cold= 20 + 273.15,
+          EX721_Tin_cold= 20 + 273.15,
+          EX731_Tin_cold= 20 + 273.15,
+          EX701_Tout_cold= 35 + 273.15,
+          EX711_Tout_cold= 35 + 273.15,
+          EX721_Tout_cold= 35 + 273.15,
+          EX731_Tout_cold= 35 + 273.15,
           FCVC01theta=[0,0; 1e6,0],
           FCVC02theta=[0,0.5; 1e6,0.5],
           VE901(p0=p_VE901));
-      //     EX701_Tin_cold= 20 + 273.15,
-      //     EX711_Tin_cold= 20 + 273.15,
-      //     EX721_Tin_cold= 20 + 273.15,
-      //     EX731_Tin_cold= 20 + 273.15,
-      //     EX701_Tout_cold= 35 + 273.15,
-      //     EX711_Tout_cold= 35 + 273.15,
-      //     EX721_Tout_cold= 35 + 273.15,
-      //     EX731_Tout_cold= 35 + 273.15,
 
         // System S200
         // Unloading

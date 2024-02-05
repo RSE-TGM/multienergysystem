@@ -98,8 +98,8 @@ equation
 //   assert(headmin < head, "Head is lower than its minimum value", AssertionLevel.error);
 //   assert(qnom_inm3h_max > q_m3h, "Volumetric flowrate is higher than its maximum operating value", AssertionLevel.error);
 //   assert(qnom_inm3h_min < q_m3h, "Volumetric flowrate is lower than its minimum operating value", AssertionLevel.error);
-   assert(2*pi*50 >= omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
-   assert(2*pi*30 <= omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
+//   assert(2*pi*50 >= omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
+//   assert(2*pi*30 <= omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;

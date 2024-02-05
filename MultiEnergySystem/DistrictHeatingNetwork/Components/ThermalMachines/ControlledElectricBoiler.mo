@@ -31,7 +31,8 @@ equation
 
   //Pheat = delay(if heat_on then Pmaxres*nR else 0, tdelay);
   //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxres*nR) else 0, tdelay);
-  Pheat = min(Pheat_ref, Pmaxres*nR);
+  Pheat = if heat_on then min(Pheat_ref, Pmaxres*nR) else 0;
+  //Pheat = min(Pheat_ref, Pmaxres*nR);
 
 //   when Tout_ref - T_bandwidth > Tout and pre(heat_on)== false then
 //     heat_on=  true;

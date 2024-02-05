@@ -135,55 +135,54 @@ package Configurations
         FCVC01_rackL4L5_cold(q_m3h_start=q_m3h_rackCold/2),
         rackL6L7_FCVC02_hot(q_m3h_start=q_m3h_rackHot/4),
         FCVC02(q_m3h_start=q_m3h_rackHot/4));
-       extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseSimplified;
       inner DistrictHeatingNetwork.System system annotation (Placement(visible=true,
             transformation(
             origin={889,309},
             extent={{-10,-10},{10,10}},
             rotation=0)));
+      Plants.Thermal.Systems.CoolingSingleLoad EX701
+        annotation (Placement(transformation(extent={{-56,-34},{76,98}})));
+      Plants.Thermal.Systems.CoolingSingleLoad EX711
+        annotation (Placement(transformation(extent={{86,-38},{218,94}})));
+      Plants.Thermal.Systems.CoolingSingleLoad EX721
+        annotation (Placement(transformation(extent={{280,-36},{412,96}})));
+      Plants.Thermal.Systems.CoolingSingleLoad EX731
+        annotation (Placement(transformation(extent={{538,-38},{670,94}})));
     equation
-      connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
-          Line(
-          points={{100,-40},{100,38},{14,38},{14,205},{60,205}},
+      connect(EX701.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (Line(
+          points={{-9.8,76.88},{-9.8,206},{-12,206},{-12,205},{60,205}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL701_FT701_rackL2L3.outlet, rackL2L3_rackL3L4_cold.outlet)
-        annotation (Line(
-          points={{140,-40},{140,58},{42,58},{42,265},{90,265}},
+      connect(EX701.outlet, rackL2L3_rackL3L4_cold.outlet) annotation (Line(
+          points={{29.8,76.88},{28,264},{28,265},{90,265}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL731_rackL6L7_TT732.inlet, rackL6L7_FCVC02_hot.inlet) annotation (
-          Line(
-          points={{260,-40},{256,-40},{256,60},{618,60},{618,205},{640,205}},
+      connect(EX711.inlet, rackL3L4_FCVC01_hot.inlet) annotation (Line(
+          points={{132.2,72.88},{132.2,205},{180,205}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation (
-         Line(
-          points={{300,-40},{300,38},{636,38},{636,265},{650,265}},
+      connect(EX711.outlet, rackL2L3_rackL3L4_cold.inlet) annotation (Line(
+          points={{171.8,72.88},{171.8,265},{110,265}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL711_rackL3L4_TT712.inlet, rackL3L4_FCVC01_hot.inlet) annotation (
-          Line(
-          points={{420,-40},{420,80},{152,80},{152,205},{180,205}},
+      connect(EX721.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (Line(
+          points={{326.2,74.88},{326.2,205},{400,205}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL711_FT711_rackL3L4.outlet, rackL2L3_rackL3L4_cold.inlet)
-        annotation (Line(
-          points={{460,-40},{460,112},{170,112},{170,265},{110,265}},
+      connect(EX721.outlet, FCVC01_rackL4L5_cold.inlet) annotation (Line(
+          points={{365.8,74.88},{365.8,265},{330,265}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL721_rackL4L5_TT722.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (
-          Line(
-          points={{580,-40},{580,132},{330,132},{330,205},{400,205}},
+      connect(EX731.inlet, rackL6L7_FCVC02_hot.inlet) annotation (Line(
+          points={{584.2,72.88},{584.2,205},{640,205}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL721_FT721_rackL4L5.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
-          Line(
-          points={{620,-40},{620,158},{358,158},{358,264},{354,264},{354,265},{330,265}},
+      connect(EX731.outlet, rackL6L7_FCVC02_cold.outlet) annotation (Line(
+          points={{623.8,72.88},{623.8,265},{650,265}},
           color={140,56,54},
           thickness=0.5));
-      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-            coordinateSystem(preserveAspectRatio=false)));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(
+              extent={{-900,-320},{900,320}})));
     end CentralizedNetworkSimplifiedBaseLoadSimplified;
   end BaseClass;
 

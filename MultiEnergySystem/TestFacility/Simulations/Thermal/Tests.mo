@@ -3223,7 +3223,9 @@ package Tests
           EX731_Tout_cold= 35 + 273.15,
           FCVC01theta=[0,0; 1e6,0],
           FCVC02theta=[0,0.5; 1e6,0.5],
-          VE901(p0=p_VE901));
+          VE901(p0=p_VE901),
+          EB401(tdelay=30),
+          GB101(tdelay=20));
 
         // System S200
         // Unloading
@@ -3833,7 +3835,7 @@ package Tests
             color={140,56,54},
             thickness=0.5));
         annotation (experiment(
-            StopTime=800000,
+            StopTime=900000,
             Tolerance=1e-05,
             __Dymola_Algorithm="Dassl"));
       end CentralisedSystemLoadSimplifiedI_D;

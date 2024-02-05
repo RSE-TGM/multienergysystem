@@ -1157,7 +1157,7 @@ package Test "Package to test component equation and behaviour"
           extent={{-10,-10},{10,10}},
           rotation=0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass
-      LumpedStorageConstantMass(H=0.01) annotation (Placement(transformation(
+      LumpedStorageConstantMass(H=0.1)  annotation (Placement(transformation(
           extent={{-10,-14},{10,14}},
           rotation=0,
           origin={-6,50})));

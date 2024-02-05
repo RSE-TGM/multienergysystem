@@ -181,6 +181,49 @@ package Tests
           Tolerance=1e-06,
           __Dymola_Algorithm="Dassl"));
     end ControlledElectricBoiler;
+
+    model CoolingSingleLoad
+      parameter Real FCVtheta[:,:] = [0, 1; 300, 1; 300, 0.5; 500, 0.5];
+      Plants.Thermal.Systems.CoolingSingleLoad coolingSingleLoad
+        annotation (Placement(transformation(extent={{-40,-40},{40,40}})));
+      DistrictHeatingNetwork.Sources.SourcePressure                   sourceHot_E501(T0=353.15, p0=250000)                                       annotation (
+        Placement(visible = true, transformation(origin={-26,52},     extent={{-10,-10},{10,10}},      rotation = 0)));
+      DistrictHeatingNetwork.Sources.SinkMassFlow sinkHot(
+        T0=338.15,
+        m_flow0=1.8,
+        p0=240000,
+        pin_start=240000) annotation (Placement(visible=true, transformation(
+            origin={33,51},
+            extent={{-13,-13},{13,13}},
+            rotation=0)));
+      Modelica.Blocks.Sources.TimeTable TinCoolSP(table=[0,15 + 273.15; 100,15 + 273.15])
+        annotation (Placement(transformation(extent={{-80,-40},{-60,-20}})));
+      Modelica.Blocks.Sources.TimeTable FCV_theta(table=FCVtheta)
+        annotation (Placement(transformation(extent={{-82,24},{-62,44}})));
+      Modelica.Blocks.Sources.TimeTable PtSP(table=[0,35e3; 100,35e3; 200,50e3; 300,50e3])
+        annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+    equation
+      connect(sourceHot_E501.outlet, coolingSingleLoad.inlet) annotation (Line(
+          points={{-16,52},{-12,52},{-12,27.2}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(sinkHot.inlet, coolingSingleLoad.outlet) annotation (Line(
+          points={{20,51},{18,51},{18,52},{12,52},{12,27.2}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(FCV_theta.y, coolingSingleLoad.theta)
+        annotation (Line(points={{-61,34},{-50,34},{-50,24},{-32,24}}, color={0,0,127}));
+      connect(PtSP.y, coolingSingleLoad.Pt_SP)
+        annotation (Line(points={{-59,0},{-32,0}}, color={0,0,127}));
+      connect(TinCoolSP.y, coolingSingleLoad.Tin_cool_SP)
+        annotation (Line(points={{-59,-30},{-50,-30},{-50,-24},{-32,-24}}, color={0,0,127}));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(
+              preserveAspectRatio=false)),
+        experiment(
+          StopTime=400,
+          Tolerance=1e-06,
+          __Dymola_Algorithm="Dassl"));
+    end CoolingSingleLoad;
   end Systems;
 
   package Loads "Package to run test in the load side of the plant using real data"

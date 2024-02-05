@@ -246,14 +246,14 @@ model CoolingSingleLoad
     p0=200000,
     T0=288.15) annotation (Placement(transformation(extent={{-36,-122},{-56,-142}})));
   Modelica.Blocks.Interfaces.RealInput Pt_SP
-    annotation (Placement(transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent={{
-            -100,-20},{-60,20}})));
+    annotation (Placement(transformation(extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},
+            {-60,10}})));
   Modelica.Blocks.Interfaces.RealInput theta
-    annotation (Placement(transformation(extent={{-100,40},{-60,80}}), iconTransformation(extent={{-100,
-            40},{-60,80}})));
+    annotation (Placement(transformation(extent={{-80,30},{-60,50}}),  iconTransformation(extent={{-80,30},
+            {-60,50}})));
   Modelica.Blocks.Interfaces.RealInput Tin_cool_SP
-    annotation (Placement(transformation(extent={{-100,-80},{-60,-40}}), iconTransformation(extent={
-            {-100,-80},{-60,-40}})));
+    annotation (Placement(transformation(extent={{-80,-50},{-60,-30}}),  iconTransformation(extent={{-80,-50},
+            {-60,-30}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin={-20,150},   extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-30,68},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
@@ -264,9 +264,9 @@ model CoolingSingleLoad
     annotation (Placement(transformation(extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,-104}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+        extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={0,-104})));
+        origin={0,-102})));
 equation
   m_flow_cool_SP = Pt_SP/(TT704.fluid.h-TT703.fluid.h);
   Pt = EX701.Pt;
@@ -334,9 +334,9 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(Tin_cool_SP, VER3.in_T0)
-    annotation (Line(points={{-80,-60},{-54,-60},{-54,-106},{39,-106},{39,-122.6}},
+    annotation (Line(points={{-70,-40},{-54,-40},{-54,-106},{39,-106},{39,-122.6}},
                                                                color={0,0,127}));
-  connect(theta, FCV701.opening) annotation (Line(points={{-80,60},{64,60},{64,18},{28,18}},
+  connect(theta, FCV701.opening) annotation (Line(points={{-70,40},{64,40},{64,18},{28,18}},
                                                                             color={0,0,127}));
   connect(inlet, PL701_rackL2L3_TT702.inlet)
     annotation (Line(

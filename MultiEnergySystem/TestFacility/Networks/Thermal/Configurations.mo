@@ -2087,7 +2087,7 @@ package Configurations
 
     partial model CentralizedSystemSimplifiedLoadSimplifiedI
       "System with only Gas Boiler as source of heat"
-      extends BaseClass.CentralizedNetworkBaseLoadSimplified;
+      extends BaseClass.CentralizedNetworkSimplifiedBaseLoadSimplified;
       // System S100
 
       parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1=1.695e5;
@@ -2131,31 +2131,31 @@ package Configurations
             transformation(
             extent={{-6,-6},{6,6}},
             rotation=-90,
-            origin={-238,-72})));
+            origin={-240,-72})));
       DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT102
         "Pressure sensor at the outlet of valve FCV101" annotation (Placement(
             transformation(
             extent={{6,6},{-6,-6}},
             rotation=90,
-            origin={-238,-84})));
+            origin={-240,-84})));
       DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT101
         "Pressure sensor at the inlet of gas boiler" annotation (Placement(
             transformation(
             extent={{-6,-6},{6,6}},
             rotation=90,
-            origin={-278,-84})));
+            origin={-272,-84})));
       DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT101(T_start=
             Tin_start_S1, p_start=pin_start_S1)
         "Temperature sensor at the outlet of valve FCV101" annotation (Placement(
             transformation(
             extent={{-6,-6},{6,6}},
             rotation=90,
-            origin={-278,-70})));
+            origin={-272,-70})));
       DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT101(T_start=Tin_start_S1,
           p_start=pin_start_S1) annotation (Placement(transformation(
             extent={{7,-7},{-7,7}},
             rotation=90,
-            origin={-279,-99})));
+            origin={-273,-99})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
         L=L_S1_rCD_hot,
         h=h_S1_rCD_hot,
@@ -2169,7 +2169,7 @@ package Configurations
         n=n) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=90,
-            origin={-240,-40})));
+            origin={-242,-40})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
         L=L_S1_rCD_cold,
         h=h_S1_rCD_cold,
@@ -2183,31 +2183,44 @@ package Configurations
         n=n) annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=90,
-            origin={-276,-40})));
+            origin={-270,-40})));
+      Plants.Thermal.Systems.ControlledGasBoiler controlledGasBoiler
+        annotation (Placement(transformation(extent={{-302,-222},{-212,-132}})));
     equation
       connect(TT102.inlet,PT102. inlet) annotation (Line(
-          points={{-240.4,-72},{-240.4,-84}},
+          points={{-242.4,-72},{-242.4,-84}},
           color={140,56,54},
           thickness=0.5));
       connect(PT101.inlet,TT101. inlet) annotation (Line(
-          points={{-275.6,-84},{-275.6,-70}},
+          points={{-269.6,-84},{-269.6,-70}},
           color={140,56,54},
           thickness=0.5));
       connect(PL_S100_rCD_hot.inlet,TT102. inlet) annotation (Line(
-          points={{-240,-50},{-240,-72},{-240.4,-72}},
+          points={{-242,-50},{-242,-72},{-242.4,-72}},
           color={140,56,54},
           thickness=0.5));
       connect(TT101.inlet,PL_S100_rCD_cold. outlet) annotation (Line(
-          points={{-275.6,-70},{-275.6,-65},{-276,-65},{-276,-50}},
+          points={{-269.6,-70},{-269.6,-65},{-270,-65},{-270,-50}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
-          Line(
-          points={{-276,-30},{-276,5.25},{-326.5,5.25}},
+      connect(controlledGasBoiler.inlet, FT101.outlet) annotation (Line(
+          points={{-270.5,-141},{-270.5,-128},{-270.2,-128},{-270.2,-103.2}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
-          points={{-240,-30},{-242,-30},{-242,44.75},{-257.5,44.75}},
+      connect(FT101.inlet, PT101.inlet) annotation (Line(
+          points={{-270.2,-94.8},{-270.2,-84},{-269.6,-84}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PT102.inlet, controlledGasBoiler.outlet) annotation (Line(
+          points={{-242.4,-84},{-242.4,-112.5},{-243.5,-112.5},{-243.5,-141}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_cold.inlet, FV933.inlet) annotation (Line(
+          points={{-270,-30},{-270,5.25},{-200,5.25},{-200,45},{-213,45}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S200_S900.inlet) annotation (Line(
+          points={{-242,-30},{-242,44},{-240,44},{-240,45},{-475,45},{-475,44.75},{-727,44.75}},
           color={140,56,54},
           thickness=0.5));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

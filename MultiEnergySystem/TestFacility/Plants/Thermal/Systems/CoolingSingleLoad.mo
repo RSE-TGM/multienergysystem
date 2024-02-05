@@ -261,8 +261,12 @@ model CoolingSingleLoad
   Modelica.Blocks.Sources.RealExpression mflowcoolSP(y=m_flow_cool_SP)
     annotation (Placement(transformation(extent={{-80,-156},{-60,-136}})));
   Modelica.Blocks.Interfaces.RealOutput Pt
-    annotation (Placement(transformation(extent={{60,-20},{100,20}}), iconTransformation(extent={{
-            60,-20},{100,20}})));
+    annotation (Placement(transformation(extent={{-20,-20},{20,20}},
+        rotation=-90,
+        origin={0,-104}), iconTransformation(
+        extent={{-20,-20},{20,20}},
+        rotation=-90,
+        origin={0,-104})));
 equation
   m_flow_cool_SP = Pt_SP/(TT704.fluid.h-TT703.fluid.h);
   Pt = EX701.Pt;

@@ -1,5 +1,66 @@
 within MultiEnergySystem.TestFacility.Simulations.Thermal;
 package Tests
+  package Systems
+
+    model GasBoiler
+      parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5 - 0.09273e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 60 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
+      parameter Real P101omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*30; 300, 2*3.141592654*30];
+      parameter Real FCV101theta[:,:] = [0, 1];
+
+      Plants.Thermal.Systems.GasBoiler S100
+        annotation (Placement(transformation(extent={{-32,-32},{32,32}})));
+      Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
+        annotation (Placement(transformation(extent={{-80,-42},{-60,-22}})));
+      Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
+        "Input to decide whether or nor the gas boiler is working"
+        annotation (Placement(transformation(extent={{74,-10},{54,10}})));
+      Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
+        annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
+      Modelica.Blocks.Sources.TimeTable P101_omega(table=P101omega)
+        annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+      inner System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
+      DistrictHeatingNetwork.Sources.SourcePressure
+                             source(
+        use_in_p0=false,
+        use_in_T0=false,
+        p0=pin_start_S1,
+        T0=Tin_start_S1)
+        annotation (Placement(transformation(extent={{-42,78},{-22,58}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow
+                           sink(
+        use_in_m_flow=false,
+        pin_start=pout_start_S1,
+        p0=pout_start_S1,
+        T0=Tout_start_S1,
+        m_flow0=m_flow_S1,
+        G=0)
+        annotation (Placement(transformation(extent={{18,78},{38,58}})));
+    equation
+      connect(GB101_Status.y, S100.Status)
+        annotation (Line(points={{53,0},{25.6,0}}, color={255,0,255}));
+      connect(FCV101_theta.y, S100.theta)
+        annotation (Line(points={{-59,30},{-40,30},{-40,16},{-25.6,16}}, color={0,0,127}));
+      connect(P101_omega.y, S100.omega) annotation (Line(points={{-59,0},{-25.6,0}}, color={0,0,127}));
+      connect(GB101_ToutSP.y, S100.Tout_SP)
+        annotation (Line(points={{-59,-32},{-40,-32},{-40,-16},{-25.6,-16}}, color={0,0,127}));
+      connect(source.outlet, S100.inlet) annotation (Line(
+          points={{-22,68},{-16,68},{-16,66},{-9.6,66},{-9.6,25.6}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(sink.inlet, S100.outlet) annotation (Line(
+          points={{18,68},{14,68},{14,70},{9.6,70},{9.6,25.6}},
+          color={140,56,54},
+          thickness=0.5));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(
+              preserveAspectRatio=false)));
+    end GasBoiler;
+  end Systems;
+
   package Loads "Package to run test in the load side of the plant using real data"
     model ParallelConfiguration4Loads
       extends MultiEnergySystem.TestFacility.Loads.Thermal.Configurations.BaseClass.LoadPlantBase(

@@ -4,16 +4,13 @@ partial model PartialBoiler
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
      choicesAllMatching = true);
-
+  constant Real pi = Modelica.Constants.pi;
   parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pin_start=1e5
-    "Start value Inlet pressure of the fluid"
-    annotation (Dialog(tab="Initialisation", group="fluid"));
+    "Start value Inlet pressure of the fluid"  annotation (Dialog(tab="Initialisation", group="fluid"));
   parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pout_start=0.9e5
-    "Start value Outlet pressure of the fluid"
-    annotation (Dialog(tab="Initialisation", group="fluid"));
+    "Start value Outlet pressure of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
   parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Temperature Tin_start=58 + 273.15
-    "Start value inlet temperature of the fluid"
-    annotation (Dialog(tab="Initialisation", group="fluid"));
+    "Start value inlet temperature of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
   parameter SI.Temperature Tout_start = 80 + 273.15 "Start value outlet temperature of the fluid" annotation (
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter SI.Density rho_start = 1000 "Start value outlet density of the fluid" annotation (
@@ -38,14 +35,11 @@ partial model PartialBoiler
     Dialog(tab = "Boiler Data"));
   parameter SI.PerUnit etanom = 0.98 "Nominal useful efficiency" annotation (
     Dialog(tab = "Boiler Data"));
-  parameter SI.Volume V = h*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
-                              *D^2/4 "Nominal volume of the fluid container (boiler)" annotation (
-    Dialog(tab = "Boiler Data"));
   parameter SI.Temperature T_ext = system.T_amb "Ambient temperature";
-  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + tIns)/(D/2))/(lambdaIns*2*
-      MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi                                   *h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
-  final parameter Modelica.Units.SI.ThermalResistance R_flat = tIns/(lambdaIns*MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.pi
-                                                                                 *(D/2)^2) "Flat Surface of the cylinder";
+  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + tIns)/(D/2))/(lambdaIns*2*pi*h) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
+  final parameter Modelica.Units.SI.ThermalResistance R_flat = tIns/(lambdaIns*pi*(D/2)^2) "Flat Surface of the cylinder";
+  final parameter SI.Volume V = h*pi*D^2/4 "Nominal volume of the fluid container (boiler)" annotation (
+    Dialog(tab = "Boiler Data"));
   outer DistrictHeatingNetwork.System system "system object for global defaults";
 
   SI.MassFlowRate m_flow "mass flowrate of the fluid";
@@ -84,8 +78,6 @@ equation
   fluidIn.T = Tin;
   fluidOut.p = pout;
   fluidOut.T = Tout;
-  //fluidIn = Medium.setState_pTX(pin, Tin);
-  //fluidOut = Medium.setState_pTX(pout, Tout);
 
   // Fluid properties
   hin = fluidIn.h;

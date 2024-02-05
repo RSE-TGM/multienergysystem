@@ -2,3 +2,4 @@ GasBoiler
 ElectricBoiler
 ControlledGasBoiler
 ControlledElectricBoiler
+CoolingSingleLoad

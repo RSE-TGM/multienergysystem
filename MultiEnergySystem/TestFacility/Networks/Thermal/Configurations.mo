@@ -120,6 +120,71 @@ package Configurations
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end CentralizedNetworkBaseLoadSimplified;
+
+    partial model CentralizedNetworkSimplifiedBaseLoadSimplified
+       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBaseSimplified(
+        rackL2L3_rackL3L4_hot(q_m3h_start=q_m3h_rackHot*3/4),
+        rackL3L4_FCVC01_hot(q_m3h_start=q_m3h_rackHot/2),
+        FCVC01_rackL4L5_hot(q_m3h_start=q_m3h_rackHot/2),
+        rackL4L5_rackL5L6_hot(q_m3h_start=q_m3h_rackHot/4),
+        rackL2L3_rackL3L4_cold(q_m3h_start=q_m3h_rackCold*3/4),
+        rackL3L4_FCVC01_cold(q_m3h_start=q_m3h_rackCold/2),
+        rackL5L6_rackL6L7_hot(q_m3h_start=q_m3h_rackHot/4),
+        rackL4L5_rackL5L6_cold(q_m3h_start=q_m3h_rackCold/4),
+        rackL5L6_rackL6L7_cold(q_m3h_start=q_m3h_rackCold/4),
+        FCVC01_rackL4L5_cold(q_m3h_start=q_m3h_rackCold/2),
+        rackL6L7_FCVC02_hot(q_m3h_start=q_m3h_rackHot/4),
+        FCVC02(q_m3h_start=q_m3h_rackHot/4));
+       extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseSimplified;
+      inner DistrictHeatingNetwork.System system annotation (Placement(visible=true,
+            transformation(
+            origin={889,309},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+    equation
+      connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
+          Line(
+          points={{100,-40},{100,38},{14,38},{14,205},{60,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL701_FT701_rackL2L3.outlet, rackL2L3_rackL3L4_cold.outlet)
+        annotation (Line(
+          points={{140,-40},{140,58},{42,58},{42,265},{90,265}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL731_rackL6L7_TT732.inlet, rackL6L7_FCVC02_hot.inlet) annotation (
+          Line(
+          points={{260,-40},{256,-40},{256,60},{618,60},{618,205},{640,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation (
+         Line(
+          points={{300,-40},{300,38},{636,38},{636,265},{650,265}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL711_rackL3L4_TT712.inlet, rackL3L4_FCVC01_hot.inlet) annotation (
+          Line(
+          points={{420,-40},{420,80},{152,80},{152,205},{180,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL711_FT711_rackL3L4.outlet, rackL2L3_rackL3L4_cold.inlet)
+        annotation (Line(
+          points={{460,-40},{460,112},{170,112},{170,265},{110,265}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL721_rackL4L5_TT722.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (
+          Line(
+          points={{580,-40},{580,132},{330,132},{330,205},{400,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL721_FT721_rackL4L5.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
+          Line(
+          points={{620,-40},{620,158},{358,158},{358,264},{354,264},{354,265},{330,265}},
+          color={140,56,54},
+          thickness=0.5));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+            coordinateSystem(preserveAspectRatio=false)));
+    end CentralizedNetworkSimplifiedBaseLoadSimplified;
   end BaseClass;
 
   package Centralised
@@ -2020,5 +2085,134 @@ package Configurations
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end CentralizedSystemLoadSimplifiedI;
+
+    partial model CentralizedSystemSimplifiedLoadSimplifiedI
+      "System with only Gas Boiler as source of heat"
+      extends BaseClass.CentralizedNetworkBaseLoadSimplified;
+      // System S100
+
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1=1.695e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1=1.6e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1=30 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1=30 + 273.15;
+
+      parameter DistrictHeatingNetwork.Types.Length L_S1=10;
+      parameter DistrictHeatingNetwork.Types.Length L_S1_PL1=0.4;
+      parameter DistrictHeatingNetwork.Types.Length L_S1_PL2=0.8;
+      parameter DistrictHeatingNetwork.Types.Length L_S1_PL3=1.5;
+      parameter DistrictHeatingNetwork.Types.Length L_S1_PL4=0.7;
+      parameter DistrictHeatingNetwork.Types.Length Di_S1=51e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S1=1.5e-3;
+
+      parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
+      parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+      parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
+      parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+      parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
+      parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
+      parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
+      parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
+      parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
+      parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
+      parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
+      parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1=m_flow_total;
+      parameter Real q_m3h_S1 = 9;
+
+      parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50; 100, 2*pi*50; 200, 2*pi*50];
+      parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
+
+      parameter Real FCV101theta[:,:] = [0, 1];
+      parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
+
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT102(T_start=
+            Tout_start_S1, p_start=pout_start_S1)
+        "Temperature sensor at the outlet of valve FCV101" annotation (Placement(
+            transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=-90,
+            origin={-238,-72})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT102
+        "Pressure sensor at the outlet of valve FCV101" annotation (Placement(
+            transformation(
+            extent={{6,6},{-6,-6}},
+            rotation=90,
+            origin={-238,-84})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT101
+        "Pressure sensor at the inlet of gas boiler" annotation (Placement(
+            transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={-278,-84})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT101(T_start=
+            Tin_start_S1, p_start=pin_start_S1)
+        "Temperature sensor at the outlet of valve FCV101" annotation (Placement(
+            transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={-278,-70})));
+      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT101(T_start=Tin_start_S1,
+          p_start=pin_start_S1) annotation (Placement(transformation(
+            extent={{7,-7},{-7,7}},
+            rotation=90,
+            origin={-279,-99})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
+        L=L_S1_rCD_hot,
+        h=h_S1_rCD_hot,
+        t=t_S1,
+        pin_start=pout_start_S1,
+        Tin_start=Tout_start_S1,
+        Tout_start=Tout_start_S1,
+        Di=Di_S1,
+        q_m3h_start=q_m3h_S1,
+        hctype=hctype,
+        n=n) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={-240,-40})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(
+        L=L_S1_rCD_cold,
+        h=h_S1_rCD_cold,
+        t=t_S1,
+        pin_start=pin_start_S1,
+        Tin_start=Tin_start_S1,
+        Tout_start=Tin_start_S1,
+        Di=Di_S1,
+        q_m3h_start=q_m3h_S1,
+        hctype=hctype,
+        n=n) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=90,
+            origin={-276,-40})));
+    equation
+      connect(TT102.inlet,PT102. inlet) annotation (Line(
+          points={{-240.4,-72},{-240.4,-84}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PT101.inlet,TT101. inlet) annotation (Line(
+          points={{-275.6,-84},{-275.6,-70}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.inlet,TT102. inlet) annotation (Line(
+          points={{-240,-50},{-240,-72},{-240.4,-72}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(TT101.inlet,PL_S100_rCD_cold. outlet) annotation (Line(
+          points={{-275.6,-70},{-275.6,-65},{-276,-65},{-276,-50}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
+          Line(
+          points={{-276,-30},{-276,5.25},{-326.5,5.25}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+          points={{-240,-30},{-242,-30},{-242,44.75},{-257.5,44.75}},
+          color={140,56,54},
+          thickness=0.5));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+            coordinateSystem(preserveAspectRatio=false)));
+    end CentralizedSystemSimplifiedLoadSimplifiedI;
   end Centralised;
 end Configurations;

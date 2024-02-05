@@ -212,11 +212,11 @@ equation
       points={{20,86},{20,110}},
       color={140,56,54},
       thickness=0.5));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  annotation (Icon(                                             graphics={
                      Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points={{-21,-35},
               {-27,-3},{-21,-13},{-19,25},{-11,13},{1,37},{13,13},{19,25},{23,-15},{27,-5},{23,-35},
               {1,-43},{-21,-35}}),                                                                                                                                                                                                        Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points={{-15,-35},
               {-23,-13},{-15,-17},{-15,3},{-9,-1},{1,25},{9,-1},{15,3},{17,-17},{23,-13},{15,-37},{1,
               -43},{-15,-35}})}),                                Diagram(coordinateSystem(
-          preserveAspectRatio=false, extent={{-100,-140},{100,140}})));
+                                     extent={{-100,-140},{100,140}})));
 end GasBoiler;

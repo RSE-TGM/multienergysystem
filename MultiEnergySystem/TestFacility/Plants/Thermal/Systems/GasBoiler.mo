@@ -28,8 +28,8 @@ model GasBoiler "System 100"
   final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
   final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
   final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
 
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
   parameter Real q_m3h_S1(unit = "m3/h") = 9;
   parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
   parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
@@ -168,6 +168,13 @@ model GasBoiler "System 100"
         transformation(extent={{-100,-70},{-60,-30}}), iconTransformation(extent={{-100,-70},{-60,-30}})));
   Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{100,-20},
             {60,20}}),          iconTransformation(extent={{100,-20},{60,20}})));
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTBoiler(T_start=Tin_start_S1, p_start=
+        pin_start_S1) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=-90,
+        origin={-16,44})));
+  Modelica.Blocks.Interfaces.RealOutput m_flow annotation (Placement(transformation(extent={{60,30},
+            {100,70}}), iconTransformation(extent={{60,30},{100,70}})));
 equation
   connect(P101.inlet,PL_S100_GB101_P101. outlet) annotation (Line(
       points={{20,-4.6},{20,-14}},
@@ -202,16 +209,23 @@ equation
                                                                              color={0,0,127}));
   connect(omega, P101.in_omega)
     annotation (Line(points={{-80,0},{0,0},{0,0.2},{14,0.2}},     color={0,0,127}));
-  connect(PL_S100_TT101_FT101.inlet, inlet)
-    annotation (Line(
-      points={{-20,16},{-20,90}},
-      color={140,56,54},
-      thickness=0.5));
   connect(FCV101.outlet, outlet)
     annotation (Line(
       points={{20,86},{20,110}},
       color={140,56,54},
       thickness=0.5));
+  connect(PL_S100_TT101_FT101.inlet, FTBoiler.outlet)
+    annotation (Line(
+      points={{-20,16},{-20,38}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FTBoiler.inlet, inlet)
+    annotation (Line(
+      points={{-20,50},{-20,90}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FTBoiler.m_flow, m_flow)
+    annotation (Line(points={{-10,37},{-10,28},{40,28},{40,50},{80,50}}, color={0,0,127}));
   annotation (Icon(                                             graphics={
                      Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points={{-21,-35},
               {-27,-3},{-21,-13},{-19,25},{-11,13},{1,37},{13,13},{19,25},{23,-15},{27,-5},{23,-35},

@@ -9,8 +9,9 @@ model GasBoiler "System 100"
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 60 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 65 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
 
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
   final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
@@ -27,16 +28,19 @@ model GasBoiler "System 100"
   final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
   final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
   final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
 
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = 2;
-  parameter Real q_m3h_S1 = 9;
-
+  parameter Real q_m3h_S1(unit = "m3/h") = 9;
   parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
   parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
-
   parameter Real FCV101theta[:,:] = [0, 1];
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
+  parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;
+  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.8;
+  parameter DistrictHeatingNetwork.Types.Power Pminnom = 147.6e3*0.2;
+  parameter DistrictHeatingNetwork.Types.Length h = 1.2*0.93;
+  parameter DistrictHeatingNetwork.Types.Length D = 0.64;
 
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin={-20,90},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
@@ -81,12 +85,15 @@ model GasBoiler "System 100"
         rotation=90,
         origin={20,76})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB(
-    h=1.2*0.93,
-    Pmaxnom=147.6e3*0.8,
+    h=h,
+    D=D,
+    Pmaxnom=Pmaxnom,
     Tin_start=Tin_start_S1,
     pin_start=pin_start_S1,
     pout_start=pout_start_S1,
     Tout_start=Tout_start_S1,
+    Pnimnom=Pminnom,
+    Pnom=Pnom,
     HH=55.5e6) annotation (Placement(visible=true, transformation(
         origin={0,-84},
         extent={{-36,-36},{36,36}},
@@ -101,6 +108,7 @@ model GasBoiler "System 100"
     Di=Di_S1,
     q_m3h_start=q_m3h_S1,
     n=n,
+    u_nom=u_nom,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -114,6 +122,8 @@ model GasBoiler "System 100"
     Tout_start=Tin_start_S1,
     Di=Di_S1,
     q_m3h_start=q_m3h_S1,
+    n=n,
+    u_nom=u_nom,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
@@ -127,6 +137,8 @@ model GasBoiler "System 100"
     Tout_start=Tin_start_S1,
     Di=Di_S1,
     q_m3h_start=q_m3h_S1,
+    n=n,
+    u_nom=u_nom,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
@@ -141,6 +153,7 @@ model GasBoiler "System 100"
     Di=Di_S1,
     q_m3h_start=q_m3h_S1,
     n=n,
+    u_nom=u_nom,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,

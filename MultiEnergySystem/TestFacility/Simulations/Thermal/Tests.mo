@@ -4207,4 +4207,172 @@ package Tests
       end CentralisedSystemSimplifiedLoadSimplifiedI_A;
     end Centralised;
   end Networks;
+
+  package Control
+
+    model ThermalPlantController
+      parameter Real domega_P901[:,:] = [0, 0.5; 1e6, 0.5];
+      parameter Real dtheta_FCV901[:,:] = [0, 1; 1e6, 1];
+      parameter Real domega_P101[:,:] = [0, 1; 1e6, 1];
+      parameter Real dtheta_FCV101[:,:] = [0, 1; 1e6, 1];
+      parameter Real domega_P401[:,:] = [0, 1; 1e6, 1];
+      parameter Real dtheta_FCV401[:,:] = [0, 1; 1e6, 1];
+      parameter Real dtheta_FCVC02[:,:] = [0, 0.0; 1e6, 0.0];
+      parameter Real dtheta_FCV701[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dtheta_FCV711[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dtheta_FCV721[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dtheta_FCV731[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dmflowcool_EX701[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dmflowcool_EX711[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dmflowcool_EX721[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dmflowcool_EX731[:,:] = [0, 0.8; 1e6, 0.8];
+
+      Modelica.Blocks.Sources.TimeTable domegaP901(table=domega_P901)
+        annotation (Placement(transformation(extent={{-80,90},{-70,100}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV901(table=dtheta_FCV901)
+        annotation (Placement(transformation(extent={{-80,75},{-70,85}})));
+      Modelica.Blocks.Sources.TimeTable domegaP101(table=domega_P101)
+        annotation (Placement(transformation(extent={{-80,60},{-70,70}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV101(table=dtheta_FCV101)
+        annotation (Placement(transformation(extent={{-80,45},{-70,55}})));
+      Modelica.Blocks.Sources.TimeTable domegaP401(table=domega_P401)
+        annotation (Placement(transformation(extent={{-80,30},{-70,40}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV401(table=dtheta_FCV401)
+        annotation (Placement(transformation(extent={{-80,15},{-70,25}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCVC02(table=dtheta_FCVC02)
+        annotation (Placement(transformation(extent={{-80,0},{-70,10}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV701(table=dtheta_FCV701)
+        annotation (Placement(transformation(extent={{-80,-15},{-70,-5}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV711(table=dtheta_FCV711)
+        annotation (Placement(transformation(extent={{-80,-30},{-70,-20}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV721(table=dtheta_FCV721)
+        annotation (Placement(transformation(extent={{-80,-45},{-70,-35}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX701(table=dmflowcool_EX701)
+        annotation (Placement(transformation(extent={{-80,-75},{-70,-65}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX711(table=dmflowcool_EX711)
+        annotation (Placement(transformation(extent={{-80,-90},{-70,-80}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX721(table=dmflowcool_EX721)
+        annotation (Placement(transformation(extent={{-80,-105},{-70,-95}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX731(table=dmflowcool_EX731)
+        annotation (Placement(transformation(extent={{-80,-120},{-70,-110}})));
+      FMUExport.Interfaces.ControlSignalBus
+                       processVariableBus annotation (
+        Placement(visible = true, transformation(origin={110,-5},    extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin={94,0},    extent = {{-30, -30}, {30, 30}}, rotation = -90)));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV731(table=dtheta_FCV731)
+        annotation (Placement(transformation(extent={{-80,-60},{-70,-50}})));
+    equation
+      connect(dthetaFCV901.y, processVariableBus.dthetaFCV901) annotation (Line(points={{-69.5,80},{4,80},
+              {4,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(domegaP901.y, processVariableBus.domegaP901) annotation (Line(points={{-69.5,95},{4,95},{4,
+              -5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(domegaP101.y, processVariableBus.domegaP101) annotation (Line(points={{-69.5,65},{2,65},{2,
+              -5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCV101.y, processVariableBus.dthetaFCV101) annotation (Line(points={{-69.5,50},{4,50},
+              {4,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(domegaP401.y, processVariableBus.domegaP401) annotation (Line(points={{-69.5,35},{6,35},{6,
+              -5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCV401.y, processVariableBus.dthetaFCV401) annotation (Line(points={{-69.5,20},{2,20},
+              {2,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCVC02.y, processVariableBus.dthetaFCVC02) annotation (Line(points={{-69.5,5},{6,5},
+              {6,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCV701.y, processVariableBus.dthetaFCV701) annotation (Line(points={{-69.5,-10},{6,-10},
+              {6,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCV711.y, processVariableBus.dthetaFCV711) annotation (Line(points={{-69.5,-25},{4,-25},
+              {4,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCV721.y, processVariableBus.dthetaFCV721) annotation (Line(points={{-69.5,-40},{-34,
+              -40},{-34,-42},{6,-42},{6,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dmflowcoolEX701.y, processVariableBus.dmflowcoolEX701) annotation (Line(points={{-69.5,-70},
+              {4,-70},{4,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dmflowcoolEX711.y, processVariableBus.dmflowcoolEX711) annotation (Line(points={{-69.5,-85},
+              {-32,-85},{-32,-68},{6,-68},{6,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dmflowcoolEX721.y, processVariableBus.dmflowcoolEX721) annotation (Line(points={{-69.5,-100},
+              {4,-100},{4,-5},{110,-5}},color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dmflowcoolEX731.y, processVariableBus.dmflowcoolEX731) annotation (Line(points={{-69.5,-115},
+              {0,-115},{0,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCV731.y, processVariableBus.dthetaFCV731) annotation (Line(points={{-69.5,-55},{3,-55},
+              {3,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(
+              preserveAspectRatio=false, grid={1,1})));
+    end ThermalPlantController;
+
+    model TestActuator
+      replaceable ThermalPlantController thermalPlantController
+        annotation (Placement(transformation(extent={{-54,-32},{-16,40}})));
+      FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward
+        annotation (Placement(transformation(extent={{10,-34},{46,42}})));
+    equation
+      connect(thermalPlantController.processVariableBus, centralisedSystemI_B_InitForward.controlSignalBus)
+        annotation (Line(
+          points={{-17.14,4},{-2.4,4},{-2.4,3.62},{12.34,3.62}},
+          color={255,204,51},
+          thickness=0.5));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(
+          StopTime=1000,
+          Tolerance=1e-06,
+          __Dymola_Algorithm="Dassl"));
+    end TestActuator;
+  end Control;
 end Tests;

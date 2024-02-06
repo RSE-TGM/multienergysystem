@@ -160,7 +160,7 @@ model CentralisedSystemI_B_InitForward
         extent={{-10,-10},{10,10}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaTCV711Offset(
-    fixInput=fixmflowcoolEX721,
+    fixInput=fixmflowcoolEX711,
     u_norm=m_flowcool_nom,
     u_start=m_flowcool_nom)
                        annotation (Placement(visible=true, transformation(
@@ -306,7 +306,7 @@ model CentralisedSystemI_B_InitForward
     annotation (Placement(transformation(extent={{-280,-26},{-300,-6}})));
   OffSetBlocks.OutputOffset FT701Offset(
     fixOutput=fixFT701,
-    y_fixed=TT701_des,
+    y_fixed=m_flowhot_des,
     y_norm=m_flowhot_des)
                       annotation (Placement(visible=true, transformation(
         origin={170,-120},
@@ -314,7 +314,7 @@ model CentralisedSystemI_B_InitForward
         rotation=0)));
   OffSetBlocks.OutputOffset FT711Offset(
     fixOutput=fixFT711,
-    y_fixed=TT701_des,
+    y_fixed=m_flowhot_des,
     y_norm=m_flowhot_des)
                       annotation (Placement(visible=true, transformation(
         origin={490,-120},
@@ -322,7 +322,7 @@ model CentralisedSystemI_B_InitForward
         rotation=0)));
   OffSetBlocks.OutputOffset FT721Offset(
     fixOutput=fixFT721,
-    y_fixed=TT701_des,
+    y_fixed=m_flowhot_des,
     y_norm=m_flowhot_des)
                       annotation (Placement(visible=true, transformation(
         origin={646,-120},
@@ -330,7 +330,7 @@ model CentralisedSystemI_B_InitForward
         rotation=0)));
   OffSetBlocks.OutputOffset FT731Offset(
     fixOutput=fixFT731,
-    y_fixed=TT701_des,
+    y_fixed=m_flowhot_des,
     y_norm=m_flowhot_des)
                       annotation (Placement(visible=true, transformation(
         origin={330,-120},

@@ -159,18 +159,24 @@ package Test "Package to test component equation and behaviour"
          353.15)                                                 annotation (
       Placement(visible = true, transformation(origin={-70,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
-    connect(oneSec.outlet, expansionTank.inlet) annotation (
-      Line(points={{10,40},{70,40}}));
-    connect(fiftySec.outlet, expansionTank1.inlet) annotation (
-      Line(points={{10,0},{70,0}}));
-    connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (
-      Line(points={{10,-40},{70,-40}}));
     connect(idealMassFlowSource.outlet, oneSec.inlet)
       annotation (Line(points={{-59.8,40},{-10,40}}, color={168,168,168}));
     connect(idealMassFlowSource1.outlet, fiftySec.inlet)
       annotation (Line(points={{-59.8,0},{-10,0}}, color={168,168,168}));
     connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet)
       annotation (Line(points={{-59.8,-40},{-10,-40}}, color={168,168,168}));
+    connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (Line(
+        points={{10,-40},{56,-40},{56,-48},{70,-48},{70,-40}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(fiftySec.outlet, expansionTank1.inlet) annotation (Line(
+        points={{10,0},{56,0},{56,-8},{70,-8},{70,0}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(oneSec.outlet, expansionTank.inlet) annotation (Line(
+        points={{10,40},{56,40},{56,32},{70,32},{70,40}},
+        color={140,56,54},
+        thickness=0.5));
     annotation (
       Diagram(coordinateSystem(extent={{-100,-100},{100,100}})), Documentation(
           info="<html>
@@ -232,16 +238,22 @@ package Test "Package to test component equation and behaviour"
     MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=
           5, Tnom=353.15)                                                                     annotation (
       Placement(visible = true, transformation(origin={-68,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(Di = 0.0508, L = 50, N = 50,
-      T_ext=298.15,                                                                                                            T_start(displayUnit = "degC") = 338.15, thermalInertia = true) annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(
+      thermalInertia=true,
+      cm=880,
+      rhom(displayUnit="kg/m3") = 7850,
+      pin_start=100000,                                                           Di = 0.0508, L = 50, N = 50,
+      T_ext=298.15,                                                                                                            T_start(displayUnit = "degC") = 338.15)                        annotation (
       Placement(visible = true, transformation(origin={-12,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
       Placement(visible = true, transformation(origin={92,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF pipePF(
+      allowFlowReversal=false,
       pin_start=100000,
       D=0.0508,
       L=50,
       H=0.1,
+      rhom(displayUnit="kg/m3"),
       T_start(displayUnit="degC") = 338.15,
       T_start_m(displayUnit="degC") = 338.15,
       cpm=880)                                annotation (Placement(visible=true,
@@ -269,14 +281,16 @@ package Test "Package to test component equation and behaviour"
                                           color = {168, 168, 168}));
     connect(idealMassFlowSource.outlet, pipePF.inlet)
       annotation (Line(points={{-59.8,70},{-10,70}}, color={168,168,168}));
-    connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet)
-      annotation (Line(points={{-57.8,24},{-22,24}}, color={168,168,168}));
-    connect(fiftySecNoTI.outlet, pfOut1.inlet) annotation (Line(
-        points={{-2,24},{24,24}},
-        color={140,56,54},
-        thickness=0.5));
     connect(pfOut1.outlet, expansionTank2.inlet) annotation (Line(
         points={{36,24},{92,24}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet) annotation (Line(
+        points={{-57.8,24},{-22,24}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(fiftySecNoTI.outlet, pfOut1.inlet) annotation (Line(
+        points={{-2,24},{24,24}},
         color={140,56,54},
         thickness=0.5));
     annotation (

@@ -49,7 +49,7 @@ model CoolingSingleLoad
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool=16 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool=7 + 273.15;
 
-  Real m_flow_cool_SP(nominal = 5);
+  Real m_flow_cool_SP(nominal = 10);
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
@@ -114,7 +114,7 @@ model CoolingSingleLoad
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={1,-47.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_FCV701_FT701(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
     L=L_FCV701_FT701,
     h=h_FCV701_FT701,
     t=t_S700,
@@ -128,7 +128,7 @@ model CoolingSingleLoad
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,46})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_SourceOut_FCV701(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_SourceOut_FCV701(
     L=L_HX701_SourceOut_FCV701,
     h=h_HX701_SourceOut_FCV701,
     t=t_S700,
@@ -162,7 +162,7 @@ model CoolingSingleLoad
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={22,94})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_TT702_SourceIn(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn(
     L=L_HX701_TT702_SourceIn,
     h=h_HX701_TT702_SourceIn,
     t=t_S700,
@@ -203,7 +203,7 @@ model CoolingSingleLoad
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={18,-78})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_FT701_rackL2L3(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
     L=L_FT701_rackL2L3,
     h=h_FT701_rackL2L3,
     t=t_S700,
@@ -217,7 +217,7 @@ model CoolingSingleLoad
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,118})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_rackL2L3_TT702(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
     L=L_rackL2L3_TT702,
     h=h_rackL2L3_TT702,
     t=t_S700,

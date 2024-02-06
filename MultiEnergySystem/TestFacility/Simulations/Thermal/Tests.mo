@@ -4511,7 +4511,7 @@ Control")}),                                                         Diagram(coo
       replaceable ThermalPlantController thermalPlantController(aWPIContinuous(
           y_start=-0.27)) annotation (Placement(transformation(extent={{-50,-38},{-10,38}})));
       replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
-          m_flowcool_nom=0.5,
+          m_flowcool_nom=0.35,
           FT701Offset(fixOffset=true, y_Offset_fixed=1.3),
           FT711Offset(fixOffset=true, y_Offset_fixed=1.3),
           FT721Offset(fixOffset=true, y_Offset_fixed=1.3),

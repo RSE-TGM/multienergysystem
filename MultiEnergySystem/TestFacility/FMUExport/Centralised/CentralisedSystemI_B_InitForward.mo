@@ -1,8 +1,8 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(
-        Pmaxnom=147.6*0.8));
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom=
+          147.6e3*0.8));
   OffSetBlocks.InputOffset omegaP101Offset(
     fixInput=fixomegaP101,
     u_norm=omegaP101_nom,

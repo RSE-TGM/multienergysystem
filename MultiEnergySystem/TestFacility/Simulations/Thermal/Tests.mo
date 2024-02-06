@@ -4222,10 +4222,10 @@ package Tests
       parameter Real dtheta_FCV711[:,:] = [0, 0.8; 1e6, 0.8];
       parameter Real dtheta_FCV721[:,:] = [0, 0.8; 1e6, 0.8];
       parameter Real dtheta_FCV731[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dmflowcool_EX701[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dmflowcool_EX711[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dmflowcool_EX721[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dmflowcool_EX731[:,:] = [0, 0.8; 1e6, 0.8];
+      parameter Real dmflowcool_EX701[:,:] = [0, 0.2; 1e6, 0.2];
+      parameter Real dmflowcool_EX711[:,:] = [0, 0.2; 1e6, 0.2];
+      parameter Real dmflowcool_EX721[:,:] = [0, 0.2; 1e6, 0.2];
+      parameter Real dmflowcool_EX731[:,:] = [0, 0.2; 1e6, 0.2];
 
       Modelica.Blocks.Sources.TimeTable domegaP901(table=domega_P901)
         annotation (Placement(transformation(extent={{-80,90},{-70,100}})));
@@ -4357,13 +4357,13 @@ package Tests
 
     model TestActuator
       replaceable ThermalPlantController thermalPlantController
-        annotation (Placement(transformation(extent={{-54,-32},{-16,40}})));
+        annotation (Placement(transformation(extent={{-52,-34},{-14,38}})));
       FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward
         annotation (Placement(transformation(extent={{10,-34},{46,42}})));
     equation
       connect(thermalPlantController.processVariableBus, centralisedSystemI_B_InitForward.controlSignalBus)
         annotation (Line(
-          points={{-17.14,4},{-2.4,4},{-2.4,3.62},{12.34,3.62}},
+          points={{-15.14,2},{-2.4,2},{-2.4,3.62},{12.34,3.62}},
           color={255,204,51},
           thickness=0.5));
       annotation (

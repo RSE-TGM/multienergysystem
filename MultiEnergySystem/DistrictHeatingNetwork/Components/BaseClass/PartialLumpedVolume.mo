@@ -67,7 +67,7 @@ equation
   pin = inlet.p;
 
   // Boundary Conditions
-  //inlet.h_out = inStream(inlet.h_out);
+  inlet.h_out = inStream(inlet.h_out);
 
   annotation (
     Icon(coordinateSystem(extent={{-100,-200},{100,200}})));

@@ -700,9 +700,10 @@ equation
           extent={{-100,100},{100,-100}},
           radius=25),
         Text(
-          extent={{-60,22},{60,-18}},
+          extent={{-60,40},{60,-40}},
           textColor={255,255,255},
-          textString="Thermal",
-          textStyle={TextStyle.Bold})}),                         Diagram(
+          textStyle={TextStyle.Bold},
+          textString="Thermal
+Facility")}),                                                    Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B_InitForward;

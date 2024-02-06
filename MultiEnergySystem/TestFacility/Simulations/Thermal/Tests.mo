@@ -4211,21 +4211,25 @@ package Tests
   package Control
 
     model ThermalPlantController
-      parameter Real domega_P901[:,:] = [0, 0.5; 1e6, 0.5];
-      parameter Real dtheta_FCV901[:,:] = [0, 1; 1e6, 1];
-      parameter Real domega_P101[:,:] = [0, 1; 1e6, 1];
-      parameter Real dtheta_FCV101[:,:] = [0, 1; 1e6, 1];
-      parameter Real domega_P401[:,:] = [0, 1; 1e6, 1];
-      parameter Real dtheta_FCV401[:,:] = [0, 1; 1e6, 1];
-      parameter Real dtheta_FCVC02[:,:] = [0, 0.0; 1e6, 0.0];
-      parameter Real dtheta_FCV701[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dtheta_FCV711[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dtheta_FCV721[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dtheta_FCV731[:,:] = [0, 0.8; 1e6, 0.8];
-      parameter Real dmflowcool_EX701[:,:] = [0, 0.2; 1e6, 0.2];
-      parameter Real dmflowcool_EX711[:,:] = [0, 0.2; 1e6, 0.2];
-      parameter Real dmflowcool_EX721[:,:] = [0, 0.2; 1e6, 0.2];
-      parameter Real dmflowcool_EX731[:,:] = [0, 0.2; 1e6, 0.2];
+      parameter Real domega_P901[:,:] = [0, -0.5; 1e6, -0.5];
+      parameter Real dtheta_FCV901[:,:] = [0, 0; 1e6, 0];
+      parameter Real domega_P101[:,:] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCV101[:,:] = [0, 0; 1e6, 0];
+      parameter Real domega_P401[:,:] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCV401[:,:] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCVC02[:,:] = [0, -1; 1e6, -1];
+      parameter Real dtheta_FCV701[:,:] = [0, -0.2; 1e6, -0.2];
+      parameter Real dtheta_FCV711[:,:] = [0, -0.2; 1e6, -0.2];
+      parameter Real dtheta_FCV721[:,:] = [0, -0.2; 1e6, -0.2];
+      parameter Real dtheta_FCV731[:,:] = [0, -0.2; 1e6, -0.2];
+      parameter Real dmflowcool_EX701[:,:] = [0, -0.8; 1e6, -0.8];
+      parameter Real dmflowcool_EX711[:,:] = [0, -0.8; 1e6, -0.8];
+      parameter Real dmflowcool_EX721[:,:] = [0, -0.8; 1e6, -0.8];
+      parameter Real dmflowcool_EX731[:,:] = [0, -0.8; 1e6, -0.8];
+      parameter Real dFT701[:,:] = [0, (1-1.3)/1.3; 500, (1-1.3)/1.3; 500, (1.2-1.3)/1.3; 1000, (1.2-1.3)/1.3];
+      parameter Real dFT711[:,:] = [0, (1-1.3)/1.3; 500, (1-1.3)/1.3; 500, (1.2-1.3)/1.3; 1000, (1.2-1.3)/1.3];
+      parameter Real dFT721[:,:] = [0, (0.8-1.3)/1.3; 500, (0.8-1.3)/1.3; 500, (1-1.3)/1.3; 1000, (1-1.3)/1.3];
+      parameter Real dTT731[:,:] = [0, (55-65)/(65+273.15); 500, (55-65)/(65+273.15); 500, (55-65)/(65+273.15); 1000, (55-65)/(65+273.15)];
 
       Modelica.Blocks.Sources.TimeTable domegaP901(table=domega_P901)
         annotation (Placement(transformation(extent={{-80,90},{-70,100}})));
@@ -4255,115 +4259,221 @@ package Tests
         annotation (Placement(transformation(extent={{-80,-105},{-70,-95}})));
       Modelica.Blocks.Sources.TimeTable dmflowcoolEX731(table=dmflowcool_EX731)
         annotation (Placement(transformation(extent={{-80,-120},{-70,-110}})));
-      FMUExport.Interfaces.ControlSignalBus
-                       processVariableBus annotation (
-        Placement(visible = true, transformation(origin={110,-5},    extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin={94,0},    extent = {{-30, -30}, {30, 30}}, rotation = -90)));
+      FMUExport.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(
+          visible=true,
+          transformation(
+            origin={110,-5},
+            extent={{-51,-42},{51,42}},
+            rotation=-90),
+          iconTransformation(
+            origin={94,0},
+            extent={{-30,-30},{30,30}},
+            rotation=-90)));
       Modelica.Blocks.Sources.TimeTable dthetaFCV731(table=dtheta_FCV731)
         annotation (Placement(transformation(extent={{-80,-60},{-70,-50}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous(
+        Kp=0.0013111,
+        Ti=0.001,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
+        annotation (Placement(transformation(extent={{33,36},{53,56}})));
+      Modelica.Blocks.Sources.TimeTable dFT701SP(table=dFT701)
+        annotation (Placement(transformation(extent={{12,56},{22,66}})));
+      FMUExport.Interfaces.ControlSignalBus processVariableBus annotation (Placement(
+          visible=true,
+          transformation(
+            origin={-102,0},
+            extent={{51,41},{-51,-41}},
+            rotation=-90),
+          iconTransformation(
+            origin={-91,-1},
+            extent={{31,33},{-31,-33}},
+            rotation=-90)));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous1(
+        Kp=0.0029409,
+        Ti=0.001,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
+        annotation (Placement(transformation(extent={{34,11},{54,31}})));
+      Modelica.Blocks.Sources.TimeTable dFT711SP(table=dFT711)
+        annotation (Placement(transformation(extent={{13,25},{23,35}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous2(
+        Kp=0.0029409,
+        Ti=0.001,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
+        annotation (Placement(transformation(extent={{37,-37},{57,-17}})));
+      Modelica.Blocks.Sources.TimeTable dFT721SP(table=dFT721)
+        annotation (Placement(transformation(extent={{15,-20},{25,-10}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous3(
+        Kp=349.9,
+        Ti=5.95,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
+        annotation (Placement(transformation(extent={{37,-72},{57,-52}})));
+      Modelica.Blocks.Sources.TimeTable dTT731SP(table=dTT731)
+        annotation (Placement(transformation(extent={{16,-54},{26,-44}})));
     equation
-      connect(dthetaFCV901.y, processVariableBus.dthetaFCV901) annotation (Line(points={{-69.5,80},{4,80},
+      connect(dthetaFCV901.y, controlSignalBus.dthetaFCV901) annotation (Line(points={{-69.5,80},{4,80},
               {4,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(domegaP901.y, processVariableBus.domegaP901) annotation (Line(points={{-69.5,95},{4,95},{4,
-              -5},{110,-5}}, color={0,0,127}), Text(
+      connect(domegaP901.y, controlSignalBus.domegaP901) annotation (Line(points={{-69.5,95},{4,95},{4,-5},
+              {110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(domegaP101.y, processVariableBus.domegaP101) annotation (Line(points={{-69.5,65},{2,65},{2,
-              -5},{110,-5}}, color={0,0,127}), Text(
+      connect(domegaP101.y, controlSignalBus.domegaP101) annotation (Line(points={{-69.5,65},{2,65},{2,-5},
+              {110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCV101.y, processVariableBus.dthetaFCV101) annotation (Line(points={{-69.5,50},{4,50},
+      connect(dthetaFCV101.y, controlSignalBus.dthetaFCV101) annotation (Line(points={{-69.5,50},{4,50},
               {4,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(domegaP401.y, processVariableBus.domegaP401) annotation (Line(points={{-69.5,35},{6,35},{6,
-              -5},{110,-5}}, color={0,0,127}), Text(
+      connect(domegaP401.y, controlSignalBus.domegaP401) annotation (Line(points={{-69.5,35},{6,35},{6,-5},
+              {110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCV401.y, processVariableBus.dthetaFCV401) annotation (Line(points={{-69.5,20},{2,20},
+      connect(dthetaFCV401.y, controlSignalBus.dthetaFCV401) annotation (Line(points={{-69.5,20},{2,20},
               {2,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCVC02.y, processVariableBus.dthetaFCVC02) annotation (Line(points={{-69.5,5},{6,5},
-              {6,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(dthetaFCVC02.y, controlSignalBus.dthetaFCVC02) annotation (Line(points={{-69.5,5},{6,5},{6,
+              -5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCV701.y, processVariableBus.dthetaFCV701) annotation (Line(points={{-69.5,-10},{6,-10},
-              {6,-5},{110,-5}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCV711.y, processVariableBus.dthetaFCV711) annotation (Line(points={{-69.5,-25},{4,-25},
-              {4,-5},{110,-5}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCV721.y, processVariableBus.dthetaFCV721) annotation (Line(points={{-69.5,-40},{-34,
-              -40},{-34,-42},{6,-42},{6,-5},{110,-5}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
-      connect(dmflowcoolEX701.y, processVariableBus.dmflowcoolEX701) annotation (Line(points={{-69.5,-70},
+      connect(dmflowcoolEX701.y, controlSignalBus.dmflowcoolEX701) annotation (Line(points={{-69.5,-70},
               {4,-70},{4,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dmflowcoolEX711.y, processVariableBus.dmflowcoolEX711) annotation (Line(points={{-69.5,-85},
+      connect(dmflowcoolEX711.y, controlSignalBus.dmflowcoolEX711) annotation (Line(points={{-69.5,-85},
               {-32,-85},{-32,-68},{6,-68},{6,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dmflowcoolEX721.y, processVariableBus.dmflowcoolEX721) annotation (Line(points={{-69.5,-100},
-              {4,-100},{4,-5},{110,-5}},color={0,0,127}), Text(
+      connect(dmflowcoolEX721.y, controlSignalBus.dmflowcoolEX721) annotation (Line(points={{-69.5,-100},
+              {4,-100},{4,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dmflowcoolEX731.y, processVariableBus.dmflowcoolEX731) annotation (Line(points={{-69.5,-115},
+      connect(dmflowcoolEX731.y, controlSignalBus.dmflowcoolEX731) annotation (Line(points={{-69.5,-115},
               {0,-115},{0,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dthetaFCV731.y, processVariableBus.dthetaFCV731) annotation (Line(points={{-69.5,-55},{3,-55},
-              {3,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(processVariableBus.dFT701, aWPIContinuous.FeedBack) annotation (Line(
+          points={{-102,0},{-85,0},{-85,42},{35,42}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(dFT701SP.y, aWPIContinuous.REF)
+        annotation (Line(points={{22.5,61},{28,61},{28,50},{35,50}}, color={0,0,127}));
+      connect(aWPIContinuous.controlAction, controlSignalBus.dthetaFCV701) annotation (Line(points={{51,46},
+              {64,46},{64,-5},{110,-5}},     color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
+      connect(dFT711SP.y, aWPIContinuous1.REF)
+        annotation (Line(points={{23.5,30},{29,30},{29,25},{36,25}}, color={0,0,127}));
+      connect(aWPIContinuous1.controlAction, controlSignalBus.dthetaFCV711) annotation (Line(points={{52,
+              21},{58,21},{58,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.dFT711, aWPIContinuous1.FeedBack) annotation (Line(
+          points={{-102,0},{-40,0},{-40,-1},{25,-1},{25,17},{36,17}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(dFT721SP.y, aWPIContinuous2.REF)
+        annotation (Line(points={{25.5,-15},{31,-15},{31,-23},{39,-23}}, color={0,0,127}));
+      connect(processVariableBus.dFT721, aWPIContinuous2.FeedBack) annotation (Line(
+          points={{-102,0},{-24,0},{-24,-31},{39,-31}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(aWPIContinuous2.controlAction, controlSignalBus.dthetaFCV721) annotation (Line(points={{55,-27},
+              {66,-27},{66,-5},{110,-5}},      color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(aWPIContinuous3.controlAction, controlSignalBus.dthetaFCV731) annotation (Line(points={{55,
+              -62},{63,-62},{63,-55},{67,-55},{67,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.dTT731, aWPIContinuous3.FeedBack) annotation (Line(
+          points={{-102,0},{-40,0},{-40,-66},{39,-66}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(dTT731SP.y, aWPIContinuous3.REF) annotation (Line(points={{26.5,-49},{29,-49},{29,-50},
+              {32,-50},{32,-58},{39,-58}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(
               preserveAspectRatio=false, grid={1,1})));
     end ThermalPlantController;
 
     model TestActuator
-      replaceable ThermalPlantController thermalPlantController
-        annotation (Placement(transformation(extent={{-52,-34},{-14,38}})));
-      FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward
-        annotation (Placement(transformation(extent={{10,-34},{46,42}})));
+      replaceable ThermalPlantController thermalPlantController(aWPIContinuous(
+          y_start=-0.27)) annotation (Placement(transformation(extent={{-52,-34},{-14,38}})));
+      FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
+          FT701Offset(fixOffset=true, y_Offset_fixed=1.3),
+          FT711Offset(fixOffset=true, y_Offset_fixed=1.3),
+          FT721Offset(fixOffset=true, y_Offset_fixed=1.3),
+          TT731Offset(fixOffset=true, y_Offset_fixed=65+273.15))
+        annotation (Placement(transformation(extent={{10,-34},{48,40}})));
     equation
-      connect(thermalPlantController.processVariableBus, centralisedSystemI_B_InitForward.controlSignalBus)
+      connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus)
         annotation (Line(
-          points={{-15.14,2},{-2.4,2},{-2.4,3.62},{12.34,3.62}},
+          points={{45.72,3},{66,3},{66,-48},{-68,-48},{-68,5.24},{-47.63,5.24}},
+          color={255,204,51},
+          thickness=0.5));
+      connect(thermalPlantController.controlSignalBus, centralisedSystemI_B_InitForward.controlSignalBus)
+        annotation (Line(
+          points={{-15.14,2},{-15.14,2.63},{12.47,2.63}},
           color={255,204,51},
           thickness=0.5));
       annotation (

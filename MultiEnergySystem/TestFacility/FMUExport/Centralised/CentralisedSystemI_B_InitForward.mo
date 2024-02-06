@@ -691,6 +691,18 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                     Rectangle(
+          lineColor={140,56,54},
+          fillColor={192,80,77},
+          fillPattern=FillPattern.Solid,
+          lineThickness=1,
+          extent={{-100,100},{100,-100}},
+          radius=25),
+        Text(
+          extent={{-60,22},{60,-18}},
+          textColor={255,255,255},
+          textString="Thermal",
+          textStyle={TextStyle.Bold})}),                         Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B_InitForward;

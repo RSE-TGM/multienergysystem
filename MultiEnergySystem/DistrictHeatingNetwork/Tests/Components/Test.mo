@@ -254,9 +254,13 @@ package Test "Package to test component equation and behaviour"
           origin={46,70},
           extent={{-10,-10},{10,10}},
           rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut1
+                                                                                  annotation (Placement(
+          visible=true, transformation(
+          origin={30,28},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
   equation
-    connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (
-      Line(points={{-2,24},{92,24}}));
     connect(pipePF.outlet, pfOut.inlet) annotation (
       Line(points={{10,70},{26,70},{26,66},{40,66}},
                                           color = {168, 168, 168}));
@@ -267,6 +271,14 @@ package Test "Package to test component equation and behaviour"
       annotation (Line(points={{-59.8,70},{-10,70}}, color={168,168,168}));
     connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet)
       annotation (Line(points={{-57.8,24},{-22,24}}, color={168,168,168}));
+    connect(fiftySecNoTI.outlet, pfOut1.inlet) annotation (Line(
+        points={{-2,24},{24,24}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(pfOut1.outlet, expansionTank2.inlet) annotation (Line(
+        points={{36,24},{92,24}},
+        color={140,56,54},
+        thickness=0.5));
     annotation (
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})));
   end PlugFlowPipeTest;
@@ -1159,17 +1171,17 @@ package Test "Package to test component equation and behaviour"
     MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass
       LumpedStorageConstantMass(H=0.1)  annotation (Placement(transformation(
           extent={{-10,-14},{10,14}},
-          rotation=0,
+          rotation=270,
           origin={-6,50})));
   equation
     connect(idealMassFlowSource.outlet, LumpedStorageConstantMass.inlet)
       annotation (Line(
-        points={{-65.8,66},{-22,66},{-22,40},{-16,40}},
+        points={{-65.8,66},{-22,66},{-22,60},{-16,60}},
         color={140,56,54},
         thickness=0.5));
     connect(LumpedStorageConstantMass.outlet, expansionTank.inlet) annotation (
         Line(
-        points={{-16,60},{-16,70},{68,70},{68,64},{78,64},{78,76}},
+        points={{4,60},{4,70},{68,70},{68,64},{78,64},{78,76}},
         color={140,56,54},
         thickness=0.5));
     annotation (

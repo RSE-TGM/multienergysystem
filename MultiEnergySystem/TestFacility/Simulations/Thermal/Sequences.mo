@@ -54,6 +54,8 @@ package Sequences
           FT713_mflow(table=kq*[0,1.6193*998/3600; 1e6,1.6193*998/3600]),
           FT723_mflow(table=kq*[0,1.1859*998/3600; 1e6,1.1859*998/3600]),
           FT733_mflow(table=kq*[0,1.3281*998/3600; 1e6,1.3281*998/3600]),
+          GB101_ToutSP = [0, 76+273.15; 1e6, 273.15],
+          EB401_ToutSP = [0, 76+273.15; 1e6, 273.15],
           EX701_Tin_hot = T_start_hot,
           EX711_Tin_hot = T_start_hot,
           EX721_Tin_hot = T_start_hot,
@@ -80,11 +82,11 @@ package Sequences
           Tout_start_S9 = 72 + 273.15,
           T_start_hot = 72 + 273.15,
           FCV901(Kv=20),
-          GB101(Tout_start=346.15, initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState),
+          GB101(Tout_start=346.15, initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState, Pmaxnom = GB101_Pmaxnom),
           EB401(
             Tout_start=342.15,
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-                                    nR=4),
+                                    nR= 3.5),
           FCVC01(Tin_start=T_start_hot),
           VER3(T0=EX701_Tin_cold),
           VER2(T0=EX731_Tin_cold),
@@ -95,8 +97,10 @@ package Sequences
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
           FCVC02(Kv=25));
           //FCV701theta = [0, 0.6269; 1e6, 0.6269],
-        parameter Real kq = 3.5;
-        annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
+        parameter Real kq = 1;
+        parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
+        annotation (experiment(StopTime = 10000, __Dymola_Algorithm = "Dassl"),
+  Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end Seq_0412_Test2;
 
     end Centralised;

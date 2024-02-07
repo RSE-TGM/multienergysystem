@@ -1843,8 +1843,9 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
       parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
       parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
-      parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
-
+      parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 0.2 "to be analysed";
+  //parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+      
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1=m_flow_total;
       parameter Real q_m3h_S1 = 9;
 
@@ -2099,7 +2100,9 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length L_S4_PL3=1.3;
       parameter DistrictHeatingNetwork.Types.Length L_S4_PL4=1.3;
       parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_cold=5.5;
+      parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_cold=0;
       parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_hot=6;
+      parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_hot=-0.5;  
 
       parameter DistrictHeatingNetwork.Types.Length Di_S4=51e-3;
       parameter DistrictHeatingNetwork.Types.Length t_S4=1.5e-3;

@@ -6,7 +6,7 @@ package Sequences
       model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
         extends Thermal.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_A(
           P101omega = [0, 2*pi*30; 1e6, 2*pi*30],
-          P901omega = [0, 2*pi*36.4; 1.6e3, 2*pi*36.4; 1.6e3, 2*pi*34.6; 3.52e3, 2*pi*34.6; 3.52e3, 2*pi*30; 11.68e3, 2*pi*30; 11.68e3, 2*pi*35; 1e6, 2*pi*35],
+          P901omega = [0, 2*pi*36.4; 1.6e3, 2*pi*36.4; 1.6e3, 2*pi*34.6; 3.52e3, 2*pi*34.6; 3.52e3, 2*pi*30; 11.68e3, 2*pi*30; 11.682e3, 2*pi*35; 1e6, 2*pi*35],
           FCV101theta = [0, 0.6; 3.52e3, 0.6; 3.52e3, 1; 1e6, 1],
           FCV901theta = [0, 1; 1e6, 1],
           FCVC01theta = [0, 0.2; 1.6e3, 0.2; 1.6e3, 0; 1e6, 0],
@@ -40,7 +40,8 @@ package Sequences
           FCVC01(Kv=25),
           VE901(p0=180000));
 
-        annotation (experiment(StopTime=13100, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(StopTime = 13100, __Dymola_Algorithm = "Dassl"),
+  Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end Seq_2401_Test1;
 
       model Seq_0412_Test2 "Sequence 2 done on 04/12/23"

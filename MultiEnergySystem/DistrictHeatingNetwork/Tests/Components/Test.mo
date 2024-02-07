@@ -1205,4 +1205,109 @@ package Test "Package to test component equation and behaviour"
     annotation (
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})));
   end LumpedStorageConstantMassTest;
+
+  model PFPipe_vs_AixLibPF_test
+    extends Modelica.Icons.Example;
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=
+          5, Tnom=353.15)                                                                    annotation (
+        Placement(visible=true, transformation(
+          origin={-76,80},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank annotation (Placement(
+          visible=true, transformation(
+          origin={79,89},
+          extent={{-9,-9},{9,9}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF pipePF(
+      allowFlowReversal=false,
+      pin_start=100000,
+      D=0.0508,
+      L=50,
+      H=0.1,
+      rhom(displayUnit="kg/m3"),
+      T_start(displayUnit="degC") = 338.15,
+      T_start_m(displayUnit="degC") = 338.15,
+      cpm=880)                                annotation (Placement(visible=true,
+          transformation(
+          origin={-20,80},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut annotation (Placement(
+          visible=true, transformation(
+          origin={40,84},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    AixLib.Fluid.Sources.Boundary_pT
+                        sin(
+      redeclare package Medium = AixLib.Media.Water,
+      T=338.15,
+      nPorts=1,
+      p(displayUnit="bar") = 250000)
+                                    "Pressure boundary condition"
+      annotation (Placement(transformation(extent={{70,14},{58,26}})));
+    AixLib.Fluid.FixedResistances.PlugFlowPipe pip(
+      redeclare package Medium = AixLib.Media.Water,
+      m_flow_small=0.1,
+      have_symmetry=false,
+      dh=0.0508,
+      length=50,
+      dIns=0.05,
+      kIns=0.028,
+      m_flow_nominal=1,
+      cPip=880,
+      thickness=0.003,
+      initDelay=true,
+      m_flow_start=1,
+      rhoPip=7850,
+      T_start_in=338.15,
+      T_start_out=338.15) "Pipe"
+      annotation (Placement(transformation(extent={{-10,12},{4,28}})));
+    Modelica.Thermal.HeatTransfer.Sources.FixedTemperature bou[2](each T=298.15)
+      "Boundary temperature"
+      annotation (Placement(transformation(extent={{-26,44},{-18,52}})));
+    AixLib.Fluid.Sources.MassFlowSource_T sou(
+      redeclare package Medium = AixLib.Media.Water,
+      use_T_in=false,
+      m_flow=5,
+      T=353.15,
+      nPorts=1) "Flow source"
+      annotation (Placement(transformation(extent={{-82,10},{-62,30}})));
+    AixLib.Fluid.Sensors.TemperatureTwoPort senTemOut(
+      redeclare package Medium = AixLib.Media.Water,
+      m_flow_nominal=1,
+      tau=0,
+      T_start(displayUnit="K") = 273.15 + 65)
+                      "Temperature sensor"
+      annotation (Placement(transformation(extent={{16,10},{36,30}})));
+    AixLib.Fluid.Sensors.TemperatureTwoPort senTemIn(
+      redeclare package Medium = AixLib.Media.Water,
+      m_flow_nominal=1,
+      tau=0,
+      T_start(displayUnit="K") = 273.15 + 65)
+                      "Temperature sensor"
+      annotation (Placement(transformation(extent={{-48,10},{-28,30}})));
+  equation
+    connect(pipePF.outlet, pfOut.inlet) annotation (
+      Line(points={{-10,80},{34,80}},     color = {168, 168, 168}));
+    connect(pfOut.outlet, expansionTank.inlet) annotation (
+      Line(points={{46,80},{79,80}},      color = {168, 168, 168}));
+    connect(idealMassFlowSource.outlet, pipePF.inlet)
+      annotation (Line(points={{-65.8,80},{-30,80}}, color={168,168,168}));
+    connect(pip.port_b,senTemOut. port_a)
+      annotation (Line(points={{4,20},{16,20}},color={0,127,255}));
+    connect(senTemOut.port_b,sin. ports[1])
+      annotation (Line(points={{36,20},{58,20}},
+                                               color={0,127,255}));
+    connect(senTemIn.port_b,pip. port_a)
+      annotation (Line(points={{-28,20},{-10,20}},
+                                               color={0,127,255}));
+    connect(bou[1].port,pip. heatPort)
+      annotation (Line(points={{-18,48},{-3,48},{-3,28}}, color={191,0,0}));
+    connect(sou.ports[1],senTemIn. port_a) annotation (Line(points={{-62,20},{
+            -48,20}},           color={0,127,255}));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
+          StopTime=120, __Dymola_Algorithm="Dassl"));
+  end PFPipe_vs_AixLibPF_test;
 end Test;

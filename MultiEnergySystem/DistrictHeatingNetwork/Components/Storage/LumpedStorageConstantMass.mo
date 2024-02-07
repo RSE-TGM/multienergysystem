@@ -17,6 +17,9 @@ model LumpedStorageConstantMass "Model a perfectly mixed thermal storage with in
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
+  // Boundary Conditions
+  inlet.h_out = inStream(inlet.h_out);
+
   // Mass Balance
   inlet.m_flow + outlet.m_flow = 0 "No mass dynamics";
 

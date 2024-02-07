@@ -1224,7 +1224,7 @@ package Test "Package to test component equation and behaviour"
       pin_start=100000,
       D=0.0508,
       L=50,
-      H=0.1,
+      H=0,
       rhom(displayUnit="kg/m3"),
       T_start(displayUnit="degC") = 338.15,
       T_start_m(displayUnit="degC") = 338.15,
@@ -1265,7 +1265,7 @@ package Test "Package to test component equation and behaviour"
       annotation (Placement(transformation(extent={{-10,12},{4,28}})));
     Modelica.Thermal.HeatTransfer.Sources.FixedTemperature bou[2](each T=298.15)
       "Boundary temperature"
-      annotation (Placement(transformation(extent={{-26,44},{-18,52}})));
+      annotation (Placement(transformation(extent={{-22,40},{-14,48}})));
     AixLib.Fluid.Sources.MassFlowSource_T sou(
       redeclare package Medium = AixLib.Media.Water,
       use_T_in=false,
@@ -1277,14 +1277,14 @@ package Test "Package to test component equation and behaviour"
       redeclare package Medium = AixLib.Media.Water,
       m_flow_nominal=1,
       tau=0,
-      T_start(displayUnit="K") = 273.15 + 65)
+      T_start(displayUnit="K") = 65)
                       "Temperature sensor"
       annotation (Placement(transformation(extent={{16,10},{36,30}})));
     AixLib.Fluid.Sensors.TemperatureTwoPort senTemIn(
       redeclare package Medium = AixLib.Media.Water,
       m_flow_nominal=1,
       tau=0,
-      T_start(displayUnit="K") = 273.15 + 65)
+      T_start(displayUnit="degC") = 338.15)
                       "Temperature sensor"
       annotation (Placement(transformation(extent={{-48,10},{-28,30}})));
   equation
@@ -1303,7 +1303,7 @@ package Test "Package to test component equation and behaviour"
       annotation (Line(points={{-28,20},{-10,20}},
                                                color={0,127,255}));
     connect(bou[1].port,pip. heatPort)
-      annotation (Line(points={{-18,48},{-3,48},{-3,28}}, color={191,0,0}));
+      annotation (Line(points={{-14,44},{-3,44},{-3,28}}, color={191,0,0}));
     connect(sou.ports[1],senTemIn. port_a) annotation (Line(points={{-62,20},{
             -48,20}},           color={0,127,255}));
     annotation (

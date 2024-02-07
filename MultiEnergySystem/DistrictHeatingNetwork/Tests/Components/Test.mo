@@ -242,9 +242,11 @@ package Test "Package to test component equation and behaviour"
       thermalInertia=true,
       cm=880,
       rhom(displayUnit="kg/m3") = 7850,
-      pin_start=100000,                                                           Di = 0.0508, L = 50, N = 50,
+      pin_start=100000,                                                           Di = 0.0508, L = 50,
+      N=50,
       T_ext=298.15,
-      T_start(displayUnit="degC") = 338.15)                                                                                                                                                   annotation (
+      T_start(displayUnit="degC") = 338.15,
+      ss=false)                                                                                                                                                                               annotation (
       Placement(visible = true, transformation(origin={-12,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
       Placement(visible = true, transformation(origin={92,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -295,7 +297,8 @@ package Test "Package to test component equation and behaviour"
         color={140,56,54},
         thickness=0.5));
     annotation (
-      Diagram(coordinateSystem(extent={{-100,0},{100,100}})));
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
+          StopTime=120, __Dymola_Algorithm="Dassl"));
   end PlugFlowPipeTest;
 
   model PowerTransferTest "3 tests using Ideal Power Transfer component"

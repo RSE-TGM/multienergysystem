@@ -42,6 +42,10 @@ equation
     Tout = inStream(outlet.h_out) / cp;
   end if;
 
+initial equation
+  der(Ttilde) = 0;
+
+
   annotation (
     Icon(graphics={  Rectangle(origin = {76, -120}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-4, 20}, {4, -20}}), Rectangle(origin = {-76, -120}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-4, 20}, {4, -20}}), Text(origin = {0, -160}, extent = {{-100, 20}, {100, -20}}, textString = "%name"), Rectangle(origin = {0, 10}, lineColor = {145, 145, 145}, fillColor = {255, 255, 255}, fillPattern = FillPattern.VerticalCylinder, extent = {{-100, 90}, {100, -90}}), Ellipse(origin = {0, 103}, lineColor = {145, 145, 145}, fillColor = {255, 255, 255}, fillPattern = FillPattern.VerticalCylinder, extent = {{-100, 37}, {100, -37}}), Ellipse(origin = {0, -83}, lineColor = {145, 145, 145}, fillColor = {255, 255, 255}, fillPattern = FillPattern.VerticalCylinder, extent = {{-100, 37}, {100, -37}}), Polygon(origin = {-61, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-11, -14}, {1, 14}, {11, 12}, {-1, -14}, {-1, -14}, {-11, -14}}), Rectangle(origin = {-71, 54}, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Rectangle(origin = {-71, -60}, lineColor = {0, 0, 255}, fillColor = {0, 85, 255}, fillPattern = FillPattern.Solid, extent = {{-7, 20}, {7, -20}}), Polygon(origin = {-61, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-11, -14}, {1, 14}, {11, 12}, {-1, -14}, {-1, -14}, {-11, -14}}), Polygon(origin = {73, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-11, -14}, {-21, 12}, {-13, 14}, {-1, -14}, {-1, -14}, {-11, -14}}), Polygon(origin = {5, -126}, fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-13, -14}, {-13, 22}, {3, 22}, {3, -14}, {3, -14}, {-13, -14}})}, coordinateSystem(extent = {{-100, -140}, {100, 140}})));
 end LumpedStorageConstantMass;

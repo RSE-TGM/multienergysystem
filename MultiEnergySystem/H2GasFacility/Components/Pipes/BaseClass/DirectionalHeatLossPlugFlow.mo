@@ -8,17 +8,14 @@ model DirectionalHeatLossPlugFlow
       constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
      choicesAllMatching = true);
-  replaceable model HeatTransferModel =
-      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-      constrainedby
-    DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
+
 
   // Parameters
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal "Nominal mass flow rate";
   parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
   // Final parameters
-  //cp? rho0?
-  final parameter Real C = rho0 * Modelica.Constants.pi * (Di / 2) ^ 2 * cp "Thermal capacity per unit length of pipe";
+  // cp,rho0--> NG6_H2_Papay/PapayMixture
+  final parameter Real C = rho * Modelica.Constants.pi * (Di / 2) ^ 2 * cp "Thermal capacity per unit length of pipe";
   final parameter Real R = 1 / (lambdaIns * 2 * Modelica.Constants.pi / Modelica.Math.log((Di / 2 + tIns) / (Di / 2))) "Thermal resistance per unit length from fluid to boundary temperature";
   final parameter Modelica.Units.SI.Time tau_char = R * C "Characteristic delay time";
 
@@ -27,6 +24,7 @@ model DirectionalHeatLossPlugFlow
   Modelica.Units.SI.Temperature T_a_inflow(start = T_start) "Temperature at port_a for inflowing fluid";
   Modelica.Units.SI.Temperature T_b_outflow(start = T_start) "Temperature at port_b for outflowing fluid";
 
+  // Inputs
 
   Interfaces.FluidPortInlet                                 inlet(m_flow(min=
           if allowFlowReversal then -Modelica.Constants.inf else 0))                                                                    annotation (
@@ -36,8 +34,6 @@ model DirectionalHeatLossPlugFlow
     Placement(visible = true, transformation(origin={100,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput tau(unit="s")   "Time delay at pipe level" annotation (
     Placement(visible = true, transformation(origin={-100,80},   extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
-
-  // Inputs
 
 equation
   // Mass balance

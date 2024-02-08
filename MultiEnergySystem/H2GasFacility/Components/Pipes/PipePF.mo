@@ -1,5 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model PipePF
+
+  // Medium & Heat Transfer Model for the pipe
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay
+      constrainedby
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+     choicesAllMatching = true);
+
   Interfaces.FluidPortInlet                                 inlet(m_flow(min=
           if allowFlowReversal then -Modelica.Constants.inf else 0))                                                                    annotation (
     Placement(visible = true, transformation(origin={-100,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
@@ -12,13 +20,11 @@ model PipePF
           extent={{-76,6},{-46,-8}},
           textColor={244,125,35},
           textString="InletHeatLoss
-"),
-        Text(
+"),     Text(
           extent={{50,6},{80,-8}},
           textColor={244,125,35},
           textString="OutletHeatLoss
-"),
-        Text(
+"),     Text(
           extent={{-12,14},{26,-12}},
           textColor={244,125,35},
           textString="PlugFlowCore"),
@@ -26,8 +32,7 @@ model PipePF
           extent={{28,-16},{74,-42}},
           textColor={244,125,35},
           textString="ThermalInertia
-"),
-        Text(
+"),     Text(
           extent={{-28,54},{34,30}},
           textColor={244,125,35},
           textString="TimeDelay

@@ -5,12 +5,9 @@ partial model PartialBoiler
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
      choicesAllMatching = true);
   constant Real pi = Modelica.Constants.pi;
-  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pin_start=1e5
-    "Start value Inlet pressure of the fluid"  annotation (Dialog(tab="Initialisation", group="fluid"));
-  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pout_start=0.9e5
-    "Start value Outlet pressure of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
-  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Temperature Tin_start=58 + 273.15
-    "Start value inlet temperature of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
+  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pin_start=1e5 "Start value Inlet pressure of the fluid"  annotation (Dialog(tab="Initialisation", group="fluid"));
+  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pout_start=0.9e5 "Start value Outlet pressure of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
+  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Temperature Tin_start=58 + 273.15 "Start value inlet temperature of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
   parameter SI.Temperature Tout_start = 80 + 273.15 "Start value outlet temperature of the fluid" annotation (
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter SI.Density rho_start = 1000 "Start value outlet density of the fluid" annotation (

@@ -40,8 +40,10 @@ package Sequences
           FCVC01(Kv=25),
           VE901(p0=180000));
 
-        annotation (experiment(StopTime = 13100, __Dymola_Algorithm = "Dassl"),
-  Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
+        annotation (experiment(
+            StopTime=13100,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"), Diagram(coordinateSystem(extent={{-900,-500},{900,500}})));
       end Seq_2401_Test1;
 
       model Seq_0412_Test2 "Sequence 2 done on 04/12/23"
@@ -99,8 +101,10 @@ package Sequences
           //FCV701theta = [0, 0.6269; 1e6, 0.6269],
         parameter Real kq = 1;
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
-        annotation (experiment(StopTime = 10000, __Dymola_Algorithm = "Dassl"),
-  Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
+        annotation (experiment(
+            StopTime=10000,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"), Diagram(coordinateSystem(extent={{-900,-500},{900,500}})));
       end Seq_0412_Test2;
 
     end Centralised;

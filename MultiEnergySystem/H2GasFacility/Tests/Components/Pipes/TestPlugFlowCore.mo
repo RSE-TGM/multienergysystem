@@ -32,15 +32,19 @@ model TestPlugFlowCore
     Placement(visible = true, transformation(origin={-88,42},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PlugFlowCore
     plugFlowCore(
+    allowFlowReversal=true,
     L=Pipe.pipe1.L,
     H=1e-4,
-    m_flow_start=5,
-    pin_start=200000,
-    pout_start=150000,
-    hin_start=10000,
-    Tin_start=298.15,
-    Tout_start=298.15,
-    Di=Pipe.pipe1.Di)
+    T_ext=system.T_amb,
+    m_flow_start=Pipe.pipe1.m_flow_start,
+    pin_start=Pipe.pipe1.pin_start,
+    pout_start=Pipe.pipe1.pout_start,
+    hin_start=Pipe.pipe1.hin_start,
+    Tin_start=Pipe.pipe1.Tin_start,
+    Tout_start=Pipe.pipe1.Tout_start,
+    X_start=X_start,
+    Di=Pipe.pipe1.Di,
+    rho_nom=Pipe.pipe1.rho_nom)
     annotation (Placement(transformation(extent={{-16,-88},{28,-44}})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure
                                        sourceP1(

@@ -1,19 +1,32 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model PipePF
+  extends Components.Pipes.BaseClass.PartialRoundTube;
 
   // Medium & Heat Transfer Model for the pipe
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
 
-  Interfaces.FluidPortInlet                                 inlet(m_flow(min=
-          if allowFlowReversal then -Modelica.Constants.inf else 0))                                                                    annotation (
-    Placement(visible = true, transformation(origin={-100,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-100, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Interfaces.FluidPortOutlet                                 outlet(m_flow(max=
-          if allowFlowReversal then +Modelica.Constants.inf else 0))                                                                      annotation (
-    Placement(visible = true, transformation(origin={100,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow(
+    L=L,
+    H=H,
+    t=t,
+    pmax=pmax,
+    tIns=tIns,
+    lambdaIns=lambdaIns,
+    thermalInertia=thermalInertia,
+    cm=cm,
+    rhom=rhom,
+    lambdam=lambdam,
+    T_ext=T_ext,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,
+    pout_start=pout_start,
+    hin_start=hin_start,
+    Tin_start=Tin_start,
+    Tout_start=Tout_start,
+    Di=Di) annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false), graphics={
         Text(

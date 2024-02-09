@@ -1,6 +1,9 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
+    redeclare model Medium =  MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay,
+    fluidIn(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
+    fluidOut(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
     outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)), hin_start = fluid[1].h_id_start,
     T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal);
@@ -10,10 +13,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.squareReg;
   import Modelica.Fluid.Utilities.regStep;
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay
-      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
-     choicesAllMatching = true);
+
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation (
@@ -67,8 +67,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Heat Transfer Model"));
   parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
-  parameter Types.MassFraction X_start[nX] "Start value for the mass fraction" annotation (
-    Dialog(group = "Initialisation"));
+//   parameter Types.MassFraction X_start[nX] "Start value for the mass fraction"
+//     annotation (Dialog(group="Initialisation"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
 
@@ -108,7 +108,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Mass Mt "Total mass in the full volume";
   Types.Density rho[n + 1] "Density at each volume boundary";
   Types.MassFlowRate m_flow[n + 1](each min = if allowFlowReversal then -Modelica.Constants.inf else 0, each start = m_flow_start, each nominal = m_flow_start) "Mass flow at each volume boundary";
-  Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
+  Types.VolumeFlowRate q[n + 1] "Volumetric flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1] "Specific enthalpy at each fluid";
   //Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";
@@ -165,6 +165,11 @@ equation
   fluid.T = T;
   fluid.Xi = Xi;
   fluid.p = p;
+
+  {fluidIn.p, fluidIn.h} = {fluid[1].p, fluid[1].h};
+  fluidIn.Xi = fluid[1].Xi;
+  {fluidOut.p, fluidOut.h} = {fluid[n+1].p, fluid[n+1].h};
+  fluidOut.Xi = fluid[n+1].Xi;
 
 // Equations to assign values from fluids properties
   for i in 1:n + 1 loop

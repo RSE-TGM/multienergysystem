@@ -141,44 +141,45 @@ package Configurations
             extent={{-10,-10},{10,10}},
             rotation=0)));
       Plants.Thermal.Systems.CoolingSingleLoad EX701
-        annotation (Placement(transformation(extent={{-56,-34},{76,98}})));
+        annotation (Placement(transformation(extent={{-14,-2},{66,78}})));
       Plants.Thermal.Systems.CoolingSingleLoad EX711
-        annotation (Placement(transformation(extent={{86,-38},{218,94}})));
+        annotation (Placement(transformation(extent={{122,-2},{208,84}})));
       Plants.Thermal.Systems.CoolingSingleLoad EX721
         annotation (Placement(transformation(extent={{280,-36},{412,96}})));
       Plants.Thermal.Systems.CoolingSingleLoad EX731
         annotation (Placement(transformation(extent={{538,-38},{670,94}})));
     equation
       connect(EX701.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (Line(
-          points={{-9.8,76.88},{-9.8,206},{-12,206},{-12,205},{60,205}},
+          points={{14,69.2},{-32,69.2},{-32,176},{16,176},{16,205},{60,205}},
           color={140,56,54},
           thickness=0.5));
       connect(EX701.outlet, rackL2L3_rackL3L4_cold.outlet) annotation (Line(
-          points={{29.8,76.88},{28,264},{28,265},{90,265}},
+          points={{38,69.2},{38,176},{40,176},{40,265},{90,265}},
           color={140,56,54},
           thickness=0.5));
       connect(EX711.inlet, rackL3L4_FCVC01_hot.inlet) annotation (Line(
-          points={{132.2,72.88},{132.2,205},{180,205}},
+          points={{152.1,74.54},{96,74.54},{96,192},{104,192},{104,205},{180,205}},
           color={140,56,54},
           thickness=0.5));
       connect(EX711.outlet, rackL2L3_rackL3L4_cold.inlet) annotation (Line(
-          points={{171.8,72.88},{171.8,265},{110,265}},
+          points={{177.9,74.54},{248,74.54},{248,208},{224,208},{224,232},{160,232},{160,265},{110,
+              265}},
           color={140,56,54},
           thickness=0.5));
       connect(EX721.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (Line(
-          points={{326.2,74.88},{326.2,205},{400,205}},
+          points={{326.2,81.48},{326.2,205},{400,205}},
           color={140,56,54},
           thickness=0.5));
       connect(EX721.outlet, FCVC01_rackL4L5_cold.inlet) annotation (Line(
-          points={{365.8,74.88},{365.8,265},{330,265}},
+          points={{365.8,81.48},{365.8,265},{330,265}},
           color={140,56,54},
           thickness=0.5));
       connect(EX731.inlet, rackL6L7_FCVC02_hot.inlet) annotation (Line(
-          points={{584.2,72.88},{584.2,205},{640,205}},
+          points={{584.2,79.48},{584.2,205},{640,205}},
           color={140,56,54},
           thickness=0.5));
       connect(EX731.outlet, rackL6L7_FCVC02_cold.outlet) annotation (Line(
-          points={{623.8,72.88},{623.8,265},{650,265}},
+          points={{623.8,79.48},{623.8,265},{650,265}},
           color={140,56,54},
           thickness=0.5));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(
@@ -1844,8 +1845,8 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
       parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
       parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 0.2 "to be analysed";
-  //parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
-      
+      //parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1=m_flow_total;
       parameter Real q_m3h_S1 = 9;
 
@@ -2102,7 +2103,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_cold=5.5;
       parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_cold=0;
       parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_hot=6;
-      parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_hot=-0.5;  
+      parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_hot=-0.5;
 
       parameter DistrictHeatingNetwork.Types.Length Di_S4=51e-3;
       parameter DistrictHeatingNetwork.Types.Length t_S4=1.5e-3;
@@ -2474,7 +2475,7 @@ package Configurations
             extent={{10,-10},{-10,10}},
             rotation=90,
             origin={-260,-40})));
-      Plants.Thermal.Systems.ControlledGasBoiler controlledGasBoiler
+      Plants.Thermal.Systems.GasBoiler GB101
         annotation (Placement(transformation(extent={{-292,-202},{-202,-112}})));
     equation
       connect(TT102.inlet,PT102. inlet) annotation (Line(
@@ -2493,7 +2494,7 @@ package Configurations
           points={{-259.6,-70},{-259.6,-65},{-260,-65},{-260,-50}},
           color={140,56,54},
           thickness=0.5));
-      connect(controlledGasBoiler.inlet, FT101.outlet) annotation (Line(
+      connect(GB101.inlet, FT101.outlet) annotation (Line(
           points={{-260.5,-121},{-260.5,-128},{-260.2,-128},{-260.2,-103.2}},
           color={140,56,54},
           thickness=0.5));
@@ -2501,7 +2502,7 @@ package Configurations
           points={{-260.2,-94.8},{-260.2,-84},{-259.6,-84}},
           color={140,56,54},
           thickness=0.5));
-      connect(PT102.inlet, controlledGasBoiler.outlet) annotation (Line(
+      connect(PT102.inlet, GB101.outlet) annotation (Line(
           points={{-232.4,-84},{-232.4,-112.5},{-233.5,-112.5},{-233.5,-121}},
           color={140,56,54},
           thickness=0.5));

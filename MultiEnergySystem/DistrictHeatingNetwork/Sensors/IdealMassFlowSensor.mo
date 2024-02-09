@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors;
 model IdealMassFlowSensor
   "Ideal Mass Flow Sensor"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialIdealFlowSensor;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialIdealFlowSensor;
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
   parameter Types.Temperature T_start = 60 + 273.15;

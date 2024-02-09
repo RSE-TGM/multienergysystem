@@ -1,6 +1,9 @@
 within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
 model GasBoiler "System 100"
   extends DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
+  Modelica.Blocks.Interfaces.RealInput theta "Opening valve of the valve's system" annotation (
+      Placement(transformation(extent={{-70,20},{-50,40}}),  iconTransformation(extent={{-70,20},{
+            -50,40}})));
 
   constant Real pi = Modelica.Constants.pi;
 
@@ -158,23 +161,21 @@ model GasBoiler "System 100"
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,44})));
-  Modelica.Blocks.Interfaces.RealInput theta "Opening valve of the valve's system" annotation (
-      Placement(transformation(extent={{-100,30},{-60,70}}), iconTransformation(extent={{-100,30},{-60,
-            70}})));
   Modelica.Blocks.Interfaces.RealInput omega "Rotational speed for circulation pump" annotation (
-      Placement(transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent={{-100,-20},
-            {-60,20}})));
+      Placement(transformation(extent={{-70,-10},{-50,10}}),  iconTransformation(extent={{-70,-10},
+            {-50,10}})));
   Modelica.Blocks.Interfaces.RealInput Tout_SP "Outlet temperature set point" annotation (Placement(
-        transformation(extent={{-100,-70},{-60,-30}}), iconTransformation(extent={{-100,-70},{-60,-30}})));
-  Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{100,-20},
-            {60,20}}),          iconTransformation(extent={{100,-20},{60,20}})));
+        transformation(extent={{-70,-40},{-50,-20}}),  iconTransformation(extent={{-70,-40},{-50,
+            -20}})));
+  Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{70,-40},
+            {50,-20}}),         iconTransformation(extent={{70,-40},{50,-20}})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTBoiler(T_start=Tin_start_S1, p_start=
         pin_start_S1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-16,44})));
-  Modelica.Blocks.Interfaces.RealOutput m_flow annotation (Placement(transformation(extent={{60,30},
-            {100,70}}), iconTransformation(extent={{60,30},{100,70}})));
+  Modelica.Blocks.Interfaces.RealOutput m_flow annotation (Placement(transformation(extent={{52,20},
+            {72,40}}),  iconTransformation(extent={{52,20},{72,40}})));
 equation
   connect(P101.inlet,PL_S100_GB101_P101. outlet) annotation (Line(
       points={{20,-4.6},{20,-14}},
@@ -201,14 +202,14 @@ equation
       points={{-20,-4},{-20,-14}},
       color={140,56,54},
       thickness=0.5));
-  connect(Status, GB.heat_on) annotation (Line(points={{80,0},{40,0},{40,-130},{-48,-130},{-48,-105.6},
-          {-28.8,-105.6}},                                                      color={255,0,255}));
+  connect(Status, GB.heat_on) annotation (Line(points={{60,-30},{40,-30},{40,-130},{-48,-130},{-48,
+          -105.6},{-28.8,-105.6}},                                              color={255,0,255}));
   connect(Tout_SP, GB.Tout_ref)
-    annotation (Line(points={{-80,-50},{-50,-50},{-50,-84},{-28.8,-84}}, color={0,0,127}));
-  connect(theta, FCV101.opening) annotation (Line(points={{-80,50},{-34,50},{-34,76},{12,76}},
+    annotation (Line(points={{-60,-30},{-50,-30},{-50,-84},{-28.8,-84}}, color={0,0,127}));
+  connect(theta, FCV101.opening) annotation (Line(points={{-60,30},{-34,30},{-34,76},{12,76}},
                                                                              color={0,0,127}));
   connect(omega, P101.in_omega)
-    annotation (Line(points={{-80,0},{0,0},{0,0.2},{14,0.2}},     color={0,0,127}));
+    annotation (Line(points={{-60,0},{0,0},{0,0.2},{14,0.2}},     color={0,0,127}));
   connect(FCV101.outlet, outlet)
     annotation (Line(
       points={{20,86},{20,110}},
@@ -225,7 +226,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FTBoiler.m_flow, m_flow)
-    annotation (Line(points={{-10,37},{-10,28},{40,28},{40,50},{80,50}}, color={0,0,127}));
+    annotation (Line(points={{-10,37},{-10,28},{40,28},{40,30},{62,30}}, color={0,0,127}));
   annotation (Icon(                                             graphics={
                      Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points={{-21,-35},
               {-27,-3},{-21,-13},{-19,25},{-11,13},{1,37},{13,13},{19,25},{23,-15},{27,-5},{23,-35},

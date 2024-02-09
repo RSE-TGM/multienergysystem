@@ -1818,7 +1818,16 @@ package Tests
       end CentralisedSystemLoadSimplifiedI_D;
 
       model CentralisedSystemSimplifiedLoadSimplifiedI_A "Sequence using Gas Boiler as heat source only"
-        extends MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemSimplifiedLoadSimplifiedI(p_VE901 = 1.69e5, FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 0; 100, 0], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*40; 100, 2*pi*40], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 12, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV901(Kv = 20), FCVC01(Kv = 25), FCVC02(Kv = 25), controlledGasBoiler(Kp = 100, Ti = 20, boiler(q_m3h_S1 = 12), PI(y_start = 2*pi*30)), EX701(Tin_start_Cool = 298.15, Tout_start_Cool = 305.15));
+        extends MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemSimplifiedLoadSimplifiedI(
+          p_VE901 = 1.69e5,
+          FV933_state = false,
+          FCVC01theta = [0, 0; 100, 0],
+          FCVC02theta = [0, 0.2; 100, 0.2],
+          FCV901theta = [0, 1; 100, 1],
+          P901omega = [0, 2*pi*30; 100, 2*pi*30],
+          FCV101theta = [0, 1; 100, 1],
+          P101omega = [0, 2*pi*40; 100, 2*pi*40],
+          q_m3h_S9 = 12, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV901(Kv = 20), FCVC01(Kv = 25), FCVC02(Kv = 25),                                                                                       EX701(Tin_start_Cool = 298.15, Tout_start_Cool = 305.15));
         parameter DistrictHeatingNetwork.Types.Power EX701PtSP[:, :] = [0, 20e3; 1e6, 20e3];
         parameter DistrictHeatingNetwork.Types.Power EX711PtSP[:, :] = [0, 20e3; 1e6, 20e3];
         parameter DistrictHeatingNetwork.Types.Power EX721PtSP[:, :] = [0, 20e3; 1e6, 20e3];
@@ -1842,8 +1851,8 @@ package Tests
           Placement(transformation(extent = {{740, 289}, {720, 309}})));
         Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k = FV933_state) annotation (
           Placement(transformation(extent = {{-185, 55}, {-205, 75}})));
-        Modelica.Blocks.Sources.TimeTable FCV101_theta(table = FCV101theta) annotation (
-          Placement(transformation(extent = {{-312, -130}, {-292, -110}})));
+        Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)   annotation (
+          Placement(transformation(extent={{-322,-130},{-302,-110}})));
         Modelica.Blocks.Sources.TimeTable FCV701_theta(table = FCV701theta) annotation (
           Placement(transformation(extent = {{-80, 60}, {-59, 80}})));
         Modelica.Blocks.Sources.TimeTable FCV711_theta(table = FCV711theta) annotation (
@@ -1852,8 +1861,9 @@ package Tests
           Placement(transformation(extent = {{512, 60}, {532, 80}})));
         Modelica.Blocks.Sources.TimeTable FCV721_theta(table = FCV721theta) annotation (
           Placement(transformation(extent = {{251, 62}, {271, 82}})));
-        Modelica.Blocks.Sources.TimeTable GB101_Tout_SP(table = GB101_ToutSP) annotation (
-          Placement(transformation(extent = {{-312, -200}, {-292, -180}})));
+        Modelica.Blocks.Sources.TimeTable GB101_Tout_SP(table=[0,80 + 273.15; 100,80 + 273.15])
+                                                                              annotation (
+          Placement(transformation(extent={{-322,-200},{-302,-180}})));
         Modelica.Blocks.Sources.TimeTable EX721_PtSP(table = EX721PtSP) annotation (
           Placement(transformation(extent = {{250, 18}, {270, 38}})));
         Modelica.Blocks.Sources.TimeTable EX711_PtSP(table = EX711PtSP) annotation (
@@ -1872,8 +1882,8 @@ package Tests
           Placement(transformation(extent = {{66, -20}, {86, 0}})));
         Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e8}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
           Placement(transformation(extent = {{-170, -168}, {-190, -148}})));
-        Modelica.Blocks.Sources.TimeTable GB101_mflow_SP(table = GB101_mflowSP) annotation (
-          Placement(transformation(extent = {{-312, -168}, {-292, -148}})));
+        Modelica.Blocks.Sources.TimeTable GB101_omega(table=P101omega)
+          annotation (Placement(transformation(extent={{-322,-168},{-302,-148}})));
       equation
         connect(FCV901_theta.y, FCV901.opening) annotation (
           Line(points = {{-735, 103}, {-742, 103}, {-742, 115}, {-749, 115}}, color = {0, 0, 127}));
@@ -1885,12 +1895,12 @@ package Tests
           Line(points = {{719, 299}, {710, 299}, {710, 234}, {698, 234}, {698, 235}}, color = {0, 0, 127}));
         connect(FV933_OnOff.y, FV933.u) annotation (
           Line(points = {{-206, 65}, {-218, 65}, {-218, 46.6}}, color = {255, 0, 255}));
-        connect(FCV101_theta.y, controlledGasBoiler.theta) annotation (
-          Line(points = {{-291, -120}, {-291, -139}, {-278.5, -139}}, color = {0, 0, 127}));
-        connect(GB101_Status.y, controlledGasBoiler.Status) annotation (
-          Line(points = {{-191, -158}, {-201, -158}, {-201, -157}, {-211, -157}}, color = {255, 0, 255}));
-        connect(GB101_Tout_SP.y, controlledGasBoiler.Tout_SP) annotation (
-          Line(points = {{-291, -190}, {-288, -190}, {-288, -175}, {-278.5, -175}}, color = {0, 0, 127}));
+        connect(FCV101_theta.y, GB101.theta) annotation (Line(points={{-301,-120},{-296,-120},{-296,
+                -139},{-278.5,-139}}, color={0,0,127}));
+        connect(GB101_Status.y, GB101.Status) annotation (Line(points={{-191,-158},{-201,-158},{
+                -201,-175},{-215.5,-175}}, color={255,0,255}));
+        connect(GB101_Tout_SP.y, GB101.Tout_SP) annotation (Line(points={{-301,-190},{-296,-190},{
+                -296,-175},{-278.5,-175}}, color={0,0,127}));
         connect(EX701_PtSP.y, EX701.Pt_SP) annotation (
           Line(points = {{-59, 30}, {-47.6, 30}, {-47.6, 32}, {-36.2, 32}}, color = {0, 0, 127}));
         connect(TT703_SP.y, EX701.Tin_cool_SP) annotation (
@@ -1915,8 +1925,8 @@ package Tests
           Line(points = {{533, 70}, {540, 70}, {540, 54.4}, {557.8, 54.4}}, color = {0, 0, 127}));
         connect(TT733_SP.y, EX731.Tin_cool_SP) annotation (
           Line(points = {{531, -10}, {540, -10}, {540, 1.6}, {557.8, 1.6}}, color = {0, 0, 127}));
-        connect(GB101_mflow_SP.y, controlledGasBoiler.m_flow_SP) annotation (
-          Line(points = {{-291, -158}, {-284.75, -158}, {-284.75, -157}, {-278.5, -157}}, color = {0, 0, 127}));
+        connect(GB101_omega.y, GB101.omega) annotation (Line(points={{-301,-158},{-292,-158},{-292,
+                -157},{-278.5,-157}}, color={0,0,127}));
         annotation (
           experiment(StopTime = 500, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));
       end CentralisedSystemSimplifiedLoadSimplifiedI_A;

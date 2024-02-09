@@ -67,6 +67,6 @@ equation
           {0,31.5},{0,24}}, color={0,0,127}));
   connect(Command.u, u) annotation (Line(points={{0.5,62},{0.5,81},{0,81},{0,100}},
         color={255,0,255}));
-annotation(
+annotation (
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
 end FlowCoefficientOnOffValve;

@@ -32,22 +32,23 @@ model ElectricBoiler "System 400"
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
     Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Interfaces.RealInput theta "Opening valve of the valve's system" annotation (
-      Placement(transformation(extent={{-100,30},{-60,70}}), iconTransformation(extent={{-100,30},{-60,
-            70}})));
+      Placement(transformation(extent={{-80,30},{-60,50}}),  iconTransformation(extent={{-80,30},{
+            -60,50}})));
   Modelica.Blocks.Interfaces.RealInput omega "Rotational speed for circulation pump" annotation (
-      Placement(transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent={{-100,-20},
-            {-60,20}})));
+      Placement(transformation(extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},
+            {-60,10}})));
   Modelica.Blocks.Interfaces.RealInput Tout_SP "Outlet temperature set point" annotation (Placement(
-        transformation(extent={{-100,-70},{-60,-30}}), iconTransformation(extent={{-100,-70},{-60,-30}})));
-  Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{100,-20},
-            {60,20}}),          iconTransformation(extent={{100,-20},{60,20}})));
+        transformation(extent={{-80,-50},{-60,-30}}),  iconTransformation(extent={{-80,-50},{-60,
+            -30}})));
+  Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{80,-50},
+            {60,-30}}),         iconTransformation(extent={{80,-50},{60,-30}})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTBoiler(T_start=Tin_start_S4, p_start=
         pin_start_S4) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-16,64})));
   Modelica.Blocks.Interfaces.RealOutput m_flow annotation (Placement(transformation(extent={{60,30},
-            {100,70}}), iconTransformation(extent={{60,30},{100,70}})));
+            {80,50}}),  iconTransformation(extent={{60,30},{80,50}})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler
     EB401(
     D=0.4,
@@ -163,7 +164,7 @@ model ElectricBoiler "System 400"
         origin={-22,10})));
 equation
   connect(FTBoiler.m_flow, m_flow)
-    annotation (Line(points={{-10,57},{-10,32},{50,32},{50,50},{80,50}}, color={0,0,127}));
+    annotation (Line(points={{-10,57},{-10,32},{50,32},{50,40},{70,40}}, color={0,0,127}));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
       points={{-22,-36},{-22,-48.7},{-15.2,-48.7},{-15.2,-66.8}},
       color={140,56,54},
@@ -172,13 +173,16 @@ equation
       points={{11.2,-66.8},{12,-66.8},{12,-48},{18,-48},{18,-36}},
       color={140,56,54},
       thickness=0.5));
-  connect(m_flow, m_flow) annotation (Line(points={{80,50},{80,50}}, color={0,0,127}));
-  connect(Status, EB401.heat_on) annotation (Line(points={{80,0},{46,0},{46,-154},{-70,-154},{-70,-128.4},
-          {-37.2,-128.4}}, color={255,0,255}));
+  connect(m_flow, m_flow) annotation (Line(points={{70,40},{70,40},{70,42},{70,32},{70,40},{70,40}},
+                                                                     color={0,0,127}));
+  connect(Status, EB401.heat_on) annotation (Line(points={{70,-40},{46,-40},{46,-154},{-70,-154},{
+          -70,-128.4},{-37.2,-128.4}},
+                           color={255,0,255}));
   connect(Tout_SP, EB401.Tout_ref)
-    annotation (Line(points={{-80,-50},{-56,-50},{-56,-102},{-37.2,-102}}, color={0,0,127}));
-  connect(omega, P401.in_omega) annotation (Line(points={{-80,0},{-36,0},{-36,-8},{0,-8},{0,-1.8},{12,
-          -1.8}}, color={0,0,127}));
+    annotation (Line(points={{-70,-40},{-56,-40},{-56,-102},{-37.2,-102}}, color={0,0,127}));
+  connect(omega, P401.in_omega) annotation (Line(points={{-70,0},{-36,0},{-36,-8},{0,-8},{0,-1.8},{
+          12,-1.8}},
+                  color={0,0,127}));
   connect(PL2_S401.inlet, PL1_S401.outlet)
     annotation (Line(
       points={{-22,-16},{-22,0}},
@@ -203,7 +207,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(theta, FCV401.opening)
-    annotation (Line(points={{-80,50},{38,50},{38,66},{26,66}}, color={0,0,127}));
+    annotation (Line(points={{-70,40},{38,40},{38,66},{26,66}}, color={0,0,127}));
   connect(PL_S400_EB401_P401.outlet, P401.inlet)
     annotation (Line(
       points={{18,-16},{18,-6.6}},
@@ -214,11 +218,8 @@ equation
       points={{18,12.6},{18,22}},
       color={140,56,54},
       thickness=0.5));
-  annotation (Icon(                                             graphics={
-                     Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points={{-21,-35},
-              {-27,-3},{-21,-13},{-19,25},{-11,13},{1,37},{13,13},{19,25},{23,-15},{27,-5},{23,-35},
-              {1,-43},{-21,-35}}),                                                                                                                                                                                                        Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points={{-15,-35},
-              {-23,-13},{-15,-17},{-15,3},{-9,-1},{1,25},{9,-1},{15,3},{17,-17},{23,-13},{15,-37},{1,
-              -43},{-15,-35}})}),                                Diagram(coordinateSystem(
-                                     extent={{-100,-140},{100,140}})));
+  annotation (                                                   Diagram(coordinateSystem(
+                                     extent={{-100,-140},{100,140}})), Icon(graphics={
+                     Polygon( lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points={{14,30},
+              {-4,30},{-16,-4},{-2,0},{-14,-30},{16,12},{4,8},{4,8},{14,30}})}));
 end ElectricBoiler;

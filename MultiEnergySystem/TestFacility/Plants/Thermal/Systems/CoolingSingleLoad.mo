@@ -246,18 +246,18 @@ model CoolingSingleLoad
     p0=200000,
     T0=288.15) annotation (Placement(transformation(extent={{-36,-122},{-56,-142}})));
   Modelica.Blocks.Interfaces.RealInput Pt_SP
-    annotation (Placement(transformation(extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},
-            {-60,10}})));
+    annotation (Placement(transformation(extent={{-70,-10},{-50,10}}),  iconTransformation(extent={{-70,-10},
+            {-50,10}})));
   Modelica.Blocks.Interfaces.RealInput theta
-    annotation (Placement(transformation(extent={{-80,30},{-60,50}}),  iconTransformation(extent={{-80,30},
-            {-60,50}})));
+    annotation (Placement(transformation(extent={{-70,20},{-50,40}}),  iconTransformation(extent={{-70,20},
+            {-50,40}})));
   Modelica.Blocks.Interfaces.RealInput Tin_cool_SP
-    annotation (Placement(transformation(extent={{-80,-50},{-60,-30}}),  iconTransformation(extent={{-80,-50},
-            {-60,-30}})));
+    annotation (Placement(transformation(extent={{-70,-40},{-50,-20}}),  iconTransformation(extent={{-70,-40},
+            {-50,-20}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
-    Placement(visible = true, transformation(origin={-20,150},   extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-30,68},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={-20,150},   extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-30,78},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
-    Placement(visible = true, transformation(origin={20,150},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={30,68},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={20,150},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={30,78},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   Modelica.Blocks.Sources.RealExpression mflowcoolSP(y=m_flow_cool_SP)
     annotation (Placement(transformation(extent={{-80,-156},{-60,-136}})));
   Modelica.Blocks.Interfaces.RealOutput Pt
@@ -265,8 +265,8 @@ model CoolingSingleLoad
         rotation=-90,
         origin={0,-104}), iconTransformation(
         extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={0,-102})));
+        rotation=0,
+        origin={62,0})));
 equation
   m_flow_cool_SP = Pt_SP/(TT704.fluid.h-TT703.fluid.h);
   Pt = EX701.Pt;
@@ -334,9 +334,9 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(Tin_cool_SP, VER3.in_T0)
-    annotation (Line(points={{-70,-40},{-54,-40},{-54,-106},{39,-106},{39,-122.6}},
+    annotation (Line(points={{-60,-30},{-54,-30},{-54,-106},{39,-106},{39,-122.6}},
                                                                color={0,0,127}));
-  connect(theta, FCV701.opening) annotation (Line(points={{-70,40},{64,40},{64,18},{28,18}},
+  connect(theta, FCV701.opening) annotation (Line(points={{-60,30},{64,30},{64,18},{28,18}},
                                                                             color={0,0,127}));
   connect(inlet, PL701_rackL2L3_TT702.inlet)
     annotation (Line(
@@ -351,20 +351,15 @@ equation
 
   connect(mflowcoolSP.y, FT703.in_m_flow) annotation (Line(points={{-59,-146},{-52,-146},{-52,-148},
           {-40,-148},{-40,-137}}, color={0,0,127}));
-  annotation (Diagram(coordinateSystem(extent={{-100,-160},{100,160}})), Icon(graphics={              Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, lineThickness = 0.5, extent={{-60,100},
-              {60,-100}},                                                                                                                                                                                                        radius = 20),
-                                                                                                                                                                                                        Line(origin={10.22,
-              19.92},                                                                                                                                                                                                        points={{-39.92,
-              0.22},{-19.92,0.22},{-9.92,20.22},{10.08,-19.78},{30.08,20.22},{
-              40.08,0.22},{60.08,0.22}},                                                                                                                                                                                                        color={255,49,
-              52},                                                                                                                                                                                                        thickness = 1, arrowSize = 20,
-          rotation=180,
-          arrow={Arrow.Filled,Arrow.None},
-          pattern=LinePattern.Dash),                                                                                                                                                                                                        Line(origin={10.22,
-              -50.08},                                                                                                                                                                                                        points={{-39.92,
-              0.22},{-19.92,0.22},{-9.92,20.22},{10.08,-19.78},{30.08,20.22},{
-              40.08,0.22},{60.08,0.22}},                                                                                                                                                                                                        color={76,0,227},    thickness = 1, arrowSize = 20,
-          rotation=180,
-          arrow={Arrow.None,Arrow.Filled},
-          pattern=LinePattern.Dash)}));
+  annotation (Diagram(coordinateSystem(extent={{-100,-160},{100,160}})), Icon(graphics={              Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern=
+              FillPattern.Solid,                                                                                                                                                                         lineThickness = 0.5, extent={{-60,80},
+              {60,-82}},                                                                                                                                                                                                        radius=0),                                                                                                                                     Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-40,44},
+              {40,-36}}),
+        Line(
+          points={{-28,26},{-28,-22},{-18,-22},{-18,36},{-6,36},{-6,-24},{6,-24},{2,36},{14,36},{14,
+              -24},{22,-24},{24,-24},{24,32}},
+          color={140,56,54},
+          thickness=1,
+          smooth=Smooth.Bezier,
+          arrow={Arrow.None,Arrow.Filled})}));
 end CoolingSingleLoad;

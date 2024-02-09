@@ -1,7 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model pipeFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import Modelica.Fluid.Utilities.regSquare;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   // Flow parameter

@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors;
 model IdealPressureSensor
   "Ideal Mass Flow Sensor"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialIdealFlowSensor;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialIdealFlowSensor;
   Modelica.Blocks.Interfaces.RealOutput p annotation (Placement(
       visible=true,
       transformation(

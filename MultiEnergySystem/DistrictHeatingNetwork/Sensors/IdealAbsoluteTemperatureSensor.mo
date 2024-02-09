@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors;
 model IdealAbsoluteTemperatureSensor
   "Get absolute pressure of the attached port"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialAbsoluteSensor;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialAbsoluteSensor;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
   Modelica.Blocks.Interfaces.RealOutput T annotation (
     Placement(visible = true, transformation(origin = {6, 82}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={0,130},    extent = {{-10, -10}, {10, 10}}, rotation=90)));

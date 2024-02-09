@@ -108,7 +108,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Mass Mt "Total mass in the full volume";
   Types.Density rho[n + 1] "Density at each volume boundary";
   Types.MassFlowRate m_flow[n + 1](each min = if allowFlowReversal then -Modelica.Constants.inf else 0, each start = m_flow_start, each nominal = m_flow_start) "Mass flow at each volume boundary";
-  Types.VolumeFlowRate q[n + 1] "Mass flow rate in each volume across the pipe";
+  Types.VolumeFlowRate q[n + 1] "Volumetric flow rate in each volume across the pipe";
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1] "Specific enthalpy at each fluid";
   //Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";

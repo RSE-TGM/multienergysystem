@@ -34,6 +34,7 @@ partial model PartialLumpedVolume
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.Temperature Tin_start = T_start;
   parameter Types.Temperature Tout_start = T_start;
+
   // Final parameters
   final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
   final parameter Types.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
@@ -67,7 +68,7 @@ equation
   pin = inlet.p;
 
   // Boundary Conditions
-  //inlet.h_out = inStream(inlet.h_out);
+  // inlet.h_out = inStream(inlet.h_out);
 
   annotation (
     Icon(coordinateSystem(extent={{-100,-200},{100,200}})));

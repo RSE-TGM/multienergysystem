@@ -8,6 +8,7 @@ model pipeFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) re
   parameter Modelica.Units.SI.Velocity u_nom = 1 "Nominal fluid velocity";
   parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
   parameter Integer N = 2 "Number of finite volumes";
+  parameter Boolean ss = true;
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf/2*rho0*omega*L/A*u_nom^2 "Nominal pressure drop";
   final parameter Modelica.Units.SI.MassFlowRate m_flow_nom = rho0*A*u_nom "Nominal mass flow rate";
   final parameter Modelica.Units.SI.Volume V = A*L;
@@ -63,7 +64,11 @@ equation
     section_T[i] = Ttilde[i];
   end for;
 initial equation
-  der(Ttilde) = zeros(N);
+  if ss == true then
+    der(Ttilde) = zeros(N);
+  else
+    Ttilde = T_start*ones(N);
+  end if;
   if thermalInertia then
     der(Twall) = zeros(N);
   else

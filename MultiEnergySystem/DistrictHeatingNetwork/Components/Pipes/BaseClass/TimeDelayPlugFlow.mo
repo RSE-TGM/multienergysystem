@@ -11,7 +11,7 @@ model TimeDelayPlugFlow
   parameter Boolean initDelay = false "Initialize delay for a constant m_flow_start if true, otherwise start from 0";
   parameter Modelica.Units.SI.MassFlowRate m_flow_start = 0 "Initialization of mass flow rate to calculate initial time delay";
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal(min = 0) "Nominal mass flow rate";
-
+  parameter Boolean ss = true;
   // Final parameter
   final parameter Modelica.Units.SI.Time t_in_start = if initDelay and abs(m_flow_start) > 1E-10 * m_flow_nominal then min(L / m_flow_start * (rho0 * D ^ 2 / 4 * Modelica.Constants.pi), 0) else 0 "Initial value of input time at inlet";
   final parameter Modelica.Units.SI.Time t_out_start = if initDelay and abs(m_flow_start) > 1E-10 * m_flow_nominal then min(-L / m_flow_start * (rho0 * D ^ 2 / 4 * Modelica.Constants.pi), 0) else 0 "Initial value of input time at outlet";

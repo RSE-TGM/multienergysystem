@@ -159,18 +159,24 @@ package Test "Package to test component equation and behaviour"
          353.15)                                                 annotation (
       Placement(visible = true, transformation(origin={-70,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
-    connect(oneSec.outlet, expansionTank.inlet) annotation (
-      Line(points={{10,40},{70,40}}));
-    connect(fiftySec.outlet, expansionTank1.inlet) annotation (
-      Line(points={{10,0},{70,0}}));
-    connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (
-      Line(points={{10,-40},{70,-40}}));
     connect(idealMassFlowSource.outlet, oneSec.inlet)
       annotation (Line(points={{-59.8,40},{-10,40}}, color={168,168,168}));
     connect(idealMassFlowSource1.outlet, fiftySec.inlet)
       annotation (Line(points={{-59.8,0},{-10,0}}, color={168,168,168}));
     connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet)
       annotation (Line(points={{-59.8,-40},{-10,-40}}, color={168,168,168}));
+    connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (Line(
+        points={{10,-40},{56,-40},{56,-48},{70,-48},{70,-40}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(fiftySec.outlet, expansionTank1.inlet) annotation (Line(
+        points={{10,0},{56,0},{56,-8},{70,-8},{70,0}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(oneSec.outlet, expansionTank.inlet) annotation (Line(
+        points={{10,40},{56,40},{56,32},{70,32},{70,40}},
+        color={140,56,54},
+        thickness=0.5));
     annotation (
       Diagram(coordinateSystem(extent={{-100,-100},{100,100}})), Documentation(
           info="<html>
@@ -232,16 +238,28 @@ package Test "Package to test component equation and behaviour"
     MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=
           5, Tnom=353.15)                                                                     annotation (
       Placement(visible = true, transformation(origin={-68,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(Di = 0.0508, L = 50, N = 50,
-      T_ext=298.15,                                                                                                            T_start(displayUnit = "degC") = 338.15, thermalInertia = true) annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(
+      thermalInertia=true,
+      cm=880,
+      rhom(displayUnit="kg/m3") = 7850,
+      pin_start=100000,                                                           Di = 0.0508, L = 50,
+      N=50,
+      T_ext=298.15,
+      T_start(displayUnit="degC") = 338.15,
+      ss=false)                                                                                                                                                                               annotation (
       Placement(visible = true, transformation(origin={-12,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
       Placement(visible = true, transformation(origin={92,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF pipePF(
+      allowFlowReversal=false,
+      pin_start=100000,
       D=0.0508,
       L=50,
+      H=0.1,
+      rhom(displayUnit="kg/m3"),
       T_start(displayUnit="degC") = 338.15,
-      T_start_m(displayUnit="degC") = 338.15) annotation (Placement(visible=true,
+      T_start_m(displayUnit="degC") = 338.15,
+      cpm=880)                                annotation (Placement(visible=true,
           transformation(
           origin={0,70},
           extent={{-10,-10},{10,10}},
@@ -251,9 +269,13 @@ package Test "Package to test component equation and behaviour"
           origin={46,70},
           extent={{-10,-10},{10,10}},
           rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut1
+                                                                                  annotation (Placement(
+          visible=true, transformation(
+          origin={30,28},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
   equation
-    connect(fiftySecNoTI.outlet, expansionTank2.inlet) annotation (
-      Line(points={{-2,24},{92,24}}));
     connect(pipePF.outlet, pfOut.inlet) annotation (
       Line(points={{10,70},{26,70},{26,66},{40,66}},
                                           color = {168, 168, 168}));
@@ -262,10 +284,21 @@ package Test "Package to test component equation and behaviour"
                                           color = {168, 168, 168}));
     connect(idealMassFlowSource.outlet, pipePF.inlet)
       annotation (Line(points={{-59.8,70},{-10,70}}, color={168,168,168}));
-    connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet)
-      annotation (Line(points={{-57.8,24},{-22,24}}, color={168,168,168}));
+    connect(pfOut1.outlet, expansionTank2.inlet) annotation (Line(
+        points={{36,24},{92,24}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet) annotation (Line(
+        points={{-57.8,24},{-22,24}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(fiftySecNoTI.outlet, pfOut1.inlet) annotation (Line(
+        points={{-2,24},{24,24}},
+        color={140,56,54},
+        thickness=0.5));
     annotation (
-      Diagram(coordinateSystem(extent={{-100,0},{100,100}})));
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
+          StopTime=120, __Dymola_Algorithm="Dassl"));
   end PlugFlowPipeTest;
 
   model PowerTransferTest "3 tests using Ideal Power Transfer component"
@@ -417,15 +450,15 @@ package Test "Package to test component equation and behaviour"
       Placement(visible = true, transformation(origin = {20, -44}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   equation
     connect(sinkP.inlet, tank.outlet) annotation (
-      Line(points={{-50,40},{-60,40},{-60,5.25},{-50,5.25}},    color = {168, 168, 168}));
+      Line(points={{-50,40},{-60,40},{-60,7},{-50,7}},          color = {168, 168, 168}));
     connect(sourceW.outlet, tank.inlet) annotation (
-      Line(points={{-60,-30},{-60,-5.25},{-50,-5.25}},  color = {168, 168, 168}));
+      Line(points={{-60,-30},{-60,-7},{-50,-7}},        color = {168, 168, 168}));
     connect(m_flow.y, sourceW.in_m_flow) annotation (
       Line(points = {{-71, -46}, {-65, -46}}, color = {0, 0, 127}));
     connect(sink_mflow.inlet, tank2.outlet) annotation (
-      Line(points={{20,32},{20,5.25},{30,5.25}},  color = {168, 168, 168}));
+      Line(points={{20,32},{20,8.75},{30,8.75}},  color = {168, 168, 168}));
     connect(sourceP.outlet, tank2.inlet) annotation (
-      Line(points={{20,-34},{20,-5.25},{30,-5.25}},  color = {168, 168, 168}));
+      Line(points={{20,-34},{20,-8.75},{30,-8.75}},  color = {168, 168, 168}));
     annotation (
       Diagram(coordinateSystem(extent = {{-100, -80}, {100, 80}})), experiment(
           StopTime=100, __Dymola_Algorithm="Dassl"));
@@ -1135,4 +1168,146 @@ package Test "Package to test component equation and behaviour"
 
 <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.GasBoiler\">GasBoiler</a>.<div><br></div><div>The test includes changes in:</div><div><ul><li>fuel flow mass flow rate&nbsp;</li><li>water flow mass flow rate</li><li>water inlet temperature</li></ul></div><div><div><br></div></div></body></html>"));
   end ControlledElectricBoilerTest;
+
+  model LumpedStorageConstantMassTest
+    extends Modelica.Icons.Example;
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
+      allowFlowReversal=false,
+      use_in_m_flow=false,                                                                   mflownom=
+          5,
+      Tnom=353.15)                                                                           annotation (
+        Placement(visible=true, transformation(
+          origin={-76,66},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(p=200000,
+        T=323.15)                                                                   annotation (Placement(
+          visible=true, transformation(
+          origin={78,86},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass
+      LumpedStorageConstantMass(H=0.1)  annotation (Placement(transformation(
+          extent={{-10,-14},{10,14}},
+          rotation=270,
+          origin={-6,50})));
+  equation
+    connect(idealMassFlowSource.outlet, LumpedStorageConstantMass.inlet)
+      annotation (Line(
+        points={{-65.8,66},{-22,66},{-22,60},{-16,60}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(LumpedStorageConstantMass.outlet, expansionTank.inlet) annotation (
+        Line(
+        points={{4,60},{4,70},{68,70},{68,64},{78,64},{78,76}},
+        color={140,56,54},
+        thickness=0.5));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})));
+  end LumpedStorageConstantMassTest;
+
+  model PFPipe_vs_AixLibPF_test
+    extends Modelica.Icons.Example;
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=
+          5, Tnom=353.15)                                                                    annotation (
+        Placement(visible=true, transformation(
+          origin={-76,80},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank annotation (Placement(
+          visible=true, transformation(
+          origin={79,89},
+          extent={{-9,-9},{9,9}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF pipePF(
+      allowFlowReversal=false,
+      pin_start=100000,
+      D=0.0508,
+      L=50,
+      H=0,
+      rhom(displayUnit="kg/m3"),
+      T_start(displayUnit="degC") = 338.15,
+      T_start_m(displayUnit="degC") = 338.15,
+      cpm=880)                                annotation (Placement(visible=true,
+          transformation(
+          origin={-20,80},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut annotation (Placement(
+          visible=true, transformation(
+          origin={40,84},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    AixLib.Fluid.Sources.Boundary_pT
+                        sin(
+      redeclare package Medium = AixLib.Media.Water,
+      T=338.15,
+      nPorts=1,
+      p(displayUnit="bar") = 250000)
+                                    "Pressure boundary condition"
+      annotation (Placement(transformation(extent={{70,14},{58,26}})));
+    AixLib.Fluid.FixedResistances.PlugFlowPipe pip(
+      redeclare package Medium = AixLib.Media.Water,
+      m_flow_small=0.1,
+      have_symmetry=false,
+      dh=0.0508,
+      length=50,
+      dIns=0.05,
+      kIns=0.028,
+      m_flow_nominal=1,
+      cPip=880,
+      thickness=0.003,
+      initDelay=true,
+      m_flow_start=1,
+      rhoPip=7850,
+      T_start_in=338.15,
+      T_start_out=338.15) "Pipe"
+      annotation (Placement(transformation(extent={{-10,12},{4,28}})));
+    Modelica.Thermal.HeatTransfer.Sources.FixedTemperature bou[2](each T=298.15)
+      "Boundary temperature"
+      annotation (Placement(transformation(extent={{-22,40},{-14,48}})));
+    AixLib.Fluid.Sources.MassFlowSource_T sou(
+      redeclare package Medium = AixLib.Media.Water,
+      use_T_in=false,
+      m_flow=5,
+      T=353.15,
+      nPorts=1) "Flow source"
+      annotation (Placement(transformation(extent={{-82,10},{-62,30}})));
+    AixLib.Fluid.Sensors.TemperatureTwoPort senTemOut(
+      redeclare package Medium = AixLib.Media.Water,
+      m_flow_nominal=1,
+      tau=0,
+      T_start(displayUnit="K") = 65)
+                      "Temperature sensor"
+      annotation (Placement(transformation(extent={{16,10},{36,30}})));
+    AixLib.Fluid.Sensors.TemperatureTwoPort senTemIn(
+      redeclare package Medium = AixLib.Media.Water,
+      m_flow_nominal=1,
+      tau=0,
+      T_start(displayUnit="degC") = 338.15)
+                      "Temperature sensor"
+      annotation (Placement(transformation(extent={{-48,10},{-28,30}})));
+  equation
+    connect(pipePF.outlet, pfOut.inlet) annotation (
+      Line(points={{-10,80},{34,80}},     color = {168, 168, 168}));
+    connect(pfOut.outlet, expansionTank.inlet) annotation (
+      Line(points={{46,80},{79,80}},      color = {168, 168, 168}));
+    connect(idealMassFlowSource.outlet, pipePF.inlet)
+      annotation (Line(points={{-65.8,80},{-30,80}}, color={168,168,168}));
+    connect(pip.port_b,senTemOut. port_a)
+      annotation (Line(points={{4,20},{16,20}},color={0,127,255}));
+    connect(senTemOut.port_b,sin. ports[1])
+      annotation (Line(points={{36,20},{58,20}},
+                                               color={0,127,255}));
+    connect(senTemIn.port_b,pip. port_a)
+      annotation (Line(points={{-28,20},{-10,20}},
+                                               color={0,127,255}));
+    connect(bou[1].port,pip. heatPort)
+      annotation (Line(points={{-14,44},{-3,44},{-3,28}}, color={191,0,0}));
+    connect(sou.ports[1],senTemIn. port_a) annotation (Line(points={{-62,20},{
+            -48,20}},           color={0,127,255}));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
+          StopTime=120, __Dymola_Algorithm="Dassl"));
+  end PFPipe_vs_AixLibPF_test;
 end Test;

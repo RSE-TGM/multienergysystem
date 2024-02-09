@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 model PlugFlowCore
-  extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube;
+  extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(Di=i);
   import Modelica.Fluid.Utilities.regSquare;
 
   // Parameter declaration
@@ -8,7 +8,7 @@ model PlugFlowCore
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
   parameter H2GasFacility.Types.Velocity u_nom = 1 "Nominal fluid velocity";
   parameter H2GasFacility.Types.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
-  parameter H2GasFacility.Types.Temperature T_start = 25 + 273.15 "Start value to be used for specific enthalpy initialization";
+  parameter H2GasFacility.Types.Temperature T_start=298.15        "Start value to be used for specific enthalpy initialization";
 
   // Final parameter computation
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho_nom * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
@@ -57,5 +57,8 @@ equation
   q = inlet.m_flow / fluidIn.rho;
   v = q / A;
   (inlet.h_out, outlet.h_out) = spatialDistribution(inStream(inlet.h_out), inStream(outlet.h_out), x / L, v >= 0, {0.0, 1.0}, {h_ini_in, h_ini_out});
-  (inlet.Xi, outlet.Xi) = spatialDistribution(inStream(inlet.Xi), inStream(outlet.Xi), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
+  //(inlet.Xi, outlet.Xi) = spatialDistribution(inStream(inlet.Xi), inStream(outlet.Xi), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
+  (inlet.Xi, outlet.Xi) = spatialDistribution(fluidIn.Xi, fluidOut.Xi, x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
+
+
 end PlugFlowCore;

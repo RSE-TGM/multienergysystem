@@ -8,7 +8,7 @@ partial model PartialLumpedVolume
   outer System system "system object for global defaults";
 
   //Fluid model
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidl "Medium model" annotation (
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
     choicesAllMatching = true);
 
   // Constants

@@ -27,7 +27,8 @@ model TestSinglePipe_B "Base test model of a single pipe (Flow1DFV) with a press
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp p_in(duration = 50, height = 1000*0, offset = pin_start, startTime = 200) annotation (
     Placement(visible = true, transformation(origin = {-86, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(redeclare model Medium = Medium, R = 1, T0(displayUnit = "K") = 20 + 273.15, X0 = Xref, p0(displayUnit = "Pa") = 48999.99999999999, use_in_p0 = true) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(redeclare
+      model                                                                         Medium = Medium, R = 1, T0(displayUnit = "K") = 20 + 273.15, X0 = Xref, p0(displayUnit = "Pa") = 48999.99999999999, use_in_p0 = true) annotation (
     Placement(transformation(extent = {{56, -52}, {76, -32}})));
   Modelica.Blocks.Sources.Ramp p_out(duration = 100, height = 0.03e5, offset = 0.49e5, startTime = 50) annotation (
     Placement(visible = true, transformation(origin = {68, 36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

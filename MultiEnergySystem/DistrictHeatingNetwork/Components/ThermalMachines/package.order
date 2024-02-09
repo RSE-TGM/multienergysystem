@@ -1,10 +1,10 @@
 BaseClass
-ControlledHeatPumpNoDynamics
-ControlledChillerNoDynamics
 GasBoiler
 ElectricBoiler
 ControlledElectricBoiler
 ControlledGasBoiler
 ControlledCHP
 ChillerNoDynamics
+ControlledChillerNoDynamics
+ControlledHeatPumpNoDynamics
 ControlledChillerNoDynamicsSP

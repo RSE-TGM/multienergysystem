@@ -1,5 +1,5 @@
 ﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
-partial model PapayMixtureND
+partial model PapayMixtureND "Papay Mixture model without derivatives"
   extends PartialMixture(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start), computeDerivatives = false);
   import Modelica.Fluid.Utilities.regStep;
 

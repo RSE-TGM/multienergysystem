@@ -1,25 +1,14 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 model DirectionalHeatLossPlugFlow
-  extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
-
-  // Medium for the pipe
-  replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
-     choicesAllMatching = true);
-
+  extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube;
 
   // Parameters
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal "Nominal mass flow rate";
   parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X;
 
   // Final parameters
   // cp,rho0--> NG6_H2_Papay/PapayMixture
-//   final parameter Real C = rho * Modelica.Constants.pi * (Di / 2) ^ 2 * cp "Thermal capacity per unit length of pipe";
-   final parameter Real R = 1 / (lambdaIns * 2 * Modelica.Constants.pi / Modelica.Math.log((Di / 2 + tIns) / (Di / 2))) "Thermal resistance per unit length from fluid to boundary temperature";
-//   final parameter Modelica.Units.SI.Time tau_char = R * C "Characteristic delay time";
+  final parameter Real R = 1 / (lambdaIns * 2 * Modelica.Constants.pi / Modelica.Math.log((Di / 2 + tIns) / (Di / 2))) "Thermal resistance per unit length from fluid to boundary temperature";
 
   // Variables
   Modelica.Units.SI.HeatFlowRate Q_flow "Heat flowing from the pipe";
@@ -27,26 +16,9 @@ model DirectionalHeatLossPlugFlow
   Modelica.Units.SI.Temperature T_b_outflow(start = T_start) "Temperature at outlet for outflowing fluid";
 
   Real C "Thermal capacity per unit length of pipe";
-  //Real R "Thermal resistance per unit length from fluid to boundary temperature";
   Modelica.Units.SI.Time tau_char "Characteristic delay time";
 
-  // Medium
-  Medium fluidIn(
-    T_start = Tin_start,
-    p_start = pin_start,
-    X_start = X_start,
-    computeTransport = false,
-    computeEntropy = false);
-  Medium fluidOut(
-    T_start = Tout_start,
-    p_start = pout_start,
-    X_start = X_start,
-    computeTransport = false,
-    computeEntropy = false);
-
-
   // Inputs
-
   Modelica.Blocks.Interfaces.RealInput tau(unit="s")   "Time delay at pipe level" annotation (
     Placement(visible = true, transformation(origin={-100,80},   extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {-80, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 90)));
 

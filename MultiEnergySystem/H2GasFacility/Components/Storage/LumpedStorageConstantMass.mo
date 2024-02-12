@@ -20,20 +20,19 @@ model LumpedStorageConstantMass
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
-    // Medium
-    Medium fluidIn(
-      T_start = Tin_start,
-      p_start = pin_start,
-      X_start = X_start,
-      computeTransport = false,
-      computeEntropy = false);
-    Medium fluidOut(
-      T_start = Tout_start,
-      p_start = pout_start,
-      X_start = X_start,
-      computeTransport = false,
-      computeEntropy = false);
-
+//   // Medium
+//   Medium fluidIn(
+//     T_start = Tin_start,
+//     p_start = pin_start,
+//     X_start = X_start,
+//     computeTransport = false,
+//     computeEntropy = false);
+//   Medium fluidOut(
+//     T_start = Tout_start,
+//     p_start = pout_start,
+//     X_start = X_start,
+//     computeTransport = false,
+//     computeEntropy = false);
 
 equation
     // Boundary Conditions

@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Fittings;
 model SuddenAreaChange
   "Model a sudden area change in the fluid flow"
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
-  import      Modelica.Units.SI;
+  import Modelica.Units.SI;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
   // Parameters

@@ -57,8 +57,8 @@ equation
   q = inlet.m_flow / fluidIn.rho;
   v = q / A;
   (inlet.h_out, outlet.h_out) = spatialDistribution(inStream(inlet.h_out), inStream(outlet.h_out), x / L, v >= 0, {0.0, 1.0}, {h_ini_in, h_ini_out});
-  (inlet.Xi, outlet.Xi) = spatialDistribution(inStream(inlet.Xi), inStream(outlet.Xi), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
-  //(inlet.Xi, outlet.Xi) = spatialDistribution(fluidIn.Xi, fluidOut.Xi, x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
+  //(inlet.Xi, outlet.Xi) = spatialDistribution(inStream(inlet.Xi), inStream(outlet.Xi), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
+  (inlet.Xi, outlet.Xi) = spatialDistribution(fluidIn.Xi, fluidOut.Xi, x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
 
 
 end PlugFlowCore;

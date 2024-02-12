@@ -27,7 +27,8 @@ model ControlledGasBoiler
   Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{100,-20},
             {60,20}}),          iconTransformation(extent={{100,-20},{60,20}})));
 equation
-  connect(Status, boiler.Status) annotation (Line(points={{80,0},{32,0}}, color={255,0,255}));
+  connect(Status, boiler.Status) annotation (Line(points={{80,0},{52,0},{52,-12},{23.2,-12}},
+                                                                          color={255,0,255}));
   connect(Tout_SP, boiler.Tout_SP)
     annotation (Line(points={{-70,-40},{-48,-40},{-48,-20},{-32,-20}}, color={0,0,127}));
   connect(theta, boiler.theta)
@@ -42,8 +43,9 @@ equation
       thickness=0.5));
   connect(m_flow_SP, PI.REF)
     annotation (Line(points={{-70,0},{-56,0},{-56,52},{-46,52}}, color={0,0,127}));
-  connect(boiler.m_flow, PI.FeedBack) annotation (Line(points={{32,20},{42,20},{42,72},{-56,72},{-56,
-          60},{-46,60}}, color={0,0,127}));
+  connect(boiler.m_flow, PI.FeedBack) annotation (Line(points={{24,12},{42,12},{42,72},{-56,72},{
+          -56,60},{-46,60}},
+                         color={0,0,127}));
   connect(PI.controlAction, boiler.omega) annotation (Line(points={{-30,56},{-24,56},{-24,40},{-48,40},
           {-48,0},{-32,0}}, color={0,0,127}));
   annotation (Icon(                                             graphics={

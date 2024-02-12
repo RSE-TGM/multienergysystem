@@ -27,28 +27,14 @@ model ElectricBoiler "System 400"
   parameter Real FCV401theta[:,:] = [0, 1];
   parameter Real EB401_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
-    Placement(visible = true, transformation(origin={-20,90},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
-    Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput theta "Opening valve of the valve's system" annotation (
-      Placement(transformation(extent={{-80,30},{-60,50}}),  iconTransformation(extent={{-80,30},{
-            -60,50}})));
-  Modelica.Blocks.Interfaces.RealInput omega "Rotational speed for circulation pump" annotation (
-      Placement(transformation(extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},
-            {-60,10}})));
-  Modelica.Blocks.Interfaces.RealInput Tout_SP "Outlet temperature set point" annotation (Placement(
-        transformation(extent={{-80,-50},{-60,-30}}),  iconTransformation(extent={{-80,-50},{-60,
-            -30}})));
-  Modelica.Blocks.Interfaces.BooleanInput Status annotation (Placement(transformation(extent={{80,-50},
-            {60,-30}}),         iconTransformation(extent={{80,-50},{60,-30}})));
+    Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={25,80},     extent={{-5,-5},
+            {5,5}},                                                                                                                                                                    rotation = 0)));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTBoiler(T_start=Tin_start_S4, p_start=
         pin_start_S4) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-16,64})));
-  Modelica.Blocks.Interfaces.RealOutput m_flow annotation (Placement(transformation(extent={{60,30},
-            {80,50}}),  iconTransformation(extent={{60,30},{80,50}})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler
     EB401(
     D=0.4,
@@ -162,9 +148,9 @@ model ElectricBoiler "System 400"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-22,10})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (Placement(transformation(
+          extent={{-30,75},{-20,85}}), iconTransformation(extent={{-30,75},{-20,85}})));
 equation
-  connect(FTBoiler.m_flow, m_flow)
-    annotation (Line(points={{-10,57},{-10,32},{50,32},{50,40},{70,40}}, color={0,0,127}));
   connect(PL2_S401.outlet,EB401. inlet) annotation (Line(
       points={{-22,-36},{-22,-48.7},{-15.2,-48.7},{-15.2,-66.8}},
       color={140,56,54},
@@ -173,16 +159,6 @@ equation
       points={{11.2,-66.8},{12,-66.8},{12,-48},{18,-48},{18,-36}},
       color={140,56,54},
       thickness=0.5));
-  connect(m_flow, m_flow) annotation (Line(points={{70,40},{70,40},{70,42},{70,32},{70,40},{70,40}},
-                                                                     color={0,0,127}));
-  connect(Status, EB401.heat_on) annotation (Line(points={{70,-40},{46,-40},{46,-154},{-70,-154},{
-          -70,-128.4},{-37.2,-128.4}},
-                           color={255,0,255}));
-  connect(Tout_SP, EB401.Tout_ref)
-    annotation (Line(points={{-70,-40},{-56,-40},{-56,-102},{-37.2,-102}}, color={0,0,127}));
-  connect(omega, P401.in_omega) annotation (Line(points={{-70,0},{-36,0},{-36,-8},{0,-8},{0,-1.8},{
-          12,-1.8}},
-                  color={0,0,127}));
   connect(PL2_S401.inlet, PL1_S401.outlet)
     annotation (Line(
       points={{-22,-16},{-22,0}},
@@ -194,7 +170,7 @@ equation
       thickness=0.5));
   connect(FTBoiler.inlet, inlet)
     annotation (Line(
-      points={{-20,70},{-20,90}},
+      points={{-20,70},{-20,82},{-20,80},{-25,80}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV401.outlet, outlet) annotation (Line(
@@ -206,8 +182,6 @@ equation
       points={{18,42},{18,56}},
       color={140,56,54},
       thickness=0.5));
-  connect(theta, FCV401.opening)
-    annotation (Line(points={{-70,40},{38,40},{38,66},{26,66}}, color={0,0,127}));
   connect(PL_S400_EB401_P401.outlet, P401.inlet)
     annotation (Line(
       points={{18,-16},{18,-6.6}},
@@ -219,7 +193,12 @@ equation
       color={140,56,54},
       thickness=0.5));
   annotation (                                                   Diagram(coordinateSystem(
-                                     extent={{-100,-140},{100,140}})), Icon(graphics={
-                     Polygon( lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points={{14,30},
-              {-4,30},{-16,-4},{-2,0},{-14,-30},{16,12},{4,8},{4,8},{14,30}})}));
+                                     extent={{-100,-140},{100,140}})), Icon(coordinateSystem(grid={
+            1,1}),                                                          graphics={Bitmap(
+          extent={{-28,-32},{27,31}},
+          imageSource=
+              "iVBORw0KGgoAAAANSUhEUgAAAEEAAABFCAYAAAAVZotTAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAAAVISURBVHhe7ZtfSCxVHMfXu1e9lFdBLqklFyxLCQMxMcjyQSVCQY2s9D5EBNmTRNBDEfYghEVkPdQleijEQPoHSkoPBmJCJuqDCrorVJaaaRf/5bq4u2q/n3ng1/RNd2bO7M7lzoEPst/zPbPn92V39pyZMeX4+Nh3q7cLp39v6eaFQM0LgZoXAjUvBGpeCNTcGkLu1NTU9ZaWlp/r6+uXx8bGPiHt6j9dDjReJ7iJo6Oj4pqamt95apLy8vIb1Hc/GmMXKCYLDqC6unrNGICis7PzRzTOLlBMBigAft3R0TElNfLdjcbbAYqJBgVQV1e3TPo9sVjsEanT64fQMewAxURyVgDcPz8//47Ss7KyIqRlyfE6gGKiOC8AIqWhoeE31dfX1/eNHK8LKCYCKrTonAB80Wj0Udm/t7d3TR5DF1B0mngCYCYnJ6+r/vz8/BBpt8t+XUDRSVAA/JE3BkBcrKio+FN5hoaGPjf0awOKTmEiAN/BwcHj0hcOh5uMHl1A0QnMBMCMjIz0KF9xcfE2aelGjy6gqBuzARCXCgsLd5V3dHT0U+DRBhR1wgEY9wLnBODb399/UvojkchjyKcLKOrijADOXPoODAx8pfyVlZXrpPmNHp1AUQdWAyAyc3JywmoMbak/BB6tQNEuNgLw7e7uPivH8d4B+XQCRTvYCYDp6en5Vo4j7eTeiJNA0SpU6H12AiCuZGRkRNVY3jwBj3agaAUUQGNj468mAvBtbW29IMcfHh6WIZ9uoGgWHQEwc3Nz76rxVVVVfyCPE0DRDLoCYNbX11+Wx+H9ghMXUYxAMV50BnBKHu8W5fGYrq6uH2gB9RT1O7JegGKcZHLBcrI2AzghFAo9w1eQ5HEVTU1NS2tra6+QT+vVJSjGw8bGxktygjoCUNAJsbS/v//rtLS0Q/keioKCgr+Wl5dfJ6+Wn08oxoPc5fEKT1cAEjpmwezs7HtyMyVZXFx8E40zCxTjgScnJzQzM/M+6XcafZrI5JNmc3PzL/I9Ty+83mHwmgaK8RCNRqvkhNSkhoeHP6OP84NojAb8fJ1RLqhOT5jIGzdQjBf5lTDS3d39fTgcfoJ8F4zj7MALqOzs7AP1PjouvkLRBP7V1dVXebsrA5C0trb+tLOz8xwYaxoOoLS0dFMdm0+cpF81+swCRQukb29vP9/e3j4nA5AEAoG3wLi4MQbA8AoTec0CRTtEIpHa3t7eIb/ffyQnzFg9V6AA+KtIfVq+alDUAf28FfNJUk48GAx2Ie9ZOB0AA0VdUBAPyMlPTEx8hHz/RyICYKCoi6WlpTdkAZubmy8iHyJRATBQ1EVbW9uCKoB/20m7YvQgEhkAA0UdUCGlsgi+bIZ8RhIdAANFHSwsLLwtC+ELqMgnSUYADBQ1kCK32bzBIu2ywfMvkhUAA0W7xGKxSlkM30xBPkUyA2CgaJfp6ekPZEF8Ww35mGQHwEDRJn65lygqKtoh7ZLBc4IbAmCgaAe+eQqK+o/PLQEwULQD30aXhfHDFkaPmwJgoGiDdH6gQhXGj9uQdlF63BYAA0Wr8EUUWRw/eCX73RgAA0WrDA4OfiEL5EfwVJ9bA2CgaJHLeXl5+6pAeUfZzQEwULRCKBR6Whap7ii7PQAGilZYWVl5TRbKvwo3QwAMFK1An4QWWSwvmIz3Fd0YAANFi9xWW1u7KouWuDUABopWoY3TwyUlJVvGAMbHxz+mflcGwDjxv9J3BYPB9kAgcG9ubu6NsrKyL1NTU7877XNlcyKEm655/xdJzQuBmhcCNS8Eal4I1LwQqHkh+Hy+vwG4aaMC1QsJdwAAAABJRU5ErkJggg==",
+
+          fileName=
+              "modelica://MultiEnergySystem/../../../Lavoro/6. Rapporti RdS/Figure/electricboilericon2.png")}));
 end ElectricBoiler;

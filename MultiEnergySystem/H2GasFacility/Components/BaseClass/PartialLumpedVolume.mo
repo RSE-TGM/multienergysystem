@@ -2,9 +2,10 @@ within MultiEnergySystem.H2GasFacility.Components.BaseClass;
 model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
   import MultiEnergySystem.DistrictHeatingNetwork.Types;
-  import MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND;
 
   // ADD MODEL OF THE FLUID OF THE PIPE --> Is it necessary?
+  import MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND;
+
 
 
   // Definition of System
@@ -19,6 +20,8 @@ model PartialLumpedVolume
   constant Real pi = Modelica.Constants.pi;
 
   // Parameters
+  parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
+
   parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal" annotation (
     Dialog(tab = "Data", group = "Operating conditions"));
   parameter Types.Length H = 0 "High of the lumped water tank" annotation (
@@ -31,7 +34,7 @@ model PartialLumpedVolume
     Dialog(tab = "Data", group = "Tank"));
   parameter Types.Pressure pin_start = 5e5 "start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter Types.Pressure pout_start = pin_start - g_n*rho*H "start pressure at lower part of the tank" annotation (
+  parameter Types.Pressure pout_start = pin_start - g_n*rho_nom*H "start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.MassFlowRate m_flow_start = 1 "Start mass flow rate through the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
@@ -40,7 +43,7 @@ model PartialLumpedVolume
 
   // Final parameters
   final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
-  final parameter Types.Mass M_id = V * rho "Mass of water inside the mixing volume";
+  final parameter Types.Mass M_id = V * rho_nom "Mass of water inside the mixing volume";
 
   // Variables
   Modelica.Units.SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";

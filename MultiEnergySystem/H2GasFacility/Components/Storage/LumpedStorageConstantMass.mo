@@ -4,11 +4,12 @@ model LumpedStorageConstantMass
   extends MultiEnergySystem.H2GasFacility.Components.BaseClass.PartialLumpedVolume;
 
   // To be changed
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
+  // import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Insulation parameters
-  parameter Types.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
-  parameter Types.Length dIns = 0.15 "Insulation thickness";
+  parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
+  parameter H2GasFacility.Types.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
+  parameter H2GasFacility.Types.Length dIns = 0.15 "Insulation thickness";
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
 
@@ -19,6 +20,21 @@ model LumpedStorageConstantMass
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
+    // Medium
+    Medium fluidIn(
+      T_start = Tin_start,
+      p_start = pin_start,
+      X_start = X_start,
+      computeTransport = false,
+      computeEntropy = false);
+    Medium fluidOut(
+      T_start = Tout_start,
+      p_start = pout_start,
+      X_start = X_start,
+      computeTransport = false,
+      computeEntropy = false);
+
+
 equation
     // Boundary Conditions
     inlet.h_out = inStream(inlet.h_out);
@@ -27,10 +43,10 @@ equation
     inlet.m_flow + outlet.m_flow = 0 "No mass dynamics";
 
     // Energy Balance
-    M_id * cp * der(Ttilde) = m_flow_in * cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
+    M_id * fuidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
 
     // Pressure at the bottom of the tank is increased as Stevino
-    inlet.p - outlet.p = rho0*H*g_n;
+    inlet.p - outlet.p = rho_nom*H*g_n;
 
     // Computation of heat loss to ambient
     Q_amb = 1/(R_lateral + 2*R_flat)*(Ttilde - T_ext) "Insulation all around";
@@ -39,13 +55,13 @@ equation
     temperatureMixVolume = Ttilde - 273.15;
 
     // Boundary equations
-    outlet.h_out = Tout * cp;
+    outlet.h_out = Tout * fluidIn.cp;
     if not allowFlowReversal or m_flow_in > 0 then
-      Tin = inStream(inlet.h_out) / cp;
+      Tin = inStream(inlet.h_out) / fluidIn.cp;
       Tout = Ttilde;
     else
       Tin = Ttilde;
-      Tout = inStream(outlet.h_out) / cp;
+      Tout = inStream(outlet.h_out) / fluidIn.cp;
     end if;
 
 initial equation

@@ -20,21 +20,18 @@ model LumpedStorageConstantMass
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
-//   // Medium
-//   Medium fluidIn(
-//     T_start = Tin_start,
-//     p_start = pin_start,
-//     X_start = X_start,
-//     computeTransport = false,
-//     computeEntropy = false);
-//   Medium fluidOut(
-//     T_start = Tout_start,
-//     p_start = pout_start,
-//     X_start = X_start,
-//     computeTransport = false,
-//     computeEntropy = false);
 
 equation
+    // Fluid definition
+    fluidIn.p = inlet.p;
+    fluidIn.h = inlet.h_out;
+    fluidIn.Xi = inlet.Xi;
+
+    fluidOut.p = outlet.p;
+    fluidOut.h = outlet.h_out;
+    fluidOut.Xi = outlet.Xi;
+
+
     // Boundary Conditions
     inlet.h_out = inStream(inlet.h_out);
 
@@ -42,7 +39,7 @@ equation
     inlet.m_flow + outlet.m_flow = 0 "No mass dynamics";
 
     // Energy Balance
-    M_id * fuidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
+    M_id * fluidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
 
     // Pressure at the bottom of the tank is increased as Stevino
     inlet.p - outlet.p = rho_nom*H*g_n;

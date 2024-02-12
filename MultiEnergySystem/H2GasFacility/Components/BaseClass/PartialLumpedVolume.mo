@@ -1,15 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Components.BaseClass;
 model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
-  import MultiEnergySystem.DistrictHeatingNetwork.Types;
+  import MultiEnergySystem.H2GasFacility.Types;
 
   // ADD MODEL OF THE FLUID OF THE PIPE --> Is it necessary?
   import MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND;
 
-
-
   // Definition of System
-  outer System system "system object for global defaults";
+  // outer System system "system object for global defaults";
 
   //Fluid model
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
@@ -18,6 +16,20 @@ model PartialLumpedVolume
   // Constants
   constant Types.Acceleration g_n = Modelica.Constants.g_n;
   constant Real pi = Modelica.Constants.pi;
+
+  // Medium
+  Medium fluidIn(
+    T_start = Tin_start,
+    p_start = pin_start,
+    X_start = X_start,
+    computeTransport = false,
+    computeEntropy = false);
+  Medium fluidOut(
+    T_start = Tout_start,
+    p_start = pout_start,
+    X_start = X_start,
+    computeTransport = false,
+    computeEntropy = false);
 
   // Parameters
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
@@ -53,10 +65,10 @@ model PartialLumpedVolume
   Modelica.Units.SI.Pressure pout "Pressure in the high part of the tank";
 
   // Connectors
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet(m_flow(start = m_flow_start))  annotation (
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet(m_flow(start = m_flow_start))  annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-100,
             -100},                                                                                                                                        extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet(m_flow(start = -m_flow_start)) annotation (Placement(
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortOutlet outlet(m_flow(start = -m_flow_start)) annotation (Placement(
       visible=true,
       transformation(
         origin={100,0},
@@ -73,11 +85,6 @@ equation
   m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";
   pout = outlet.p;
   pin = inlet.p;
-
-  // Boundary Conditions
-  // inlet.h_out = inStream(inlet.h_out);
-
-
 
 
 end PartialLumpedVolume;

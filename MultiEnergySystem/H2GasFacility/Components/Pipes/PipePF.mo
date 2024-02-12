@@ -26,19 +26,26 @@ model PipePF
     hin_start=hin_start,
     Tin_start=Tin_start,
     Tout_start=Tout_start,
-    Di=Di) annotation (Placement(transformation(extent={{-70,-10},{-50,10}})));
+    Di=Di) annotation (Placement(transformation(extent={{-80,-10},{-60,10}})));
+  BaseClass.PlugFlowCore plugFlowCore
+    annotation (Placement(transformation(extent={{10,-10},{30,10}})));
+  BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow1
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={68,0})));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
-          extent={{-76,6},{-46,-8}},
+          extent={{-88,22},{-58,8}},
           textColor={244,125,35},
           textString="InletHeatLoss
 "),     Text(
-          extent={{50,6},{80,-8}},
+          extent={{48,24},{78,10}},
           textColor={244,125,35},
           textString="OutletHeatLoss
 "),     Text(
-          extent={{-12,14},{26,-12}},
+          extent={{-6,30},{32,4}},
           textColor={244,125,35},
           textString="PlugFlowCore"),
         Text(
@@ -49,5 +56,9 @@ model PipePF
           extent={{-28,54},{34,30}},
           textColor={244,125,35},
           textString="TimeDelay
+"),     Text(
+          extent={{-50,28},{-12,2}},
+          textColor={244,125,35},
+          textString="MassFlowSensor
 ")}));
 end PipePF;

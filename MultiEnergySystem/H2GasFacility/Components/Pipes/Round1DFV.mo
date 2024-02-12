@@ -1,7 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
-    redeclare model Medium =  MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay,
+    redeclare model Medium =
+        MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay,
     fluidIn(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     fluidOut(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),

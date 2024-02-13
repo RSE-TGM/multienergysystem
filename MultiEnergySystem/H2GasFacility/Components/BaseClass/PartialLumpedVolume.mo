@@ -24,9 +24,9 @@ model PartialLumpedVolume
 
   // Parameters
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
-  parameter Types.Length H = 0 "High of the lumped water tank" annotation (
+  parameter Types.Length H = 0 "High of the lumped tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
-  parameter Types.Length D = 0.5 "Diameter of the lumped water tank" annotation (
+  parameter Types.Length D = 0.5 "Diameter of the lumped tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
   parameter Types.Temperature T_start = 298.15 "Starting temperature" annotation (
     Dialog(tab = "Data", group = "Initialization"));
@@ -45,13 +45,13 @@ model PartialLumpedVolume
     Dialog(group = "Initialisation"));
 
   // Final parameters
-  final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
-  final parameter Types.Mass M_id = V * rho_nom "Mass of water inside the mixing volume";
+  final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of fluid inside the mixing volume";
+  final parameter Types.Mass M_id = V * rho_nom "Mass of fluid inside the mixing volume";
 
   // Variables
   Modelica.Units.SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";
-  Modelica.Units.SI.Temperature Tin "Temperatue of the water entering/leaving the volume";
-  Modelica.Units.SI.Temperature Tout "Temperatue of the water entering/leaving the volume";
+  Modelica.Units.SI.Temperature Tin "Temperatue of the fluid entering/leaving the volume";
+  Modelica.Units.SI.Temperature Tout "Temperatue of the fluid entering/leaving the volume";
   Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
   Modelica.Units.SI.Pressure pout "Pressure in the high part of the tank";
 
@@ -72,10 +72,18 @@ model PartialLumpedVolume
 
 equation
 
+  // Fluid definition
+  fluidIn.p = inlet.p;
+  fluidIn.h = inStream(inlet.h_out);
+  fluidIn.Xi = inStream(inlet.Xi);
+
+  fluidOut.p = outlet.p;
+  fluidOut.h = outlet.h_out;
+  fluidOut.Xi = outlet.Xi;
+
   // Definition of some variables
   m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";
   pout = outlet.p;
   pin = inlet.p;
-
 
 end PartialLumpedVolume;

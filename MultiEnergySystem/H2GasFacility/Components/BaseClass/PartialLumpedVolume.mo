@@ -2,7 +2,23 @@ within MultiEnergySystem.H2GasFacility.Components.BaseClass;
 model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
 
-  extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
+  //extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
+
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet(nXi = fluidIn.nXi)
+                                                                                    annotation (
+    Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-100,
+            -100},                                                                                                                                        extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortOutlet outlet(nXi = fluidOut.nXi)
+                                                                                       annotation (Placement(
+      visible=true,
+      transformation(
+        origin={100,0},
+        extent={{-10,-10},{10,10}},
+        rotation=0),
+      iconTransformation(
+        origin={-100,100},
+        extent={{-20,-20},{20,20}},
+        rotation=0)));
 
   // Definition of System
   outer System system "system object for global defaults";

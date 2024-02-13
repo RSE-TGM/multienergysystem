@@ -2,8 +2,7 @@ within MultiEnergySystem.H2GasFacility.Components.BaseClass;
 model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
 
-  extends
-      MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
+  extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
 
   // Definition of System
   outer System system "system object for global defaults";
@@ -17,13 +16,14 @@ model PartialLumpedVolume
      choicesAllMatching = true);
   import MultiEnergySystem.H2GasFacility.Types;
 
-  // Constants
 
+  // Constants
   constant Types.Acceleration g_n = Modelica.Constants.g_n;
   constant Real pi = Modelica.Constants.pi;
 
   // Parameters
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
+  //parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal";
   parameter Types.Length H = 0 "High of the lumped tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
   parameter Types.Length D = 0.5 "Diameter of the lumped tank" annotation (
@@ -40,8 +40,7 @@ model PartialLumpedVolume
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.Temperature Tin_start = T_start;
   parameter Types.Temperature Tout_start = T_start;
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X
-    "Mass fraction start value of fluid" annotation (
+  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
 
   // Final parameters
@@ -50,8 +49,8 @@ model PartialLumpedVolume
 
   // Variables
   Modelica.Units.SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";
-  Modelica.Units.SI.Temperature Tin "Temperatue of the fluid entering/leaving the volume";
-  Modelica.Units.SI.Temperature Tout "Temperatue of the fluid entering/leaving the volume";
+  Modelica.Units.SI.Temperature T_a_inflow(start = T_start) "Temperatue of the fluid entering/leaving the volume";
+  Modelica.Units.SI.Temperature T_b_outflow(start = T_start) "Temperatue of the fluid entering/leaving the volume";
   Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
   Modelica.Units.SI.Pressure pout "Pressure in the high part of the tank";
 
@@ -85,5 +84,6 @@ equation
   m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";
   pout = outlet.p;
   pin = inlet.p;
+
 
 end PartialLumpedVolume;

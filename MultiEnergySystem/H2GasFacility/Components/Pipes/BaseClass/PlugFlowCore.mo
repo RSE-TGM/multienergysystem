@@ -49,9 +49,10 @@ equation
   fluidOut.p = outlet.p;
   fluidOut.h = outlet.h_out;
   fluidOut.Xi = outlet.Xi;
-// Pressure drop due to friction
+
+  // Pressure drop due to friction
   inlet.p - outlet.p = rho_nom * Modelica.Constants.g_n * H + homotopy(cf / 2 * rho_nom * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * q * rho_nom);
-// Mass balance (no storage)
+  // Mass balance (no storage)
   inlet.m_flow + outlet.m_flow = 0;
   der(x) = v;
   q = inlet.m_flow / fluidIn.rho;

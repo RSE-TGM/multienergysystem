@@ -74,8 +74,8 @@ model TestPlugFlowCore
     T0(displayUnit="K") = 298.15,
     X0=Xref_2,
     m_flow0=m_flow_start,
-    p0=49000,
-    pin_start=49000,
+    p0=49500,
+    pin_start=49500,
     use_in_m_flow0=true)                                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={64,-66},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow1(

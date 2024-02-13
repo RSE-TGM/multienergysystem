@@ -2,3 +2,4 @@ PartialInsulatedTube
 PartialRoundTube
 DirectionalHeatLossPlugFlow
 PlugFlowCore
+TimeDelayPlugFlow

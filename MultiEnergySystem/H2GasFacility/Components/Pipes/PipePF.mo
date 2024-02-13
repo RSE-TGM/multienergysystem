@@ -34,8 +34,8 @@ model PipePF
     annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
   BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow1
     annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
+        extent={{10,-10},{-10,10}},
+        rotation=180,
         origin={30,0})));
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass
     annotation (Placement(transformation(extent={{60,-40},{80,-20}})));
@@ -58,8 +58,8 @@ equation
     annotation (Line(points={{11.5,48.5},{18,48.5},{18,32},{-66,32},{-66,6}},
         color={0,0,127}));
   connect(timeDelayPlugFlow.tau, directionalHeatLossPlugFlow1.tau) annotation (
-      Line(points={{11.3,56.3},{24,56.3},{24,20},{10,20},{10,-22},{22,-22},{22,
-          -6}}, color={0,0,127}));
+      Line(points={{11.3,56.3},{22,56.3},{22,6}},
+                color={0,0,127}));
   connect(directionalHeatLossPlugFlow1.outlet, lumpedStorageConstantMass.inlet)
     annotation (Line(
       points={{40,0},{50,0},{50,-40},{60,-40}},
@@ -67,7 +67,7 @@ equation
       thickness=0.5));
   connect(directionalHeatLossPlugFlow1.inlet, plugFlowCore.outlet) annotation (
       Line(
-      points={{20,0},{0,0}},
+      points={{20,1.77636e-15},{16,1.77636e-15},{16,0},{0,0}},
       color={182,109,49},
       thickness=0.5));
   connect(directionalHeatLossPlugFlow.outlet, inlet) annotation (Line(

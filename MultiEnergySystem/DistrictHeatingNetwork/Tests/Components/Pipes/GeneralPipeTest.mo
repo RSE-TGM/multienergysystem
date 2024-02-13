@@ -240,12 +240,13 @@ equation
   connect(pout_set.y, sinkP.in_p0) annotation (
     Line(points={{-111,130},{-134,130},{-134,108.4}},
                                                   color = {0, 0, 127}));
-  connect(wall_FixedT.MultiPort, pipe1_A.wall) annotation (Line(points={{-250,60},{-236,60},{-236,118},
-          {-170,118},{-170,106.02}}, color={255,238,44}));
+  connect(wall_FixedT.MultiPort, pipe1_A.wall) annotation (Line(points={{-250,60},{-236,60},{-236,
+          118},{-170,118},{-170,105.74}},
+                                     color={255,238,44}));
   connect(wall_FixedT.MultiPort, pipe3_A.wall) annotation (Line(points={{-250,60},{-236,60},{-236,0},
-          {-170,0},{-170,-13.98}}, color={255,238,44}));
+          {-170,0},{-170,-14.26}}, color={255,238,44}));
   connect(pipe4_A.wall, pipe3_A.wall)
-    annotation (Line(points={{-122,-13.98},{-122,0},{-170,0},{-170,-13.98}}, color={255,238,44}));
+    annotation (Line(points={{-122,-14.26},{-122,0},{-170,0},{-170,-14.26}}, color={255,238,44}));
   connect(sourceP1.outlet, pipe2_B.inlet) annotation (Line(
       points={{-210,-100},{-184,-100}},
       color={140,56,54},
@@ -288,7 +289,7 @@ equation
   connect(wall_FixedT.MultiPort, metalWallFV.ext) annotation (Line(points={{-250,60},{-240,60},{
           -240,72},{-170,72},{-170,45.1}}, color={255,238,44}));
   connect(metalWallFV.int, pipe2_A.wall)
-    annotation (Line(points={{-170,39},{-170,26.02}}, color={255,238,44}));
+    annotation (Line(points={{-170,39},{-170,25.74}}, color={255,238,44}));
   annotation (
     Documentation(info = "<html><head></head><body>Base test to verify the difference between considering linear or non-linear drop pressure.</body></html>"),
     experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-06, Interval = 0.166889),

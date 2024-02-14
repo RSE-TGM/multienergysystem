@@ -61,7 +61,7 @@ equation
     end if;
 
 initial equation
-  der(Ttilde) = 0;
+    der(Ttilde) = 0;
 
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

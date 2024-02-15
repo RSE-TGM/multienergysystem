@@ -29,20 +29,20 @@ equation
     fluidIn.Xi = inStream(inlet.Xi);
 
     fluidOut.p = outlet.p;
-    //fluidIn.h = outlet.h_out;
-    fluidOut.T = T_b_outflow;
+    fluidIn.h = outlet.h_out;
+    //fluidOut.T = T_b_outflow;
     fluidOut.Xi = outlet.Xi;
 
 
-    // Boundary Conditions
-    inlet.h_out = inStream(inlet.h_out);
+    // Mass composition balance
+    inStream(inlet.Xi) = outlet.Xi;
+    inStream(outlet.Xi) = inlet.Xi;
 
-    // Mass Balance
+    // Mass Flow Balance
     inlet.m_flow + outlet.m_flow = 0 "No mass dynamics";
 
     // Energy Balance
     M_id * fluidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (T_a_inflow - T_b_outflow) - Q_amb "Ideal perfectly mixed fluid";
-    //T_a_inflow = fluidIn.T;
 
     // Pressure at the bottom of the tank is increased as Stevino
     inlet.p - outlet.p = rho_nom*H*g_n;
@@ -54,7 +54,9 @@ equation
     temperatureMixVolume = Ttilde - 273.15;
 
     // Boundary equations
+    inlet.h_out = inStream(inlet.h_out);
     outlet.h_out = T_b_outflow * fluidOut.cp;
+
     if not allowFlowReversal or m_flow_in > 0 then
       T_a_inflow = inStream(inlet.h_out) / fluidIn.cp;
       T_b_outflow = Ttilde;

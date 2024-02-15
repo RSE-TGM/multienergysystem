@@ -13,7 +13,23 @@ model IdealMassFlowSensor
 
   parameter Types.Temperature T_start = 60 + 273.15;
   parameter Types.Pressure p_start = 2.5e5;
-  Medium fluid(Tin_start = T_start, pin_start = p_start);
+
+  parameter Types.MassFlowRate m_flow_start "Start value for mass flow rate" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.Pressure pin_start "Pressure start value of outgoing fluid" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.Pressure pout_start "Pressure start value of outgoing fluid" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.SpecificEnthalpy hin_start "Specific enthalpy start value at the inlet of the volume" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.Temperature Tin_start "Temperature start value of fluid at the start of the volume" annotation (
+    Dialog(group = "Initialisation"));
+  parameter Types.Temperature Tout_start "Temperature start value of fluid at the end of the volume" annotation (
+    Dialog(group = "Initialisation"));
+  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
+    Dialog(group = "Initialisation"));
+
+  //Medium fluid(Tin_start = T_start, pin_start = p_start);
   Modelica.Blocks.Interfaces.RealOutput m_flow "Mass flowrate in kg/s" annotation (Placement(
       visible=true,
       transformation(
@@ -36,18 +52,18 @@ model IdealMassFlowSensor
         rotation=90)));
 
   // Medium
-  Medium fluidIn(
-    T_start = Tin_start,
-    p_start = pin_start,
-    X_start = X_start,
-    computeTransport = false,
-    computeEntropy = false);
-  Medium fluidOut(
-    T_start = Tout_start,
-    p_start = pout_start,
-    X_start = X_start,
-    computeTransport = false,
-    computeEntropy = false);
+//   Medium fluidIn(
+//     T_start = Tin_start,
+//     p_start = pin_start,
+//     X_start = X_start,
+//     computeTransport = false,
+//     computeEntropy = false);
+//   Medium fluidOut(
+//     T_start = Tout_start,
+//     p_start = pout_start,
+//     X_start = X_start,
+//     computeTransport = false,
+//     computeEntropy = false);
 
 
 equation
@@ -61,12 +77,9 @@ equation
   fluidOut.h = outlet.h_out;
   fluidOut.Xi = outlet.Xi;
 
-  // Fluid definition
-  fluid.h = inStream(inlet.h_out);
-  fluid.p = inlet.p;
-
+  //
   m_flow = inlet.m_flow;
-  q_m3hr = (m_flow/fluid.rho)*3600;
+  q_m3hr = (m_flow/fluidIn.rho)*3600;
 
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={

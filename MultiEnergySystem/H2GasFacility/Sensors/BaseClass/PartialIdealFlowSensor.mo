@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Sensors.BaseClass;
-model PartialIdealFlowSensor "Partial component of a generic sensor for flow properties"
+partial model PartialIdealFlowSensor "Partial component of a generic sensor for flow properties"
 
   extends
     MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
@@ -37,25 +37,6 @@ model PartialIdealFlowSensor "Partial component of a generic sensor for flow pro
     computeEntropy = false);
 
 equation
-
-  // Fluid definition
-  fluidIn.p = inlet.p;
-  fluidIn.h = inStream(inlet.h_out);
-  fluidIn.Xi = inStream(inlet.Xi);
-
-  fluidOut.p = outlet.p;
-  fluidOut.h = outlet.h_out;
-  fluidOut.Xi = outlet.Xi;
-
-  // mass balance
-  0 = inlet.m_flow + outlet.m_flow;
-  // momentum balance (no pressure losses)
-  0 = inlet.p - outlet.p;
-  // isenthalpic state transformation (no storage and no loss of energy)
-  inStream(inlet.h_out) = outlet.h_out;
-  inStream(outlet.h_out) = inlet.h_out;
-  inStream(inlet.Xi) = outlet.Xi;
-  inStream(outlet.Xi) = inlet.Xi;
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));

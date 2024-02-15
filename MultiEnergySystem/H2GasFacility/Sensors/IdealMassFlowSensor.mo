@@ -77,6 +77,16 @@ equation
   fluidOut.h = outlet.h_out;
   fluidOut.Xi = outlet.Xi;
 
+  // Mass composition balance
+  inStream(inlet.Xi) = outlet.Xi;
+  inStream(outlet.Xi) = inlet.Xi;
+   // momentum balance (no pressure losses)
+  0 = inlet.p - outlet.p;
+  // mass balance
+  0 = inlet.m_flow + outlet.m_flow;
+  inStream(inlet.h_out) = outlet.h_out;
+  inStream(outlet.h_out) = inlet.h_out;
+
   //
   m_flow = inlet.m_flow;
   q_m3hr = (m_flow/fluidIn.rho)*3600;

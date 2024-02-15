@@ -29,7 +29,6 @@ model IdealMassFlowSensor
   parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
 
-  //Medium fluid(Tin_start = T_start, pin_start = p_start);
   Modelica.Blocks.Interfaces.RealOutput m_flow "Mass flowrate in kg/s" annotation (Placement(
       visible=true,
       transformation(
@@ -51,21 +50,6 @@ model IdealMassFlowSensor
         extent={{-10,-10},{10,10}},
         rotation=90)));
 
-  // Medium
-//   Medium fluidIn(
-//     T_start = Tin_start,
-//     p_start = pin_start,
-//     X_start = X_start,
-//     computeTransport = false,
-//     computeEntropy = false);
-//   Medium fluidOut(
-//     T_start = Tout_start,
-//     p_start = pout_start,
-//     X_start = X_start,
-//     computeTransport = false,
-//     computeEntropy = false);
-
-
 equation
 
   // Fluid definition
@@ -80,10 +64,11 @@ equation
   // Mass composition balance
   inStream(inlet.Xi) = outlet.Xi;
   inStream(outlet.Xi) = inlet.Xi;
-   // momentum balance (no pressure losses)
+  // momentum balance (no pressure losses)
   0 = inlet.p - outlet.p;
-  // mass balance
+  // mass flow balance
   0 = inlet.m_flow + outlet.m_flow;
+  // Enthalpy balance
   inStream(inlet.h_out) = outlet.h_out;
   inStream(outlet.h_out) = inlet.h_out;
 

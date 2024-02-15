@@ -1,6 +1,6 @@
 ﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal;
 package HeatTransfer
-import AllamCycle.Types;
+import DistrictHeatingNetwork.Types;
 
   model IdealHeatTransfer "Ideal heat transfer model"
     extends Thermal.BaseClasses.BaseConvectiveHeatTransfer(

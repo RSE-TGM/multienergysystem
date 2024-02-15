@@ -87,15 +87,14 @@ partial model PartialLumpedVolume
 
 equation
 
-  // Fluid definition
-  fluidIn.p = inlet.p;
-  fluidIn.h = inlet.h_out;
-  fluidIn.Xi = inlet.Xi;
-
-  fluidOut.p = outlet.p;
-  //fluidOut.h = outlet.h_out;
-  fluidOut.T = T_b_outflow;
-  fluidOut.Xi = outlet.Xi;
+//   // Fluid definition
+//   fluidIn.p = inlet.p;
+//   fluidIn.h = inlet.h_out;
+//   fluidIn.Xi = inlet.Xi;
+//
+//   fluidOut.p = outlet.p;
+//   fluidOut.h = outlet.h_out;
+//   fluidOut.Xi = outlet.Xi;
 
   // Definition of some variables
   m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";

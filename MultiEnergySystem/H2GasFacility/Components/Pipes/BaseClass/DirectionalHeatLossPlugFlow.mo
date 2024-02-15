@@ -53,6 +53,12 @@ equation
 
   C = fluidIn.rho * Modelica.Constants.pi * (Di / 2) ^ 2 * fluidIn.cp;
   tau_char = R * C;
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={                                                                                                                                                                                                        Line(origin={-60,
+              32.7143},                                                                                                                                                                                                        points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20),
+                                                                                                                                                                                                        Line(origin={0,
+              32.7143},                                                                                                                                                                                                        points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20),
+                                                                                                                                                                                                        Line(origin={60,
+              32.7143},                                                                                                                                                                                                        points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20)}),
+                                                                 Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end DirectionalHeatLossPlugFlow;

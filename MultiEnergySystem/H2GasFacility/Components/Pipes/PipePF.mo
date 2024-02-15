@@ -80,26 +80,5 @@ equation
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-86,-8},{-64,-18}},
-          textColor={244,125,35},
-          textString="InletHeatLoss
-"),     Text(
-          extent={{-22,-10},{0,-20}},
-          textColor={244,125,35},
-          textString="PlugFlowCore"),
-        Text(
-          extent={{54,-40},{86,-54}},
-          textColor={244,125,35},
-          textString="ThermalInertia
-"),     Text(
-          extent={{-24,74},{24,62}},
-          textColor={244,125,35},
-          textString="TimeDelay
-"),     Text(
-          extent={{-56,-6},{-36,-20}},
-          textColor={244,125,35},
-          textString="MassFlowSensor
-")}));
+        coordinateSystem(preserveAspectRatio=false)));
 end PipePF;

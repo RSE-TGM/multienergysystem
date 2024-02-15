@@ -69,6 +69,23 @@ equation
   q_m3hr = (m_flow/fluid.rho)*3600;
 
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                     Rectangle(lineColor = {140, 56, 54}, fillColor={244,125,35},    fillPattern=
+              FillPattern.Solid,                                                                                      extent={{-40,-20},
+              {40,-60}}),                                                                                                                                                                                                        Text(origin={0,68},     textColor={244,125,
+              35},                                                                                                                                                                                                        extent={{-100,
+              -126},{100,-166}},
+          textString="%name"),
+                     Text(origin={0,60},    textColor={244,125,35},    extent = {{-20, 24}, {20, -24}}, textString = "F"),                                                                                           Ellipse(lineColor={244,125,
+              35},                                                                                                                                                                                                        extent={{-40,100},
+              {40,20}}),                                                                                                                                 Line(points={{40,60},
+              {60,60}},                                                                                                                                                                      color={244,125,
+              35}),                                                                                                                                                                                                        Line(points={{0,20},{
+              0,-20}},                                                                                                                                                                                                        color={244,125,
+              35}),                                                                                                                                      Line(points={{-10,0},
+              {10,0}},                                                                                                                                                                       color={244,125,
+              35},
+          origin={0,110},
+          rotation=90)}),                                        Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end IdealMassFlowSensor;

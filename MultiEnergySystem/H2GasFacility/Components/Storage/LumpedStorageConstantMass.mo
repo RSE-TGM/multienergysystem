@@ -15,8 +15,6 @@ model LumpedStorageConstantMass
   Types.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
   Types.HeatFlowRate Q_amb "Heat losses to ambient";
 
-  Modelica.Units.SI.HeatFlowRate Q_flow "Heat flowing from the pipe";
-
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
@@ -30,7 +28,6 @@ equation
 
     fluidOut.p = outlet.p;
     fluidIn.h = outlet.h_out;
-    //fluidOut.T = T_b_outflow;
     fluidOut.Xi = outlet.Xi;
 
 

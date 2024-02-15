@@ -47,10 +47,15 @@ equation
   q = inlet.m_flow / fluidIn.rho;
   v = q / A;
   (inlet.h_out, outlet.h_out) = spatialDistribution(inStream(inlet.h_out), inStream(outlet.h_out), x / L, v >= 0, {0.0, 1.0}, {h_ini_in, h_ini_out});
+
+  //
+  // inStream() + Vector doesn't work in the spatialDistirbution function. For this reason it is necessary to use the for loop and
+  // to assign the value of the inStream() function to the inStreamIn\Out variables.
+  //
   for i in 1:fluidIn.nXi loop
     inStreamIn[i] = inStream(inlet.Xi[i]);
     inStreamOut[i] = inStream(outlet.Xi[i]);
     (inlet.Xi[i], outlet.Xi[i]) = spatialDistribution(inStream(inlet.Xi[i]), inStream(outlet.Xi[i]), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in[i], Xi_ini_out[i]});
   end for;
-  // The error is because it is a vector? we should write 7 different spatial distribution for each Xi?
+
 end PlugFlowCore;

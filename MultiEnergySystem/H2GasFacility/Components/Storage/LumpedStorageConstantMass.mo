@@ -4,9 +4,6 @@ model LumpedStorageConstantMass
   extends
     MultiEnergySystem.H2GasFacility.Components.BaseClass.PartialLumpedVolume;
 
-  // To be changed
-  // import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
-
   // Insulation parameters
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
   parameter H2GasFacility.Types.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
@@ -18,6 +15,8 @@ model LumpedStorageConstantMass
   Types.Temperature Ttilde(start = T_start) "Temperatue of the water inside the volume";
   Types.HeatFlowRate Q_amb "Heat losses to ambient";
 
+  Modelica.Units.SI.HeatFlowRate Q_flow "Heat flowing from the pipe";
+
   Modelica.Blocks.Interfaces.RealOutput temperatureMixVolume annotation (
     Placement(visible = true, transformation(origin = {60, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {100, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 
@@ -25,11 +24,12 @@ model LumpedStorageConstantMass
 equation
     // Fluid definition
     fluidIn.p = inlet.p;
-    fluidIn.h = inlet.h_out;
-    fluidIn.Xi = inlet.Xi;
+    //fluidIn.h = inStream(inlet.h_out);
+    fluidIn.T = T_a_inflow;
+    fluidIn.Xi = inStream(inlet.Xi);
 
     fluidOut.p = outlet.p;
-    fluidOut.h = outlet.h_out;
+    fluidOut.T = T_b_outflow;
     fluidOut.Xi = outlet.Xi;
 
 
@@ -40,7 +40,7 @@ equation
     inlet.m_flow + outlet.m_flow = 0 "No mass dynamics";
 
     // Energy Balance
-    M_id * fluidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
+    M_id * fluidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (T_a_inflow - T_b_outflow) - Q_amb "Ideal perfectly mixed fluid";
 
     // Pressure at the bottom of the tank is increased as Stevino
     inlet.p - outlet.p = rho_nom*H*g_n;
@@ -52,13 +52,13 @@ equation
     temperatureMixVolume = Ttilde - 273.15;
 
     // Boundary equations
-    outlet.h_out = Tout * fluidIn.cp;
+    outlet.h_out = T_b_outflow * fluidOut.cp;
     if not allowFlowReversal or m_flow_in > 0 then
-      Tin = inStream(inlet.h_out) / fluidIn.cp;
-      Tout = Ttilde;
+      T_a_inflow = inStream(inlet.h_out) / fluidIn.cp;
+      T_b_outflow = Ttilde;
     else
-      Tin = Ttilde;
-      Tout = inStream(outlet.h_out) / fluidIn.cp;
+      T_a_inflow = Ttilde;
+      T_b_outflow = inStream(outlet.h_out) / fluidOut.cp;
     end if;
 
 initial equation

@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Components.BaseClass;
-model PartialLumpedVolume
+partial model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
 
   //extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
@@ -39,7 +39,7 @@ model PartialLumpedVolume
 
   // Parameters
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
-  //parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal";
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal";
   parameter Types.Length H = 0 "High of the lumped tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
   parameter Types.Length D = 0.5 "Diameter of the lumped tank" annotation (

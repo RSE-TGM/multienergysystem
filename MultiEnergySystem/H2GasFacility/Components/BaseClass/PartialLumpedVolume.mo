@@ -23,7 +23,7 @@ partial model PartialLumpedVolume
   // Definition of System
   outer System system "system object for global defaults";
 
-  // ADD MODEL OF THE FLUID OF THE PIPE --> Is it necessary?
+  // Add model of the fluid in the pipe
   // import MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND

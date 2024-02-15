@@ -46,9 +46,11 @@ equation
   der(x) = v;
   q = inlet.m_flow / fluidIn.rho;
   v = q / A;
+
+  //Spatial Distribution of Enthalpy
   (inlet.h_out, outlet.h_out) = spatialDistribution(inStream(inlet.h_out), inStream(outlet.h_out), x / L, v >= 0, {0.0, 1.0}, {h_ini_in, h_ini_out});
 
-  //
+  // Spatial Distribution of
   // inStream() + Vector doesn't work in the spatialDistirbution function. For this reason it is necessary to use the for loop and
   // to assign the value of the inStream() function to the inStreamIn\Out variables.
   //

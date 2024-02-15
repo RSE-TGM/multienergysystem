@@ -33,7 +33,7 @@ model TestPlugFlowCore
     X_start=X_start,
     Di=Pipe.pipe1.Di,
     rho_nom=Pipe.pipe1.rho_nom)
-    annotation (Placement(transformation(extent={{-16,-22},{28,22}})));
+    annotation (Placement(transformation(extent={{-16,-54},{28,-10}})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure
                                        sourceP1(
     redeclare model Medium = Medium,
@@ -86,18 +86,18 @@ model TestPlugFlowCore
     T0(displayUnit="K") = 308.15,
     X0=Xref_2,
     p0=49500)
-    annotation (Placement(transformation(extent={{54,-40},{74,-20}})));
+    annotation (Placement(transformation(extent={{54,-42},{74,-22}})));
 equation
   connect(p_in1.y, sourceP1.in_p0) annotation (Line(points={{-77,12},{-50,12},{-50,
           8.4}},        color={0,0,127}));
   connect(T_in1.y, sourceP1.in_T0) annotation (Line(points={{-77,48},{-64,48},{-64,
           30},{-46,30},{-46,9.6}},          color={0,0,127}));
   connect(sourceMassFlow.outlet, plugFlowCore.inlet) annotation (Line(
-      points={{-40,-32},{-34,-32},{-34,-34},{-28,-34},{-28,0},{-16,0}},
+      points={{-40,-32},{-16,-32}},
       color={182,109,49},
       thickness=0.5));
   connect(sinkPressure.inlet, plugFlowCore.outlet) annotation (Line(
-      points={{54,-30},{48,-30},{48,-28},{40,-28},{40,0},{28,0}},
+      points={{54,-32},{28,-32}},
       color={182,109,49},
       thickness=0.5));
   connect(m_flow1.y, sourceMassFlow.in_m_flow0) annotation (Line(points={{-85,-28},

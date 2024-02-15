@@ -22,13 +22,14 @@ model LumpedStorageConstantMass
 
 
 equation
+
     // Fluid definition
     fluidIn.p = inlet.p;
-    //fluidIn.h = inStream(inlet.h_out);
-    fluidIn.T = T_a_inflow;
+    fluidIn.h = inStream(inlet.h_out);
     fluidIn.Xi = inStream(inlet.Xi);
 
     fluidOut.p = outlet.p;
+    //fluidIn.h = outlet.h_out;
     fluidOut.T = T_b_outflow;
     fluidOut.Xi = outlet.Xi;
 
@@ -41,6 +42,7 @@ equation
 
     // Energy Balance
     M_id * fluidIn.cp * der(Ttilde) = m_flow_in * fluidIn.cp * (T_a_inflow - T_b_outflow) - Q_amb "Ideal perfectly mixed fluid";
+    //T_a_inflow = fluidIn.T;
 
     // Pressure at the bottom of the tank is increased as Stevino
     inlet.p - outlet.p = rho_nom*H*g_n;

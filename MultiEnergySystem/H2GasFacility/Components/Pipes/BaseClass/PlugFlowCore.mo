@@ -18,23 +18,9 @@ model PlugFlowCore
   H2GasFacility.Types.Length x "Spatial coordinate for spatialDistribution operator";
   H2GasFacility.Types.Velocity v "Flow velocity of medium in pipe";
   H2GasFacility.Types.VolumeFlowRate q "Volume flow rate at inflowing port (positive when flow from port_a to port_b)";
-  Real[fluidIn.nXi] a;
-  Real[fluidIn.nXi]   b;
-  Real[fluidIn.nXi]     c;
-  Real[fluidIn.nXi]       d;
-  // Medium
-//   Medium fluidIn(
-//     T_start = Tin_start,
-//     p_start = pin_start,
-//     X_start = X_start,
-//     computeTransport = false,
-//     computeEntropy = false);
-//   Medium fluidOut(
-//     T_start = Tout_start,
-//     p_start = pout_start,
-//     X_start = X_start,
-//     computeTransport = false,
-//     computeEntropy = false);
+
+  Real[fluidIn.nXi]  inStreamIn;
+  Real[fluidIn.nXi]  inStreamOut;
 
 //protected
     parameter H2GasFacility.Types.SpecificEnthalpy h_ini_in = fluidIn.h_id_start "For initialization of spatialDistribution inlet";
@@ -62,17 +48,9 @@ equation
   v = q / A;
   (inlet.h_out, outlet.h_out) = spatialDistribution(inStream(inlet.h_out), inStream(outlet.h_out), x / L, v >= 0, {0.0, 1.0}, {h_ini_in, h_ini_out});
   for i in 1:fluidIn.nXi loop
-    a[i] = inlet.Xi[i];
-    b[i] = outlet.Xi[i];
-    c[i] = inStream(inlet.Xi[i]);
-    d[i] = inStream(outlet.Xi[i]);
-    (a[i], b[i]) = spatialDistribution(c[i], d[i], x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in[i], Xi_ini_out[i]});
-    //(inlet.Xi[i], outlet.Xi[i]) = spatialDistribution(inStream(inlet.Xi[i]), inStream(outlet.Xi[i]), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in[i], Xi_ini_out[i]});
-   end for;
-  //(inlet.Xi[1], outlet.Xi[1]) = spatialDistribution(inStream(inlet.Xi[1]), inStream(outlet.Xi[1]), x / L, v >= 0, {0.0, 1.0}, {1, 1});
-  //(a, b) = spatialDistribution(c, d, x / L, v >= 0, {0.0, 1.0}, {1, 1});
-  //(inlet.Xi, outlet.Xi) = spatialDistribution(inStream(inlet.Xi), inStream(outlet.Xi), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in, Xi_ini_out});
-//   outlet.Xi[2:end] = inStream(inlet.Xi[2:end]);
-//   inlet.Xi[2:end] = inStream(outlet.Xi[2:end]);
+    inStreamIn[i] = inStream(inlet.Xi[i]);
+    inStreamOut[i] = inStream(outlet.Xi[i]);
+    (inlet.Xi[i], outlet.Xi[i]) = spatialDistribution(inStream(inlet.Xi[i]), inStream(outlet.Xi[i]), x / L, v >= 0, {0.0, 1.0}, {Xi_ini_in[i], Xi_ini_out[i]});
+  end for;
   // The error is because it is a vector? we should write 7 different spatial distribution for each Xi?
 end PlugFlowCore;

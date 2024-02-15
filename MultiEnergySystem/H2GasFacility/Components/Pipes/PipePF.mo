@@ -40,7 +40,7 @@ model PipePF
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass
     annotation (Placement(transformation(extent={{60,-40},{80,-20}})));
   Sensors.IdealMassFlowSensor idealMassFlowSensor
-    annotation (Placement(transformation(extent={{-56,-6},{-36,14}})));
+    annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
   BaseClass.TimeDelayPlugFlow timeDelayPlugFlow
     annotation (Placement(transformation(extent={{-8,42},{12,62}})));
 equation
@@ -49,11 +49,11 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(idealMassFlowSensor.outlet, plugFlowCore.inlet) annotation (Line(
-      points={{-40,0},{-20,0}},
+      points={{-34,0},{-20,0}},
       color={182,109,49},
       thickness=0.5));
   connect(idealMassFlowSensor.m_flow, timeDelayPlugFlow.m_flow) annotation (
-      Line(points={{-39,10},{-28,10},{-28,56.4},{-6.2,56.4}}, color={0,0,127}));
+      Line(points={{-37,6},{-28,6},{-28,56.4},{-6.2,56.4}},   color={0,0,127}));
   connect(timeDelayPlugFlow.tau_rev, directionalHeatLossPlugFlow.tau)
     annotation (Line(points={{11.5,48.5},{18,48.5},{18,32},{-66,32},{-66,6}},
         color={0,0,127}));
@@ -76,7 +76,7 @@ equation
       thickness=0.5));
   connect(directionalHeatLossPlugFlow.inlet, idealMassFlowSensor.inlet)
     annotation (Line(
-      points={{-64,-1.66533e-15},{-56,-1.66533e-15},{-56,0},{-52,0}},
+      points={{-64,-1.66533e-15},{-59,-1.66533e-15},{-59,0},{-54,0}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

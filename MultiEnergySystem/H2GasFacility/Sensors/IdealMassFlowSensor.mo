@@ -94,8 +94,8 @@ equation
 
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                      Rectangle(lineColor = {140, 56, 54}, fillColor={244,125,35},    fillPattern=
-              FillPattern.Solid,                                                                                      extent={{-40,-20},
-              {40,-60}}),                                                                                                                                                                                                        Text(origin={0,68},     textColor={244,125,
+              FillPattern.Solid,                                                                                      extent={{-80,20},
+              {80,-20}}),                                                                                                                                                                                                        Text(origin={0,100},    textColor={244,125,
               35},                                                                                                                                                                                                        extent={{-100,
               -126},{100,-166}},
           textString="%name"),

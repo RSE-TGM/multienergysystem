@@ -1978,7 +1978,7 @@ package Configurations "Different possible configurations for the loads"
         dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom,
         Tin_start(displayUnit="K") = EX701_Tout_hot,
         pin_start=EX701_pout_hot,
-        q_m3h_start=EX701_q_m3h_cold) annotation (Placement(transformation(
+        q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={140,-150})));
@@ -2016,7 +2016,7 @@ package Configurations "Different possible configurations for the loads"
         lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
         m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
         m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=9,
+        n=5,
         nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
         nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
         nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
@@ -2313,7 +2313,7 @@ package Configurations "Different possible configurations for the loads"
         dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom,
         Tin_start(displayUnit="K") = EX721_Tout_hot,
         pin_start=EX721_pout_hot,
-        q_m3h_start=EX721_q_m3h_cold) annotation (Placement(transformation(
+        q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={620,-150})));
@@ -2453,7 +2453,7 @@ package Configurations "Different possible configurations for the loads"
         dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom,
         Tin_start(displayUnit="K") = EX731_Tout_hot,
         pin_start=EX731_pout_hot,
-        q_m3h_start=EX731_q_m3h_cold) annotation (Placement(transformation(
+        q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={300,-150})));
@@ -2601,8 +2601,8 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_hot=2.5e5;
       parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_hot=2.4e5;
       parameter DistrictHeatingNetwork.Types.Pressure FCV701_pout=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_hot=15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_hot=80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_hot=65 + 273.15;
 
       parameter Real EX701_q_m3h_cold(unit = "m3/h") = 1.5;
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX701_cold=
@@ -2617,8 +2617,8 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_hot=2e5;
       parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_hot=1.99e5;
       parameter DistrictHeatingNetwork.Types.Pressure FCV711_pout=1.98e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot=15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_hot=80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot=65 + 273.15;
 
       parameter Real EX711_q_m3h_cold(unit = "m3/h") = 1.5;
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_cold=
@@ -2633,8 +2633,8 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_hot=2e5;
       parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_hot=1.99e5;
       parameter DistrictHeatingNetwork.Types.Pressure FCV721_pout=1.98e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_hot=80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=65 + 273.15;
 
       parameter Real EX721_q_m3h_cold(unit = "m3/h") = 1.5;
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_cold=
@@ -2649,8 +2649,8 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_hot=2e5;
       parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_hot=1.99e5;
       parameter DistrictHeatingNetwork.Types.Pressure FCV731_pout=1.98e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_hot=15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_hot=80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_hot=65 + 273.15;
 
       parameter Real EX731_q_m3h_cold(unit = "m3/h") = 1;
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX731_cold=0.5*1000/

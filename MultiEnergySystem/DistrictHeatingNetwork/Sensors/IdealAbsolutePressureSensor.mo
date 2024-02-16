@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Sensors;
 model IdealAbsolutePressureSensor
   "Get absolute pressure of the attached port"
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialAbsoluteSensor;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Sensors.BaseClass.PartialAbsoluteSensor;
   Modelica.Blocks.Interfaces.RealOutput p annotation (
     Placement(visible = true, transformation(origin = {6, 82}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={0,130},    extent = {{-10, -10}, {10, 10}}, rotation=90)));
   Real p_meas;

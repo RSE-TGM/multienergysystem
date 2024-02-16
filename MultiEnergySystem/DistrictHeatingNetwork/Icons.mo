@@ -50,8 +50,9 @@ package Icons "Icon package for DHN components"
 
     partial model Pipe
       annotation (
-        Icon(graphics={  Rectangle(fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent={{-100,32},
-                  {100,-32}}),                                                                                                     Text(origin={0,34},    textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+        Icon(graphics={  Rectangle(fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, extent={{-100,30},
+                  {100,-30}},
+              radius=5)},                                                                                                                                                                                                        coordinateSystem(extent = {{-100, -100}, {100, 100}})));
     end Pipe;
   end Water;
 
@@ -84,16 +85,17 @@ package Icons "Icon package for DHN components"
     equation
 
       annotation (
-        Icon(graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, extent = {{-60, 80}, {60, -80}}), Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {0, -6}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name"), Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}})}));
+        Icon(graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern=
+                  FillPattern.Solid,                                                                                        extent = {{-60, 80}, {60, -80}},
+              radius=15),                                                                                                                                     Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Text(origin = {0, -6}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name"), Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}})}));
     end Boiler;
 
     partial model ElectricBoiler
-      extends
-        MultiEnergySystem.DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
+      extends MultiEnergySystem.DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
     equation
 
       annotation (
-        Icon(graphics = {Polygon(lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));
+        Icon(graphics={  Polygon(lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));
     end ElectricBoiler;
 
     partial model HeatPump

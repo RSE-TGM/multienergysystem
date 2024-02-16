@@ -1,7 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 partial model ThermalInertiaPlugFlow
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 equation
   // No pressure loss

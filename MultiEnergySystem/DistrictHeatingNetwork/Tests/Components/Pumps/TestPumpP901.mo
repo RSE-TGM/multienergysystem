@@ -1,7 +1,15 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pumps;
 model TestPumpP901
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
+  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass.PumpTestBase(
+    m_flow_set_50Hz(
+      height=5.45,
+      offset=2.1,
+      startTime=50),
+    sink_50Hz(
+      T0=Pump.P901.Tout_start,
+      p0=Pump.P901.pout_start,
+      m_flow0=Pump.P901.m_flow_nom,
+      pin_start=Pump.P901.pout_start),
     pump_50Hz(
       Tin_start=Pump.P901.Tin_start,
       Tout_start=Pump.P901.Tout_start,
@@ -22,21 +30,12 @@ model TestPumpP901
       qnom_inm3h_min=Pump.P901.qnommin_inm3h,
       rhonom=Pump.P901.rhonom,
       qnom_inm3h_max=Pump.P901.qnommax_inm3h),
-    m_flow_set(
-      height=5.45,
-      offset=2.1,
-      startTime=50),
     sourceP(
       p0=Pump.P901.pin_start,
       T0=Pump.P901.Tin_start,
       h0=Pump.P901.hin_start),
     cvalve(Kv=12),
     omega(height=-0.1*Pump.P901.omeganom*0, offset=Pump.P901.omeganom),
-    sink(
-      T0=Pump.P901.Tout_start,
-      p0=Pump.P901.pout_start,
-      m_flow0=Pump.P901.m_flow_nom,
-      pin_start=Pump.P901.pout_start),
     pump_40Hz(
       Tin_start=Pump.P901.Tin_start,
       Tout_start=Pump.P901.Tout_start,

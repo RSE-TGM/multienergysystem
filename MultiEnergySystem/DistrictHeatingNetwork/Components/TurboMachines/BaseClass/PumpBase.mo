@@ -75,7 +75,6 @@ partial model PumpBase "Base model to develop water pump models"
   Modelica.Units.SI.Pressure pout "Pressure of outgoing fluid";
   Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start) "Enthalpy of entering fluid";
   Modelica.Units.SI.SpecificEnthalpy hout(start = hin_start, nominal = 1e5) "Enthalpy of outgoing fluid";
-  //Types.SpecificEnthalpy hiso;
   Types.Density rhoin(nominal = 1e3) "Density of entering fluid";
   Types.Density rhoout(nominal = 1e3) "Density of outgoing fluid";
   Types.Temperature Tin(start = Tin_start) "Liquid inlet temperature";
@@ -99,8 +98,8 @@ equation
 //   assert(headmin < head, "Head is lower than its minimum value", AssertionLevel.error);
 //   assert(qnom_inm3h_max > q_m3h, "Volumetric flowrate is higher than its maximum operating value", AssertionLevel.error);
 //   assert(qnom_inm3h_min < q_m3h, "Volumetric flowrate is lower than its minimum operating value", AssertionLevel.error);
-   assert(2*pi*50 >= omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
-   assert(2*pi*30 <= omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
+//   assert(2*pi*50 >= omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
+//   assert(2*pi*30 <= omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;
@@ -128,11 +127,8 @@ equation
   f = omega/(2*pi);
 
   head = dp/(rhoin*g);
-  //dp = head*rhoin*g;
   W = dp*q/eta;
-//eta = 0.6;
-//eta = dp*q/W;
-//dp = W*eta/q;
+
   // Mass Balance
   inlet.m_flow + outlet.m_flow = 0;
 

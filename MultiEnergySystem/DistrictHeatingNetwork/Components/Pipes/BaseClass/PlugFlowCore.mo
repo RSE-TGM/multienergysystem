@@ -1,7 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model PlugFlowCore
-  extends
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import Modelica.Fluid.Utilities.regSquare;
 

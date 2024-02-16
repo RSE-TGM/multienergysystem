@@ -16,8 +16,6 @@ model ControlledGasBoiler
   SI.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
   SI.Power Pheat_ref "Reference value for computed Heat Power required";
   SI.SpecificEnthalpy hout_ref "Reference required temperature";
-
-
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
 
 
@@ -35,7 +33,8 @@ equation
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
 
   //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxnom) else 0, tdelay);
-  Pheat = min(Pheat_ref, Pmaxnom);
+  Pheat = if heat_on then min(Pheat_ref, Pmaxnom) else 0;
+  //Pheat = min(Pheat_ref, Pmaxnom);
 
 //   when Tout_ref - T_bandwidth > Tout and pre(heat_on)==false then
 //     heat_on=  true;

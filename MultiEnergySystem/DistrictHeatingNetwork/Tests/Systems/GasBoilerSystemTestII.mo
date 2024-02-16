@@ -14,16 +14,6 @@ model GasBoilerSystemTestII "Test of System 100 with real data"
   parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
 
   // Pipe Data
-
-  parameter Types.Length L_S1_PL1 = 0.4;
-  parameter Types.Length h_S1_PL1 = 0;
-  parameter Types.Length L_S1_PL2 = 0.8;
-  parameter Types.Length h_S1_PL2 = 0;
-  parameter Types.Length L_S1_PL3 = 1.5;
-  parameter Types.Length h_S1_PL3 = 0;
-  parameter Types.Length L_S1_PL4 = 0.7;
-  parameter Types.Length h_S1_PL4 = 0;
-
   parameter Types.Length L_TT101_FT101 = 0.7;
   parameter Types.Length h_TT101_FT101 = 0;
   parameter Types.Length L_FT101_GB101 = 1.25 + 0.7;
@@ -47,10 +37,10 @@ model GasBoilerSystemTestII "Test of System 100 with real data"
   parameter Real P101omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*30; 300, 2*3.141592654*30];
   parameter Real FCV101theta[:,:] = [0, 1];
 
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Flows = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C://Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Pressures = Modelica.Utilities.Files.loadResource("C://Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Flows = Modelica.Utilities.Files.loadResource("C://Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Actuators = Modelica.Utilities.Files.loadResource("C://Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test2\Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
   parameter String matrixFT101 = "FT101" "Matrix name in file";
   parameter String matrixPT101 = "PT101" "Matrix name in file";
@@ -144,7 +134,7 @@ model GasBoilerSystemTestII "Test of System 100 with real data"
     pin_start=pin_start_S1,
     pout_start=pout_start_S1,
     h=1.2*0.93,
-    Pmaxnom=147.6e3*0.79,
+    Pmaxnom=147.6e3*0.8,
     HH=55.5e6)         annotation (Placement(visible=true, transformation(
         origin={0,-106},
         extent={{-46,-46},{46,46}},
@@ -227,6 +217,9 @@ model GasBoilerSystemTestII "Test of System 100 with real data"
     use_in_p0=true,
     p0=pout_start_S1,
     T0=Tout_start_S1) annotation (Placement(transformation(extent={{26,138},{46,118}})));
+  Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
+    "Input to decide whether or nor the gas boiler is working"
+    annotation (Placement(transformation(extent={{-80,-148},{-60,-128}})));
 equation
   connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (Line(
       points={{20,-14.6},{20,-26}},
@@ -293,6 +286,8 @@ equation
       thickness=0.5));
   connect(PT102_profile.y, sink.in_p0)
     annotation (Line(points={{39,100},{32,100},{32,119.6}}, color={0,0,127}));
+  connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-133.6},
+          {-36.8,-133.6}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

@@ -1,41 +1,47 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
-partial model PartialSubstance
+partial model PartialSubstance "Base model for liquid pure substances"
   extends Modelica.Icons.MaterialProperty;
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false "Used to decide if it is necessary to calculate the entropy of the fluid";
   parameter Boolean compressibilityEffect = false "Used to enable compressibility effects";
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
+  parameter Types.Density rho_start = 990 "Start value of the fluid density";
+  parameter Types.SpecificHeatCapacity cp_start = 4185 "Start value of fluid spe. heat capacity";
   parameter Types.DynamicViscosity mu_start "Start value of the fluid dynamic viscosity";
   parameter Types.MolarMass MM "Molar mass of the fluid";
   parameter Real rho_coeff[3] "Coefficients to compute fluid density";
   parameter Real cp_coeff[4] "Coefficients to compute specific heat capacity";
   parameter Real kappa_coeff[3] "Coefficients to compute thermal conductivity";
+  final parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) "Start value specific enthalpy";
 
   //Variables
   connector InputPressure = input Types.Pressure "Pseudo-input to check model balancedness";
   connector InputTemperature = input Types.Temperature "Pseudo-input to check model balancedness";
   InputPressure p(start = p_start) "Absolute pressure";
   InputTemperature T(start = T_start) "Temperature";
+  Types.Density rho(start = rho_start) "Density";
+  Real drho_dT(unit = "kg/(m3.K)") annotation (
+    HideResult = not CompressibilityEffect);
   Types.SpecificVolume v "Specific volume";
   Types.MolarVolume v_mol "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
-  Types.SpecificEnthalpy h "Specific Enthalpy of the fluid";
+  Types.SpecificEnthalpy h(start = h_start) "Specific Enthalpy of the fluid";
   Types.SpecificEntropy s "Specific Entropy" annotation (
     HideResult = not ComputeEntropy);
-  Types.SpecificHeatCapacity cp "Specific heat capacity of the fluid";
+  Types.SpecificHeatCapacity cp(start = cp_start) "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
   Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation (
     HideResult = not CompressibilityEffect);
-  Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure";
+  Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure" annotation (
+    HideResult = not CompressibilityEffect);
   Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation (
     HideResult = not CompressibilityEffect);
   Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (
     HideResult = not ComputeTransport);
   Types.ThermalConductivity kappa "Thermal Conductivity" annotation (
     HideResult = not ComputeTransport);
-  Types.Density rho "Density";
 
 protected
   function cp_T

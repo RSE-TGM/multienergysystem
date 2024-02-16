@@ -2,19 +2,22 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model GasBoilerSystemTest "Test of System 100 with real data"
   extends Modelica.Icons.Example;
 
-  parameter Integer n = 3;
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-
-  parameter Real Kv_P101 = Valve.FCV101.Kv;
+  // Constants
+  constant Real pi = Modelica.Constants.pi;
   // Temperatures and pressures
-
   parameter Types.Pressure pin_start_S1 = 1.695e5 - 0.09273e5;
   parameter Types.Pressure pout_start_S1 = 1.6e5;
   parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
   parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
+  parameter Real q_m3h_S1(unit = "m3/h") = 9.25;  
+  final parameter Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;    
+
+  // Valve
+  parameter Real Kv_P101 = Valve.FCV101.Kv;
 
   // Pipe Data
-
+  parameter Integer n = 3;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Types.Length L_S1_PL1 = 0.4;
   parameter Types.Length h_S1_PL1 = 0;
   parameter Types.Length L_S1_PL2 = 0.8;
@@ -41,40 +44,41 @@ model GasBoilerSystemTest "Test of System 100 with real data"
   parameter Types.Length Di_S1 = 51e-3;
   parameter Types.Length t_S1 = 1.5e-3;
 
-  parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
-  final parameter Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
-
+  //Sources' parameters
   parameter Real P101omega[:,:] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*30; 300, 2*3.141592654*30];
   parameter Real FCV101theta[:,:] = [0, 1];
+  parameter Types.Temperature GB101ToutSP[:,:] = [0, 80 + 273.15; 0, 80 + 273.15];
+  parameter Types.MassFlowRate mflowS1[:,:] = [0, 4; 100, 4];
+  parameter Types.Temperature TinS1[:,:] = [0, 60 + 273.15; 100, 60 + 273.15];
+  parameter Types.Pressure pinS1[:,:] = [0, 1.8e5; 100, 1.8e5];
 
+//  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/DiscoD/Muro/Lavoro/Simulations/ModelicaSimulations/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
+//  parameter String matrixFT101 = "FT101" "Matrix name in file";
+//  parameter String matrixPT101 = "PT101" "Matrix name in file";
+//  parameter String matrixPT102 = "PT102" "Matrix name in file";
+//  parameter String matrixTT101 = "TT101" "Matrix name in file";
+//  parameter String matrixTT102 = "TT102" "Matrix name in file";
+//  parameter String matrixthetaFCV101 = "theta_FCV101" "Matrix name in file";
+//  parameter String matrixf_P101 = "f_P101" "Matrix name in file";
 
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test1\Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test1\Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Flows = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test1\Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Dicembre 2023\0412_Test1\Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+//  parameter String timenoscale = "time" "Matrix name in file";
 
-  parameter String matrixFT101 = "FT101" "Matrix name in file";
-  parameter String matrixPT101 = "PT101" "Matrix name in file";
-  parameter String matrixPT102 = "PT102" "Matrix name in file";
-  parameter String matrixTT101 = "TT101" "Matrix name in file";
-  parameter String matrixTT102 = "TT102" "Matrix name in file";
-  parameter String matrixthetaFCV101 = "theta_FCV101" "Matrix name in file";
-  parameter String matrixf_P101 = "f_P101" "Matrix name in file";
-
-  parameter String timenoscale = "time" "Matrix name in file";
-
-  final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT101) "Dimension of matrix";
-  final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT101,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT102,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  parameter Real FT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2])*985/3600 "Matrix data";
-  parameter Real q_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2]) "Matrix data";
-  parameter Real PT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT101,dim[1]+1,dim[2])*1e5 "Matrix data";
-  parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1]+1,dim[2])*1e5 "Matrix data";
-  final parameter Real thetaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV101,dim[1],dim[2]) "Matrix data";
-  final parameter Real omegaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixf_P101,dim[1],dim[2])*2*Modelica.Constants.pi "Matrix data";
+//  final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT101) "Dimension of matrix";
+//  final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
+//  final parameter Real TT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT101,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+//  final parameter Real TT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT102,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+//  parameter Real FT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2])*985/3600 "Matrix data";
+//  parameter Real q_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2]) "Matrix data";
+//  parameter Real PT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT101,dim[1]+1,dim[2])*1e5 "Matrix data";
+//  parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1]+1,dim[2])*1e5 "Matrix data";
+//  final parameter Real thetaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV101,dim[1],dim[2]) "Matrix data";
+//  final parameter Real omegaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixf_P101,dim[1],dim[2])*2*Modelica.Constants.pi "Matrix data";
 
 
 
@@ -147,7 +151,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     Tin_start=Tin_start_S1,
     pin_start=pin_start_S1,
     pout_start=pout_start_S1,
-    Pmaxnom=147.6e3*0.79,
+    Pmaxnom=147.6e3*0.8,
     HH=55.5e6)         annotation (Placement(visible=true, transformation(
         origin={0,-106},
         extent={{-46,-46},{46,46}},
@@ -212,7 +216,7 @@ model GasBoilerSystemTest "Test of System 100 with real data"
     annotation (Placement(transformation(extent={{30,136},{50,116}})));
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table=FCV101theta)
     annotation (Placement(transformation(extent={{60,46},{40,66}})));
-  Modelica.Blocks.Sources.TimeTable P101_omega(table=[t,omegaFCV101])
+  Modelica.Blocks.Sources.TimeTable P101_omega(table=P101omega)
     annotation (Placement(transformation(extent={{60,-20},{40,0}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL_S100_P101_FCV101(
     L=L_P101_FCV101,
@@ -226,11 +230,11 @@ model GasBoilerSystemTest "Test of System 100 with real data"
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,24})));
-  Modelica.Blocks.Sources.TimeTable TT101_profile(table=[t,TT_101])
+  Modelica.Blocks.Sources.TimeTable TT101_profile(table=TinS1)
     annotation (Placement(transformation(extent={{-80,60},{-60,80}})));
-  Modelica.Blocks.Sources.TimeTable FT101_profile(table=[t,FT_101[1:end - 1]])
+  Modelica.Blocks.Sources.TimeTable FT101_profile(table=mflowS1)
     annotation (Placement(transformation(extent={{80,94},{60,114}})));
-  Modelica.Blocks.Sources.TimeTable PT101_profile(table=[t,PT_101[1:end - 1]])
+  Modelica.Blocks.Sources.TimeTable PT101_profile(table=pinS1)
     annotation (Placement(transformation(extent={{-80,100},{-60,120}})));
   Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
     annotation (Placement(transformation(extent={{-80,-116},{-60,-96}})));
@@ -310,6 +314,5 @@ equation
         coordinateSystem(grid={0.5,0.5})),
     experiment(
       StopTime=3880,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      Tolerance=1e-06, StartTime = 0, Interval = 7.76));
 end GasBoilerSystemTest;

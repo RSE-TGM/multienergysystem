@@ -1,8 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Media;
 model WaterTest "Definition of two water states using temperature and density as thermodynamic properties"
   extends Modelica.Icons.Example;
-  replaceable package Medium = Water constrainedby
-    Modelica.Media.Interfaces.PartialMedium                                                "Medium model";
+  replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model";
   replaceable model MediumReal =
       DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity;
   //Declaration of water fluids

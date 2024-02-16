@@ -1,2 +1,8 @@
 GasBoiler
 ElectricBoiler
+ControlledGasBoiler
+ControlledElectricBoiler
+CoolingSingleLoad
+CirculationPump
+RackCD
+RackType2

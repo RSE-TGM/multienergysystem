@@ -34,7 +34,7 @@ model PipePF
   parameter SI.Temperature T_start_m = 273.15 + 70 "Metal temperature start value";
 
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
-  parameter H2GasFacility.Types.SpecificHeatCapacityAtConstantPressure cp = fluidIn.cp;
+  parameter H2GasFacility.Types.SpecificHeatCapacityAtConstantPressure cp = 2100;
 
   // Final
   final parameter Modelica.Units.SI.Area A = Modelica.Constants.pi*Di^2/4;
@@ -95,7 +95,7 @@ model PipePF
         origin={30,0})));
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass(
     allowFlowReversal=false,
-    H=0.1,
+    H=1,
     Tin_start=Pipe.pipe1.Tin_start,
     Tout_start=Pipe.pipe1.Tout_start)
     annotation (Placement(transformation(extent={{60,-40},{80,-20}})));
@@ -113,6 +113,14 @@ model PipePF
     m_flow_nominal=1)
     annotation (Placement(transformation(extent={{-8,42},{12,62}})));
 equation
+
+  fluidIn.p = inlet.p;
+  fluidIn.h = inlet.h_out;
+  fluidIn.Xi = inlet.Xi;
+
+  fluidOut.p = outlet.p;
+  fluidOut.h = outlet.h_out;
+  fluidOut.Xi = outlet.Xi;
   connect(lumpedStorageConstantMass.outlet, outlet) annotation (Line(
       points={{60,-20},{60,0},{100,0}},
       color={182,109,49},

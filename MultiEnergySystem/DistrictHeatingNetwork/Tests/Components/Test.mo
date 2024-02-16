@@ -261,7 +261,7 @@ package Test "Package to test component equation and behaviour"
       T_start_m(displayUnit="degC") = 338.15,
       cpm=880)                                annotation (Placement(visible=true,
           transformation(
-          origin={0,70},
+          origin={-4,72},
           extent={{-10,-10},{10,10}},
           rotation=0)));
     MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut annotation (Placement(
@@ -277,13 +277,14 @@ package Test "Package to test component equation and behaviour"
           rotation=0)));
   equation
     connect(pipePF.outlet, pfOut.inlet) annotation (
-      Line(points={{10,70},{26,70},{26,66},{40,66}},
+      Line(points={{6,72},{26,72},{26,66},{40,66}},
                                           color = {168, 168, 168}));
     connect(pfOut.outlet, expansionTank.inlet) annotation (
       Line(points={{52,66},{72,66},{72,70},{92,70}},
                                           color = {168, 168, 168}));
     connect(idealMassFlowSource.outlet, pipePF.inlet)
-      annotation (Line(points={{-59.8,70},{-10,70}}, color={168,168,168}));
+      annotation (Line(points={{-59.8,70},{-38,70},{-38,72},{-14,72}},
+                                                     color={168,168,168}));
     connect(pfOut1.outlet, expansionTank2.inlet) annotation (Line(
         points={{36,24},{92,24}},
         color={140,56,54},

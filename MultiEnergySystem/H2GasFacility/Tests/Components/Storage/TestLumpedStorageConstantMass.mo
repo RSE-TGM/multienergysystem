@@ -19,8 +19,8 @@ model TestLumpedStorageConstantMass
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow1(
     duration=100,
-    height=-m_flow_start*2,
-    offset=m_flow_start,
+    height=-m_flow_start,
+    offset=-m_flow_start,
     startTime=75)                                                                                                      annotation (
     Placement(visible = true, transformation(origin={-81,15},   extent={{-9,-9},
             {9,9}},                                                                              rotation = 0)));
@@ -39,7 +39,11 @@ model TestLumpedStorageConstantMass
     p0=49500)
     annotation (Placement(transformation(extent={{64,0},{84,20}})));
   MultiEnergySystem.H2GasFacility.Components.Storage.LumpedStorageConstantMass
-    lumpedStorageConstantMass annotation (Placement(transformation(
+    lumpedStorageConstantMass(
+    allowFlowReversal=true,
+    H=0.5,
+    pin_start=49500,
+    X_start=Xref_2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={22,-14})));

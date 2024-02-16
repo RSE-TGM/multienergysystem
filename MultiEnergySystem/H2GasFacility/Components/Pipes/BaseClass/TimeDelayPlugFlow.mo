@@ -9,18 +9,13 @@ model TimeDelayPlugFlow
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
      choicesAllMatching = true);
 
-  // ??????? DOMANDA ??????????
-  // In questo modello io ho bisogno solo di rho_nom, devo comunque definire tutto il fluido?
-  // Devo definire p,h,Xi? Secondo me no, ma devo trovare il modo di definire solo rho_nom
-  // ??????????????????????????
-
 
   // Base tube parameters
   parameter Modelica.Units.SI.Length L "Pipe length";
   parameter Modelica.Units.SI.Length D "Diameter (assuming a round cross section area)";
 
   // Parameters
-  parameter H2GasFacility.Types.Density rho_nom = 0.7 "Nominal density";
+  parameter H2GasFacility.Types.Density rho_nom = 0.6844 "Nominal density --> The value must be changed!";
   //parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
 
   parameter Boolean initDelay = false "Initialize delay for a constant m_flow_start if true, otherwise start from 0";

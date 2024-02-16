@@ -3,7 +3,7 @@ model DirectionalHeatLossPlugFlow
   extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube;
 
   // Parameters
-  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal "Nominal mass flow rate";
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal(min = 0) "Nominal mass flow rate";
   parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
 
   // Final parameters

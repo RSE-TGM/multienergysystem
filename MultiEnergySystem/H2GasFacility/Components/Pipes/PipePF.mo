@@ -10,7 +10,7 @@ model PipePF
      choicesAllMatching = true);
 
   BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow(
-    L=L,
+    L=Pipe.pipe1.L,
     H=H,
     t=t,
     pmax=pmax,
@@ -21,27 +21,59 @@ model PipePF
     rhom=rhom,
     lambdam=lambdam,
     T_ext=T_ext,
-    m_flow_start=m_flow_start,
-    pin_start=pin_start,
-    pout_start=pout_start,
-    hin_start=hin_start,
-    Tin_start=Tin_start,
-    Tout_start=Tout_start,
-    Di=Di) annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+    m_flow_start=Pipe.pipe1.m_flow_start,
+    pin_start=Pipe.pipe1.pin_start,
+    pout_start=Pipe.pipe1.pout_start,
+    hin_start=Pipe.pipe1.hin_start,
+    Tin_start=Pipe.pipe1.Tin_start,
+    Tout_start=Pipe.pipe1.Tout_start,
+    Di=Pipe.pipe1.Di,
+    m_flow_nominal=1)
+           annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-74,0})));
-  BaseClass.PlugFlowCore plugFlowCore
+  BaseClass.PlugFlowCore plugFlowCore(
+    L=Pipe.pipe1.L,
+    m_flow_start=Pipe.pipe1.m_flow_start,
+    pin_start=Pipe.pipe1.pin_start,
+    pout_start=Pipe.pipe1.pout_start,
+    hin_start=Pipe.pipe1.hin_start,
+    Tin_start=Pipe.pipe1.Tin_start,
+    Tout_start=Pipe.pipe1.Tout_start,
+    Di=Pipe.pipe1.Di)
     annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
-  BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow1
+  BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow1(
+    L=Pipe.pipe1.L,
+    m_flow_start=Pipe.pipe1.m_flow_start,
+    pin_start=Pipe.pipe1.pin_start,
+    pout_start=Pipe.pipe1.pout_start,
+    hin_start=Pipe.pipe1.hin_start,
+    Tin_start=Pipe.pipe1.Tin_start,
+    Tout_start=Pipe.pipe1.Tout_start,
+    Di=Pipe.pipe1.Di,
+    m_flow_nominal=1)
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=180,
         origin={30,0})));
-  Storage.LumpedStorageConstantMass lumpedStorageConstantMass
+  Storage.LumpedStorageConstantMass lumpedStorageConstantMass(
+    allowFlowReversal=false,
+    H=0.1,
+    Tin_start=Pipe.pipe1.Tin_start,
+    Tout_start=Pipe.pipe1.Tout_start)
     annotation (Placement(transformation(extent={{60,-40},{80,-20}})));
-  Sensors.IdealMassFlowSensor idealMassFlowSensor
+  Sensors.IdealMassFlowSensor idealMassFlowSensor(
+    pin_start=Pipe.pipe1.pin_start,
+    pout_start=Pipe.pipe1.pout_start,
+    Tin_start=Pipe.pipe1.Tin_start,
+    Tout_start=Pipe.pipe1.Tin_start,
+    m_flow_start=Pipe.pipe1.m_flow_start,
+    hin_start=Pipe.pipe1.hin_start)
     annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
-  BaseClass.TimeDelayPlugFlow timeDelayPlugFlow
+  BaseClass.TimeDelayPlugFlow timeDelayPlugFlow(
+    L=Pipe.pipe1.L,
+    D=Pipe.pipe1.Di,
+    m_flow_nominal=1)
     annotation (Placement(transformation(extent={{-8,42},{12,62}})));
 equation
   connect(lumpedStorageConstantMass.outlet, outlet) annotation (Line(

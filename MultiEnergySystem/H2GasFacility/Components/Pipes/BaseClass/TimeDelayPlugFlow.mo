@@ -20,9 +20,8 @@ model TimeDelayPlugFlow
   parameter Modelica.Units.SI.Length D "Diameter (assuming a round cross section area)";
 
   // Parameters
-  parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
-  //parameter H2GasFacility.Types.Density rho_nom = MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND.rho_start "Nominal density";
-  //parameter H2GasFacility.Types.Density rho_nom = MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixtureND.rho_start "Nominal density";
+  parameter H2GasFacility.Types.Density rho_nom = 0.7 "Nominal density";
+  //parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
 
   parameter Boolean initDelay = false "Initialize delay for a constant m_flow_start if true, otherwise start from 0";
   parameter Modelica.Units.SI.MassFlowRate m_flow_start = 0 "Initialization of mass flow rate to calculate initial time delay";

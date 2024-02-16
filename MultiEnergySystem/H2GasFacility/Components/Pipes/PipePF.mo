@@ -9,6 +9,43 @@ model PipePF
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
      choicesAllMatching = true);
 
+  import Modelica.Units.SI;
+  // Flow initial parameters
+  parameter SI.MassFlowRate m_flow_nominal = 1 "Nominal mass flow";
+  parameter SI.MassFlowRate m_flow_start "Starting mass flow";
+  parameter SI.MassFlowRate m_flow_small = 0.01 "Minimum mass flow rate for regularization";
+  parameter SI.PerUnit cf = 0.004 "Constant Fanning factor";
+  // Pressure initial parameteers
+  parameter SI.Pressure pin_start "Starting initial pressure";
+  // Parameter
+  parameter SI.Length L "Length";
+  parameter SI.Length D "Internal diameter";
+  parameter SI.Length H = 0 "Hight, positive if outlet is higher than inlet. = 0 ports at same hight";
+  parameter SI.Length tIns = 0.15 "Insulation thickness";
+  parameter SI.ThermalConductivity lambdaIns = 0.04 "Thermal conductivity of the insulant material";
+  // Metal Parameter
+  parameter Boolean thermalInertia = true "= true account for metal thermal inertia";
+  parameter SI.Length t = 0.003 "Metal tube thickness";
+  //parameter Real rhomcm(unit = "J/(m3.K)") "Metal heat capacity per unit volume [J/m^3.K]; steel = 3.12e6";
+  parameter SI.Density rhom = 8000 "Metal density [kg/m^3], for steel = 7850";
+  parameter SI.ThermalConductivity lambdam = 45 "Thermal conductivity; steel = 45";
+  parameter SI.Temperature T_ext = 15 + 273.15 "External temperature";
+  parameter SI.Temperature T_start = 273.15 + 70 "Temperature start value";
+  parameter SI.Temperature T_start_m = 273.15 + 70 "Metal temperature start value";
+
+  parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
+  parameter H2GasFacility.Types.SpecificHeatCapacityAtConstantPressure cp = fluidIn.cp;
+
+  // Final
+  final parameter Modelica.Units.SI.Area A = Modelica.Constants.pi*Di^2/4;
+  final parameter SI.Velocity u_nom = m_flow_nominal/(rho_nom*A);
+  parameter SI.SpecificHeatCapacity cpm;
+  final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((Di/2 + t)^2 - (Di/2)^2)*L*cpm*rhom/(cp*rho_nom) "Volume of water equivalent to the metal";
+  final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*1) "Consider a diameter of 2, compute hight";
+
+
+
+
   BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow(
     L=Pipe.pipe1.L,
     H=H,

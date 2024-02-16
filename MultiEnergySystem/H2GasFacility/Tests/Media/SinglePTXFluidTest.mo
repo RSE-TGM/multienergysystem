@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
-model SinglePTXFluidTest
+model SinglePTXFluidTest "Basic test for computing the properties of a gas, choosing a specific fluid model and defining the pressure, temperature & mass composition"
   extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Real fluid";
   parameter Types.Temperature T_ref = 50 + 273.15 "Reference temperature";

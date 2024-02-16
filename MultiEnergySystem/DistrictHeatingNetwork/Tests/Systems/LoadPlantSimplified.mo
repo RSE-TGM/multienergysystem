@@ -1,6 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model LoadPlantSimplified
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(
+    redeclare model Medium = Medium,
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom,
     Tin_start(displayUnit="K") = EX701_Tout_hot,
@@ -12,6 +13,7 @@ model LoadPlantSimplified
 
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX701(
     redeclare model Medium = Medium,
+    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
     hctype_hot=hctype,
     Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
     Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
@@ -57,7 +59,7 @@ model LoadPlantSimplified
         DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-    thermalInertia=false,
+    thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
       Placement(transformation(
@@ -66,6 +68,7 @@ model LoadPlantSimplified
         origin={-239,-55.5})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_FCV701_FT701(
+    redeclare model Medium = Medium,
     L=L_FCV701_FT701,
     h=h_FCV701_FT701,
     t=t_S700,
@@ -80,6 +83,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={-220,38})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_SourceOut_FCV701(
+    redeclare model Medium = Medium,
     L=L_HX701_SourceOut_FCV701,
     h=h_HX701_SourceOut_FCV701,
     t=t_S700,
@@ -93,15 +97,16 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-220,-22})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT701(T_start=
-        EX701_Tout_hot, p_start=FCV701_pout)
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT701(
+        redeclare model Medium = Medium,
+        T_start= EX701_Tout_hot, p_start=FCV701_pout)
     "Flow sensor at the outlet outlet of EX701 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={-218,56})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT701(T_start=
-        EX701_Tout_hot, p_start=FCV701_pout)
+        EX701_Tout_hot, p_start=FCV701_pout,redeclare model Medium = Medium)
     "Temperature sensor at the outlet of EX701 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
@@ -114,6 +119,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={-218,86})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_TT702_SourceIn(
+    redeclare model Medium = Medium,
     L=L_HX701_TT702_SourceIn,
     h=h_HX701_TT702_SourceIn,
     t=t_S700,
@@ -127,8 +133,8 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-260,10})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT702(T_start=
-        EX701_Tin_hot, p_start=EX701_pin_hot)
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT702(redeclare model Medium = Medium,
+        T_start= EX701_Tin_hot, p_start=EX701_pin_hot)
     "Temperature sensor at the inlet of EX701 - hot side" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
@@ -142,6 +148,7 @@ model LoadPlantSimplified
         origin={-262,80})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX711(
     redeclare model Medium = Medium,
+    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
     hctype_hot=hctype,
     Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
     Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
@@ -151,10 +158,10 @@ model LoadPlantSimplified
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-    Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-    Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-    Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-    Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+    Tin_start_cold=EX711_Tin_cold,
+    Tin_start_hot=EX711_Tin_hot,
+    Tout_start_cold=EX711_Tout_cold,
+    Tout_start_hot=EX711_Tout_hot,
     cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
@@ -173,7 +180,7 @@ model LoadPlantSimplified
     lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
     m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
     m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-    n=5,
+    n=9,
     nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
     nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
     nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
@@ -187,7 +194,7 @@ model LoadPlantSimplified
         DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-    thermalInertia=false,
+    thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
       Placement(transformation(
@@ -196,6 +203,7 @@ model LoadPlantSimplified
         origin={81,-58.5})));
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(
+    redeclare model Medium = Medium,
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom,
     Tin_start(displayUnit="K") = EX711_Tout_hot,
@@ -206,6 +214,7 @@ model LoadPlantSimplified
         origin={100,10})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_FCV711_FT711(
+    redeclare model Medium = Medium,
     L=L_FCV711_FT711,
     h=h_FCV711_FT711,
     t=t_S700,
@@ -220,6 +229,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={100,40})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_SourceOut_FCV711(
+    redeclare model Medium = Medium,
     L=L_HX711_SourceOut_FCV711,
     h=h_HX711_SourceOut_FCV711,
     t=t_S700,
@@ -233,14 +243,14 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={100,-20})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT711(T_start=
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT711(redeclare model Medium = Medium,T_start=
         EX711_Tout_hot, p_start=FCV711_pout)
     "Flow sensor at the outlet outlet of EX711 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={102,58})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT711(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT711(redeclare model Medium = Medium,T_start=
         EX711_Tout_hot, p_start=FCV711_pout)
     "Temperature sensor at the outlet of EX711 - hot side" annotation (
       Placement(transformation(
@@ -254,6 +264,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={102,88})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_TT712_SourceIn(
+    redeclare model Medium = Medium,
     L=L_HX711_TT712_SourceIn,
     h=h_HX711_TT712_SourceIn,
     t=t_S700,
@@ -267,7 +278,7 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={60,10})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT712(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT712(redeclare model Medium = Medium,T_start=
         EX711_Tin_hot, p_start=EX711_pin_hot)
     "Temperature sensor at the inlet of EX711 - hot side" annotation (Placement(
         transformation(
@@ -282,6 +293,7 @@ model LoadPlantSimplified
         origin={58,80})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX721(
     redeclare model Medium = Medium,
+    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
     hctype_hot=hctype,
     Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
     Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
@@ -291,10 +303,10 @@ model LoadPlantSimplified
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-    Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-    Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-    Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-    Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+    Tin_start_cold=EX721_Tin_cold,
+    Tin_start_hot=EX721_Tin_hot,
+    Tout_start_cold=EX721_Tout_cold,
+    Tout_start_hot=EX721_Tout_hot,
     cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
@@ -313,7 +325,7 @@ model LoadPlantSimplified
     lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
     m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
     m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-    n=5,
+    n=9,
     nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
     nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
     nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
@@ -327,7 +339,7 @@ model LoadPlantSimplified
         DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-    thermalInertia=false,
+    thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
       Placement(transformation(
@@ -336,6 +348,7 @@ model LoadPlantSimplified
         origin={239,-58.5})));
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(
+    redeclare model Medium = Medium,
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom,
     Tin_start(displayUnit="K") = EX721_Tout_hot,
@@ -346,6 +359,7 @@ model LoadPlantSimplified
         origin={260,10})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_FCV721_FT721(
+    redeclare model Medium = Medium,
     L=L_FCV721_FT721,
     h=h_FCV721_FT721,
     t=t_S700,
@@ -360,6 +374,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={260,38})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_SourceOut_FCV721(
+    redeclare model Medium = Medium,
     L=L_HX721_SourceOut_FCV721,
     h=h_HX721_SourceOut_FCV721,
     t=t_S700,
@@ -373,14 +388,14 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={260,-20})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT721(T_start=
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT721(redeclare model Medium = Medium,T_start=
         EX721_Tout_hot, p_start=FCV721_pout)
     "Flow sensor at the outlet outlet of EX721 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={262,58})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT721(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT721(redeclare model Medium = Medium,T_start=
         EX721_Tout_hot, p_start=FCV721_pout)
     "Temperature sensor at the outlet of EX721 - hot side" annotation (
       Placement(transformation(
@@ -407,7 +422,7 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={220,10})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT722(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT722(redeclare model Medium = Medium,T_start=
         EX721_Tin_hot, p_start=EX721_pin_hot)
     "Temperature sensor at the inlet of EX721 - hot side" annotation (Placement(
         transformation(
@@ -422,6 +437,7 @@ model LoadPlantSimplified
         origin={218,80})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX731(
     redeclare model Medium = Medium,
+    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
     hctype_hot=hctype,
     Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
     Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
@@ -431,10 +447,10 @@ model LoadPlantSimplified
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-    Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-    Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-    Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-    Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+    Tin_start_cold=EX731_Tin_cold,
+    Tin_start_hot=EX731_Tin_hot,
+    Tout_start_cold=EX731_Tout_cold,
+    Tout_start_hot=EX731_Tout_hot,
     cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
@@ -453,7 +469,7 @@ model LoadPlantSimplified
     lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
     m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
     m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-    n=5,
+    n=9,
     nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
     nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
     nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
@@ -467,7 +483,7 @@ model LoadPlantSimplified
         DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-    thermalInertia=false,
+    thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
       Placement(transformation(
@@ -476,6 +492,7 @@ model LoadPlantSimplified
         origin={-81,-57.5})));
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(
+    redeclare model Medium = Medium,
     Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom,
     Tin_start(displayUnit="K") = EX731_Tout_hot,
@@ -486,6 +503,7 @@ model LoadPlantSimplified
         origin={-60,10})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_FCV731_FT731(
+    redeclare model Medium = Medium,
     L=L_FCV731_FT731,
     h=h_FCV731_FT731,
     t=t_S700,
@@ -500,6 +518,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={-60,36})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_SourceOut_FCV731(
+    redeclare model Medium = Medium,
     L=L_HX731_SourceOut_FCV731,
     h=h_HX731_SourceOut_FCV731,
     t=t_S700,
@@ -513,14 +532,14 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={-60,-20})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT731(T_start=
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT731(redeclare model Medium = Medium,T_start=
         EX731_Tout_hot, p_start=FCV731_pout)
     "Flow sensor at the outlet outlet of EX731 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={-58,54})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT731(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT731(redeclare model Medium = Medium,T_start=
         EX731_Tout_hot, p_start=FCV731_pout)
     "Temperature sensor at the outlet of EX731 - hot side" annotation (
       Placement(transformation(
@@ -534,6 +553,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={-58,84})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_TT732_SourceIn(
+    redeclare model Medium = Medium,
     L=L_HX731_TT732_SourceIn,
     h=h_HX731_TT732_SourceIn,
     t=t_S700,
@@ -547,7 +567,7 @@ model LoadPlantSimplified
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-100,10})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT732(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT732(redeclare model Medium = Medium,T_start=
         EX731_Tin_hot, p_start=EX731_pin_hot)
     "Temperature sensor at the inlet of EX731 - hot side" annotation (Placement(
         transformation(
@@ -560,56 +580,56 @@ model LoadPlantSimplified
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-102,80})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT734(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT734(redeclare model Medium = Medium,T_start=
         Tin_start_Cool, p_start=pout_start_Users)
     "Temperature sensor at the outlet of EX731 - cold side" annotation (
       Placement(transformation(
         extent={{-5.5,-5.5},{5.5,5.5}},
         rotation=90,
         origin={-102.5,-91.5})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT723(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT723(redeclare model Medium = Medium,T_start=
         Tout_start_Cool, p_start=pin_start_Users)
     "Temperature sensor at the inlet of EX721 - cold side" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={257,-93})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT724(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT724(redeclare model Medium = Medium,T_start=
         Tin_start_Cool, p_start=pout_start_Users)
     "Temperature sensor at the outlet of EX721 - cold side" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={218,-94})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT713(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT713(redeclare model Medium = Medium,T_start=
         Tout_start_Cool, p_start=pin_start_Users)
     "Temperature sensor at the inlet of EX711 - cold side" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={97,-90})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT714(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT714(redeclare model Medium = Medium,T_start=
         Tin_start_Cool, p_start=pout_start_Users)
     "Temperature sensor at the outlet of EX711 - cold side" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={58,-90})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT704(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT704(redeclare model Medium = Medium,T_start=
         Tin_start_Cool, p_start=pout_start_Users)
     "Temperature sensor at the outlet of EX701 - cold side" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-262,-91})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT703(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT703(redeclare model Medium = Medium,T_start=
         Tout_start_Cool, p_start=pin_start_Users)
     "Temperature sensor at the inlet of EX701 - cold side" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-222,-86})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT733(T_start=
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT733(redeclare model Medium = Medium,T_start=
         Tout_start_Cool, p_start=pin_start_Users)
     "Temperature sensor at the inlet of EX731 - cold side" annotation (
       Placement(transformation(
@@ -617,6 +637,7 @@ model LoadPlantSimplified
         rotation=90,
         origin={-63,-92})));
   DistrictHeatingNetwork.Sources.SourcePressure VER901(
+    redeclare model Medium = Medium,
     use_in_T0=true,
     p0=210000,
     T0(displayUnit="K") = 7 + 273.15,
@@ -625,7 +646,7 @@ model LoadPlantSimplified
         rotation=0,
         origin={285,-137})));
 
-  parameter Integer n = 2 "Number of volumes in each pipe";
+  parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   replaceable model Medium =
@@ -636,64 +657,64 @@ model LoadPlantSimplified
   parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_hot=2.5e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_hot=2.4e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV701_pout=2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_hot=17 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_hot=15 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_hot=44.84 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_hot=32.6 + 273.15;
 
   parameter Real EX701_q_m3h_cold(unit = "m3/h") = 1.5;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX701_cold=
       EX701_q_m3h_cold*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_cold=2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_cold=7 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_cold=14 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_cold=34.12 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_cold=34.74 + 273.15;
 
   // EX711
   parameter Real EX711_q_m3h_hot = 2.5;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_hot=2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_hot=1.99e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV711_pout=1.98e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_hot=17 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot=15 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_hot= 50.43 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot= 39.12 + 273.15;
 
   parameter Real EX711_q_m3h_cold(unit = "m3/h") = 1.5;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_cold=
       EX711_q_m3h_cold*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_cold=2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_cold=7 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_cold=14 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_cold=34.25 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_cold=35.4 + 273.15;
 
   // EX721
   parameter Real EX721_q_m3h_hot = 2.5;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_hot=2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_hot=1.99e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV721_pout=1.98e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_hot=17 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=15 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_hot=51.2 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=43.28 + 273.15;
 
   parameter Real EX721_q_m3h_cold(unit = "m3/h") = 1.5;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_cold=
       EX721_q_m3h_cold*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_cold=2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_cold=7 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_cold=14 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_cold=35.06 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_cold=36.24 + 273.15;
 
   // EX731
   parameter Real EX731_q_m3h_hot = 2.5;
   parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_hot=2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_hot=1.99e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV731_pout=1.98e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_hot=17 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_hot=15 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_hot=46.8 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_hot=40.98 + 273.15;
 
   parameter Real EX731_q_m3h_cold(unit = "m3/h") = 1;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX731_cold=0.5*1000/
       3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_cold=2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_cold=7 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_cold=14 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_cold=35.01 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_cold=34.52 + 273.15;
 
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
@@ -883,10 +904,10 @@ model LoadPlantSimplified
   parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h4 = 5;
   parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure dpRR = 1e5;
 
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\2301_Test2\Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\2301_Test2\Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Flows = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\2301_Test2\Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\2301_Test2\Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2301_Test2/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2301_Test2/Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2301_Test2/Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2301_Test2/Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
   parameter String matrixTT702 = "TT702" "Matrix name in file";
   parameter String matrixTT712 = "TT712" "Matrix name in file";
@@ -952,25 +973,25 @@ model LoadPlantSimplified
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT701) "Dimension of matrix";
   final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
 
-  final parameter Real TT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT711,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_721[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT721,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_731[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT731,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT711,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_721[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT721,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_731[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT731,dim[1],dim[2]) "Matrix data";
 
-  final parameter Real TT_702[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT702,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_712[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT712,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_722[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT722,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_732[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT732,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_702[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT702,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_712[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT712,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_722[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT722,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_732[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT732,dim[1],dim[2]) "Matrix data";
 
-  final parameter Real TT_703[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT703,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_713[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT713,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_723[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT723,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_733[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT733,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_703[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT703,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_713[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT713,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_723[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT723,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_733[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT733,dim[1],dim[2]) "Matrix data";
 
-  final parameter Real TT_704[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_714[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT714,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_724[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT724,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-  final parameter Real TT_734[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT734,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_704[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_714[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT714,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_724[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT724,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_734[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT734,dim[1],dim[2]) "Matrix data";
 
   final parameter Real PT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
   final parameter Real PT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT711,dim[1],dim[2])*1e5 "Matrix data";
@@ -982,10 +1003,10 @@ model LoadPlantSimplified
   final parameter Real PT_722[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT722,dim[1],dim[2])*1e5 "Matrix data";
   final parameter Real PT_732[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT732,dim[1],dim[2])*1e5 "Matrix data";
 
-  final parameter Real FT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT701,dim[1],dim[2])*990/3600 "Matrix data";
-  final parameter Real FT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT711,dim[1],dim[2])*990/3600 "Matrix data";
-  final parameter Real FT_721[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT721,dim[1],dim[2])*990/3600 "Matrix data";
-  final parameter Real FT_731[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT731,dim[1],dim[2])*990/3600 "Matrix data";
+  final parameter Real FT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT701,dim[1],dim[2])*980.85/3600 "Matrix data";
+  final parameter Real FT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT711,dim[1],dim[2])*980.85/3600 "Matrix data";
+  final parameter Real FT_721[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT721,dim[1],dim[2])*980.85/3600 "Matrix data";
+  final parameter Real FT_731[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT731,dim[1],dim[2])*980.85/3600 "Matrix data";
 
   final parameter Real thetaFCV701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
   final parameter Real thetaFCV711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV711,dim[1],dim[2]) "Matrix data";
@@ -1009,16 +1030,16 @@ model LoadPlantSimplified
 //   final parameter Real FT_713[:,:] = (FT_711.*(TT_712 - TT_711)./(TT_714-TT_713));
 //   final parameter Real FT_723[:,:] = (FT_721.*(TT_722 - TT_721)./(TT_724-TT_723));
 //   final parameter Real FT_733[:,:] = (FT_731.*(TT_732 - TT_731)./(TT_734-TT_733));
-  final parameter Real FT_703[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT703,dim[1],dim[2])*990/3600 "Matrix data";
-  final parameter Real FT_713[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT713,dim[1],dim[2])*990/3600 "Matrix data";
-  final parameter Real FT_723[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT723,dim[1],dim[2])*990/3600 "Matrix data";
-  final parameter Real FT_733[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT733,dim[1],dim[2])*990/3600 "Matrix data";
+  final parameter Real FT_703[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT703,dim[1],dim[2])*993/3600 "Matrix data";
+  final parameter Real FT_713[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT713,dim[1],dim[2])*993/3600 "Matrix data";
+  final parameter Real FT_723[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT723,dim[1],dim[2])*993/3600 "Matrix data";
+  final parameter Real FT_733[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT733,dim[1],dim[2])*993/3600 "Matrix data";
 
   Modelica.Blocks.Sources.TimeTable EX701_p(table=[t,PT_702])
     annotation (Placement(transformation(extent={{-320,130},{-300,150}})));
   Modelica.Blocks.Sources.TimeTable EX701_T(table=[t,TT_702])
     annotation (Placement(transformation(extent={{-320,170},{-300,190}})));
-  inner System                        system
+  inner System                        system(T_amb=278.15)
     annotation (Placement(transformation(extent={{320,258},{340,278}})));
   Modelica.Blocks.Sources.TimeTable EX711_p(table=[t,PT_712])
     annotation (Placement(transformation(extent={{0,130},{20,150}})));
@@ -1040,33 +1061,37 @@ model LoadPlantSimplified
     annotation (Placement(transformation(extent={{306,130},{286,150}})));
   Modelica.Blocks.Sources.TimeTable EX701_mflow(table=[t,FT_701])
     annotation (Placement(transformation(extent={{-180,130},{-200,150}})));
-  Sources.SourcePressure                        sourceP0(use_in_p0=true, use_in_T0=true)
+  Sources.SourcePressure                        sourceP0(redeclare model Medium = Medium,use_in_p0=true, use_in_T0=true)
     annotation (Placement(transformation(extent={{-298,90},{-278,110}})));
-  Sources.SourcePressure                        sourceP1(use_in_p0=true, use_in_T0=true)
+  Sources.SourcePressure                        sourceP1(redeclare model Medium = Medium,use_in_p0=true, use_in_T0=true)
     annotation (Placement(transformation(extent={{22,90},{42,110}})));
-  Sources.SourcePressure                        sourceP2(use_in_p0=true, use_in_T0=true)
+  Sources.SourcePressure                        sourceP2(redeclare model Medium = Medium,use_in_p0=true, use_in_T0=true)
     annotation (Placement(transformation(extent={{182,90},{202,110}})));
-  Sources.SourcePressure                        sourceP3(use_in_p0=true, use_in_T0=true)
+  Sources.SourcePressure                        sourceP3(redeclare model Medium = Medium,use_in_p0=true, use_in_T0=true)
     annotation (Placement(transformation(extent={{-140,90},{-120,110}})));
-  Sources.SinkMassFlow                        sinkMassFlowP3(
+  Sources.SinkMassFlow sinkMassFlowP3(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
     T0=323.15)
     annotation (Placement(transformation(extent={{-54,90},{-34,110}})));
   Sources.SinkMassFlow                        sinkMassFlowP1(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
     T0=323.15)
     annotation (Placement(transformation(extent={{110,90},{130,110}})));
   Sources.SinkMassFlow                        sinkMassFlowP2(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
     T0=323.15)
     annotation (Placement(transformation(extent={{276,90},{296,110}})));
   Sources.SinkMassFlow                        sinkMassFlowP0(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
@@ -1081,6 +1106,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable FCV721_theta(table=[t,thetaFCV721])
     annotation (Placement(transformation(extent={{300,0},{280,20}})));
   Sources.SinkMassFlow FT723(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
@@ -1090,6 +1116,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable TT723_(table=[t,TT_723])
     annotation (Placement(transformation(extent={{318,-120},{298,-100}})));
   Sources.SinkMassFlow FT713(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
@@ -1097,6 +1124,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable FT713_(table=[t,FT_713])
     annotation (Placement(transformation(extent={{10,-170},{30,-150}})));
   Sources.SourcePressure                        VER1(
+    redeclare model Medium = Medium,
     use_in_T0=true,
     p0=210000,
     T0(displayUnit="K") = 7 + 273.15,
@@ -1107,6 +1135,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable TT713_(table=[t,TT_713])
     annotation (Placement(transformation(extent={{158,-120},{138,-100}})));
   Sources.SourcePressure                        VER2(
+    redeclare model Medium = Medium,
     use_in_T0=true,
     p0=210000,
     T0(displayUnit="K") = 7 + 273.15,
@@ -1117,6 +1146,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable TT733_(table=[t,TT_733])
     annotation (Placement(transformation(extent={{-14,-118},{-34,-98}})));
   Sources.SourcePressure                        VER3(
+    redeclare model Medium = Medium,
     use_in_T0=true,
     p0=210000,
     T0(displayUnit="K") = 7 + 273.15,
@@ -1127,6 +1157,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable TT703_(table=[t,TT_703])
     annotation (Placement(transformation(extent={{-170,-120},{-190,-100}})));
   Sources.SinkMassFlow FT733(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
@@ -1134,6 +1165,7 @@ model LoadPlantSimplified
   Modelica.Blocks.Sources.TimeTable FT733_(table=[t,FT_733])
     annotation (Placement(transformation(extent={{-150,-170},{-130,-150}})));
   Sources.SinkMassFlow FT703(
+    redeclare model Medium = Medium,
     use_in_m_flow=true,
     pin_start=200000,
     p0=200000,
@@ -1443,5 +1475,9 @@ equation
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-340,-280},{340,280}})),
                                                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-340,-280},{340,280}})),
-    experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
+    experiment(
+      StopTime=9000,
+      Interval=100,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end LoadPlantSimplified;

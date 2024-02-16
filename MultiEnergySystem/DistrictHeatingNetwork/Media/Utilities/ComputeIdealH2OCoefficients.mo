@@ -5,13 +5,13 @@ model ComputeIdealH2OCoefficients
   import Modelica.Utilities.Streams.*;
   replaceable package Medium = Modelica.Media.Water.StandardWater;
 
-  parameter Types.Temperature T_min = 10 + 273.15;
-  parameter Types.Temperature T_max = 90 + 273.15;
+  parameter Types.Temperature T_min = 5 + 273.15;
+  parameter Types.Temperature T_max = 95 + 273.15;
   parameter Types.Pressure p = 2.5e5 "Reference pressure";
   parameter Integer N = 50;
-  parameter Integer ord_cp = 2;
-  parameter Integer ord_d = 2;
-  parameter Integer ord_k = 2;
+  parameter Integer ord_cp = 3;
+  parameter Integer ord_d = 3;
+  parameter Integer ord_k = 3;
   constant Types.Time t0 = 1;
 
   Types.Temperature T;

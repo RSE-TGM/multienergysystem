@@ -199,7 +199,7 @@ initial equation
 //     end for;
     Ttilde = T_start[2:n+1];
     if not noInitialPressure then
-      ptilde = pout_start;
+      //ptilde = pout_start;
     else
 //No initial pressure
     end if;

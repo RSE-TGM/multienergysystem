@@ -19,37 +19,37 @@ model TestLumpedStorageConstantMass
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow1(
     duration=100,
-    height=-m_flow_start,
-    offset=-m_flow_start,
+    height=-2*m_flow_start,
+    offset=m_flow_start,
     startTime=75)                                                                                                      annotation (
-    Placement(visible = true, transformation(origin={-81,15},   extent={{-9,-9},
+    Placement(visible = true, transformation(origin={-81,23},   extent={{-9,-9},
             {9,9}},                                                                              rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow(
     redeclare model Medium = Medium,
     T0(displayUnit="K") = 298.15,
     X0=Xref_2,
     m_flow0=m_flow_start,
-    p0=49500,
+    p0=500000,
       use_in_m_flow0=true)
     annotation (Placement(transformation(extent={{-50,0},{-30,20}})));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(
     redeclare model Medium = Medium,
     T0(displayUnit="K") = 308.15,
     X0=Xref_2,
-    p0=49500)
+    p0=495000,
+    computeTransport=false)
     annotation (Placement(transformation(extent={{64,0},{84,20}})));
   MultiEnergySystem.H2GasFacility.Components.Storage.LumpedStorageConstantMass
     lumpedStorageConstantMass(
     allowFlowReversal=true,
-    H=0.5,
-    pin_start=49500,
+    H=2,
     X_start=Xref_2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={22,-14})));
 equation
   connect(m_flow1.y, sourceMassFlow.in_m_flow0) annotation (Line(points={{-71.1,
-          15},{-46,15}},                  color={0,0,127}));
+          23},{-46,23},{-46,15}},         color={0,0,127}));
   connect(sourceMassFlow.outlet, lumpedStorageConstantMass.inlet) annotation (
       Line(
       points={{-30,10},{4,10},{4,-24},{12,-24}},

@@ -67,8 +67,8 @@ partial model PartialLumpedVolume
   Modelica.Units.SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";
   Modelica.Units.SI.Temperature T_a_inflow(start = T_start) "Temperatue of the fluid entering/leaving the volume";
   Modelica.Units.SI.Temperature T_b_outflow(start = T_start) "Temperatue of the fluid entering/leaving the volume";
-//   Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
-//   Modelica.Units.SI.Pressure pout "Pressure in the high part of the tank";
+  Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
+  Modelica.Units.SI.Pressure pout "Pressure in the high part of the tank";
 
 
   // Medium
@@ -89,8 +89,8 @@ equation
 
 //   // Definition of some variables
      m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";
-//   pout = outlet.p;
-//   pin = inlet.p;
+     pout = outlet.p;
+     pin = inlet.p;
 
 
 end PartialLumpedVolume;

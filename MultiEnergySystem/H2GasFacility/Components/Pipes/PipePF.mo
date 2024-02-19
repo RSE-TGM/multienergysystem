@@ -156,6 +156,9 @@ equation
       points={{-64,-1.66533e-15},{-59,-1.66533e-15},{-59,0},{-54,0}},
       color={182,109,49},
       thickness=0.5));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Text(
+          extent={{-18,14},{20,-12}},
+          textColor={0,0,0},
+          textString="PF")}),                                    Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end PipePF;

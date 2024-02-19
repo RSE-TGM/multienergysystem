@@ -36,22 +36,22 @@ model E700Test "HX70X test with real data"
 
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT701) "dimension of matrix";
   final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
-//  final parameter Real TT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]) "Matrix data";
+  //  final parameter Real TT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]) "Matrix data";
   final parameter Real TT702[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT702,dim[1],dim[2]) "Matrix data";
   final parameter Real TT703[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT703,dim[1],dim[2]) "Matrix data";
-//  final parameter Real TT704[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
+  //  final parameter Real TT704[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
   final parameter Real FT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT701,dim[1],dim[2]) "Matrix data";
   final parameter Real m_flow701[dim[1],dim[2]] = FT701*975/3600;
-//  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
-//  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
-//  final parameter Real FT703[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT703,dim[1],dim[2])*1000/3600 "Matrix data";
 
+//  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
+  //  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
+  //  final parameter Real FT703[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT703,dim[1],dim[2])*1000/3600 "Matrix data";
   inner System system annotation (
     Placement(visible = true, transformation(origin={-90,90},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E701(redeclare
       model Medium = Medium, Di_cold = BPHE.E701.Di_cold, Di_hot = BPHE.E701.Di_hot, L_cold = BPHE.E701.L_cold, L_hot = BPHE.E701.L_hot, MWall = BPHE.E701.MWall, Stot_cold = BPHE.E701.Stot_cold, Stot_hot = BPHE.E701.Stot_hot, Tin_start_cold = BPHE.E701.Tin_start_cold, Tin_start_hot = BPHE.E701.Tin_start_hot, Tout_start_cold = BPHE.E701.Tout_start_cold, Tout_start_hot = BPHE.E701.Tout_start_hot, cpm_cold = BPHE.E701.cpm_cold, cpm_hot = BPHE.E701.cpm_hot, t_cold = BPHE.E701.t_cold, t_hot = BPHE.E701.t_hot, gamma_nom_cold = BPHE.E701.gamma_nom_cold, gamma_nom_hot = BPHE.E701.gamma_nom_hot, h_cold = BPHE.E701.h_cold, h_hot = BPHE.E701.h_hot, hin_start_cold = BPHE.E701.hin_start_cold, hin_start_hot = BPHE.E701.hin_start_hot, k_cold = BPHE.E701.k_cold, k_hot = BPHE.E701.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = BPHE.E701.lambdam_cold, lambdam_hot = BPHE.E701.lambdam_hot, m_flow_start_cold = BPHE.E701.m_flow_start_cold, m_flow_start_hot = BPHE.E701.m_flow_start_hot,
     n=9,                                                                                                                                                                                                        nPipes_cold = BPHE.E701.nPipes_cold, nPipes_hot = BPHE.E701.nPipes_hot, nPlates = BPHE.E701.nPlates, pin_start_cold = BPHE.E701.pin_start_cold, pin_start_hot = BPHE.E701.pin_start_hot, pout_start_cold = BPHE.E701.pout_start_cold, pout_start_hot = BPHE.E701.pout_start_hot, rho_nom_cold = (BPHE.E701.rhoin_nom_cold + BPHE.E701.rhoout_nom_cold)/2, rho_nom_hot = (BPHE.E701.rhoin_nom_hot + BPHE.E701.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = BPHE.E701.rhom_cold, rhom_hot(displayUnit = "g/cm3") = BPHE.E701.rhom_hot, thermalInertia = false, u_nom_cold = BPHE.E701.u_nom_cold, u_nom_hot = BPHE.E701.u_nom_hot) annotation (
-    Placement(visible = true, transformation(origin={-1,-6},     extent = {{-31, -50}, {31, 50}}, rotation = 0)));
+    Placement(transformation(origin = {-2, -0.83871}, extent = {{-28, -45.1613}, {28, 45.1613}})));
   Sources.SourceMassFlow sourceHot_mflow(redeclare model Medium = Medium,
     use_in_m_flow=true,
     use_in_T=true,
@@ -99,27 +99,23 @@ model E700Test "HX70X test with real data"
 equation
 
   connect(sourceCold_mflow.outlet, E701.incold) annotation (Line(
-      points={{-50,-42},{-34,-42},{-34,-41},{-16.5,-41}},
-      color={140,56,54},
-      thickness=0.5));
+      points = {{-50, -42}, {-31, -42}, {-31, -32}, {-10, -32}},
+      color={140,56,54}));
   connect(sourceHot_mflow.outlet, E701.inhot) annotation (Line(
-      points={{50,28},{34,28},{34,29},{14.5,29}},
-      color={140,56,54},
-      thickness=0.5));
+      points = {{50, 28}, {34, 28}, {34, 31}, {6, 31}},
+      color={140,56,54}));
   connect(inhot_T.y, sourceHot_mflow.in_T)
     annotation (Line(points={{79,80},{60,80},{60,33}},   color={0,0,127}));
   connect(E701.outhot, FCV701.inlet) annotation (Line(
-      points={{14.5,-41},{27.25,-41},{27.25,-40},{40,-40}},
-      color={140,56,54},
-      thickness=0.5));
+      points = {{6, -32}, {25.5, -32}, {25.5, -40}, {40, -40}},
+      color={140,56,54}));
   connect(FCV701.outlet, sinkHot_p.inlet) annotation (Line(
       points={{60,-40},{68,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(E701.outcold, sinkCold_p.inlet) annotation (Line(
-      points={{-16.5,29},{-36.25,29},{-36.25,28},{-50,28}},
-      color={140,56,54},
-      thickness=0.5));
+      points = {{-10, 31}, {-36.25, 31}, {-36.25, 28}, {-50, 28}},
+      color={140,56,54}));
   connect(outhot_p.y, sinkHot_p.in_p0)
     annotation (Line(points={{79,-20},{74,-20},{74,-31.6}}, color={0,0,127}));
   connect(thetavalve.y, FCV701.opening)

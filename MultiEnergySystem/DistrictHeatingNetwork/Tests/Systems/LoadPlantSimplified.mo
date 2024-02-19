@@ -450,7 +450,9 @@ model LoadPlantSimplified
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
     thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot,
+    UA_ext=750,
+    UA_int=750)                                                    annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
@@ -585,7 +587,9 @@ model LoadPlantSimplified
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
     thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot,
+    UA_ext=750,
+    UA_int=750)                                                    annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
@@ -730,7 +734,9 @@ model LoadPlantSimplified
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
     thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot,
+    UA_ext=750,
+    UA_int=750)                                                    annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
@@ -874,7 +880,9 @@ model LoadPlantSimplified
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
     thermalInertia=true,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot,
+    UA_ext=750,
+    UA_int=750)                                                    annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,

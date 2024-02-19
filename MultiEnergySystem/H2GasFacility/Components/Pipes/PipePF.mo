@@ -96,6 +96,7 @@ model PipePF
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass(
     allowFlowReversal=false,
     H=1,
+    pin_start=Pipe.pipe1.pin_start,
     Tin_start=Pipe.pipe1.Tin_start,
     Tout_start=Pipe.pipe1.Tout_start)
     annotation (Placement(transformation(extent={{60,-40},{80,-20}})));

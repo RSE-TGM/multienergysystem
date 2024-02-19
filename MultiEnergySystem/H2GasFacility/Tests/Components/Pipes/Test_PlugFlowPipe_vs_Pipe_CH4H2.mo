@@ -36,7 +36,7 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
     cpm=8000) annotation (Placement(transformation(extent={{-6,-46},{38,-2}})));
   Modelica.Blocks.Sources.Ramp m_flow1(
     duration=100,
-    height=m_flow_start*2,
+    height=m_flow_start,
     offset=m_flow_start,
     startTime=75)                                                                                                      annotation (
     Placement(visible = true, transformation(origin={-81,-19},  extent={{-9,-9},
@@ -56,11 +56,12 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
     p0=49500)
     annotation (Placement(transformation(extent={{64,-34},{84,-14}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(
-    X_start=Xref,
+    X_start=X_start,
     Di=Pipe.pipe1.Di,
     L=Pipe.pipe1.L,
     Tin_start=Pipe.pipe1.Tin_start,
     Tout_start=Pipe.pipe1.Tout_start,
+    pin_nom=Pipe.pipe1.pin_start,
     rho_nom=Pipe.pipe1.rho_nom,
     k=Pipe.pipe1.k,
     m_flow_start=Pipe.pipe1.m_flow_start,
@@ -78,7 +79,7 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
     Placement(visible = true, transformation(origin={16,38},            extent = {{-22, -22}, {22, 22}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow2(
     duration=100,
-    height=m_flow_start*2,
+    height=m_flow_start,
     offset=m_flow_start,
     startTime=75)                                                                                                      annotation (
     Placement(visible = true, transformation(origin={-77,43},   extent={{-9,-9},
@@ -86,7 +87,7 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow1(
     redeclare model Medium = Medium,
     T0(displayUnit="K") = 298.15,
-    X0=Xref,
+    X0=X_start,
     m_flow0=m_flow_start,
     p0=49500,
     use_in_m_flow0=true)
@@ -94,7 +95,7 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure1(
     redeclare model Medium = Medium,
     T0(displayUnit="K") = 308.15,
-    X0=Xref,
+    X0=X_start,
     p0=49500)
     annotation (Placement(transformation(extent={{58,28},{78,48}})));
 equation

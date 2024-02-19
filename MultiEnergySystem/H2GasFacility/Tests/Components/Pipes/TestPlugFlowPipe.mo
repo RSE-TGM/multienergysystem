@@ -18,22 +18,21 @@ model TestPlugFlowPipe
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.PipePF plugFlow(
-    redeclare model Medium = Medium,
     allowFlowReversal=true,
     L=Pipe.pipe1.L,
     H=1e-4,
     T_ext=system.T_amb,
-    m_flow_start=Pipe.pipe1.m_flow_start,
-    pin_start=Pipe.pipe1.pin_start,
-    pout_start=Pipe.pipe1.pout_start,
+    m_flow_start=m_flow_start,
+    pin_start=49500,
+    pout_start=49500,
     hin_start=Pipe.pipe1.hin_start,
-    Tin_start=Pipe.pipe1.Tin_start,
-    Tout_start=Pipe.pipe1.Tout_start,
+    Tin_start=561.3,
+    Tout_start=581.3,
     X_start=X_start,
     Di=Pipe.pipe1.Di,
     D=Pipe.pipe1.Di,
-    T_start=Pipe.pipe1.Tin_start,
-    T_start_m=Pipe.pipe1.Tout_start,
+    T_start=561.3,
+    T_start_m=561.3,
     rho_nom=Pipe.pipe1.rho_nom,
     cpm=8000) annotation (Placement(transformation(extent={{-6,-46},{38,-2}})));
   Modelica.Blocks.Sources.Ramp m_flow1(
@@ -53,7 +52,7 @@ model TestPlugFlowPipe
     annotation (Placement(transformation(extent={{-50,-34},{-30,-14}})));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(
     redeclare model Medium = Medium,
-    T0(displayUnit="K") = 288.15,
+    T0(displayUnit="K") = 308.15,
     X0=X_start,
     p0=49500)
     annotation (Placement(transformation(extent={{64,-34},{84,-14}})));

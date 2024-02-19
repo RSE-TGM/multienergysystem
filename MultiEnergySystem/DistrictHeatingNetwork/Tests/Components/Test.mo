@@ -235,8 +235,10 @@ package Test "Package to test component equation and behaviour"
           origin={92,80},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(mflownom=
-          5, Tnom=353.15)                                                                     annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(
+      use_in_m_flow=true,                                                                     mflownom=
+          5,
+      Tnom=353.15)                                                                            annotation (
       Placement(visible = true, transformation(origin={-68,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(
       thermalInertia=true,
@@ -275,6 +277,13 @@ package Test "Package to test component equation and behaviour"
           origin={30,28},
           extent={{-10,-10},{10,10}},
           rotation=0)));
+    Modelica.Blocks.Sources.Ramp m_flow1(
+      duration=100,
+      height=-10,
+      offset=5,
+      startTime=75)                                                                                                      annotation (
+      Placement(visible = true, transformation(origin={-97,41},   extent={{-9,-9},
+              {9,9}},                                                                              rotation = 0)));
   equation
     connect(pipePF.outlet, pfOut.inlet) annotation (
       Line(points={{6,72},{26,72},{26,66},{40,66}},
@@ -297,6 +306,8 @@ package Test "Package to test component equation and behaviour"
         points={{-2,24},{24,24}},
         color={140,56,54},
         thickness=0.5));
+    connect(m_flow1.y, idealMassFlowSource2.in_m_flow) annotation (Line(points=
+            {{-87.1,41},{-73,41},{-73,30.2}}, color={0,0,127}));
     annotation (
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
           StopTime=120, __Dymola_Algorithm="Dassl"));

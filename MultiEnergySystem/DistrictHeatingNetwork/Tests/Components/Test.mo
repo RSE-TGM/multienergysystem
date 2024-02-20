@@ -255,7 +255,7 @@ package Test "Package to test component equation and behaviour"
       Tout_start=298.15,
       Di=0.0508,
       L=50,
-      N=100,
+      N=20,
       T_ext=298.15,
       T_start(displayUnit="degC") = 298.15,
       ss=false) annotation (Placement(visible=true, transformation(

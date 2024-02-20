@@ -224,93 +224,110 @@ package Test "Package to test component equation and behaviour"
 
   model PlugFlowPipeTest
     extends Modelica.Icons.Example;
-    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(mflownom=
-          5, Tnom=353.15)                                                                    annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
+      allowFlowReversal=true,
+      use_in_m_flow=true,                                                                    mflownom=
+          5,
+      Tnom=353.15)                                                                           annotation (
         Placement(visible=true, transformation(
-          origin={-70,70},
+          origin={-64,72},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank annotation (Placement(
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(
+        allowFlowReversal=true, T=298.15)                                           annotation (Placement(
           visible=true, transformation(
           origin={92,80},
           extent={{-10,-10},{10,10}},
           rotation=0)));
     MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource2(
+      allowFlowReversal=true,
       use_in_m_flow=true,                                                                     mflownom=
           5,
       Tnom=353.15)                                                                            annotation (
       Placement(visible = true, transformation(origin={-68,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV fiftySecNoTI(
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV FV_Pipe(
+      allowFlowReversal=true,
       thermalInertia=true,
       cm=880,
       rhom(displayUnit="kg/m3") = 7850,
-      pin_start=100000,                                                           Di = 0.0508, L = 50,
-      N=50,
+      pin_start=100000,
+      Tin_start=298.15,
+      Tout_start=298.15,
+      Di=0.0508,
+      L=50,
+      N=100,
       T_ext=298.15,
-      T_start(displayUnit="degC") = 338.15,
-      ss=false)                                                                                                                                                                               annotation (
-      Placement(visible = true, transformation(origin={-12,24},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2 annotation (
+      T_start(displayUnit="degC") = 298.15,
+      ss=false) annotation (Placement(visible=true, transformation(
+          origin={-12,24},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank2(
+        allowFlowReversal=true, T=298.15)                                            annotation (
       Placement(visible = true, transformation(origin={92,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF pipePF(
-      allowFlowReversal=false,
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF PF_Pipe(
+      allowFlowReversal=true,
       pin_start=100000,
       D=0.0508,
       L=50,
       H=0.1,
       rhom(displayUnit="kg/m3"),
-      T_start(displayUnit="degC") = 338.15,
-      T_start_m(displayUnit="degC") = 338.15,
-      cpm=880)                                annotation (Placement(visible=true,
-          transformation(
+      T_start(displayUnit="degC") = 298.15,
+      T_start_m(displayUnit="degC") = 298.15,
+      cpm=880) annotation (Placement(visible=true, transformation(
           origin={-4,72},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut annotation (Placement(
-          visible=true, transformation(
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tout_PF
+      annotation (Placement(visible=true, transformation(
           origin={46,70},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut1
-                                                                                  annotation (Placement(
-          visible=true, transformation(
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tout_FV
+      annotation (Placement(visible=true, transformation(
           origin={30,28},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    Modelica.Blocks.Sources.Ramp m_flow1(
-      duration=100,
-      height=-10,
-      offset=5,
-      startTime=75)                                                                                                      annotation (
-      Placement(visible = true, transformation(origin={-97,41},   extent={{-9,-9},
-              {9,9}},                                                                              rotation = 0)));
+    Modelica.Blocks.Sources.Ramp m_flow(
+      duration=0,
+      height=5,
+      offset=1,
+      startTime=50) annotation (Placement(visible=true, transformation(
+          origin={-105,51},
+          extent={{-9,-9},{9,9}},
+          rotation=0)));
   equation
-    connect(pipePF.outlet, pfOut.inlet) annotation (
-      Line(points={{6,72},{26,72},{26,66},{40,66}},
-                                          color = {168, 168, 168}));
-    connect(pfOut.outlet, expansionTank.inlet) annotation (
-      Line(points={{52,66},{72,66},{72,70},{92,70}},
-                                          color = {168, 168, 168}));
-    connect(idealMassFlowSource.outlet, pipePF.inlet)
-      annotation (Line(points={{-59.8,70},{-38,70},{-38,72},{-14,72}},
-                                                     color={168,168,168}));
-    connect(pfOut1.outlet, expansionTank2.inlet) annotation (Line(
+    connect(Tout_FV.outlet, expansionTank2.inlet) annotation (Line(
         points={{36,24},{92,24}},
         color={140,56,54},
         thickness=0.5));
-    connect(idealMassFlowSource2.outlet, fiftySecNoTI.inlet) annotation (Line(
+    connect(idealMassFlowSource2.outlet, FV_Pipe.inlet) annotation (Line(
         points={{-57.8,24},{-22,24}},
         color={140,56,54},
         thickness=0.5));
-    connect(fiftySecNoTI.outlet, pfOut1.inlet) annotation (Line(
+    connect(FV_Pipe.outlet, Tout_FV.inlet) annotation (Line(
         points={{-2,24},{24,24}},
         color={140,56,54},
         thickness=0.5));
-    connect(m_flow1.y, idealMassFlowSource2.in_m_flow) annotation (Line(points=
-            {{-87.1,41},{-73,41},{-73,30.2}}, color={0,0,127}));
+    connect(m_flow.y, idealMassFlowSource2.in_m_flow) annotation (Line(points={
+            {-95.1,51},{-73,51},{-73,30.2}}, color={0,0,127}));
+    connect(idealMassFlowSource.outlet, PF_Pipe.inlet) annotation (Line(
+        points={{-53.8,72},{-14,72}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(PF_Pipe.outlet, Tout_PF.inlet) annotation (Line(
+        points={{6,72},{30,72},{30,66},{40,66}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(Tout_PF.outlet, expansionTank.inlet) annotation (Line(
+        points={{52,66},{92,66},{92,70}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(m_flow.y, idealMassFlowSource.in_m_flow) annotation (Line(points={{
+            -95.1,51},{-80,51},{-80,86},{-69,86},{-69,78.2}}, color={0,0,127}));
     annotation (
-      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
-          StopTime=120, __Dymola_Algorithm="Dassl"));
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
+            150, __Dymola_Algorithm="Dassl"));
   end PlugFlowPipeTest;
 
   model PowerTransferTest "3 tests using Ideal Power Transfer component"

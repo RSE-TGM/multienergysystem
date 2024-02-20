@@ -35,7 +35,7 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
     T_start=Pipe.pipe1.Tin_start,
     T_start_m=Pipe.pipe1.Tin_start,
     rho_nom=Pipe.pipe1.rho_nom,
-    cpm=8000) annotation (Placement(transformation(extent={{-14,-60},{30,-16}})));
+    cpm=8000) annotation (Placement(transformation(extent={{-12,-86},{32,-42}})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure
                                        sourceP1(
     p0(displayUnit="Pa") = Pipe.pipe1.pin_start,
@@ -44,19 +44,19 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
     X0=Xref,
     use_in_T0=true,
     use_in_p0=true)                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin={-46,-38},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={-44,-64},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in1(
     duration=10,
     height=0,
     offset=15 + 273.15,
     startTime=150)                                                                                    annotation (
-    Placement(visible = true, transformation(origin={-82,14},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={-80,-12},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp p_in1(
     height=0.5e5*0.05,
     offset=0.5e5,
     duration=50,
     startTime=200)                                                                                       annotation (
-    Placement(visible = true, transformation(origin={-82,-18},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={-80,-44},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow
                                      sink1(
     T0(displayUnit="K") = 15 + 273.15,
@@ -67,26 +67,26 @@ model Test_PlugFlowPipe_vs_Pipe_CH4H2
     redeclare model Medium = Medium,
     m_flow0=m_flow_start,
     use_in_m_flow0=true)                                                                                                                                                                                     annotation (
-    Placement(visible = true, transformation(origin={78,-38},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={80,-64},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow1(
     duration=10,
     height=-m_flow_start*2,
     offset=m_flow_start,
     startTime=75)                                                                                                      annotation (
-    Placement(visible = true, transformation(origin={52,-12},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={54,-38},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
-  connect(p_in1.y, sourceP1.in_p0) annotation (Line(points={{-71,-18},{-50,-18},
-          {-50,-29.6}}, color={0,0,127}));
-  connect(T_in1.y, sourceP1.in_T0)
-    annotation (Line(points={{-71,14},{-46,14},{-46,-28.4}}, color={0,0,127}));
+  connect(p_in1.y, sourceP1.in_p0) annotation (Line(points={{-69,-44},{-48,-44},
+          {-48,-55.6}}, color={0,0,127}));
+  connect(T_in1.y, sourceP1.in_T0) annotation (Line(points={{-69,-12},{-44,-12},
+          {-44,-54.4}}, color={0,0,127}));
   connect(sourceP1.outlet, plugFlow.inlet) annotation (Line(
-      points={{-36,-38},{-14,-38}},
+      points={{-34,-64},{-12,-64}},
       color={182,109,49},
       thickness=0.5));
   connect(m_flow1.y, sink1.in_m_flow0)
-    annotation (Line(points={{63,-12},{72,-12},{72,-33}}, color={0,0,127}));
+    annotation (Line(points={{65,-38},{74,-38},{74,-59}}, color={0,0,127}));
   connect(plugFlow.outlet, sink1.inlet) annotation (Line(
-      points={{30,-38},{68,-38}},
+      points={{32,-64},{70,-64}},
       color={182,109,49},
       thickness=0.5));
   annotation (

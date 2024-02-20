@@ -32,7 +32,7 @@ model TestPlugFlowPipe
     Di=Pipe.pipe1.Di,
     D=Pipe.pipe1.Di,
     T_start=Pipe.pipe1.Tin_start,
-    T_start_m=Pipe.pipe1.Tout_start,
+    T_start_m=Pipe.pipe1.Tin_start,
     rho_nom=Pipe.pipe1.rho_nom,
     cpm=8000) annotation (Placement(transformation(extent={{-6,-46},{38,-2}})));
   Modelica.Blocks.Sources.Ramp m_flow1(
@@ -44,7 +44,7 @@ model TestPlugFlowPipe
             {9,9}},                                                                              rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow(
     redeclare model Medium = Medium,
-    T0(displayUnit="K") = 288.15,
+    T0(displayUnit="degC") = 303.15,
     X0=Xref,
     m_flow0=m_flow_start,
     p0=49500,
@@ -52,7 +52,7 @@ model TestPlugFlowPipe
     annotation (Placement(transformation(extent={{-50,-34},{-30,-14}})));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(
     redeclare model Medium = Medium,
-    T0(displayUnit="K") = 318.15,
+    T0(displayUnit="degC") = 288.15,
     X0=Xref,
     p0=49500)
     annotation (Placement(transformation(extent={{64,-34},{84,-14}})));

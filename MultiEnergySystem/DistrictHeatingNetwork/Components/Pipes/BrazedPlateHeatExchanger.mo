@@ -1,7 +1,9 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
-
 model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient
+      constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   // General
   parameter Boolean thermalInertia = true "if true then account for metal thermal inertia";
   parameter Integer n = 3 "Number of volumes in the heat exchanger";
@@ -9,113 +11,113 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option";
   outer System system "system object for global defaults";
   // Hot side
-  parameter Modelica.Units.SI.Length L_hot = 0.5 "Length of the tube hot side" annotation(
+  parameter Modelica.Units.SI.Length L_hot = 0.5 "Length of the tube hot side" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length h_hot = 0 "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation(
+  parameter Modelica.Units.SI.Length h_hot = 0 "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length t_hot = 3e-3 "Thickness of the tube" annotation(
+  parameter Modelica.Units.SI.Length t_hot = 3e-3 "Thickness of the tube" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length Di_hot "Internal Diameter of a single tube" annotation(
+  parameter Modelica.Units.SI.Length Di_hot "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Area Stot_hot "Total surface of a single tube" annotation(
+  parameter Modelica.Units.SI.Area Stot_hot "Total surface of a single tube" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Integer nPipes_hot = 2 "Number of parallel pipes" annotation(
+  parameter Integer nPipes_hot = 2 "Number of parallel pipes" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Modelica.Units.SI.PerUnit cf_hot = 0.004 "Constant Fanning friction coefficient" annotation(
+  parameter Modelica.Units.SI.PerUnit cf_hot = 0.004 "Constant Fanning friction coefficient" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Real k_hot(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation(
+  parameter Real k_hot(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Integer n_hot = n "Number of finite volumes in each pipe" annotation(
+  parameter Integer n_hot = n "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Hot Side", group = "Fluid"));
-  parameter Modelica.Units.SI.Velocity u_nom_hot = 1 "Nominal fluid velocity" annotation(
+  parameter Modelica.Units.SI.Velocity u_nom_hot = 1 "Nominal fluid velocity" annotation (
     Dialog(tab = "Hot Side", group = "Fluid"));
-  parameter Modelica.Units.SI.Density rho_nom_hot = 997 "Nominal density of the fluid" annotation(
+  parameter Modelica.Units.SI.Density rho_nom_hot = 997 "Nominal density of the fluid" annotation (
     Dialog(tab = "Hot Side", group = "Fluid"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype_hot = Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation(
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype_hot = Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
     Dialog(tab = "Hot Side", group = "Fluid"));
-  parameter Modelica.Units.SI.PerUnit kc_hot "Corrective factor for heat tranfer" annotation(
+  parameter Modelica.Units.SI.PerUnit kc_hot "Corrective factor for heat tranfer" annotation (
     Dialog(tab = "Hot Side", group = "Heat Transfer Model"));
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_hot = 1500 "nominal heat transfer coeffcient" annotation(
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_hot = 1500 "nominal heat transfer coeffcient" annotation (
     Dialog(tab = "Hot Side", group = "Heat Transfer Model"));
-  parameter Modelica.Units.SI.Length tIns_hot = 0.15 "Insulation thickness" annotation(
+  parameter Modelica.Units.SI.Length tIns_hot = 0.15 "Insulation thickness" annotation (
     Dialog(tab = "Hot Side", group = "Insulation"));
-  parameter Modelica.Units.SI.ThermalConductivity lambdaIns_hot = 0.04 "Thermal conductivity of the insulant material" annotation(
+  parameter Modelica.Units.SI.ThermalConductivity lambdaIns_hot = 0.04 "Thermal conductivity of the insulant material" annotation (
     Dialog(tab = "Hot Side", group = "Insulation"));
-  parameter Modelica.Units.SI.SpecificHeatCapacity cpm_hot = 445 "Metal specific heat capacity" annotation(
+  parameter Modelica.Units.SI.SpecificHeatCapacity cpm_hot = 445 "Metal specific heat capacity" annotation (
     Dialog(tab = "Hot Side", group = "Metal Properties"));
-  parameter Modelica.Units.SI.Density rhom_hot = 8000 "Metal density [g/cm^3], for steel = 8" annotation(
+  parameter Modelica.Units.SI.Density rhom_hot = 8000 "Metal density [g/cm^3], for steel = 8" annotation (
     Dialog(tab = "Hot Side", group = "Metal Properties"));
-  parameter Modelica.Units.SI.ThermalConductivity lambdam_hot = 45 "Metal thermal conductivity; steel = 45" annotation(
+  parameter Modelica.Units.SI.ThermalConductivity lambdam_hot = 45 "Metal thermal conductivity; steel = 45" annotation (
     Dialog(tab = "Hot Side", group = "Metal Properties"));
-  parameter Modelica.Units.SI.MassFlowRate m_flow_start_hot "Start value for mass flow rate" annotation(
+  parameter Modelica.Units.SI.MassFlowRate m_flow_start_hot "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pin_start_hot "Pressure start value of in going fluid hot side" annotation(
+  parameter Modelica.Units.SI.Pressure pin_start_hot "Pressure start value of in going fluid hot side" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pout_start_hot "Pressure start value of outgoing fluid hot side" annotation(
+  parameter Modelica.Units.SI.Pressure pout_start_hot "Pressure start value of outgoing fluid hot side" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start_hot "Specific enthalpy start value at the inlet of the heat exchanger" annotation(
+  parameter Modelica.Units.SI.SpecificEnthalpy hin_start_hot "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tin_start_hot "Temperature start value of fluid at the start of the heat exchanger" annotation(
+  parameter Modelica.Units.SI.Temperature Tin_start_hot "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tout_start_hot "Temperature start value of fluid at the end of the heat exchanger" annotation(
+  parameter Modelica.Units.SI.Temperature Tout_start_hot "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
   // Cold side
-  parameter Modelica.Units.SI.Length L_cold "Length of the tube hot side" annotation(
+  parameter Modelica.Units.SI.Length L_cold "Length of the tube hot side" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length h_cold = 0 "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation(
+  parameter Modelica.Units.SI.Length h_cold = 0 "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length t_cold = 0.003 "Thickness of the tube" annotation(
+  parameter Modelica.Units.SI.Length t_cold = 0.003 "Thickness of the tube" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length Di_cold "Internal Diameter of a single tube" annotation(
+  parameter Modelica.Units.SI.Length Di_cold "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Area Stot_cold "Internal Diameter of a single tube" annotation(
+  parameter Modelica.Units.SI.Area Stot_cold "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Integer nPipes_cold = 2 "Number of parallel pipes" annotation(
+  parameter Integer nPipes_cold = 2 "Number of parallel pipes" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Modelica.Units.SI.PerUnit cf_cold = 0.004 "Constant Fanning friction coefficient" annotation(
+  parameter Modelica.Units.SI.PerUnit cf_cold = 0.004 "Constant Fanning friction coefficient" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Real k_cold(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation(
+  parameter Real k_cold(unit = "Pa/(kg/s)") = 500 "Coefficient for the calculation of the pressure loss across the pipe" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Integer n_cold = n "Number of finite volumes in each pipe" annotation(
+  parameter Integer n_cold = n "Number of finite volumes in each pipe" annotation (
     Dialog(tab = "Cold Side", group = "Fluid"));
-  parameter Modelica.Units.SI.Velocity u_nom_cold = 1 "Nominal fluid velocity" annotation(
+  parameter Modelica.Units.SI.Velocity u_nom_cold = 1 "Nominal fluid velocity" annotation (
     Dialog(tab = "Cold Side", group = "Fluid"));
-  parameter Modelica.Units.SI.Density rho_nom_cold = 997 "Nominal density of the fluid" annotation(
+  parameter Modelica.Units.SI.Density rho_nom_cold = 997 "Nominal density of the fluid" annotation (
     Dialog(tab = "Cold Side", group = "Fluid"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype_cold = Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation(
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype_cold = Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
     Dialog(tab = "Cold Side", group = "Fluid"));
-  parameter Modelica.Units.SI.PerUnit kc_cold "Corrective factor for heat tranfer" annotation(
+  parameter Modelica.Units.SI.PerUnit kc_cold "Corrective factor for heat tranfer" annotation (
     Dialog(tab = "Cold Side", group = "Heat Transfer Model"));
-  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_cold = 1500 "nominal heat transfer coeffcient" annotation(
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_cold = 1500 "nominal heat transfer coeffcient" annotation (
     Dialog(tab = "Cold Side", group = "Heat Transfer Model"));
-  parameter Modelica.Units.SI.Length tIns_cold = 0.15 "Insulation thickness" annotation(
+  parameter Modelica.Units.SI.Length tIns_cold = 0.15 "Insulation thickness" annotation (
     Dialog(tab = "Cold Side", group = "Insulation"));
-  parameter Modelica.Units.SI.ThermalConductivity lambdaIns_cold = 0.04 "Thermal conductivity of the insulant material" annotation(
+  parameter Modelica.Units.SI.ThermalConductivity lambdaIns_cold = 0.04 "Thermal conductivity of the insulant material" annotation (
     Dialog(tab = "Cold Side", group = "Insulation"));
-  parameter Modelica.Units.SI.SpecificHeatCapacity cpm_cold = 445 "Metal specific heat capacity" annotation(
+  parameter Modelica.Units.SI.SpecificHeatCapacity cpm_cold = 445 "Metal specific heat capacity" annotation (
     Dialog(tab = "Cold Side", group = "Metal Properties"));
-  parameter Modelica.Units.SI.Density rhom_cold = 8000 "Metal density [g/cm^3], for steel = 8" annotation(
+  parameter Modelica.Units.SI.Density rhom_cold = 8000 "Metal density [g/cm^3], for steel = 8" annotation (
     Dialog(tab = "Cold Side", group = "Metal Properties"));
-  parameter Modelica.Units.SI.ThermalConductivity lambdam_cold = 45 "Metal thermal conductivity; steel = 45" annotation(
+  parameter Modelica.Units.SI.ThermalConductivity lambdam_cold = 45 "Metal thermal conductivity; steel = 45" annotation (
     Dialog(tab = "Cold Side", group = "Metal Properties"));
-  parameter Modelica.Units.SI.MassFlowRate m_flow_start_cold "Start value for mass flow rate" annotation(
+  parameter Modelica.Units.SI.MassFlowRate m_flow_start_cold "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pin_start_cold "Pressure start value of outgoing fluid" annotation(
+  parameter Modelica.Units.SI.Pressure pin_start_cold "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pout_start_cold "Pressure start value of outgoing fluid" annotation(
+  parameter Modelica.Units.SI.Pressure pout_start_cold "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start_cold "Specific enthalpy start value at the inlet of the heat exchanger" annotation(
+  parameter Modelica.Units.SI.SpecificEnthalpy hin_start_cold "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tin_start_cold "Temperature start value of fluid at the start of the heat exchanger" annotation(
+  parameter Modelica.Units.SI.Temperature Tin_start_cold "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tout_start_cold "Temperature start value of fluid at the end of the heat exchanger" annotation(
+  parameter Modelica.Units.SI.Temperature Tout_start_cold "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
   // Wall
   parameter Boolean WallRes = false "Wall thermal resistance accounted for";
   parameter SI.Mass MWall "Total mass of the wall in heat exchanger";
-  parameter Modelica.Units.SI.ThermalConductance UA_ext = 1500 "Equivalent thermal conductance of outer half-wall" annotation(
+  parameter Modelica.Units.SI.ThermalConductance UA_ext = 1500 "Equivalent thermal conductance of outer half-wall" annotation (
     Dialog(enable = WallRes));
-  parameter Modelica.Units.SI.ThermalConductance UA_int = 0.1 "Equivalent thermal conductance of inner half-wall" annotation(
+  parameter Modelica.Units.SI.ThermalConductance UA_int = 0.1 "Equivalent thermal conductance of inner half-wall" annotation (
     Dialog(enable = WallRes));
   final parameter SI.SpecificHeatCapacity cpWall = cpm_hot "Specific heat capacity of the wall";
   Types.Temperature Tin_hot;
@@ -128,21 +130,26 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   Types.Pressure pout_cold;
   SI.TemperatureDifference LMTD;
   Types.Power Pt;
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet of the hot fluid" annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet of the hot fluid" annotation (
     Placement(transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}), iconTransformation(extent = {{10, 50}, {50, 90}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot "Outlet of the hot fluid" annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot "Outlet of the hot fluid" annotation (
     Placement(transformation(origin = {70, -70}, extent = {{-10, -10}, {10, 10}}), iconTransformation(extent = {{10, -90}, {50, -50}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet of the cold fluid" annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet of the cold fluid" annotation (
     Placement(transformation(origin = {-70, 70}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-2, 2}, extent = {{-48, 48}, {-8, 88}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet of the cold fluid" annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet of the cold fluid" annotation (
     Placement(transformation(origin = {-70, -70}, extent = {{-10, -10}, {10, 10}}), iconTransformation(extent = {{-50, -90}, {-10, -50}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV hotside(redeclare model Medium = Medium, Di = Di_hot, L = L_hot, q_m3h_start = m_flow_start_hot*3600/980, initOpt = initOpt, Stot = Stot_hot, Tin_start = Tin_start_hot, Tout_start = Tout_start_hot, cf = cf_hot, cm = cpm_hot, tIns = tIns_hot, t = t_hot, gamma_nom = gamma_nom_hot, h = h_hot, hctype = hctype_hot, k = k_hot, kc = kc_hot, lambdaIns = lambdaIns_hot, lambdam = lambdam_hot, n = n, nPipes = nPipes_hot, pin_start = pin_start_hot, pout_start = pout_start_hot, rho_nom = rho_nom_hot, rhom = rhom_hot, thermalInertia = thermalInertia, u_nom = u_nom_hot) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV hotside(redeclare model HeatTransferModel =
+        HeatTransferModel,                                                                                                               redeclare
+      model                                                                                                                                              Medium = Medium, Di = Di_hot, L = L_hot, q_m3h_start = m_flow_start_hot*3600/980, initOpt = initOpt, Stot = Stot_hot, Tin_start = Tin_start_hot, Tout_start = Tout_start_hot, cf = cf_hot, cm = cpm_hot, tIns = tIns_hot, t = t_hot, gamma_nom = gamma_nom_hot, h = h_hot, hctype = hctype_hot, k = k_hot, kc = kc_hot, lambdaIns = lambdaIns_hot, lambdam = lambdam_hot, n = n, nPipes = nPipes_hot, pin_start = pin_start_hot, pout_start = pout_start_hot, rho_nom = rho_nom_hot, rhom = rhom_hot, thermalInertia = thermalInertia, u_nom = u_nom_hot) annotation (
     Placement(transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV coldside(redeclare model Medium = Medium, Di = Di_cold, L = L_cold, q_m3h_start = m_flow_start_cold*3600/995, initOpt = initOpt, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cm = cpm_cold, tIns = tIns_cold, t = t_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdam = lambdam_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV coldside(redeclare model HeatTransferModel =
+        HeatTransferModel,                                                                                                                redeclare
+      model                                                                                                                                               Medium = Medium, Di = Di_cold, L = L_cold, q_m3h_start = m_flow_start_cold*3600/995, initOpt = initOpt, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cm = cpm_cold, tIns = tIns_cold, t = t_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdam = lambdam_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold) annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, WallRes = WallRes, UA_ext = UA_ext, UA_int = UA_int, Tstart1 = (Tin_start_hot + Tin_start_cold)/2, TstartN = (Tin_start_hot - Tin_start_cold)/2 + 273.15, Tstartbar = 318.15, cm = cpWall, initOpt = initOpt) annotation(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, WallRes = WallRes, UA_ext = UA_ext, UA_int = UA_int, Tstart1 = (Tin_start_hot + Tin_start_cold)/2, TstartN = (Tin_start_hot - Tin_start_cold)/2 + 273.15, Tstartbar = 318.15, cm = cpWall, initOpt = initOpt) annotation (
     Placement(transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  Thermal.HeatExchangerTopologyFV topology(redeclare model HeatExchangerTopology = DistrictHeatingNetwork.Components.Thermal.HeatExchangerTopologies.CounterCurrentFlow, Nw = n) annotation(
+  Thermal.HeatExchangerTopologyFV topology(redeclare model HeatExchangerTopology =
+        DistrictHeatingNetwork.Components.Thermal.HeatExchangerTopologies.CounterCurrentFlow,                                                                            Nw = n) annotation (
     Placement(transformation(origin = {-4, 0}, extent = {{-10, -26}, {10, -6}}, rotation = -90)));
 equation
   Tin_hot = hotside.T[1];
@@ -159,13 +166,13 @@ equation
   connect(coldside.inlet, incold);
   connect(hotside.outlet, outhot);
   connect(hotside.inlet, inhot);
-  connect(coldside.wall, topology.side2) annotation(
-    Line(points = {{-66, 0}, {-23, 0}}, color = {255, 238, 44}));
-  connect(wall.ext, topology.side1) annotation(
-    Line(points = {{17, 0}, {-17, 0}}, color = {255, 238, 44}));
-  connect(hotside.wall, wall.int) annotation(
-    Line(points = {{66, 0}, {23, 0}}, color = {255, 238, 44}));
-  annotation(
-    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics = {Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, lineThickness = 0.5, extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name"), Line(origin = {-66.58, -69.45}, points = {{8, 0}, {16, 0}}, color = {94, 82, 255}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {-58.73, 70.36}, points = {{8, 0}, {0, 0}}, color = {57, 0, 172}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {43.2, -68.29}, points = {{8, 0}, {16, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {51.29, 69.9}, points = {{8, 0}, {0, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {30.22, -8.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.Filled, Arrow.None}, arrowSize = 20), Line(origin = {-29.78, -12.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {76, 0, 227}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 20)}),
+  connect(coldside.wall, topology.side2) annotation (
+    Line(points={{-65.9,0},{-23.1,0}},  color = {255, 238, 44}));
+  connect(wall.ext, topology.side1) annotation (
+    Line(points={{16.9,0},{-17,0}},    color = {255, 238, 44}));
+  connect(hotside.wall, wall.int) annotation (
+    Line(points={{65.9,0},{23,0}},    color = {255, 238, 44}));
+  annotation (
+    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, lineThickness = 0.5, extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name"), Line(origin = {-66.58, -69.45}, points = {{8, 0}, {16, 0}}, color = {94, 82, 255}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {-58.73, 70.36}, points = {{8, 0}, {0, 0}}, color = {57, 0, 172}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {43.2, -68.29}, points = {{8, 0}, {16, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {51.29, 69.9}, points = {{8, 0}, {0, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {30.22, -8.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.Filled, Arrow.None}, arrowSize = 20), Line(origin = {-29.78, -12.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {76, 0, 227}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 20)}),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, grid = {1, 1})));
 end BrazedPlateHeatExchanger;

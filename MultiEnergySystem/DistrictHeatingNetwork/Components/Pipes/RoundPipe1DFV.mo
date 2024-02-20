@@ -6,7 +6,7 @@ model RoundPipe1DFV
   import Modelica.Fluid.Utilities.regStep;
 
   replaceable model HeatTransferModel =
-      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient
       constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
@@ -49,7 +49,7 @@ model RoundPipe1DFV
     Dialog(group = "Heat Transfer Model"));
   parameter Types.CoefficientOfHeatTransfer gamma_nom = 5 "nominal heat transfer coeffcient" annotation (
     Dialog(group = "Heat Transfer Model"));
-
+  parameter Modelica.Units.SI.PerUnit alpha = 0 "Exponent in the flow-dependency law";
   parameter Real cons = 1e-4;
 
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid" annotation (
@@ -93,6 +93,7 @@ model RoundPipe1DFV
   Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
 
   HeatTransferModel heatTransfer(
+    alpha = alpha,
     gamma_nom = gamma_nom,
     n = n,
     nPipes = nPipes,

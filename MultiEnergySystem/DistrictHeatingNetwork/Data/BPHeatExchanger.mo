@@ -45,6 +45,8 @@ record BPHeatExchanger
   SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);
   SI.CoefficientOfHeatTransfer gamma_nom_hot = 2*Unom "Nominal heat transfer coefficient hot side";
   SI.CoefficientOfHeatTransfer gamma_nom_cold = gamma_nom_hot "Nominal heat transfer coefficient cold side";
+//   SI.CoefficientOfHeatTransfer gamma_nom_hot = 2.5*Unom "Nominal heat transfer coefficient hot side";
+//   SI.CoefficientOfHeatTransfer gamma_nom_cold = 1.6666*Unom "Nominal heat transfer coefficient cold side";
   SI.SpecificHeatCapacity cpm_hot "Nominal specific heat capacity of the metal hot side";
   SI.SpecificHeatCapacity cpm_cold "Nominal specific heat capacity of the metal cold side";
   SI.Density rhom_hot "Nominal density of metal hot side";

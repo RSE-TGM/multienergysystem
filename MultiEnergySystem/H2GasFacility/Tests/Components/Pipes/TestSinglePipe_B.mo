@@ -39,12 +39,14 @@ equation
     Line(points = {{-75, 20}, {-54, 20}, {-54, 8.4}}, color = {0, 0, 127}));
   connect(T_in.y, sourceP.in_T0) annotation (
     Line(points = {{-75, 52}, {-50, 52}, {-50, 9.6}}, color = {0, 0, 127}));
-  connect(roundPipe.outlet, sinkPressure.inlet) annotation (
-    Line(points = {{22, 0}, {32, 0}, {32, -42}, {56, -42}}, color = {182, 109, 49}, thickness = 0.5));
   connect(p_out.y, sinkPressure.in_p0) annotation (
     Line(points = {{79, 36}, {84, 36}, {84, -6}, {88, -6}, {88, -33.6}, {62, -33.6}}, color = {0, 0, 127}));
   connect(sourceP.outlet, roundPipe.inlet) annotation (
     Line(points = {{-40, 0}, {-22, 0}}, color = {182, 109, 49}, thickness = 0.5));
+  connect(roundPipe.outlet, sinkPressure.inlet) annotation (Line(
+      points={{22,0},{34,0},{34,-42},{56,-42}},
+      color={182,109,49},
+      thickness=0.5));
   annotation (
     experiment(StopTime = 250, Interval = 0.0350035, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));
 end TestSinglePipe_B;

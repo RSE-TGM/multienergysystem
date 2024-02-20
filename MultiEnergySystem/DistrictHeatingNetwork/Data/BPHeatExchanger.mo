@@ -43,17 +43,20 @@ record BPHeatExchanger
   SI.Power Qnom;
   SI.Temperature LMTD = ((Tout_start_hot - Tin_start_cold)-(Tin_start_hot-Tout_start_cold))/log((Tout_start_hot - Tin_start_cold)/(Tin_start_hot-Tout_start_cold));
   SI.CoefficientOfHeatTransfer Unom = Qnom/(Stot_hot*LMTD);
-  SI.CoefficientOfHeatTransfer gamma_nom_hot = 2*Unom "Nominal heat transfer coefficient hot side";
-  SI.CoefficientOfHeatTransfer gamma_nom_cold = gamma_nom_hot "Nominal heat transfer coefficient cold side";
-//   SI.CoefficientOfHeatTransfer gamma_nom_hot = 2.5*Unom "Nominal heat transfer coefficient hot side";
-//   SI.CoefficientOfHeatTransfer gamma_nom_cold = 1.6666*Unom "Nominal heat transfer coefficient cold side";
+  Real Rfoul(unit = "m2.K/W") "Fouling resistance";
+//   SI.CoefficientOfHeatTransfer gamma_nom_hot = 2*Unom "Nominal heat transfer coefficient hot side";
+//   SI.CoefficientOfHeatTransfer gamma_nom_cold = gamma_nom_hot "Nominal heat transfer coefficient cold side";
+  SI.CoefficientOfHeatTransfer gamma_nom_hot = 2.5*Unom "Nominal heat transfer coefficient hot side";
+  SI.CoefficientOfHeatTransfer gamma_nom_cold = 1.6666*Unom "Nominal heat transfer coefficient cold side";
+//   SI.CoefficientOfHeatTransfer gamma_nom_hot = 2.5/((1/Unom)-Rfoul) "Nominal heat transfer coefficient hot side";
+//   SI.CoefficientOfHeatTransfer gamma_nom_cold = 1.6666/((1/Unom)-Rfoul) "Nominal heat transfer coefficient cold side";
   SI.SpecificHeatCapacity cpm_hot "Nominal specific heat capacity of the metal hot side";
   SI.SpecificHeatCapacity cpm_cold "Nominal specific heat capacity of the metal cold side";
   SI.Density rhom_hot "Nominal density of metal hot side";
   SI.Density rhom_cold "Nominal density of metal cold side";
   SI.ThermalConductivity lambdam_hot "Nominal thermal conductivity of metal hot side";
   SI.ThermalConductivity lambdam_cold "Nominal thermal conductivity of metal cold side";
-  Real Rfoul(unit = "m2.K/W") "Fouling resistance";
+
 
                                                            annotation (
     Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">Record class including main variables to describe the different Brazed-Plate Heat Exchangers of the RSE heating network.</span></body></html>"));

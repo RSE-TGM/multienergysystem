@@ -255,7 +255,7 @@ package Test "Package to test component equation and behaviour"
       Tout_start=298.15,
       Di=0.0508,
       L=50,
-      N=20,
+      N=5,
       T_ext=298.15,
       T_start(displayUnit="degC") = 298.15,
       ss=false) annotation (Placement(visible=true, transformation(
@@ -1259,7 +1259,7 @@ package Test "Package to test component equation and behaviour"
       T_start_m(displayUnit="degC") = 338.15,
       cpm=880)                                annotation (Placement(visible=true,
           transformation(
-          origin={-20,80},
+          origin={-10,80},
           extent={{-10,-10},{10,10}},
           rotation=0)));
     MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfOut annotation (Placement(
@@ -1316,13 +1316,12 @@ package Test "Package to test component equation and behaviour"
       T_start(displayUnit="degC") = 338.15)
                       "Temperature sensor"
       annotation (Placement(transformation(extent={{-48,10},{-28,30}})));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor pfIn
+      annotation (Placement(visible=true, transformation(
+          origin={-42,84},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
   equation
-    connect(pipePF.outlet, pfOut.inlet) annotation (
-      Line(points={{-10,80},{34,80}},     color = {168, 168, 168}));
-    connect(pfOut.outlet, expansionTank.inlet) annotation (
-      Line(points={{46,80},{79,80}},      color = {168, 168, 168}));
-    connect(idealMassFlowSource.outlet, pipePF.inlet)
-      annotation (Line(points={{-65.8,80},{-30,80}}, color={168,168,168}));
     connect(pip.port_b,senTemOut. port_a)
       annotation (Line(points={{4,20},{16,20}},color={0,127,255}));
     connect(senTemOut.port_b,sin. ports[1])
@@ -1335,6 +1334,22 @@ package Test "Package to test component equation and behaviour"
       annotation (Line(points={{-14,44},{-3,44},{-3,28}}, color={191,0,0}));
     connect(sou.ports[1],senTemIn. port_a) annotation (Line(points={{-62,20},{
             -48,20}},           color={0,127,255}));
+    connect(idealMassFlowSource.outlet, pfIn.inlet) annotation (Line(
+        points={{-65.8,80},{-48,80}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(pfIn.outlet, pipePF.inlet) annotation (Line(
+        points={{-36,80},{-20,80}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(pipePF.outlet, pfOut.inlet) annotation (Line(
+        points={{0,80},{34,80}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(pfOut.outlet, expansionTank.inlet) annotation (Line(
+        points={{46,80},{66,80},{66,74},{79,74},{79,80}},
+        color={140,56,54},
+        thickness=0.5));
     annotation (
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
           StopTime=120, __Dymola_Algorithm="Dassl"));

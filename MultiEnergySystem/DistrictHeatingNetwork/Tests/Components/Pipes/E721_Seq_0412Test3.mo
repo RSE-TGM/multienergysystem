@@ -8,9 +8,12 @@ model E721_Seq_0412Test3
     matrixFT701 = "FT721",
     matrixFT703 = "FT723",
     matrixPT701 = "PT721",
-    CorrectFactorHot = 1.02,
+    CorrectFactorHot = 1,
     CorrectFactorCold = 1,
     deltaThotmax = 26,
     deltaTcoldmax = 22.5,
-    E701(coldside(alpha=0.8257757), hotside(alpha=0.8257757)));
+    E701(
+      gamma_nom_hot=3666.84441,
+      gamma_nom_cold=9520.42245,
+         coldside(alpha=0.8257757), hotside(alpha=0.8257757)));
 end E721_Seq_0412Test3;

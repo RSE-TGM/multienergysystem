@@ -1,6 +1,15 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pipes;
-model E701_Seq_3001Test2
+model E711_Seq_3001Test2
   extends E700Test(
+    matrixTT701 = "TT711",
+    matrixTT702 = "TT712",
+    matrixTT703 = "TT713",
+    matrixTT704 = "TT714",
+    matrixFT701 = "FT711",
+    matrixFT703 = "FT713",
+    matrixPT701 = "PT711",
+    CorrectFactorHot = 1,
+    CorrectFactorCold = 1,
     deltaThotmax = 17,
     deltaTcoldmax = 30,
     Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test2/Temperatures.mat"),
@@ -13,4 +22,4 @@ model E701_Seq_3001Test2
       Interval=1,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end E701_Seq_3001Test2;
+end E711_Seq_3001Test2;

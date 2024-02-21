@@ -9,7 +9,7 @@ model E701_Seq_2401Test1
     Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2401_Test1/Pressures.mat"),
     Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2401_Test1/Flow.mat"),
     Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2401_Test1/Actuators.mat"),
-    E701(coldside(alpha=0.8257757), hotside(alpha=0.8257757)));
+    E701(coldside(alpha=0.67402256), hotside(alpha=0.67402256)));
   annotation (experiment(
       StopTime=10000,
       Interval=1,

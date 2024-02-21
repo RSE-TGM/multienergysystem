@@ -70,14 +70,18 @@ model PipePF
         rotation=180,
         origin={-74,0})));
   BaseClass.PlugFlowCore plugFlowCore(
-    L=Pipe.pipe1.L,
-    m_flow_start=Pipe.pipe1.m_flow_start,
-    pin_start=Pipe.pipe1.pin_start,
-    pout_start=Pipe.pipe1.pout_start,
-    hin_start=Pipe.pipe1.hin_start,
-    Tin_start=Pipe.pipe1.Tin_start,
-    Tout_start=Pipe.pipe1.Tout_start,
-    Di=Pipe.pipe1.Di)
+    L=L,
+    H=H,
+    t=t,
+    T_ext=T_ext,
+    m_flow_start=m_flow_start,
+    pin_start=pin_start,
+    pout_start=pout_start,
+    hin_start=hin_start,
+    Tin_start=Tin_start,
+    Tout_start=Tout_start,
+    X_start=X_start,
+    Di=Di)
     annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
   BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow1(
     L=Pipe.pipe1.L,

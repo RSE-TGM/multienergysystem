@@ -20,7 +20,7 @@ model TestPlugFlowPipe
   MultiEnergySystem.H2GasFacility.Components.Pipes.PipePF plugFlow(
     allowFlowReversal=true,
     L=Pipe.pipe1.L,
-    H=1e-4,
+    H=0,
     T_ext=system.T_amb,
     m_flow_start=m_flow_start,
     pin_start=Pipe.pipe1.pin_start,

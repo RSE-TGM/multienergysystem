@@ -3,7 +3,7 @@ model TestLumpedStorageConstantMass
   "Base test model of a single pipe (Flow1DFV) with a pressure source & mass flowrate sink"
   extends Modelica.Icons.Example;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay                        constrainedby
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND                        constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
   parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
@@ -42,7 +42,7 @@ model TestLumpedStorageConstantMass
   MultiEnergySystem.H2GasFacility.Components.Storage.LumpedStorageConstantMass
     lumpedStorageConstantMass(
     allowFlowReversal=true,
-    H=2,
+    H=10,
     X_start=Xref_2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,

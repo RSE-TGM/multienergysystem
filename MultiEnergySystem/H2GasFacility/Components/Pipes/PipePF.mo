@@ -42,6 +42,7 @@ model PipePF
   parameter SI.SpecificHeatCapacity cpm;
   final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((Di/2 + t)^2 - (Di/2)^2)*L*cpm*rhom/(cp*rho_nom) "Volume of water equivalent to the metal";
   final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*1) "Consider a diameter of 2, compute hight";
+  //final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*D) "Consider a diameter of 2, compute hight";
 
 
 
@@ -124,7 +125,8 @@ model PipePF
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass(
     rho_nom=rho_nom,
     allowFlowReversal=false,
-    H=1,
+    H=h_equivalent,
+    D=2,
     T_start=T_start,
     T_ext=T_ext,
     pin_start=pin_start,

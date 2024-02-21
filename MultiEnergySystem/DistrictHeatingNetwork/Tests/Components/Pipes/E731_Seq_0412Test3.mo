@@ -12,8 +12,5 @@ model E731_Seq_0412Test3
     CorrectFactorCold = 1,
     deltaThotmax = 26,
     deltaTcoldmax = 22.5,
-    E701(
-      gamma_nom_hot=3000,
-      gamma_nom_cold=3000,
-         coldside(alpha=0), hotside(alpha=0)));
+    E701(coldside(alpha=0.8257757), hotside(alpha=0.8257757)));
 end E731_Seq_0412Test3;

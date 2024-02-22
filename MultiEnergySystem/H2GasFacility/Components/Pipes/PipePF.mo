@@ -125,7 +125,7 @@ model PipePF
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass(
     rho_nom=rho_nom,
     allowFlowReversal=false,
-    H=h_equivalent,
+    H=1,
     D=2,
     T_start=T_start,
     T_ext=T_ext,

@@ -14,6 +14,7 @@ model Test_PF_vs_FV
   parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start "Initial temperature at the inlet";
   parameter Types.Length kappa = 0.045e-3;
   //parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
+  parameter Types.MassFraction X_start[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   // Components
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (

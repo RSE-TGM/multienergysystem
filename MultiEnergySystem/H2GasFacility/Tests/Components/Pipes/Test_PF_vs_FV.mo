@@ -7,14 +7,14 @@ model Test_PF_vs_FV
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   //parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
   parameter Types.MassFraction Xref[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
-  //parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
+  //parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
+  parameter Types.MassFraction X_start[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
+
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
   parameter Integer n = 3 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
   parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start "Initial temperature at the inlet";
   parameter Types.Length kappa = 0.045e-3;
-  //parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
-  parameter Types.MassFraction X_start[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   // Components
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
@@ -44,7 +44,7 @@ model Test_PF_vs_FV
     T_start=Pipe.pipe1.Tin_start,
     T_start_m=Pipe.pipe1.Tin_start,
     rho_nom=Pipe.pipe1.rho_nom,
-    cpm=8000) annotation (Placement(transformation(extent={{-12,-80},{32,-36}})));
+    cpm=8000) annotation (Placement(transformation(extent={{-6,-76},{26,-36}})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP_PF(
     p0(displayUnit="Pa") = Pipe.pipe1.pin_start,
     T0=288.15,
@@ -80,7 +80,7 @@ model Test_PF_vs_FV
     redeclare model Medium = Medium,
     m_flow0=m_flow_start,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
-        origin={80,-58},
+        origin={80,-56},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow(
@@ -140,13 +140,13 @@ equation
   connect(T_in.y, sourceP_PF.in_T0)
     annotation (Line(points={{-99,12},{-44,12},{-44,-48.4}}, color={0,0,127}));
   connect(sourceP_PF.outlet, plugFlow.inlet) annotation (Line(
-      points={{-34,-58},{-12,-58}},
+      points={{-34,-58},{-32,-58},{-32,-56},{-6,-56}},
       color={182,109,49},
       thickness=0.5));
   connect(m_flow.y, sink_PF.in_m_flow0)
-    annotation (Line(points={{65,-10},{74,-10},{74,-53}}, color={0,0,127}));
+    annotation (Line(points={{65,-10},{74,-10},{74,-51}}, color={0,0,127}));
   connect(plugFlow.outlet, sink_PF.inlet) annotation (Line(
-      points={{32,-58},{70,-58}},
+      points={{26,-56},{70,-56}},
       color={182,109,49},
       thickness=0.5));
   connect(sourceP_FV.outlet, round1DFV.inlet) annotation (Line(

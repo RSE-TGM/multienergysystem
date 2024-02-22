@@ -49,6 +49,7 @@ partial model PartialInsulatedTube
     Dialog(group = "Initialisation"));
   parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
+  //parameter H2GasFacility.Types.MassFraction X_start[5] "Mass fraction start value of fluid";
 
   // Medium
   Medium fluidIn(

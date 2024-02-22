@@ -47,14 +47,14 @@ model TestPlugFlowPipe
     T0(displayUnit="degC") = 303.15,
     X0=Xref,
     m_flow0=m_flow_start,
-    p0=49500,
+    p0=50000,
       use_in_m_flow0=true)
     annotation (Placement(transformation(extent={{-50,-34},{-30,-14}})));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(
     redeclare model Medium = Medium,
     T0(displayUnit="degC") = 288.15,
     X0=Xref,
-    p0=49500)
+    p0=50000)
     annotation (Placement(transformation(extent={{64,-34},{84,-14}})));
 equation
   connect(sourceMassFlow.outlet, plugFlow.inlet) annotation (Line(

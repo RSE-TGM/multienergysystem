@@ -1354,4 +1354,83 @@ package Test "Package to test component equation and behaviour"
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(
           StopTime=120, __Dymola_Algorithm="Dassl"));
   end PFPipe_vs_AixLibPF_test;
+
+  model PF_PipeTest
+    "Test of the Plug Flow Pipe used to reproduce the test in the paper from Sartor and Dewallef"
+    extends Modelica.Icons.Example;
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
+      allowFlowReversal=true,
+      use_in_m_flow=true,
+      use_in_T=false,
+      mflownom=1.67,
+      Tnom(displayUnit="K") = 30 + 273.15)                                                   annotation (
+        Placement(visible=true, transformation(
+          origin={-66,54},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(
+        allowFlowReversal=true, T=287.15)                                           annotation (Placement(
+          visible=true, transformation(
+          origin={92,68},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipePF PF_Pipe(
+      allowFlowReversal=true,
+      m_flow_nominal=1.67,
+      m_flow_start=0.58,
+      pin_start=100000,
+      D=0.0508,
+      L=39,
+      H=0,
+      tIns=0.013,
+      lambdaIns=0.04,
+      t=0.004,
+      rhom(displayUnit="kg/m3") = 8000,
+      T_start(displayUnit="degC") = 287.15,
+      T_start_m(displayUnit="degC") = 287.15,
+      cpm=500) annotation (Placement(visible=true, transformation(
+          origin={10,54},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tout_PF
+      annotation (Placement(visible=true, transformation(
+          origin={46,58},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    Modelica.Blocks.Sources.Ramp m_flow(
+      duration=0,
+      height=0,
+      offset=1.18,
+      startTime=10) annotation (Placement(visible=true, transformation(
+          origin={-105,51},
+          extent={{-9,-9},{9,9}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tin_PF
+      annotation (Placement(visible=true, transformation(
+          origin={-28,58},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+  equation
+    connect(PF_Pipe.outlet, Tout_PF.inlet) annotation (Line(
+        points={{20,54},{40,54}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(Tout_PF.outlet, expansionTank.inlet) annotation (Line(
+        points={{52,54},{92,54},{92,58}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(m_flow.y, idealMassFlowSource.in_m_flow) annotation (Line(points={{-95.1,
+            51},{-82,51},{-82,68},{-71,68},{-71,60.2}},       color={0,0,127}));
+    connect(idealMassFlowSource.outlet, Tin_PF.inlet) annotation (Line(
+        points={{-55.8,54},{-34,54}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(Tin_PF.outlet, PF_Pipe.inlet) annotation (Line(
+        points={{-22,54},{0,54}},
+        color={140,56,54},
+        thickness=0.5));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
+            600, __Dymola_Algorithm="Dassl"));
+  end PF_PipeTest;
 end Test;

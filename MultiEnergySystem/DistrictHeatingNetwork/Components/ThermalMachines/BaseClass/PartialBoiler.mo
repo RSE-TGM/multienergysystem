@@ -5,18 +5,21 @@ partial model PartialBoiler
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
      choicesAllMatching = true);
   constant Real pi = Modelica.Constants.pi;
-  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pin_start=1e5 "Start value Inlet pressure of the fluid"  annotation (Dialog(tab="Initialisation", group="fluid"));
-  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure pout_start=0.9e5 "Start value Outlet pressure of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
-  parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Temperature Tin_start=58 + 273.15 "Start value inlet temperature of the fluid" annotation (Dialog(tab="Initialisation", group="fluid"));
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start=1e5 "Start value Inlet pressure of the fluid"  annotation
+   (Dialog(tab="Initialisation", group="fluid"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start=0.9e5 "Start value Outlet pressure of the fluid" annotation
+   (Dialog(tab="Initialisation", group="fluid"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start=58 + 273.15 "Start value inlet temperature of the fluid" annotation
+   (Dialog(tab="Initialisation", group="fluid"));
   parameter SI.Temperature Tout_start = 80 + 273.15 "Start value outlet temperature of the fluid" annotation (
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter SI.Density rho_start = 1000 "Start value outlet density of the fluid" annotation (
     Dialog(tab = "Initialisation", group = "fluid"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(tab = "Initialisation"));
-  parameter SI.Length h = 1.2 "High of the water deposite" annotation (
+  parameter DistrictHeatingNetwork.Types.Length h = 1.2 "High of the water deposite" annotation (
     Dialog(tab = "Boiler Data"));
-  parameter SI.Diameter D = 0.64 "In case the shape of the Water deposite is a Cylinder" annotation (
+  parameter DistrictHeatingNetwork.Types.Length D = 0.64 "In case the shape of the Water deposite is a Cylinder" annotation (
     Dialog(tab = "Boiler Data"));
   parameter SI.ThermalConductivity lambdaIns = 0.045 "Conductance of the insulation material" annotation (
     Dialog(tab = "Insulation Data"));
@@ -28,7 +31,7 @@ partial model PartialBoiler
     Dialog(tab = "Boiler Data"));
   parameter SI.Power Pnom = 100e3 "Nominal Power" annotation (
     Dialog(tab = "Boiler Data"));
-  parameter SI.MassFlowRate m_flow_nom = 147.6e3/(20*4186) "Nominal fluid mass flow rate" annotation (
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 147.6e3/(20*4186) "Nominal fluid mass flow rate" annotation (
     Dialog(tab = "Boiler Data"));
   parameter SI.PerUnit etanom = 0.98 "Nominal useful efficiency" annotation (
     Dialog(tab = "Boiler Data"));
@@ -61,7 +64,7 @@ partial model PartialBoiler
     Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
   assert(Pmaxnom >= Pheat, "Actual heat power is higher than Maximum heat power", AssertionLevel.warning);
-  assert(10e5 >= inlet.p, "Actual heat power is higher than Maximum heat power", AssertionLevel.warning);
+  assert(10e5 >= inlet.p, "Actual pressure is higher than Maximum pressure", AssertionLevel.warning);
 
   // Balance equations
   V*(fluidOut.drho_dT*der(Tout)) = inlet.m_flow + outlet.m_flow;

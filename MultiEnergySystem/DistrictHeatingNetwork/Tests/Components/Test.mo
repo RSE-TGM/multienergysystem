@@ -1361,9 +1361,9 @@ package Test "Package to test component equation and behaviour"
     MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
       allowFlowReversal=true,
       use_in_m_flow=true,
-      use_in_T=false,
+      use_in_T=true,
       mflownom=1.67,
-      Tnom(displayUnit="K") = 30 + 273.15)                                                   annotation (
+      Tnom(displayUnit="K") = 38 + 273.15)                                                   annotation (
         Placement(visible=true, transformation(
           origin={-66,54},
           extent={{-10,-10},{10,10}},
@@ -1386,8 +1386,8 @@ package Test "Package to test component equation and behaviour"
       lambdaIns=0.04,
       t=0.004,
       rhom(displayUnit="kg/m3") = 8000,
-      T_start(displayUnit="degC") = 287.15,
-      T_start_m(displayUnit="degC") = 287.15,
+      T_start(displayUnit="degC") = 300.65,
+      T_start_m(displayUnit="degC") = 300.65,
       cpm=500) annotation (Placement(visible=true, transformation(
           origin={10,54},
           extent={{-10,-10},{10,10}},
@@ -1400,7 +1400,7 @@ package Test "Package to test component equation and behaviour"
     Modelica.Blocks.Sources.Ramp m_flow(
       duration=0,
       height=0,
-      offset=1.18,
+      offset=1.2,
       startTime=10) annotation (Placement(visible=true, transformation(
           origin={-105,51},
           extent={{-9,-9},{9,9}},
@@ -1409,6 +1409,15 @@ package Test "Package to test component equation and behaviour"
       annotation (Placement(visible=true, transformation(
           origin={-28,58},
           extent={{-10,-10},{10,10}},
+          rotation=0)));
+    Modelica.Blocks.Sources.Ramp m_flow1(
+      duration=0,
+      height=-22.5,
+      offset=60 + 273.15,
+      startTime=600)
+                    annotation (Placement(visible=true, transformation(
+          origin={-105,85},
+          extent={{-9,-9},{9,9}},
           rotation=0)));
   equation
     connect(PF_Pipe.outlet, Tout_PF.inlet) annotation (Line(
@@ -1429,6 +1438,8 @@ package Test "Package to test component equation and behaviour"
         points={{-22,54},{0,54}},
         color={140,56,54},
         thickness=0.5));
+    connect(m_flow1.y, idealMassFlowSource.in_T) annotation (Line(points={{
+            -95.1,85},{-61,85},{-61,60.2}}, color={0,0,127}));
     annotation (
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
             600, __Dymola_Algorithm="Dassl"));

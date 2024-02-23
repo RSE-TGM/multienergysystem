@@ -3,7 +3,7 @@ model CH4PR
   extends SinglePTXFluidTest(
     redeclare model Medium = H2GasFacility.Media.RealGases.CH4PR,
     T_ref = 15 + 273.15,
-    p_ref = 0.5e5,
+    p_ref = 1.3e5,
     Y = {1});
 
 equation

@@ -8,7 +8,7 @@ model GasBoiler
     Dialog(tab = "Boiler Data"));
   parameter Real convf = 275 "experimental conversion factor";
 
-  SI.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
 
   MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inletfuel(nXi = 1) annotation (
     Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-60,-2},  extent = {{-20, -20}, {20, 20}}, rotation = 0)));

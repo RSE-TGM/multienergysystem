@@ -7,10 +7,10 @@ partial model PartialInsulatedTube
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
       constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
 
-  parameter Types.Length L
+  parameter Types.Length L = 1
     "Length of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
   parameter Types.Length H = 0
@@ -50,7 +50,7 @@ partial model PartialInsulatedTube
     "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Pressure pin_start
-    "Pressure start value of outgoing fluid" annotation (
+    "Pressure start value of ingoing fluid" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Pressure pout_start
     "Pressure start value of outgoing fluid" annotation (
@@ -58,10 +58,10 @@ partial model PartialInsulatedTube
   parameter Types.SpecificEnthalpy hin_start
     "Specific enthalpy start value at the inlet of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tin_start
+  parameter Types.Temperature Tin_start = 15 + 273.15
     "Temperature start value of fluid at the start of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tout_start
+  parameter Types.Temperature Tout_start = 15 + 273.15
     "Temperature start value of fluid at the end of the volume" annotation (
     Dialog(group = "Initialisation"));
   parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X

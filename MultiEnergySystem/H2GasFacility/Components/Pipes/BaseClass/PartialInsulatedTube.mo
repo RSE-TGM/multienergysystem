@@ -46,13 +46,13 @@ partial model PartialInsulatedTube
   parameter Types.Temperature T_ext = 15 + 273.15
     "External temperature" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.MassFlowRate m_flow_start
+  parameter Types.MassFlowRate m_flow_start = 5
     "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pin_start
+  parameter Types.Pressure pin_start = 5e5
     "Pressure start value of ingoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pout_start
+  parameter Types.Pressure pout_start = 4.5e5
     "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.SpecificEnthalpy hin_start

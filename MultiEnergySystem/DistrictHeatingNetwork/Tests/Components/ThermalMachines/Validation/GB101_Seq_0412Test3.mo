@@ -1,17 +1,16 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines.Validation;
 
 model GB101_Seq_0412Test3
-  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines.GasBoilerTest(sourceCH4(use_in_m_flow0 = true), sourceP(use_in_p0 = false, use_in_T0 = true), sinkM(use_in_m_flow = true), sinkrefT(use_in_m_flow = false, use_in_T = true));
+  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines.GasBoilerTest(sourceCH4(use_in_m_flow0 = true), sourceP(use_in_p0 = false, use_in_T0 = true), sinkM(use_in_m_flow = true));
 
   parameter String Data = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix" annotation (
     Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-//  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Pressures.mat") "File name of matrix" annotation (
-//    Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-//  parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Flow.mat") "File name of matrix" annotation (
-//    Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-//  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Actuators.mat") "File name of matrix" annotation (
-//    Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-
+  //  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Pressures.mat") "File name of matrix" annotation (
+  //    Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+  //  parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Flow.mat") "File name of matrix" annotation (
+  //    Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+  //  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Actuators.mat") "File name of matrix" annotation (
+  //    Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
   parameter Real CorrectFactorHot = 1;
   parameter Real CorrectFactorCold = 1;
   parameter Types.Density rhohotref = 985;
@@ -33,8 +32,6 @@ model GB101_Seq_0412Test3
     Placement(transformation(origin = {0, 50}, extent = {{-100, -30}, {-80, -10}})));
   Modelica.Blocks.Sources.TimeTable m_flow(table = [t, m_flow101])  annotation(
     Placement(transformation(origin = {-40, 50}, extent = {{100, -30}, {80, -10}}, rotation = -0)));
-  Modelica.Blocks.Sources.TimeTable TT102_ref(table = [t, TT102])  annotation(
-    Placement(transformation(origin = {-30, 90}, extent = {{100, -30}, {80, -10}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Data, matrixTT101) "dimension of matrix";
   final parameter Real t[:, :] = Modelica.Utilities.Streams.readRealMatrix(Data, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -54,6 +51,6 @@ equation
     Line(points = {{-78, 30}, {-76, 30}, {-76, 6}}, color = {0, 0, 127}));
   connect(m_flow.y, sinkM.in_m_flow) annotation(
     Line(points = {{40, 30}, {22, 30}, {22, 54}}, color = {0, 0, 127}));
-  connect(TT102_ref.y, sinkrefT.in_T) annotation(
-    Line(points = {{50, 70}, {30, 70}, {30, 78}}, color = {0, 0, 127}));
+  annotation(
+    experiment(StartTime = 0, StopTime = 9000, Tolerance = 1e-6, Interval = 18));
 end GB101_Seq_0412Test3;

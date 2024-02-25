@@ -13,8 +13,6 @@ model GasBoilerTest
     Placement(transformation(origin = {-36, 60}, extent = {{-10, 10}, {10, -10}})));
   H2GasFacility.Sources.SourceMassFlow sourceCH4(redeclare model Medium = Gas, p0 = 0.105e6, T0 = 15 + 273.15, X0 = {1, 0}, m_flow0 = 5.8) annotation(
     Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
-  DistrictHeatingNetwork.Sources.SinkMassFlow sinkrefT(redeclare model Medium = Water, G = 1e-2, pin_start = 2e5, p0 = 2e5, T0 = 353.15, m_flow0 = 1) annotation(
-    Placement(transformation(origin = {30, 84}, extent = {{-12, 12}, {12, -12}})));
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation(
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation

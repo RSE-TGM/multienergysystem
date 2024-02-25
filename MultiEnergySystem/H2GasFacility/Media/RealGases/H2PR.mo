@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-model H2PR
+model H2PR "Hydrogen model using PR EoS"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 0,
       X_start = {1},

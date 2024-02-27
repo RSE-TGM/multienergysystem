@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
+﻿within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 model PlugFlowCore
   extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(Di=Di);
   import Modelica.Fluid.Utilities.regSquare;
@@ -39,9 +39,10 @@ equation
   fluidOut.h = outlet.h_out;
   fluidOut.Xi = outlet.Xi;
 
-  // Pressure drop due to friction
-//   inlet.p - outlet.p = rho_nom * Modelica.Constants.g_n * H + homotopy(cf / 2 * rho_nom * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * q * rho_nom);
+  // Pressure drop due to friction --> Quale dei due è giusto? fluidIn.rho o rho_nom
+  //inlet.p - outlet.p = rho_nom * Modelica.Constants.g_n * H + homotopy(cf / 2 * rho_nom * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * q * rho_nom);
   inlet.p - outlet.p = fluidIn.rho * Modelica.Constants.g_n * H + homotopy(cf / 2 * fluidIn.rho * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * q * fluidIn.rho);
+
   // Mass balance (no storage)
   inlet.m_flow + outlet.m_flow = 0;
   der(x) = v;

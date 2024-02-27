@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
 model Pipe_CH4H2
   extends Components.Pipes.TestSinglePipe_A(
-    redeclare model Medium = H2GasFacility.Media.IdealGases.NG4_H2, n = 15, Xref = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477},
+    redeclare model Medium = H2GasFacility.Media.IdealGases.NG4_H2, n = 5, Xref = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477},
     roundPipe(
       X_start=Xref,
     Di =           Pipe.pipe1.Di,

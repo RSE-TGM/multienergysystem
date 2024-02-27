@@ -57,15 +57,15 @@ model Test_PF_vs_FV
         rotation=0)));
   Modelica.Blocks.Sources.Ramp T_in(
     duration=10,
-    height=0,
+    height=5,
     offset=15 + 273.15,
     startTime=150) annotation (Placement(visible=true, transformation(
         origin={-110,12},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.Ramp p_in(
-    height=0.5e5*0.05,
-    offset=0.5e5,
+    height=-1.5e5,
+    offset=2.5e5,
     duration=50,
     startTime=200) annotation (Placement(visible=true, transformation(
         origin={-110,-18},
@@ -85,13 +85,14 @@ model Test_PF_vs_FV
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow(
     duration=10,
-    height=-m_flow_start*2,
+    height=m_flow_start,
     offset=m_flow_start,
     startTime=75) annotation (Placement(visible=true, transformation(
         origin={54,-10},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV round1DFV(
+    redeclare model Medium = Medium,
     L=Pipe.pipe1.L,
     H=Pipe.pipe1.h,
     t=Pipe.pipe1.t,
@@ -164,5 +165,9 @@ equation
   connect(m_flow.y, sink_FV.in_m_flow0) annotation (Line(points={{65,-10},{74,-10},
           {74,46},{52,46},{52,37}}, color={0,0,127}));
   annotation (
-    experiment(StopTime = 250, Interval = 0.0350042, Tolerance = 1e-06, StartTime = 0));
+    experiment(
+      StopTime=500,
+      Interval=0.0350042,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end Test_PF_vs_FV;

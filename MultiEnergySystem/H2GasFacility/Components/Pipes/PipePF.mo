@@ -48,6 +48,7 @@ model PipePF
 
 
   BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow(
+  redeclare model Medium = Medium,
     L=L,
     H=H,
     t=t,
@@ -73,6 +74,7 @@ model PipePF
         rotation=180,
         origin={-74,0})));
   BaseClass.PlugFlowCore plugFlowCore(
+  redeclare model Medium = Medium,
     L=L,
     H=H,
     t=t,
@@ -98,6 +100,7 @@ model PipePF
     T_start=T_start)
     annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
   BaseClass.DirectionalHeatLossPlugFlow directionalHeatLossPlugFlow1(
+  redeclare model Medium = Medium,
     L=L,
     H=H,
     t=t,
@@ -123,6 +126,7 @@ model PipePF
         rotation=180,
         origin={30,0})));
   Storage.LumpedStorageConstantMass lumpedStorageConstantMass(
+  redeclare model Medium = Medium,
     rho_nom=rho_nom,
     allowFlowReversal=false,
     H=1,
@@ -137,6 +141,7 @@ model PipePF
     lambdaIns=lambdaIns)
     annotation (Placement(transformation(extent={{60,-40},{80,-20}})));
   Sensors.IdealMassFlowSensor idealMassFlowSensor(
+  redeclare model Medium = Medium,
     pin_start=pin_start,
     pout_start=pout_start,
     Tin_start=Tin_start,
@@ -147,6 +152,7 @@ model PipePF
     hin_start=hin_start)
     annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
   BaseClass.TimeDelayPlugFlow timeDelayPlugFlow(
+  redeclare model Medium = Medium,
     L=L,
     D=Di,
     rho_nom=rho_nom,

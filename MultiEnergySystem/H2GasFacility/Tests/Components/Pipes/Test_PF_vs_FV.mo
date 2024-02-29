@@ -87,7 +87,7 @@ model Test_PF_vs_FV
     duration=10,
     height=m_flow_start,
     offset=m_flow_start,
-    startTime=75) annotation (Placement(visible=true, transformation(
+    startTime=50) annotation (Placement(visible=true, transformation(
         origin={54,-10},
         extent={{-10,-10},{10,10}},
         rotation=0)));

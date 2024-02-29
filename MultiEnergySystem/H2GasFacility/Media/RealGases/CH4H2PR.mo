@@ -1,12 +1,14 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
 model CH4H2PR "Methane & Hydrogen model using PR EoS"
-  extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
+  extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 1,
       nX = 2,
       X_start = {0.9, 0.1},
       T_start = 25 + 273.15,
       p_start = 1e5,
       posDom = 1,
+      w =   {Modelica.Media.IdealGases.Common.FluidData.CH4.acentricFactor,
+             Modelica.Media.IdealGases.Common.FluidData.H2.acentricFactor},
       MM =  {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
              Modelica.Media.IdealGases.Common.SingleGasesData.H2.MM},
       p_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalPressure,
@@ -15,6 +17,9 @@ model CH4H2PR "Methane & Hydrogen model using PR EoS"
              Modelica.Media.IdealGases.Common.FluidData.H2.criticalTemperature},
       v_mol_c = {Modelica.Media.IdealGases.Common.FluidData.CH4.criticalMolarVolume,
                  Modelica.Media.IdealGases.Common.FluidData.H2.criticalMolarVolume},
+      delta=
+         {{ 0.00000,   -0.149},
+         {  -0.149,   0.00000}},
       Hf = {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.Hf,
             Modelica.Media.IdealGases.Common.SingleGasesData.H2.Hf},
       HHV = {MultiEnergySystem.H2GasFacility.Data.FuelHeatingData.CH4.HHV,

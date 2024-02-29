@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-model CH4Papay
+model CH4Papay "Methane model using Papay equation for compressibility"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
       nXi = 0,
       X_start = {1},

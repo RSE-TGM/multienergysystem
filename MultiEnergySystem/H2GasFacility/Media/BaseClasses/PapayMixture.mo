@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PapayMixture
-  extends PapayMixtureND(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start), computeDerivatives = true);
+  extends PapayMixtureND(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start), final computeDerivatives = true);
   import Modelica.Fluid.Utilities.regStep;
 
   //Variables

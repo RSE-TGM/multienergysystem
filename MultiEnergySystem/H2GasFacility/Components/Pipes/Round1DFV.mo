@@ -13,10 +13,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.squareReg;
   import Modelica.Fluid.Utilities.regStep;
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+  replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay
+      constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient

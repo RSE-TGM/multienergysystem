@@ -4,12 +4,12 @@ model PlugFlowCore
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import Modelica.Fluid.Utilities.regSquare;
 
+  constant Real g_n = Modelica.Constants.g_n;
 // Parameter declaration
   parameter Types.PerUnit cf = 0.004 "Constant Fanning factor";
   parameter Types.Velocity u_nom = 1 "Nominal fluid velocity";
   parameter Types.MassFlowRate m_flow_small = 0.001 "Small mass flow rate for regularization of zero flow";
   parameter Types.Temperature T_start = 25 + 273.15 "Start value to be used for specific enthalpy initialization";
-  parameter Boolean ss = true;
   // Final parameter computation
   final parameter Modelica.Units.SI.PressureDifference dp_nom = cf / 2 * rho0 * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
   final parameter Types.MassFlowRate m_flow_nom = rho0 * A * u_nom "Nominal mass flow rate";
@@ -19,18 +19,13 @@ model PlugFlowCore
   Types.VolumeFlowRate V_flow = inlet.m_flow / rho0 "Volume flow rate at inflowing port (positive when flow from port_a to port_b)";
 
 protected
-    parameter Modelica.Units.SI.SpecificEnthalpy h_ini_in = cp * T_start "For initialization of spatialDistribution inlet";
-    parameter Modelica.Units.SI.SpecificEnthalpy h_ini_out = cp * T_start "For initialization of spatialDistribution outlet";
+    parameter Types.SpecificEnthalpy h_ini_in = cp * T_start "For initialization of spatialDistribution inlet";
+    parameter Types.SpecificEnthalpy h_ini_out = cp * T_start "For initialization of spatialDistribution outlet";
 initial equation
-//   if ss == true then
-//     x = L;
-//   else
-//     x = 0;
-//   end if;
   x = 0;
 equation
 // Pressure drop due to friction
-  inlet.p - outlet.p = rho0 * Modelica.Constants.g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * V_flow * rho0);
+  inlet.p - outlet.p = rho0 * g_n * h + homotopy(cf / 2 * rho0 * omega * L / A * regSquare(v, u_nom * 0.05), dp_nom / m_flow_nom * V_flow * rho0);
 // Mass balance (no storage)
   inlet.m_flow + outlet.m_flow = 0;
   der(x) = v;

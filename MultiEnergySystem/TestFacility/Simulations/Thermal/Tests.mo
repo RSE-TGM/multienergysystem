@@ -172,13 +172,13 @@ package Tests
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h3 = 3;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h4 = 5;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure dpRR = 1e5;
-      parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\1701_Test2\Temperatures.mat") "File name of matrix" annotation (
+      parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Temperatures.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-      parameter String Pressures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\1701_Test2\Pressures.mat") "File name of matrix" annotation (
+      parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Pressures.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-      parameter String Flows = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\1701_Test2\Flow.mat") "File name of matrix" annotation (
+      parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Flow.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-      parameter String Actuators = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Test Gennaio 2024\1701_Test2\Actuators.mat") "File name of matrix" annotation (
+      parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Actuators.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
       parameter String matrixTT702 = "TT702" "Matrix name in file";
       parameter String matrixTT712 = "TT712" "Matrix name in file";
@@ -1354,6 +1354,14 @@ package Tests
           Placement(transformation(extent = {{512, -280}, {492, -260}})));
         Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e8}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
           Placement(transformation(extent = {{-318, -344}, {-298, -324}})));
+  Modelica.Blocks.Sources.RealExpression TT703_SPP annotation(
+          Placement(transformation(origin = {180, -240}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+  Modelica.Blocks.Sources.RealExpression TT733_SPP annotation(
+          Placement(transformation(origin = {334, -240}, extent = {{10, -10}, {-10, 10}})));
+  Modelica.Blocks.Sources.RealExpression tt733_spp annotation(
+          Placement(transformation(origin = {516, -242}, extent = {{10, -10}, {-10, 10}})));
+  Modelica.Blocks.Sources.RealExpression tt733_spp1 annotation(
+          Placement(transformation(origin = {664, -240}, extent = {{10, -10}, {-10, 10}})));
       equation
         connect(FCV901_theta.y, FCV901.opening) annotation (
           Line(points = {{-735, 103}, {-742, 103}, {-742, 115}, {-749, 115}}, color = {0, 0, 127}));
@@ -1385,19 +1393,13 @@ package Tests
           Line(points = {{231, -330}, {238, -330}, {238, -305}}, color = {0, 0, 127}));
         connect(FT703_mflow.y, FT703.in_m_flow) annotation (
           Line(points = {{71, -330}, {80, -330}, {80, -305}}, color = {0, 0, 127}));
-        connect(TT703_SP.y, VER3.in_T0) annotation (
-          Line(points = {{171, -270}, {159, -270}, {159, -290.6}}, color = {0, 0, 127}));
-        connect(TT733_SP.y, VER2.in_T0) annotation (
-          Line(points = {{327, -270}, {319, -270}, {319, -290.6}}, color = {0, 0, 127}));
-        connect(TT723_SP.y, VER901.in_T0) annotation (
-          Line(points = {{651, -270}, {641, -270}, {641, -288.6}}, color = {0, 0, 127}));
-        connect(TT713_SP.y, VER1.in_T0) annotation (
-          Line(points = {{491, -270}, {479, -270}, {479, -290.6}}, color = {0, 0, 127}));
         connect(P101_input.y, P101.in_omega) annotation (
           Line(points = {{-221, -180.5}, {-234, -180.5}, {-234, -179.8}}, color = {0, 0, 127}));
         connect(GB101_Status.y, GB101.heat_on) annotation (
           Line(points = {{-297, -334}, {-294, -334}, {-294, -322}, {-285, -322}}, color = {255, 0, 255}));
-      end CentralisedSystemLoadSimplifiedI_A;
+      annotation(
+          Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
+end CentralisedSystemLoadSimplifiedI_A;
 
       model CentralisedSystemLoadSimplifiedI_B
         extends CentralisedSystemLoadSimplifiedI_A(VER901(T0 = 15 + 273.15), FV933_state = false, P901omega = [0, 2*pi*30; 500, 2*pi*30], P101omega = [0, 2*pi*30; 1000, 2*pi*30], pin_start_rCD_cold = 1.66e5, VE901(p0(displayUnit = "Pa") = 166000), P101qm3h = [0, 14; 100, 14], T_start_cold = 72 + 273.15, T_start_hot = 80 + 273.15, Tin_start_S1 = 72 + 273.15, Tout_start_S1 = 80 + 273.15, FCV101theta = [0, 1; 100, 1], FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 0; 100, 0], FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 8000, 0.2; 8000, 0.5; 10000, 0.5], EX701_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX711_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX721_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX731_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX701q_m3h_cold = [0, 4.2; 100, 4.2], EX711q_m3h_cold = [0, 4.2; 100, 4.2], EX721q_m3h_cold = [0, 4.2; 100, 4.2], EX731q_m3h_cold = [0, 4.2; 100, 4.2], GB101(Pmaxnom = 147.6e3*0.8), ToutcoolSP = [0, 25.5; 500, 25.5; 500, 12; 1000, 12], EX701(Tin_start_hot = T_start_hot), EX731(Tin_start_hot = T_start_hot), FCV901(Kv = 20));

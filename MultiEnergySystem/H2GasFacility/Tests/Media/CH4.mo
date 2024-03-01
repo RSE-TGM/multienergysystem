@@ -3,7 +3,7 @@ model CH4
   extends Tests.Media.SinglePTXFluidTest(
     redeclare model Medium = H2GasFacility.Media.IdealGases.NG_4,
     T_ref = 15 + 273.15,
-    p_ref = 7500,
+    p_ref = 1.3e5,
     X_ref = {0.929, 0.06, 0.01, 0.001},
     Y = {0.929, 0.06, 0.01, 0.001});
 equation

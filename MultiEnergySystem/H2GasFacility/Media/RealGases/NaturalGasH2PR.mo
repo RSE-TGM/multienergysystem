@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-model NaturalGasH2PR "Mixture real gas model for fuel using PR EoS"
+model NaturalGasH2PR "Mixture real gas model for natural & H2 using PR EoS"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 5,
       X_start = {0.94201, 0.01862, 0.0393, 0.00543, 0.00001, 0.03},

@@ -40,6 +40,15 @@ package Sequences
           FCVC01(Kv=25),
           VE901(p0=180000));
 
+equation
+        connect(TT703_SP.y, VER3.in_T0) annotation(
+          Line(points = {{172, -270}, {160, -270}, {160, -290}}, color = {0, 0, 127}));
+  connect(TT733_SP.y, VER2.in_T0) annotation(
+          Line(points = {{328, -270}, {320, -270}, {320, -290}}, color = {0, 0, 127}));
+  connect(TT713_SP.y, VER1.in_T0) annotation(
+          Line(points = {{492, -270}, {480, -270}, {480, -290}}, color = {0, 0, 127}));
+  connect(TT723_SP.y, VER901.in_T0) annotation(
+          Line(points = {{652, -270}, {640, -270}, {640, -288}, {642, -288}}, color = {0, 0, 127}));
         annotation (experiment(
             StopTime=13100,
             Tolerance=1e-06,
@@ -48,7 +57,7 @@ package Sequences
 
       model Seq_0412_Test2 "Sequence 2 done on 04/12/23"
         extends Thermal.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_B(
-          TT703_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
+          
           TT713_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
           TT723_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
           TT733_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
@@ -57,7 +66,7 @@ package Sequences
           FT723_mflow(table=kq*[0,1.1859*998/3600; 1e6,1.1859*998/3600]),
           FT733_mflow(table=kq*[0,1.3281*998/3600; 1e6,1.3281*998/3600]),
           GB101_ToutSP = [0, 76+273.15; 1e6, 273.15],
-          EB401_ToutSP = [0, 76+273.15; 1e6, 273.15],
+          EB401_ToutSP = [0, 74+273.15; 1e6, 273.15],
           EX701_Tin_hot = T_start_hot,
           EX711_Tin_hot = T_start_hot,
           EX721_Tin_hot = T_start_hot,
@@ -88,23 +97,35 @@ package Sequences
           EB401(
             Tout_start=342.15,
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-                                    nR= 3.5),
+                                    nR= 4),
           FCVC01(Tin_start=T_start_hot),
           VER3(T0=EX701_Tin_cold),
           VER2(T0=EX731_Tin_cold),
           VER1(T0=EX711_Tin_cold),
           VER901(T0=EX721_Tin_cold),
-          FCV101(Kv=20),
+          FCV101(Kv = 20, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic),
           EB401_Status(table={537,768,2271,2500}),
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
-          FCVC02(Kv=25));
+          FCVC02(Kv=25), TT703_SPP(y = Tcoolsin));
           //FCV701theta = [0, 0.6269; 1e6, 0.6269],
-        parameter Real kq = 1;
+        parameter Real kq = 0.7;
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
+        parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";
+        
+        Real Tcoolsin;
+      equation
+        Tcoolsin = 273.15 + 16.7 + 1.7*sin(2*3.1415*freq*(time+200));
+  connect(TT703_SPP.y, VER3.in_T0) annotation(
+          Line(points = {{170, -240}, {160, -240}, {160, -290}}, color = {0, 0, 127}));
+  connect(TT703_SPP.y, VER2.in_T0) annotation(
+          Line(points = {{170, -240}, {164, -240}, {164, -250}, {242, -250}, {242, -280}, {320, -280}, {320, -290}}, color = {0, 0, 127}));
+  connect(VER1.in_T0, VER2.in_T0) annotation(
+          Line(points = {{480, -290}, {480, -278}, {320, -278}, {320, -290}}, color = {0, 0, 127}));
+  connect(VER901.in_T0, VER1.in_T0) annotation(
+          Line(points = {{642, -288}, {640, -288}, {640, -280}, {480, -280}, {480, -290}}, color = {0, 0, 127}));
         annotation (experiment(
             StopTime=10000,
-            Tolerance=1e-06,
-            __Dymola_Algorithm="Dassl"), Diagram(coordinateSystem(extent={{-900,-500},{900,500}})));
+            Tolerance=1e-06, StartTime = 0, Interval = 20), Diagram(coordinateSystem(extent={{-900,-500},{900,500}})));
       end Seq_0412_Test2;
 
     end Centralised;

@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
-model NGPapay_6 "Natural Gas using PR EoS"
+model NGPapay_6 "Natural Gas using Papay EoS & 6 components"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
       nXi = 5,
       X_start = {0.85306, 0.06486, 0.02058, 0.0028, 0.03882, 0.01268},

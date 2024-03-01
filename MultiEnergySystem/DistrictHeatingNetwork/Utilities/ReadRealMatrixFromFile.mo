@@ -7,17 +7,17 @@ model ReadRealMatrixFromFile
 //     annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 //   parameter String file = Modelica.Utilities.Files.loadResource("C:\DiscoD\Muro\Lavoro\Temperatures.mat") "File name of matrix"
 //     annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:\Users\muro\OneDrive - RSE S.p.A\Modelli e Simulazione\Acquisizione dati - Test Facility\Temperatures.mat") "File name of matrix"
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix"
     annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
   parameter String matrixTT701 = "TT701" "Matrix name in file";
   parameter String matrixTT702 = "TT702" "Matrix name in file";
   parameter String matrixTT703 = "TT703" "Matrix name in file";
   parameter String matrixTT704 = "TT704" "Matrix name in file";
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT701) "Dimension of matrix";
-  final parameter Real TT701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]) "Matrix data";
-  final parameter Real TT702[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT702,dim[1],dim[2]) "Matrix data";
-  final parameter Real TT703[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
-  final parameter Real TT704[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]) "Matrix data";
+//  final parameter Real TT702[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT702,dim[1],dim[2]) "Matrix data";
+//  final parameter Real TT703[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
+//  final parameter Real TT704[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT704,dim[1],dim[2]) "Matrix data";
 
 //   final parameter String file1 = Modelica.Utilities.Files.loadResource("modelica://Modelica/Resources/Data/Utilities/Test_RealMatrix_v4.mat") "File name of check matrix 1";
 //   final parameter String file2 = Modelica.Utilities.Files.loadResource("modelica://Modelica/Resources/Data/Utilities/Test_RealMatrix_v6.mat") "File name of check matrix 2";

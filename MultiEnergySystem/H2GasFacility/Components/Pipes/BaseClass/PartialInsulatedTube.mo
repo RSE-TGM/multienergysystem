@@ -7,49 +7,66 @@ partial model PartialInsulatedTube
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
       constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
 
-  parameter Types.Length L "Length of the tube" annotation (
+  parameter Types.Length L = 1
+    "Length of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Length H = 0 "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
+  parameter Types.Length H = 0
+    "Height, positive if outlet is higher than inlet. = 0 ports at same hight" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Length t = 0.003 "Thickness of the tube" annotation (
+  parameter Types.Length t = 0.003
+    "Thickness of the tube" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Pressure pmax = 6e5 "Maximum pressure that the component can support" annotation (
+  parameter Types.Pressure pmax = 6e5
+    "Maximum pressure that the component can support" annotation (
     Dialog(tab = "Data", group = "Pipe"));
-  parameter Types.Length tIns = 0.15 "Insulation thickness" annotation (
+  parameter Types.Length tIns = 0.15
+    "Insulation thickness" annotation (
     Dialog(tab = "Data", group = "Insulation"));
-  parameter Types.ThermalConductivity lambdaIns = 0.04 "Thermal conductivity of the insulant material" annotation (
+  parameter Types.ThermalConductivity lambdaIns = 0.04
+    "Thermal conductivity of the insulant material" annotation (
     Dialog(tab = "Data", group = "Insulation"));
 
 // Metal Parameter
-  parameter Boolean thermalInertia = true "if true then account for metal thermal inertia" annotation (
+  parameter Boolean thermalInertia = true
+    "if true then account for metal thermal inertia" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
-  parameter Types.SpecificHeatCapacity cm = 445 "Metal wall specific heat capacity" annotation (
+  parameter Types.SpecificHeatCapacity cm = 445
+    "Metal wall specific heat capacity" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
-  parameter Types.Density rhom = 8000 "Metal density [g/cm^3], for steel = 8" annotation (
+  parameter Types.Density rhom = 8000
+    "Metal density [g/cm^3], for steel = 8" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
-  parameter Types.ThermalConductivity lambdam = 45 "Metal thermal conductivity; steel = 45" annotation (
+  parameter Types.ThermalConductivity lambdam = 45
+    "Metal thermal conductivity; steel = 45" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
 
-  parameter Types.Temperature T_ext = 15 + 273.15 "External temperature" annotation (
+  parameter Types.Temperature T_ext = 15 + 273.15
+    "External temperature" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.MassFlowRate m_flow_start "Start value for mass flow rate" annotation (
+  parameter Types.MassFlowRate m_flow_start = 5
+    "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pin_start "Pressure start value of outgoing fluid" annotation (
+  parameter Types.Pressure pin_start = 5e5
+    "Pressure start value of ingoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pout_start "Pressure start value of outgoing fluid" annotation (
+  parameter Types.Pressure pout_start = 4.5e5
+    "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.SpecificEnthalpy hin_start "Specific enthalpy start value at the inlet of the volume" annotation (
+  parameter Types.SpecificEnthalpy hin_start
+    "Specific enthalpy start value at the inlet of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tin_start "Temperature start value of fluid at the start of the volume" annotation (
+  parameter Types.Temperature Tin_start = 15 + 273.15
+    "Temperature start value of fluid at the start of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tout_start "Temperature start value of fluid at the end of the volume" annotation (
+  parameter Types.Temperature Tout_start = 15 + 273.15
+    "Temperature start value of fluid at the end of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
+  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X
+    "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
-  //parameter H2GasFacility.Types.MassFraction X_start[5] "Mass fraction start value of fluid";
 
   // Medium
   Medium fluidIn(

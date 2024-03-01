@@ -10,6 +10,7 @@ model WaterLiquidVaryingDensity
     kappa_coeff = {-8.1509980345909e-06,0.0063995962643842,-0.57622073567604});
 
   parameter Types.SpecificEnergy u_bias = 1.492354e+06;
+  parameter Types.SpecificEnthalpy h_bias = -1.4927048e6;
 
   //Start parameters
 initial equation
@@ -27,7 +28,7 @@ equation
   //u = u_T(T,cp_coeff) - u_bias;
   h = u + p/rho;
   //h = h_T(T,cp_coeff) - u_bias;
-  h = h_T(T,cp_coeff);
+  h = h_T(T,cp_coeff) + h_bias;
   cp = du_dT;
   cp = cp_T(T, cp_coeff);
   cv = cp;

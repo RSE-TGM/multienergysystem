@@ -3,7 +3,7 @@ model NG6_H2_Papay_ND
   "Mixture fluid model of natural gas with 4 components and hydrogen using Papay compressiblity factor equation"
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixtureND(
       computeTransport = true,
-      nXi = 7,
+      nXi = 6,
       nX = 7,
       X_start = {0.9, 0.04, 0.04, 0.005, 0.005, 0.01, 0.01},
       T_start = 15 + 273.15,

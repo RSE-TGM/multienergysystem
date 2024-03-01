@@ -7,7 +7,7 @@ model BaseTwoFluidsComparison
   constant Real p0(unit = "s") = 1 "Reference value for units";
 
   parameter Types.Temperature T_ref = 15 + 273.15 "Reference temperature";
-  parameter Types.Pressure p_ref = 1e6 "Reference pressure";
+  parameter Types.Pressure p_ref = p_min "Reference pressure";
   parameter Types.MassFraction X_ref[:] = M/Mt "Mass Fraction of the real gas";
   parameter Types.MoleFraction Y[:] = H2GasFacility.Data.MassMolFractionData.NG_Guzzo_Russian.Y;
   parameter Types.MolarMass M[:] = Y.*medium1.MM;

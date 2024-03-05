@@ -1593,6 +1593,74 @@ package Test "Package to test component equation and behaviour"
   52.64+273.15,
   52.641+273.15};
 
+
+    parameter Real Toutref[:] = {
+  291.432,
+  291.432,
+  291.438,
+  291.444,
+  291.45,
+  291.455,
+  291.461,
+  291.472,
+  291.486,
+  291.509,
+  291.513,
+  291.509,
+  291.501,
+  291.509,
+  291.558,
+  291.585,
+  291.814,
+  292.654,
+  293.57,
+  294.562,
+  296.089,
+  297.158,
+  298.303,
+  298.544,
+  299.295,
+  300.593,
+  301.814,
+  303.57,
+  305.173,
+  307.387,
+  309.6,
+  312.043,
+  313.952,
+  314.742,
+  315.784,
+  317.31,
+  318.532,
+  319.829,
+  320.898,
+  321.967,
+  322.546,
+  322.883,
+  323.799,
+  324.104,
+  324.41,
+  324.868,
+  324.912,
+  325.02,
+  325.02,
+  325.173,
+  325.262,
+  325.478,
+  325.213,
+  325.326,
+  325.478,
+  325.555,
+  325.52,
+  325.478,
+  325.554,
+  325.631,
+  325.666,
+  325.631,
+  325.54,
+  325.478,
+  325.631};
+
     MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
       allowFlowReversal=true,
       use_in_m_flow=true,
@@ -1621,8 +1689,8 @@ package Test "Package to test component equation and behaviour"
       lambdaIns=0.04,
       t=0.004,
       rhom(displayUnit="kg/m3") = 8000,
-      T_start(displayUnit="degC") = 300.65,
-      T_start_m(displayUnit="degC") = 300.65,
+      T_start(displayUnit="degC") = 291.432,
+      T_start_m(displayUnit="degC") = 291.432,
       cpm=500) annotation (Placement(visible=true, transformation(
           origin={10,54},
           extent={{-10,-10},{10,10}},
@@ -1635,7 +1703,7 @@ package Test "Package to test component equation and behaviour"
     Modelica.Blocks.Sources.Ramp m_flow(
       duration=0,
       height=0,
-      offset=1.2,
+      offset=0.58,
       startTime=10) annotation (Placement(visible=true, transformation(
           origin={-105,51},
           extent={{-9,-9},{9,9}},
@@ -1645,8 +1713,14 @@ package Test "Package to test component equation and behaviour"
           origin={-28,58},
           extent={{-10,-10},{10,10}},
           rotation=0)));
-    Modelica.Blocks.Sources.TimeTable timeTable(table=[time_ref,Tinref])
+    Modelica.Blocks.Sources.TimeTable Tin_ref(table=[time_ref,Tinref])
       annotation (Placement(transformation(extent={{-94,90},{-74,110}})));
+    Modelica.Blocks.Sources.TimeTable Tout_ref(table=[time_ref,Toutref])
+      annotation (Placement(transformation(extent={{-46,90},{-26,110}})));
+    Modelica.Blocks.Math.Add add(k2=-1)
+      annotation (Placement(transformation(extent={{-10,86},{10,106}})));
+    Modelica.Blocks.Sources.RealExpression realExpression(y=273.15)
+      annotation (Placement(transformation(extent={{-46,66},{-26,86}})));
   equation
     connect(PF_Pipe.outlet, Tout_PF.inlet) annotation (Line(
         points={{20,54},{40,54}},
@@ -1666,10 +1740,14 @@ package Test "Package to test component equation and behaviour"
         points={{-22,54},{0,54}},
         color={140,56,54},
         thickness=0.5));
-    connect(timeTable.y, idealMassFlowSource.in_T) annotation (Line(points={{-73,100},
+    connect(Tin_ref.y, idealMassFlowSource.in_T) annotation (Line(points={{-73,100},
             {-61,100},{-61,60.2}}, color={0,0,127}));
+    connect(Tout_ref.y, add.u1) annotation (Line(points={{-25,100},{-25,102},{
+            -12,102}}, color={0,0,127}));
+    connect(realExpression.y, add.u2) annotation (Line(points={{-25,76},{-18,76},
+            {-18,90},{-12,90}}, color={0,0,127}));
     annotation (
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
-            900, __Dymola_Algorithm="Dassl"));
+            590, __Dymola_Algorithm="Dassl"));
   end PF_PipeTest_realdata;
 end Test;

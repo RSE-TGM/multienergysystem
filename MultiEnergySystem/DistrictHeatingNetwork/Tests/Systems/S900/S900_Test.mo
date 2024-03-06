@@ -20,7 +20,7 @@ model S900_Test "Test with real data"
   parameter String matrixfreq = "f_P901";
   parameter String matrixFT = "FT901" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
-  parameter Real Kv(unit = "m3/h") = 21 "Metri Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = 20.5 "Metri Flow Coefficient";
 
   Modelica.Blocks.Sources.TimeTable TT902_profile(table=[ts,TTi]) annotation (Placement(transformation(extent={{-60,-70},{-40,-50}})));
   Modelica.Blocks.Sources.TimeTable PT202_profile(table=[ts,PTi]) annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));

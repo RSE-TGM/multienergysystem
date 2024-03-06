@@ -16,6 +16,8 @@ partial model TestBase
   parameter Types.ThermalConductivity lambdaIns = 0.04 "Thermal conductivity of the insulant material";
   parameter Types.PerUnit cf = 0.195 "Constant Fanning factor";
   parameter Real Kv =  12;
+  parameter Real Q_nom(unit = "m3/h") = 5;
+  parameter Real theta_ex = 0;
 
 
   parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix" annotation (
@@ -30,7 +32,7 @@ partial model TestBase
 
   Real Q_sim(unit = "m3/h");
   Real Q_meas(unit = "m3/h");
-  Real dQ;
+  Real Q_sim_norm, Q_meas_norm, dQ;
 
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(redeclare model Medium = Medium, T0 = Valve.TCV701.Tin_start, p0 = Valve.TCV701.pin_start, use_in_p0 = true, use_in_T0 = true) annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
@@ -39,20 +41,6 @@ partial model TestBase
     Kv=Kv,                                                                                                                                      Tin_start = Valve.FCV701.Tin_start, dp_nom = Valve.FCV701.dp_nom, pin_start = Valve.FCV701.pin_start, rho_nom = Valve.FCV701.rho_nom, q_m3h_start = Valve.FCV701.q_nom_m3h, rho_start = Valve.FCV701.rho_nom,
     openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage)                                                                                                 annotation (
     Placement(transformation(extent = {{-8, -8}, {8, 8}})));
-  DistrictHeatingNetwork.Components.Pipes.HydraulicDiameter pipe1(
-    redeclare model Medium = Medium,
-    L=L,
-    h=0,
-    t=t,
-    pmax=pmax,
-    Di=Di,
-    tIns=tIns,
-    lambdaIns=lambdaIns,
-    pin_start=pin_start,
-    Tin_start=Tin_start,
-    cf=cf,
-    T_start=Tin_start)
-    annotation (Placement(transformation(origin={-30,0}, extent={{-10,-10},{10,10}})));
   Sources.SinkPressure sinkP(redeclare model Medium = Medium, use_in_p0 = true)  annotation (
     Placement(transformation(origin={70,0},    extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Sources.TimeTable inp(table = [ts, PTi])  annotation (
@@ -60,28 +48,13 @@ partial model TestBase
   Modelica.Blocks.Sources.TimeTable outp(table = [ts, PTo])  annotation (
     Placement(transformation(origin={90,20},    extent = {{4, -4}, {-4, 4}})));
   Modelica.Blocks.Sources.TimeTable theta(table = [ts, thetav])  annotation (
-    Placement(transformation(origin = {-10, 20}, extent = {{-4, -4}, {4, 4}})));
+    Placement(transformation(origin={-18,20},    extent = {{-4, -4}, {4, 4}})));
   Modelica.Blocks.Sources.TimeTable inT(table = [ts, TTi])  annotation (
     Placement(transformation(origin = {-88, 32}, extent = {{-4, -4}, {4, 4}})));
   inner System system annotation (
     Placement(transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Sources.TimeTable qm3h_ref(table = [ts, FT]) annotation (
     Placement(transformation(origin = {-90, 10}, extent = {{100, 70}, {80, 90}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.HydraulicDiameter
-                                                            pipe2(
-    redeclare model Medium = Medium,
-    L=L,
-    h=0,
-    t=t,
-    pmax=pmax,
-    Di=Di,
-    tIns=tIns,
-    lambdaIns=lambdaIns,
-    pin_start=pin_start,
-    Tin_start=Tin_start,
-    cf=cf,
-    T_start=Tin_start)                                                                                                                                                                                              annotation (
-    Placement(transformation(origin={30,0},     extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Math.Add add annotation (Placement(transformation(extent={{-78,20},{-72,26}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=980*9.81*h)
     annotation (Placement(transformation(extent={{-92,38},{-72,58}})));
@@ -89,6 +62,13 @@ partial model TestBase
                                annotation (Placement(transformation(extent={{76,26},{70,32}})));
   Modelica.Blocks.Sources.RealExpression realExpression1(y=980*9.81*(h - 0.2))
     annotation (Placement(transformation(extent={{58,36},{78,56}})));
+  Modelica.Blocks.Math.Add add2
+                               annotation (Placement(transformation(extent={{-10,18},{-4,24}})));
+  Modelica.Blocks.Sources.RealExpression realExpression2(y=theta_ex)
+    annotation (Placement(transformation(extent={{-42,24},{-22,44}})));
+  Modelica.Blocks.Math.Min minn annotation (Placement(transformation(extent={{6,26},{16,36}})));
+  Modelica.Blocks.Sources.RealExpression realExpression3(y=1)
+    annotation (Placement(transformation(extent={{-20,32},{0,52}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -103,25 +83,12 @@ protected
 equation
   Q_sim = cvalve.q_m3h;
   Q_meas = qm3h_ref.y;
-  dQ = abs(Q_sim - Q_meas)/Q_meas;
+  Q_sim_norm = abs((Q_sim - Q_nom)/Q_nom);
+  Q_meas_norm = abs((Q_meas - Q_nom)/Q_nom);
+  dQ = 100*abs(Q_sim_norm - Q_meas_norm);
 
-  connect(theta.y, cvalve.opening) annotation (
-    Line(points={{-5.6,20},{0,20},{0,6.4}},    color = {0, 0, 127}));
   connect(inT.y, sourceP.in_T0) annotation (
     Line(points={{-83.6,32},{-66,32},{-66,8.4}},          color = {0, 0, 127}));
-  connect(pipe1.inlet, sourceP.outlet)
-    annotation (Line(points={{-40,0},{-60,0}}, color={140,56,54}));
-  connect(pipe1.outlet, cvalve.inlet) annotation (Line(points={{-20,0},{-8,0}}, color={140,56,54}));
-  connect(sinkP.inlet, pipe2.outlet)
-    annotation (Line(
-      points={{60,0},{40,0}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(pipe2.inlet, cvalve.outlet)
-    annotation (Line(
-      points={{20,0},{8,0}},
-      color={140,56,54},
-      thickness=0.5));
   connect(inp.y, add.u2)
     annotation (Line(points={{-83.6,20},{-82,20},{-82,21.2},{-78.6,21.2}}, color={0,0,127}));
   connect(add.y, sourceP.in_p0)
@@ -134,4 +101,24 @@ equation
     annotation (Line(points={{69.7,29},{66,29},{66,8.4}}, color={0,0,127}));
   connect(realExpression1.y, add1.u1)
     annotation (Line(points={{79,46},{86,46},{86,30.8},{76.6,30.8}}, color={0,0,127}));
+  connect(theta.y, add2.u2)
+    annotation (Line(points={{-13.6,20},{-12.1,20},{-12.1,19.2},{-10.6,19.2}}, color={0,0,127}));
+  connect(realExpression2.y, add2.u1) annotation (Line(points={{-21,34},{-16,34},{-16,28},{-10.6,28},
+          {-10.6,22.8}}, color={0,0,127}));
+  connect(add2.y,minn. u2)
+    annotation (Line(points={{-3.7,21},{6,21},{6,28},{5,28}}, color={0,0,127}));
+  connect(realExpression3.y,minn. u1)
+    annotation (Line(points={{1,42},{2,42},{2,34},{5,34}}, color={0,0,127}));
+  connect(minn.y, cvalve.opening)
+    annotation (Line(points={{16.5,31},{20,31},{20,12},{0,12},{0,6.4}}, color={0,0,127}));
+  connect(sourceP.outlet, cvalve.inlet)
+    annotation (Line(
+      points={{-60,0},{-8,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(cvalve.outlet, sinkP.inlet)
+    annotation (Line(
+      points={{8,0},{60,0}},
+      color={140,56,54},
+      thickness=0.5));
 end TestBase;

@@ -23,12 +23,12 @@ partial model TestBase
   parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix" annotation (
     Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
 
-  parameter String matrixPTi = "PT702" "Matrix name in file";
-  parameter String matrixPTo = "PT701" "Matrix name in file";
-  parameter String matrixTTi = "TT701" "Matrix name in file";
-  parameter String matrixtheta = "theta_FCV701" "Matrix name in file";
-  parameter String matrixFT = "FT701" "Matrix name in file";
-  parameter String timenoscale = "time" "Matrix name in file";
+  parameter String matrixPTi = "PT702";
+  parameter String matrixPTo = "PT701";
+  parameter String matrixTTi = "TT701";
+  parameter String matrixtheta = "theta_FCV701";
+  parameter String matrixFT = "FT701";
+  parameter String timenoscale = "time";
 
   Real Q_sim(unit = "m3/h");
   Real Q_meas(unit = "m3/h");

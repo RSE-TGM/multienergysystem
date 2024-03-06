@@ -18,7 +18,7 @@ model RoundPipe1DFV
 // Flow parameter
   parameter Types.Density rho_start = 985 "Density start/reference value" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real q_m3h_start(unit = "m3/h") = 8 "volumetric flowrate start/Reference value" annotation (
+  parameter Real q_m3h_start(unit = "m3/h") = 3600*m_flow_start/rho_start "volumetric flowrate start/Reference value" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation (
     Dialog(group = "Initialisation"));
@@ -32,6 +32,8 @@ model RoundPipe1DFV
   parameter Types.Density rho_nom = 1e3 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.Velocity u_nom = 5 "Nominal fluid velocity" annotation (
+    Dialog(tab = "Data", group = "Fluid"));
+  parameter Types.Pressure p_nom = 5e5 "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state" annotation (
     Dialog(tab = "Data", group = "Fluid"));
@@ -49,12 +51,12 @@ model RoundPipe1DFV
     Dialog(group = "Heat Transfer Model"));
   parameter Types.CoefficientOfHeatTransfer gamma_nom = 5 "nominal heat transfer coeffcient" annotation (
     Dialog(group = "Heat Transfer Model"));
-  parameter Modelica.Units.SI.PerUnit alpha = 0 "Exponent in the flow-dependency law";
+  parameter Modelica.Units.SI.PerUnit alpha = 0 "Exponent in the flow-dependency law" annotation (
+    Dialog(group = "Heat Transfer Model"));
   parameter Real cons = 1e-4;
 
   final parameter Types.Temperature T_start[n + 1] = linspace(Tin_start, Tout_start, n + 1) "Temperature start value of the fluid" annotation (
     Dialog(group = "Initialisation"));
-  //final parameter Types.Pressure dp_start = rho_start * g * h + cf/2 * rho_start * omega * L / A * u_nom ^ 2 "Nominal pressure drop";
   final parameter Types.Pressure dp_start = rho_start * g * h + cf/2 * rho_start * omega * L / A * u_start ^ 2 "Nominal pressure drop";
   final parameter Types.Pressure dp_nom = 2e5 "Nominal pressure drop";
   final parameter Types.MassFlowRate m_flow_nom = rho_nom * A * u_nom "Nominal mass flow rate";
@@ -64,8 +66,9 @@ model RoundPipe1DFV
   final parameter Types.Area Atot = A * nPipes "Total internal area of all tubes";
   final parameter Types.Volume V = A * L * nPipes "Total volume of the fluid in the pipe";
   final parameter Types.Volume Vi = V / n "Volume of one finite element";
+  final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
-  outer System system "system object for global defaults";
+outer System system "system object for global defaults";
 
   // Variables
   Types.MassFlowRate m_flow[n + 1](each start = m_flow_start, each nominal = m_flow_nom) "Mass flow rate in each section across the pipe";
@@ -76,8 +79,8 @@ model RoundPipe1DFV
   Types.Temperature Twall[n] "Pipe wall temperature";
   Types.Power Qtot "Total heat";
   Types.Temperature T[n + 1](start = T_start) "Volume boundary temperatures";
-  Types.Pressure pin(nominal = 5e5) "Inlet pressure";
-  Types.Pressure pout(nominal = 5e5) "Outlet pressure";
+  Types.Pressure pin(nominal = p_nom) "Inlet pressure";
+  Types.Pressure pout(nominal = p_nom) "Outlet pressure";
   Types.Pressure ptilde "Pressure state the pipe";
   Types.Pressure dp(start = dp_start) "Delta pressure";
   Types.Mass M[n] "Mass of fluid in each finite volume";

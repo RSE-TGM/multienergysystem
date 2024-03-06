@@ -28,6 +28,9 @@ partial model TestBase
   parameter String matrixFT = "FT701" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
 
+  Real Q_sim(unit = "m3/h");
+  Real Q_meas(unit = "m3/h");
+  Real dQ;
 
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(redeclare model Medium = Medium, T0 = Valve.TCV701.Tin_start, p0 = Valve.TCV701.pin_start, use_in_p0 = true, use_in_T0 = true) annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
@@ -98,6 +101,10 @@ protected
   final parameter Types.Temperature Tin_start = TTi[1,1];
   final parameter Types.Pressure pin_start = PTi[1,1];
 equation
+  Q_sim = cvalve.q_m3h;
+  Q_meas = qm3h_ref.y;
+  dQ = abs(Q_sim - Q_meas)/Q_meas;
+
   connect(theta.y, cvalve.opening) annotation (
     Line(points={{-5.6,20},{0,20},{0,6.4}},    color = {0, 0, 127}));
   connect(inT.y, sourceP.in_T0) annotation (

@@ -36,7 +36,7 @@ package ValveCharacteristics
   function equalPercentage "Square opening char."
     extends
       MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
-      parameter Real N = 55;
+      parameter Real N = 50;
   algorithm
   rp := N^(pos-1);
   end equalPercentage;

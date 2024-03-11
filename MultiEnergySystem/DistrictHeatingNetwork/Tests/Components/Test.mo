@@ -2064,7 +2064,7 @@ package Test "Package to test component equation and behaviour"
     Modelica.Blocks.Sources.Ramp m_flow(
       duration=0,
       height=0,
-      offset=0.58,
+      offset=1.2,
       startTime=10) annotation (Placement(visible=true, transformation(
           origin={-105,51},
           extent={{-9,-9},{9,9}},

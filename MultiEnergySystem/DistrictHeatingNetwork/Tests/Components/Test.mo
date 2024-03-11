@@ -1750,4 +1750,284 @@ package Test "Package to test component equation and behaviour"
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
             590, __Dymola_Algorithm="Dassl"));
   end PF_PipeTest_realdata;
+
+  model FV_PipeTest_realdata
+    "Test of the Finite Volume Pipe used to reproduce the test in the paper from Sartor and Dewallef, 2017"
+    extends Modelica.Icons.Example;
+    parameter Real time_ref[:] = {0, 0.91, 2.72, 4.53, 6.34, 8.16, 9.97, 13.6,
+  19.03,
+  30.82,
+  35.35,
+  59.82,
+  73.41,
+  87.92,
+  116.92,
+  127.79,
+  138.67,
+  141.39,
+  145.92,
+  151.36,
+  154.98,
+  157.7,
+  161.33,
+  162.24,
+  164.95,
+  168.58,
+  173.11,
+  177.64,
+  182.18,
+  185.8,
+  192.15,
+  198.49,
+  202.11,
+  205.74,
+  211.18,
+  216.62,
+  222.96,
+  230.21,
+  236.56,
+  245.62,
+  251.06,
+  254.68,
+  267.37,
+  274.62,
+  275.53,
+  292.75,
+  296.37,
+  314.5,
+  318.13,
+  334.44,
+  341.69,
+  361.63,
+  385.2,
+  403.32,
+  405.14,
+  420.54,
+  430.51,
+  450.45,
+  475.83,
+  495.77,
+  519.34,
+  539.27,
+  564.65,
+  584.59,
+  588.22};
+
+    parameter Real Tinref[:] = {18.282+273.15, 20.115+273.15,
+  23.931+273.15,
+  27.748+273.15,
+  31.565+273.15,
+  35.382+273.15,
+  39.198+273.15,
+  43.015+273.15,
+  46.832+273.15,
+  49.819+273.15,
+  50.344+273.15,
+  51.689+273.15,
+  52.023+273.15,
+  52.222+273.15,
+  52.328+273.15,
+  52.328+273.15,
+  52.323+273.15,
+  52.322+273.15,
+  52.321+273.15,
+  52.321+273.15,
+  52.322+273.15,
+  52.324+273.15,
+  52.327+273.15,
+  52.328+273.15,
+  52.332+273.15,
+  52.339+273.15,
+  52.349+273.15,
+  52.362+273.15,
+  52.377+273.15,
+  52.391+273.15,
+  52.417+273.15,
+  52.446+273.15,
+  52.463+273.15,
+  52.481+273.15,
+  52.508+273.15,
+  52.535+273.15,
+  52.565+273.15,
+  52.594+273.15,
+  52.615+273.15,
+  52.632+273.15,
+  52.634+273.15,
+  52.631+273.15,
+  52.598+273.15,
+  52.57+273.15,
+  52.566+273.15,
+  52.494+273.15,
+  52.481+273.15,
+  52.444+273.15,
+  52.442+273.15,
+  52.459+273.15,
+  52.481+273.15,
+  52.573+273.15,
+  52.634+273.15,
+  52.576+273.15,
+  52.568+273.15,
+  52.501+273.15,
+  52.481+273.15,
+  52.525+273.15,
+  52.634+273.15,
+  52.655+273.15,
+  52.634+273.15,
+  52.626+273.15,
+  52.634+273.15,
+  52.64+273.15,
+  52.641+273.15};
+
+    parameter Real Toutref[:] = {
+  291.432,
+  291.432,
+  291.438,
+  291.444,
+  291.45,
+  291.455,
+  291.461,
+  291.472,
+  291.486,
+  291.509,
+  291.513,
+  291.509,
+  291.501,
+  291.509,
+  291.558,
+  291.585,
+  291.814,
+  292.654,
+  293.57,
+  294.562,
+  296.089,
+  297.158,
+  298.303,
+  298.544,
+  299.295,
+  300.593,
+  301.814,
+  303.57,
+  305.173,
+  307.387,
+  309.6,
+  312.043,
+  313.952,
+  314.742,
+  315.784,
+  317.31,
+  318.532,
+  319.829,
+  320.898,
+  321.967,
+  322.546,
+  322.883,
+  323.799,
+  324.104,
+  324.41,
+  324.868,
+  324.912,
+  325.02,
+  325.02,
+  325.173,
+  325.262,
+  325.478,
+  325.213,
+  325.326,
+  325.478,
+  325.555,
+  325.52,
+  325.478,
+  325.554,
+  325.631,
+  325.666,
+  325.631,
+  325.54,
+  325.478,
+  325.631};
+
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
+      allowFlowReversal=true,
+      use_in_m_flow=true,
+      use_in_T=true,
+      mflownom=1.67,
+      Tnom(displayUnit="K") = 38 + 273.15)                                                   annotation (
+        Placement(visible=true, transformation(
+          origin={-66,54},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(
+        allowFlowReversal=true, T=287.15)                                           annotation (Placement(
+          visible=true, transformation(
+          origin={92,68},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tout_PF
+      annotation (Placement(visible=true, transformation(
+          origin={46,58},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    Modelica.Blocks.Sources.Ramp m_flow(
+      duration=0,
+      height=0,
+      offset=0.58,
+      startTime=10) annotation (Placement(visible=true, transformation(
+          origin={-105,51},
+          extent={{-9,-9},{9,9}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tin_PF
+      annotation (Placement(visible=true, transformation(
+          origin={-28,58},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    Modelica.Blocks.Sources.TimeTable Tin_ref(table=[time_ref,Tinref])
+      annotation (Placement(transformation(extent={{-94,90},{-74,110}})));
+    Modelica.Blocks.Sources.TimeTable Tout_ref(table=[time_ref,Toutref])
+      annotation (Placement(transformation(extent={{-46,90},{-26,110}})));
+    Modelica.Blocks.Math.Add add(k2=-1)
+      annotation (Placement(transformation(extent={{-10,86},{10,106}})));
+    Modelica.Blocks.Sources.RealExpression realExpression(y=273.15)
+      annotation (Placement(transformation(extent={{-46,66},{-26,86}})));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV pipeFV(
+      L=39,
+      t=0.004,
+      tIns=0.013,
+      lambdaIns=0.04,
+      cm=500,
+      pin_start=100000,
+      pout_start=250000,
+      Tin_start=291.432,
+      Tout_start=291.432,
+      Di=0.0508,
+      u_nom=1.67,
+      T_start=289.15,
+      N=10) annotation (Placement(transformation(extent={{-4,42},{20,66}})));
+  equation
+    connect(Tout_PF.outlet, expansionTank.inlet) annotation (Line(
+        points={{52,54},{92,54},{92,58}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(m_flow.y, idealMassFlowSource.in_m_flow) annotation (Line(points={{-95.1,
+            51},{-82,51},{-82,68},{-71,68},{-71,60.2}},       color={0,0,127}));
+    connect(idealMassFlowSource.outlet, Tin_PF.inlet) annotation (Line(
+        points={{-55.8,54},{-34,54}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(Tin_ref.y, idealMassFlowSource.in_T) annotation (Line(points={{-73,100},
+            {-61,100},{-61,60.2}}, color={0,0,127}));
+    connect(Tout_ref.y, add.u1) annotation (Line(points={{-25,100},{-25,102},{
+            -12,102}}, color={0,0,127}));
+    connect(realExpression.y, add.u2) annotation (Line(points={{-25,76},{-18,76},
+            {-18,90},{-12,90}}, color={0,0,127}));
+    connect(Tin_PF.outlet, pipeFV.inlet) annotation (Line(
+        points={{-22,54},{-4,54}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(pipeFV.outlet, Tout_PF.inlet) annotation (Line(
+        points={{20,54},{40,54}},
+        color={140,56,54},
+        thickness=0.5));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
+            590, __Dymola_Algorithm="Dassl"));
+  end FV_PipeTest_realdata;
 end Test;

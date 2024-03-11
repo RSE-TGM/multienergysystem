@@ -2030,4 +2030,91 @@ package Test "Package to test component equation and behaviour"
       Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
             590, __Dymola_Algorithm="Dassl"));
   end FV_PipeTest_realdata;
+
+  model FV_PipeTest_realdata_doublestep
+    "Test of the Finite Volume Pipe used to reproduce the test in the paper from Sartor and Dewallef, 2017"
+    extends Modelica.Icons.Example;
+    parameter Real time_ref[:] = {0, 1.0765385773482783, 2.1531264354737463, 3.2296650128220703, 3.2296650128220703, 4.306203590170348, 7.535868602992373, 11.842121473939866, 15.071786486761889, 16.148325064110168, 17.224863641458445, 19.37799007693224, 21.531116512405983, 23.68419366710254, 29.066985115398356, 39.83251873121276, 49.521513769678826, 72.1291688594331, 92.58374679449075, 118.42106689706708, 152.870794179984, 176.55503712786376, 202.39235723043996, 227.1530894748908, 249.7607445646451, 272.36839965439935, 305.74163764074507, 322.9665505629808, 361.72253071684526, 390.78951583224364, 437.08131530832316, 482.2966254878316, 509.2105334485335, 531.8181885382877, 556.5789207827385, 591.0287466272098, 614.7128910135352, 631.9378039357707, 647.0095411417556, 661.0047890511692, 666.3875312186877, 668.5407069349386, 669.6171962315096, 672.8468612443318, 675.0000369605827, 676.0765262571538, 678.2297019734049, 682.5358562827979, 686.8421091537456, 692.2248513212639, 696.5311041922116, 706.2200992306775, 721.2918364366624, 751.4354094101863, 775.1196523580659, 798.8037967443912, 823.5646275503964, 850.4784369495437, 866.6267620136539, 886.0047520905862, 896.7703349871778};
+    //parameter Real Tinref[:] = {27, 31.293492567677344, 33.9561285134399, 38.07110378381478, 38.07110378381478, 41.58093905399852, 44.00151290540304, 46.42208675680756, 48.66112027023152, 51.08169412163605, 53.19969797294499, 54.71255628380682, 56.0438714865601, 57.25415979732636, 58.645991216201146, 59.49319192568633, 60.037821250011945, 60.52193574328005, 60.82450851350361, 60.94553679055464, 61.127079898663176, 61.42965128382274, 61.30862300677172, 61.55068094593776, 61.611194391931285, 61.671709222988795, 61.85325233109733, 61.85325233109733, 62.03479543920587, 62.09531027026338, 62.1558237162569, 62.21633854731441, 62.33736682436544, 62.276853378371925, 62.45839648648046, 62.33736682436544, 62.1558237162569, 61.55068094593776, 60.642965405395074, 59.977306418954434, 58.76701949325218, 57.25415979732636, 55.92284459457307, 54.6520428378133, 52.65506864861938, 51.142207567629555, 49.08471993244212, 47.02723229725468, 45.393344324277834, 43.3358539189624, 41.58093905399852, 39.5839648648046, 38.313163108044826, 38.01059033782126, 37.7080175675977, 37.647504121604186, 37.647504121604186, 37.465961013495644, 37.465961013495644, 37.34493135138062, 37.34493135138062};
+
+    parameter Real Tinref[:] = {300.15, 304.4434925676773, 307.1061285134399, 311.2211037838148, 311.2211037838148, 314.7309390539985, 317.151512905403, 319.57208675680755, 321.8111202702315, 324.231694121636, 326.34969797294497, 327.8625562838068, 329.19387148656006, 330.4041597973263, 331.7959912162011, 332.6431919256863, 333.1878212500119, 333.67193574328, 333.97450851350357, 334.0955367905546, 334.27707989866315, 334.5796512838227, 334.4586230067717, 334.70068094593773, 334.76119439193127, 334.8217092229888, 335.0032523310973, 335.0032523310973, 335.18479543920586, 335.24531027026336, 335.3058237162569, 335.3663385473144, 335.48736682436544, 335.4268533783719, 335.60839648648044, 335.48736682436544, 335.3058237162569, 334.70068094593773, 333.7929654053951, 333.1273064189544, 331.91701949325216, 330.4041597973263, 329.07284459457304, 327.8020428378133, 325.80506864861934, 324.29220756762953, 322.2347199324421, 320.17723229725465, 318.5433443242778, 316.4858539189624, 314.7309390539985, 312.7339648648046, 311.4631631080448, 311.16059033782125, 310.8580175675977, 310.79750412160416, 310.79750412160416, 310.6159610134956, 310.6159610134956, 310.4949313513806, 310.4949313513806};
+
+
+    MultiEnergySystem.DistrictHeatingNetwork.Sources.IdealMassFlowSource idealMassFlowSource(
+      allowFlowReversal=true,
+      use_in_m_flow=true,
+      use_in_T=true,
+      mflownom=1.2,
+      Tnom(displayUnit="K") = 30 + 273.15)                                                   annotation (
+        Placement(visible=true, transformation(
+          origin={-66,54},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.ExpansionTank expansionTank(
+        allowFlowReversal=true, T=287.15)                                           annotation (Placement(
+          visible=true, transformation(
+          origin={92,68},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tout_PF
+      annotation (Placement(visible=true, transformation(
+          origin={46,58},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    Modelica.Blocks.Sources.Ramp m_flow(
+      duration=0,
+      height=0,
+      offset=0.58,
+      startTime=10) annotation (Placement(visible=true, transformation(
+          origin={-105,51},
+          extent={{-9,-9},{9,9}},
+          rotation=0)));
+    MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor Tin_PF
+      annotation (Placement(visible=true, transformation(
+          origin={-28,58},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    Modelica.Blocks.Sources.TimeTable Tin_ref(table=[time_ref,Tinref])
+      annotation (Placement(transformation(extent={{-94,90},{-74,110}})));
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.pipeFV pipeFV(
+      L=39,
+      t=0.004,
+      tIns=0.013,
+      lambdaIns=0.04,
+      cm=500,
+      m_flow_start=1.2,
+      pin_start=100000,
+      pout_start=250000,
+      Tin_start=303.15,
+      Tout_start=303.15,
+      Di=0.0508,
+      u_nom=0.59,
+      T_start=289.15,
+      N=100)
+            annotation (Placement(transformation(extent={{-4,42},{20,66}})));
+  equation
+    connect(Tout_PF.outlet, expansionTank.inlet) annotation (Line(
+        points={{52,54},{92,54},{92,58}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(m_flow.y, idealMassFlowSource.in_m_flow) annotation (Line(points={{-95.1,
+            51},{-82,51},{-82,68},{-71,68},{-71,60.2}},       color={0,0,127}));
+    connect(idealMassFlowSource.outlet, Tin_PF.inlet) annotation (Line(
+        points={{-55.8,54},{-34,54}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(Tin_ref.y, idealMassFlowSource.in_T) annotation (Line(points={{-73,100},
+            {-61,100},{-61,60.2}}, color={0,0,127}));
+    connect(Tin_PF.outlet, pipeFV.inlet) annotation (Line(
+        points={{-22,54},{-4,54}},
+        color={140,56,54},
+        thickness=0.5));
+    connect(pipeFV.outlet, Tout_PF.inlet) annotation (Line(
+        points={{20,54},{40,54}},
+        color={140,56,54},
+        thickness=0.5));
+    annotation (
+      Diagram(coordinateSystem(extent={{-100,0},{100,100}})), experiment(StopTime=
+            890, __Dymola_Algorithm="Dassl"));
+  end FV_PipeTest_realdata_doublestep;
 end Test;

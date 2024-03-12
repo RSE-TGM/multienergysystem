@@ -36,13 +36,11 @@ model TestSinglePipe_A_wip
     Tin_start=Pipe.pipe1.Tin_start,
     Tout_start=Pipe.pipe1.Tout_start,
     Di=Pipe.pipe1.Di,
-    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
+    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Upstream,
 
     rho_nom=Pipe.pipe1.rho_nom,
     k=Pipe.pipe1.k)
-    annotation (Placement(transformation(extent={{-2,-6},{18,14}})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV round1DFV
-    annotation (Placement(transformation(extent={{-2,-32},{18,-12}})));
+    annotation (Placement(transformation(extent={{0,-18},{20,2}})));
 equation
   connect(m_flow.y, sink.in_m_flow0) annotation (
     Line(points={{37,38},{68,38},{68,-5}},       color = {0, 0, 127}));
@@ -51,19 +49,11 @@ equation
   connect(T_in.y, sourceP.in_T0) annotation (
     Line(points={{-75,52},{-56,52},{-56,-0.4}},       color = {0, 0, 127}));
   connect(sourceP.outlet, round1DFV_wip.inlet) annotation (Line(
-      points={{-46,-10},{-24,-10},{-24,4},{-2,4}},
+      points={{-46,-10},{-44,-10},{-44,-8},{0,-8}},
       color={182,109,49},
       thickness=0.5));
   connect(round1DFV_wip.outlet, sink.inlet) annotation (Line(
-      points={{18,4},{42,4},{42,-10},{64,-10}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sourceP.outlet, round1DFV.inlet) annotation (Line(
-      points={{-46,-10},{-24,-10},{-24,-22},{-2,-22}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(round1DFV.outlet, sink.inlet) annotation (Line(
-      points={{18,-22},{42,-22},{42,-10},{64,-10}},
+      points={{20,-8},{22,-8},{22,-10},{64,-10}},
       color={182,109,49},
       thickness=0.5));
   annotation (

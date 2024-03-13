@@ -36,11 +36,11 @@ model TestSinglePipe_A_wip
     Tin_start=Pipe.pipe1.Tin_start,
     Tout_start=Pipe.pipe1.Tout_start,
     Di=Pipe.pipe1.Di,
-    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Upstream,
-
+    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     rho_nom=Pipe.pipe1.rho_nom,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{0,-18},{20,2}})));
+
 equation
   connect(m_flow.y, sink.in_m_flow0) annotation (
     Line(points={{37,38},{68,38},{68,-5}},       color = {0, 0, 127}));

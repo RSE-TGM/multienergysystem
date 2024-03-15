@@ -3,7 +3,7 @@ model TestSinglePipe_A_wip
   "Base test model of a single pipe (Flow1DFV) with a pressure source & mass flowrate sink"
   extends Modelica.Icons.Example;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2 constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
   parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
@@ -17,11 +17,15 @@ model TestSinglePipe_A_wip
   // Components
   H2GasFacility.Sources.SourcePressure sourceP(redeclare model Medium = Medium, T0 = 293.15, X0 = Xref, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (
     Placement(visible = true, transformation(origin={-56,-10},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  H2GasFacility.Sources.SinkMassFlow sink(G = 0, redeclare model Medium = Medium, T0(displayUnit = "K") = 298.15, X0 = Xref_2, m_flow0 = m_flow_start, p0 = 49000, pin_start = 49000, use_in_m_flow0 = true) annotation (
+  H2GasFacility.Sources.SinkMassFlow sink(
+    G=1,                                         redeclare model Medium = Medium, T0(displayUnit = "K") = 298.15, X0 = Xref_2, m_flow0 = m_flow_start,
+    p0=49000,
+    pin_start=49000,                                                                                                                                                                  use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin={74,-10},  extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = -m_flow_start*2, offset = m_flow_start, startTime = 75) annotation (
+  Modelica.Blocks.Sources.Ramp m_flow(duration = 100,
+    height=-m_flow_start*0,                                                     offset = m_flow_start, startTime = 75) annotation (
     Placement(visible = true, transformation(origin = {26, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -37,9 +41,8 @@ model TestSinglePipe_A_wip
     Tout_start=Pipe.pipe1.Tout_start,
     X_start=X_start,
     Di=Pipe.pipe1.Di,
-    quasiStatic=true,
-    computeInertialTerm=true,
-    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
+    constantFrictionFactor=true,
+    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
     rho_nom=Pipe.pipe1.rho_nom,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{0,-18},{20,2}})));

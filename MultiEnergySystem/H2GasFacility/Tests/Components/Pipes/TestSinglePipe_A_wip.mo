@@ -35,8 +35,9 @@ model TestSinglePipe_A_wip
     hin_start=Pipe.pipe1.hin_start,
     Tin_start=Pipe.pipe1.Tin_start,
     Tout_start=Pipe.pipe1.Tout_start,
+    X_start=X_start,
     Di=Pipe.pipe1.Di,
-    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
+    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
     rho_nom=Pipe.pipe1.rho_nom,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{0,-18},{20,2}})));

@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Components.Pipes;
+﻿within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV_wip
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
@@ -300,7 +300,7 @@ equation
       ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
       //Cosnider also the derivative of the mass flow:
-      //-L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
+      //-L/(A*n)*der(m_flow[i+1])+ p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];
     end if;
@@ -314,10 +314,14 @@ equation
 //      //pin - pout = rho[end]*g_n*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
 //    else
 //      -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
-        -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
 //    end if;
 
 
+   //Domande
+   // 1) Perchè rho[i+1]*g_n*H non viene considerato nell'equazione di bilancio del momento dove viene considerato anche il termine inerziale?  -L/(A*n)...
+   // 2) Perchè non viene considerato il termine dell'energia cientica d(rho*A*v^2)/dx ?
+   // 3) Provo ad aggiungere il termine inerziale -L/(A*n)*der(m_flow[i+1]) ma la simulazione --> Failed
+   // 4)
 
 
 

@@ -15,7 +15,7 @@ partial model ThermalFacility
           fillPattern=FillPattern.Solid,
           lineThickness=1,
           extent={{-100,100},{100,-100}},
-          radius=25),
+          radius=0),
         Polygon(
           points={{-2,74},{-48,-72},{46,-72},{-2,74}},
           lineColor={255,255,255},

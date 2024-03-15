@@ -24,11 +24,10 @@ model ControlledCHP
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
 
   Modelica.Blocks.Interfaces.RealInput Pelectric_in annotation (Placement(
-        transformation(extent={{-100,-20},{-60,20}}), iconTransformation(extent=
-           {{-100,-20},{-60,20}})));
+        transformation(extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},{-60,10}})));
   Modelica.Blocks.Interfaces.BooleanInput heat_on annotation (Placement(
-        transformation(extent={{-100,-80},{-60,-40}}),
-                                                    iconTransformation(extent={{-100,-80},{-60,-40}})));
+        transformation(extent={{-80,-60},{-60,-40}}),
+                                                    iconTransformation(extent={{-80,-60},{-60,-40}})));
 equation
   inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
   fluidOut_ref.p = pout;

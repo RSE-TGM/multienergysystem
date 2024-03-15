@@ -23,10 +23,9 @@ model ControlledElectricBoiler
    "Reference outlet fluid";
 
   Modelica.Blocks.Interfaces.RealInput Tout_ref annotation (Placement(transformation(
-          extent={{-100,-20},{-60,20}}), iconTransformation(extent={{-100,-20},{
-            -60,20}})));
+          extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},{-60,10}})));
   Modelica.Blocks.Interfaces.BooleanInput heat_on annotation (Placement(
-        transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-100,-80},{-60,-40}})));
+        transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-80,-60},{-60,-40}})));
 equation
   fluidOut_ref.p = pin;
   fluidOut_ref.T = Tout_ref;

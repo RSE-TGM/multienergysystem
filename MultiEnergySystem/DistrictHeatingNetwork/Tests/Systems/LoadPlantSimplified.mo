@@ -347,15 +347,15 @@ model LoadPlantSimplified
   final parameter Real TT_724[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT724,dim[1],dim[2]) "Matrix data";
   final parameter Real TT_734[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT734,dim[1],dim[2]) "Matrix data";
 
-  final parameter Real PT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
-  final parameter Real PT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT711,dim[1],dim[2])*1e5 "Matrix data";
-  final parameter Real PT_721[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT721,dim[1],dim[2])*1e5 "Matrix data";
-  final parameter Real PT_731[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT731,dim[1],dim[2])*1e5 "Matrix data";
+  final parameter Real PT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2]) "Matrix data";
+  final parameter Real PT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT711,dim[1],dim[2]) "Matrix data";
+  final parameter Real PT_721[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT721,dim[1],dim[2]) "Matrix data";
+  final parameter Real PT_731[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT731,dim[1],dim[2]) "Matrix data";
 
-  final parameter Real PT_702[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT702,dim[1],dim[2])*1e5 "Matrix data";
-  final parameter Real PT_712[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT712,dim[1],dim[2])*1e5 "Matrix data";
-  final parameter Real PT_722[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT722,dim[1],dim[2])*1e5 "Matrix data";
-  final parameter Real PT_732[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT732,dim[1],dim[2])*1e5 "Matrix data";
+  final parameter Real PT_702[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT702,dim[1],dim[2]) "Matrix data";
+  final parameter Real PT_712[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT712,dim[1],dim[2]) "Matrix data";
+  final parameter Real PT_722[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT722,dim[1],dim[2]) "Matrix data";
+  final parameter Real PT_732[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT732,dim[1],dim[2]) "Matrix data";
 
   final parameter Real FT_701[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT701,dim[1],dim[2])*980.85/3600 "Matrix data";
   final parameter Real FT_711[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT711,dim[1],dim[2])*980.85/3600 "Matrix data";

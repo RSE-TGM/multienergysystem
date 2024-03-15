@@ -6,6 +6,7 @@ model TestSinglePipe_B_wip
   redeclare MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV_wip roundPipe(
       X_start=Xref,
       constantFrictionFactor=false,
+      computeInertialTerm=false,
       hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle),
     sinkPressure(T0=15 + 273.15, R=0),
     p_out(

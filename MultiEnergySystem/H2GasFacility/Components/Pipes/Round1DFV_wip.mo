@@ -288,15 +288,14 @@ equation
 //          M[i]*der(Xitilde[i,j]) + Xitilde[i,j]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,j] - m_flow[i+1]*Xi[i+1,j];
 //        end if;
 //      end for;
-        //M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
-
         //Mass Composition Balance
+        //M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
         M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:]; //Mass Composition Balance
     end if;
 
     // Momentum Balance - Hydraulic Capacitance Position
-    // with the if we can select where to get the pression in each single volume (middle point/inlet/outlet)
 
+    // with the if we can select where to get the pression in each single volume (middle point/inlet/outlet)
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
       -L/(A*n)*der(m_flow[i+1])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
       -L/(A*n)*der(m_flow[i+1])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
@@ -306,6 +305,7 @@ equation
       //p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];
     end if;
+
 
 //    if not computeInertialTerm then
 //      //-L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
@@ -319,11 +319,10 @@ equation
 //    end if;
 
 
-   //Domande
-   // 1) Perchè rho[i+1]*g_n*H non viene considerato nell'equazione di bilancio del momento dove viene considerato anche il termine inerziale?  -L/(A*n)...
-   // 2) Perchè non viene considerato il termine dell'energia cientica d(rho*A*v^2)/dx ?
-   // 3) Provo ad aggiungere il termine inerziale -L/(A*n)*der(m_flow[i+1]) ma la simulazione --> Failed
-   // 4)
+   // DOMANDE E COMMENTI:
+   // - Perchè non viene considerato il termine dell'energia cientica d(rho*A*v^2)/dx ?
+   // - Provo ad aggiungere il termine inerziale -L/(A*n)*der(m_flow[i+1]) ma la simulazione --> Failed --> Funziona solo con Ideal Gas
+   // -
 
 
 

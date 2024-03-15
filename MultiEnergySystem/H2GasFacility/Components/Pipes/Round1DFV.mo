@@ -302,6 +302,7 @@ equation
 //      -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
 //    end if;
   end for;
+  //m_flow_tilde = (m_flow[i] + m_flow[i+1])/2
 
   inh = inStream(inlet.h_out);
   outh = inStream(outlet.h_out);
@@ -374,4 +375,7 @@ initial equation
 // No initial equations
   end if;
 
+  annotation (Documentation(info="<html>
+<p><span style=\"font-size: 12pt;\">** Friction factor equation -&gt; Add bibliography</span></p>
+</html>"));
 end Round1DFV;

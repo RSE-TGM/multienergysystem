@@ -1,11 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
 model TestSinglePipe_B_wip
   extends TestSinglePipe_B(
-  n = 15,
+  n = 5,
   redeclare model Medium = H2GasFacility.Media.IdealGases.NG6_H2,
   redeclare MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV_wip roundPipe(
       X_start=Xref,
-      constantFrictionFactor=true,
+      constantFrictionFactor=false,
       hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle),
     sinkPressure(T0=15 + 273.15, R=0),
     p_out(
@@ -26,4 +26,9 @@ model TestSinglePipe_B_wip
 equation
   connect(realExpression.y, sourceP.in_X0)
     annotation (Line(points={{-51,80},{-46,80},{-46,8.4}}, color={0,0,127}));
+  annotation (Documentation(info="<html>
+<p>Test of Round 1DFV pipe. </p>
+<p>This test works with Ideal Gases. The solver is not able to find a solution with ideal gases. </p>
+<p>It is possible to have as input: mass flow, pressure, temperature and mass composition. </p>
+</html>"));
 end TestSinglePipe_B_wip;

@@ -402,4 +402,7 @@ initial equation
 // No initial equations
   end if;
 
+  annotation (Documentation(info="<html>
+<p>This is the Work In Progress modell with modifications and tests on the equations </p>
+</html>"));
 end Round1DFV_wip;

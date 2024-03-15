@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
-    redeclare model Medium = Medium,
+    redeclare model Medium = Gas,
     fluidIn(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     fluidOut(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
@@ -13,7 +13,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.squareReg;
   import Modelica.Fluid.Utilities.regStep;
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay
+  replaceable model Gas = H2GasFacility.Media.RealGases.NG6_H2_Papay
       constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
@@ -191,17 +191,17 @@ equation
 
 // Relationships for state variables
   if allowFlowReversal then
-    Ttilde = regStep(dp, T[2:end], T[1:end-1],dp_nom*dp_small);
-    Xitilde = regStep(dp, Xi[2:end,:], Xi[1:end-1,:], dp_nom*dp_small);
-    rhotilde = regStep(dp, rho[2:n+1], rho[1:n], dp_nom*dp_small);
-    utilde = regStep(dp, fluid[2:end].u, fluid[1:end-1].u, dp_nom*dp_small);
+    Ttilde = regStep(dp, T[2:end], T[1:end-1],m_flow_start*dp_small);
+    Xitilde = regStep(dp, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    rhotilde = regStep(dp, rho[2:n+1], rho[1:n], m_flow_start*dp_small);
+    utilde = regStep(dp, fluid[2:end].u, fluid[1:end-1].u, m_flow_start*dp_small);
 
-    dv_dT = regStep(dp, fluid[2:end].dv_dT, fluid[1:end-1].dv_dT, dp_nom*dp_small);
-    dv_dp = regStep(dp, fluid[2:end].dv_dp, fluid[1:end-1].dv_dp, dp_nom*dp_small);
-    dv_dXi = regStep(dp, fluid[2:end].dv_dX[1:nXi], fluid[1:end-1].dv_dX[1:nXi], dp_nom*dp_small);
-    du_dT = regStep(dp, fluid[2:end].du_dT, fluid[1:end-1].du_dT, dp_nom*dp_small);
-    du_dp = regStep(dp, fluid[2:end].du_dp, fluid[1:end-1].du_dp, dp_nom*dp_small);
-    du_dXi = regStep(dp, fluid[2:end].du_dX[1:nXi], fluid[1:end-1].du_dX[1:nXi], dp_nom*dp_small);
+    dv_dT = regStep(dp, fluid[2:end].dv_dT, fluid[1:end-1].dv_dT, m_flow_start*dp_small);
+    dv_dp = regStep(dp, fluid[2:end].dv_dp, fluid[1:end-1].dv_dp, m_flow_start*dp_small);
+    dv_dXi = regStep(dp, fluid[2:end].dv_dX[1:nXi], fluid[1:end-1].dv_dX[1:nXi], m_flow_start*dp_small);
+    du_dT = regStep(dp, fluid[2:end].du_dT, fluid[1:end-1].du_dT, m_flow_start*dp_small);
+    du_dp = regStep(dp, fluid[2:end].du_dp, fluid[1:end-1].du_dp, m_flow_start*dp_small);
+    du_dXi = regStep(dp, fluid[2:end].du_dX[1:nXi], fluid[1:end-1].du_dX[1:nXi], m_flow_start*dp_small);
   else
     Ttilde = T[2:end];
     Xitilde = Xi[2:end,:];
@@ -226,11 +226,11 @@ equation
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)+
                 {dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
-                //{regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n}
-                //{regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n} +
-                //{regStep(dp, fluid[i+1].dv_dX[1:end-1], fluid[i].dv_dX[1:end-1], dp_nom*dp_small)*der(Xitilde[i,:]) for i in 1:n};
+                //{regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
+                //{regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n}
+                //{regStep(dp, fluid[i+1].dv_dp, fluid[i].dv_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
+                //{regStep(dp, fluid[i+1].dv_dT, fluid[i].dv_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n} +
+                //{regStep(dp, fluid[i+1].dv_dX[1:end-1], fluid[i].dv_dX[1:end-1], m_flow_start*dp_small)*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = if quasiStatic then
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)
@@ -238,11 +238,11 @@ equation
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)+
                 {du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
-                //{regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n}
-                //{regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, dp_nom*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, dp_nom*dp_small)*der(Ttilde[i]) for i in 1:n} +
-                //{regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], dp_nom*dp_small)*der(Xitilde[i,:]) for i in 1:n};
+                //{regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
+                //{regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n}
+                //{regStep(dp, fluid[i+1].du_dp, fluid[i].du_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
+                //{regStep(dp, fluid[i+1].du_dT, fluid[i].du_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n} +
+                //{regStep(dp, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], m_flow_start*dp_small)*der(Xitilde[i,:]) for i in 1:n};
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -310,9 +310,9 @@ equation
 
 
   if allowFlowReversal then
-    fluid_temp.p = regStep(dp,inlet.p,outlet.p,dp_nom*dp_small);
-    fluid_temp.h = regStep(dp,inh,outh,dp_nom*dp_small);
-    fluid_temp.Xi = regStep(dp,inXi,outXi,dp_nom*dp_small);
+    fluid_temp.p = regStep(dp,inlet.p,outlet.p,m_flow_start*dp_small);
+    fluid_temp.h = regStep(dp,inh,outh,m_flow_start*dp_small);
+    fluid_temp.Xi = regStep(dp,inXi,outXi,m_flow_start*dp_small);
   else
     fluid_temp.p = inlet.p;
     fluid_temp.h = inStream(inlet.h_out);

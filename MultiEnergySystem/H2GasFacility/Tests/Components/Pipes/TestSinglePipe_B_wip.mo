@@ -7,5 +7,9 @@ model TestSinglePipe_B_wip
       hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle),
 
     sinkPressure(T0=15 + 273.15, R=0),
-    sourceP(R=0));
+    sourceP(R=0),
+    p_out(
+      height=0.0015e5,
+      duration=0,
+      startTime=50));
 end TestSinglePipe_B_wip;

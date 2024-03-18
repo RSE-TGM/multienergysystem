@@ -13,10 +13,12 @@ model TestSinglePipe_B_wip
       height=0*0.003e5,
       duration=0,
       startTime=50),
-    T_in(height=3, duration=0),
+    T_in(
+      height=3,    duration=0,
+      startTime=50),
     sourceP(use_in_X0=true),
     p_in(
-      height=0.001e5,
+      height=0,
       duration=0,
       startTime=50));
   //redeclare model Medium = Media.Ideal

@@ -8,6 +8,6 @@ package H2GasFacility
         textColor={232,232,232},
         textStyle={TextStyle.Bold},
         fontName="Tahoma",
-        textString="GN")}),
+        textString="NG")}),
     Documentation(info = "<html><head></head><body>Gas Facility package.<div><br></div><div>The objective of this library is to develop models for natural gas / biomethane &amp; hydrogen distribution modeling &amp; control.</div></body></html>"));
 end H2GasFacility;

@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.Plants.Thermal;
 package Systems "Package including the different systems (with data) of the RSE heating network"
-  extends Modelica.Icons.Package;
+  extends DistrictHeatingNetwork.Icons.Generic.Systems;
 
 annotation (Icon(graphics={
                      Ellipse(origin={-45,-49},  fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-37,37},

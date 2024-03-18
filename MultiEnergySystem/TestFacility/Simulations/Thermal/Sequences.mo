@@ -1,9 +1,12 @@
 within MultiEnergySystem.TestFacility.Simulations.Thermal;
 package Sequences
-
+  extends Modelica.Icons.ExamplesPackage;
   package Networks
+    extends DistrictHeatingNetwork.Icons.Generic.Networks;
     package Centralised
+      extends DistrictHeatingNetwork.Icons.Generic.Centralised;
       model Seq_2401_Test1 "Sequence 1 done on 24/01/24"
+        extends Modelica.Icons.Example;
         extends Thermal.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_A(
           P101omega = [0, 2*pi*30; 1e6, 2*pi*30],
           P901omega = [0, 2*pi*36.4; 1.6e3, 2*pi*36.4; 1.6e3, 2*pi*34.6; 3.52e3, 2*pi*34.6; 3.52e3, 2*pi*30; 11.68e3, 2*pi*30; 11.682e3, 2*pi*35; 1e6, 2*pi*35],
@@ -40,15 +43,18 @@ package Sequences
           FCVC01(Kv=25),
           VE901(p0=180000));
 
-equation
-        connect(TT703_SP.y, VER3.in_T0) annotation(
-          Line(points = {{172, -270}, {160, -270}, {160, -290}}, color = {0, 0, 127}));
-  connect(TT733_SP.y, VER2.in_T0) annotation(
-          Line(points = {{328, -270}, {320, -270}, {320, -290}}, color = {0, 0, 127}));
-  connect(TT713_SP.y, VER1.in_T0) annotation(
-          Line(points = {{492, -270}, {480, -270}, {480, -290}}, color = {0, 0, 127}));
-  connect(TT723_SP.y, VER901.in_T0) annotation(
-          Line(points = {{652, -270}, {640, -270}, {640, -288}, {642, -288}}, color = {0, 0, 127}));
+      equation
+        connect(TT703_SP.y, VER3.in_T0) annotation (
+          Line(points={{171,-270},{159,-270},{159,-290.6}},      color = {0, 0, 127}));
+        connect(
+          TT733_SP.y, VER2.in_T0) annotation (
+          Line(points={{327,-270},{319,-270},{319,-290.6}},      color = {0, 0, 127}));
+        connect(
+          TT713_SP.y, VER1.in_T0) annotation (
+          Line(points={{491,-270},{479,-270},{479,-290.6}},      color = {0, 0, 127}));
+        connect(
+          TT723_SP.y, VER901.in_T0) annotation (
+          Line(points={{651,-270},{640,-270},{640,-288.6},{641,-288.6}},      color = {0, 0, 127}));
         annotation (experiment(
             StopTime=13100,
             Tolerance=1e-06,
@@ -56,8 +62,8 @@ equation
       end Seq_2401_Test1;
 
       model Seq_0412_Test2 "Sequence 2 done on 04/12/23"
+        extends Modelica.Icons.Example;
         extends Thermal.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_B(
-          
           TT713_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
           TT723_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
           TT733_SP(table=[0,16.5 + 273.15; 1e6,16.5 + 273.15]),
@@ -107,22 +113,27 @@ equation
           EB401_Status(table={537,768,2271,2500}),
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
           FCVC02(Kv=25), TT703_SPP(y = Tcoolsin));
+
           //FCV701theta = [0, 0.6269; 1e6, 0.6269],
         parameter Real kq = 0.7;
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
         parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";
-        
+
         Real Tcoolsin;
       equation
         Tcoolsin = 273.15 + 16.7 + 1.7*sin(2*3.1415*freq*(time+200));
-  connect(TT703_SPP.y, VER3.in_T0) annotation(
-          Line(points = {{170, -240}, {160, -240}, {160, -290}}, color = {0, 0, 127}));
-  connect(TT703_SPP.y, VER2.in_T0) annotation(
-          Line(points = {{170, -240}, {164, -240}, {164, -250}, {242, -250}, {242, -280}, {320, -280}, {320, -290}}, color = {0, 0, 127}));
-  connect(VER1.in_T0, VER2.in_T0) annotation(
-          Line(points = {{480, -290}, {480, -278}, {320, -278}, {320, -290}}, color = {0, 0, 127}));
-  connect(VER901.in_T0, VER1.in_T0) annotation(
-          Line(points = {{642, -288}, {640, -288}, {640, -280}, {480, -280}, {480, -290}}, color = {0, 0, 127}));
+        connect(
+          TT703_SPP.y, VER3.in_T0) annotation (
+          Line(points={{169,-240},{159,-240},{159,-290.6}},      color = {0, 0, 127}));
+        connect(
+          TT703_SPP.y, VER2.in_T0) annotation (
+          Line(points={{169,-240},{164,-240},{164,-250},{242,-250},{242,-280},{319,-280},{319,-290.6}},              color = {0, 0, 127}));
+        connect(
+          VER1.in_T0, VER2.in_T0) annotation (
+          Line(points={{479,-290.6},{479,-278},{319,-278},{319,-290.6}},      color = {0, 0, 127}));
+        connect(
+          VER901.in_T0, VER1.in_T0) annotation (
+          Line(points={{641,-288.6},{640,-288.6},{640,-280},{479,-280},{479,-290.6}},      color = {0, 0, 127}));
         annotation (experiment(
             StopTime=10000,
             Tolerance=1e-06, StartTime = 0, Interval = 20), Diagram(coordinateSystem(extent={{-900,-500},{900,500}})));

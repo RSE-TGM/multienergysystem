@@ -1,7 +1,8 @@
 within MultiEnergySystem.TestFacility.Networks.Thermal;
 package Configurations
+  extends Modelica.Icons.VariantsPackage;
   package BaseClass
-
+    extends Modelica.Icons.BasesPackage;
     partial model CentralizedNetworkBase
        extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase;
        extends Loads.Thermal.Configurations.BaseClass.LoadPlantBase;
@@ -124,7 +125,7 @@ package Configurations
   end BaseClass;
 
   package Centralised
-
+    extends DistrictHeatingNetwork.Icons.Generic.Centralised;
     partial model CentralizedSystemI
       "System with only Gas Boiler as source of heat"
       extends BaseClass.CentralizedNetworkBase;

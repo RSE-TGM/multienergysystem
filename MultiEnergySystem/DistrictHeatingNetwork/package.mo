@@ -10,9 +10,9 @@ package DistrictHeatingNetwork "Components for District Heating and Cooling Syst
 
                                   annotation (
     Icon(graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {211, 87, 84}, fillPattern = FillPattern.HorizontalCylinder, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(
-        extent={{-98,98},{98,-98}},
+        extent={{-80,80},{76,-80}},
         textColor={232,232,232},
         textStyle={TextStyle.Bold},
         fontName="Tahoma",
-        textString="DHN")}));
+        textString="DH")}));
 end DistrictHeatingNetwork;

@@ -1,4 +1,4 @@
 within MultiEnergySystem.H2GasFacility;
 package Data
-  extends Modelica.Icons.UtilitiesPackage;
+  extends Modelica.Icons.RecordsPackage;
 end Data;

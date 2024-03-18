@@ -73,7 +73,6 @@ model RoundPipeFV
   Types.Velocity u[n + 1](each start = u_start, each nominal = u_nom) "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "State variable temperatures";
   Types.Temperature Twall[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "Pipe wall temperature";
-  //Types.Power Qtot "Total heat";
   Types.Temperature T[n + 1](start = T_start) "Volume boundary temperatures";
   Types.Pressure pin "Inlet pressure";
   Types.Pressure pout "Outlet pressure";

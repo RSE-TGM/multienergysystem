@@ -3,7 +3,7 @@ package Configurations "Different possible configurations for the loads"
   extends Modelica.Icons.VariantsPackage;
 
   package BaseClass
-
+    extends Modelica.Icons.BasesPackage;
     partial model LoadPlantBase
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,

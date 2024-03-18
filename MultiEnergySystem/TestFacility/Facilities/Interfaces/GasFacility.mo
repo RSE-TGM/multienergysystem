@@ -15,7 +15,7 @@ partial model GasFacility "Interface for a full gas facility"
           fillPattern=FillPattern.Solid,
           lineThickness=1,
           extent={{-100,100},{100,-100}},
-          radius=25),                                                                                                                                                                                                        Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-48,44},
+          radius=0),                                                                                                                                                                                                        Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-48,44},
               {44,-46}}),
                      Polygon(origin={-3,3},    lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Polygon(origin={-3,3},    lineColor = {255, 0, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-15, -37}, {-23, -13}, {-15, -17}, {-15, 3}, {-9, -1}, {1, 25}, {9, -1}, {15, 3}, {17, -17}, {23, -13}, {15, -37}, {1, -43}, {-15, -37}}),
         Text(

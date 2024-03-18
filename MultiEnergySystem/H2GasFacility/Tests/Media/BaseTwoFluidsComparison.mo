@@ -1,8 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
 model BaseTwoFluidsComparison
   extends Modelica.Icons.Example;
-  replaceable model Medium1 = H2GasFacility.Media.IdealGases.NG6_H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Fluid reference";
-  replaceable model Medium2 = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Fluid compared";
+  replaceable model Medium1 = H2GasFacility.Media.IdealGases.NG6_H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture                                                                               "Fluid reference";
+  replaceable model Medium2 = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture                                                                                    "Fluid compared";
 
   constant Real p0(unit = "s") = 1 "Reference value for units";
 

@@ -76,10 +76,10 @@ equation
           {276,234},{294,234}}, color={0,0,127}));
   connect(FCV_C02, FCVC02.opening)
     annotation (Line(points={{734,234},{698,234},{698,235}}, color={0,0,127}));
-  connect(EB401.Tout_ref, EB401_Tout) annotation (Line(points={{-365,-301},{-374.5,
-          -301},{-374.5,-300},{-398,-300}}, color={0,0,127}));
-  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-285,-301},{-285,
-          -300},{-314,-300}}, color={0,0,127}));
+  connect(EB401.Tout_ref, EB401_Tout) annotation (Line(points={{-361.5,-301},{-374.5,-301},{-374.5,
+          -300},{-398,-300}},               color={0,0,127}));
+  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-281.5,-301},{-281.5,-300},{-314,
+          -300}},             color={0,0,127}));
   connect(P101.in_m_flow, m_flow_P101) annotation (Line(points={{-234.48,-179.8},{-216.24,-179.8},{
           -216.24,-180},{-198,-180}}, color={0,0,127}));
   connect(FCV_101, FCV101.opening)
@@ -132,9 +132,11 @@ equation
   connect(m_flow_P401, P401.in_m_flow) annotation (Line(points={{-286,-176},{-299.24,-176},{-299.24,
           -175.8},{-312.48,-175.8}}, color={0,0,127}));
   connect(EB401Status.y, EB401.heat_on)
-    annotation (Line(points={{-401,-356},{-390,-356},{-390,-322},{-365,-322}}, color={255,0,255}));
+    annotation (Line(points={{-401,-356},{-390,-356},{-390,-318.5},{-361.5,-318.5}},
+                                                                               color={255,0,255}));
   connect(GB101Status.y, GB101.heat_on)
-    annotation (Line(points={{-315,-364},{-302,-364},{-302,-322},{-285,-322}}, color={255,0,255}));
+    annotation (Line(points={{-315,-364},{-302,-364},{-302,-318.5},{-281.5,-318.5}},
+                                                                               color={255,0,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B_FMU;

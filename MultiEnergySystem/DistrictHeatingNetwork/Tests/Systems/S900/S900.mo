@@ -1,7 +1,9 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model PumpingCirculationSystem
-
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.S900;
+model S900
   extends Modelica.Icons.Example;
+
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
+    DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
   parameter Types.Length Di = 51e-3;
   parameter Types.Length L_v = 1;
@@ -31,6 +33,7 @@ model PumpingCirculationSystem
   parameter Real FCV901theta[:,:] = [0, 1];
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P901(
+    redeclare model Medium = Medium,
     Tin_start=Pump.P901.Tin_start,
     Tout_start=Pump.P901.Tout_start,
     hin_start=Pump.P901.hin_start,
@@ -55,20 +58,19 @@ model PumpingCirculationSystem
     Placement(visible = true, transformation(                 extent={{-10,10},{
             10,-10}},                                                                          rotation=90,
         origin={0,-46})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901
-    annotation (Placement(transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium
+      =                                                                                               Medium) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-2,32})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
-    PT902 "Pressure sensor at the outlet of pump 901" annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT902 "Pressure sensor at the outlet of pump 901" annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-2,39.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT902(T_start=Tout_start_S9, p_start=pout_start_S9)
-    "Temperature sensor at the outlet of pump 901"       annotation (Placement(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT902(redeclare
+      model Medium =                                                                                             Medium, T_start=Tout_start_S9, p_start=pout_start_S9)
+    "Temperature sensor at the outlet of pump 901"   annotation (Placement(
         transformation(
         extent={{-4.75,-4.75},{4.75,4.75}},
         rotation=90,
@@ -76,6 +78,7 @@ model PumpingCirculationSystem
   inner System system(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState)
     annotation (Placement(transformation(extent={{139.5,140},{159.5,160}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL4_S901(
+    redeclare model Medium = Medium,
     L=L_S9_PL3,
     t=t_S9,
     m_flow_start=m_flow_S9,
@@ -89,7 +92,7 @@ model PumpingCirculationSystem
         rotation=90,
         origin={0,10})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT901(T_start=Tin_start_S9, p_start=pin_start_S9)
+    TT901(redeclare model Medium = Medium, T_start=Tin_start_S9, p_start=pin_start_S9)
     "Temperature sensor at the inlet of pump 901" annotation (Placement(
         transformation(
         extent={{-4.75,-4.75},{4.75,4.75}},
@@ -102,6 +105,7 @@ model PumpingCirculationSystem
         rotation=90,
         origin={-118,31.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL2_S901(
+    redeclare model Medium = Medium,
     L=L_S9_PL2,
     t=t_S9,
     m_flow_start=m_flow_S9,
@@ -115,34 +119,35 @@ model PumpingCirculationSystem
         origin={-116,-30})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
+    redeclare model Medium = Medium,
     Kv=Valve.FCV901.Kv,
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage,
     dp_nom(displayUnit="Pa") = Valve.FCV901.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S9,
     pin_start=pout_start_S9) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={0,-20})));
-  Sources.SourcePressure sourcePressure1(p0=pin_start_S9, T0=Tin_start_S9)
-    annotation (Placement(transformation(extent={{-141,54.5},{-130.5,65}})));
-  Sources.SourcePressure sourceP(p0=pin_start_S9, T0=Tin_start_S9) annotation (Placement(
+  Sources.SourcePressure sourcePressure1(redeclare model Medium = Medium, p0=pin_start_S9, T0=Tin_start_S9)  annotation (Placement(transformation(extent={{-141,54.5},{-130.5,65}})));
+  Sources.SourcePressure sourceP(redeclare model Medium = Medium, p0=pin_start_S9, T0=Tin_start_S9) annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={0,-92})));
-  Sources.SinkMassFlow sink_ annotation (Placement(transformation(
+  Sources.SinkMassFlow sink_(redeclare model Medium = Medium) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={-116,-80})));
   Sources.SinkPressure sinkP(
+    redeclare model Medium = Medium,
     use_in_p0=false,
     p0=pout_start_S9,
     T0=Tout_start_S9,
     R=1) annotation (Placement(transformation(extent={{14,66},{26,54}})));
-  Modelica.Blocks.Sources.TimeTable P901_omega(table=P901omega)
-    annotation (Placement(transformation(extent={{40,-60},{20,-40}})));
-  Modelica.Blocks.Sources.TimeTable FCV901_theta(table=FCV901theta)
-    annotation (Placement(transformation(extent={{40,-30},{20,-10}})));
+  Modelica.Blocks.Sources.TimeTable P901_omega(table=P901omega)  annotation (Placement(transformation(extent={{40,-60},{20,-40}})));
+  Modelica.Blocks.Sources.TimeTable FCV901_theta(table=FCV901theta) annotation (Placement(transformation(extent={{40,-30},{20,-10}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV rackCD_Hot_S200_S900(
+    redeclare model Medium = Medium,
     L=L_rCD_H7,
     h=0,
     t=t_rCD,
@@ -217,4 +222,4 @@ equation
       StopTime=700,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end PumpingCirculationSystem;
+end S900;

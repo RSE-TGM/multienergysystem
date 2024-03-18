@@ -5,6 +5,7 @@ package Types
   type valveOpeningChar = enumeration(
       Linear "Linear opening characteristic",
       Quadratic "Quadratic opening characteristic",
-      SquareRoot "Square root opening charecteristic")
+      SquareRoot "Square root opening charecteristic",
+      EqualPercentage "Equal percentage opening characteristic")
   "Enumeration to define the choice of valve flow coefficient";
 end Types;

@@ -4,6 +4,7 @@ package Configurations
   extends Modelica.Icons.VariantsPackage;
 
   package BaseClass "Package with different base models for the possible configurations"
+    extends Modelica.Icons.BasesPackage;
     partial model CentralPlantBase
       "Base Case considering rack CD and the pipelines connecting to the loads"
 
@@ -1669,6 +1670,7 @@ package Configurations
   end BaseClass;
 
   package Centralised
+    extends DistrictHeatingNetwork.Icons.Generic.Centralised;
     partial model CentralisedPlantI_A
        extends BaseClass.CentralPlantBase;
       // System S100

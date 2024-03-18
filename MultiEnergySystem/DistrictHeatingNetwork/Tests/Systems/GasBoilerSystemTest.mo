@@ -9,8 +9,8 @@ model GasBoilerSystemTest "Test of System 100 with real data"
   parameter Types.Pressure pout_start_S1 = 1.6e5;
   parameter Types.Temperature Tin_start_S1 = 60 + 273.15;
   parameter Types.Temperature Tout_start_S1 = 80 + 273.15;
-  parameter Real q_m3h_S1(unit = "m3/h") = 9.25;  
-  final parameter Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;    
+  parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
+  final parameter Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
 
   // Valve
   parameter Real Kv_P101 = Valve.FCV101.Kv;

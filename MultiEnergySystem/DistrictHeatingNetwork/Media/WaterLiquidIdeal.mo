@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Media;
 model WaterLiquidIdeal
   "Liquid water model with constant density and specific heat capacity"
   extends BaseClasses.PartialSubstance(
-    mu_start = 0,
+    mu_start = 0.00113,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,
     rho_coeff = {-0.0034821889243192,1.8159726369743,764.95410451574},
     cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755},
@@ -28,7 +28,7 @@ equation
   dv_dp = 0 "Pressure derivative of specific volume at constant Temperature";
   dv_dT = 0;
   if computeTransport == true then
-    mu = 0.001;
+    mu = mu_start;
     kappa = kappa_T(T, kappa_coeff);
   else
     mu = 0;

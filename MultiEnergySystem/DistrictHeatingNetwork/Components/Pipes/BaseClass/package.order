@@ -1,6 +1,7 @@
 PartialInsulatedTube
+PartialRoundTube
 PlugFlowCore
 DirectionalHeatLossPlugFlow
 TimeDelayPlugFlow
 ThermalInertiaPlugFlow
-PartialRoundTube
+FixedResistance

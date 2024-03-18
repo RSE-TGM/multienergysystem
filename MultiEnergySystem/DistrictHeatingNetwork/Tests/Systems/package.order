@@ -8,11 +8,7 @@ GasBoilerSystemTestIIB
 ElectricBoilerSystem
 ElectricBoilerSystemTest
 ElectricBoilerSystemTestB
-PumpingCirculationSystem
-PumpingCirculationSystemTest
-PumpingCirculationSystemTestB
-PumpingCirculationSystemTestC
-PumpingCirculationSystemTestD
+S900
 WaterTankSystem
 WaterTankSystemB
 StratifiedWaterTankSystem

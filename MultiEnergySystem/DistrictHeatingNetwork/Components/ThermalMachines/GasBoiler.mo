@@ -11,7 +11,8 @@ model GasBoiler
   DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel "mass flowrate of the fuel";
 
   MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inletfuel(nXi = 1) annotation (
-    Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-60,-2},  extent = {{-20, -20}, {20, 20}}, rotation = 0)));
+    Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-60,0},   extent={{-10,-10},
+            {10,10}},                                                                                                                                                                 rotation = 0)));
 equation
   inlet.p - outlet.p = rho*9.81*h;
   inletfuel.p = system.p_amb;

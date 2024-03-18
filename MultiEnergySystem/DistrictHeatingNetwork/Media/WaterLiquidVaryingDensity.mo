@@ -3,14 +3,13 @@ model WaterLiquidVaryingDensity
   "Liquid water model with varying specific heat capacity and density"
   extends BaseClasses.PartialSubstance(
     compressibilityEffect = true,
-    mu_start = 0,
+    mu_start = 0.00113,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,
     rho_coeff = {-0.0034821889243192,1.8159726369743,764.95410451574},
     cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755},
     kappa_coeff = {-8.1509980345909e-06,0.0063995962643842,-0.57622073567604});
 
   parameter Types.SpecificEnergy u_bias = 1.492354e+06;
-  parameter Types.SpecificEnthalpy h_bias = -1.4927048e6;
 
   //Start parameters
 initial equation
@@ -28,7 +27,7 @@ equation
   //u = u_T(T,cp_coeff) - u_bias;
   h = u + p/rho;
   //h = h_T(T,cp_coeff) - u_bias;
-  h = h_T(T,cp_coeff) + h_bias;
+  h = h_T(T,cp_coeff);
   cp = du_dT;
   cp = cp_T(T, cp_coeff);
   cv = cp;
@@ -41,7 +40,7 @@ equation
   dv_dT = -(((+1.48186e-005*3)*T + (-0.0177278)*2)*T + 6.36275)/rho^2;
 //p_sat = ((((+0.000342217) * T + (-0.295484)) * T + 85.5469) * T + (-8298.06)) * T + (-104.079);
   if computeTransport == true then
-    mu = 0.001;
+    mu = mu_start;
     kappa = kappa_T(T, kappa_coeff);
   else
     mu = 0;

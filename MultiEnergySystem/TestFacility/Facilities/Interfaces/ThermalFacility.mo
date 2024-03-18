@@ -15,22 +15,5 @@ partial model ThermalFacility
           fillPattern=FillPattern.Solid,
           lineThickness=1,
           extent={{-100,100},{100,-100}},
-          radius=25),
-        Polygon(
-          points={{-2,74},{-48,-72},{46,-72},{-2,74}},
-          lineColor={255,255,255},
-          lineThickness=1,
-          fillPattern=FillPattern.Solid,
-          smooth=Smooth.Bezier,
-          fillColor={0,128,255}),
-        Line(
-          points={{-24,-24},{-28,-36},{-26,-52},{-20,-62}},
-          color={255,255,255},
-          thickness=1,
-          smooth=Smooth.Bezier),
-        Text(
-          extent={{-60,90},{60,50}},
-          textColor={255,255,255},
-          textString="Thermal")}),
-                        Diagram(coordinateSystem(preserveAspectRatio=false)));
+          radius=0)}),  Diagram(coordinateSystem(preserveAspectRatio=false)));
 end ThermalFacility;

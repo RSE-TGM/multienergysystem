@@ -1,13 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 partial model PartialInsulatedTube
-  extends
-    MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
+  extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(
+                                                                        inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
 
   // Medium for the pipe
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+                                                                     "Medium model" annotation (
      choicesAllMatching = true);
 
   parameter Types.Length L = 1

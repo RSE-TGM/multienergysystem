@@ -77,9 +77,6 @@ equation
     X[1] = 1;
   end if;
 
-  assert(sum(X) > 0, "error1");
-  assert(sum(MM) > 0, "error2");
-
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
   MM_mix = MM*Y "molar mass of the fluid";
 

@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass;
 partial model PartialValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Water.Valve;
-  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort(allowFlowReversal = true);
+  extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort(allowFlowReversal = true);
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regRoot;
   import Modelica.Fluid.Utilities.regStep;
@@ -79,6 +79,8 @@ equation
     m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.SquareRoot then
     m_flow = homotopy((BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+  elseif openingChar == Components.Types.valveOpeningChar.EqualPercentage then
+    m_flow = homotopy((BaseClass.ValveCharacteristics.equalPercentage(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
 
   // Definition of fluids

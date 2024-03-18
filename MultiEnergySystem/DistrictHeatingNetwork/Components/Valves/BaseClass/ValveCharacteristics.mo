@@ -32,4 +32,12 @@ package ValveCharacteristics
   algorithm
   rp := sqrt(pos+1e-3);
   end squareRoot;
+
+  function equalPercentage "Square opening char."
+    extends
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
+      //parameter Real N = 50;
+  algorithm
+  rp := 50^(pos-1);
+  end equalPercentage;
 end ValveCharacteristics;

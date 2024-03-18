@@ -5,7 +5,7 @@ package H2GasFacility
 
   annotation (
     Icon(graphics={                                                                                                                                                                                        Text(
-        extent={{-80,80},{80,-80}},
+        extent={{-78,80},{82,-80}},
         textColor={232,232,232},
         textStyle={TextStyle.Bold},
         fontName="Tahoma",

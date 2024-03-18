@@ -5,8 +5,7 @@ model PipePF_Discretized
 
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
 
   import Modelica.Units.SI;

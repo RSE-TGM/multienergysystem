@@ -17,11 +17,9 @@ model TestManifoldOnly
 
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sink(redeclare model Medium = MediumOut, R = 0, T0(displayUnit = "K") = 293, X0 = {0.15, 0.25, 0.6}, computeTransport = false, p0(displayUnit = "Pa") = 399999.9999999999) annotation (
     Placement(visible = true, transformation(origin = {20, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow source1(redeclare
-      model                                                                      Medium = MediumIn1, T0(displayUnit = "K") = 293, X0 = {0.15, 0.25, 0.6}, m_flow0 = 1.5, p0(displayUnit = "Pa") = 499999.9999999999, use_in_X0 = true) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow source1(redeclare model Medium = MediumIn1, T0(displayUnit = "K") = 293, X0 = {0.15, 0.25, 0.6}, m_flow0 = 1.5, p0(displayUnit = "Pa") = 499999.9999999999, use_in_X0 = true) annotation (
     Placement(visible = true, transformation(origin = {-12, 70}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow source2(redeclare
-      model                                                                      Medium = MediumIn2, T0(displayUnit = "K") = 298, X0 = {0.2, 0.2, 0.6}, m_flow0 = 2, p0(displayUnit = "Pa") = 499999.9999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow source2(redeclare model Medium = MediumIn2, T0(displayUnit = "K") = 298, X0 = {0.2, 0.2, 0.6}, m_flow0 = 2, p0(displayUnit = "Pa") = 499999.9999999999) annotation (
     Placement(visible = true, transformation(origin = {12, 70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Sources.RealExpression X_valve1[3](y = if time < 250 then {0.15, 0.25, 0.6} elseif time < 300 then {-0.001*time + 0.4, 0.001*time, 0.6} else {0.1, 0.3, 0.6}) annotation (
     Placement(visible = true, transformation(origin = {-70, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

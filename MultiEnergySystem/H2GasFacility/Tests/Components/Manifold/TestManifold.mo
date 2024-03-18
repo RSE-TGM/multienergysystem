@@ -1,36 +1,37 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Manifold;
 model TestManifold
   extends Modelica.Icons.Example;
-  replaceable model MediumIn1 = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
-  replaceable model MediumIn2 = H2GasFacility.Media.IdealGases.H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
-  replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumIn1 = H2GasFacility.Media.IdealGases.CH4 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumIn2 = H2GasFacility.Media.IdealGases.H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O manifold(redeclare
-      model                                                                                             MediumIn1 = MediumIn1, redeclare
-      model                                                                                                                                    MediumIn2 = MediumIn2, redeclare
-      model                                                                                                                                                                           MediumOut = MediumOut, Xout_start = {0.5, 0.5}, p_start(displayUnit = "Pa") = 49999.99999999999) annotation (
+      model MediumIn1 =                                                                                             MediumIn1, redeclare
+      model MediumIn2 =                                                                                                                                    MediumIn2, redeclare
+      model MediumOut =                                                                                                                                                                           MediumOut, Xout_start = {0.5, 0.5}, p_start(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-30, -30}, {30, 30}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sink(redeclare model Medium = MediumOut, R = 0, T0 = 15 + 273.15, X0 = {0.5, 0.5}, computeTransport = false, p0(displayUnit = "Pa") = 49630) annotation (
     Placement(visible = true, transformation(origin = {30, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve2(redeclare
-      model                                                                                   Medium = MediumIn2, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {1}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve2(redeclare model
+      Medium =                                                                                         MediumIn2, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {1}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {-12, 50}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve1(redeclare
-      model                                                                                   Medium = MediumIn1, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {1}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve1(redeclare model
+      Medium =                                                                                         MediumIn1, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {1}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {12, 50}, extent = {{10, 10}, {-10, -10}}, rotation = 90)));
   Modelica.Blocks.Sources.Ramp opening1(duration = 0, height = -0.5, offset = 1, startTime = 200) annotation (
     Placement(visible = true, transformation(origin = {-50, 50}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp opening2(duration = 0, height = -0.5, offset = 1, startTime = 100) annotation (
     Placement(visible = true, transformation(origin = {50, 50}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valveout(redeclare
-      model                                                                                     Medium = MediumOut, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {0.5, 0.5}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valveout(redeclare model
+      Medium =                                                                                           MediumOut, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = {0.5, 0.5}, dp_nom(displayUnit = "Pa") = 369.9, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {0, -60}, extent = {{-10, 10}, {10, -10}}, rotation = -90)));
   Modelica.Blocks.Sources.Ramp openingout(duration = 0, height = -0.5, offset = 1, startTime = 300) annotation (
     Placement(visible = true, transformation(origin = {-50, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Sources.SourcePressure source1(redeclare
-      model                                                                      Medium = MediumIn1, T0 = 15 + 273.15, X0 = {1}, p0(displayUnit = "Pa") = 49999.99999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure source1(redeclare model Medium = MediumIn1, T0 = 15 + 273.15, X0 = {1}, p0(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {12, 86}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Sources.SourcePressure source2(redeclare
-      model                                                                      Medium = MediumIn2, T0 = 15 + 273.15, X0 = {1}, p0(displayUnit = "Pa") = 49999.99999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure source2(redeclare model Medium = MediumIn2, T0 = 15 + 273.15, X0 = {1}, p0(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {-12, 86}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
 equation
   connect(valve2.outlet, manifold.inlet2) annotation (

@@ -1,8 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Components.Storage;
 model LumpedStorageConstantMass
 
-  extends
-    MultiEnergySystem.H2GasFacility.Components.BaseClass.PartialLumpedVolume;
+  extends MultiEnergySystem.H2GasFacility.Components.BaseClass.PartialLumpedVolume;
 
   // Insulation parameters
   parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";

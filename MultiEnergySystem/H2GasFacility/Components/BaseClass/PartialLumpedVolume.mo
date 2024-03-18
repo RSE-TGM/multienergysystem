@@ -27,8 +27,7 @@ partial model PartialLumpedVolume
   // import MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   import MultiEnergySystem.H2GasFacility.Types;
 

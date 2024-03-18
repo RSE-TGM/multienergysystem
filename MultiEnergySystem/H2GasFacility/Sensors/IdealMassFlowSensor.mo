@@ -1,13 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Sensors;
 model IdealMassFlowSensor
   "Ideal Mass Flow Sensor"
-  extends
-    MultiEnergySystem.H2GasFacility.Sensors.BaseClass.PartialIdealFlowSensor;
+  extends MultiEnergySystem.H2GasFacility.Sensors.BaseClass.PartialIdealFlowSensor;
 
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
 
 

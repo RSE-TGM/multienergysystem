@@ -1,13 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Sensors.BaseClass;
 partial model PartialIdealFlowSensor "Partial component of a generic sensor for flow properties"
 
-  extends
-    MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
+  extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(
+                                                                        inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
 
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                 "Medium model" annotation (
+      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
 
   // Parameters

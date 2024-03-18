@@ -12,8 +12,7 @@ model TestManifold
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{10, 10}, {-10, -10}}, rotation = 180)));
   Modelica.Blocks.Sources.Ramp opening2(duration = 0, height = 0, offset = 1, startTime = 100) annotation (
     Placement(visible = true, transformation(origin = {30, 50}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Sources.SourcePressure source1(redeclare
-      model                                                                      Medium = MediumIn1, T0(displayUnit = "K") = 293, X0 = {0.15, 0.25, 0.6}, p0(displayUnit = "Pa") = 600000, use_in_X0 = true) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure source1(redeclare model Medium = MediumIn1, T0(displayUnit = "K") = 293, X0 = {0.15, 0.25, 0.6}, p0(displayUnit = "Pa") = 600000, use_in_X0 = true) annotation (
     Placement(visible = true, transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sink(redeclare model Medium = MediumOut, T0(displayUnit = "K") = 293, X0 = {0.15, 0.25, 0.6}, p0(displayUnit = "Pa") = 5e5) annotation (
     Placement(visible = true, transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

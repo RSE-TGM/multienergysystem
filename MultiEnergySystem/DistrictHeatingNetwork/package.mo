@@ -11,7 +11,7 @@ package DistrictHeatingNetwork "Components for District Heating and Cooling Syst
 
                                   annotation (
     Icon(graphics={                                                                                                                                                                                      Text(
-        extent={{-80,80},{76,-80}},
+        extent={{-78,80},{78,-80}},
         textColor={232,232,232},
         textStyle={TextStyle.Bold},
         fontName="Tahoma",

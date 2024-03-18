@@ -18,7 +18,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-      constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer "Heat transfer model for " annotation (
+      constrainedby
+    DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer                 "Heat transfer model for " annotation (
      choicesAllMatching = true);
 
   constant Types.Acceleration g_n = Modelica.Constants.g_n "Gravity";

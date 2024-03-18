@@ -2,7 +2,8 @@ within MultiEnergySystem.H2GasFacility.Sources;
 model SinkMassFlow
   extends DistrictHeatingNetwork.Icons.Gas.SourceW;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR                        constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR                        constrainedby
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
     "Medium model"  annotation(choicesAllMatching=true);
 
   // Nominal Values

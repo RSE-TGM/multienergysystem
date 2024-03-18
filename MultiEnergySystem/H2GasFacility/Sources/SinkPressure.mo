@@ -2,7 +2,8 @@ within MultiEnergySystem.H2GasFacility.Sources;
 model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                                                                              "Medium model" annotation (
      choicesAllMatching = true);
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
 

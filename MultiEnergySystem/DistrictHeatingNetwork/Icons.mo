@@ -225,8 +225,9 @@ package Icons "Icon package for DHN components"
     extends Modelica.Icons.IconsPackage;
     partial model Gas
       annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-                         Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, lineThickness = 1, extent={{-100,
-                  100},{100,-100}},                                                                                                                                                              radius = 25)}),
+                         Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern=
+                  FillPattern.Solid,                                                                                                     lineThickness = 1, extent={{-100,
+                  100},{100,-100}},                                                                                                                                                              radius=20)}),
           Diagram(coordinateSystem(preserveAspectRatio=false)));
     end Gas;
   end Gas;

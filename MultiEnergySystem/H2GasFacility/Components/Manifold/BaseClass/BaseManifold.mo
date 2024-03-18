@@ -1,9 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Components.Manifold.BaseClass;
 partial model BaseManifold
   // Mediums
-  replaceable model MediumIn1 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
-  replaceable model MediumIn2 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
-  replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumIn1 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumIn2 = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture;
 
   // Parameters
   parameter Boolean computeTransport = false "Used to decide if it is necessary to calculate the transport properties";

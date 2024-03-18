@@ -1,8 +1,10 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines;
 model GasBoilerTest
   extends Modelica.Icons.Example;
-  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Gas fluid";
-  replaceable model Water = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Water fluid";
+  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    H2GasFacility.Media.BaseClasses.PartialMixture                                                                          "Gas fluid";
+  replaceable model Water = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby
+    DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance                                                                                         "Water fluid";
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler boiler(Pmaxnom = 147.6e3*0.8, Tin_start = 333.15, pin_start = 300000, pout_start = 290000) annotation (
     Placement(visible = true, transformation(origin = {-8.88178e-16, 8.88178e-16}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));

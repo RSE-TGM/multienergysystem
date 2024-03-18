@@ -1,9 +1,11 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
+    DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-      constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
+      constrainedby
+    DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   // General
   parameter Boolean thermalInertia = true "if true then account for metal thermal inertia";
   parameter Integer n = 3 "Number of volumes in the heat exchanger";
@@ -142,11 +144,12 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV hotside(
     redeclare model HeatTransferModel =
         HeatTransferModel,                                                                                                               redeclare
-      model                                                                                                                                              Medium = Medium, Di = Di_hot, L = L_hot, q_m3h_start = m_flow_start_hot*3600/980, initOpt = initOpt, Stot = Stot_hot, Tin_start = Tin_start_hot, Tout_start = Tout_start_hot, cf = cf_hot, cm = cpm_hot, tIns = tIns_hot, t = t_hot, gamma_nom = gamma_nom_hot, h = h_hot, hctype = hctype_hot, k = k_hot, kc = kc_hot, lambdaIns = lambdaIns_hot, lambdam = lambdam_hot, n = n, nPipes = nPipes_hot, pin_start = pin_start_hot, pout_start = pout_start_hot, rho_nom = rho_nom_hot, rhom = rhom_hot, thermalInertia = thermalInertia, u_nom = u_nom_hot) annotation (
+      model Medium =                                                                                                                                              Medium, Di = Di_hot, L = L_hot, q_m3h_start = m_flow_start_hot*3600/980, initOpt = initOpt, Stot = Stot_hot, Tin_start = Tin_start_hot, Tout_start = Tout_start_hot, cf = cf_hot, cm = cpm_hot, tIns = tIns_hot, t = t_hot, gamma_nom = gamma_nom_hot, h = h_hot, hctype = hctype_hot, k = k_hot, kc = kc_hot, lambdaIns = lambdaIns_hot, lambdam = lambdam_hot, n = n, nPipes = nPipes_hot, pin_start = pin_start_hot, pout_start = pout_start_hot, rho_nom = rho_nom_hot, rhom = rhom_hot, thermalInertia = thermalInertia, u_nom = u_nom_hot) annotation (
     Placement(transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV coldside(redeclare model HeatTransferModel =
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV coldside(redeclare model
+      HeatTransferModel =
         HeatTransferModel,                                                                                                                redeclare
-      model                                                                                                                                               Medium = Medium, Di = Di_cold, L = L_cold, q_m3h_start = m_flow_start_cold*3600/995, initOpt = initOpt, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cm = cpm_cold, tIns = tIns_cold, t = t_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdam = lambdam_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold) annotation (
+      model Medium =                                                                                                                                               Medium, Di = Di_cold, L = L_cold, q_m3h_start = m_flow_start_cold*3600/995, initOpt = initOpt, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cm = cpm_cold, tIns = tIns_cold, t = t_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdam = lambdam_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold) annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, WallRes = WallRes, UA_ext = UA_ext, UA_int = UA_int, Tstart1 = (Tin_start_hot + Tin_start_cold)/2, TstartN = (Tin_start_hot - Tin_start_cold)/2 + 273.15, Tstartbar = 318.15, cm = cpWall, initOpt = initOpt) annotation (
     Placement(transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));

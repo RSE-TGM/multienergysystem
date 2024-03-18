@@ -58,7 +58,8 @@ model S900
     Placement(visible = true, transformation(                 extent={{-10,10},{
             10,-10}},                                                                          rotation=90,
         origin={0,-46})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium = Medium) annotation (Placement(transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium
+      =                                                                                               Medium) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-2,32})));

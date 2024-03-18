@@ -1,13 +1,14 @@
 within MultiEnergySystem;
 package H2GasFacility
+  extends DistrictHeatingNetwork.Icons.Gas.Gas;
   import Pipe = MultiEnergySystem.H2GasFacility.Data.PipelineData;
 
   annotation (
-    Icon(graphics={  Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(
+    Icon(graphics={                                                                                                                                                                                        Text(
         extent={{-80,80},{80,-80}},
         textColor={232,232,232},
         textStyle={TextStyle.Bold},
         fontName="Tahoma",
-        textString="NG")}),
+          textString="NG")}),
     Documentation(info = "<html><head></head><body>Gas Facility package.<div><br></div><div>The objective of this library is to develop models for natural gas / biomethane &amp; hydrogen distribution modeling &amp; control.</div></body></html>"));
 end H2GasFacility;

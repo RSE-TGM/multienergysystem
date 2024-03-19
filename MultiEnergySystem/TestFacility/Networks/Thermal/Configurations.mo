@@ -2353,17 +2353,17 @@ package Configurations
       parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
       Plants.Thermal.Systems.GasBoiler S100
-        annotation (Placement(transformation(extent={{-112,-83},{-52,-23}})));
+        annotation (Placement(transformation(extent={{-109,-83},{-49,-23}})));
       Plants.Thermal.Systems.CirculationPump S900 annotation (Placement(transformation(
             extent={{-25,-25},{25,25}},
             rotation=-90,
-            origin={-106,65})));
+            origin={-103,65})));
       Plants.Thermal.Systems.CoolingSingleLoad EX701
         annotation (Placement(transformation(extent={{-47,-84},{13,-24}})));
       Plants.Thermal.Systems.RackCD rackCD
-        annotation (Placement(transformation(extent={{-160,-45},{-60,55}})));
+        annotation (Placement(transformation(extent={{-157,-45},{-57,55}})));
       Plants.Thermal.Systems.ElectricBoiler S400
-        annotation (Placement(transformation(extent={{-168,-82},{-108,-22}})));
+        annotation (Placement(transformation(extent={{-165,-82},{-105,-22}})));
       Plants.Thermal.Systems.RackType2 rackType2_1
         annotation (Placement(transformation(extent={{-40,14},{62,116}})));
       Plants.Thermal.Systems.CoolingSingleLoad EX711
@@ -2421,11 +2421,11 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(S900.fluidPortInlet1, rackType2_1.outletCold) annotation (Line(
-          points={{-86.25,70},{-63.125,70},{-63.125,70.1},{-40,70.1}},
+          points={{-83.25,70},{-60.125,70},{-60.125,70.1},{-40,70.1}},
           color={140,56,54},
           thickness=0.5));
       connect(S900.fluidPortOutlet1, rackType2_1.inletHot) annotation (Line(
-          points={{-86,60},{-63,60},{-63,59.9},{-40,59.9}},
+          points={{-83,60},{-60,60},{-60,59.9},{-40,59.9}},
           color={140,56,54},
           thickness=0.5));
       connect(EX721.inlet, rackCD1.outletElectricBoiler) annotation (Line(
@@ -2445,35 +2445,35 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.outletPump, S900.fluidPortInlet) annotation (Line(
-          points={{-160,10},{-170,10},{-170,60},{-126,60}},
+          points={{-157,10},{-164,10},{-164,60},{-123,60}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.inletPump, S900.fluidPortOutlet) annotation (Line(
-          points={{-160,0},{-180,0},{-180,70},{-126,70}},
+          points={{-157,0},{-174,0},{-174,70},{-123,70}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.inletGasBoiler, S100.outlet) annotation (Line(
-          points={{-75,-10},{-75,-25},{-74.5,-25},{-74.5,-29}},
+          points={{-72,-10},{-72,-25},{-71.5,-25},{-71.5,-29}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.outletGasBoiler, S100.inlet) annotation (Line(
-          points={{-90,-10},{-90,-29},{-89.5,-29}},
+          points={{-87,-10},{-87,-29},{-86.5,-29}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.inletElectricBoiler, S400.outlet) annotation (Line(
-          points={{-130,-10},{-130,-24.5},{-130.5,-24.5},{-130.5,-28}},
+          points={{-127,-10},{-127,-24.5},{-127.5,-24.5},{-127.5,-28}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.outletElectricBoiler, S400.inlet) annotation (Line(
-          points={{-145,-10},{-145.5,-10},{-145.5,-28}},
+          points={{-142,-10},{-142.5,-10},{-142.5,-28}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD.outletCold, FV933.inlet) annotation (Line(
-          points={{-60,0},{-50,0},{-50,2}},
+          points={{-57,0},{-50,0},{-50,2}},
           color={140,56,54},
           thickness=0.5));
       connect(FV933.outlet, rackCD.inletHot) annotation (Line(
-          points={{-50,8},{-50,10},{-60,10}},
+          points={{-50,8},{-50,10},{-57,10}},
           color={140,56,54},
           thickness=0.5));
       connect(rackCD1.outletCold, FCVC02.inlet) annotation (Line(

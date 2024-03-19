@@ -20,10 +20,10 @@ model TestSinglePipe_C_wip
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_in(
-    duration=50,
-    height=1,
-    offset=m_flow_start,
-    startTime=200) annotation (Placement(visible=true, transformation(
+    duration=0,
+    height=0.5,
+    offset=Pipe.pipe1.m_flow_start,
+    startTime=50)  annotation (Placement(visible=true, transformation(
         origin={-86,20},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -37,15 +37,16 @@ model TestSinglePipe_C_wip
     Tout_start=Pipe.pipe1.Tout_start,
     X_start=X_start,
     Di=Pipe.pipe1.Di,
-    constantFrictionFactor=true,
+    constantFrictionFactor=false,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
     rho_nom=Pipe.pipe1.rho_nom,
+    n=5,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{-8,-18},{12,2}})));
 
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(
     T0(displayUnit="K") = 15 + 273.15,
-    R=0,
+    R=1,
     redeclare model Medium = Medium,
     X0=Xref,
     p0(displayUnit="Pa") = 48999.99999999999,
@@ -54,14 +55,16 @@ model TestSinglePipe_C_wip
   Modelica.Blocks.Sources.Ramp p_out(
     height=0*0.3e5,
     duration=0,
-    startTime=50,
+    startTime=050,
     offset=0.49e5)                                                                                     annotation (
     Placement(visible = true, transformation(origin={36,44},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow(
     p0=Pipe.pipe1.pin_start,
     T0=Pipe.pipe1.Tin_start,
+    redeclare model Medium = Medium,
     X0=Xref,
     m_flow0=m_flow_start,
+    G=0,
     use_in_m_flow0=true,
     use_in_T0=true)
     annotation (Placement(transformation(extent={{-58,-18},{-38,2}})));
@@ -81,7 +84,11 @@ equation
   connect(T_in.y, sourceMassFlow.in_T0)
     annotation (Line(points={{-75,52},{-48,52},{-48,-3}}, color={0,0,127}));
   annotation (
-    experiment(StopTime = 250, Interval = 0.0350042, Tolerance = 1e-06, StartTime = 0),
+    experiment(
+      StopTime=100,
+      Interval=0.0350042,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"),
       Documentation(info="<html>
 <p>This test doesn&apos;t wotk because there is a conflict in giving the pressure at the inlet and the m_flow at the outlet. </p>
 </html>"));

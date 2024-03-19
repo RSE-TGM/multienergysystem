@@ -21,7 +21,7 @@ model TestSinglePipe_C_wip
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0,
-    height=0.5,
+    height=0.01,
     offset=Pipe.pipe1.m_flow_start,
     startTime=50)  annotation (Placement(visible=true, transformation(
         origin={-86,20},

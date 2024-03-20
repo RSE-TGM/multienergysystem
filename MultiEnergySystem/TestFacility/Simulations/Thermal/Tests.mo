@@ -386,6 +386,239 @@ package Tests
       annotation (
         experiment(StopTime = 2800, __Dymola_Algorithm = "Dassl"));
     end ParallelConfiguration4Loads;
+
+    model E7X1Test "Subsystem of a single HX70X test with real data"
+      extends Modelica.Icons.Example;
+      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+      replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+
+      parameter Real CorrectFactorHot = 1;
+      parameter Real CorrectFactorCold = 1;
+      parameter DistrictHeatingNetwork.Types.Density rhohotref=985;
+      parameter DistrictHeatingNetwork.Types.Density rhocoldref=999;
+      parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix" annotation (
+        Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+      parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Pressures.mat") "File name of matrix" annotation (
+        Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+      parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Flow.mat") "File name of matrix" annotation (
+        Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+      parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Actuators.mat") "File name of matrix" annotation (
+        Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+      parameter String matrixTT701 = "TT701" "Matrix name in file";
+      parameter String matrixTT702 = "TT702" "Matrix name in file";
+      parameter String matrixTT703 = "TT703" "Matrix name in file";
+      parameter String matrixTT704 = "TT704" "Matrix name in file";
+      parameter String matrixFT701 = "FT701" "Matrix name in file";
+      parameter String matrixFT703 = "FT703" "Matrix name in file";
+      parameter String matrixPT701 = "PT701" "Matrix name in file";
+      parameter String matrixthetaFCV701 = "theta_FCV701" "Matrix name in file";
+      parameter String timenoscale = "time" "Matrix name in file";
+      parameter Real EX701_q_m3h_hot = 2.5;
+      parameter Real deltaThotmax = 30;
+      parameter Real deltaTcoldmax = 20;
+
+      // Variables
+    //   DistrictHeatingNetwork.Types.Temperature Tout_cold_ref;
+    //   DistrictHeatingNetwork.Types.Temperature Tout_hot_ref;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaToutcold;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTouthot;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold_ref;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot_ref;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot;
+    //   Real deviationCold, deviationHot;
+    //   DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
+    //   DistrictHeatingNetwork.Types.CoefficientOfHeatTransfer gamma_ref;
+    //   DistrictHeatingNetwork.Types.Power Ptcold_ref;
+    //   DistrictHeatingNetwork.Types.Power Pthot_ref;
+
+      //  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
+      //  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
+      //  *1000/3600 "Matrix data";
+      inner DistrictHeatingNetwork.System system annotation (Placement(visible=true, transformation(
+            origin={-90,90},
+            extent={{-10,-10},{10,10}},
+            rotation=0)));
+      DistrictHeatingNetwork.Sources.SourceMassFlow sourceHot_mflow(
+        redeclare model Medium = Medium,
+        use_in_m_flow=true,
+        use_in_T=true,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
+        m_flow0=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot) annotation (Placement(transformation(extent={{61,41},{41,21}})));
+      DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold_mflow(
+        redeclare model Medium = Medium,
+        use_in_m_flow=true,
+        use_in_T=true,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
+        m_flow0=0.32) annotation (Placement(transformation(extent={{-60,-42},{-40,-22}})));
+      DistrictHeatingNetwork.Sources.SinkPressure sinkHot_p(
+        redeclare model Medium = Medium,
+        use_in_p0=true,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot) annotation (Placement(transformation(extent={{44,-43},{64,-23}})));
+      DistrictHeatingNetwork.Sources.SinkPressure sinkCold_p(
+        redeclare model Medium = Medium,
+        use_in_p0=false,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold) annotation (Placement(transformation(extent={{-43,21},{-62,40}})));
+      Modelica.Blocks.Sources.TimeTable inhot_T(table = [t, TT702]) annotation (
+        Placement(transformation(extent={{69,-5},{59,5}})));
+      Modelica.Blocks.Sources.TimeTable incold_T(table = [t, TT703]) annotation (
+        Placement(transformation(extent={{-68,0},{-58,10}})));
+      Modelica.Blocks.Sources.TimeTable outhot_p(table = [0, 2e5; 100, 2e5]) annotation (
+        Placement(transformation(extent={{65,-20},{55,-10}})));
+      Modelica.Blocks.Sources.TimeTable hot_m_flow(table = [t, m_flow701]) annotation (
+        Placement(transformation(extent={{69,10},{59,20}})));
+      Modelica.Blocks.Sources.TimeTable cold_m_flow(table = [t, m_flow703]) annotation (
+        Placement(transformation(extent={{-68,-15},{-58,-5}})));
+      DistrictHeatingNetwork.Sources.SinkPressure sinkCold_ref(
+        redeclare model Medium = Medium,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        use_in_p0=false,
+        use_in_T0=true,
+        R=1) annotation (Placement(transformation(origin={40,42}, extent={{-50,18},{-70,38}})));
+      Modelica.Blocks.Sources.TimeTable outcold_Tref(table = [t, TT704]) annotation (
+        Placement(transformation(origin = {50, 10}, extent = {{-100, 70}, {-80, 90}}, rotation = -0)));
+      DistrictHeatingNetwork.Sources.SinkPressure sinkHot_ref(
+        redeclare model Medium = Medium,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        use_in_p0=false,
+        use_in_T0=true,
+        R=1) annotation (Placement(transformation(origin={-58,110}, extent={{68,-50},{88,-30}})));
+      Modelica.Blocks.Sources.TimeTable outhot_Tref(table = [t, TT701]) annotation (
+        Placement(transformation(origin = {-50, 10}, extent = {{100, 70}, {80, 90}}, rotation = -0)));
+      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(
+        redeclare model Medium = Medium,
+        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot)
+        annotation (Placement(transformation(extent={{31,-36},{41,-26}})));
+      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(
+        redeclare model Medium = Medium,
+        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
+        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold)
+        annotation (Placement(transformation(extent={{-42,28},{-32,38}})));
+      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(
+        redeclare model Medium = Medium,
+        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
+        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold)
+        annotation (Placement(transformation(extent={{-40,-35},{-30,-25}})));
+      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(
+        redeclare model Medium = Medium,
+        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
+        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot)
+        annotation (Placement(transformation(extent={{27,28},{37,38}})));
+      Modelica.Blocks.Math.Add dT_cold_sim(k1=-1) annotation (Placement(transformation(extent={{-70,40},{-80,50}})));
+      Modelica.Blocks.Math.Add dT_hot_sim(k1=+1, k2=-1) annotation (Placement(transformation(extent={{70,40},{80,50}})));
+      Modelica.Blocks.Math.Add dT_cold_meas(k1=-1) annotation (Placement(transformation(extent={{-70,60},{-80,70}})));
+      Modelica.Blocks.Math.Add dT_hot_meas(k1=-1) annotation (Placement(transformation(extent={{70,60},{80,70}})));
+      DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_cold_indexes "ASHRAE indexes for delta T cold" annotation (Placement(transformation(extent={{-90,50},{-100,60}})));
+      DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_hot_indexes "ASHRAE indexes for delta T hot" annotation (Placement(transformation(extent={{90,50},{100,60}})));
+      MultiEnergySystem.TestFacility.Loads.Thermal.Systems.CoolingSingleLoad EX7X1 annotation (Placement(transformation(extent={{-16,-2},{15,29}})));
+      Modelica.Blocks.Sources.TimeTable theta(table=[t,thetaValve])
+                                                               annotation (Placement(transformation(extent={{-32,43},{-22,53}})));
+    protected
+      final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures, matrixTT701) "dimension of matrix";
+      final parameter Real t[:, :] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, timenoscale, dim[1], dim[2]) "Matrix data";
+      final parameter Real TT701[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]);
+      final parameter Real TT702[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixTT702, dim[1], dim[2]);
+      final parameter Real TT703[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixTT703, dim[1], dim[2]);
+      final parameter Real TT704[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixTT704, dim[1], dim[2]);
+      final parameter Real FT701[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows, matrixFT701, dim[1], dim[2]);
+      final parameter Real FT703[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows, matrixFT703, dim[1], dim[2]);
+      final parameter Real m_flow701[dim[1], dim[2]] = FT701*rhohotref*CorrectFactorHot/3600;
+      final parameter Real m_flow703[dim[1], dim[2]] = FT703*rhocoldref*CorrectFactorCold/3600;
+      final parameter Real thetaValve[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators, matrixthetaFCV701, dim[1], dim[2]);
+    equation
+      // Variables
+    //   Tout_hot_ref = sinkHot_ref.fluid.T;
+    //   Tout_cold_ref = sinkCold_ref.fluid.T;
+    //   deltaTouthot = E7X1.Tout_hot  - Tout_hot_ref;
+    //   deltaToutcold = E7X1.Tout_cold  - Tout_cold_ref;
+    //   deltaThot_ref = E7X1.Tin_hot  - Tout_hot_ref;
+    //   deltaTcold_ref = Tout_cold_ref -E7X1.Tin_cold;
+    //   deltaThot =E7X1.Tin_hot  -E7X1.Tout_hot;
+    //   deltaTcold =E7X1.Tout_cold  -E7X1.Tin_cold;
+    //   //deviationHot = abs((deltaThot - deltaThot_ref)./deltaThot_ref)*100;
+    //   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
+    //   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
+    //   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
+    //   LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
+    //   gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
+    //   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
+    //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
+
+      // Connections
+      connect(outhot_p.y, sinkHot_p.in_p0) annotation (
+        Line(points={{54.5,-15},{50,-15},{50,-24.6}},      color = {0, 0, 127}));
+      connect(incold_T.y, sourceCold_mflow.in_T) annotation (
+        Line(points={{-57.5,5},{-50,5},{-50,-27}},        color = {0, 0, 127}));
+      connect(outcold_Tref.y, sinkCold_ref.in_T0) annotation (
+        Line(points={{-29,90},{-20,90},{-20,79.6}},      color = {0, 0, 127}));
+      connect(outhot_Tref.y, sinkHot_ref.in_T0) annotation (
+        Line(points={{29,90},{20,90},{20,79.6}},      color = {0, 0, 127}));
+      connect(cold_m_flow.y, sourceCold_mflow.in_m_flow)
+        annotation (Line(points={{-57.5,-10},{-56,-10},{-56,-27}}, color={0,0,127}));
+      connect(hot_m_flow.y, sourceHot_mflow.in_m_flow)
+        annotation (Line(points={{58.5,15},{57,15},{57,26}}, color={0,0,127}));
+      connect(inhot_T.y, sourceHot_mflow.in_T)
+        annotation (Line(points={{58.5,0},{51,0},{51,26}}, color={0,0,127}));
+      connect(sinkHot_p.inlet, TT7X1.inlet)
+        annotation (Line(
+          points={{44,-33},{36,-33}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(sinkCold_p.inlet, TT7X4.inlet) annotation (Line(
+          points={{-43,30.5},{-40.5,30.5},{-40.5,31},{-37,31}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(sourceCold_mflow.outlet, TT7X3.inlet) annotation (Line(
+          points={{-40,-32},{-35,-32}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(TT7X4.T, dT_cold_sim.u2) annotation (Line(points={{-37,39.5},{-37,42},{-69,42}}, color={0,0,127}));
+      connect(TT7X3.T, dT_cold_sim.u1) annotation (Line(points={{-35,-23.5},{-35,17},{-66,17},{-66,48},{-69,48}}, color={0,0,127}));
+      connect(TT7X1.T, dT_hot_sim.u2) annotation (Line(points={{36,-24.5},{36,42},{69,42}}, color={0,0,127}));
+      connect(TT7X2.T, dT_hot_sim.u1) annotation (Line(points={{32,39.5},{32,48},{69,48}}, color={0,0,127}));
+      connect(incold_T.y, dT_cold_meas.u1) annotation (Line(points={{-57.5,5},{-50,5},{-50,68},{-69,68}}, color={0,0,127}));
+      connect(outcold_Tref.y, dT_cold_meas.u2) annotation (Line(points={{-29,90},{-28,90},{-28,62},{-69,62}}, color={0,0,127}));
+      connect(dT_hot_meas.u1, sinkHot_ref.in_T0) annotation (Line(points={{69,68},{27,68},{27,90},{20,90},{20,79.6}}, color={0,0,127}));
+      connect(dT_hot_meas.u2, sourceHot_mflow.in_T) annotation (Line(points={{69,62},{55,62},{55,0},{51,0},{51,26}}, color={0,0,127}));
+      connect(dT_cold_sim.y, dT_cold_indexes.u_sim) annotation (Line(points={{-80.5,45},{-85,45},{-85,52.5},{-89,52.5}}, color={0,0,127}));
+      connect(dT_cold_meas.y, dT_cold_indexes.u_meas) annotation (Line(points={{-80.5,65},{-85,65},{-85,57.5},{-89,57.5}}, color={0,0,127}));
+      connect(dT_hot_meas.y, dT_hot_indexes.u_meas) annotation (Line(points={{80.5,65},{85,65},{85,57.5},{89,57.5}}, color={0,0,127}));
+      connect(dT_hot_sim.y, dT_hot_indexes.u_sim) annotation (Line(points={{80.5,45},{85,45},{85,52.5},{89,52.5}}, color={0,0,127}));
+      connect(EX7X1.outcold, TT7X4.inlet) annotation (Line(
+          points={{-6.7,-3.55},{-6.7,-11},{-28,-11},{-28,31},{-37,31}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(EX7X1.incold, TT7X3.inlet) annotation (Line(
+          points={{5.7,-3.55},{5.7,-32},{-35,-32}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(EX7X1.outhot, TT7X1.inlet) annotation (Line(
+          points={{5.7,30.55},{5.7,38},{25,38},{25,-33},{36,-33}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(sourceHot_mflow.outlet, TT7X2.inlet) annotation (Line(
+          points={{41,31},{32,31}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(EX7X1.inhot, TT7X2.inlet) annotation (Line(
+          points={{-6.7,30.55},{-6.7,43},{28,43},{28,31},{32,31}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(theta.y, EX7X1.theta) annotation (Line(points={{-21.5,48},{-17,48},{-17,33},{-23,33},{-23,24.35},{-17.55,24.35}}, color={0,0,127}));
+      annotation (
+        Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}},
+            grid={1,1})),
+        Documentation(info = "<html><head></head><body>The present test model consider the 04 types of heat exchangers which are located in the heating network of RSE.&nbsp;<div><br></div><div>The tests have been done considering design conditions only and a constant heat transfer coefficient model for all heat exchangers. This may change in case of other future tests.</div><div><br></div><div>The nominal data considered for these heat exchangers can be found in the package DisctricHeatingNetwork/Data/BPHEData</div></body></html>"),
+        experiment(StopTime = 3600, Interval = 1, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"),
+        Icon(coordinateSystem(grid={1,1})));
+    end E7X1Test;
   end Loads;
 
   package Networks
@@ -2113,8 +2346,8 @@ Control")}),
             extent={{-80,-80},{82,80}},
             imageSource=
                 "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",
-
             fileName=
                 "modelica://MultiEnergySystem/../../../../../Users/muro/Downloads/controlvar.png")}));
+
   end Control;
 end Tests;

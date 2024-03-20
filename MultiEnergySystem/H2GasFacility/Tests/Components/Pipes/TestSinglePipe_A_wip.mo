@@ -65,6 +65,6 @@ equation
   annotation (
     experiment(StopTime = 250, Interval = 0.0350042, Tolerance = 1e-06, StartTime = 0),
       Documentation(info="<html>
-<p>This test doesn&apos;t wotk because there is a conflict in giving the pressure at the inlet and the m_flow at the outlet. </p>
+<p>This test doesn&apos;t wotk because there is a conflict in giving the m_flow at the outlet. </p>
 </html>"));
 end TestSinglePipe_A_wip;

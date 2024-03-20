@@ -52,7 +52,7 @@ import DistrictHeatingNetwork.Types;
 
   model ConstantHeatTransferCoefficient
     extends FlowDependentHeatTransferCoefficient(
-    final alpha = 0 "it means gamma = gamma_nom",
+    alpha = 0 "it means gamma = gamma_nom",
     final beta = 1,
     final gamma_approx = gamma_nom);
   end ConstantHeatTransferCoefficient;

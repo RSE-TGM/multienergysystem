@@ -96,6 +96,7 @@ outer System system "system object for global defaults";
   Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
 
   HeatTransferModel heatTransfer(
+    final alpha = alpha,
     gamma_nom = gamma_nom,
     n = n,
     nPipes = nPipes,
@@ -112,7 +113,7 @@ outer System system "system object for global defaults";
     each m_flow_nom = m_flow_start,
     p_nom = pout_start,
     kc = kc);
-    //alpha = alpha,
+
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (
     Placement(visible = true, transformation(origin = {-1.77636e-15, 50.5}, extent = {{-42, -10.5}, {42, 10.5}}, rotation = 0), iconTransformation(origin={0,41},               extent = {{-44, -11}, {44, 11}}, rotation = 0)));
 

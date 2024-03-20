@@ -21,12 +21,28 @@ model S900_Test "Test with real data"
   parameter String matrixFT = "FT901" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
   parameter Real Kv(unit = "m3/h") = 20.5 "Metri Flow Coefficient";
+  parameter Integer T_sampling = 1;
+  final parameter Real frequency = 1/T_sampling;
 
   Modelica.Blocks.Sources.TimeTable TT902_profile(table=[ts,TTi]) annotation (Placement(transformation(extent={{-60,-70},{-40,-50}})));
   Modelica.Blocks.Sources.TimeTable PT202_profile(table=[ts,PTi]) annotation (Placement(transformation(extent={{-60,-100},{-40,-80}})));
   Modelica.Blocks.Sources.TimeTable PT902_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{44,30},{24,50}})));
   Modelica.Blocks.Sources.TimeTable qm3h_ref(table=[ts,FT])
     annotation (Placement(transformation(extent={{-10,130},{10,150}})));
+  Modelica.Blocks.Math.Add add(k2=-1)
+    annotation (Placement(transformation(extent={{36,92},{56,112}})));
+  Modelica.Blocks.Math.RootMeanSquare rootMeanSquare(f=frequency)
+    annotation (Placement(transformation(extent={{70,92},{90,112}})));
+  Modelica.Blocks.Math.Mean mean(f=frequency)
+                                 annotation (Placement(transformation(extent={{70,126},{90,146}})));
+  Modelica.Blocks.Math.Mean mean_simu(f=frequency)
+    annotation (Placement(transformation(extent={{70,62},{90,82}})));
+  Modelica.Blocks.Math.ContinuousMean continuousMean
+    annotation (Placement(transformation(extent={{70,30},{90,50}})));
+  Modelica.Blocks.Math.Division CVRMSE
+    annotation (Placement(transformation(extent={{112,126},{132,146}})));
+  Modelica.Blocks.Math.Division NMBE
+    annotation (Placement(transformation(extent={{112,92},{132,112}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -47,6 +63,25 @@ equation
     annotation (Line(points={{-39,-90},{-28,-90},{-28,-94.4},{-5.04,-94.4}}, color={0,0,127}));
   connect(PT902_profile.y, sinkP.in_p0)
     annotation (Line(points={{23,40},{18,40},{18,54.96},{17.6,54.96}}, color={0,0,127}));
+  connect(qm3h_ref.y, add.u1)
+    annotation (Line(points={{11,140},{28,140},{28,108},{34,108}}, color={0,0,127}));
+  connect(FT901.q_m3hr, add.u2)
+    annotation (Line(points={{-8.5,32},{-14,32},{-14,96},{34,96}}, color={0,0,127}));
+  connect(add.y, rootMeanSquare.u) annotation (Line(points={{57,102},{68,102}}, color={0,0,127}));
+  connect(mean.u, rootMeanSquare.u)
+    annotation (Line(points={{68,136},{62,136},{62,102},{68,102}}, color={0,0,127}));
+  connect(mean_simu.u, add.u2)
+    annotation (Line(points={{68,72},{10,72},{10,96},{34,96}}, color={0,0,127}));
+  connect(continuousMean.u, add.u2)
+    annotation (Line(points={{68,40},{54,40},{54,72},{10,72},{10,96},{34,96}}, color={0,0,127}));
+  connect(mean.y, CVRMSE.u1)
+    annotation (Line(points={{91,136},{98,136},{98,142},{110,142}}, color={0,0,127}));
+  connect(continuousMean.y, CVRMSE.u2)
+    annotation (Line(points={{91,40},{100,40},{100,130},{110,130}}, color={0,0,127}));
+  connect(rootMeanSquare.y, NMBE.u1)
+    annotation (Line(points={{91,102},{96,102},{96,108},{110,108}}, color={0,0,127}));
+  connect(NMBE.u2, CVRMSE.u2)
+    annotation (Line(points={{110,96},{100,96},{100,130},{110,130}}, color={0,0,127}));
   annotation (experiment(
       StopTime=2600,
       Tolerance=1e-06,

@@ -7,7 +7,7 @@ model E701_Seq_0412Test3
     deltaThotmax = 26,
     deltaTcoldmax = 22.5);
   annotation (experiment(
-      StopTime=6000,
+      StopTime=7200,
       Interval=1,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));

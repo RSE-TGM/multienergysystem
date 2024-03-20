@@ -89,12 +89,9 @@ outer System system "system object for global defaults";
   Types.Density rho[n + 1](each start = rho_start, each nominal = rho_nom) "Density at each fluid";
   Types.Density rhotilde[n](each start = rho_start, each nominal = rho_nom) "Density at each state fluid";
 
-  //   Types.Power Q_int[n] "Heat dissipation out of each volume into the wall";
-  //   Types.Power Q_ext[n] "Heat dissipation out of each wall cell to the ambient";
-
+  // Fluids
   Medium fluid[n+1](T_start = T_start, p_start = linspace(pin_start, pout_start, n + 1));
   Medium fluid_temp(T_start = Tin_start, p_start = pin_start);
-
   HeatTransferModel heatTransfer(
     final alpha = alpha,
     gamma_nom = gamma_nom,

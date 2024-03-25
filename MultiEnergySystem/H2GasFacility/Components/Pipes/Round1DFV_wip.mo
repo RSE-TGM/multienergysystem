@@ -180,7 +180,10 @@ equation
   for i in 1:n + 1 loop
     if not constantFrictionFactor then
       Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000) "Reynold's number";
+      // Haaland equation: OK
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
+      // Chen formula: --> Solver not able to solve it
+      sqrtReg(ff[i]) = min(1/(-2*log10(kappa/(3.7065*Di)-((5.0425/Re[i])*log10((k/Di)^1.1098/2.8257+5.8506/Re[i]^0.8981)))), 1/(-2*log10(kappa/(3.7065*Di)-((5.0425/4000)*log10((k/Di)^1.1098/2.8257+5.8506/4000^0.8981)))));
     else
       Re[i]=0;
       ff[i]=ff_nom;

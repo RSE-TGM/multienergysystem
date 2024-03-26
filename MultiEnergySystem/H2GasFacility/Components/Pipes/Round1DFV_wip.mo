@@ -183,7 +183,7 @@ equation
       // Haaland equation: OK
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
       // Chen formula: --> Solver not able to solve it
-      sqrtReg(ff[i]) = min(1/(-2*log10(kappa/(3.7065*Di)-((5.0425/Re[i])*log10((k/Di)^1.1098/2.8257+5.8506/Re[i]^0.8981)))), 1/(-2*log10(kappa/(3.7065*Di)-((5.0425/4000)*log10((k/Di)^1.1098/2.8257+5.8506/4000^0.8981)))));
+      // sqrtReg(ff[i]) = min(1/(-2*log10(kappa/(3.7065*Di)-((5.0425/Re[i])*log10((k/Di)^1.1098/2.8257+5.8506/Re[i]^0.8981)))), 1/(-2*log10(kappa/(3.7065*Di)-((5.0425/4000)*log10((k/Di)^1.1098/2.8257+5.8506/4000^0.8981)))));
     else
       Re[i]=0;
       ff[i]=ff_nom;

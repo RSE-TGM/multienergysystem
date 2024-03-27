@@ -40,7 +40,7 @@ model TestSinglePipe_C_wip
     constantFrictionFactor=false,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
     rho_nom=Pipe.pipe1.rho_nom,
-    n=20,
+    n=5,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{-8,-18},{12,2}})));
 

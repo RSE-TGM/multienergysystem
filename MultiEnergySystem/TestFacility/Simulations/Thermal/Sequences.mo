@@ -40,7 +40,7 @@ package Sequences
           GB101(Tout_start=315.02, initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState),
           FCVC02(Kv=25),
           FCV101(Kv=20),
-          FCVC01(Kv=25),
+          FCVC01(Kv = 25),
           VE901(p0=180000));
 
       equation
@@ -103,18 +103,26 @@ package Sequences
           EB401(
             Tout_start=342.15,
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-                                    nR= 4),
-          FCVC01(Tin_start=T_start_hot),
+            h=0.5,                  nR= 4),
+          FCVC01(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage,
+                 Tin_start=T_start_hot, Kv = 25),
           VER3(T0=EX701_Tin_cold),
           VER2(T0=EX731_Tin_cold),
           VER1(T0=EX711_Tin_cold),
           VER901(T0=EX721_Tin_cold),
-          FCV101(Kv = 20, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic),
+          FCV101(Kv=20, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           EB401_Status(table={537,768,2271,2500}),
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
-          FCVC02(Kv=25), TT703_SPP(y = Tcoolsin));
+          FCVC02(Kv = 25, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          TT703_SPP(y = Tcoolsin),
+          FCV701(openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV721(openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV731(openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV711(openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV401(Kv=32),
+          FV402(Kv=20));
 
-          //FCV701theta = [0, 0.6269; 1e6, 0.6269],
+//FCV701theta = [0, 0.6269; 1e6, 0.6269],
         parameter Real kq = 0.7;
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
         parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";

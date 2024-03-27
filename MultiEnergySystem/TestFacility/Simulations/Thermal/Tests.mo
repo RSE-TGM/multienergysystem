@@ -418,20 +418,19 @@ package Tests
       parameter Real deltaTcoldmax = 20;
 
       // Variables
-    //   DistrictHeatingNetwork.Types.Temperature Tout_cold_ref;
-    //   DistrictHeatingNetwork.Types.Temperature Tout_hot_ref;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaToutcold;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTouthot;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold_ref;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot_ref;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot;
-    //   Real deviationCold, deviationHot;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
-    //   DistrictHeatingNetwork.Types.CoefficientOfHeatTransfer gamma_ref;
-    //   DistrictHeatingNetwork.Types.Power Ptcold_ref;
-    //   DistrictHeatingNetwork.Types.Power Pthot_ref;
-
+      //   DistrictHeatingNetwork.Types.Temperature Tout_cold_ref;
+      //   DistrictHeatingNetwork.Types.Temperature Tout_hot_ref;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaToutcold;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTouthot;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold_ref;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot_ref;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot;
+      //   Real deviationCold, deviationHot;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
+      //   DistrictHeatingNetwork.Types.CoefficientOfHeatTransfer gamma_ref;
+      //   DistrictHeatingNetwork.Types.Power Ptcold_ref;
+      //   DistrictHeatingNetwork.Types.Power Pthot_ref;
       //  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
       //  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
       //  *1000/3600 "Matrix data";
@@ -534,23 +533,22 @@ package Tests
       final parameter Real thetaValve[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators, matrixthetaFCV701, dim[1], dim[2]);
     equation
       // Variables
-    //   Tout_hot_ref = sinkHot_ref.fluid.T;
-    //   Tout_cold_ref = sinkCold_ref.fluid.T;
-    //   deltaTouthot = E7X1.Tout_hot  - Tout_hot_ref;
-    //   deltaToutcold = E7X1.Tout_cold  - Tout_cold_ref;
-    //   deltaThot_ref = E7X1.Tin_hot  - Tout_hot_ref;
-    //   deltaTcold_ref = Tout_cold_ref -E7X1.Tin_cold;
-    //   deltaThot =E7X1.Tin_hot  -E7X1.Tout_hot;
-    //   deltaTcold =E7X1.Tout_cold  -E7X1.Tin_cold;
-    //   //deviationHot = abs((deltaThot - deltaThot_ref)./deltaThot_ref)*100;
-    //   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
-    //   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
-    //   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
-    //   LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
-    //   gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
-    //   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
-    //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
-
+      //   Tout_hot_ref = sinkHot_ref.fluid.T;
+      //   Tout_cold_ref = sinkCold_ref.fluid.T;
+      //   deltaTouthot = E7X1.Tout_hot  - Tout_hot_ref;
+      //   deltaToutcold = E7X1.Tout_cold  - Tout_cold_ref;
+      //   deltaThot_ref = E7X1.Tin_hot  - Tout_hot_ref;
+      //   deltaTcold_ref = Tout_cold_ref -E7X1.Tin_cold;
+      //   deltaThot =E7X1.Tin_hot  -E7X1.Tout_hot;
+      //   deltaTcold =E7X1.Tout_cold  -E7X1.Tin_cold;
+      //   //deviationHot = abs((deltaThot - deltaThot_ref)./deltaThot_ref)*100;
+      //   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
+      //   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
+      //   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
+      //   LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
+      //   gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
+      //   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
+      //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
       // Connections
       connect(outhot_p.y, sinkHot_p.in_p0) annotation (
         Line(points={{54.5,-15},{50,-15},{50,-24.6}},      color = {0, 0, 127}));
@@ -651,20 +649,19 @@ package Tests
       parameter Real deltaTcoldmax = 20;
 
       // Variables
-    //   DistrictHeatingNetwork.Types.Temperature Tout_cold_ref;
-    //   DistrictHeatingNetwork.Types.Temperature Tout_hot_ref;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaToutcold;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTouthot;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold_ref;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot_ref;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot;
-    //   Real deviationCold, deviationHot;
-    //   DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
-    //   DistrictHeatingNetwork.Types.CoefficientOfHeatTransfer gamma_ref;
-    //   DistrictHeatingNetwork.Types.Power Ptcold_ref;
-    //   DistrictHeatingNetwork.Types.Power Pthot_ref;
-
+      //   DistrictHeatingNetwork.Types.Temperature Tout_cold_ref;
+      //   DistrictHeatingNetwork.Types.Temperature Tout_hot_ref;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaToutcold;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTouthot;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold_ref;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot_ref;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot;
+      //   Real deviationCold, deviationHot;
+      //   DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
+      //   DistrictHeatingNetwork.Types.CoefficientOfHeatTransfer gamma_ref;
+      //   DistrictHeatingNetwork.Types.Power Ptcold_ref;
+      //   DistrictHeatingNetwork.Types.Power Pthot_ref;
       //  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
       //  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
       //  *1000/3600 "Matrix data";
@@ -753,23 +750,22 @@ package Tests
       final parameter Real thetaValve[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators, matrixthetaFCV701, dim[1], dim[2]);
     equation
       // Variables
-    //   Tout_hot_ref = sinkHot_ref.fluid.T;
-    //   Tout_cold_ref = sinkCold_ref.fluid.T;
-    //   deltaTouthot = E7X1.Tout_hot  - Tout_hot_ref;
-    //   deltaToutcold = E7X1.Tout_cold  - Tout_cold_ref;
-    //   deltaThot_ref = E7X1.Tin_hot  - Tout_hot_ref;
-    //   deltaTcold_ref = Tout_cold_ref -E7X1.Tin_cold;
-    //   deltaThot =E7X1.Tin_hot  -E7X1.Tout_hot;
-    //   deltaTcold =E7X1.Tout_cold  -E7X1.Tin_cold;
-    //   //deviationHot = abs((deltaThot - deltaThot_ref)./deltaThot_ref)*100;
-    //   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
-    //   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
-    //   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
-    //   LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
-    //   gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
-    //   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
-    //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
-
+      //   Tout_hot_ref = sinkHot_ref.fluid.T;
+      //   Tout_cold_ref = sinkCold_ref.fluid.T;
+      //   deltaTouthot = E7X1.Tout_hot  - Tout_hot_ref;
+      //   deltaToutcold = E7X1.Tout_cold  - Tout_cold_ref;
+      //   deltaThot_ref = E7X1.Tin_hot  - Tout_hot_ref;
+      //   deltaTcold_ref = Tout_cold_ref -E7X1.Tin_cold;
+      //   deltaThot =E7X1.Tin_hot  -E7X1.Tout_hot;
+      //   deltaTcold =E7X1.Tout_cold  -E7X1.Tin_cold;
+      //   //deviationHot = abs((deltaThot - deltaThot_ref)./deltaThot_ref)*100;
+      //   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
+      //   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
+      //   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
+      //   LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
+      //   gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
+      //   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
+      //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
       // Connections
       connect(outhot_p.y, sinkHot_p.in_p0) annotation (
         Line(points={{54.5,-15},{50,-15},{50,-24.6}},      color = {0, 0, 127}));
@@ -1777,7 +1773,7 @@ package Tests
         Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k = FV933_state) annotation (
           Placement(transformation(extent = {{-185, 55}, {-205, 75}})));
         Modelica.Blocks.Sources.TimeTable FCV101_theta(table = FCV101theta) annotation (
-          Placement(transformation(extent = {{-200, -140}, {-220, -120}})));
+          Placement(transformation(extent = {{-178, -120}, {-198, -100}})));
         DistrictHeatingNetwork.Sources.PumpInput P101_input(omega = P101omega, q_m3h = P101qm3h) annotation (
           Placement(transformation(extent = {{-200, -191}, {-220, -170}})));
         Modelica.Blocks.Sources.TimeTable FCV701_theta(table = FCV701theta) annotation (
@@ -1816,6 +1812,11 @@ package Tests
           Placement(transformation(origin = {516, -242}, extent = {{10, -10}, {-10, 10}})));
         Modelica.Blocks.Sources.RealExpression tt733_spp1 annotation (
           Placement(transformation(origin = {664, -240}, extent = {{10, -10}, {-10, 10}})));
+        Modelica.Blocks.Continuous.FirstOrder FCV101_firstOrder(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (
+          Placement(transformation(extent = {{-206, -120}, {-226, -100}})));
       equation
         connect(FCV901_theta.y, FCV901.opening) annotation (
           Line(points = {{-735, 103}, {-742, 103}, {-742, 115}, {-749, 115}}, color = {0, 0, 127}));
@@ -1827,8 +1828,6 @@ package Tests
           Line(points = {{719, 299}, {710, 299}, {710, 234}, {698, 234}, {698, 235}}, color = {0, 0, 127}));
         connect(FV933_OnOff.y, FV933.u) annotation (
           Line(points = {{-206, 65}, {-218, 65}, {-218, 46.6}}, color = {255, 0, 255}));
-        connect(FCV101_theta.y, FCV101.opening) annotation (
-          Line(points = {{-221, -130}, {-226, -130}, {-226, -110}, {-232, -110}}, color = {0, 0, 127}));
         connect(FCV701_theta.y, FCV701.opening) annotation (
           Line(points = {{158, -150}, {148, -150}}, color = {0, 0, 127}));
         connect(FCV711_theta.y, FCV711.opening) annotation (
@@ -1851,6 +1850,12 @@ package Tests
           Line(points = {{-221, -180.5}, {-234, -180.5}, {-234, -179.8}}, color = {0, 0, 127}));
         connect(GB101_Status.y, GB101.heat_on) annotation (
           Line(points={{-297,-334},{-294,-334},{-294,-318.5},{-281.5,-318.5}},    color = {255, 0, 255}));
+        connect(
+          FCV101_theta.y, FCV101_firstOrder.u) annotation (
+          Line(points = {{-199, -110}, {-204, -110}}, color = {0, 0, 127}));
+        connect(
+          FCV101_firstOrder.y, FCV101.opening) annotation (
+          Line(points = {{-227, -110}, {-232, -110}}, color = {0, 0, 127}));
       annotation (
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end CentralisedSystemLoadSimplifiedI_A;
@@ -1917,7 +1922,7 @@ package Tests
         DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -20})));
         Modelica.Blocks.Sources.TimeTable FCV401_theta(table = FCV401theta) annotation (
-          Placement(transformation(extent = {{-288, -150}, {-308, -130}})));
+          Placement(transformation(extent={{-178,-152},{-198,-132}})));
         DistrictHeatingNetwork.Sources.PumpInput P401_input(omega = P401omega, q_m3h = P401qm3h) annotation (
           Placement(transformation(extent = {{-288, -191}, {-308, -170}})));
         Modelica.Blocks.Sources.TimeTable EB401_Tout_SP(table = EB401_ToutSP) annotation (
@@ -1928,6 +1933,10 @@ package Tests
           Placement(transformation(extent = {{-290, -30}, {-310, -10}})));
         Modelica.Blocks.Sources.BooleanTable EB401_Status(table = {1e8}, startValue = true) "Input to decide whether or nor the electric boiler is working" annotation (
           Placement(transformation(extent = {{-408, -342}, {-388, -322}})));
+        Modelica.Blocks.Continuous.FirstOrder FCV401_firstOrder(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-206,-152},{-226,-132}})));
       equation
         connect(P401.inlet, PL3_S401.outlet) annotation (
           Line(points = {{-322, -184.6}, {-322, -226}}, color = {140, 56, 54}, thickness = 0.5));
@@ -1963,10 +1972,8 @@ package Tests
           Line(points = {{-362, -10}, {-362, 5.25}, {-408.5, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
         connect(FV402.outlet, rackCD_Hot_S400_S300.inlet) annotation (
           Line(points = {{-322, -10}, {-322, 45}, {-338, 45}}, color = {140, 56, 54}, thickness = 0.5));
-        connect(FCV401_theta.y, FCV401.opening) annotation (
-          Line(points = {{-309, -140}, {-314, -140}}, color = {0, 0, 127}));
         connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (
-          Line(points = {{-387, -300}, {-387, -302}, {-369.2, -302}}, color = {0, 0, 127}));
+          Line(points={{-387,-300},{-387,-302},{-365.8,-302}},        color = {0, 0, 127}));
         connect(FV401_Status.y, FV401.u) annotation (
           Line(points = {{-373, -20}, {-365.2, -20}}, color = {255, 0, 255}));
         connect(FV402_Status.y, FV402.u) annotation (
@@ -1974,7 +1981,9 @@ package Tests
         connect(P401_input.y, P401.in_omega) annotation (
           Line(points = {{-309, -180.5}, {-312.5, -180.5}, {-312.5, -179.8}, {-316, -179.8}}, color = {0, 0, 127}));
         connect(EB401_Status.y, EB401.heat_on) annotation (
-          Line(points = {{-387, -332}, {-380, -332}, {-380, -322.4}, {-369.2, -322.4}}, color = {255, 0, 255}));
+          Line(points={{-387,-332},{-380,-332},{-380,-319},{-365.8,-319}},              color = {255, 0, 255}));
+        connect(FCV401_firstOrder.u, FCV401_theta.y) annotation (Line(points={{-204,-142},{-199,-142}}, color={0,0,127}));
+        connect(FCV401_firstOrder.y, FCV401.opening) annotation (Line(points={{-227,-142},{-232,-142},{-232,-126},{-306,-126},{-306,-140},{-314,-140}}, color={0,0,127}));
         annotation (
           Icon(coordinateSystem(preserveAspectRatio = false)),
           Diagram(coordinateSystem(preserveAspectRatio = false)),

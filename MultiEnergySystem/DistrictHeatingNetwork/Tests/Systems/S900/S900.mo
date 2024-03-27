@@ -58,8 +58,7 @@ model S900
     Placement(visible = true, transformation(                 extent={{-10,10},{
             10,-10}},                                                                          rotation=90,
         origin={0,-46})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium
-      =                                                                                               Medium) annotation (Placement(transformation(
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium = Medium) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-2,32})));
@@ -68,8 +67,8 @@ model S900
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-2,39.5})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT902(redeclare
-      model Medium =                                                                                             Medium, T_start=Tout_start_S9, p_start=pout_start_S9)
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT902(redeclare model
+            Medium =                                                                                             Medium, T_start=Tout_start_S9, p_start=pout_start_S9)
     "Temperature sensor at the outlet of pump 901"   annotation (Placement(
         transformation(
         extent={{-4.75,-4.75},{4.75,4.75}},

@@ -298,7 +298,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(GB101_ToutSP.y, GB101.Tout_ref)
-    annotation (Line(points={{-59,-106},{-36.8,-106}}, color={0,0,127}));
+    annotation (Line(points={{-59,-106},{-32.2,-106}}, color={0,0,127}));
   connect(source.outlet, TT101.inlet) annotation (Line(
       points={{-30,126},{-19.6,126},{-19.6,58}},
       color={140,56,54},
@@ -307,8 +307,8 @@ equation
       points={{30,126},{19.6,126},{19.6,86}},
       color={140,56,54},
       thickness=0.5));
-  connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-133.6},
-          {-36.8,-133.6}}, color={255,0,255}));
+  connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-129},{-32.2,-129}},
+                           color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

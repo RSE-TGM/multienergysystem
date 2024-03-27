@@ -67,9 +67,8 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
     Placement(transformation(origin = {-18, 20}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Sources.SourcePressure source(p0 = pin_start_S1, T0 = Tin_start_S1) annotation (
     Placement(transformation(extent = {{-52, 138}, {-32, 158}})));
-  Modelica.Blocks.Sources.Ramp ramp(height = m_flow_S1*0.8*0, duration = 1500, offset = m_flow_S1, startTime = 1000) annotation (
-    Placement(transformation(extent = {{80, 150}, {60, 170}})));
-  Sources.SinkMassFlow sink(use_in_m_flow = true, pin_start = pout_start_S1, p0 = pout_start_S1, T0 = Tout_start_S1, m_flow0 = m_flow_S1) annotation (
+  Sources.SinkMassFlow sink(
+    use_in_m_flow=false,                          pin_start = pout_start_S1, p0 = pout_start_S1, T0 = Tout_start_S1, m_flow0 = m_flow_S1) annotation (
     Placement(transformation(extent = {{22, 138}, {42, 158}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(L = L_S1_rCD_cold, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype, n = n) annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-18, 120})));
@@ -79,7 +78,8 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
     Placement(transformation(origin = {0, 10}, extent = {{58, 32}, {38, 52}})));
   Modelica.Blocks.Sources.TimeTable P101_omega(table = P101omega) annotation (
     Placement(transformation(origin = {0, 10}, extent = {{58, -32}, {38, -12}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(L = L_P101_FCV101, h = h_P101_FCV101, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, n = n) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(L = L_P101_FCV101, h = h_P101_FCV101, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1,
+    q_m3h_start=q_m3h_S1,                                                                                                                                                                                                        n = n) annotation (
     Placement(transformation(origin = {18, 20}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
   Modelica.Blocks.Sources.TimeTable GB101_Tout(table = GB101ToutSP) annotation (
     Placement(transformation(origin = {-42, -80}, extent = {{-58, -32}, {-38, -12}})));
@@ -91,9 +91,9 @@ equation
   connect(TT102.inlet, PT102.inlet) annotation (
     Line(points = {{17.6, 100}, {17.6, 88}}, color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S100_GB101_P101.inlet, GB101.outlet) annotation (
-    Line(points = {{18, -50}, {18, -60.2}, {14, -60.2}, {14, -67}}, color = {140, 56, 54}));
+    Line(points={{18,-50},{18,-60.2},{13.8,-60.2},{13.8,-67.2}},    color = {140, 56, 54}));
   connect(GB101.inlet, PL_S100_FT101_GB101.outlet) annotation (
-    Line(points = {{-13.8, -67.2}, {-13.8, -50.2}, {-17.8, -52.2}}, color = {140, 56, 54}));
+    Line(points={{-13.8,-67.2},{-13.8,-52},{-18,-52}},              color = {140, 56, 54}));
   connect(FT101.outlet, PL_S100_FT101_GB101.inlet) annotation (
     Line(points = {{-18.2, -21.2}, {-18.2, -23.6}, {-18, -23.6}, {-18, -32}}, color = {140, 56, 54}));
   connect(PL_S100_TT101_FT101.outlet, FT101.inlet) annotation (
@@ -102,12 +102,11 @@ equation
     Line(points = {{-18, 30}, {-18, 42}, {-17.6, 42}}, color = {140, 56, 54}));
   connect(PT101.inlet, TT101.inlet) annotation (
     Line(points = {{-17.6, 42}, {-17.6, 54}}, color = {140, 56, 54}));
-  connect(ramp.y, sink.in_m_flow) annotation (
-    Line(points = {{59, 160}, {26, 160}, {26, 153}}, color = {0, 0, 127}));
   connect(source.outlet, PL_S100_rCD_cold.inlet) annotation (
     Line(points = {{-32, 148}, {-18, 148}, {-18, 130}}, color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S100_rCD_cold.outlet, TT101.inlet) annotation (
-    Line(points = {{-18, 110}, {-18, 54}}, color = {140, 56, 54}));
+    Line(points={{-18,110},{-18,82},{-18,54},{-17.6,54}},
+                                           color = {140, 56, 54}));
   connect(sink.inlet, PL_S100_rCD_hot.outlet) annotation (
     Line(points = {{22, 148}, {18, 148}, {18, 130}}, color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S100_rCD_hot.inlet, TT102.inlet) annotation (
@@ -123,9 +122,10 @@ equation
   connect(PT102.inlet, FCV101.outlet) annotation (
     Line(points = {{17.6, 88}, {17.6, 90}, {18, 90}, {18, 62}}, color = {140, 56, 54}));
   connect(GB101_Tout.y, GB101.Tout_ref) annotation (
-    Line(points = {{-79, -102}, {-36, -102}, {-36, -104}}, color = {0, 0, 127}));
+    Line(points={{-79,-102},{-32.2,-102},{-32.2,-104}},    color = {0, 0, 127}));
   connect(GB101_Status.y, GB101.heat_on) annotation (
-    Line(points = {{-79, -132}, {-37, -132}}, color = {255, 0, 255}));
+    Line(points={{-79,-132},{-56,-132},{-56,-127},{-32.2,-127}},
+                                              color = {255, 0, 255}));
   annotation (
     Diagram(coordinateSystem(extent = {{-160, -160}, {160, 160}})),
     Icon(coordinateSystem(grid = {0.5, 0.5})),

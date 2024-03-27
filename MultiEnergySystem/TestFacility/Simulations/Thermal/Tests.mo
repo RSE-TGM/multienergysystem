@@ -1763,7 +1763,7 @@ package Tests
         extends
           MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI(      FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], P101omega = [0, 2*pi*30; 100, 2*pi*30; 100, 2*pi*30; 200, 2*pi*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15], GB101(h = 1.2*0.93, Pmaxnom = 147.6e3*0.8));
         Modelica.Blocks.Sources.TimeTable FCV901_theta(table = FCV901theta) annotation (
-          Placement(transformation(extent = {{-714, 93}, {-734, 113}})));
+          Placement(transformation(extent={{-682,103},{-702,123}})));
         DistrictHeatingNetwork.Sources.PumpInput P901_input(useOmega = true, omega = P901omega, q_m3h = P901qm3h) annotation (
           Placement(transformation(extent = {{-714, 54}, {-734, 75}})));
         Modelica.Blocks.Sources.TimeTable FCVC01_theta(table = FCVC01theta) annotation (
@@ -1817,9 +1817,11 @@ package Tests
           T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState) annotation (
           Placement(transformation(extent = {{-206, -120}, {-226, -100}})));
+        Modelica.Blocks.Continuous.FirstOrder FCV901_firstOrder(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-716,104},{-736,124}})));
       equation
-        connect(FCV901_theta.y, FCV901.opening) annotation (
-          Line(points = {{-735, 103}, {-742, 103}, {-742, 115}, {-749, 115}}, color = {0, 0, 127}));
         connect(P901_input.y, P901.in_omega) annotation (
           Line(points = {{-735, 64.5}, {-743.5, 64.5}, {-743.5, 66.3}, {-747.25, 66.3}}, color = {0, 0, 127}));
         connect(FCVC01_theta.y, FCVC01.opening) annotation (
@@ -1856,6 +1858,8 @@ package Tests
         connect(
           FCV101_firstOrder.y, FCV101.opening) annotation (
           Line(points = {{-227, -110}, {-232, -110}}, color = {0, 0, 127}));
+        connect(FCV901_firstOrder.y, FCV901.opening) annotation (Line(points={{-737,114},{-744,114},{-744,115},{-749,115}}, color={0,0,127}));
+        connect(FCV901_theta.y, FCV901_firstOrder.u) annotation (Line(points={{-703,113},{-708.5,113},{-708.5,114},{-714,114}}, color={0,0,127}));
       annotation (
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end CentralisedSystemLoadSimplifiedI_A;

@@ -1898,13 +1898,13 @@ package Tests
         DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P401(Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start, Tout_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P401.a, b = DistrictHeatingNetwork.Data.PumpData.P401.b, m_flow_start = m_flow_S4, dpnom = DistrictHeatingNetwork.Data.PumpData.P401.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P401.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P401.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P401.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P401.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P401.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P401.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P401.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P401.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h, use_in_omega = true) annotation (
           Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-322, -175})));
         DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
-          Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -140})));
+          Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-322,-110})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(L = L_S4_PL3, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -236})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S401(L = L_S4_PL2, t = t_S4, m_flow_start = m_flow_S4, pin_start = pin_start_S4, pout_start = pin_start_S4, Tin_start = Tin_start_S4, Tout_start = Tin_start_S4, Di = Di_S4, hctype = hctype, n = n) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-362, -238})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(L = L_S4_PL3, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation (
-          Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -112})));
+          Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-322,-142})));
         DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT402(T_start = Tout_start_S4, p_start = pout_start_S4) "Temperature sensor at the outlet of valve FCV401" annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-320, -74})));
         DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT402 "Pressure sensor at the outlet of valve FCV401" annotation (
@@ -1944,14 +1944,8 @@ package Tests
       equation
         connect(P401.inlet, PL3_S401.outlet) annotation (
           Line(points = {{-322, -184.6}, {-322, -226}}, color = {140, 56, 54}, thickness = 0.5));
-        connect(FCV401.inlet, P401.outlet) annotation (
-          Line(points = {{-322, -150}, {-322, -165.4}}, color = {140, 56, 54}, thickness = 0.5));
         connect(TT402.inlet, PT402.inlet) annotation (
           Line(points = {{-322.4, -74}, {-322.4, -86}}, color = {140, 56, 54}, thickness = 0.5));
-        connect(PL4_S401.inlet, FCV401.outlet) annotation (
-          Line(points = {{-322, -122}, {-322, -130}}, color = {140, 56, 54}, thickness = 0.5));
-        connect(PT402.inlet, PL4_S401.outlet) annotation (
-          Line(points = {{-322.4, -86}, {-322.4, -95}, {-322, -95}, {-322, -102}}, color = {140, 56, 54}, thickness = 0.5));
         connect(FT401.outlet, PL2_S401.inlet) annotation (
           Line(points = {{-362.2, -199.2}, {-362.2, -207.6}, {-362, -207.6}, {-362, -228}}, color = {140, 56, 54}, thickness = 0.5));
         connect(PL1_S401.outlet, FT401.inlet) annotation (
@@ -1987,7 +1981,20 @@ package Tests
         connect(EB401_Status.y, EB401.heat_on) annotation (
           Line(points={{-387,-332},{-380,-332},{-380,-319},{-365.8,-319}},              color = {255, 0, 255}));
         connect(FCV401_firstOrder.u, FCV401_theta.y) annotation (Line(points={{-204,-142},{-199,-142}}, color={0,0,127}));
-        connect(FCV401_firstOrder.y, FCV401.opening) annotation (Line(points={{-227,-142},{-232,-142},{-232,-126},{-306,-126},{-306,-140},{-314,-140}}, color={0,0,127}));
+        connect(FCV401_firstOrder.y, FCV401.opening) annotation (Line(points={{-227,-142},{-227,-136},{-160,-136},{-160,-200},{-256,-200},{-256,-110},{-314,-110}},
+                                                                                                                                                        color={0,0,127}));
+        connect(PL4_S401.inlet, P401.outlet) annotation (Line(
+            points={{-322,-152},{-322,-165.4}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(PL4_S401.outlet, FCV401.inlet) annotation (Line(
+            points={{-322,-132},{-322,-120}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(FCV401.outlet, PT402.inlet) annotation (Line(
+            points={{-322,-100},{-322,-93},{-322.4,-93},{-322.4,-86}},
+            color={140,56,54},
+            thickness=0.5));
         annotation (
           Icon(coordinateSystem(preserveAspectRatio = false)),
           Diagram(coordinateSystem(preserveAspectRatio = false)),

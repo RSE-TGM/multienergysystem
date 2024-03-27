@@ -12,14 +12,12 @@ model S400 "Main components of System 400 - Electric Boiler"
 
   parameter Types.Length Di_S4 = 51e-3;
   parameter Types.Length t_S4 = 1.5e-3;
-  parameter Types.Length L_PT401_EB401 = 1.30;
-  parameter Types.Length h_PT401_EB401 = 0.82;
-  parameter Types.Length L_EB401_P401 = 1.3;
-  parameter Types.Length h_EB401_P401 = 1.3*0.01;
-  parameter Types.Length L_P401_FCV401 = 0.2;
+  parameter Types.Length L_PT401_EB401 = 0.5+0.4;
+  parameter Types.Length h_PT401_EB401 = 0;
+  parameter Types.Length L_EB401_P401 = 0.3+1+1+0.4;
+  parameter Types.Length h_EB401_P401 = -1;
+  parameter Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
   parameter Types.Length h_P401_FCV401 = 0.2;
-  parameter Types.Length L_FCV401_PT402 = 1.3;
-  parameter Types.Length h_FCV401_PT402 = 0;
 
   parameter Real q_m3h_S4 = 5;
   final parameter Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
@@ -62,6 +60,7 @@ model S400 "Main components of System 400 - Electric Boiler"
     omeganom = Pump.P401.omeganom,
     pin_start(displayUnit="Pa") = Pump.P401.pin_start,
     pout_start(displayUnit="Pa") = Pump.P401.pout_start,
+    headnom=Pump.P401.headnom,
     qnom_inm3h=Pump.P401.qnom_inm3h,                                                                                                                                                                                                        rhonom(displayUnit = "kg/m3") = Pump.P401.rhonom,
     headmax=Pump.P401.headnommax,
     headmin=Pump.P401.headnommin,
@@ -129,13 +128,13 @@ model S400 "Main components of System 400 - Electric Boiler"
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=-90,
-        origin={22,134})));
+        origin={22,122})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT402 "Pressure sensor at the outlet of valve FCV401" annotation (Placement(
         transformation(
         extent={{6,6},{-6,-6}},
         rotation=90,
-        origin={22,122})));
+        origin={22,110})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT401 "Pressure sensor at the inlet of gas boiler" annotation (Placement(
         transformation(
@@ -155,34 +154,19 @@ model S400 "Main components of System 400 - Electric Boiler"
         rotation=90,
         origin={-21,17})));
   Sources.SourcePressure source(redeclare model Medium = Medium, p0=pin_start_S4, T0=Tin_start_S4)
-    annotation (Placement(transformation(extent={{-52,132},{-32,112}})));
-  Sources.SinkMassFlow sink(
-    redeclare model Medium = Medium,
-    use_in_m_flow=false,
-    pin_start=pout_start_S4,
-    p0=pout_start_S4,
-    T0=Tout_start_S4,
-    m_flow0=m_flow_S4)
-    annotation (Placement(transformation(extent={{24,162},{44,142}})));
+    annotation (Placement(transformation(extent={{-52,130},{-32,110}})));
   Modelica.Blocks.Sources.TimeTable EB401_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
     annotation (Placement(transformation(extent={{-90,-128},{-70,-108}})));
   Modelica.Blocks.Sources.BooleanTable EB101_Status(table={1e6}, startValue=true) "Input to decide whether or nor the electric boiler is working"
     annotation (Placement(transformation(extent={{-90,-160},{-70,-140}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=FCV401theta) annotation (Placement(transformation(extent={{60,54},{40,74}})));
   Modelica.Blocks.Sources.TimeTable P401_omega(table=P401omega)  annotation (Placement(transformation(extent={{60,-20},{40,0}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_FCV401_PT402(
+  Sources.SinkPressure sinkP(
     redeclare model Medium = Medium,
-    L=L_FCV401_PT402,
-    h=h_FCV401_PT402,
-    t=t_S4,
-    pin_start=pout_start_S4,
-    Tin_start=Tout_start_S4,
-    Tout_start=Tout_start_S4,
-    Di=Di_S4,
-    q_m3h_start=q_m3h_S4) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=90,
-        origin={20,96})));
+    use_in_p0=false,
+    p0=pout_start_S4,
+    T0=Tout_start_S4,
+    R=1) annotation (Placement(transformation(extent={{26,150},{46,130}})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
       points={{20,-14.6},{20,-32}},
@@ -190,7 +174,7 @@ equation
       thickness=0.5));
 
   connect(TT402.inlet,PT402. inlet) annotation (Line(
-      points={{19.6,134},{19.6,122}},
+      points={{19.6,122},{22,122},{22,118},{19.6,118},{19.6,110}},
       color={140,56,54},
       thickness=0.5));
   connect(PT401.inlet,TT401. inlet) annotation (Line(
@@ -201,12 +185,8 @@ equation
       points={{15.6,-76.4},{14,-76.4},{14,-52},{20,-52}},
       color={140,56,54},
       thickness=0.5));
-  connect(TT402.inlet, sink.inlet) annotation (Line(
-      points={{19.6,134},{20,134},{20,152},{24,152}},
-      color={140,56,54},
-      thickness=0.5));
   connect(source.outlet, TT401.inlet) annotation (Line(
-      points={{-32,122},{-17.6,122},{-17.6,52}},
+      points={{-32,120},{-17.6,120},{-17.6,52}},
       color={140,56,54},
       thickness=0.5));
   connect(EB401_ToutSP.y, EB401.Tout_ref)
@@ -231,16 +211,16 @@ equation
   connect(FCV401_theta.y, FCV401.opening) annotation (Line(points={{39,64},{28,64}}, color={0,0,127}));
   connect(P401_omega.y, P401.in_omega) annotation (Line(points={{39,-10},{32.5,-10},{32.5,-9.8},{26,-9.8}},
                                                                                                           color={0,0,127}));
-  connect(FCV401.outlet, PL_S400_FCV401_PT402.inlet) annotation (Line(
-      points={{20,74},{20,86}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S400_FCV401_PT402.outlet, PT402.inlet) annotation (Line(
-      points={{20,106},{20,115},{19.6,115},{19.6,122}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S400_PT401_EB101.outlet, EB401.inlet) annotation (Line(
       points={{-18,-34},{-18,-60},{-15.6,-60},{-15.6,-76.4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sinkP.inlet, TT402.inlet) annotation (Line(
+      points={{26,140},{20,140},{20,122},{19.6,122}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT402.inlet, FCV401.outlet) annotation (Line(
+      points={{19.6,110},{20,110},{20,74}},
       color={140,56,54},
       thickness=0.5));
   annotation (

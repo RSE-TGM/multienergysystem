@@ -48,7 +48,7 @@ partial model PartialValve
   // Variables
   Types.MassFlowRate m_flow(start = m_flow_start) "Mass flow rate through the valve";
   Types.VolumeFlowRate q "Volumetric flow rate";
-  Real q_m3h(unit = "m3/h", start = q_m3h_start) "Volumetric flow rate in m3/h";
+  Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/h";
   Types.Temperature Tin(start = Tin_start);
   Types.Temperature Tout(start = Tout_start);
   Types.Pressure pin(start = pin_start);
@@ -80,7 +80,7 @@ equation
   elseif openingChar == Components.Types.valveOpeningChar.SquareRoot then
     m_flow = homotopy((BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.EqualPercentage then
-    m_flow = homotopy((BaseClass.ValveCharacteristics.equalPercentage(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.equalPercentage(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.equalPercentage(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
 
   // Definition of fluids

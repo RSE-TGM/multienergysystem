@@ -23,7 +23,7 @@ model S400_Test
   parameter String matrixfreq = "f_P401";
   parameter String matrixFT = "FT401" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
-  parameter Real Kv(unit = "m3/h") = 20.5 "Metri Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = 50 "Metri Flow Coefficient";
 
   Modelica.Blocks.Sources.TimeTable TT401_profile(table=[ts,TTi]) annotation (Placement(transformation(extent={{-108,72},{-88,92}})));
   Modelica.Blocks.Sources.TimeTable PT401_profile(table=[ts,PTi]) annotation (Placement(transformation(extent={{-106,102},{-86,122}})));

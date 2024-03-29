@@ -97,11 +97,11 @@ package Tests
         inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
         Modelica.Blocks.Continuous.FirstOrder lowPassomega(
           k=1,
-          T=2.5,
+          T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-68,26},{-56,38}})));
         Modelica.Blocks.Continuous.FirstOrder lowPasstheta(
           k=1,
-          T=2.5,
+          T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-68,8},{-56,20}})));
 
 
@@ -145,6 +145,15 @@ package Tests
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)));
       end TestBase;
     end S100;
+
+    package S200
+      extends Modelica.Icons.ExamplesPackage;
+      model TestBase
+        extends Modelica.Icons.Example;
+        Plants.Thermal.Systems.TES tES annotation (Placement(transformation(extent={{-30,-32},{32,30}})));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+      end TestBase;
+    end S200;
 
     package S400 "Set of validation tests of electric boiler system"
       extends Modelica.Icons.ExamplesPackage;
@@ -276,6 +285,26 @@ package Tests
         connect(EB401_Status1.y, electricBoiler.status) annotation (Line(points={{-57.4,-34},{-44,-34},{-44,-0.1},{-30.9,-0.1}}, color={255,0,255}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end TestBase;
+
+      model S400_Seq_2601Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2601_Test1/Temperatures.mat"));
+      end S400_Seq_2601Test1;
+
+      model S400_Seq_3001Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test1/Temperatures.mat"));
+      end S400_Seq_3001Test1;
+
+      model S400_Seq_3001Test2
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test2/Temperatures.mat"));
+      end S400_Seq_3001Test2;
+
+      model S400_Seq_2703Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2703_Test1/Temperatures.mat"));
+      end S400_Seq_2703Test1;
+
+      model S400_Seq_2903Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2903_Test1/Temperatures.mat"));
+      end S400_Seq_2903Test1;
     end S400;
 
     package S900 "Validation tests of pumping system"
@@ -363,8 +392,8 @@ package Tests
               extent={{-10,-10},{10,10}},
               rotation=-90,
               origin={-10,-84})));
-        Modelica.Blocks.Sources.TimeTable P901_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-58,22},{-46,34}})));
-        Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-58,0},{-46,12}})));
+        Modelica.Blocks.Sources.TimeTable P901_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-80,22},{-68,34}})));
+        Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-80,0},{-68,12}})));
         Modelica.Blocks.Sources.TimeTable PT902_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{56,28},{44,40}})));
         DistrictHeatingNetwork.Sources.SinkPressure
                              sinkP(
@@ -377,6 +406,14 @@ package Tests
         DistrictHeatingNetwork.Utilities.ASHRAEIndex m_flow_index annotation (Placement(transformation(extent={{74,74},{86,86}})));
 
         inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
+        Modelica.Blocks.Continuous.FirstOrder lowPassomega(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-56,22},{-44,34}})));
+        Modelica.Blocks.Continuous.FirstOrder lowPasstheta(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-56,0},{-44,12}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -392,8 +429,6 @@ package Tests
         final parameter DistrictHeatingNetwork.Types.Pressure pin_start = PTi[1,1];
         final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = m_flow_approx[1,1];
       equation
-        connect(P901_omega.y, circulationPump.omega) annotation (Line(points={{-45.4,28},{-38,28},{-38,21},{-31,21}}, color={0,0,127}));
-        connect(FCV901_theta.y, circulationPump.theta) annotation (Line(points={{-45.4,6},{-38,6},{-38,15},{-31,15}}, color={0,0,127}));
         connect(sinkP.inlet, circulationPump.outlethot) annotation (Line(
             points={{32,58},{13.7,58},{13.7,34.5}},
             color={140,56,54},
@@ -416,6 +451,10 @@ package Tests
         connect(PT902_profile.y, sinkP.in_p0) annotation (Line(points={{43.4,34},{35.6,34},{35.6,52.96}}, color={0,0,127}));
         connect(m_flow_ref.y, m_flow_index.u_meas) annotation (Line(points={{60.6,90},{66,90},{66,82},{72.8,82},{72.8,83}}, color={0,0,127}));
         connect(circulationPump.m_flow_, m_flow_index.u_sim) annotation (Line(points={{35,21},{66,21},{66,77},{72.8,77}}, color={0,0,127}));
+        connect(P901_omega.y, lowPassomega.u) annotation (Line(points={{-67.4,28},{-57.2,28}}, color={0,0,127}));
+        connect(lowPassomega.y, circulationPump.omega) annotation (Line(points={{-43.4,28},{-38,28},{-38,21},{-31,21}}, color={0,0,127}));
+        connect(FCV901_theta.y, lowPasstheta.u) annotation (Line(points={{-67.4,6},{-57.2,6}}, color={0,0,127}));
+        connect(lowPasstheta.y, circulationPump.theta) annotation (Line(points={{-43.4,6},{-38,6},{-38,15},{-31,15}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end TestBase;
 
@@ -1176,7 +1215,7 @@ package Tests
         connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (
           Line(points = {{749, -60}, {767.5, -60}, {767.5, -97.2}}, color = {0, 0, 127}));
         connect(GB101_Tout_SP.y, GB101.Tout_ref) annotation (
-          Line(points = {{-297, -300}, {-297, -301}, {-285, -301}}, color = {0, 0, 127}));
+          Line(points={{-297,-300},{-297,-301},{-281.5,-301}},      color = {0, 0, 127}));
         connect(PR01_omega.y, PR01.in_omega) annotation (
           Line(points = {{681, -208}, {689.25, -208}, {689.25, -207.8}, {697.5, -207.8}}, color = {0, 0, 127}));
       end CentralisedSystemI_A;
@@ -1288,7 +1327,7 @@ package Tests
         connect(FCV401_theta.y, FCV401.opening) annotation (
           Line(points = {{-309, -140}, {-314, -140}}, color = {0, 0, 127}));
         connect(EB401_Tout_SP.y, EB401.Tout_ref) annotation (
-          Line(points = {{-387, -300}, {-387, -302}, {-369.2, -302}}, color = {0, 0, 127}));
+          Line(points={{-387,-300},{-387,-302},{-365.8,-302}},        color = {0, 0, 127}));
         connect(FV401_Status.y, FV401.u) annotation (
           Line(points = {{-373, -20}, {-365.2, -20}}, color = {255, 0, 255}));
         connect(FV402_Status.y, FV402.u) annotation (

@@ -27,7 +27,6 @@ model S400 "Main components of System 400 - Electric Boiler"
   parameter Real P401omega[:,:] = [0, 2*3.141592654*30; 100, 2*3.141592654*30];
   parameter Real FCV401theta[:,:] = [0, 1];
 
-
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={150,150},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 

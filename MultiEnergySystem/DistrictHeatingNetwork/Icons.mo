@@ -61,6 +61,18 @@ package Icons "Icon package for DHN components"
                          Rectangle(lineColor = {140, 56, 54}, fillColor={242,220,219},   fillPattern=FillPattern.Solid,                lineThickness = 1, extent={{-100,
                   100},{100,-100}},                                                                                                                                                            radius=20)}));
     end Thermal;
+
+    partial model ThermalModel
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                         Rectangle(lineColor = {140, 56, 54}, fillColor={242,220,219},   fillPattern=FillPattern.Solid,                lineThickness = 1, extent={{-100,100},{100,
+                  -100}},                                                                                                                                                                      radius=20),
+            Ellipse(
+              extent={{-60,60},{62,-58}},
+              lineColor={140,56,54},
+              lineThickness=1,
+              fillPattern=FillPattern.Solid,
+              fillColor={255,255,255})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end ThermalModel;
   end Water;
 
   package Generic

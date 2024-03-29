@@ -32,9 +32,9 @@ equation
   connect(Tout_SP, boiler.Tout_SP)
     annotation (Line(points={{-70,-40},{-48,-40},{-48,-20},{-32,-20}}, color={0,0,127}));
   connect(theta, boiler.theta)
-    annotation (Line(points={{-70,40},{-60,40},{-60,20},{-32,20}}, color={0,0,127}));
+    annotation (Line(points={{-70,40},{-60,40},{-60,20},{-44,20}}, color={0,0,127}));
   connect(boiler.inlet, inlet) annotation (Line(
-      points={{-16.4,46},{-16.4,76},{-20,76},{-20,90}},
+      points={{-15.6,46},{-15.6,76},{-20,76},{-20,90}},
       color={140,56,54},
       thickness=0.5));
   connect(boiler.outlet, outlet) annotation (Line(
@@ -43,11 +43,11 @@ equation
       thickness=0.5));
   connect(m_flow_SP, PI.REF)
     annotation (Line(points={{-70,0},{-56,0},{-56,52},{-46,52}}, color={0,0,127}));
-  connect(boiler.m_flow, PI.FeedBack) annotation (Line(points={{24,12},{42,12},{42,72},{-56,72},{
+  connect(boiler.M_flow, PI.FeedBack) annotation (Line(points={{24,12},{42,12},{42,72},{-56,72},{
           -56,60},{-46,60}},
                          color={0,0,127}));
-  connect(PI.controlAction, boiler.omega) annotation (Line(points={{-30,56},{-24,56},{-24,40},{-48,40},
-          {-48,0},{-32,0}}, color={0,0,127}));
+  connect(PI.controlAction, boiler.omega) annotation (Line(points={{-30,56},{-24,56},{-24,40},{-48,40},{-48,28},{-44,28}},
+                            color={0,0,127}));
   annotation (Icon(                                             graphics={
                      Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, extent={{-60,80},
               {60,-80}}),                                                                                                                                 Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-40,40},

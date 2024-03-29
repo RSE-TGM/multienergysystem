@@ -56,8 +56,9 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(group = "Pump Characteristics"));
   parameter Real qnom_inm3h_max(unit = "m3/h") = 20 "minimum volumetric flowrate in m3/h" annotation (
     Dialog(group = "Pump Characteristics"));
+  parameter Real correctionfactor = 1;
 
-  Medium fluidIn(T_start = Tin_start, p_start = pin_start);
+Medium fluidIn(T_start = Tin_start, p_start = pin_start);
   Medium fluidOut(T_start = Tout_start, p_start = pout_start);
 
   //Final parameters

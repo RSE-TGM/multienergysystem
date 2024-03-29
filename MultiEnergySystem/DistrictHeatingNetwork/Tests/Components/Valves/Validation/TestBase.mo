@@ -36,8 +36,8 @@ partial model TestBase
 
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(redeclare model Medium = Medium, T0 = Valve.TCV701.Tin_start, p0 = Valve.TCV701.pin_start, use_in_p0 = true, use_in_T0 = true) annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve cvalve(redeclare
-      model Medium =                                                                                              Medium,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve cvalve(redeclare model
+            Medium =                                                                                              Medium,
     Kv=Kv,                                                                                                                                      Tin_start = Valve.FCV701.Tin_start, dp_nom = Valve.FCV701.dp_nom, pin_start = Valve.FCV701.pin_start, rho_nom = Valve.FCV701.rho_nom, q_m3h_start = Valve.FCV701.q_nom_m3h, rho_start = Valve.FCV701.rho_nom,
     openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage)                                                                                                 annotation (
     Placement(transformation(extent = {{-8, -8}, {8, 8}})));

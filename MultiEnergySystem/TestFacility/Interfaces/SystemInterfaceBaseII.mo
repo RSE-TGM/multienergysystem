@@ -57,5 +57,5 @@ equation
       points={{24,-100},{24,-100}},
       color={140,56,54},
       thickness=0.5));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
+  annotation (                                                   Diagram(coordinateSystem(preserveAspectRatio=false)));
 end SystemInterfaceBaseII;

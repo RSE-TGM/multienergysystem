@@ -3,163 +3,152 @@ package Tests
   extends Modelica.Icons.ExamplesPackage;
   package Systems
     extends DistrictHeatingNetwork.Icons.Generic.Systems;
-    model GasBoiler
-      parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
-      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5 - 0.09273e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
-      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 60 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
-      parameter Real P101omega[:, :] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*30; 300, 2*3.141592654*30];
-      parameter Real FCV101theta[:, :] = [0, 1];
-      Plants.Thermal.Systems.GasBoiler S100 annotation (
-        Placement(transformation(extent = {{-32, -32}, {32, 32}})));
-      Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table = [0, 80 + 273.15; 100, 80 + 273.15]) annotation (
-        Placement(transformation(extent = {{-80, -42}, {-60, -22}})));
-      Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e6}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
-        Placement(transformation(extent = {{74, -10}, {54, 10}})));
-      Modelica.Blocks.Sources.TimeTable FCV101_theta(table = FCV101theta) annotation (
-        Placement(transformation(extent = {{-80, 20}, {-60, 40}})));
-      Modelica.Blocks.Sources.TimeTable P101_omega(table = P101omega) annotation (
-        Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      inner System system annotation (
-        Placement(transformation(extent = {{80, 80}, {100, 100}})));
-      DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = false, use_in_T0 = false, p0 = pin_start_S1, T0 = Tin_start_S1) annotation (
-        Placement(transformation(extent = {{-40, 70}, {-20, 50}})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow sink(use_in_m_flow = false, pin_start = pout_start_S1, p0 = pout_start_S1, T0 = Tout_start_S1, m_flow0 = m_flow_S1, G = 0) annotation (
-        Placement(transformation(extent = {{18, 70}, {38, 50}})));
-    equation
-      connect(source.outlet, S100.inlet) annotation (
-        Line(points={{-20,60},{-12.48,60},{-12.48,36.8}},    color = {140, 56, 54}, thickness = 0.5));
-      connect(sink.inlet, S100.outlet) annotation (
-        Line(points={{18,60},{13.12,60},{13.12,36.8}},    color = {140, 56, 54}, thickness = 0.5));
-      annotation (
-        Icon(coordinateSystem(preserveAspectRatio = false)),
-        Diagram(coordinateSystem(preserveAspectRatio = false)));
-    end GasBoiler;
-
-    model ControlledGasBoiler
-      parameter Real q_m3h_SP[:, :](unit = "m3/h") = [0, 10; 50, 10; 50, 12; 100, 12];
-      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_SP[:, :] = [0, 10*985/3600; 50, 10*985/3600; 50, 12*985/3600; 100, 12*985/3600; 200, 9*985/3600; 300, 9*985/3600];
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
-      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 60 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
-      parameter Real P101omega[:, :] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*30; 300, 2*3.141592654*30];
-      parameter Real FCV101theta[:, :] = [0, 1];
-      Plants.Thermal.Systems.ControlledGasBoiler S100(Kp = 100, Ti = 1) annotation (
-        Placement(transformation(extent = {{-32, -32}, {32, 32}})));
-      Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table = [0, 80 + 273.15; 100, 80 + 273.15]) annotation (
-        Placement(transformation(extent = {{-80, -42}, {-60, -22}})));
-      Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e6}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
-        Placement(transformation(extent = {{74, -10}, {54, 10}})));
-      Modelica.Blocks.Sources.TimeTable FCV101_theta(table = FCV101theta) annotation (
-        Placement(transformation(extent = {{-80, 20}, {-60, 40}})));
-      Modelica.Blocks.Sources.TimeTable P101_m_flowSP(table = m_flow_SP) annotation (
-        Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      inner System system annotation (
-        Placement(transformation(extent = {{80, 80}, {100, 100}})));
-      DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = false, use_in_T0 = false, p0 = pin_start_S1, T0 = Tin_start_S1) annotation (
-        Placement(transformation(extent = {{-40, 70}, {-20, 50}})));
-      DistrictHeatingNetwork.Sources.SinkPressure sink(use_in_p0 = false, p0 = pout_start_S1, T0 = Tout_start_S1) annotation (
-        Placement(transformation(extent = {{18, 70}, {38, 50}})));
-    equation
-      connect(GB101_Status.y, S100.Status) annotation (
-        Line(points = {{53, 0}, {25.6, 0}}, color = {255, 0, 255}));
-      connect(FCV101_theta.y, S100.theta) annotation (
-        Line(points={{-59,30},{-40,30},{-40,12.8},{-22.4,12.8}},          color = {0, 0, 127}));
-      connect(GB101_ToutSP.y, S100.Tout_SP) annotation (
-        Line(points={{-59,-32},{-40,-32},{-40,-12.8},{-22.4,-12.8}},          color = {0, 0, 127}));
-      connect(source.outlet, S100.inlet) annotation (
-        Line(points = {{-20, 60}, {-9.6, 60}, {-9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(sink.inlet, S100.outlet) annotation (
-        Line(points = {{18, 60}, {14, 60}, {14, 58}, {9.6, 58}, {9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(P101_m_flowSP.y, S100.m_flow_SP) annotation (
-        Line(points={{-59,0},{-22.4,0}},      color = {0, 0, 127}));
-      annotation (
-        Icon(coordinateSystem(preserveAspectRatio = false)),
-        Diagram(coordinateSystem(preserveAspectRatio = false)),
-        experiment(StopTime = 300, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));
-    end ControlledGasBoiler;
-
-    model ControlledElectricBoiler
-      parameter Real q_m3h_SP[:, :](unit = "m3/h") = [0, 10; 50, 10; 50, 12; 100, 12];
-      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_SP[:, :] = [0, 6*985/3600; 50, 6*985/3600; 50, 12*985/3600; 100, 12*985/3600; 200, 9*985/3600; 300, 9*985/3600];
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
-      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 65 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S4 = 80 + 273.15;
-      parameter Real P401omega[:, :] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*30; 300, 2*3.141592654*30];
-      parameter Real FCV401theta[:, :] = [0, 1];
-      Plants.Thermal.Systems.ControlledElectricBoiler S400(Kp = 100, Ti = 1) annotation (
-        Placement(transformation(extent = {{-32, -32}, {32, 32}})));
-      Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table = [0, 80 + 273.15; 100, 80 + 273.15]) annotation (
-        Placement(transformation(extent = {{-80, -42}, {-60, -22}})));
-      Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e6}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
-        Placement(transformation(extent = {{74, -10}, {54, 10}})));
-      Modelica.Blocks.Sources.TimeTable FCV101_theta(table = FCV401theta) annotation (
-        Placement(transformation(extent = {{-80, 20}, {-60, 40}})));
-      Modelica.Blocks.Sources.TimeTable P101_m_flowSP(table = m_flow_SP) annotation (
-        Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-      inner System system annotation (
-        Placement(transformation(extent = {{80, 80}, {100, 100}})));
-      DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = false, use_in_T0 = false, p0 = pin_start_S4, T0 = Tin_start_S4) annotation (
-        Placement(transformation(extent = {{-40, 70}, {-20, 50}})));
-      DistrictHeatingNetwork.Sources.SinkPressure sink(use_in_p0 = false, p0 = pout_start_S4, T0 = Tout_start_S4) annotation (
-        Placement(transformation(extent = {{18, 70}, {38, 50}})));
-    equation
-      connect(GB101_Status.y, S400.Status) annotation (
-        Line(points = {{53, 0}, {25.6, 0}}, color = {255, 0, 255}));
-      connect(FCV101_theta.y, S400.theta) annotation (
-        Line(points = {{-59, 30}, {-40, 30}, {-40, 12.8}, {-25.6, 12.8}}, color = {0, 0, 127}));
-      connect(GB101_ToutSP.y, S400.Tout_SP) annotation (
-        Line(points = {{-59, -32}, {-40, -32}, {-40, -12.8}, {-25.6, -12.8}}, color = {0, 0, 127}));
-      connect(source.outlet, S400.inlet) annotation (
-        Line(points = {{-20, 60}, {-9.6, 60}, {-9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(sink.inlet, S400.outlet) annotation (
-        Line(points = {{18, 60}, {14, 60}, {14, 58}, {9.6, 58}, {9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(P101_m_flowSP.y, S400.m_flow_SP) annotation (
-        Line(points = {{-59, 0}, {-25.6, 0}}, color = {0, 0, 127}));
-      annotation (
-        Icon(coordinateSystem(preserveAspectRatio = false)),
-        Diagram(coordinateSystem(preserveAspectRatio = false)),
-        experiment(StopTime = 300, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));
-    end ControlledElectricBoiler;
-
-    model CoolingSingleLoad
-      parameter Real FCVtheta[:, :] = [0, 1; 300, 1; 300, 0.5; 500, 0.5];
-      Plants.Thermal.Systems.CoolingSingleLoad coolingSingleLoad annotation (
-        Placement(transformation(extent = {{-40, -40}, {40, 40}})));
-      DistrictHeatingNetwork.Sources.SourcePressure sourceHot_E501(T0 = 353.15, p0 = 250000) annotation (
-        Placement(visible = true, transformation(origin = {-26, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      DistrictHeatingNetwork.Sources.SinkMassFlow sinkHot(T0 = 338.15, m_flow0 = 1.8, p0 = 240000, pin_start = 240000) annotation (
-        Placement(visible = true, transformation(origin = {33, 51}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
-      Modelica.Blocks.Sources.TimeTable TinCoolSP(table = [0, 15 + 273.15; 100, 15 + 273.15]) annotation (
-        Placement(transformation(extent = {{-80, -40}, {-60, -20}})));
-      Modelica.Blocks.Sources.TimeTable FCV_theta(table = FCVtheta) annotation (
-        Placement(transformation(extent = {{-82, 24}, {-62, 44}})));
-      Modelica.Blocks.Sources.TimeTable PtSP(table = [0, 35e3; 100, 35e3; 200, 50e3; 300, 50e3]) annotation (
-        Placement(transformation(extent = {{-80, -10}, {-60, 10}})));
-    equation
-      connect(sourceHot_E501.outlet, coolingSingleLoad.inlet) annotation (
-        Line(points={{-16,52},{-10,52},{-10,32}},          color = {140, 56, 54}, thickness = 0.5));
-      connect(sinkHot.inlet, coolingSingleLoad.outlet) annotation (
-        Line(points={{20,51},{18,51},{18,52},{10,52},{10,32}},              color = {140, 56, 54}, thickness = 0.5));
-      connect(FCV_theta.y, coolingSingleLoad.theta) annotation (
-        Line(points = {{-61, 34}, {-50, 34}, {-50, 24}, {-32, 24}}, color = {0, 0, 127}));
-      connect(PtSP.y, coolingSingleLoad.Pt_SP) annotation (
-        Line(points = {{-59, 0}, {-32, 0}}, color = {0, 0, 127}));
-      connect(TinCoolSP.y, coolingSingleLoad.Tin_cool_SP) annotation (
-        Line(points = {{-59, -30}, {-50, -30}, {-50, -24}, {-32, -24}}, color = {0, 0, 127}));
-      annotation (
-        Icon(coordinateSystem(preserveAspectRatio = false)),
-        Diagram(coordinateSystem(preserveAspectRatio = false)),
-        experiment(StopTime = 400, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));
-    end CoolingSingleLoad;
 
     package S100 "Set of validation tests of  gas boiler system"
       extends Modelica.Icons.ExamplesPackage;
+      model TestBase
+        extends Modelica.Icons.Example;
+
+        parameter Integer n = 3;
+        parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+
+        // Temperatures and pressures
+
+        parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5 - 0.09273e5;
+        parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
+        parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 60 + 273.15;
+        parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
+
+        // Pipe Data
+        parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
+        parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+        parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
+        parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7;
+        parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
+        parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
+        parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
+        parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
+
+        parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold = 0.66+0.25+0.54+0.5+1.3+1+3+4+0.5+0.2+0.3 "12.25";
+        parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
+        parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot = 1 + 3 + 3.2 + 1.1 + 1.2 + 0.5 + 0.25 + 0.6;
+        parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6;
+
+        parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
+        parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
+
+        parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
+        final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
+
+        parameter DistrictHeatingNetwork.Types.Density rhohotref = 985 "Reference hot water density";
+        parameter DistrictHeatingNetwork.Types.Density rhocoldref = 999 "Reference cold water density";
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
+          Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+
+        parameter String matrixPTi = "PT101" "Matrix name in file";
+        parameter String matrixPTo = "PT102" "Matrix name in file";
+        parameter String matrixTTi = "TT101" "Matrix name in file";
+        parameter String matrixTTo = "TT102" "Matrix name in file";
+        parameter String matrixtheta = "theta_FCV101" "Matrix name in file";
+        parameter String matrixfreq = "f_P101";
+        parameter String matrixFT = "FT101" "Matrix name in file";
+        parameter String timenoscale = "time" "Matrix name in file";
+        parameter Real Kv(unit = "m3/h") = 21 "Metri Flow Coefficient";
+
+        Plants.Thermal.Systems.GasBoiler gasBoiler(hctype=hctype)
+                                                   annotation (Placement(transformation(extent={{-30,-28},{26,28}})));
+        DistrictHeatingNetwork.Sources.SourcePressure
+                               source(
+          use_in_p0=true,
+          use_in_T0=true,
+          p0=pin_start_S1,
+          T0=Tin_start_S1)
+          annotation (Placement(transformation(extent={{-10,10},{10,-10}},
+              rotation=-90,
+              origin={-14,60})));
+        DistrictHeatingNetwork.Sources.SinkPressure
+                             sink(
+          use_in_p0=true,
+          p0=pout_start_S1,
+          T0=Tout_start_S1) annotation (Placement(transformation(extent={{-10,10},{10,-10}},
+              rotation=90,
+              origin={10,60})));
+        Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
+          annotation (Placement(transformation(extent={{-68,-12},{-56,0}})));
+        Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
+          "Input to decide whether or nor the gas boiler is working"
+          annotation (Placement(transformation(extent={{-68,-30},{-56,-18}})));
+        Modelica.Blocks.Sources.TimeTable TT101_profile(table=[ts,TTi])
+          annotation (Placement(transformation(extent={{-46,48},{-34,60}})));
+        Modelica.Blocks.Sources.TimeTable PT101_profile(table=[ts,PTi])
+          annotation (Placement(transformation(extent={{-46,66},{-34,78}})));
+        Modelica.Blocks.Sources.TimeTable FCV101_theta(table=[ts,thetav])
+          annotation (Placement(transformation(extent={{-88,8},{-76,20}})));
+        Modelica.Blocks.Sources.TimeTable P101_omega(table=[ts,omega])
+          annotation (Placement(transformation(extent={{-88,26},{-76,38}})));
+        Modelica.Blocks.Sources.TimeTable PT102_profile(table=[ts,PTo])
+          annotation (Placement(transformation(extent={{38,50},{26,62}})));
+        Modelica.Blocks.Sources.TimeTable m_flow_ref(table=[ts,m_flow_approx]) annotation (Placement(transformation(extent={{44,50},{56,62}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex
+                              valqm3h annotation (Placement(transformation(extent={{66,26},{78,38}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex
+                              valT annotation (Placement(transformation(extent={{66,12},{78,0}})));
+        Modelica.Blocks.Sources.TimeTable Tout_ref(table=[ts,TTo]) annotation (Placement(transformation(extent={{42,-18},{54,-6}})));
+        inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
+        Modelica.Blocks.Continuous.FirstOrder lowPassomega(
+          k=1,
+          T=2.5,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-68,26},{-56,38}})));
+        Modelica.Blocks.Continuous.FirstOrder lowPasstheta(
+          k=1,
+          T=2.5,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-68,8},{-56,20}})));
+
+
+      protected
+        final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
+        final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
+        final parameter Real PTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTi, dim[1], dim[2]);
+        final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
+        final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
+        final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
+        final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
+        final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
+        final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
+        final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
+        final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
+        final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1,1];
+        final parameter DistrictHeatingNetwork.Types.Pressure pin_start = PTi[1,1];
+        final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = m_flow_approx[1,1];
+      equation
+        connect(sink.inlet, gasBoiler.outlet) annotation (Line(
+            points={{10,50},{10,41.1},{9.48,41.1},{9.48,32.2}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(source.outlet, gasBoiler.inlet) annotation (Line(
+            points={{-14,50},{-12.92,50},{-12.92,32.2}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(PT102_profile.y, sink.in_p0) annotation (Line(points={{25.4,56},{18.4,56}}, color={0,0,127}));
+        connect(TT101_profile.y, source.in_T0) annotation (Line(points={{-33.4,54},{-30,54},{-30,56},{-22.4,56}}, color={0,0,127}));
+        connect(PT101_profile.y, source.in_p0) annotation (Line(points={{-33.4,72},{-30,72},{-30,64},{-22.4,64}}, color={0,0,127}));
+        connect(GB101_ToutSP.y, gasBoiler.Toutset) annotation (Line(points={{-55.4,-6},{-48,-6},{-48,8.4},{-32.8,8.4}}, color={0,0,127}));
+        connect(GB101_Status.y, gasBoiler.status) annotation (Line(points={{-55.4,-24},{-44,-24},{-44,2.8},{-32.8,2.8}}, color={255,0,255}));
+        connect(gasBoiler.m_flow_, valqm3h.u_sim) annotation (Line(points={{28.8,19.6},{52,19.6},{52,29},{64.8,29}}, color={0,0,127}));
+        connect(m_flow_ref.y, valqm3h.u_meas) annotation (Line(points={{56.6,56},{60,56},{60,35},{64.8,35}}, color={0,0,127}));
+        connect(Tout_ref.y, valT.u_meas) annotation (Line(points={{54.6,-12},{60,-12},{60,3},{64.8,3}}, color={0,0,127}));
+        connect(gasBoiler.TTout, valT.u_sim) annotation (Line(points={{28.8,8.4},{52,8.4},{52,9},{64.8,9}}, color={0,0,127}));
+        connect(P101_omega.y, lowPassomega.u) annotation (Line(points={{-75.4,32},{-69.2,32}}, color={0,0,127}));
+        connect(lowPassomega.y, gasBoiler.omega) annotation (Line(points={{-55.4,32},{-48,32},{-48,19.6},{-32.8,19.6}}, color={0,0,127}));
+        connect(FCV101_theta.y, lowPasstheta.u) annotation (Line(points={{-75.4,14},{-69.2,14}}, color={0,0,127}));
+        connect(lowPasstheta.y, gasBoiler.theta) annotation (Line(points={{-55.4,14},{-32.8,14}}, color={0,0,127}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false)));
+      end TestBase;
     end S100;
+
+    package S400 "Set of validation tests of electric boiler system"
+      extends Modelica.Icons.ExamplesPackage;
+    end S400;
 
     package S900 "Validation tests of pumping system"
       extends Modelica.Icons.ExamplesPackage;
@@ -211,8 +200,8 @@ package Tests
 
         Plants.Thermal.Systems.CirculationPump circulationPump(n=3)
                                                                annotation (Placement(transformation(extent={{-28,-30},{32,30}})));
-        Modelica.Blocks.Sources.TimeTable TT902_profile(table=[ts,TTi]) annotation (Placement(transformation(extent={{48,-78},{36,-66}})));
-        Modelica.Blocks.Sources.TimeTable PT202_profile(table=[ts,PTi]) annotation (Placement(transformation(extent={{48,-96},{36,-84}})));
+        Modelica.Blocks.Sources.TimeTable TT902_profile(table=[ts,TTi]) annotation (Placement(transformation(extent={{48,-72},{36,-60}})));
+        Modelica.Blocks.Sources.TimeTable PT202_profile(table=[ts,PTi]) annotation (Placement(transformation(extent={{48,-90},{36,-78}})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(
           m_flow_start=m_flow_start,
           redeclare model Medium = Medium,
@@ -229,7 +218,7 @@ package Tests
           annotation (Placement(transformation(
               extent={{-9.625,9.625},{9.625,-9.625}},
               rotation=90,
-              origin={14.375,-61.625})));
+              origin={14.375,-55.625})));
         DistrictHeatingNetwork.Sources.SourcePressure
                                sourceP(
           use_in_p0=true,
@@ -240,18 +229,12 @@ package Tests
               transformation(
               extent={{-6,6},{6,-6}},
               rotation=90,
-              origin={14,-92})));
-        DistrictHeatingNetwork.Sources.SourcePressure
-                               sourcePressure1(
-          redeclare model Medium = Medium,
-          p0=pin_start_S9,
-          T0=Tin_start_S9,
-          R=1)                                                                                                     annotation (Placement(transformation(extent={{-31,52.5},{-20.5,63}})));
+              origin={14,-86})));
         DistrictHeatingNetwork.Sources.SinkMassFlow
                              sink_(redeclare model Medium = Medium) annotation (Placement(transformation(
               extent={{-10,-10},{10,10}},
               rotation=-90,
-              origin={-10,-90})));
+              origin={-10,-84})));
         Modelica.Blocks.Sources.TimeTable P901_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-58,22},{-46,34}})));
         Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-58,0},{-46,12}})));
         Modelica.Blocks.Sources.TimeTable PT902_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{56,28},{44,40}})));
@@ -263,8 +246,7 @@ package Tests
           T0=Tout_start_S9,
           R=1) annotation (Placement(transformation(extent={{32,64},{44,52}})));
         Modelica.Blocks.Sources.TimeTable m_flow_ref(table=[ts,m_flow_approx]) annotation (Placement(transformation(extent={{48,84},{60,96}})));
-        DistrictHeatingNetwork.Utilities.ASHRAEIndex
-                              indexes annotation (Placement(transformation(extent={{74,74},{86,86}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex m_flow_index annotation (Placement(transformation(extent={{74,74},{86,86}})));
 
         inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
       protected
@@ -289,33 +271,35 @@ package Tests
             color={140,56,54},
             thickness=0.5));
         connect(rackCD_Hot_S200_S900.outlet, circulationPump.inlethot) annotation (Line(
-            points={{14.375,-52},{13.7,-52},{13.7,-34.5}},
+            points={{14.375,-46},{13.7,-46},{13.7,-34.5}},
             color={140,56,54},
             thickness=0.5));
         connect(sourceP.outlet, rackCD_Hot_S200_S900.inlet)
           annotation (Line(
-            points={{14,-86},{14,-78.625},{14.375,-78.625},{14.375,-71.25}},
+            points={{14,-80},{14,-72.625},{14.375,-72.625},{14.375,-65.25}},
             color={140,56,54},
             thickness=0.5));
         connect(sink_.inlet, circulationPump.outletcold) annotation (Line(
-            points={{-10,-80},{-10,-56.25},{-9.7,-56.25},{-9.7,-34.5}},
+            points={{-10,-74},{-10,-50.25},{-9.7,-50.25},{-9.7,-34.5}},
             color={140,56,54},
             thickness=0.5));
-        connect(sourceP.in_p0, PT202_profile.y) annotation (Line(points={{19.04,-94.4},{30,-94.4},{30,-90},{35.4,-90}}, color={0,0,127}));
-        connect(TT902_profile.y, sourceP.in_T0) annotation (Line(points={{35.4,-72},{28,-72},{28,-89.6},{19.04,-89.6}}, color={0,0,127}));
+        connect(sourceP.in_p0, PT202_profile.y) annotation (Line(points={{19.04,-88.4},{30,-88.4},{30,-84},{35.4,-84}}, color={0,0,127}));
+        connect(TT902_profile.y, sourceP.in_T0) annotation (Line(points={{35.4,-66},{28,-66},{28,-83.6},{19.04,-83.6}}, color={0,0,127}));
         connect(PT902_profile.y, sinkP.in_p0) annotation (Line(points={{43.4,34},{35.6,34},{35.6,52.96}}, color={0,0,127}));
-        connect(m_flow_ref.y, indexes.u_meas) annotation (Line(points={{60.6,90},{66,90},{66,82},{72.8,82},{72.8,83}}, color={0,0,127}));
-        connect(circulationPump.m_flow_, indexes.u_sim) annotation (Line(points={{35,21},{66,21},{66,77},{72.8,77}}, color={0,0,127}));
+        connect(m_flow_ref.y, m_flow_index.u_meas) annotation (Line(points={{60.6,90},{66,90},{66,82},{72.8,82},{72.8,83}}, color={0,0,127}));
+        connect(circulationPump.m_flow_, m_flow_index.u_sim) annotation (Line(points={{35,21},{66,21},{66,77},{72.8,77}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end TestBase;
 
       model S900_Seq_1701Test1
         extends TestBase(    MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test1/Temperatures.mat"));
       end S900_Seq_1701Test1;
-    end S900;
 
-    package S400 "Set of validation tests of electric boiler system"
-    end S400;
+      model S900_Seq_2903Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2903_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=5100, __Dymola_Algorithm="Dassl"));
+      end S900_Seq_2903Test1;
+    end S900;
   end Systems;
 
   package Loads "Package to run test in the load side of the plant using real data"

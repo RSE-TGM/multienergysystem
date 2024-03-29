@@ -38,9 +38,9 @@ package Tests
       connect(GB101_ToutSP.y, S100.Tout_SP) annotation (
         Line(points = {{-59, -32}, {-40, -32}, {-40, -16}, {-25.6, -16}}, color = {0, 0, 127}));
       connect(source.outlet, S100.inlet) annotation (
-        Line(points = {{-20, 60}, {-9.6, 60}, {-9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{-20,60},{-8,60},{-8,25.6}},            color = {140, 56, 54}, thickness = 0.5));
       connect(sink.inlet, S100.outlet) annotation (
-        Line(points = {{18, 60}, {9.6, 60}, {9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{18,60},{8,60},{8,25.6}},            color = {140, 56, 54}, thickness = 0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)));
@@ -75,15 +75,15 @@ package Tests
       connect(GB101_Status.y, S100.Status) annotation (
         Line(points = {{53, 0}, {25.6, 0}}, color = {255, 0, 255}));
       connect(FCV101_theta.y, S100.theta) annotation (
-        Line(points = {{-59, 30}, {-40, 30}, {-40, 12.8}, {-25.6, 12.8}}, color = {0, 0, 127}));
+        Line(points={{-59,30},{-40,30},{-40,12.8},{-22.4,12.8}},          color = {0, 0, 127}));
       connect(GB101_ToutSP.y, S100.Tout_SP) annotation (
-        Line(points = {{-59, -32}, {-40, -32}, {-40, -12.8}, {-25.6, -12.8}}, color = {0, 0, 127}));
+        Line(points={{-59,-32},{-40,-32},{-40,-12.8},{-22.4,-12.8}},          color = {0, 0, 127}));
       connect(source.outlet, S100.inlet) annotation (
         Line(points = {{-20, 60}, {-9.6, 60}, {-9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
       connect(sink.inlet, S100.outlet) annotation (
         Line(points = {{18, 60}, {14, 60}, {14, 58}, {9.6, 58}, {9.6, 25.6}}, color = {140, 56, 54}, thickness = 0.5));
       connect(P101_m_flowSP.y, S100.m_flow_SP) annotation (
-        Line(points = {{-59, 0}, {-25.6, 0}}, color = {0, 0, 127}));
+        Line(points={{-59,0},{-22.4,0}},      color = {0, 0, 127}));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),

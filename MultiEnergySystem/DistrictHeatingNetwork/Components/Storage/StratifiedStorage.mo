@@ -2,8 +2,8 @@
 model StratifiedStorage
   "Model a perfectly mixed thermal storage with insulation all around. Output temperature in Celsius [°C]"
   extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume(
-                                                                                      redeclare
-      model Medium =
+                                                                                      redeclare model
+            Medium =
         DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity);
   import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regStep;

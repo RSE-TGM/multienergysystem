@@ -122,7 +122,7 @@ package Sequences
           FCV401(Kv=32),
           FV402(Kv=20));
 
-//FCV701theta = [0, 0.6269; 1e6, 0.6269],
+        //FCV701theta = [0, 0.6269; 1e6, 0.6269],
         parameter Real kq = 0.7;
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
         parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";

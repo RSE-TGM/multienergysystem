@@ -58,8 +58,7 @@ package Icons "Icon package for DHN components"
     partial package Thermal
 
       annotation (Icon(graphics={
-                         Rectangle(lineColor = {140, 56, 54}, fillColor={192,80,77},     fillPattern=
-                  FillPattern.Solid,                                                                                                   lineThickness = 1, extent={{-100,
+                         Rectangle(lineColor = {140, 56, 54}, fillColor={242,220,219},   fillPattern=FillPattern.Solid,                lineThickness = 1, extent={{-100,
                   100},{100,-100}},                                                                                                                                                            radius=20)}));
     end Thermal;
   end Water;

@@ -32,11 +32,11 @@ equation
   connect(theta, boiler.theta)
     annotation (Line(points={{-80,40},{-60,40},{-60,20},{-32,20}}, color={0,0,127}));
   connect(boiler.inlet, inlet) annotation (Line(
-      points={{-12,32},{-12,76},{-20,76},{-20,90}},
+      points={{-10,32},{-10,76},{-20,76},{-20,90}},
       color={140,56,54},
       thickness=0.5));
   connect(boiler.outlet, outlet) annotation (Line(
-      points={{12,32},{12,60},{12,88},{18,88}},
+      points={{10,32},{10,60},{10,88},{18,88}},
       color={140,56,54},
       thickness=0.5));
   connect(m_flow_SP, PI.REF)

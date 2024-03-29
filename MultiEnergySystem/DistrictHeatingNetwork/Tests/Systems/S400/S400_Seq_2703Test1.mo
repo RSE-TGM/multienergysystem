@@ -1,0 +1,10 @@
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.S400;
+model S400_Seq_2703Test1
+  extends S400_Test(
+    MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2703_Test1/Temperatures.mat"), FCV401(
+        openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot));
+  annotation (experiment(
+      StopTime=1215,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
+end S400_Seq_2703Test1;

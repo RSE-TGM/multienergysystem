@@ -3,12 +3,13 @@ model S400_Test
   extends S400(
     FCV401(
       Kv=Kv,
-      openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage,
+      openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot,
       dp_nom=Valve.FCV401.dp_nom),
     source(use_in_p0=true, use_in_T0=true),
-    sink(use_in_m_flow=true),
     FCV401_theta(table=[ts,thetav]),
-    P401_omega(table=[ts,omega]));
+    P401_omega(table=[ts,omega]),
+    sinkP(use_in_p0=true),
+    P401(correctionfactor=pumpcorrectionFactor));
 
   parameter Types.Density rhohotref = 985 "Reference hot water density";
   parameter Types.Density rhocoldref = 999 "Reference cold water density";
@@ -23,18 +24,18 @@ model S400_Test
   parameter String matrixfreq = "f_P401";
   parameter String matrixFT = "FT401" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
-  parameter Real Kv(unit = "m3/h") = 50 "Metri Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = 21 "Metri Flow Coefficient";
+  parameter Real pumpcorrectionFactor = 1;
 
   Modelica.Blocks.Sources.TimeTable TT401_profile(table=[ts,TTi]) annotation (Placement(transformation(extent={{-108,72},{-88,92}})));
   Modelica.Blocks.Sources.TimeTable PT401_profile(table=[ts,PTi]) annotation (Placement(transformation(extent={{-106,102},{-86,122}})));
-  Modelica.Blocks.Sources.TimeTable FT401_profile(table=[ts,m_flow_approx])
-                                                                  annotation (Placement(transformation(extent={{76,132},{56,152}})));
+  Modelica.Blocks.Sources.TimeTable PT402_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{72,84},{52,104}})));
 
-  Modelica.Blocks.Sources.TimeTable pout_ref(table=[ts,PTo])
-    annotation (Placement(transformation(extent={{64,24},{84,44}})));
+  Modelica.Blocks.Sources.TimeTable qm3h_ref(table=[ts,FT])
+    annotation (Placement(transformation(extent={{-66,-36},{-46,-16}})));
   Utilities.ASHRAEIndex valT annotation (Placement(transformation(extent={{104,122},{124,102}})));
-  Utilities.ASHRAEIndex valp annotation (Placement(transformation(extent={{104,94},{124,74}})));
-  Modelica.Blocks.Sources.TimeTable Tout_ref(table=[ts,TTo]) annotation (Placement(transformation(extent={{64,54},{84,74}})));
+  Utilities.ASHRAEIndex valqm3h annotation (Placement(transformation(extent={{-46,22},{-66,2}})));
+  Modelica.Blocks.Sources.TimeTable Tout_ref(table=[ts,TTo]) annotation (Placement(transformation(extent={{104,44},{124,64}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -50,14 +51,15 @@ protected
   final parameter Types.Temperature Tin_start = TTi[1,1];
   final parameter Types.Pressure pin_start = PTi[1,1];
 equation
-  connect(PT401_profile.y, source.in_p0) annotation (Line(points={{-85,112},{-70,112},{-70,110},{-46,110},{-46,113.6}}, color={0,0,127}));
-  connect(TT401_profile.y, source.in_T0) annotation (Line(points={{-87,82},{-38,82},{-38,113.6}},                       color={0,0,127}));
-  connect(FT401_profile.y, sink.in_m_flow) annotation (Line(points={{55,142},{28,142},{28,147}},                   color={0,0,127}));
-  connect(TT402.T, valT.u_sim) annotation (Line(points={{29.8,134},{46,134},{46,117},{102,117}}, color={0,0,127}));
-  connect(PT402.p, valp.u_sim) annotation (Line(points={{29.8,122},{40,122},{40,89},{102,89}}, color={0,0,127}));
-  connect(Tout_ref.y, valT.u_meas) annotation (Line(points={{85,64},{92,64},{92,107},{102,107}}, color={0,0,127}));
-  connect(pout_ref.y, valp.u_meas) annotation (Line(points={{85,34},{96,34},{96,79},{102,79}}, color={0,0,127}));
-  annotation (Diagram(coordinateSystem(extent={{-160,-200},{160,200}})), experiment(
+  connect(PT401_profile.y, source.in_p0) annotation (Line(points={{-85,112},{-70,112},{-70,110},{-44,110},{-44,111.6}}, color={0,0,127}));
+  connect(TT401_profile.y, source.in_T0) annotation (Line(points={{-87,82},{-36,82},{-36,111.6}},                       color={0,0,127}));
+  connect(TT402.T, valT.u_sim) annotation (Line(points={{23.8,104},{46,104},{46,117},{102,117}}, color={0,0,127}));
+  connect(Tout_ref.y, valT.u_meas) annotation (Line(points={{125,54},{130,54},{130,98},{96,98},{96,107},{102,107}},
+                                                                                                 color={0,0,127}));
+  connect(PT402_profile.y, sinkP.in_p0) annotation (Line(points={{51,94},{28,94},{28,102},{26,102},{26,111.6}},   color={0,0,127}));
+  connect(FT401.q_m3hr, valqm3h.u_sim) annotation (Line(points={{-28.1,17},{-44,17}}, color={0,0,127}));
+  connect(qm3h_ref.y, valqm3h.u_meas) annotation (Line(points={{-45,-26},{-38,-26},{-38,7},{-44,7}}, color={0,0,127}));
+  annotation (Diagram(coordinateSystem(extent={{-160,-160},{160,160}})), experiment(
       StopTime=2500,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));

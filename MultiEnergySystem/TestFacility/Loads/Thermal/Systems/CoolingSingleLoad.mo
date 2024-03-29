@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.Loads.Thermal.Systems;
 model CoolingSingleLoad
+  extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
@@ -95,7 +96,7 @@ model CoolingSingleLoad
     rho_start=rho_start_valve,
     q_m3h_start=q_m3h_start_valve)
                                  "Flow Control Valve - Hot side" annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
+        extent={{10,10},{-10,-10}},
         rotation=-90,
         origin={20,10})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX7X1(
@@ -347,7 +348,7 @@ equation
       points={{20.4,-72},{20.4,-58.125},{21.3,-58.125},{21.3,-56.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV7X1.opening, theta) annotation (Line(points={{28,10},{0,10},{0,50},{-56,50},{-56,70},{-110,70}},
+  connect(FCV7X1.opening, theta) annotation (Line(points={{12,10},{0,10},{0,50},{-56,50},{-56,70},{-110,70}},
                                                                             color={0,0,127}));
   connect(MultiPort, PL701_TT702_SourceIn.wall) annotation (Line(points={{-110,0},{-60,0},{-60,10},{-24.1,10}}, color={255,238,44}));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
@@ -385,9 +386,9 @@ equation
       points={{20,78},{20,110}},
       color={140,56,54},
       thickness=0.5));
-  annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(graphics={Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern=
-              FillPattern.Solid, lineThickness=2, extent={{-100,100},{100,-100}}, radius=10),                                                                                                                                    Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-60,62},
-              {60,-58}}),
+  connect(PL701_TT702_SourceIn1.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{-24.1,-90},{-42,-90},{-42,-88},{-60,-88},{-60,10},{-24.1,10}}, color={255,238,44}));
+  connect(PL701_TT702_SourceIn2.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{24.1,-90},{32,-90},{32,-96},{-60,-96},{-60,10},{-24.1,10}}, color={255,238,44}));
+  annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(graphics={
         Text(
           extent={{-100,-140},{100,-180}},
           textColor={140,56,54},

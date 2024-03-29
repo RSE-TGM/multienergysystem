@@ -2,6 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves;
 model FlowCoefficientOnOffValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort(allowFlowReversal = true);
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Water.Valve;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
   parameter Types.PerUnit nomOpening = 1 "Nominal valve opening" annotation (
     Dialog(group = "Valve characteristics"));
   parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter" annotation (
@@ -27,6 +28,7 @@ model FlowCoefficientOnOffValve
     Dialog(group = "Initialisation"));
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve valve(
+    redeclare model Medium = Medium,
     allowFlowReversal=true,
     nomOpening=nomOpening,
     minimumOpening=minimumOpening,
@@ -39,12 +41,12 @@ model FlowCoefficientOnOffValve
     pin_start=pin_start,
     rho_start=rho_start,
     q_m3h_start=q_m3h_start)
-    annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
+    annotation (Placement(transformation(extent={{-16,-16},{16,16}})));
   Modelica.Blocks.Math.BooleanToReal Command(realTrue=1, realFalse=0)
     annotation (Placement(transformation(
         extent={{-10,-9.5},{10,9.5}},
         rotation=-90,
-        origin={0.5,50})));
+        origin={0.5,62})));
   Modelica.Blocks.Interfaces.BooleanInput u annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
@@ -53,20 +55,27 @@ model FlowCoefficientOnOffValve
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,32})));
+  Modelica.Blocks.Continuous.FirstOrder firstOrder(
+    k=1,
+    T=0.5,
+    initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=-90,
+        origin={0,32})));
 equation
 
   connect(valve.inlet, inlet) annotation (Line(
-      points={{-30,0},{-100,0}},
+      points={{-16,0},{-100,0}},
       color={140,56,54},
       thickness=0.5));
   connect(valve.outlet, outlet) annotation (Line(
-      points={{30,0},{100,0}},
+      points={{16,0},{100,0}},
       color={140,56,54},
       thickness=0.5));
-  connect(Command.y, valve.opening) annotation (Line(points={{0.5,39},{0.5,31.5},
-          {0,31.5},{0,24}}, color={0,0,127}));
-  connect(Command.u, u) annotation (Line(points={{0.5,62},{0.5,81},{0,81},{0,100}},
+  connect(Command.u, u) annotation (Line(points={{0.5,74},{0.5,87},{0,87},{0,100}},
         color={255,0,255}));
+  connect(Command.y, firstOrder.u) annotation (Line(points={{0.5,51},{0.5,48.5},{2.22045e-15,48.5},{2.22045e-15,44}}, color={0,0,127}));
+  connect(firstOrder.y, valve.opening) annotation (Line(points={{-1.9984e-15,21},{-1.9984e-15,20},{0,20},{0,12.8}}, color={0,0,127}));
 annotation (
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
 end FlowCoefficientOnOffValve;

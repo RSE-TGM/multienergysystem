@@ -1,6 +1,7 @@
 GasBoiler
 ElectricBoiler
 CirculationPump
+TES
 ControlledGasBoiler
 ControlledElectricBoiler
 CoolingSingleLoad

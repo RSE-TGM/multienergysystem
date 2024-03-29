@@ -1,8 +1,8 @@
 GasBoiler
 ElectricBoiler
+CirculationPump
 ControlledGasBoiler
 ControlledElectricBoiler
 CoolingSingleLoad
-CirculationPump
 RackCD
 RackType2

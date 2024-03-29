@@ -4,6 +4,10 @@ model S400 "Main components of System 400 - Electric Boiler"
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
+  constant Real pi = Modelica.Constants.pi;
+  parameter Integer n = 3 "Number of volumes in each pipe";
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
+      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Types.Pressure pin_start_S4 = 1.695e5;
   parameter Types.Pressure pout_start_S4 = 1.6e5;
   parameter Types.Temperature Tin_start_S4 = 70 + 273.15;

@@ -6,9 +6,9 @@ package H2GasFacility
   annotation (
     Icon(graphics={                                                                                                                                                                                        Text(
         extent={{-78,80},{82,-80}},
-        textColor={232,232,232},
+        textColor={182,109,49},
         textStyle={TextStyle.Bold},
         fontName="Tahoma",
-          textString="NG")}),
+        textString="NG")}),
     Documentation(info = "<html><head></head><body>Gas Facility package.<div><br></div><div>The objective of this library is to develop models for natural gas / biomethane &amp; hydrogen distribution modeling &amp; control.</div></body></html>"));
 end H2GasFacility;

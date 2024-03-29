@@ -7,9 +7,9 @@ model TestManifold
     H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumOut = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
     H2GasFacility.Media.BaseClasses.PartialMixture;
-  replaceable MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O manifold(redeclare
-      model MediumIn1 =                                                                                             MediumIn1, redeclare
-      model MediumIn2 =                                                                                                                                    MediumIn2, redeclare
+  replaceable MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O manifold(redeclare model
+            MediumIn1 =                                                                                             MediumIn1, redeclare model
+            MediumIn2 =                                                                                                                                    MediumIn2, redeclare
       model MediumOut =                                                                                                                                                                           MediumOut, Xout_start = {0.5, 0.5}, p_start(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-30, -30}, {30, 30}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Sources.SinkPressure sink(redeclare model Medium = MediumOut, R = 0, T0 = 15 + 273.15, X0 = {0.5, 0.5}, computeTransport = false, p0(displayUnit = "Pa") = 49630) annotation (

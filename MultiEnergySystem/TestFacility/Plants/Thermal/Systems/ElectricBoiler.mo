@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
 model ElectricBoiler "System 400"
-  extends TestFacility.Interfaces.SystemInterfaceBaseI;
+  extends TestFacility.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;

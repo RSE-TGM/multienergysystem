@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
 model GasBoiler "System 100"
-  extends TestFacility.Interfaces.SystemInterfaceBaseI;
+  extends TestFacility.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient

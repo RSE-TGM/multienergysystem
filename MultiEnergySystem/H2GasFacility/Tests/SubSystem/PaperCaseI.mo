@@ -116,8 +116,8 @@ constantFrictionFactor=constantFrictionFactor)                                  
     rho_nom=Pipe.pipe9.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {30, 20}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di = Pipe.pipe10.Di, L = Pipe.pipe10.L, redeclare
-      model Medium =                                                                                                                 Medium, Tin_start = Pipe.pipe10.Tin_start, Tout_start = Pipe.pipe10.Tout_start, X_start = X_start, hin_start = Pipe.pipe10.hin_start, k = Pipe.pipe10.k, kc = 1, m_flow_start = Pipe.pipe10.m_flow_start, n = n, pin_start = Pipe.pipe10.pin_start, pout_start = Pipe.pipe10.pout_start, momentum = momentum,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di = Pipe.pipe10.Di, L = Pipe.pipe10.L, redeclare model
+            Medium =                                                                                                                 Medium, Tin_start = Pipe.pipe10.Tin_start, Tout_start = Pipe.pipe10.Tout_start, X_start = X_start, hin_start = Pipe.pipe10.hin_start, k = Pipe.pipe10.k, kc = 1, m_flow_start = Pipe.pipe10.m_flow_start, n = n, pin_start = Pipe.pipe10.pin_start, pout_start = Pipe.pipe10.pout_start, momentum = momentum,
     quasiStatic=quasiStatic,
     pin_nom=p_nom,
     rho_nom=Pipe.pipe10.rho_nom,

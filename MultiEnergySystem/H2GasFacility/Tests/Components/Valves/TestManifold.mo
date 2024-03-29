@@ -7,8 +7,8 @@ model TestManifold
     H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumOut = H2GasFacility.Media.IdealGases.CO_H2_CH4 constrainedby
     H2GasFacility.Media.BaseClasses.PartialMixture;
-  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve1(A_v = 4.877657e-3, redeclare
-      model Medium =                                                                                                      MediumIn1, Tin_start(displayUnit = "K") = 293, Tout_start(displayUnit = "K") = 293, X_start = {0.15, 0.25, 0.6}, dp_nom(displayUnit = "Pa") = 99999.99999999999, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve1(A_v = 4.877657e-3, redeclare model
+            Medium =                                                                                                      MediumIn1, Tin_start(displayUnit = "K") = 293, Tout_start(displayUnit = "K") = 293, X_start = {0.15, 0.25, 0.6}, dp_nom(displayUnit = "Pa") = 99999.99999999999, pin_start(displayUnit = "Pa") = 49999.99999999999) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{10, 10}, {-10, -10}}, rotation = 180)));
   Modelica.Blocks.Sources.Ramp opening2(duration = 0, height = 0, offset = 1, startTime = 100) annotation (
     Placement(visible = true, transformation(origin = {30, 50}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));

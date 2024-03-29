@@ -233,8 +233,7 @@ package Icons "Icon package for DHN components"
     partial package Gas
 
       annotation (Icon(graphics={
-                         Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern=
-                  FillPattern.Solid,                                                                                                     lineThickness = 1, extent={{-100,
+                         Rectangle(lineColor = {182, 109, 49}, fillColor={253,234,218},    fillPattern=FillPattern.Solid,                lineThickness = 1, extent={{-100,
                   100},{100,-100}},                                                                                                                                                              radius=20)}));
     end Gas;
   end Gas;

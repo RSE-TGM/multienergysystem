@@ -133,6 +133,25 @@ model CirculationPump
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20,-31})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    L=L_rCD_H7,
+    h=0,
+    t=t_rCD,
+    pin_start=pin_start_S9,
+    Tin_start=Tout_start_S9,
+    Tout_start=Tout_start_S9,
+    Di=Di,
+    q_m3h_start=q_m3h_S9,
+    nPipes=1,
+    n=n,
+    hctype=hctype)
+    "Pipe connecting the outlet of future heat storage and the outlet of hot side of CHP system"
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20,-72})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     redeclare model Medium = Medium,
@@ -147,6 +166,7 @@ model CirculationPump
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={20,30})));
+
 
 equation
   connect(FT901.outlet,PT902. inlet) annotation (Line(
@@ -185,10 +205,6 @@ equation
       points={{-20,-41},{-20,-88},{-22,-88},{-22,-102}},
       color={140,56,54},
       thickness=0.5));
-  connect(P901.inlet, inlethot) annotation (Line(
-      points={{20,-50},{20,-86},{24,-86},{24,-100}},
-      color={140,56,54},
-      thickness=0.5));
   connect(TT902.inlet, outlethot) annotation (Line(
       points={{21.35,68.25},{20,68.25},{20,110}},
       color={140,56,54},
@@ -199,13 +215,31 @@ equation
       thickness=0.5));
   connect(omega, P901.in_omega) annotation (Line(points={{-110,70},{-68,70},{-68,-46},{15,-46}}, color={0,0,127}));
   connect(theta, FCV901.opening) annotation (Line(points={{-110,50},{2,50},{2,30},{15.2,30}}, color={0,0,127}));
-  connect(PL2_S901.wall, MultiPort) annotation (Line(points={{-24.1,-31},{-58,-31},{-58,-70},{-110,-70}}, color={255,238,44}));
-  connect(PL4_S901.wall, MultiPort) annotation (Line(points={{15.9,-16},{-58,-16},{-58,-70},{-110,-70}}, color={255,238,44}));
   connect(PT902.p, PTout) annotation (Line(points={{29.5,57.5},{46,57.5},{46,-10},{110,-10}}, color={0,0,127}));
   connect(FT901.m_flow, m_flow_) annotation (Line(points={{26,51.5},{26,52},{58,52},{58,70},{110,70}}, color={0,0,127}));
   connect(TT902.T, TTout) annotation (Line(points={{29.425,68.25},{78,68.25},{78,30},{110,30}}, color={0,0,127}));
   connect(TT901.T, PTin) annotation (Line(points={{-27.925,68.25},{-34,68.25},{-34,10},{110,10}}, color={0,0,127}));
   connect(PT901.p, TTin) annotation (Line(points={{-28.5,30.5},{-28.5,20},{72,20},{72,50},{110,50}}, color={0,0,127}));
+  connect(P901.inlet, rackCD_Hot_S200_S900.outlet) annotation (Line(
+      points={{20,-50},{20,-62}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackCD_Hot_S200_S900.inlet, inlethot) annotation (Line(
+      points={{20,-82},{20,-86},{24,-86},{24,-100}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackCD_Hot_S200_S900.wall, MultiPort) annotation (Line(
+      points={{15.9,-72},{-48,-72},{-48,-70},{-110,-70}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL2_S901.wall, MultiPort) annotation (Line(
+      points={{-24.1,-31},{-48,-31},{-48,-70},{-110,-70}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL4_S901.wall, MultiPort) annotation (Line(
+      points={{15.9,-16},{-48,-16},{-48,-70},{-110,-70}},
+      color={255,101,98},
+      thickness=0.5));
   annotation (Icon(coordinateSystem(grid={1,1}), graphics={
         Bitmap(
           extent={{-49.5,-61},{49.5,61}},

@@ -390,10 +390,6 @@ equation
   connect(PL701_TT702_SourceIn2.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{24.1,-90},{32,-90},{32,-96},{-60,-96},{-60,10},{-24.1,10}}, color={255,238,44}));
   annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(coordinateSystem(grid={2,2}),
                                                                               graphics={
-        Text(
-          extent={{-100,-140},{100,-180}},
-          textColor={140,56,54},
-          textString="%name"),
                              Bitmap(
           extent={{-50,-40},{50,60}},
           imageSource=

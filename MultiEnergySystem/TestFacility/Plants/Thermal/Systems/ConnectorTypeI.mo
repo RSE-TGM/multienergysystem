@@ -97,7 +97,7 @@ model ConnectorTypeI "Model to be used for connecting one source or one load to 
     annotation (Placement(transformation(
         extent={{-14,-14},{14,14}},
         rotation=-90,
-        origin={-50,-84})));
+        origin={-50,-76})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipeInletCold(
     L=L_incold,
     h=h_incold,
@@ -123,11 +123,11 @@ model ConnectorTypeI "Model to be used for connecting one source or one load to 
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTcold(redeclare model Medium = Medium,T_start=T_start_cold, p_start=pin_start_cold) annotation (Placement(transformation(extent={{-26,44},{-46,64}})));
 equation
   connect(pipeInletHot.inlet, inletHot) annotation (Line(
-      points={{-94,-52},{-120,-52}},
+      points={{-94,-52},{-104,-52},{-104,-40},{-114,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletHot.outlet, outletComp) annotation (Line(
-      points={{-50,-98},{-50,-120}},
+      points={{-50,-90},{-50,-114}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletCold.wall, MultiPort) annotation (Line(
@@ -143,19 +143,19 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(pipeOutletHot.wall, MultiPort) annotation (Line(
-      points={{-44.26,-84},{0,-84},{0,110}},
+      points={{-44.26,-76},{0,-76},{0,110}},
       color={255,101,98},
       thickness=0.5));
   connect(inletComp, pipeInletCold.inlet) annotation (Line(
-      points={{50,-120},{50,8}},
+      points={{51,-113},{51,-52},{50,-52},{50,8}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletCold.inlet, inletCold) annotation (Line(
-      points={{40,50},{124,50},{124,48},{120,48}},
+      points={{40,50},{124,50},{124,40},{114,40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeInletCold.outlet, inletCold) annotation (Line(
-      points={{50,36},{50,50},{124,50},{124,48},{120,48}},
+      points={{50,36},{50,50},{124,50},{124,40},{114,40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeInletHot.outlet, FThot.inlet) annotation (Line(
@@ -163,11 +163,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FThot.outlet, outletHot) annotation (Line(
-      points={{32,-52},{68,-52},{68,-52},{120,-52}},
+      points={{32,-52},{68,-52},{68,-40},{114,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletHot.inlet, FThot.inlet) annotation (Line(
-      points={{-50,-70},{-50,-52},{20,-52}},
+      points={{-50,-62},{-50,-52},{20,-52}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletCold.outlet, FTcold.inlet) annotation (Line(
@@ -175,7 +175,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FTcold.outlet, outletCold) annotation (Line(
-      points={{-42,50},{-120,50}},
+      points={{-42,50},{-78,50},{-78,40},{-114,40}},
       color={140,56,54},
       thickness=0.5));
   connect(FTcold.m_flow, m_flow_outletCold) annotation (Line(points={{-43,60},{-48,60},{-48,110}}, color={0,0,127}));

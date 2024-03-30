@@ -286,13 +286,13 @@ model CoolingSingleLoad
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet connector at hot side"   annotation (
     Placement(visible = true,
               transformation(origin={-20,110}, extent = {{-10, -10}, {10, 10}}, rotation = 0),
-              iconTransformation(origin={-40,110}, extent={{-10,-10},{10,10}}, rotation = 0)));
+              iconTransformation(origin={-48,115}, extent={{-15,-15},{15,15}}, rotation = 0)));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot "Outlet connector at hot side"  annotation (
-    Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={40,110},    extent={{-10,-10},{10,10}},      rotation = 0)));
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet connector at cold side" annotation (Placement(transformation(extent={{30,-120},{50,-100}}), iconTransformation(
-          extent={{30,-120},{50,-100}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet connector at cold side" annotation (Placement(transformation(extent={{-50,-120},{-30,-100}}),
-        iconTransformation(extent={{-50,-120},{-30,-100}})));
+    Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={51,115},    extent={{-15,-15},{15,15}},      rotation = 0)));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet connector at cold side" annotation (Placement(transformation(extent={{34,-130},{64,-100}}), iconTransformation(
+          extent={{34,-130},{64,-100}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet connector at cold side" annotation (Placement(transformation(extent={{-64,-130},{-34,-100}}),
+        iconTransformation(extent={{-64,-130},{-34,-100}})));
 
   Modelica.Blocks.Interfaces.RealOutput FT7X1_FT annotation (Placement(transformation(extent={{100,-20},{120,0}}), iconTransformation(extent={{100,-20},{120,0}})));
   Modelica.Blocks.Interfaces.RealOutput TT7X1_TT annotation (Placement(transformation(extent={{100,60},{120,80}}), iconTransformation(extent={{100,60},{120,80}})));
@@ -355,7 +355,7 @@ equation
   connect(PL701_FCV701_FT701.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{15.9,34},{-60,34},{-60,10},{-24.1,10}}, color={255,238,44}));
   connect(PL701_SourceOut_FCV701.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{15.9,-16},{-60,-16},{-60,10},{-24.1,10}}, color={255,238,44}));
   connect(PL701_TT702_SourceIn1.outlet, outcold) annotation (Line(
-      points={{-20,-100},{-20,-110},{-40,-110}},
+      points={{-20,-100},{-20,-115},{-49,-115}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn1.inlet, TT7X4.inlet) annotation (Line(
@@ -367,7 +367,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn2.inlet, incold) annotation (Line(
-      points={{20,-100},{20,-110},{40,-110}},
+      points={{20,-100},{20,-115},{49,-115}},
       color={140,56,54},
       thickness=0.5));
   connect(FT701.q_m3hr, FT7X1_FT) annotation (Line(points={{28.5,56},{68,56},{68,-10},{110,-10}}, color={0,0,127}));
@@ -388,7 +388,8 @@ equation
       thickness=0.5));
   connect(PL701_TT702_SourceIn1.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{-24.1,-90},{-42,-90},{-42,-88},{-60,-88},{-60,10},{-24.1,10}}, color={255,238,44}));
   connect(PL701_TT702_SourceIn2.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{24.1,-90},{32,-90},{32,-96},{-60,-96},{-60,10},{-24.1,10}}, color={255,238,44}));
-  annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(graphics={
+  annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(coordinateSystem(grid={2,2}),
+                                                                              graphics={
         Text(
           extent={{-100,-140},{100,-180}},
           textColor={140,56,54},

@@ -81,14 +81,26 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
-  connect(MultiPort, EX701.MultiPort) annotation (Line(points={{-110,0},{-84,0},{-84,10},{-73,10}}, color={255,238,44}));
-  connect(MultiPort, EX711.MultiPort) annotation (Line(points={{-110,0},{-94,0},{-94,-14},{-34,-14},{-34,10},{-27,10}}, color={255,238,44}));
-  connect(EX721.MultiPort, EX701.MultiPort) annotation (Line(points={{19,10},{8,10},{8,-14},{-94,-14},{-94,0},{-84,0},{-84,10},{-73,10}}, color={255,238,44}));
-  connect(EX731.MultiPort, EX701.MultiPort) annotation (Line(points={{59,10},{52,10},{52,-14},{-94,-14},{-94,0},{-84,0},{-84,10},{-73,10}}, color={255,238,44}));
   connect(theta[1], EX701.theta) annotation (Line(points={{-110,66.25},{-88,66.25},{-88,17},{-73,17}}, color={0,0,127}));
   connect(theta[2], EX711.theta) annotation (Line(points={{-110,68.75},{-40,68.75},{-40,17},{-27,17}}, color={0,0,127}));
   connect(theta[3], EX721.theta) annotation (Line(points={{-110,71.25},{10,71.25},{10,17},{19,17}}, color={0,0,127}));
   connect(theta[4], EX731.theta) annotation (Line(points={{-110,73.75},{54,73.75},{54,17},{59,17}}, color={0,0,127}));
+  connect(MultiPort, EX701.MultiPort) annotation (Line(
+      points={{-110,0},{-84,0},{-84,10},{-73,10}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(MultiPort, EX711.MultiPort) annotation (Line(
+      points={{-110,0},{-84,0},{-84,-12},{-40,-12},{-40,10},{-27,10}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(EX721.MultiPort, EX711.MultiPort) annotation (Line(
+      points={{19,10},{8,10},{8,-12},{-40,-12},{-40,10},{-27,10}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(EX731.MultiPort, EX711.MultiPort) annotation (Line(
+      points={{59,10},{50,10},{50,-12},{-40,-12},{-40,10},{-27,10}},
+      color={255,101,98},
+      thickness=0.5));
   annotation (Diagram(coordinateSystem(preserveAspectRatio=false)), Icon(graphics={     Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern=
               FillPattern.Solid, lineThickness=2, extent={{-100,100},{100,-100}}, radius=10),                                                                                                                                    Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-80,76},
               {-20,16}}),                                                                                                                                                                                                        Ellipse(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{26,76},

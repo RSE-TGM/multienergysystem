@@ -7,6 +7,8 @@ connector MultiHeatPort
   annotation (
     defaultComponentName = "MultiPort",
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
-    Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2}), graphics={  Rectangle(lineColor = {255, 238, 44}, fillColor = {245, 163, 0}, pattern = LinePattern.None,
-            fillPattern =                                                                                                                                                                                                        FillPattern.Solid, extent = {{-100, 100}, {100, -100}})}));
+    Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2}), graphics={  Rectangle(lineColor={255,101,98},     fillColor={192,80,
+              77},
+            fillPattern=FillPattern.Forward,                                                                                                                                                                                                        extent = {{-100, 100}, {100, -100}},
+          lineThickness=0.5)}));
 end MultiHeatPort;

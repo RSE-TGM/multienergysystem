@@ -18,7 +18,7 @@ model RoundPipe1DFV
 // Flow parameter
   parameter Types.Density rho_start = 985 "Density start/reference value" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real q_m3h_start(unit = "m3/h") = 3600*m_flow_start/rho_start "volumetric flowrate start/Reference value" annotation (
+  parameter Real q_m3h_start(unit = "m3/h") = 3600*4/rho_start "volumetric flowrate start/Reference value" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation (
     Dialog(group = "Initialisation"));
@@ -33,7 +33,7 @@ model RoundPipe1DFV
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.Velocity u_nom = 5 "Nominal fluid velocity" annotation (
     Dialog(tab = "Data", group = "Fluid"));
-  parameter Types.Pressure p_nom = 5e5 "Nominal fluid velocity" annotation (
+  parameter Types.Pressure p_nom = 5e5 "Nominal working pressure" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state" annotation (
     Dialog(tab = "Data", group = "Fluid"));
@@ -107,8 +107,8 @@ outer System system "system object for global defaults";
     cp = 0.5*(fluid[1:end-1].cp + fluid[2:end].cp),
     mu = fluid[2:end].mu,
     k = fluid[2:end].kappa,
-    each m_flow_nom = m_flow_start,
-    p_nom = pout_start,
+    each m_flow_nom = m_flow_nom,
+    p_nom = p_nom,
     kc = kc);
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.MultiHeatPort wall(n=n)   annotation (

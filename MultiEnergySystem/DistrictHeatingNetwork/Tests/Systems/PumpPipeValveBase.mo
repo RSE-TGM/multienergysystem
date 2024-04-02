@@ -85,9 +85,9 @@ model PumpPipeValveBase
     p0=pin_start,
     T0=Tin_start,
     m_flow0=m_flow_start)                                                annotation (Placement(transformation(extent={{-80,10},{-60,-10}})));
-  Modelica.Blocks.Sources.TimeTable m_flowSet(table=omega)
+  Modelica.Blocks.Sources.TimeTable m_flowSet(table=m_flow)
                                              annotation (Placement(transformation(extent={{-100,-40},{-80,-20}})));
-  Modelica.Blocks.Sources.TimeTable poutSet(table=omega) annotation (Placement(transformation(extent={{50,-40},{70,-20}})));
+  Modelica.Blocks.Sources.TimeTable poutSet(table=pout)  annotation (Placement(transformation(extent={{50,-40},{70,-20}})));
 equation
   connect(pump.outlet, pipe.inlet) annotation (Line(
       points={{-32,0},{-23,0},{-23,1.77636e-15},{-14,1.77636e-15}},

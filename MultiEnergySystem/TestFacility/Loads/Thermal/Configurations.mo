@@ -2038,7 +2038,7 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={121,-215.5})));
 
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_FCV701_FT701(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
         L=L_FCV701_FT701,
         h=h_FCV701_FT701,
         t=t_S700,
@@ -2052,7 +2052,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={140,-122})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_SourceOut_FCV701(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_SourceOut_FCV701(
         L=L_HX701_SourceOut_FCV701,
         h=h_HX701_SourceOut_FCV701,
         t=t_S700,
@@ -2086,7 +2086,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-5,5},{5,-5}},
             rotation=90,
             origin={142,-74})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_TT702_SourceIn(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn(
         L=L_HX701_TT702_SourceIn,
         h=h_HX701_TT702_SourceIn,
         t=t_S700,
@@ -2178,7 +2178,7 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={460,-150})));
 
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_FCV711_FT711(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FCV711_FT711(
         L=L_FCV711_FT711,
         h=h_FCV711_FT711,
         t=t_S700,

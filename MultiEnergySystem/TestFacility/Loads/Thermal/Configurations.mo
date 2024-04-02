@@ -2979,13 +2979,13 @@ package Configurations "Different possible configurations for the loads"
         use_in_m_flow=true,
         pin_start=200000,
         p0=200000,
-        T0=288.15) annotation (Placement(transformation(extent={{570,-290},{550,-310}})));
+        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{570,-290},{550,-310}})));
       DistrictHeatingNetwork.Sources.SinkMassFlow
                            FT713(
         use_in_m_flow=true,
         pin_start=200000,
         p0=200000,
-        T0=288.15) annotation (Placement(transformation(extent={{404,-290},{384,-310}})));
+        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{404,-290},{384,-310}})));
       DistrictHeatingNetwork.Sources.SourcePressure VER1(
         use_in_T0=true,
         p0=210000,
@@ -3015,13 +3015,13 @@ package Configurations "Different possible configurations for the loads"
         use_in_m_flow=true,
         pin_start=200000,
         p0=200000,
-        T0=288.15) annotation (Placement(transformation(extent={{242,-290},{222,-310}})));
+        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{242,-290},{222,-310}})));
       DistrictHeatingNetwork.Sources.SinkMassFlow
                            FT703(
         use_in_m_flow=true,
         pin_start=200000,
         p0=200000,
-        T0=288.15) annotation (Placement(transformation(extent={{84,-290},{64,-310}})));
+        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{84,-290},{64,-310}})));
     equation
       connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
           points={{140,-132},{140,-140}},

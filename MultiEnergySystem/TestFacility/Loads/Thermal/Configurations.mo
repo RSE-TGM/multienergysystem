@@ -2192,7 +2192,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={460,-120})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_SourceOut_FCV711(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_SourceOut_FCV711(
         L=L_HX711_SourceOut_FCV711,
         h=h_HX711_SourceOut_FCV711,
         t=t_S700,
@@ -2226,7 +2226,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-5,5},{5,-5}},
             rotation=90,
             origin={462,-72})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_TT712_SourceIn(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_TT712_SourceIn(
         L=L_HX711_TT712_SourceIn,
         h=h_HX711_TT712_SourceIn,
         t=t_S700,
@@ -2318,7 +2318,7 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={620,-150})));
 
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_FCV721_FT721(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FCV721_FT721(
         L=L_FCV721_FT721,
         h=h_FCV721_FT721,
         t=t_S700,
@@ -2332,7 +2332,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={620,-122})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_SourceOut_FCV721(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_SourceOut_FCV721(
         L=L_HX721_SourceOut_FCV721,
         h=h_HX721_SourceOut_FCV721,
         t=t_S700,
@@ -2366,7 +2366,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-5,5},{5,-5}},
             rotation=90,
             origin={622,-72})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_TT722_SourceIn(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_TT722_SourceIn(
         L=L_HX721_TT722_SourceIn,
         h=h_HX721_TT722_SourceIn,
         t=t_S700,
@@ -2458,7 +2458,7 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={300,-150})));
 
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_FCV731_FT731(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FCV731_FT731(
         L=L_FCV731_FT731,
         h=h_FCV731_FT731,
         t=t_S700,
@@ -2472,7 +2472,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={300,-124})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_SourceOut_FCV731(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_SourceOut_FCV731(
         L=L_HX731_SourceOut_FCV731,
         h=h_HX731_SourceOut_FCV731,
         t=t_S700,
@@ -2506,7 +2506,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-5,5},{5,-5}},
             rotation=90,
             origin={302,-76})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_TT732_SourceIn(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_TT732_SourceIn(
         L=L_HX731_TT732_SourceIn,
         h=h_HX731_TT732_SourceIn,
         t=t_S700,
@@ -2854,7 +2854,7 @@ package Configurations "Different possible configurations for the loads"
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h4 = 5;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure dpRR = 1e5;
 
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_FT701_rackL2L3(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
         L=L_FT701_rackL2L3,
         h=h_FT701_rackL2L3,
         t=t_S700,
@@ -2868,7 +2868,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={140,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL701_rackL2L3_TT702(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
         L=L_rackL2L3_TT702,
         h=h_rackL2L3_TT702,
         t=t_S700,
@@ -2882,7 +2882,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={100,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_FT711_rackL3L4(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FT711_rackL3L4(
         L=L_FT711_rackL3L4,
         h=h_FT711_rackL3L4,
         t=t_S700,
@@ -2896,7 +2896,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={460,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL711_rackL3L4_TT712(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(
         L=L_rackL3L4_TT712,
         h=h_rackL3L4_TT712,
         t=t_S700,
@@ -2910,7 +2910,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={420,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_FT721_rackL4L5(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(
         L=L_FT721_rackL4L5,
         h=h_FT721_rackL4L5,
         t=t_S700,
@@ -2924,7 +2924,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={620,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL721_rackL4L5_TT722(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(
         L=L_rackL4L5_TT722,
         h=h_rackL4L5_TT722,
         t=t_S700,
@@ -2938,7 +2938,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={580,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_FT731_rackL6L7(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(
         L=L_FT731_rackL6L7,
         h=h_FT731_rackL6L7,
         t=t_S700,
@@ -2952,7 +2952,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={300,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipeFV PL731_rackL6L7_TT732(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(
         L=L_rackL6L7_TT732,
         h=h_rackL6L7_TT732,
         t=t_S700,

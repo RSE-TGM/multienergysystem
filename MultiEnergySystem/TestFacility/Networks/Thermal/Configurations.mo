@@ -730,13 +730,13 @@ package Configurations
       DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P401(Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start, Tout_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P401.a, b = DistrictHeatingNetwork.Data.PumpData.P401.b, m_flow_start = m_flow_S4, dpnom = DistrictHeatingNetwork.Data.PumpData.P401.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P401.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P401.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P401.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P401.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P401.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P401.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P401.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P401.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h, use_in_omega = true) annotation(
         Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-318, -171})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation(
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-318, -136})));
+        Placement(transformation(origin = {-318, -110}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(L = L_S4_PL3, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation(
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-318, -232})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S401(L = L_S4_PL2, t = t_S4, m_flow_start = m_flow_S4, pin_start = pin_start_S4, pout_start = pin_start_S4, Tin_start = Tin_start_S4, Tout_start = Tin_start_S4, Di = Di_S4, hctype = hctype, n = n) annotation(
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-358, -234})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(L = L_S4_PL3, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation(
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-318, -108})));
+        Placement(transformation(origin = {-318, -142}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
       DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT402(T_start = Tout_start_S4, p_start = pout_start_S4) "Temperature sensor at the outlet of valve FCV401" annotation(
         Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-316, -70})));
       DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT402 "Pressure sensor at the outlet of valve FCV401" annotation(
@@ -760,14 +760,8 @@ package Configurations
     equation
       connect(P401.inlet, PL3_S401.outlet) annotation(
         Line(points = {{-318, -180.6}, {-318, -222}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(FCV401.inlet, P401.outlet) annotation(
-        Line(points = {{-318, -146}, {-318, -161.4}}, color = {140, 56, 54}, thickness = 0.5));
       connect(TT402.inlet, PT402.inlet) annotation(
         Line(points = {{-318.4, -70}, {-318.4, -82}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(PL4_S401.inlet, FCV401.outlet) annotation(
-        Line(points = {{-318, -118}, {-318, -126}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(PT402.inlet, PL4_S401.outlet) annotation(
-        Line(points = {{-318.4, -82}, {-318.4, -91}, {-318, -91}, {-318, -98}}, color = {140, 56, 54}, thickness = 0.5));
       connect(FT401.outlet, PL2_S401.inlet) annotation(
         Line(points = {{-358.2, -195.2}, {-358.2, -203.6}, {-358, -203.6}, {-358, -224}}, color = {140, 56, 54}, thickness = 0.5));
       connect(PL1_S401.outlet, FT401.inlet) annotation(
@@ -792,6 +786,12 @@ package Configurations
         Line(points = {{-318, -6}, {-318, 45}, {-338, 45}}, color = {140, 56, 54}, thickness = 0.5));
       connect(PL2_S401.outlet, EB401.inlet) annotation(
         Line(points = {{-358, -244}, {-358, -258}, {-347.5, -258}, {-347.5, -273}}, color = {140, 56, 54}, thickness = 0.5));
+  connect(P401.outlet, PL4_S401.inlet) annotation(
+        Line(points = {{-318, -162}, {-318, -152}}, color = {140, 56, 54}));
+  connect(PL4_S401.outlet, FCV401.inlet) annotation(
+        Line(points = {{-318, -132}, {-318, -120}}, color = {140, 56, 54}));
+  connect(FCV401.outlet, PT402.inlet) annotation(
+        Line(points = {{-318, -100}, {-318, -82}}, color = {140, 56, 54}));
     end CentralizedSystemLoadSimplifiedI_B;
 
     partial model CentralizedSystemSimplifiedLoadSimplifiedI "System with only Gas Boiler as source of heat"

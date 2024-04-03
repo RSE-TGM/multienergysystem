@@ -593,14 +593,13 @@ equation
           -120},{638,-120}}, color={0,0,127}));
   connect(FT731.m_flow, FT731Offset.y) annotation (Line(points={{305,-102.5},{305,-100},{314,-100},{
           314,-120},{322,-120}}, color={0,0,127}));
-  connect(TcoolSP.y, VER3.in_T0) annotation (Line(points={{701,-346},{450,-346},{450,-354},{182,-354},
-          {182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
-  connect(VER2.in_T0, VER3.in_T0) annotation (Line(points={{319,-290.6},{319,-278},{342,-278},{342,-354},
-          {182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
-  connect(VER1.in_T0, VER3.in_T0) annotation (Line(points={{479,-290.6},{479,-278},{502,-278},{502,-346},
-          {450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
-  connect(VER901.in_T0, VER3.in_T0) annotation (Line(points={{641,-288.6},{641,-270},{674,-270},{674,
-          -346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
+  connect(TcoolSP.y, coldSourcePEX701.in_T0) annotation (Line(points={{701,-346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
+  connect(coldSourcePEX731.in_T0, coldSourcePEX701.in_T0)
+    annotation (Line(points={{319,-290.6},{319,-278},{342,-278},{342,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
+  connect(coldSourcePEX711.in_T0, coldSourcePEX701.in_T0)
+    annotation (Line(points={{479,-290.6},{479,-278},{502,-278},{502,-346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
+  connect(coldSourcePEX721.in_T0, coldSourcePEX701.in_T0)
+    annotation (Line(points={{641,-288.6},{641,-270},{674,-270},{674,-346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
   connect(thetaFCVC01.y, FCVC01.opening) annotation (Line(points={{271,234},{264.5,234},{264.5,235},{258,235}}, color={0,0,127}));
   connect(controlSignalBus.domegaP101, omegaP101Offset.deltaUnorm) annotation (Line(
       points={{-897,-3},{-706,-3},{-706,-202},{-176,-202},{-176,-180},{-202,-180}},

@@ -2063,15 +2063,15 @@ package Tests
 
       model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat source only"
         extends
-          MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI(      FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], P101omega = [0, 2*pi*30; 100, 2*pi*30; 100, 2*pi*30; 200, 2*pi*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15], GB101(h = 1.2*0.93, Pmaxnom = 147.6e3*0.8));
+          MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI(FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], P101omega = [0, 2*pi*30; 100, 2*pi*30; 100, 2*pi*30; 200, 2*pi*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15], GB101(h = 1.2*0.93, Pmaxnom = 147.6e3*0.8));
         Modelica.Blocks.Sources.TimeTable FCV901_theta(table = FCV901theta) annotation (
           Placement(transformation(extent={{-682,103},{-702,123}})));
         DistrictHeatingNetwork.Sources.PumpInput P901_input(useOmega = true, omega = P901omega, q_m3h = P901qm3h) annotation (
           Placement(transformation(extent = {{-714, 54}, {-734, 75}})));
         Modelica.Blocks.Sources.TimeTable FCVC01_theta(table = FCVC01theta) annotation (
-          Placement(transformation(extent = {{300, 289}, {280, 309}})));
+          Placement(transformation(extent={{332,290},{312,310}})));
         Modelica.Blocks.Sources.TimeTable FCVC02_theta(table = FCVC02theta) annotation (
-          Placement(transformation(extent = {{740, 289}, {720, 309}})));
+          Placement(transformation(extent={{782,290},{762,310}})));
         Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k = FV933_state) annotation (
           Placement(transformation(extent = {{-185, 55}, {-205, 75}})));
         Modelica.Blocks.Sources.TimeTable FCV101_theta(table = FCV101theta) annotation (
@@ -2123,13 +2123,17 @@ package Tests
           k=1,
           T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-716,104},{-736,124}})));
+        Modelica.Blocks.Continuous.FirstOrder FCVC01_firstOrder(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{300,290},{280,310}})));
+        Modelica.Blocks.Continuous.FirstOrder FCVC02_firstOrder(
+          k=1,
+          T=1,
+          initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{750,290},{730,310}})));
       equation
         connect(P901_input.y, P901.in_omega) annotation (
           Line(points = {{-735, 64.5}, {-743.5, 64.5}, {-743.5, 66.3}, {-747.25, 66.3}}, color = {0, 0, 127}));
-        connect(FCVC01_theta.y, FCVC01.opening) annotation (
-          Line(points = {{279, 299}, {268, 299}, {268, 235}, {258, 235}}, color = {0, 0, 127}));
-        connect(FCVC02_theta.y, FCVC02.opening) annotation (
-          Line(points = {{719, 299}, {710, 299}, {710, 234}, {698, 234}, {698, 235}}, color = {0, 0, 127}));
         connect(FV933_OnOff.y, FV933.u) annotation (
           Line(points = {{-206, 65}, {-218, 65}, {-218, 46.6}}, color = {255, 0, 255}));
         connect(FCV701_theta.y, FCV701.opening) annotation (
@@ -2160,14 +2164,51 @@ package Tests
         connect(
           FCV101_firstOrder.y, FCV101.opening) annotation (
           Line(points = {{-227, -110}, {-232, -110}}, color = {0, 0, 127}));
-        connect(FCV901_firstOrder.y, FCV901.opening) annotation (Line(points={{-737,114},{-744,114},{-744,115},{-749,115}}, color={0,0,127}));
+        connect(FCV901_firstOrder.y, FCV901.opening) annotation (Line(points={{-737,114},{-744,114},{-744,140.5},{-749.9,140.5}},
+                                                                                                                            color={0,0,127}));
         connect(FCV901_theta.y, FCV901_firstOrder.u) annotation (Line(points={{-703,113},{-708.5,113},{-708.5,114},{-714,114}}, color={0,0,127}));
+        connect(FCVC01_firstOrder.u, FCVC01_theta.y) annotation (Line(points={{302,300},{311,300}}, color={0,0,127}));
+        connect(FCVC01_firstOrder.y, FCVC01.opening) annotation (Line(points={{279,300},{270,300},{270,235},{258,235}}, color={0,0,127}));
+        connect(FCVC02_theta.y, FCVC02_firstOrder.u) annotation (Line(points={{761,300},{752,300}}, color={0,0,127}));
+        connect(FCVC02_firstOrder.y, FCVC02.opening) annotation (Line(points={{729,300},{720,300},{720,235},{698,235}}, color={0,0,127}));
       annotation (
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end CentralisedSystemLoadSimplifiedI_A;
 
       model CentralisedSystemLoadSimplifiedI_B
-        extends CentralisedSystemLoadSimplifiedI_A(VER901(T0 = 15 + 273.15), FV933_state = false, P901omega = [0, 2*pi*30; 500, 2*pi*30], P101omega = [0, 2*pi*30; 1000, 2*pi*30], pin_start_rCD_cold = 1.66e5, VE901(p0(displayUnit = "Pa") = 166000), P101qm3h = [0, 14; 100, 14], T_start_cold = 72 + 273.15, T_start_hot = 80 + 273.15, Tin_start_S1 = 72 + 273.15, Tout_start_S1 = 80 + 273.15, FCV101theta = [0, 1; 100, 1], FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 0; 100, 0], FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 8000, 0.2; 8000, 0.5; 10000, 0.5], EX701_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX711_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX721_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX731_TinCold = [0, 22 + 273.15; 100, 22 + 273.15], EX701q_m3h_cold = [0, 4.2; 100, 4.2], EX711q_m3h_cold = [0, 4.2; 100, 4.2], EX721q_m3h_cold = [0, 4.2; 100, 4.2], EX731q_m3h_cold = [0, 4.2; 100, 4.2], GB101(Pmaxnom = 147.6e3*0.8), ToutcoolSP = [0, 25.5; 500, 25.5; 500, 12; 1000, 12], EX701(Tin_start_hot = T_start_hot), EX731(Tin_start_hot = T_start_hot), FCV901(Kv = 20));
+        extends CentralisedSystemLoadSimplifiedI_A(
+          coldSourcePEX721(T0=15 + 273.15),
+          FV933_state=false,
+          P901omega=[0,2*pi*30; 500,2*pi*30],
+          P101omega=[0,2*pi*30; 1000,2*pi*30],
+          pin_start_rCD_cold=1.66e5,
+          VE901(p0(displayUnit="Pa") = 166000),
+          P101qm3h=[0,14; 100,14],
+          T_start_cold=72 + 273.15,
+          T_start_hot=80 + 273.15,
+          Tin_start_S1=72 + 273.15,
+          Tout_start_S1=80 + 273.15,
+          FCV101theta=[0,1; 100,1],
+          FCVC01theta=[0,0; 100,0],
+          FCVC02theta=[0,0; 100,0],
+          FCV701theta=[0,1; 100,1],
+          FCV711theta=[0,1; 100,1],
+          FCV721theta=[0,1; 100,1],
+          FCV731theta=[0,1; 100,1],
+          FCVR01theta=[0,0.2; 8000,0.2; 8000,0.5; 10000,0.5],
+          EX701_TinCold=[0,22 + 273.15; 100,22 + 273.15],
+          EX711_TinCold=[0,22 + 273.15; 100,22 + 273.15],
+          EX721_TinCold=[0,22 + 273.15; 100,22 + 273.15],
+          EX731_TinCold=[0,22 + 273.15; 100,22 + 273.15],
+          EX701q_m3h_cold=[0,4.2; 100,4.2],
+          EX711q_m3h_cold=[0,4.2; 100,4.2],
+          EX721q_m3h_cold=[0,4.2; 100,4.2],
+          EX731q_m3h_cold=[0,4.2; 100,4.2],
+          GB101(Pmaxnom=147.6e3*0.8),
+          ToutcoolSP=[0,25.5; 500,25.5; 500,12; 1000,12],
+          EX701(Tin_start_hot=T_start_hot),
+          EX731(Tin_start_hot=T_start_hot),
+          FCV901(Kv=20));
         // System 400
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
@@ -2880,9 +2921,10 @@ Control")}),
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
     equation
       connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus) annotation (
-        Line(points = {{51, 0}, {66, 0}, {66, -48}, {-66, -48}, {-66, 0}, {-48, 0}}, color = {255, 204, 51}, thickness = 0.5));
+        Line(points={{51.36,0},{66,0},{66,-48},{-66,-48},{-66,-0.38},{-48.02,-0.38}},color = {255, 204, 51}, thickness = 0.5));
       connect(thermalPlantController.controlSignalBus, centralisedSystemI_B_InitForward.controlSignalBus) annotation (
-        Line(points = {{-7, 0}, {13, 0}}, color = {255, 204, 51}, thickness = 0.5));
+        Line(points={{-7.32,0},{2,0},{2,-0.38},{12.86,-0.38}},
+                                          color = {255, 204, 51}, thickness = 0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),

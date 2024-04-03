@@ -1,51 +1,55 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemLoadSimplifiedI_B_FMU
   extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
-    Tout_start_Cool = 16.5 + 273.15,
-    EX701_Tin_hot = T_start_hot,
-    EX711_Tin_hot = T_start_hot,
-    EX721_Tin_hot = T_start_hot,
-    EX731_Tin_hot = T_start_hot,
-    EX701_Tout_hot = T_start_hot-20,
-    EX711_Tout_hot = T_start_hot-20,
-    EX721_Tout_hot = T_start_hot-20,
-    EX731_Tout_hot = T_start_hot-20,
-    EX701_Tin_cold = 16.5 + 273.15,
-    EX711_Tin_cold = 16.5 + 273.15,
-    EX721_Tin_cold = 16.5 + 273.15,
-    EX731_Tin_cold = 16.5 + 273.15,
-    FCVC01theta = [0, 0; 1e6, 0],
-    FCVC02theta = [0, 0.5; 1e6, 0.5],
-    FCV101theta = [0, 1; 1e6, 1],
-    FCV401theta = [0, 1; 1e6, 1],
-    FCV901theta = [0, 1; 1e6, 1],
-    FCV701theta = [0, 1; 1e6, 1],
-    FCV711theta = [0, 1; 1e6, 1],
-    FCV721theta = [0, 0.75; 442, 0.75; 442, 1; 890, 1; 1848, 0.79; 4505, 0.79; 7250, 0.96; 9538, 0.78; 1e6, 0.78],
-    FCV731theta = [0, 0.9; 0.041e4, 0.9; 0.041e4, 1; 0.3684e4, 1; 0.5e4, 0.92; 1e6, 0.92],
+    coldSourcePEX721(T0=EX721_Tin_cold),
+    coldSourcePEX711(T0=EX711_Tin_cold),
+    coldSourcePEX731(T0=EX731_Tin_cold),
+    coldSourcePEX701(T0=EX701_Tin_cold),
+    Tout_start_Cool=16.5 + 273.15,
+    EX701_Tin_hot=T_start_hot,
+    EX711_Tin_hot=T_start_hot,
+    EX721_Tin_hot=T_start_hot,
+    EX731_Tin_hot=T_start_hot,
+    EX701_Tout_hot=T_start_hot - 20,
+    EX711_Tout_hot=T_start_hot - 20,
+    EX721_Tout_hot=T_start_hot - 20,
+    EX731_Tout_hot=T_start_hot - 20,
+    EX701_Tin_cold=16.5 + 273.15,
+    EX711_Tin_cold=16.5 + 273.15,
+    EX721_Tin_cold=16.5 + 273.15,
+    EX731_Tin_cold=16.5 + 273.15,
+    FCVC01theta=[0,0; 1e6,0],
+    FCVC02theta=[0,0.5; 1e6,0.5],
+    FCV101theta=[0,1; 1e6,1],
+    FCV401theta=[0,1; 1e6,1],
+    FCV901theta=[0,1; 1e6,1],
+    FCV701theta=[0,1; 1e6,1],
+    FCV711theta=[0,1; 1e6,1],
+    FCV721theta=[0,0.75; 442,0.75; 442,1; 890,1; 1848,0.79; 4505,0.79; 7250,0.96; 9538,0.78; 1e6,0.78],
+    FCV731theta=[0,0.9; 0.041e4,0.9; 0.041e4,1; 0.3684e4,1; 0.5e4,0.92; 1e6,0.92],
     VE901(p0=1.76e5),
-    Tout_start_S9 = 80 + 273.15,
-    T_start_hot = 80 + 273.15,
+    Tout_start_S9=80 + 273.15,
+    T_start_hot=80 + 273.15,
     GB101(Tout_start=353.15),
     EB401(Tout_start=353.15, nR=5),
     FCVC01(Tin_start=T_start_hot, q_m3h_start=q_m3h_rackHot/4),
-    VER3(T0=EX701_Tin_cold),
-    VER2(T0=EX731_Tin_cold),
-    VER1(T0=EX711_Tin_cold),
-    VER901(T0=EX721_Tin_cold),
     FCV101(Kv=20),
     rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5*0),
     FCVC02(Kv=25),
-    EX701(n=3,
+    EX701(
+      n=3,
       m_flow_start_hot=EX701_q_m3h_hot*1000/3600,
       m_flow_start_cold=EX701_q_m3h_cold*1000/3600),
-    EX731(n=3,
+    EX731(
+      n=3,
       m_flow_start_hot=EX731_q_m3h_hot*1000/3600,
       m_flow_start_cold=EX731_q_m3h_cold*1000/3600),
-    EX711(n=3,
+    EX711(
+      n=3,
       m_flow_start_hot=EX711_q_m3h_hot*1000/3600,
       m_flow_start_cold=EX711_q_m3h_cold*1000/3600),
-    EX721(n=3,
+    EX721(
+      n=3,
       m_flow_start_hot=EX721_q_m3h_hot*1000/3600,
       m_flow_start_cold=EX721_q_m3h_cold*1000/3600),
     FCV901(Kv=20));
@@ -134,19 +138,21 @@ equation
   connect(P901.in_omega, omega_P901) annotation (Line(points={{-747.25,66.3},{-728.625,66.3},{-728.625,
           66},{-710,66}}, color={0,0,127}));
   connect(FCV901.opening, theta_FCV901)
-    annotation (Line(points={{-749,115},{-730.5,115},{-730.5,114},{-712,114}}, color={0,0,127}));
+    annotation (Line(points={{-749.9,140.5},{-730.5,140.5},{-730.5,114},{-712,114}},
+                                                                               color={0,0,127}));
   connect(FCVC01.opening, FCV_C01) annotation (Line(points={{258,235},{276,235},
           {276,234},{294,234}}, color={0,0,127}));
   connect(FCV_C02, FCVC02.opening)
     annotation (Line(points={{734,234},{698,234},{698,235}}, color={0,0,127}));
-  connect(EB401.Tout_ref, EB401_Tout) annotation (Line(points={{-365,-301},{-374.5,
-          -301},{-374.5,-300},{-398,-300}}, color={0,0,127}));
-  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-285,-301},{-285,
-          -300},{-314,-300}}, color={0,0,127}));
+  connect(EB401.Tout_ref, EB401_Tout) annotation (Line(points={{-361.5,-301},{-374.5,-301},{-374.5,-300},{-398,-300}},
+                                            color={0,0,127}));
+  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-281.5,-301},{-281.5,-300},{-314,-300}},
+                              color={0,0,127}));
   connect(theta_FCV101, FCV101.opening)
     annotation (Line(points={{-194,-110},{-232,-110}}, color={0,0,127}));
   connect(FCV401.opening, theta_FCV401)
-    annotation (Line(points={{-310,-136},{-286,-136}}, color={0,0,127}));
+    annotation (Line(points={{-310,-110},{-298,-110},{-298,-136},{-286,-136}},
+                                                       color={0,0,127}));
   connect(theta_FCV701, FCV701.opening)
     annotation (Line(points={{176,-150},{148,-150}}, color={0,0,127}));
   connect(FCV731.opening, theta_FCV731)
@@ -178,14 +184,10 @@ equation
     annotation (Line(points={{91.5,-120},{70,-120}}, color={0,0,127}));
   connect(omega_P101, P101.in_omega) annotation (Line(points={{-198,-180},{-216,-180},{-216,-179.8},
           {-234,-179.8}}, color={0,0,127}));
-  connect(VER901.in_T0, EX721_Tcold)
-    annotation (Line(points={{641,-288.6},{641,-278.3},{676,-278.3},{676,-268}}, color={0,0,127}));
-  connect(EX711_Tcold, VER1.in_T0)
-    annotation (Line(points={{512,-270},{479,-270},{479,-290.6}}, color={0,0,127}));
-  connect(EX731_Tcold, VER2.in_T0)
-    annotation (Line(points={{356,-260},{319,-260},{319,-290.6}}, color={0,0,127}));
-  connect(EX701_Tcold, VER3.in_T0)
-    annotation (Line(points={{192,-268},{159,-268},{159,-290.6}}, color={0,0,127}));
+  connect(coldSourcePEX721.in_T0, EX721_Tcold) annotation (Line(points={{641,-288.6},{641,-278.3},{676,-278.3},{676,-268}}, color={0,0,127}));
+  connect(EX711_Tcold, coldSourcePEX711.in_T0) annotation (Line(points={{512,-270},{479,-270},{479,-290.6}}, color={0,0,127}));
+  connect(EX731_Tcold, coldSourcePEX731.in_T0) annotation (Line(points={{356,-260},{319,-260},{319,-290.6}}, color={0,0,127}));
+  connect(EX701_Tcold, coldSourcePEX701.in_T0) annotation (Line(points={{192,-268},{159,-268},{159,-290.6}}, color={0,0,127}));
   connect(EX701_mflowcold, FT703.in_m_flow)
     annotation (Line(points={{50,-320},{80,-320},{80,-305}}, color={0,0,127}));
   connect(EX731_mflowcold, FT733.in_m_flow) annotation (Line(points={{198,-320},{218,-320},{218,-318},
@@ -194,10 +196,10 @@ equation
     annotation (Line(points={{368,-320},{400,-320},{400,-305}}, color={0,0,127}));
   connect(EX721_mflowcold, FT723.in_m_flow)
     annotation (Line(points={{538,-320},{566,-320},{566,-305}}, color={0,0,127}));
-  connect(GB101Status.y, GB101.heat_on) annotation (Line(points={{-317,-344},{-308,-344},{-308,-342},
-          {-300,-342},{-300,-322},{-285,-322}}, color={255,0,255}));
-  connect(EB401Status.y, EB401.heat_on) annotation (Line(points={{-403,-336},{-394,-336},{-394,-338},
-          {-386,-338},{-386,-322},{-365,-322}}, color={255,0,255}));
+  connect(GB101Status.y, GB101.heat_on) annotation (Line(points={{-317,-344},{-308,-344},{-308,-342},{-300,-342},{-300,-318.5},{-281.5,-318.5}},
+                                                color={255,0,255}));
+  connect(EB401Status.y, EB401.heat_on) annotation (Line(points={{-403,-336},{-394,-336},{-394,-338},{-386,-338},{-386,-318.5},{-361.5,-318.5}},
+                                                color={255,0,255}));
   connect(omega_P401, P401.in_omega) annotation (Line(points={{-286,-176},{-299,-176},{-299,-175.8},
           {-312,-175.8}}, color={0,0,127}));
   connect(TT701.T, TT_701) annotation (Line(points={{148.5,-88},{168,-88}}, color={0,0,127}));

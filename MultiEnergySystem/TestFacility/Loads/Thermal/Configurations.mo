@@ -1973,628 +1973,13 @@ package Configurations "Different possible configurations for the loads"
     end LoadPlantBase;
 
     partial model LoadPlantBaseSimplified
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom,
-        Tin_start(displayUnit="K") = EX701_Tout_hot,
-        pin_start=EX701_pout_hot,
-        q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=-90,
-            origin={140,-150})));
-
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX701(
-        redeclare model Medium = Medium,
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=EX701_Tin_cold,
-        Tin_start_hot=EX701_Tin_hot,
-        Tout_start_cold=EX701_Tout_cold,
-        Tout_start_hot=EX701_Tout_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={121,-215.5})));
-
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
-        L=L_FCV701_FT701,
-        h=h_FCV701_FT701,
-        t=t_S700,
-        pin_start=FCV701_pout,
-        Tin_start=EX701_Tout_hot,
-        Tout_start=EX701_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX701_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={140,-122})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_SourceOut_FCV701(
-        L=L_HX701_SourceOut_FCV701,
-        h=h_HX701_SourceOut_FCV701,
-        t=t_S700,
-        pin_start=EX701_pout_hot,
-        Tin_start=EX701_Tout_hot,
-        Tout_start=EX701_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX701_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={140,-182})));
-      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT701(T_start=
-            EX701_Tout_hot, p_start=FCV701_pout)
-        "Flow sensor at the outlet outlet of EX701 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={142,-104})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT701(T_start=
-            EX701_Tout_hot, p_start=FCV701_pout)
-        "Temperature sensor at the outlet of EX701 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={142,-88})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT701
-        "Pressure sensor at the outlet of EX701 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={142,-74})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn(
-        L=L_HX701_TT702_SourceIn,
-        h=h_HX701_TT702_SourceIn,
-        t=t_S700,
-        pin_start=EX701_pin_hot,
-        Tin_start=EX701_Tin_hot,
-        Tout_start=EX701_Tin_hot,
-        Di=Di_S700,
-        q_m3h_start=EX701_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=-90,
-            origin={100,-150})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT702(T_start=
-            EX701_Tin_hot, p_start=EX701_pin_hot)
-        "Temperature sensor at the inlet of EX701 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={98,-120})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT702
-        "Pressure sensor at the inlet of EX701 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={98,-80})));
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX711(
-        redeclare model Medium = Medium,
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=EX711_Tin_cold,
-        Tin_start_hot=EX711_Tin_hot,
-        Tout_start_cold=EX711_Tout_cold,
-        Tout_start_hot=EX711_Tout_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={441,-218.5})));
-
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom,
-        Tin_start(displayUnit="K") = EX711_Tout_hot,
-        pin_start=EX711_pout_hot,
-        q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=-90,
-            origin={460,-150})));
-
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FCV711_FT711(
-        L=L_FCV711_FT711,
-        h=h_FCV711_FT711,
-        t=t_S700,
-        pin_start=FCV711_pout,
-        Tin_start=EX711_Tout_hot,
-        Tout_start=EX711_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX711_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={460,-120})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_SourceOut_FCV711(
-        L=L_HX711_SourceOut_FCV711,
-        h=h_HX711_SourceOut_FCV711,
-        t=t_S700,
-        pin_start=EX711_pout_hot,
-        Tin_start=EX711_Tout_hot,
-        Tout_start=EX711_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX711_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={460,-180})));
-      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT711(T_start=
-            EX711_Tout_hot, p_start=FCV711_pout)
-        "Flow sensor at the outlet outlet of EX711 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={462,-102})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT711(T_start=
-            EX711_Tout_hot, p_start=FCV711_pout)
-        "Temperature sensor at the outlet of EX711 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={462,-86})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT711
-        "Pressure sensor at the outlet of EX711 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={462,-72})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_TT712_SourceIn(
-        L=L_HX711_TT712_SourceIn,
-        h=h_HX711_TT712_SourceIn,
-        t=t_S700,
-        pin_start=EX711_pin_hot,
-        Tin_start=EX711_Tin_hot,
-        Tout_start=EX711_Tin_hot,
-        Di=Di_S700,
-        q_m3h_start=EX711_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=-90,
-            origin={420,-150})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT712(T_start=
-            EX711_Tin_hot, p_start=EX711_pin_hot)
-        "Temperature sensor at the inlet of EX711 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={418,-120})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT712
-        "Pressure sensor at the inlet of EX711 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={418,-80})));
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX721(
-        redeclare model Medium = Medium,
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=EX721_Tin_cold,
-        Tin_start_hot=EX721_Tin_hot,
-        Tout_start_cold=EX721_Tout_cold,
-        Tout_start_hot=EX721_Tout_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={599,-218.5})));
-
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom,
-        Tin_start(displayUnit="K") = EX721_Tout_hot,
-        pin_start=EX721_pout_hot,
-        q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=-90,
-            origin={620,-150})));
-
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FCV721_FT721(
-        L=L_FCV721_FT721,
-        h=h_FCV721_FT721,
-        t=t_S700,
-        pin_start=FCV721_pout,
-        Tin_start=EX721_Tout_hot,
-        Tout_start=EX721_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX721_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={620,-122})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_SourceOut_FCV721(
-        L=L_HX721_SourceOut_FCV721,
-        h=h_HX721_SourceOut_FCV721,
-        t=t_S700,
-        pin_start=EX721_pout_hot,
-        Tin_start=EX721_Tout_hot,
-        Tout_start=EX721_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX721_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={620,-180})));
-      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT721(T_start=
-            EX721_Tout_hot, p_start=FCV721_pout)
-        "Flow sensor at the outlet outlet of EX721 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={622,-102})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT721(T_start=
-            EX721_Tout_hot, p_start=FCV721_pout)
-        "Temperature sensor at the outlet of EX721 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={622,-86})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT721
-        "Pressure sensor at the outlet of EX721 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={622,-72})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_TT722_SourceIn(
-        L=L_HX721_TT722_SourceIn,
-        h=h_HX721_TT722_SourceIn,
-        t=t_S700,
-        pin_start=EX721_pin_hot,
-        Tin_start=EX721_Tin_hot,
-        Tout_start=EX721_Tin_hot,
-        Di=Di_S700,
-        q_m3h_start=EX721_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=-90,
-            origin={580,-150})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT722(T_start=
-            EX721_Tin_hot, p_start=EX721_pin_hot)
-        "Temperature sensor at the inlet of EX721 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={578,-120})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT722
-        "Pressure sensor at the inlet of EX721 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={578,-80})));
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX731(
-        redeclare model Medium = Medium,
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=EX731_Tin_cold,
-        Tin_start_hot=EX731_Tin_hot,
-        Tout_start_cold=EX731_Tout_cold,
-        Tout_start_hot=EX731_Tout_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={279,-217.5})));
-
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom,
-        Tin_start(displayUnit="K") = EX731_Tout_hot,
-        pin_start=EX731_pout_hot,
-        q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=-90,
-            origin={300,-150})));
-
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FCV731_FT731(
-        L=L_FCV731_FT731,
-        h=h_FCV731_FT731,
-        t=t_S700,
-        pin_start=FCV731_pout,
-        Tin_start=EX731_Tout_hot,
-        Tout_start=EX731_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX731_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={300,-124})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_SourceOut_FCV731(
-        L=L_HX731_SourceOut_FCV731,
-        h=h_HX731_SourceOut_FCV731,
-        t=t_S700,
-        pin_start=EX731_pout_hot,
-        Tin_start=EX731_Tout_hot,
-        Tout_start=EX731_Tout_hot,
-        Di=Di_S700,
-        q_m3h_start=EX731_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=90,
-            origin={300,-180})));
-      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT731(T_start=
-            EX731_Tout_hot, p_start=FCV731_pout)
-        "Flow sensor at the outlet outlet of EX731 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={302,-106})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT731(T_start=
-            EX731_Tout_hot, p_start=FCV731_pout)
-        "Temperature sensor at the outlet of EX731 - hot side" annotation (
-          Placement(transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={302,-90})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT731
-        "Pressure sensor at the outlet of EX731 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,5},{5,-5}},
-            rotation=90,
-            origin={302,-76})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_TT732_SourceIn(
-        L=L_HX731_TT732_SourceIn,
-        h=h_HX731_TT732_SourceIn,
-        t=t_S700,
-        pin_start=EX731_pin_hot,
-        Tin_start=EX731_Tin_hot,
-        Tout_start=EX731_Tin_hot,
-        Di=Di_S700,
-        q_m3h_start=EX731_q_m3h_hot,
-        n=n,
-        hctype=hctype) annotation (Placement(transformation(
-            extent={{-10,10},{10,-10}},
-            rotation=-90,
-            origin={260,-150})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT732(T_start=
-            EX731_Tin_hot, p_start=EX731_pin_hot)
-        "Temperature sensor at the inlet of EX731 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={258,-120})));
-      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT732
-        "Pressure sensor at the inlet of EX731 - hot side" annotation (Placement(
-            transformation(
-            extent={{-5,-5},{5,5}},
-            rotation=90,
-            origin={258,-80})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT734(T_start=
-            Tin_start_Cool, p_start=pout_start_Users)
-        "Temperature sensor at the outlet of EX731 - cold side" annotation (
-          Placement(transformation(
-            extent={{-5.5,-5.5},{5.5,5.5}},
-            rotation=90,
-            origin={257.5,-251.5})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT723(T_start=
-            Tout_start_Cool, p_start=pin_start_Users)
-        "Temperature sensor at the inlet of EX721 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={617,-253})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT724(T_start=
-            Tin_start_Cool, p_start=pout_start_Users)
-        "Temperature sensor at the outlet of EX721 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={578,-254})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT713(T_start=
-            Tout_start_Cool, p_start=pin_start_Users)
-        "Temperature sensor at the inlet of EX711 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={457,-250})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT714(T_start=
-            Tin_start_Cool, p_start=pout_start_Users)
-        "Temperature sensor at the outlet of EX711 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={418,-250})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT704(T_start=
-            Tin_start_Cool, p_start=pout_start_Users)
-        "Temperature sensor at the outlet of EX701 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={98,-251})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT703(T_start=
-            Tout_start_Cool, p_start=pin_start_Users)
-        "Temperature sensor at the inlet of EX701 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={138,-246})));
-      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT733(T_start=
-            Tout_start_Cool, p_start=pin_start_Users)
-        "Temperature sensor at the inlet of EX731 - cold side" annotation (
-          Placement(transformation(
-            extent={{-6,-6},{6,6}},
-            rotation=90,
-            origin={297,-252})));
-
       parameter Integer n = 2 "Number of volumes in each pipe";
       parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
           DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-      replaceable model Medium =
-          DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity;
+      replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
+      DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
+      DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
       // EX701
       parameter Real EX701_q_m3h_hot = 2.5;
@@ -2854,7 +2239,501 @@ package Configurations "Different possible configurations for the loads"
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h4 = 5;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure dpRR = 1e5;
 
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
+
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX701(
+        redeclare model Medium = MediumLPHot,
+        hctype_hot=hctype,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=EX701_Tin_cold,
+        Tin_start_hot=EX701_Tin_hot,
+        Tout_start_cold=EX701_Tout_cold,
+        Tout_start_hot=EX701_Tout_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
+        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={121,-215.5})));
+
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
+        redeclare model Medium = MediumLPHot,
+        L=L_FCV701_FT701,
+        h=h_FCV701_FT701,
+        t=t_S700,
+        pin_start=FCV701_pout,
+        Tin_start=EX701_Tout_hot,
+        Tout_start=EX701_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX701_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={140,-122})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_SourceOut_FCV701(
+        redeclare model Medium = MediumLPHot,
+        L=L_HX701_SourceOut_FCV701,
+        h=h_HX701_SourceOut_FCV701,
+        t=t_S700,
+        pin_start=EX701_pout_hot,
+        Tin_start=EX701_Tout_hot,
+        Tout_start=EX701_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX701_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={140,-182})));
+      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT701(redeclare model Medium = MediumLPHot, T_start=EX701_Tout_hot, p_start=FCV701_pout) "Flow sensor at the outlet outlet of EX701 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={142,-104})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT701(redeclare model Medium = MediumLPHot, T_start=EX701_Tout_hot, p_start=FCV701_pout) "Temperature sensor at the outlet of EX701 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={142,-88})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT701 "Pressure sensor at the outlet of EX701 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={142,-74})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn(redeclare model Medium = MediumLPHot,
+        L=L_HX701_TT702_SourceIn,
+        h=h_HX701_TT702_SourceIn,
+        t=t_S700,
+        pin_start=EX701_pin_hot,
+        Tin_start=EX701_Tin_hot,
+        Tout_start=EX701_Tin_hot,
+        Di=Di_S700,
+        q_m3h_start=EX701_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=-90,
+            origin={100,-150})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT702(redeclare model Medium = MediumLPHot, T_start=EX701_Tin_hot, p_start=EX701_pin_hot) "Temperature sensor at the inlet of EX701 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={98,-120})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT702 "Pressure sensor at the inlet of EX701 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={98,-80})));
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX711(
+        redeclare model Medium = MediumLPHot,
+        hctype_hot=hctype,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=EX711_Tin_cold,
+        Tin_start_hot=EX711_Tin_hot,
+        Tout_start_cold=EX711_Tout_cold,
+        Tout_start_hot=EX711_Tout_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
+        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={441,-218.5})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FCV711_FT711(redeclare model Medium = MediumLPHot,
+        L=L_FCV711_FT711,
+        h=h_FCV711_FT711,
+        t=t_S700,
+        pin_start=FCV711_pout,
+        Tin_start=EX711_Tout_hot,
+        Tout_start=EX711_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX711_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={460,-120})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_SourceOut_FCV711(redeclare model Medium = MediumLPHot,
+        L=L_HX711_SourceOut_FCV711,
+        h=h_HX711_SourceOut_FCV711,
+        t=t_S700,
+        pin_start=EX711_pout_hot,
+        Tin_start=EX711_Tout_hot,
+        Tout_start=EX711_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX711_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={460,-180})));
+      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT711(redeclare model Medium = MediumLPHot, T_start=EX711_Tout_hot, p_start=FCV711_pout) "Flow sensor at the outlet outlet of EX711 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={462,-102})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT711(redeclare model Medium = MediumLPHot, T_start= EX711_Tout_hot, p_start=FCV711_pout) "Temperature sensor at the outlet of EX711 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={462,-86})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT711 "Pressure sensor at the outlet of EX711 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={462,-72})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_TT712_SourceIn(redeclare model Medium = MediumLPHot, L=L_HX711_TT712_SourceIn, h=h_HX711_TT712_SourceIn, t=t_S700, pin_start=EX711_pin_hot, Tin_start=EX711_Tin_hot, Tout_start=EX711_Tin_hot, Di=Di_S700, q_m3h_start=EX711_q_m3h_hot, n=n, hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=-90,
+            origin={420,-150})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT712(redeclare model Medium = MediumLPHot,T_start=EX711_Tin_hot, p_start=EX711_pin_hot) "Temperature sensor at the inlet of EX711 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={418,-120})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT712 "Pressure sensor at the inlet of EX711 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={418,-80})));
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX721(
+        redeclare model Medium = MediumLPHot,
+        hctype_hot=hctype,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=EX721_Tin_cold,
+        Tin_start_hot=EX721_Tin_hot,
+        Tout_start_cold=EX721_Tout_cold,
+        Tout_start_hot=EX721_Tout_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
+        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={599,-218.5})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FCV721_FT721(redeclare model Medium = MediumLPHot,
+        L=L_FCV721_FT721,
+        h=h_FCV721_FT721,
+        t=t_S700,
+        pin_start=FCV721_pout,
+        Tin_start=EX721_Tout_hot,
+        Tout_start=EX721_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX721_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={620,-122})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_SourceOut_FCV721(redeclare model Medium = MediumLPHot,
+        L=L_HX721_SourceOut_FCV721,
+        h=h_HX721_SourceOut_FCV721,
+        t=t_S700,
+        pin_start=EX721_pout_hot,
+        Tin_start=EX721_Tout_hot,
+        Tout_start=EX721_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX721_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={620,-180})));
+      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT721(redeclare model Medium = MediumLPHot, T_start=EX721_Tout_hot, p_start=FCV721_pout) "Flow sensor at the outlet outlet of EX721 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={622,-102})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT721(redeclare model Medium = MediumLPHot, T_start=EX721_Tout_hot, p_start=FCV721_pout) "Temperature sensor at the outlet of EX721 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={622,-86})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT721 "Pressure sensor at the outlet of EX721 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={622,-72})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_TT722_SourceIn(redeclare model Medium = MediumLPHot,
+        L=L_HX721_TT722_SourceIn,
+        h=h_HX721_TT722_SourceIn,
+        t=t_S700,
+        pin_start=EX721_pin_hot,
+        Tin_start=EX721_Tin_hot,
+        Tout_start=EX721_Tin_hot,
+        Di=Di_S700,
+        q_m3h_start=EX721_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=-90,
+            origin={580,-150})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT722(redeclare model Medium = MediumLPHot, T_start=EX721_Tin_hot, p_start=EX721_pin_hot) "Temperature sensor at the inlet of EX721 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={578,-120})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT722 "Pressure sensor at the inlet of EX721 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={578,-80})));
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX731(
+        redeclare model Medium = MediumLPHot,
+        hctype_hot=hctype,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=EX731_Tin_cold,
+        Tin_start_hot=EX731_Tin_hot,
+        Tout_start_cold=EX731_Tout_cold,
+        Tout_start_hot=EX731_Tout_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
+        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
+            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={279,-217.5})));
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom, Tin_start(displayUnit="K") = EX701_Tout_hot, pin_start=EX701_pout_hot, q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=-90,
+            origin={140,-150})));
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom, Tin_start(displayUnit="K") = EX711_Tout_hot, pin_start=EX711_pout_hot, q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=-90,
+            origin={460,-150})));
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom, Tin_start(displayUnit="K") = EX721_Tout_hot, pin_start=EX721_pout_hot, q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=-90,
+            origin={620,-150})));
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom, Tin_start(displayUnit="K") = EX731_Tout_hot, pin_start=EX731_pout_hot, q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=-90,
+            origin={300,-150})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FCV731_FT731(redeclare model Medium = MediumLPHot,
+        L=L_FCV731_FT731,
+        h=h_FCV731_FT731,
+        t=t_S700,
+        pin_start=FCV731_pout,
+        Tin_start=EX731_Tout_hot,
+        Tout_start=EX731_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX731_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={300,-124})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_SourceOut_FCV731(redeclare model Medium = MediumLPHot,
+        L=L_HX731_SourceOut_FCV731,
+        h=h_HX731_SourceOut_FCV731,
+        t=t_S700,
+        pin_start=EX731_pout_hot,
+        Tin_start=EX731_Tout_hot,
+        Tout_start=EX731_Tout_hot,
+        Di=Di_S700,
+        q_m3h_start=EX731_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={300,-180})));
+      DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT731(redeclare model Medium = MediumLPHot,T_start= EX731_Tout_hot, p_start=FCV731_pout) "Flow sensor at the outlet outlet of EX731 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={302,-106})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT731(redeclare model Medium = MediumLPHot,T_start=EX731_Tout_hot, p_start=FCV731_pout) "Temperature sensor at the outlet of EX731 - hot side" annotation (
+          Placement(transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={302,-90})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT731 "Pressure sensor at the outlet of EX731 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,5},{5,-5}},
+            rotation=90,
+            origin={302,-76})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_TT732_SourceIn(redeclare model Medium = MediumLPHot,
+        L=L_HX731_TT732_SourceIn,
+        h=h_HX731_TT732_SourceIn,
+        t=t_S700,
+        pin_start=EX731_pin_hot,
+        Tin_start=EX731_Tin_hot,
+        Tout_start=EX731_Tin_hot,
+        Di=Di_S700,
+        q_m3h_start=EX731_q_m3h_hot,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=-90,
+            origin={260,-150})));
+      DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT732 "Pressure sensor at the inlet of EX731 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={258,-80})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT732(redeclare model Medium = MediumLPHot, T_start= EX731_Tin_hot, p_start=EX731_pin_hot) "Temperature sensor at the inlet of EX731 - hot side" annotation (Placement(
+            transformation(
+            extent={{-5,-5},{5,5}},
+            rotation=90,
+            origin={258,-120})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(redeclare model Medium = MediumLPHot,
         L=L_FT701_rackL2L3,
         h=h_FT701_rackL2L3,
         t=t_S700,
@@ -2868,7 +2747,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={140,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(redeclare model Medium = MediumLPHot,
         L=L_rackL2L3_TT702,
         h=h_rackL2L3_TT702,
         t=t_S700,
@@ -2882,7 +2761,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={100,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FT711_rackL3L4(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FT711_rackL3L4(redeclare model Medium = MediumLPHot,
         L=L_FT711_rackL3L4,
         h=h_FT711_rackL3L4,
         t=t_S700,
@@ -2896,7 +2775,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={460,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(redeclare model Medium = MediumLPHot,
         L=L_rackL3L4_TT712,
         h=h_rackL3L4_TT712,
         t=t_S700,
@@ -2910,7 +2789,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={420,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(redeclare model Medium = MediumLPHot,
         L=L_FT721_rackL4L5,
         h=h_FT721_rackL4L5,
         t=t_S700,
@@ -2924,7 +2803,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={620,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(redeclare model Medium = MediumLPHot,
         L=L_rackL4L5_TT722,
         h=h_rackL4L5_TT722,
         t=t_S700,
@@ -2938,7 +2817,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={580,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(redeclare model Medium = MediumLPHot,
         L=L_FT731_rackL6L7,
         h=h_FT731_rackL6L7,
         t=t_S700,
@@ -2952,7 +2831,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=90,
             origin={300,-50})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(redeclare model Medium = MediumLPHot,
         L=L_rackL6L7_TT732,
         h=h_rackL6L7_TT732,
         t=t_S700,
@@ -2966,62 +2845,67 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={260,-50})));
-      DistrictHeatingNetwork.Sources.SourcePressure VER901(
-        use_in_T0=true,
-        p0=210000,
-        T0(displayUnit="K") = 7 + 273.15,
-        R=0) annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=0,
-            origin={645,-297})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow
-                           FT723(
-        use_in_m_flow=true,
-        pin_start=200000,
-        p0=200000,
-        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{570,-290},{550,-310}})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow
-                           FT713(
-        use_in_m_flow=true,
-        pin_start=200000,
-        p0=200000,
-        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{404,-290},{384,-310}})));
-      DistrictHeatingNetwork.Sources.SourcePressure VER1(
-        use_in_T0=true,
-        p0=210000,
-        T0(displayUnit="K") = 7 + 273.15,
-        R=0) annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=0,
-            origin={483,-299})));
-      DistrictHeatingNetwork.Sources.SourcePressure VER2(
-        use_in_T0=true,
-        p0=210000,
-        T0(displayUnit="K") = 7 + 273.15,
-        R=0) annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=0,
-            origin={323,-299})));
-      DistrictHeatingNetwork.Sources.SourcePressure VER3(
-        use_in_T0=true,
-        p0=210000,
-        T0(displayUnit="K") = 7 + 273.15,
-        R=0) annotation (Placement(transformation(
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT704(redeclare model Medium = MediumLPCold,T_start=Tin_start_Cool, p_start=pout_start_Users) "Temperature sensor at the outlet of EX701 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={98,-251})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT714(redeclare model Medium = MediumLPCold,T_start=Tin_start_Cool, p_start=pout_start_Users) "Temperature sensor at the outlet of EX711 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={418,-250})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT724(redeclare model Medium = MediumLPCold,T_start=Tin_start_Cool, p_start=pout_start_Users) "Temperature sensor at the outlet of EX721 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={578,-254})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT734(redeclare model Medium = MediumLPCold,T_start=Tin_start_Cool, p_start=pout_start_Users) "Temperature sensor at the outlet of EX731 - cold side" annotation (
+          Placement(transformation(
+            extent={{-5.5,-5.5},{5.5,5.5}},
+            rotation=90,
+            origin={257.5,-251.5})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT703(redeclare model Medium = MediumLPCold,T_start=Tout_start_Cool, p_start=pin_start_Users) "Temperature sensor at the inlet of EX701 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={138,-246})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT713(redeclare model Medium = MediumLPCold,T_start=Tout_start_Cool, p_start=pin_start_Users) "Temperature sensor at the inlet of EX711 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={457,-250})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT723(redeclare model Medium = MediumLPCold,T_start=Tout_start_Cool, p_start=pin_start_Users) "Temperature sensor at the inlet of EX721 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={617,-253})));
+      DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT733(redeclare model Medium = MediumLPCold,T_start=Tout_start_Cool, p_start=pin_start_Users) "Temperature sensor at the inlet of EX731 - cold side" annotation (
+          Placement(transformation(
+            extent={{-6,-6},{6,6}},
+            rotation=90,
+            origin={297,-252})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT703(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{84,-290},{64,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT713(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{404,-290},{384,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT723(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{570,-290},{550,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT733(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{242,-290},{222,-310}})));
+      DistrictHeatingNetwork.Sources.SourcePressure coldSourcePEX701(redeclare model Medium = MediumLPCold, use_in_T0=true, p0=210000, T0(displayUnit="K") = 7 + 273.15, R=0) "Ideal pressure source of heat exchanger EX701 - cold side" annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=0,
             origin={163,-299})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow
-                           FT733(
-        use_in_m_flow=true,
-        pin_start=200000,
-        p0=200000,
-        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{242,-290},{222,-310}})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow
-                           FT703(
-        use_in_m_flow=true,
-        pin_start=200000,
-        p0=200000,
-        T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{84,-290},{64,-310}})));
+      DistrictHeatingNetwork.Sources.SourcePressure coldSourcePEX711(redeclare model Medium = MediumLPCold, use_in_T0=true, p0=210000, T0(displayUnit="K") = 7 + 273.15, R=0) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=0,
+            origin={483,-299})));
+      DistrictHeatingNetwork.Sources.SourcePressure coldSourcePEX721(redeclare model Medium = MediumLPCold, use_in_T0=true, p0=210000, T0(displayUnit="K") = 7 + 273.15, R=0) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=0,
+            origin={645,-297})));
+      DistrictHeatingNetwork.Sources.SourcePressure coldSourcePEX731(redeclare model Medium = MediumLPCold, use_in_T0=true, p0=210000, T0(displayUnit="K") = 7 + 273.15, R=0) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=0,
+            origin={323,-299})));
+
     equation
       connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
           points={{140,-132},{140,-140}},
@@ -3239,19 +3123,19 @@ package Configurations "Different possible configurations for the loads"
           points={{100,-60},{100,-80}},
           color={140,56,54},
           thickness=0.5));
-      connect(TT703.inlet,VER3. outlet) annotation (Line(
+      connect(TT703.inlet, coldSourcePEX701.outlet) annotation (Line(
           points={{140.4,-246},{140,-246},{140,-299},{153,-299}},
           color={140,56,54},
           thickness=0.5));
-      connect(TT733.inlet,VER2. outlet) annotation (Line(
+      connect(TT733.inlet, coldSourcePEX731.outlet) annotation (Line(
           points={{299.4,-252},{300,-252},{300,-299},{313,-299}},
           color={140,56,54},
           thickness=0.5));
-      connect(VER1.outlet, TT713.inlet) annotation (Line(
+      connect(coldSourcePEX711.outlet, TT713.inlet) annotation (Line(
           points={{473,-299},{459.4,-299},{459.4,-250}},
           color={140,56,54},
           thickness=0.5));
-      connect(VER901.outlet, TT723.inlet) annotation (Line(
+      connect(coldSourcePEX721.outlet, TT723.inlet) annotation (Line(
           points={{635,-297},{619.4,-297},{619.4,-253}},
           color={140,56,54},
           thickness=0.5));

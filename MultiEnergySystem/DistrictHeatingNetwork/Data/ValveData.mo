@@ -78,18 +78,20 @@ package ValveData
     q_nom_m3h = 8.8,
     dp_nom = 1e5,
     rho_nom = 0.9680155e3,
-    Kv = 33,
+    Kv = 21,
     Tin_start = 60 + 273.15,
     pin_start = 1.66e5);
+    //Kv = 33,
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCV901(
     Name = "FCV901",
     Tin_nom = 80 + 273.15,
     q_nom_m3h = 19,
     dp_nom = 1.5e5,
     rho_nom = 985 "Calculo teorico",
-    Kv = 33,
+    Kv = 21,
     Tin_start = 80 + 273.15,
     pin_start = 3e5);
+    //Kv = 33,
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCV701(
     Name = "FCV701",
     Tin_nom = 60 + 273.15,

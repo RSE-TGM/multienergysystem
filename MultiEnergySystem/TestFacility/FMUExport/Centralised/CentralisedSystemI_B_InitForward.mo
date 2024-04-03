@@ -30,6 +30,8 @@ model CentralisedSystemI_B_InitForward
   parameter Boolean fixmflowcoolEX711 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixmflowcoolEX721 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixmflowcoolEX731 = ForwardInit "True if forward, False if backward";
+  parameter Boolean fixToutGB101 = ForwardInit "True if forward, False if backward";
+  parameter Boolean fixToutEB401 = ForwardInit "True if forward, False if backward";
 
 //Output
   final parameter Boolean fixPT902 = not fixomegaP901;
@@ -47,11 +49,12 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixTT711 = not fixmflowcoolEX711;
   final parameter Boolean fixTT721 = not fixmflowcoolEX721;
   final parameter Boolean fixTT731 = not fixmflowcoolEX731;
+  final parameter Boolean fixTT102 = not fixToutGB101;
+  final parameter Boolean fixTT402 = not fixToutEB401;
+
 
 //Additional variables
   final parameter Boolean fixTT902 = false;
-  final parameter Boolean fixTT102 = false;
-  final parameter Boolean fixTT402 = false;
   final parameter Boolean fixPT901 = false;
   final parameter Boolean fixPT701 = false;
   final parameter Boolean fixPT702 = false;
@@ -66,13 +69,14 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixFT721 = false;
   final parameter Boolean fixFT731 = false;
 
-
 //Normalisation values
   //Nominal values
   parameter DistrictHeatingNetwork.Types.PerUnit theta_nom = 1 "Nom. opening valve in the system" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Non dimensional"));
   parameter DistrictHeatingNetwork.Types.Temperature THot_nom = 80 + 273.15 "Desired temperature at the outlet of the loads";
   parameter DistrictHeatingNetwork.Types.Temperature TCool_nom = 15 + 273.15 "Desired temperature at the outlet of the loads";
+  parameter DistrictHeatingNetwork.Types.Temperature ToutGB101_nom = 100 + 273.15 "Desired temperature at the outlet of the loads";
+  parameter DistrictHeatingNetwork.Types.Temperature ToutEB401_nom = 100 + 273.15 "Desired temperature at the outlet of the loads";
   parameter DistrictHeatingNetwork.Types.AngularVelocity omegaP901_nom = 2*Modelica.Constants.pi*50 "Nominal CO2 m.f.r. going through pump P5" annotation (
      Dialog(tab = "Nominal and Desired values", group = "Rotational speed"));
   parameter DistrictHeatingNetwork.Types.AngularVelocity omegaP101_nom = 2*Modelica.Constants.pi*50 "Nominal CO2 m.f.r. going through pump P5" annotation (
@@ -390,7 +394,7 @@ model CentralisedSystemI_B_InitForward
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.RealExpression ThotSP(y=80 + 273.15)
-    annotation (Placement(transformation(extent={{-432,-312},{-412,-292}})));
+    annotation (Placement(transformation(extent={{-556,-266},{-536,-246}})));
   Modelica.Blocks.Sources.RealExpression TcoolSP(y=15 + 273.15)
     annotation (Placement(transformation(extent={{722,-356},{702,-336}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVC01(y=0)
@@ -509,6 +513,20 @@ model CentralisedSystemI_B_InitForward
         origin={646,-66},
         extent={{-10,-10},{10,10}},
         rotation=0)));
+  OffSetBlocks.InputOffset ToutEB401Offset(
+    fixInput=fixToutEB401,
+    u_norm=ToutEB401_nom,
+    u_start=TT402_des)     annotation (Placement(visible=true, transformation(
+        origin={-418,-300},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  OffSetBlocks.InputOffset ToutGB101Offset(
+    fixInput=fixToutGB101,
+    u_norm=ToutGB101_nom,
+    u_start=TT102_des)     annotation (Placement(visible=true, transformation(
+        origin={-418,-276},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
 equation
   connect(FCV701.opening, thetaFCV701Offset.u)    annotation (Line(points={{148,-150},{161,-150}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731.opening)    annotation (Line(points={{321,-150},{308,-150}}, color={0,0,127}));
@@ -575,10 +593,6 @@ equation
           -120},{638,-120}}, color={0,0,127}));
   connect(FT731.m_flow, FT731Offset.y) annotation (Line(points={{305,-102.5},{305,-100},{314,-100},{
           314,-120},{322,-120}}, color={0,0,127}));
-  connect(ThotSP.y, EB401.Tout_ref) annotation (Line(points={{-411,-302},{-388,-302},{-388,-301},{-361.5,-301}},
-                                                                                                               color={0,0,127}));
-  connect(ThotSP.y, GB101.Tout_ref) annotation (Line(points={{-411,-302},{-396,-302},{-396,-284},{-302,-284},{-302,-301},{-281.5,-301}},
-                                          color={0,0,127}));
   connect(TcoolSP.y, VER3.in_T0) annotation (Line(points={{701,-346},{450,-346},{450,-354},{182,-354},
           {182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
   connect(VER2.in_T0, VER3.in_T0) annotation (Line(points={{319,-290.6},{319,-278},{342,-278},{342,-354},
@@ -733,8 +747,8 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(FT401Offset.deltaYnorm, processVariableBus.dFT401) annotation (Line(points={{-423,-222},{-490,
-          -222},{-490,-388},{862,-388},{862,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(FT401Offset.deltaYnorm, processVariableBus.dFT401) annotation (Line(points={{-423,-222},{-464,-222},{-464,-388},{888,-388},{888,-3},{896,-3}},
+                                                           color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
@@ -894,6 +908,24 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
+  connect(ToutEB401Offset.u, EB401.Tout_ref) annotation (Line(points={{-409,-300},{-386.25,-300},{-386.25,-301},{-361.5,-301}}, color={0,0,127}));
+  connect(controlSignalBus.dToutEB401, ToutEB401Offset.deltaUnorm) annotation (Line(
+      points={{-897,-3},{-850,-3},{-850,-300},{-426,-300}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{-3,6},{-3,6}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(ToutGB101Offset.u, GB101.Tout_ref) annotation (Line(points={{-409,-276},{-290,-276},{-290,-301},{-281.5,-301}}, color={0,0,127}));
+  connect(controlSignalBus.dToutGB101, ToutGB101Offset.deltaUnorm) annotation (Line(
+      points={{-897,-3},{-852,-3},{-852,-280},{-426,-280},{-426,-276}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{-3,-6},{-3,-6}},
+      horizontalAlignment=TextAlignment.Right));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-60,40},{60,-40}},

@@ -67,7 +67,8 @@ equation
   assert(10e5 >= inlet.p, "Actual pressure is higher than Maximum pressure", AssertionLevel.warning);
 
   // Balance equations
-  V*(fluidOut.drho_dT*der(Tout)) = inlet.m_flow + outlet.m_flow;
+  //V*(fluidOut.drho_dT*der(Tout)) = inlet.m_flow + outlet.m_flow;
+  0 = inlet.m_flow + outlet.m_flow;
   M = rho*V;
   M*cp*der(Tout) = outlet.m_flow*hout + inlet.m_flow*hin + Pheat - Q_amb;
   Q_amb = 1/(R_lateral + 2*R_flat)*(Tout - T_ext) "Insulation all around, computation of heat loss to ambient";

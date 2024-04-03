@@ -1,6 +1,7 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
+  extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom = 147.6e3*0.8), FT703(G = 1E-3), FT733(G = 1E-3), FT713(G = 1e-3), FT723(G = 1e-3));
   OffSetBlocks.InputOffset omegaP101Offset(
     fixInput=fixomegaP101,
@@ -38,21 +39,33 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixFT101 = not fixthetaFCV101;
   final parameter Boolean fixFT401 = not fixthetaFCV401;
   final parameter Boolean fixFTA12 = not fixthetaFCVC02;
-  final parameter Boolean fixFT701 = not fixthetaFCV701;
-  final parameter Boolean fixFT711 = not fixthetaFCV711;
-  final parameter Boolean fixFT721 = not fixthetaFCV721;
-  final parameter Boolean fixFT731 = not fixthetaFCV731;
-  final parameter Boolean fixTT704 = not fixmflowcoolEX701;
-  final parameter Boolean fixTT714 = not fixmflowcoolEX711;
-  final parameter Boolean fixTT724 = not fixmflowcoolEX721;
-  final parameter Boolean fixTT734 = not fixmflowcoolEX731;
+  final parameter Boolean fixTT704 = not fixthetaFCV701;
+  final parameter Boolean fixTT714 = not fixthetaFCV711;
+  final parameter Boolean fixTT724 = not fixthetaFCV721;
+  final parameter Boolean fixTT734 = not fixthetaFCV731;
+  final parameter Boolean fixTT701 = not fixmflowcoolEX701;
+  final parameter Boolean fixTT711 = not fixmflowcoolEX711;
+  final parameter Boolean fixTT721 = not fixmflowcoolEX721;
+  final parameter Boolean fixTT731 = not fixmflowcoolEX731;
 
 //Additional variables
   final parameter Boolean fixTT902 = false;
-  final parameter Boolean fixTT701 = false;
-  final parameter Boolean fixTT711 = false;
-  final parameter Boolean fixTT721 = false;
-  final parameter Boolean fixTT731 = false;
+  final parameter Boolean fixTT102 = false;
+  final parameter Boolean fixTT402 = false;
+  final parameter Boolean fixPT901 = false;
+  final parameter Boolean fixPT701 = false;
+  final parameter Boolean fixPT702 = false;
+  final parameter Boolean fixPT711 = false;
+  final parameter Boolean fixPT712 = false;
+  final parameter Boolean fixPT721 = false;
+  final parameter Boolean fixPT722 = false;
+  final parameter Boolean fixPT731 = false;
+  final parameter Boolean fixPT732 = false;
+  final parameter Boolean fixFT701 = false;
+  final parameter Boolean fixFT711 = false;
+  final parameter Boolean fixFT721 = false;
+  final parameter Boolean fixFT731 = false;
+
 
 //Normalisation values
   //Nominal values
@@ -72,16 +85,39 @@ model CentralisedSystemI_B_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT101_nom= DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h*980/3600;
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT401_nom= DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.Pressure PT901_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT902_nom = 4e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT102_nom = 4e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT402_nom = 4e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT701_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT702_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT711_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT712_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT721_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT722_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT731_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT732_nom = 4e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+
   //  Desired Outputs values
   parameter DistrictHeatingNetwork.Types.Temperature ToutLoad_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
   parameter DistrictHeatingNetwork.Types.Temperature TT902_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT102_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT402_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
   parameter DistrictHeatingNetwork.Types.Temperature TT701_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
@@ -99,11 +135,29 @@ model CentralisedSystemI_B_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
   parameter DistrictHeatingNetwork.Types.Temperature TT734_des = 20 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT901_des = 2e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT902_des = 2.8e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT102_des = 2e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT402_des = 2e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT701_des = 2.2e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT702_des = 2.7e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT711_des = 2.2e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT712_des = 2.7e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT721_des = 2.2e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT722_des = 2.7e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT731_des = 2.2e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 2.7e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT901_des= DistrictHeatingNetwork.Data.PumpData.P901.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
@@ -378,17 +432,96 @@ model CentralisedSystemI_B_InitForward
         rotation=0)));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=false)
     annotation (Placement(transformation(extent={{-181,51},{-201,71}})));
+  OffSetBlocks.OutputOffset TT102Offset(
+    fixOutput=fixTT102,
+    y_fixed=TT102_des,
+    y_norm=TT102_des) annotation (Placement(visible=true, transformation(
+        origin={-214,-56},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset TT402Offset(
+    fixOutput=fixTT402,
+    y_fixed=TT402_des,
+    y_norm=TT402_des) annotation (Placement(visible=true, transformation(
+        origin={-292,-56},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT901Offset(
+    fixOutput=fixPT901,
+    y_fixed=PT901_des,
+    y_norm=PT901_des) annotation (Placement(visible=true, transformation(
+        origin={-844,162},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT701Offset(
+    fixOutput=fixPT701,
+    y_fixed=PT701_des,
+    y_norm=PT701_nom) annotation (Placement(visible=true, transformation(
+        origin={170,-60},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT702Offset(
+    fixOutput=fixPT702,
+    y_fixed=PT702_des,
+    y_norm=PT702_nom) annotation (Placement(visible=true, transformation(
+        origin={74,-80},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT732Offset(
+    fixOutput=fixPT732,
+    y_fixed=PT732_des,
+    y_norm=PT732_nom) annotation (Placement(visible=true, transformation(
+        origin={238,-80},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT712Offset(
+    fixOutput=fixPT712,
+    y_fixed=PT712_des,
+    y_norm=PT712_nom) annotation (Placement(visible=true, transformation(
+        origin={396,-80},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT722Offset(
+    fixOutput=fixPT722,
+    y_fixed=PT722_des,
+    y_norm=PT722_nom) annotation (Placement(visible=true, transformation(
+        origin={556,-80},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT731Offset(
+    fixOutput=fixPT731,
+    y_fixed=PT731_des,
+    y_norm=PT731_nom) annotation (Placement(visible=true, transformation(
+        origin={330,-64},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT711Offset(
+    fixOutput=fixPT711,
+    y_fixed=PT711_des,
+    y_norm=PT711_nom) annotation (Placement(visible=true, transformation(
+        origin={492,-66},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset PT721Offset(
+    fixOutput=fixPT721,
+    y_fixed=PT721_des,
+    y_norm=PT721_nom) annotation (Placement(visible=true, transformation(
+        origin={646,-66},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
 equation
   connect(FCV701.opening, thetaFCV701Offset.u)    annotation (Line(points={{148,-150},{161,-150}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731.opening)    annotation (Line(points={{321,-150},{308,-150}}, color={0,0,127}));
   connect(thetaFCV711Offset.u, FCV711.opening)    annotation (Line(points={{483,-150},{468,-150}}, color={0,0,127}));
   connect(thetaFCV721Offset.u, FCV721.opening)    annotation (Line(points={{637,-150},{628,-150}}, color={0,0,127}));
-  connect(thetaFCV901Offset.u, FCV901.opening)    annotation (Line(points={{-739,114},{-744,114},{-744,115},{-749,115}}, color={0,0,127}));
+  connect(thetaFCV901Offset.u, FCV901.opening)    annotation (Line(points={{-739,114},{-744,114},{-744,140.5},{-749.9,140.5}},
+                                                                                                                         color={0,0,127}));
   connect(omegaP901Offset.u, P901.in_omega) annotation (Line(points={{-739,66},{-743.125,66},{-743.125,
           66.3},{-747.25,66.3}}, color={0,0,127}));
   connect(thetaFCV101Offset.u, FCV101.opening)    annotation (Line(points={{-219,-140},{-226,-140},{-226,-110},{-232,-110}},
                                                        color={0,0,127}));
-  connect(thetaFCV401Offset.u, FCV401.opening)    annotation (Line(points={{-303,-136},{-310,-136}}, color={0,0,127}));
+  connect(thetaFCV401Offset.u, FCV401.opening)    annotation (Line(points={{-303,-136},{-306,-136},{-306,-110},{-310,-110}},
+                                                                                                     color={0,0,127}));
   connect(TT902.T,TT902Offset. y)    annotation (Line(points={{-748.575,196.25},{-748.575,208},{-734,208},{-734,220}},
                                                                            color={0,0,127}));
   connect(PT902.p, PT902Offset.y)    annotation (Line(points={{-748.5,181.5},{-743.25,181.5},{-743.25,182},{-738,182}},
@@ -423,8 +556,10 @@ equation
   connect(thetaTCV731Offset.u, FT733.in_m_flow)    annotation (Line(points={{223,-320},{238,-320},{238,-305}}, color={0,0,127}));
   connect(thetaTCV711Offset.u, FT713.in_m_flow)    annotation (Line(points={{379,-320},{400,-320},{400,-305}}, color={0,0,127}));
   connect(mflowEX721Offset.u, FT723.in_m_flow)    annotation (Line(points={{539,-320},{566,-320},{566,-305}}, color={0,0,127}));
-  connect(EB401Status.y, EB401.heat_on)    annotation (Line(points={{-403,-350},{-388,-350},{-388,-322},{-365,-322}}, color={255,0,255}));
-  connect(GB101Status.y, GB101.heat_on)    annotation (Line(points={{-313,-368},{-300,-368},{-300,-322},{-285,-322}}, color={255,0,255}));
+  connect(EB401Status.y, EB401.heat_on)    annotation (Line(points={{-403,-350},{-388,-350},{-388,-318.5},{-361.5,-318.5}},
+                                                                                                                      color={255,0,255}));
+  connect(GB101Status.y, GB101.heat_on)    annotation (Line(points={{-313,-368},{-300,-368},{-300,-318.5},{-281.5,-318.5}},
+                                                                                                                      color={255,0,255}));
   connect(FV402_OnOff.y, FV402.u)    annotation (Line(points={{-301,-16},{-314.8,-16}}, color={255,0,255}));
   connect(FV401_OnOff.y, FV401.u) annotation (Line(points={{-377,-14},{-369.1,-14},{-369.1,-16},{-361.2,
           -16}}, color={255,0,255}));
@@ -440,9 +575,10 @@ equation
           -120},{638,-120}}, color={0,0,127}));
   connect(FT731.m_flow, FT731Offset.y) annotation (Line(points={{305,-102.5},{305,-100},{314,-100},{
           314,-120},{322,-120}}, color={0,0,127}));
-  connect(ThotSP.y, EB401.Tout_ref) annotation (Line(points={{-411,-302},{-388,-302},{-388,-301},{-365,-301}}, color={0,0,127}));
-  connect(ThotSP.y, GB101.Tout_ref) annotation (Line(points={{-411,-302},{-396,-302},{-396,-284},{-302,
-          -284},{-302,-301},{-285,-301}}, color={0,0,127}));
+  connect(ThotSP.y, EB401.Tout_ref) annotation (Line(points={{-411,-302},{-388,-302},{-388,-301},{-361.5,-301}},
+                                                                                                               color={0,0,127}));
+  connect(ThotSP.y, GB101.Tout_ref) annotation (Line(points={{-411,-302},{-396,-302},{-396,-284},{-302,-284},{-302,-301},{-281.5,-301}},
+                                          color={0,0,127}));
   connect(TcoolSP.y, VER3.in_T0) annotation (Line(points={{701,-346},{450,-346},{450,-354},{182,-354},
           {182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
   connect(VER2.in_T0, VER3.in_T0) annotation (Line(points={{319,-290.6},{319,-278},{342,-278},{342,-354},
@@ -633,8 +769,8 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(TT704Offset.deltaYnorm, processVariableBus.dTT704) annotation (Line(points={{59,-250},{20,
-          -250},{20,-246},{0,-246},{0,-184},{810,-184},{810,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(TT704Offset.deltaYnorm, processVariableBus.dTT704) annotation (Line(points={{59,-250},{40,-250},{40,-180},{838,-180},{838,-3},{896,-3}},
+                                                                           color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
@@ -688,19 +824,80 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(FT901.m_flow, FT901Offset.y) annotation(
-    Line(points = {{-752, 170}, {-748, 170}, {-748, 150}, {-738, 150}}, color = {0, 0, 127}));
+  connect(FT901.m_flow, FT901Offset.y) annotation (
+    Line(points={{-752,169.5},{-748,169.5},{-748,150},{-738,150}},      color = {0, 0, 127}));
+  connect(TT102.T, TT102Offset.y) annotation (Line(points={{-230.2,-72},{-226,-72},{-226,-56},{-222,-56}}, color={0,0,127}));
+  connect(TT402.T, TT402Offset.y) annotation (Line(points={{-308.2,-70},{-306,-70},{-306,-56},{-300,-56}}, color={0,0,127}));
+  connect(TT102Offset.deltaYnorm, processVariableBus.dTT102) annotation (Line(points={{-205,-56},{-184,-56},{-184,-54},{-130,-54},{-130,0},{896,0},{896,-3}}, color={0,0,127}),
+      Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(TT402Offset.deltaYnorm, processVariableBus.dTT402) annotation (Line(points={{-283,-56},{-256,-56},{-256,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PT901.p, PT901Offset.y) annotation (Line(points={{-816.5,162.5},{-826.25,162.5},{-826.25,162},{-836,162}}, color={0,0,127}));
+  connect(PT901Offset.deltaYnorm, processVariableBus.dPT901) annotation (Line(points={{-853,162},{-876,162},{-876,282},{820,282},{820,14},{896,14},{896,-3}}, color={0,0,127}),
+      Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(PT701.p, PT701Offset.y) annotation (Line(points={{148.5,-74},{156,-74},{156,-60},{162,-60}}, color={0,0,127}));
+  connect(PT702.p, PT702Offset.y) annotation (Line(points={{91.5,-80},{82,-80}}, color={0,0,127}));
+  connect(PT701Offset.deltaYnorm, processVariableBus.dPT701) annotation (Line(points={{179,-60},{190,-60},{190,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PT702Offset.deltaYnorm, processVariableBus.dPT702) annotation (Line(points={{65,-80},{60,-80},{60,-76},{66,-76},{66,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(PT732.p, PT732Offset.y) annotation (Line(points={{251.5,-80},{246,-80}}, color={0,0,127}));
+  connect(PT712.p, PT712Offset.y) annotation (Line(points={{411.5,-80},{404,-80}}, color={0,0,127}));
+  connect(PT722.p, PT722Offset.y) annotation (Line(points={{571.5,-80},{564,-80}}, color={0,0,127}));
+  connect(PT732Offset.deltaYnorm, processVariableBus.dPT732) annotation (Line(points={{229,-80},{220,-80},{220,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(PT712Offset.deltaYnorm, processVariableBus.dPT712) annotation (Line(points={{387,-80},{376,-80},{376,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(PT722Offset.deltaYnorm, processVariableBus.dPT722) annotation (Line(points={{547,-80},{544,-80},{544,-6},{896,-6},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(PT731.p, PT731Offset.y) annotation (Line(points={{308.5,-76},{312,-76},{312,-64},{322,-64},{322,-64}}, color={0,0,127}));
+  connect(PT711.p, PT711Offset.y) annotation (Line(points={{468.5,-72},{474,-72},{474,-66},{484,-66}}, color={0,0,127}));
+  connect(PT721.p, PT721Offset.y) annotation (Line(points={{628.5,-72},{630,-72},{630,-70},{632,-70},{632,-66},{638,-66}}, color={0,0,127}));
+  connect(PT731Offset.deltaYnorm, processVariableBus.dPT731) annotation (Line(points={{339,-64},{358,-64},{358,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PT711Offset.deltaYnorm, processVariableBus.dPT711) annotation (Line(points={{501,-66},{526,-66},{526,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PT721Offset.deltaYnorm, processVariableBus.dPT721) annotation (Line(points={{655,-66},{662,-66},{662,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-                     Rectangle(
-          lineColor={140,56,54},
-          fillColor={192,80,77},
-          fillPattern=FillPattern.Solid,
-          lineThickness=1,
-          extent={{-100,100},{100,-100}},
-          radius=25),
         Text(
           extent={{-60,40},{60,-40}},
-          textColor={255,255,255},
+          textColor={140,56,54},
           textStyle={TextStyle.Bold},
           textString="Thermal
 Facility")}),                                                    Diagram(

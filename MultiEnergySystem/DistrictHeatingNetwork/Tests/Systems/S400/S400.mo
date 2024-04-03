@@ -199,9 +199,6 @@ equation
       points={{-30,120},{-15.6,120},{-15.6,52}},
       color={140,56,54},
       thickness=0.5));
-  connect(EB401_ToutSP.y, EB401.Tout_ref)
-    annotation (Line(points={{-63,-106},{-46.35,-106},{-46.35,-107},{-29.7,-107}},
-                                                       color={0,0,127}));
   connect(EB401_Status.y, EB401.heat_on) annotation (Line(points={{-63,-138},{-48,-138},{-48,-127.5},{-29.7,-127.5}},                   color={255,0,255}));
   connect(FCV401.inlet, PL_S400_P401_FCV401.outlet) annotation (Line(
       points={{14,54},{14,44}},
@@ -235,6 +232,7 @@ equation
   connect(firstOrder.y, FCV401.opening) annotation (Line(points={{31,66},{28,66},{28,64},{22,64}}, color={0,0,127}));
   connect(P401_omega.y, firstOrder1.u) annotation (Line(points={{59,-10},{54,-10}}, color={0,0,127}));
   connect(firstOrder1.y, P401.in_omega) annotation (Line(points={{31,-10},{25.5,-10},{25.5,-9.8},{20,-9.8}}, color={0,0,127}));
+  connect(EB401_ToutSP.y, EB401.Tout_ref) annotation (Line(points={{-63,-106},{-46.35,-106},{-46.35,-107},{-29.7,-107}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

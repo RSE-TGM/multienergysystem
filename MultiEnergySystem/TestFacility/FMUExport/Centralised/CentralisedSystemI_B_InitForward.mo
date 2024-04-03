@@ -1,8 +1,7 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom=
-          147.6e3*0.8));
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom = 147.6e3*0.8), FT703(G = 1E-3), FT733(G = 1E-3), FT713(G = 1e-3), FT723(G = 1e-3));
   OffSetBlocks.InputOffset omegaP101Offset(
     fixInput=fixomegaP101,
     u_norm=omegaP101_nom,
@@ -11,7 +10,7 @@ model CentralisedSystemI_B_InitForward
         extent={{10,-10},{-10,10}},
         rotation=0)));
 
-  //Boolean Parameters
+//Boolean Parameters
   //Initialization type
   parameter Boolean ForwardInit = true "True if forward, False if backward";
   //Input
@@ -31,7 +30,7 @@ model CentralisedSystemI_B_InitForward
   parameter Boolean fixmflowcoolEX721 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixmflowcoolEX731 = ForwardInit "True if forward, False if backward";
 
-  //Output
+//Output
   final parameter Boolean fixPT902 = not fixomegaP901;
   final parameter Boolean fixPT102 = not fixomegaP101;
   final parameter Boolean fixPT402 = not fixomegaP401;
@@ -48,7 +47,7 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixTT724 = not fixmflowcoolEX721;
   final parameter Boolean fixTT734 = not fixmflowcoolEX731;
 
-  //Additional variables
+//Additional variables
   final parameter Boolean fixTT902 = false;
   final parameter Boolean fixTT701 = false;
   final parameter Boolean fixTT711 = false;
@@ -404,8 +403,6 @@ equation
           -270},{238,-270}}, color={0,0,127}));
   connect(TT714.T, TT714Offset.y)    annotation (Line(points={{410.2,-250},{410.2,-270},{378,-270}}, color={0,0,127}));
   connect(TT724.T, TT724Offset.y)    annotation (Line(points={{570.2,-254},{543.1,-254},{543.1,-270},{538,-270}}, color={0,0,127}));
-  connect(FT901.q_m3hr,FT901Offset. y)    annotation (Line(points={{-748.5,166},{-748.5,150},{-738,150}},
-                                                       color={0,0,127}));
   connect(controlSignalBus.domegaP901, omegaP901Offset.deltaUnorm) annotation (Line(
       points={{-897,-3},{-708,-3},{-708,66},{-722,66}},
       color={255,204,51},
@@ -691,6 +688,8 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
+  connect(FT901.m_flow, FT901Offset.y) annotation(
+    Line(points = {{-752, 170}, {-748, 170}, {-748, 150}, {-738, 150}}, color = {0, 0, 127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
                      Rectangle(
           lineColor={140,56,54},

@@ -2760,7 +2760,7 @@ package Tests
       parameter Real dmflowcool_EX711[:, :] = [0, -0.8; 1e6, -0.8];
       parameter Real dmflowcool_EX721[:, :] = [0, -0.8; 1e6, -0.8];
       parameter Real dmflowcool_EX731[:, :] = [0, -0.8; 1e6, -0.8];
-      parameter Real dTT704[:, :] = [0, (15 - 20)/(20 + 273.15); 1e3, (15 - 20)/(20 + 273.15)];
+      parameter Real dTT704[:, :] = [0, (18 - 20)/(20 + 273.15); 1e3, (18 - 20)/(20 + 273.15)];
       parameter Real dFT701[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
       parameter Real dFT711[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
       parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 1000, (1 - 1.3)/1.3];
@@ -2926,7 +2926,7 @@ Control")}),
       extends Modelica.Icons.Example;
       replaceable ThermalPlantController thermalPlantController(aWPIContinuous(y_start = -0.27)) annotation (
         Placement(transformation(origin = {5, 0}, extent = {{-55, -38}, {-11, 38}})));
-      replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(m_flowcool_nom = 0.35, FT701Offset(fixOffset = true, y_Offset_fixed = 1.3), FT711Offset(fixOffset = true, y_Offset_fixed = 1.3), FT721Offset(fixOffset = true, y_Offset_fixed = 1.3), FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667), FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667)) annotation (
+      replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(m_flowcool_nom = 0.35, TT704Offset(fixOffset = true, y_Offset_fixed = 15 + 273.15), FT711Offset(fixOffset = true, y_Offset_fixed = 1.3), FT721Offset(fixOffset = true, y_Offset_fixed = 1.3), FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667), FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667)) annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
     equation
       connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus) annotation (

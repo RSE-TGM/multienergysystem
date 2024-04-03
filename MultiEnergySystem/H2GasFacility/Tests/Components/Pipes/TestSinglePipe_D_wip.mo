@@ -17,14 +17,12 @@ model TestSinglePipe_D_wip
   // Components
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
-    Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0,
     height=0.01,
     offset=Pipe.pipe1.m_flow_start,
     startTime=50)  annotation (Placement(visible=true, transformation(
-        origin={-86,20},
+        origin={-84,30},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV_wip round1DFV_wip(
@@ -66,8 +64,30 @@ model TestSinglePipe_D_wip
     m_flow0=m_flow_start,
     G=0,
     use_in_m_flow0=true,
-    use_in_T0=true)
-    annotation (Placement(transformation(extent={{-58,-18},{-38,2}})));
+    use_in_T0=false)
+    annotation (Placement(transformation(extent={{-60,-4},{-40,16}})));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow1(
+    p0=Pipe.pipe1.pin_start,
+    T0=Pipe.pipe1.Tin_start,
+    redeclare model Medium = Medium,
+    X0=Xref,
+    m_flow0=m_flow_start,
+    G=0,
+    use_in_m_flow0=true,
+    use_in_T0=false,
+    use_in_X0=true)
+    annotation (Placement(transformation(extent={{-58,-66},{-38,-46}})));
+  Modelica.Blocks.Sources.RealExpression realExpression[7](y=if time < 50 then
+        Xref else {0,0,0,0,0,0,1})
+    annotation (Placement(transformation(extent={{-86,-28},{-66,-8}})));
+  Modelica.Blocks.Sources.Ramp m_flow_in1(
+    duration=0,
+    height=0.01,
+    offset=Pipe.pipe1.m_flow_start,
+    startTime=50)  annotation (Placement(visible=true, transformation(
+        origin={-88,-40},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
 equation
   connect(round1DFV_wip.outlet, sinkPressure.inlet) annotation (Line(
       points={{12,-8},{48,-8}},
@@ -76,13 +96,20 @@ equation
   connect(p_out.y, sinkPressure.in_p0) annotation (Line(points={{47,44},{60,44},
           {60,6},{54,6},{54,0.4}}, color={0,0,127}));
   connect(sourceMassFlow.outlet, round1DFV_wip.inlet) annotation (Line(
-      points={{-38,-8},{-8,-8}},
+      points={{-40,6},{-22,6},{-22,-8},{-8,-8}},
       color={182,109,49},
       thickness=0.5));
-  connect(sourceMassFlow.in_m_flow0, m_flow_in.y) annotation (Line(points={{-54,
-          -3},{-68,-3},{-68,20},{-75,20}}, color={0,0,127}));
-  connect(T_in.y, sourceMassFlow.in_T0)
-    annotation (Line(points={{-75,52},{-48,52},{-48,-3}}, color={0,0,127}));
+  connect(sourceMassFlow.in_m_flow0, m_flow_in.y) annotation (Line(points={{-56,11},
+          {-56,10},{-66,10},{-66,30},{-73,30}},
+                                           color={0,0,127}));
+  connect(sourceMassFlow1.outlet, round1DFV_wip.inlet) annotation (Line(
+      points={{-38,-56},{-22,-56},{-22,-8},{-8,-8}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(realExpression.y, sourceMassFlow1.in_X0)
+    annotation (Line(points={{-65,-18},{-42,-18},{-42,-51}}, color={0,0,127}));
+  connect(m_flow_in1.y, sourceMassFlow1.in_m_flow0)
+    annotation (Line(points={{-77,-40},{-54,-40},{-54,-51}}, color={0,0,127}));
   annotation (
     experiment(
       StopTime=100,

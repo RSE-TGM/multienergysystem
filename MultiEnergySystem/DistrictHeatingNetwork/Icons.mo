@@ -73,6 +73,13 @@ package Icons "Icon package for DHN components"
               fillPattern=FillPattern.Solid,
               fillColor={255,255,255})}), Diagram(coordinateSystem(preserveAspectRatio=false)));
     end ThermalModel;
+
+    partial model ThermalPlant
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+                         Rectangle(lineColor = {140, 56, 54}, fillColor={242,220,219},   fillPattern=FillPattern.Solid,                lineThickness = 1, extent={{-100,100},{100,
+                  -100}},                                                                                                                                                                      radius=20)}),
+          Diagram(coordinateSystem(preserveAspectRatio=false)));
+    end ThermalPlant;
   end Water;
 
   package Generic

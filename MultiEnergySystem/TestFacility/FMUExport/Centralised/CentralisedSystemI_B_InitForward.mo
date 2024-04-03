@@ -548,7 +548,7 @@ equation
   connect(TT701.T, TT701Offset.y)    annotation (Line(points={{148.5,-88},{154.25,-88},{154.25,-90},{162,-90}}, color={0,0,127}));
   connect(TT731.T, TT731Offset.y)    annotation (Line(points={{308.5,-90},{322,-90}}, color={0,0,127}));
   connect(TT711.T, TT711Offset.y)    annotation (Line(points={{468.5,-86},{452,-86},{452,-90},{484,-90}}, color={0,0,127}));
-  connect(TT721.T, TT721Offset.y)    annotation (Line(points={{628.5,-86},{612,-86},{612,-90},{638,-90}}, color={0,0,127}));
+  connect(TT721.T, TT721Offset.y)    annotation (Line(points={{628.5,-86},{632,-86},{632,-90},{638,-90}}, color={0,0,127}));
   connect(TT704.T, TT704Offset.y)    annotation (Line(points={{90.2,-251},{83.1,-251},{83.1,-250},{76,-250}}, color={0,0,127}));
   connect(TT734.T, TT734Offset.y) annotation (Line(points={{250.35,-251.5},{243.175,-251.5},{243.175,
           -270},{238,-270}}, color={0,0,127}));

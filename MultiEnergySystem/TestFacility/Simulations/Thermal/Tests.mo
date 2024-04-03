@@ -2760,6 +2760,7 @@ package Tests
       parameter Real dmflowcool_EX711[:, :] = [0, -0.8; 1e6, -0.8];
       parameter Real dmflowcool_EX721[:, :] = [0, -0.8; 1e6, -0.8];
       parameter Real dmflowcool_EX731[:, :] = [0, -0.8; 1e6, -0.8];
+      parameter Real dTT704[:, :] = [0, (15 - 20)/(20 + 273.15); 1e3, (15 - 20)/(20 + 273.15)];
       parameter Real dFT701[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
       parameter Real dFT711[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
       parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 1000, (1 - 1.3)/1.3];
@@ -2799,9 +2800,11 @@ package Tests
         Placement(visible = true, transformation(origin = {110, -5}, extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin = {94, 0}, extent = {{-30, -30}, {30, 30}}, rotation = -90)));
       Modelica.Blocks.Sources.TimeTable dthetaFCV731(table = dtheta_FCV731) annotation (
         Placement(transformation(extent = {{-80, -60}, {-70, -50}})));
-      DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous(Kp = 0.0013111, Ti = 0.001, Umax = 0, Umin = -1, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialOutput)) annotation (
+      DistrictHeatingNetwork.Controllers.AWPIContinuous aWPIContinuous(
+        Kp=0.13801,
+        Ti=0.1,                                                                                    Umax = 0, Umin = -1, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialOutput)) annotation (
         Placement(transformation(extent = {{34, 33}, {54, 53}})));
-      Modelica.Blocks.Sources.TimeTable dFT701SP(table = dFT701) annotation (
+      Modelica.Blocks.Sources.TimeTable dTT704SP(table=dTT704)   annotation (
         Placement(transformation(extent = {{14, 42}, {24, 52}})));
       FMUExport.Interfaces.ControlSignalBus processVariableBus annotation (
         Placement(visible = true, transformation(origin = {-102, 0}, extent = {{51, 41}, {-51, -41}}, rotation = -90), iconTransformation(origin = {-91, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
@@ -2846,10 +2849,7 @@ package Tests
       connect(dmflowcoolEX731.y, controlSignalBus.dmflowcoolEX731) annotation (
         Line(points = {{-69.5, -115}, {0, -115}, {0, -5}, {110, -5}}, color = {0, 0, 127}),
         Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-      connect(processVariableBus.dFT701, aWPIContinuous.FeedBack) annotation (
-        Line(points = {{-102, 0}, {-84, 0}, {-84, 39}, {36, 39}}, color = {255, 204, 51}, thickness = 0.5),
-        Text(string = "%first", index = -1, extent = {{-6, 3}, {-6, 3}}, horizontalAlignment = TextAlignment.Right));
-      connect(dFT701SP.y, aWPIContinuous.REF) annotation (
+      connect(dTT704SP.y, aWPIContinuous.REF) annotation (
         Line(points = {{24.5, 47}, {36, 47}}, color = {0, 0, 127}));
       connect(aWPIContinuous.controlAction, controlSignalBus.dthetaFCV701) annotation (
         Line(points = {{52, 43}, {64, 43}, {64, -5}, {110, -5}}, color = {0, 0, 127}),
@@ -2908,6 +2908,14 @@ package Tests
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.dTT704, aWPIContinuous.FeedBack) annotation (Line(
+          points={{-102,0},{-59,0},{-59,39},{36,39}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-60, 32}, {60, -28}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "PI
 Control")}),
@@ -2915,6 +2923,7 @@ Control")}),
     end ThermalPlantController;
 
     model TestActuator
+      extends Modelica.Icons.Example;
       replaceable ThermalPlantController thermalPlantController(aWPIContinuous(y_start = -0.27)) annotation (
         Placement(transformation(origin = {5, 0}, extent = {{-55, -38}, {-11, 38}})));
       replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(m_flowcool_nom = 0.35, FT701Offset(fixOffset = true, y_Offset_fixed = 1.3), FT711Offset(fixOffset = true, y_Offset_fixed = 1.3), FT721Offset(fixOffset = true, y_Offset_fixed = 1.3), FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667), FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667)) annotation (

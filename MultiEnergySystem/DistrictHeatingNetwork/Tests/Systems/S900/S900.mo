@@ -89,7 +89,7 @@ model S900
     n=5)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={0,10})));
+        origin={0,-18})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT901(redeclare model Medium = Medium, T_start=Tin_start_S9, p_start=pin_start_S9)
     "Temperature sensor at the inlet of pump 901" annotation (Placement(
@@ -126,7 +126,7 @@ model S900
     pin_start=pout_start_S9) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={0,-20})));
+        origin={0,10})));
   Sources.SourcePressure sourcePressure1(redeclare model Medium = Medium, p0=pin_start_S9, T0=Tin_start_S9)  annotation (Placement(transformation(extent={{-141,54.5},{-130.5,65}})));
   Sources.SourcePressure sourceP(redeclare model Medium = Medium, p0=pin_start_S9, T0=Tin_start_S9) annotation (Placement(
         transformation(
@@ -143,8 +143,8 @@ model S900
     p0=pout_start_S9,
     T0=Tout_start_S9,
     R=1) annotation (Placement(transformation(extent={{14,66},{26,54}})));
-  Modelica.Blocks.Sources.TimeTable P901_omega(table=P901omega)  annotation (Placement(transformation(extent={{40,-60},{20,-40}})));
-  Modelica.Blocks.Sources.TimeTable FCV901_theta(table=FCV901theta) annotation (Placement(transformation(extent={{40,-30},{20,-10}})));
+  Modelica.Blocks.Sources.TimeTable P901_omega(table=P901omega)  annotation (Placement(transformation(extent={{68,-60},{48,-40}})));
+  Modelica.Blocks.Sources.TimeTable FCV901_theta(table=FCV901theta) annotation (Placement(transformation(extent={{70,0},{50,20}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipeFV rackCD_Hot_S200_S900(
     redeclare model Medium = Medium,
     L=L_rCD_H7,
@@ -161,6 +161,11 @@ model S900
         extent={{-9.625,9.625},{9.625,-9.625}},
         rotation=90,
         origin={0.375,-69.625})));
+  Modelica.Blocks.Continuous.FirstOrder firstOrder(
+    T=2,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=1) annotation (Placement(transformation(extent={{40,0},{20,20}})));
+  Modelica.Blocks.Continuous.FirstOrder firstOrder1(T=2, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{40,-60},{20,-40}})));
 equation
   connect(FT901.outlet, PT902.inlet) annotation (Line(
       points={{0,35},{0,39.5}},
@@ -168,10 +173,6 @@ equation
       thickness=0.5));
   connect(PT902.inlet, TT902.inlet) annotation (Line(
       points={{0,39.5},{0,47.25},{0.15,47.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT901.inlet,PL4_S901. outlet) annotation (Line(
-      points={{-2.22045e-16,29},{-2.22045e-16,21.5},{6.66134e-16,21.5},{6.66134e-16,20}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.inlet, PT901.inlet) annotation (Line(
@@ -186,14 +187,6 @@ equation
       points={{-130.5,59.75},{-115.85,59.75},{-115.85,41.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV901.outlet, PL4_S901.inlet) annotation (Line(
-      points={{6.66134e-16,-10},{6.66134e-16,-5},{-6.66134e-16,-5},{-6.66134e-16,0}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(P901.outlet, FCV901.inlet) annotation (Line(
-      points={{0,-38},{0,-30}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL2_S901.outlet, sink_.inlet)
     annotation (Line(
       points={{-116,-40},{-116,-70}},
@@ -203,10 +196,6 @@ equation
       points={{0.15,47.25},{0,47.25},{0,60},{14,60}},
       color={140,56,54},
       thickness=0.5));
-  connect(P901_omega.y, P901.in_omega)
-    annotation (Line(points={{19,-50},{5,-50}},   color={0,0,127}));
-  connect(FCV901_theta.y, FCV901.opening)
-    annotation (Line(points={{19,-20},{8,-20}},   color={0,0,127}));
   connect(rackCD_Hot_S200_S900.outlet, P901.inlet) annotation (Line(
       points={{0.375,-60},{0,-60},{0,-54}},
       color={140,56,54},
@@ -215,6 +204,25 @@ equation
       points={{0.375,-79.25},{0.375,-86.125},{4.44089e-16,-86.125},{4.44089e-16,-86}},
       color={140,56,54},
       thickness=0.5));
+  connect(FCV901.outlet, FT901.inlet)
+    annotation (Line(
+      points={{6.10623e-16,20},{6.10623e-16,24.5},{-2.22045e-16,24.5},{-2.22045e-16,29}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV901.inlet, PL4_S901.outlet)
+    annotation (Line(
+      points={{-6.10623e-16,0},{-6.10623e-16,-4},{6.10623e-16,-4},{6.10623e-16,-8}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL4_S901.inlet, P901.outlet)
+    annotation (Line(
+      points={{-6.10623e-16,-28},{-6.10623e-16,-33},{4.44089e-16,-33},{4.44089e-16,-38}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV901_theta.y, firstOrder.u) annotation (Line(points={{49,10},{42,10}}, color={0,0,127}));
+  connect(firstOrder.y, FCV901.opening) annotation (Line(points={{19,10},{8,10}}, color={0,0,127}));
+  connect(P901_omega.y, firstOrder1.u) annotation (Line(points={{47,-50},{42,-50}}, color={0,0,127}));
+  connect(firstOrder1.y, P901.in_omega) annotation (Line(points={{19,-50},{5,-50}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(extent={{-160,-160},{160,160}})),
     experiment(

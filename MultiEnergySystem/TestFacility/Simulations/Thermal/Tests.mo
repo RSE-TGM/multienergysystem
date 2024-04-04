@@ -574,8 +574,7 @@ package Tests
       end S900_Seq_2601Test1;
 
       model S900_Seq_2901Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2901_Test1/Temperatures.mat"),
-            circulationPump(h_S9_PL3=0.5));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2901_Test1/Temperatures.mat"));
         annotation (experiment(StopTime=6800, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2901Test1;
 

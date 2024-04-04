@@ -6,6 +6,7 @@ model GasBoiler "System 100"
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   constant Real pi = Modelica.Constants.pi;
+  parameter Real pumpcorrectionfactor = 1;
 
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
@@ -15,18 +16,19 @@ model GasBoiler "System 100"
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 65 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
   parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
   final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
 
   final parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
-  final parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+  parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
   final parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
-  final parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+  parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
   final parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
-  final parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
+  parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
   final parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
-  final parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
+  parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
   final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
   final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
   final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
@@ -38,6 +40,9 @@ model GasBoiler "System 100"
   parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
   parameter Real FCV101theta[:,:] = [0, 1];
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
+
+  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
   parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;
   parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.8;
@@ -68,13 +73,15 @@ model GasBoiler "System 100"
     headmin=DistrictHeatingNetwork.Data.PumpData.P101.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P101.qnommin_inm3h,
     qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h,
+    correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                                                      annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
         origin={20,5})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV101(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
+    Kv=Kv,
+    openingChar=openingChar,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV101.rho_nom,
     q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV101.q_nom_m3h,
@@ -113,7 +120,8 @@ model GasBoiler "System 100"
     q_m3h_start=q_m3h_S1,
     n=n,
     u_nom=u_nom,
-    hctype=hctype) annotation (Placement(transformation(
+    hctype=hctype,
+    cf=cf)         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,-24})));
@@ -130,7 +138,8 @@ model GasBoiler "System 100"
     q_m3h_start=q_m3h_S1,
     n=n,
     u_nom=u_nom,
-    hctype=hctype) annotation (Placement(transformation(
+    hctype=hctype,
+    cf=cf)         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20,-24})));
@@ -147,7 +156,8 @@ model GasBoiler "System 100"
     q_m3h_start=q_m3h_S1,
     n=n,
     u_nom=u_nom,
-    hctype=hctype) annotation (Placement(transformation(
+    hctype=hctype,
+    cf=cf)         annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={20,34})));

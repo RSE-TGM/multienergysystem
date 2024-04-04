@@ -11,6 +11,9 @@ model CirculationPump
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter Real pumpcorrectionfactor = 1;
+  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
   parameter DistrictHeatingNetwork.Types.Length Di = 51e-3;
   parameter DistrictHeatingNetwork.Types.Length L_v = 1;
@@ -31,6 +34,7 @@ model CirculationPump
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL2 = 2.3;
   parameter DistrictHeatingNetwork.Types.Length h_S9_PL2 = 0.5;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL3 = 1.5;
+  parameter DistrictHeatingNetwork.Types.Length h_S9_PL3 = 1;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL4 = 0.65;
   parameter DistrictHeatingNetwork.Types.Length L_rCD_H7 = 15;
   parameter DistrictHeatingNetwork.Types.Length Di_S9 = 51e-3;
@@ -67,6 +71,7 @@ model CirculationPump
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P901.qnommin_inm3h,
     rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P901.rhonom,
     qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P901.qnommax_inm3h,
+    correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                                                   annotation (
     Placement(visible = true, transformation(                 extent={{-10,-10},{10,10}},      rotation=90,
         origin={20,-42})));
@@ -90,6 +95,7 @@ model CirculationPump
         rotation=90,
         origin={23.25,68.25})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S901(
+    h=h_S9_PL3,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S9_PL3,
@@ -103,7 +109,7 @@ model CirculationPump
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={20,-16})));
+        origin={18,-16})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT901(redeclare model Medium = Medium, T_start=Tin_start_S9, p_start=pin_start_S9)
     "Temperature sensor at the inlet of pump 901" annotation (Placement(
@@ -155,7 +161,7 @@ model CirculationPump
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV901.Kv,
+    Kv=Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV901.dp_nom,
     openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot,
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.rho_nom,
@@ -190,11 +196,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL4_S901.inlet, P901.outlet) annotation (Line(
-      points={{20,-26},{20,-34}},
+      points={{18,-26},{18,-30},{20,-30},{20,-34}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV901.inlet, PL4_S901.outlet) annotation (Line(
-      points={{20,24},{20,-6}},
+      points={{20,24},{20,-6},{18,-6}},
       color={140,56,54},
       thickness=0.5));
   connect(FT901.inlet, FCV901.outlet) annotation (Line(
@@ -237,7 +243,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(PL4_S901.wall, MultiPort) annotation (Line(
-      points={{15.9,-16},{-48,-16},{-48,-70},{-110,-70}},
+      points={{13.9,-16},{-48,-16},{-48,-70},{-110,-70}},
       color={255,101,98},
       thickness=0.5));
   annotation (Icon(coordinateSystem(grid={1,1}), graphics={

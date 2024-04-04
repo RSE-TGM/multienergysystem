@@ -27,7 +27,7 @@ model GasBoiler "System 100"
   parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
   final parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
   parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
-  final parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
+  parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
   parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
   final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
   final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";

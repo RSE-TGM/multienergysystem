@@ -11,6 +11,8 @@ model ElectricBoiler "System 400"
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter Real pumpcorrectionfactor = 1;
+
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 70 + 273.15;
@@ -30,7 +32,7 @@ model ElectricBoiler "System 400"
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4;
 
   parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear "opening characteristic";
 
   parameter Integer nR = 5 "Number of resistors";
   parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
@@ -82,6 +84,7 @@ model ElectricBoiler "System 400"
     headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
     qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h,
     qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h,
+    correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                      annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,

@@ -19,9 +19,9 @@ model TestSinglePipe_D_wip
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0,
-    height=0.01,
+    height=0,
     offset=Pipe.pipe1.m_flow_start,
-    startTime=50)  annotation (Placement(visible=true, transformation(
+    startTime=0)   annotation (Placement(visible=true, transformation(
         origin={-84,30},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -83,7 +83,7 @@ model TestSinglePipe_D_wip
   Modelica.Blocks.Sources.Ramp m_flow_in1(
     duration=0,
     height=0.01,
-    offset=Pipe.pipe1.m_flow_start,
+    offset=0,
     startTime=50)  annotation (Placement(visible=true, transformation(
         origin={-88,-40},
         extent={{-10,-10},{10,10}},

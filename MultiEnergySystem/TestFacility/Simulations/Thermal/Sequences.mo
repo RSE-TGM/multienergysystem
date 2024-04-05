@@ -97,7 +97,7 @@ package Sequences
           VE901(p0=1.76e5),
           Tout_start_S9=72 + 273.15,
           T_start_hot=72 + 273.15,
-          FCV901(Kv=20),
+          FCV901(Kv=33,   openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot),
           GB101(
             Tout_start=346.15,
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
@@ -111,7 +111,7 @@ package Sequences
             openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage,
             Tin_start=T_start_hot,
             Kv=25),
-          FCV101(Kv=20, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV101(Kv= 33, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           EB401_Status(table={537,768,2271,2500}),
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
           FCVC02(Kv=25, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
@@ -120,8 +120,17 @@ package Sequences
           FCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           FCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           FCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
-          FCV401(Kv=32),
-          FV402(Kv=20));
+          FCV401(Kv= 33),
+          FV402(Kv= 33),
+          PL4_S901(h = 1),
+          P101(correctionfactor = 1.5),
+          FV401(Kv = 33),
+          P401(correctionfactor = 2),
+          PL_S100_P101_FCV101(L = 2, h = 2),
+          FT703(G = 1e-8),
+          FT733(G = 1e-8),
+          FT713(G = 1e-8),
+          FT723(G = 1e-8));
         //FCV701theta = [0, 0.6269; 1e6, 0.6269],
         parameter Real kq = 0.7;
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;

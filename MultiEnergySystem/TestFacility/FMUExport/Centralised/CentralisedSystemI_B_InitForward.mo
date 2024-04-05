@@ -27,7 +27,8 @@ model CentralisedSystemI_B_InitForward
   parameter Boolean fixToutEB401 = ForwardInit "True if forward, False if backward";
 
 //Output
-  final parameter Boolean fixPT902 = not fixomegaP901;
+  //final parameter Boolean fixPT902 = not fixomegaP901;
+  final parameter Boolean fixdPTA2 = not fixomegaP901;
   final parameter Boolean fixPT102 = not fixomegaP101;
   final parameter Boolean fixPT402 = not fixomegaP401;
   final parameter Boolean fixFT901 = not fixthetaFCV901;
@@ -61,6 +62,8 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixFT711 = false;
   final parameter Boolean fixFT721 = false;
   final parameter Boolean fixFT731 = false;
+  final parameter Boolean fixPT902 = false;
+
 
 //Normalisation values
   //Nominal values
@@ -154,10 +157,12 @@ model CentralisedSystemI_B_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT731_des = 2.2e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
-  parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 2.7e5 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 0.05e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 0.1e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT901_des= DistrictHeatingNetwork.Data.PumpData.P901.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
-    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+    Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT101_des= DistrictHeatingNetwork.Data.PumpData.P101.qnom_inm3h*980/3600  "Desired gas boiler mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT401_des= DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h*980/3600  "Desired electric boiler mass flowrate" annotation (
@@ -526,6 +531,14 @@ model CentralisedSystemI_B_InitForward
         origin={-418,-276},
         extent={{-10,-10},{10,10}},
         rotation=0)));
+  OffSetBlocks.OutputOffset dPTA2Offset(
+    fixOutput=fixdPTA2,
+    y_fixed=dPTA2_des,
+    y_norm=dPTA2_des) annotation (Placement(visible=true, transformation(
+        origin={802,260},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Modelica.Blocks.Math.Add add(k1=-1) annotation (Placement(transformation(extent={{764,250},{784,270}})));
 equation
   connect(FCV701.opening, thetaFCV701Offset.u)    annotation (Line(points={{148,-150},{161,-150}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731.opening)    annotation (Line(points={{321,-150},{308,-150}}, color={0,0,127}));
@@ -924,6 +937,14 @@ equation
       index=-1,
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
+  connect(PTA20.p, add.u2) annotation (Line(points={{681,197.8},{681,198},{698,198},{698,218},{754,218},{754,254},{762,254}}, color={0,0,127}));
+  connect(PTA19.p, add.u1) annotation (Line(points={{682,272.2},{682,276},{754,276},{754,266},{762,266}}, color={0,0,127}));
+  connect(add.y, dPTA2Offset.y) annotation (Line(points={{785,260},{794,260}}, color={0,0,127}));
+  connect(dPTA2Offset.deltaYnorm, processVariableBus.dPTA2) annotation (Line(points={{811,260},{858,260},{858,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-60,40},{60,-40}},

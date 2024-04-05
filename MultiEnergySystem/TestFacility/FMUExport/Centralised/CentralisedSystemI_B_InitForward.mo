@@ -3,13 +3,6 @@ model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom = 147.6e3*0.8));
-  OffSetBlocks.InputOffset omegaP101Offset(
-    fixInput=fixomegaP101,
-    u_norm=omegaP101_nom,
-    u_start=omegaP101_nom) annotation (Placement(visible=true, transformation(
-        origin={-210,-180},
-        extent={{10,-10},{-10,10}},
-        rotation=0)));
 
 //Boolean Parameters
   //Initialization type
@@ -172,7 +165,13 @@ model CentralisedSystemI_B_InitForward
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flowhot_des= 1.3;
   parameter DistrictHeatingNetwork.Types.MassFlowRate FTA12_des= 0.2 "Desired recirculation mass flowrate";
 
-
+  OffSetBlocks.InputOffset omegaP101Offset(
+    fixInput=fixomegaP101,
+    u_norm=omegaP101_nom,
+    u_start=omegaP101_nom) annotation (Placement(visible=true, transformation(
+        origin={-210,-180},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
   OffSetBlocks.InputOffset omegaP401Offset(
     fixInput=fixomegaP401,
     u_norm=omegaP401_nom,

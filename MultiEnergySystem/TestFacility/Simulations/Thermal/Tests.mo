@@ -3108,7 +3108,11 @@ package Tests
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-60, 32}, {60, -28}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "PI
 Control")}),
-        Diagram(coordinateSystem(preserveAspectRatio = false, grid = {1, 1})));
+        Diagram(coordinateSystem(preserveAspectRatio = false, grid = {1, 1})),
+        experiment(
+          StopTime=3000,
+          Tolerance=1e-06,
+          __Dymola_Algorithm="Dassl"));
     end ThermalPlantController;
 
     model TestActuator
@@ -3134,7 +3138,7 @@ Control")}),
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),
         experiment(
-          StopTime=2000,
+          StopTime=3000,
           Tolerance=1e-06,
           __Dymola_Algorithm="Dassl"));
     end TestActuator;

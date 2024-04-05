@@ -7,8 +7,7 @@ package Configurations "Different possible configurations of the heat generating
 
     partial model CentralPlantBase "Base Case considering rack CD and the pipelines connecting to the loads"
       //Fluids
-      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
-      DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       //Constants
       parameter Real pi = Modelica.Constants.pi;
       //General parameters of pipes
@@ -135,7 +134,8 @@ package Configurations "Different possible configurations of the heat generating
         Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin = {-810, 162.5})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S901(redeclare model Medium = MediumCP, L = L_S9_PL2, h = h_S9_PL2, t = t_S9, pin_start = pin_start_S9, Tin_start = Tin_start_S9, Tout_start = Tin_start_S9, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-808, 101})));
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV901(redeclare model Medium = MediumCP, Kv = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV901.dp_nom, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV901.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV901.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S9, pin_start = pout_start_S9, q_m3h_start = q_m3h_S9) annotation (
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV901(redeclare model Medium = MediumCP, Kv = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV901.dp_nom,
+        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV901.openingChar,                                                                                                                                                                                                        rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV901.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV901.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S9, pin_start = pout_start_S9, q_m3h_start = q_m3h_S9) annotation (
         Placement(transformation(origin={-757.5,140.5},extent={{-9.5,9.5},{9.5,-9.5}},  rotation = 90)));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV933(redeclare model Medium = MediumCP, Kv = 33, dp_nom = 50000, Tin_start = T_start, pin_start = pin_start) annotation (
         Placement(visible = true, transformation(origin = {-218, 45}, extent = {{-5, 5}, {5, -5}}, rotation = 180)));

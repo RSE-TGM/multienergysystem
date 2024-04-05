@@ -2650,19 +2650,23 @@ package Configurations "Different possible configurations for the loads"
             extent={{17.5,29},{-17.5,-29}},
             rotation=-90,
             origin={279,-217.5})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom, Tin_start(displayUnit="K") = EX701_Tout_hot, pin_start=EX701_pout_hot, q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
+        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV701.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom, Tin_start(displayUnit="K") = EX701_Tout_hot, pin_start=EX701_pout_hot, q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={140,-150})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom, Tin_start(displayUnit="K") = EX711_Tout_hot, pin_start=EX711_pout_hot, q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
+        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV711.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom, Tin_start(displayUnit="K") = EX711_Tout_hot, pin_start=EX711_pout_hot, q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={460,-150})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom, Tin_start(displayUnit="K") = EX721_Tout_hot, pin_start=EX721_pout_hot, q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
+        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV721.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom, Tin_start(displayUnit="K") = EX721_Tout_hot, pin_start=EX721_pout_hot, q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={620,-150})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv, dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom, Tin_start(displayUnit="K") = EX731_Tout_hot, pin_start=EX731_pout_hot, q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
+        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV731.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom, Tin_start(displayUnit="K") = EX731_Tout_hot, pin_start=EX731_pout_hot, q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={300,-150})));

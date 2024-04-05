@@ -9,7 +9,8 @@ record Valve
   Modelica.Units.SI.MassFlowRate m_flow_nom = q_nom*rho_nom "Mass Flow Rate of the fluid";
   Real Kv(unit = "m3/h") "Metri Flow Coefficient";
   Modelica.Units.SI.Temperature Tin_start "Start value for Inlet Temperature";
-  Modelica.Units.SI.Pressure pin_start "Nominal Inlet Pressure"
+  Modelica.Units.SI.Pressure pin_start "Nominal Inlet Pressure";
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar "Opening characteristic";
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
   Documentation(info = "<html><head></head><body>Record class including main variables to describe the different pumps of the RSE heating network.</body></html>"));

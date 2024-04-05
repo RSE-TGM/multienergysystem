@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom = 147.6e3*0.8), FT703(G = 1E-3), FT733(G = 1E-3), FT713(G = 1e-3), FT723(G = 1e-3));
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom = 147.6e3*0.8));
   OffSetBlocks.InputOffset omegaP101Offset(
     fixInput=fixomegaP101,
     u_norm=omegaP101_nom,

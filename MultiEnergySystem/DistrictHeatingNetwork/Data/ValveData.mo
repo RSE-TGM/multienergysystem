@@ -79,7 +79,7 @@ package ValveData
     q_nom_m3h = 8.8,
     dp_nom = 1e5,
     rho_nom = 0.9680155e3,
-    Kv = 3,
+    Kv = 33,
     Tin_start = 60 + 273.15,
     pin_start = 1.66e5,
     openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear);
@@ -141,7 +141,8 @@ package ValveData
     rho_nom = 985,
     Kv = 33,
     Tin_start = 60 + 273.15,
-    pin_start = 3e5);
+    pin_start = 3e5,
+    openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCVC02(
     Name = "FCVC02",
     Tin_nom = 60 + 273.15,
@@ -150,5 +151,6 @@ package ValveData
     rho_nom = 985,
     Kv = 33,
     Tin_start = 80 + 273.15,
-    pin_start = 3e5);
+    pin_start = 3e5,
+    openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
 end ValveData;

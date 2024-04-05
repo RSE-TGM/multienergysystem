@@ -2885,10 +2885,26 @@ package Configurations "Different possible configurations for the loads"
             extent={{-6,-6},{6,6}},
             rotation=90,
             origin={297,-252})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow FT703(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{84,-290},{64,-310}})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow FT713(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{404,-290},{384,-310}})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow FT723(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{570,-290},{550,-310}})));
-      DistrictHeatingNetwork.Sources.SinkMassFlow FT733(redeclare model Medium = MediumLPCold, use_in_m_flow=true, pin_start=200000, p0=200000, T0=288.15, G = 0.001) annotation (Placement(transformation(extent={{242,-290},{222,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT703(redeclare model Medium = MediumLPCold, use_in_m_flow=true,
+        pin_start=200000,
+        p0=200000,
+        T0=288.15,
+        G=1e-8)                                                                                                                                                       annotation (Placement(transformation(extent={{84,-290},{64,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT713(redeclare model Medium = MediumLPCold, use_in_m_flow=true,
+        pin_start=200000,
+        p0=200000,
+        T0=288.15,
+        G=1e-8)                                                                                                                                                       annotation (Placement(transformation(extent={{404,-290},{384,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT723(redeclare model Medium = MediumLPCold, use_in_m_flow=true,
+        pin_start=200000,
+        p0=200000,
+        T0=288.15,
+        G=1e-8)                                                                                                                                                       annotation (Placement(transformation(extent={{570,-290},{550,-310}})));
+      DistrictHeatingNetwork.Sources.SinkMassFlow FT733(redeclare model Medium = MediumLPCold, use_in_m_flow=true,
+        pin_start=200000,
+        p0=200000,
+        T0=288.15,
+        G=1e-8)                                                                                                                                                       annotation (Placement(transformation(extent={{242,-290},{222,-310}})));
       DistrictHeatingNetwork.Sources.SourcePressure coldSourcePEX701(redeclare model Medium = MediumLPCold, use_in_T0=true, p0=210000, T0(displayUnit="K") = 7 + 273.15, R=0) "Ideal pressure source of heat exchanger EX701 - cold side" annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=0,

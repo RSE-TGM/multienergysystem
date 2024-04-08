@@ -2497,7 +2497,7 @@ package Tests
           EX711_Tout_hot = T_start_hot-20,
           EX721_Tout_hot = T_start_hot-20,
           EX731_Tout_hot = T_start_hot-20,
-          VE901(p0 = p_VE901));
+          VE901(p0 = p_VE901, R=1e-3));
         // System S200
         // Unloading
         //   parameter Boolean FV201_state = true;
@@ -2519,11 +2519,11 @@ package Tests
         parameter Boolean FV207_state = true;
         parameter Boolean FV208_state = true;
         parameter Boolean FV209_state = false;
-        parameter Boolean Load = true;
+        parameter Boolean Load = false;
         final parameter Boolean Unload = not Load;
         parameter Real Load2Unload = 4e5;
         parameter Real Unload2Load = 5e5;
-        parameter Integer nTank = 9 "Number of volumes in stratified tank";
+        parameter Integer nTank = 4 "Number of volumes in stratified tank";
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2 = 2.1e5;
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2 = 1.8e5;
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump = 1.79e5;
@@ -2745,6 +2745,10 @@ package Tests
           Line(points = {{-748, -426}, {-748, -444}, {-822, -444}}, color = {140, 56, 54}, thickness = 0.5));
         connect(PL_S200_D201_FT201.outlet, FT201.outlet) annotation (
           Line(points = {{-842, -444}, {-846, -444}, {-846, -344}, {-753.8, -344}, {-753.8, -287.2}}, color = {140, 56, 54}, thickness = 0.5));
+        connect(TT703_SP.y, coldSourcePEX701.in_T0) annotation (Line(points={{171,-270},{164,-270},{164,-272},{159,-272},{159,-290.6}}, color={0,0,127}));
+        connect(TT733_SP.y, coldSourcePEX731.in_T0) annotation (Line(points={{327,-270},{324,-270},{324,-278},{319,-278},{319,-290.6}}, color={0,0,127}));
+        connect(TT713_SP.y, coldSourcePEX711.in_T0) annotation (Line(points={{491,-270},{482,-270},{482,-274},{479,-274},{479,-290.6}}, color={0,0,127}));
+        connect(TT723_SP.y, coldSourcePEX721.in_T0) annotation (Line(points={{651,-270},{641,-270},{641,-288.6}}, color={0,0,127}));
         annotation (
           experiment(
             StopTime=900000,
@@ -2754,8 +2758,7 @@ package Tests
       end CentralisedSystemLoadSimplifiedI_D;
 
       model CentralisedSystemSimplifiedLoadSimplifiedI_A "Sequence using Gas Boiler as heat source only"
-        extends
-          MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemSimplifiedLoadSimplifiedI(
+        extends MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemSimplifiedLoadSimplifiedI(
           p_VE901 = 1.69e5,
           FV933_state = false,
           FCVC01theta = [0, 0; 100, 0],
@@ -2778,79 +2781,6 @@ package Tests
         parameter Real EX721_TinCold[:, :] = [0, 25 + 273.15; 100, 25 + 273.15];
         parameter Real EX731_TinCold[:, :] = [0, 25 + 273.15; 100, 25 + 273.15];
         parameter DistrictHeatingNetwork.Types.MassFlowRate GB101_mflowSP[:, :] = [0, 12*980/3600; 100, 12*980/3600];
-        Modelica.Blocks.Sources.TimeTable FCV901_theta(table = FCV901theta) annotation (
-          Placement(transformation(extent = {{-714, 93}, {-734, 113}})));
-        DistrictHeatingNetwork.Sources.PumpInput P901_input(useOmega = true, omega = P901omega, q_m3h = P901qm3h) annotation (
-          Placement(transformation(extent = {{-714, 54}, {-734, 75}})));
-        Modelica.Blocks.Sources.TimeTable FCVC01_theta(table = FCVC01theta) annotation (
-          Placement(transformation(extent = {{300, 289}, {280, 309}})));
-        Modelica.Blocks.Sources.TimeTable FCVC02_theta(table = FCVC02theta) annotation (
-          Placement(transformation(extent = {{740, 289}, {720, 309}})));
-        Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k = FV933_state) annotation (
-          Placement(transformation(extent = {{-185, 55}, {-205, 75}})));
-        Modelica.Blocks.Sources.TimeTable FCV701_theta(table = FCV701theta) annotation (
-          Placement(transformation(extent = {{-80, 60}, {-59, 80}})));
-        Modelica.Blocks.Sources.TimeTable FCV711_theta(table = FCV711theta) annotation (
-          Placement(transformation(extent = {{67, 60}, {87, 80}})));
-        Modelica.Blocks.Sources.TimeTable FCV731_theta(table = FCV731theta) annotation (
-          Placement(transformation(extent = {{512, 60}, {532, 80}})));
-        Modelica.Blocks.Sources.TimeTable FCV721_theta(table = FCV721theta) annotation (
-          Placement(transformation(extent = {{251, 62}, {271, 82}})));
-        Modelica.Blocks.Sources.TimeTable EX721_PtSP(table = EX721PtSP) annotation (
-          Placement(transformation(extent = {{250, 18}, {270, 38}})));
-        Modelica.Blocks.Sources.TimeTable EX711_PtSP(table = EX711PtSP) annotation (
-          Placement(transformation(extent = {{66, 20}, {86, 40}})));
-        Modelica.Blocks.Sources.TimeTable EX731_PtSP(table = EX731PtSP) annotation (
-          Placement(transformation(extent = {{510, 20}, {530, 40}})));
-        Modelica.Blocks.Sources.TimeTable EX701_PtSP(table = EX701PtSP) annotation (
-          Placement(transformation(extent = {{-80, 20}, {-60, 40}})));
-        Modelica.Blocks.Sources.TimeTable TT703_SP(table = EX701_TinCold) annotation (
-          Placement(transformation(extent = {{-80, -20}, {-60, 0}})));
-        Modelica.Blocks.Sources.TimeTable TT733_SP(table = EX731_TinCold) annotation (
-          Placement(transformation(extent = {{510, -20}, {530, 0}})));
-        Modelica.Blocks.Sources.TimeTable TT723_SP(table = EX721_TinCold) annotation (
-          Placement(transformation(extent = {{250, -20}, {270, 0}})));
-        Modelica.Blocks.Sources.TimeTable TT713_SP(table = EX711_TinCold) annotation (
-          Placement(transformation(extent = {{66, -20}, {86, 0}})));
-        Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e8}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
-          Placement(transformation(extent = {{-170, -168}, {-190, -148}})));
-      equation
-        connect(FCV901_theta.y, FCV901.opening) annotation (
-          Line(points = {{-735, 103}, {-742, 103}, {-742, 115}, {-749, 115}}, color = {0, 0, 127}));
-        connect(P901_input.y, P901.in_omega) annotation (
-          Line(points = {{-735, 64.5}, {-743.5, 64.5}, {-743.5, 66.3}, {-747.25, 66.3}}, color = {0, 0, 127}));
-        connect(FCVC01_theta.y, FCVC01.opening) annotation (
-          Line(points = {{279, 299}, {268, 299}, {268, 235}, {258, 235}}, color = {0, 0, 127}));
-        connect(FCVC02_theta.y, FCVC02.opening) annotation (
-          Line(points = {{719, 299}, {710, 299}, {710, 234}, {698, 234}, {698, 235}}, color = {0, 0, 127}));
-        connect(FV933_OnOff.y, FV933.u) annotation (
-          Line(points = {{-206, 65}, {-218, 65}, {-218, 46.6}}, color = {255, 0, 255}));
-        connect(GB101_Status.y, S100.Status) annotation (Line(points={{-191,-158},{-201,-158},{-201,
-                -184.5},{-220.9,-184.5}}, color={255,0,255}));
-        connect(EX701_PtSP.y, EX701.Pt_SP) annotation (
-          Line(points={{-59,30},{-47.6,30},{-47.6,38},{2,38}},              color = {0, 0, 127}));
-        connect(TT703_SP.y, EX701.Tin_cool_SP) annotation (
-          Line(points={{-59,-10},{-54,-10},{-54,26},{2,26}},                color = {0, 0, 127}));
-        connect(FCV701_theta.y, EX701.theta) annotation (
-          Line(points={{-57.95,70},{-54,70},{-54,50},{2,50}},                  color = {0, 0, 127}));
-        connect(EX711_PtSP.y, EX711.Pt_SP) annotation (
-          Line(points={{87,30},{96.4,30},{96.4,41},{139.2,41}},          color = {0, 0, 127}));
-        connect(TT713_SP.y, EX711.Tin_cool_SP) annotation (
-          Line(points={{87,-10},{92,-10},{92,28.1},{139.2,28.1}},        color = {0, 0, 127}));
-        connect(FCV711_theta.y, EX711.theta) annotation (
-          Line(points={{88,70},{92,70},{92,53.9},{139.2,53.9}},          color = {0, 0, 127}));
-        connect(EX721_PtSP.y, EX721.Pt_SP) annotation (
-          Line(points={{271,28},{285.4,28},{285.4,30},{306.4,30}},          color = {0, 0, 127}));
-        connect(FCV721_theta.y, EX721.theta) annotation (
-          Line(points={{272,72},{280,72},{280,49.8},{306.4,49.8}},          color = {0, 0, 127}));
-        connect(TT723_SP.y, EX721.Tin_cool_SP) annotation (
-          Line(points={{271,-10},{280,-10},{280,10.2},{306.4,10.2}},        color = {0, 0, 127}));
-        connect(EX731_PtSP.y, EX731.Pt_SP) annotation (
-          Line(points={{531,30},{544.4,30},{544.4,28},{564.4,28}},          color = {0, 0, 127}));
-        connect(FCV731_theta.y, EX731.theta) annotation (
-          Line(points={{533,70},{540,70},{540,47.8},{564.4,47.8}},          color = {0, 0, 127}));
-        connect(TT733_SP.y, EX731.Tin_cool_SP) annotation (
-          Line(points={{531,-10},{540,-10},{540,8.2},{564.4,8.2}},          color = {0, 0, 127}));
         annotation (
           experiment(StopTime = 500, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));
       end CentralisedSystemSimplifiedLoadSimplifiedI_A;
@@ -2868,7 +2798,8 @@ package Tests
       parameter Real dtheta_FCV101[:, :] = [0, 0; 1e6, 0];
       parameter Real domega_P401[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_FCV401[:, :] = [0, 0; 1e6, 0];
-      parameter Real dtheta_FCVC02[:, :] = [0, -1; 1e6, -1];
+      parameter Real dtheta_FCVC01[:, :] = [0, -1; 1e6, -1];
+      parameter Real dtheta_FCVC02[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_FCV701[:, :] = [0, -0.2; 1e6, -0.2];
       parameter Real dtheta_FCV711[:, :] = [0, -0.2; 1e6, -0.2];
       parameter Real dtheta_FCV721[:, :] = [0, -0.2; 1e6, -0.2];
@@ -2927,7 +2858,7 @@ package Tests
         Umax=0,
         Umin=-1,
         y_start=0,
-        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{34,33},{54,53}})));
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,40},{50,50}})));
       Modelica.Blocks.Sources.TimeTable dTT704SP(table=dTT704)   annotation (
         Placement(transformation(extent = {{14, 42}, {24, 52}})));
       FMUExport.Interfaces.ControlSignalBus processVariableBus annotation (
@@ -2938,7 +2869,7 @@ package Tests
         Umax=0,
         Umin=-1,
         y_start=0,
-        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{34,11},{54,31}})));
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,20},{50,30}})));
       Modelica.Blocks.Sources.TimeTable dTT714SP(table=dTT714)   annotation (
         Placement(transformation(extent = {{14, 20}, {24, 30}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT724(
@@ -2959,7 +2890,8 @@ package Tests
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-60},{50,-50}})));
       Modelica.Blocks.Sources.TimeTable dTT734SP(table=dTT734)   annotation (
         Placement(transformation(extent={{20,-55},{30,-45}})));
-      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(Kp = 0.00054401, Ti = 0.001, Umax = 0, Umin = -1, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialOutput)) annotation (
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(Kp = 0.00054401, Ti = 0.001, Umax = 0, Umin = -1, y_start = 0, firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
+                                                                                                                                                                                                 annotation (
         Placement(transformation(origin={23.5,41.5},
                                                    extent={{16.5,38.5},{26.5,48.5}})));
       Modelica.Blocks.Sources.TimeTable dFT101SP(table = dFT101) annotation (
@@ -2983,6 +2915,8 @@ package Tests
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-80},{50,-70}})));
       Modelica.Blocks.Sources.TimeTable ddPTA2SP(table=ddPTA2) annotation (Placement(transformation(extent={{20,-75},{30,-65}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCVC1(table=dtheta_FCVC01)    annotation (
+        Placement(transformation(extent={{-80,-137},{-70,-127}})));
     equation
       connect(dthetaFCVC02.y, controlSignalBus.dthetaFCVC02) annotation (
         Line(points = {{-69.5, 5}, {6, 5}, {6, -5}, {110, -5}}, color = {0, 0, 127}),
@@ -2999,14 +2933,15 @@ package Tests
       connect(dmflowcoolEX731.y, controlSignalBus.dmflowcoolEX731) annotation (
         Line(points = {{-69.5, -115}, {0, -115}, {0, -5}, {110, -5}}, color = {0, 0, 127}),
         Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-      connect(dTT704SP.y, PI_TT704.REF) annotation (Line(points={{24.5,47},{36,47}}, color={0,0,127}));
-      connect(PI_TT704.controlAction, controlSignalBus.dthetaFCV701) annotation (Line(points={{52,43},{64,43},{64,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(dTT704SP.y, PI_TT704.REF) annotation (Line(points={{24.5,47},{41,47}}, color={0,0,127}));
+      connect(PI_TT704.controlAction, controlSignalBus.dthetaFCV701) annotation (Line(points={{49,45},{59,45},{59,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dTT714SP.y, PI_TT714.REF) annotation (Line(points={{24.5,25},{36,25}}, color={0,0,127}));
-      connect(PI_TT714.controlAction, controlSignalBus.dthetaFCV711) annotation (Line(points={{52,21},{58,21},{58,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(dTT714SP.y, PI_TT714.REF) annotation (Line(points={{24.5,25},{39,25},{39,27},{41,27}},
+                                                                                     color={0,0,127}));
+      connect(PI_TT714.controlAction, controlSignalBus.dthetaFCV711) annotation (Line(points={{49,25},{58,25},{58,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3059,7 +2994,7 @@ package Tests
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
       connect(processVariableBus.dTT704, PI_TT704.FeedBack) annotation (Line(
-          points={{-102,0},{-59,0},{-59,39},{36,39}},
+          points={{-102,0},{28,0},{28,23},{30,23},{30,43},{41,43}},
           color={255,204,51},
           thickness=0.5), Text(
           string="%first",
@@ -3067,7 +3002,7 @@ package Tests
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
       connect(processVariableBus.dTT714, PI_TT714.FeedBack) annotation (Line(
-          points={{-102,0},{30,0},{30,17},{36,17}},
+          points={{-102,0},{36,0},{36,23},{41,23}},
           color={255,204,51},
           thickness=0.5), Text(
           string="%first",
@@ -3105,6 +3040,11 @@ package Tests
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCVC1.y, controlSignalBus.dthetaFCVC01) annotation (Line(points={{-69.5,-132},{-7,-132},{-7,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-60, 32}, {60, -28}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "PI
 Control")}),
@@ -3117,7 +3057,8 @@ Control")}),
 
     model TestActuator
       extends Modelica.Icons.Example;
-      replaceable ThermalPlantController thermalPlantController(PI_TT704(y_start=-0.27)) annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
+      replaceable ThermalPlantController thermalPlantController(
+        PI_TT704(y_start=-0.27))   annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
       replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
         m_flowcool_nom = 0.35,
         TT704Offset(fixOffset = true, y_Offset_fixed = 20 + 273.15),
@@ -3126,7 +3067,9 @@ Control")}),
         TT734Offset(fixOffset = true, y_Offset_fixed = 20 + 273.15),
         FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
         FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
-        dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.1e5))                                                                                                                                                                                                         annotation (
+        dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.1e5),
+        thetaFCVC01Offset(fixInput=false, fixOffset=true),
+        thetaFCVC02Offset(fixInput=false, fixOffset=true))                                                                                                                                                                                                         annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
     equation
       connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus) annotation (

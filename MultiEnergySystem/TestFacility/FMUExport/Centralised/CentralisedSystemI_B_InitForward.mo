@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(GB101(Pmaxnom = 147.6e3*0.8));
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(T_start_hot = 80 +273.15, T_start_cold = 70 + 273.15, GB101(Pmaxnom = 147.6e3*0.8));
 
 //Boolean Parameters
   //Initialization type
@@ -14,6 +14,7 @@ model CentralisedSystemI_B_InitForward
   parameter Boolean fixthetaFCV901 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCV101 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCV401 = ForwardInit "True if forward, False if backward";
+  parameter Boolean fixthetaFCVC01 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCVC02 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCV701 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCV711 = ForwardInit "True if forward, False if backward";
@@ -34,6 +35,7 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixFT901 = not fixthetaFCV901;
   final parameter Boolean fixFT101 = not fixthetaFCV101;
   final parameter Boolean fixFT401 = not fixthetaFCV401;
+  final parameter Boolean fixdPTA1 = not fixthetaFCVC01;
   final parameter Boolean fixFTA12 = not fixthetaFCVC02;
   final parameter Boolean fixTT704 = not fixthetaFCV701;
   final parameter Boolean fixTT714 = not fixthetaFCV711;
@@ -159,6 +161,8 @@ model CentralisedSystemI_B_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 0.05e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure dPTA1_des = 0.1e5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 0.1e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT901_des= DistrictHeatingNetwork.Data.PumpData.P901.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
@@ -248,7 +252,7 @@ model CentralisedSystemI_B_InitForward
     fixInput=fixthetaFCV901,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={-730,114},
+        origin={-690,114},
         extent={{10,-10},{-10,10}},
         rotation=0)));
   OffSetBlocks.InputOffset omegaP901Offset(
@@ -263,7 +267,7 @@ model CentralisedSystemI_B_InitForward
     fixInput=fixthetaFCV101,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={-210,-140},
+        origin={-180,-110},
         extent={{10,-10},{-10,10}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaFCV401Offset(
@@ -291,7 +295,7 @@ model CentralisedSystemI_B_InitForward
     fixInput=fixthetaFCVC02,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={718,236},
+        origin={754,236},
         extent={{10,-10},{-10,10}},
         rotation=0)));
   OffSetBlocks.OutputOffset TT701Offset(
@@ -397,12 +401,8 @@ model CentralisedSystemI_B_InitForward
         origin={330,-120},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.RealExpression ThotSP(y=80 + 273.15)
-    annotation (Placement(transformation(extent={{-556,-266},{-536,-246}})));
   Modelica.Blocks.Sources.RealExpression TcoolSP(y=15 + 273.15)
     annotation (Placement(transformation(extent={{722,-356},{702,-336}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVC01(y=0)
-    annotation (Placement(transformation(extent={{292,224},{272,244}})));
   OffSetBlocks.OutputOffset FT401Offset(
     fixOutput=fixFT401,
     y_fixed=FT401_des,
@@ -538,25 +538,47 @@ model CentralisedSystemI_B_InitForward
         origin={802,260},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Math.Add add(k1=-1) annotation (Placement(transformation(extent={{764,250},{784,270}})));
+  Modelica.Blocks.Math.Add diffPT2(k1=-1) annotation (Placement(transformation(extent={{764,250},{784,270}})));
+  OffSetBlocks.InputOffset thetaFCVC01Offset(
+    fixInput=fixthetaFCVC01,
+    u_norm=theta_nom,
+    u_start=theta_nom) annotation (Placement(visible=true, transformation(
+        origin={314,234},
+        extent={{10,-10},{-10,10}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset dPTA1Offset(
+    fixOutput=fixdPTA1,
+    y_fixed=dPTA1_des,
+    y_norm=dPTA1_des) annotation (Placement(visible=true, transformation(
+        origin={296,294},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Modelica.Blocks.Math.Add diffPT1(k1=-1) annotation (Placement(transformation(extent={{258,284},{278,304}})));
+  Modelica.Blocks.Continuous.FirstOrder FCVC01Dynamics(
+    T=1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=0) annotation (Placement(transformation(extent={{290,224},{270,244}})));
+  Modelica.Blocks.Continuous.FirstOrder FCVC02Dynamics(
+    T=1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=1) annotation (Placement(transformation(extent={{732,226},{712,246}})));
+  Modelica.Blocks.Continuous.FirstOrder FCV101Dynamics(
+    T=1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=0) annotation (Placement(transformation(extent={{-200,-120},{-220,-100}})));
 equation
   connect(FCV701.opening, thetaFCV701Offset.u)    annotation (Line(points={{148,-150},{161,-150}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731.opening)    annotation (Line(points={{321,-150},{308,-150}}, color={0,0,127}));
   connect(thetaFCV711Offset.u, FCV711.opening)    annotation (Line(points={{483,-150},{468,-150}}, color={0,0,127}));
   connect(thetaFCV721Offset.u, FCV721.opening)    annotation (Line(points={{637,-150},{628,-150}}, color={0,0,127}));
-  connect(thetaFCV901Offset.u, FCV901.opening)    annotation (Line(points={{-739,114},{-744,114},{-744,140.5},{-749.9,140.5}},
-                                                                                                                         color={0,0,127}));
   connect(omegaP901Offset.u, P901.in_omega) annotation (Line(points={{-739,66},{-743.125,66},{-743.125,
           66.3},{-747.25,66.3}}, color={0,0,127}));
-  connect(thetaFCV101Offset.u, FCV101.opening)    annotation (Line(points={{-219,-140},{-226,-140},{-226,-110},{-232,-110}},
-                                                       color={0,0,127}));
   connect(thetaFCV401Offset.u, FCV401.opening)    annotation (Line(points={{-303,-136},{-306,-136},{-306,-110},{-310,-110}},
                                                                                                      color={0,0,127}));
   connect(TT902.T,TT902Offset. y)    annotation (Line(points={{-748.575,196.25},{-748.575,208},{-734,208},{-734,220}},
                                                                            color={0,0,127}));
   connect(PT902.p, PT902Offset.y)    annotation (Line(points={{-748.5,181.5},{-743.25,181.5},{-743.25,182},{-738,182}},
                                                                                  color={0,0,127}));
-  connect(thetaFCVC02Offset.u, FCVC02.opening)    annotation (Line(points={{709,236},{709,235},{698,235}}, color={0,0,127}));
   connect(TT701.T, TT701Offset.y)    annotation (Line(points={{148.5,-88},{154.25,-88},{154.25,-90},{162,-90}}, color={0,0,127}));
   connect(TT731.T, TT731Offset.y)    annotation (Line(points={{308.5,-90},{322,-90}}, color={0,0,127}));
   connect(TT711.T, TT711Offset.y)    annotation (Line(points={{468.5,-86},{452,-86},{452,-90},{484,-90}}, color={0,0,127}));
@@ -575,7 +597,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaFCV901, thetaFCV901Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-708,-3},{-708,114},{-722,114}},
+      points={{-897,-3},{-688,-3},{-688,88},{-664,88},{-664,114},{-682,114}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -612,7 +634,6 @@ equation
     annotation (Line(points={{479,-290.6},{479,-278},{502,-278},{502,-346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
   connect(coldSourcePEX721.in_T0, coldSourcePEX701.in_T0)
     annotation (Line(points={{641,-288.6},{641,-270},{674,-270},{674,-346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
-  connect(thetaFCVC01.y, FCVC01.opening) annotation (Line(points={{271,234},{264.5,234},{264.5,235},{258,235}}, color={0,0,127}));
   connect(controlSignalBus.domegaP101, omegaP101Offset.deltaUnorm) annotation (Line(
       points={{-897,-3},{-706,-3},{-706,-202},{-176,-202},{-176,-180},{-202,-180}},
       color={255,204,51},
@@ -622,7 +643,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaFCV101, thetaFCV101Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-720,-3},{-720,-208},{-170,-208},{-170,-140},{-202,-140}},
+      points={{-897,-3},{-172,-3},{-172,-110}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -646,7 +667,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaFCVC02, thetaFCVC02Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-830,-3},{-830,252},{752,252},{752,236},{726,236}},
+      points={{-897,-3},{776,-3},{776,236},{762,236}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -937,14 +958,37 @@ equation
       index=-1,
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
-  connect(PTA20.p, add.u2) annotation (Line(points={{681,197.8},{681,198},{698,198},{698,218},{754,218},{754,254},{762,254}}, color={0,0,127}));
-  connect(PTA19.p, add.u1) annotation (Line(points={{682,272.2},{682,276},{754,276},{754,266},{762,266}}, color={0,0,127}));
-  connect(add.y, dPTA2Offset.y) annotation (Line(points={{785,260},{794,260}}, color={0,0,127}));
+  connect(PTA20.p, diffPT2.u2) annotation (Line(points={{681,197.8},{681,198},{698,198},{698,218},{754,218},{754,254},{762,254}}, color={0,0,127}));
+  connect(PTA19.p, diffPT2.u1) annotation (Line(points={{682,272.2},{682,276},{754,276},{754,266},{762,266}}, color={0,0,127}));
+  connect(diffPT2.y, dPTA2Offset.y) annotation (Line(points={{785,260},{794,260}}, color={0,0,127}));
   connect(dPTA2Offset.deltaYnorm, processVariableBus.dPTA2) annotation (Line(points={{811,260},{858,260},{858,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
+  connect(PTA07.p, diffPT1.u1) annotation (Line(points={{238,272.2},{240,272.2},{240,300},{256,300}}, color={0,0,127}));
+  connect(PTA08.p, diffPT1.u2) annotation (Line(points={{224,197.8},{224,190},{244,190},{244,288},{256,288}}, color={0,0,127}));
+  connect(diffPT1.y, dPTA1Offset.y) annotation (Line(points={{279,294},{288,294}}, color={0,0,127}));
+  connect(dPTA1Offset.deltaYnorm, processVariableBus.dPTA1) annotation (Line(points={{305,294},{858,294},{858,-12},{896,-12},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(controlSignalBus.dthetaFCVC01, thetaFCVC01Offset.deltaUnorm) annotation (Line(
+      points={{-897,-3},{-834,-3},{-834,248},{314,248},{314,234},{322,234}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(FCVC02Dynamics.y, FCVC02.opening) annotation (Line(points={{711,236},{711,235},{698,235}}, color={0,0,127}));
+  connect(FCVC02Dynamics.u, thetaFCVC02Offset.u) annotation (Line(points={{734,236},{745,236}}, color={0,0,127}));
+  connect(FCVC01Dynamics.y, FCVC01.opening) annotation (Line(points={{269,234},{263.5,234},{263.5,235},{258,235}}, color={0,0,127}));
+  connect(thetaFCVC01Offset.u, FCVC01Dynamics.u) annotation (Line(points={{305,234},{292,234}}, color={0,0,127}));
+  connect(thetaFCV101Offset.u, FCV101Dynamics.u) annotation (Line(points={{-189,-110},{-198,-110}}, color={0,0,127}));
+  connect(FCV101Dynamics.y, FCV101.opening) annotation (Line(points={{-221,-110},{-232,-110}}, color={0,0,127}));
+  connect(thetaFCV901Offset.u, FCV901.opening) annotation (Line(points={{-699,114},{-714,114},{-714,112},{-744,112},{-744,140.5},{-749.9,140.5}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-60,40},{60,-40}},

@@ -2873,8 +2873,8 @@ package Tests
       Modelica.Blocks.Sources.TimeTable dTT714SP(table=dTT714)   annotation (
         Placement(transformation(extent = {{14, 20}, {24, 30}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT724(
-        Kp=0.020032,
-        Ti=0.1,
+        Kp=0.018753,
+        Ti=0.01,
         Umax=0,
         Umin=-1,
         y_start=0,
@@ -2890,19 +2890,21 @@ package Tests
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-60},{50,-50}})));
       Modelica.Blocks.Sources.TimeTable dTT734SP(table=dTT734)   annotation (
         Placement(transformation(extent={{20,-55},{30,-45}})));
-      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(Kp = 0.00054401, Ti = 0.001, Umax = 0, Umin = -1, y_start = 0, firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(
+        Kp=0.22309,
+        Ti=0.41538,                                                                           Umax = 0, Umin = -1, y_start = 0, firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput))
                                                                                                                                                                                                  annotation (
         Placement(transformation(origin={23.5,41.5},
                                                    extent={{16.5,38.5},{26.5,48.5}})));
       Modelica.Blocks.Sources.TimeTable dFT101SP(table = dFT101) annotation (
         Placement(transformation(extent={{20,85},{30,95}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT401(
-        Kp=0.00054401,
-        Ti=0.001,
+        Kp=0.064422,
+        Ti=0.32626,
         Umax=0,
         Umin=-1,
         y_start=0,
-        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,60},{50,70}})));
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{39,60},{49,70}})));
       Modelica.Blocks.Sources.TimeTable dFT401SP(table = dFT401) annotation (
         Placement(transformation(extent={{20,65},{30,75}})));
       Modelica.Blocks.Sources.TimeTable dToutEB401(table=dTout_EB401) annotation (Placement(transformation(extent={{-80,105},{-70,115}})));
@@ -2963,9 +2965,9 @@ package Tests
       connect(processVariableBus.dFT101, PI_FT101.FeedBack) annotation (
         Line(points={{-102,0},{10,0},{10,81},{37,81},{37,83},{41,83}},
                                                                   color = {255, 204, 51}, thickness = 0.5));
-      connect(dFT401SP.y, PI_FT401.REF) annotation (Line(points={{30.5,70},{35,70},{35,67},{41,67}}, color={0,0,127}));
+      connect(dFT401SP.y, PI_FT401.REF) annotation (Line(points={{30.5,70},{35,70},{35,67},{40,67}}, color={0,0,127}));
       connect(processVariableBus.dFT401, PI_FT401.FeedBack) annotation (Line(
-          points={{-102,0},{29,0},{29,63},{41,63}},
+          points={{-102,0},{29,0},{29,63},{40,63}},
           color={255,204,51},
           thickness=0.5), Text(
           string="%first",
@@ -2977,7 +2979,7 @@ package Tests
       connect(PI_FT101.controlAction, controlSignalBus.dthetaFCV101) annotation (
         Line(points={{49,85},{64,85},{64,44},{65,44},{65,-5},{110,-5}},
                                                                  color = {0, 0, 127}));
-      connect(PI_FT401.controlAction, controlSignalBus.dthetaFCV401) annotation (Line(points={{49,65},{60,65},{60,-5},{110,-5}}, color={0,0,127}));
+      connect(PI_FT401.controlAction, controlSignalBus.dthetaFCV401) annotation (Line(points={{48,65},{60,65},{60,-5},{110,-5}}, color={0,0,127}));
       connect(domegaP401.y, controlSignalBus.domegaP401) annotation (
         Line(points={{-69.5,35},{-5,35},{-5,-8},{110,-8},{110,-5}},          color = {0, 0, 127}));
       connect(

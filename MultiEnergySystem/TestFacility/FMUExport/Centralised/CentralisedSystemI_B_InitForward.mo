@@ -159,15 +159,15 @@ model CentralisedSystemI_B_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT731_des = 2.2e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
-  parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 0.05e5 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 2.7e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure dPTS100_des = 0E5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure dPTS400_des = 0E5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
-  parameter DistrictHeatingNetwork.Types.Pressure dPTA1_des = 0.1e5 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dPTA1_des = 0.075e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
-  parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 0.1e5 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 0.075e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT901_des= DistrictHeatingNetwork.Data.PumpData.P901.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
@@ -182,7 +182,7 @@ model CentralisedSystemI_B_InitForward
     fixInput=fixomegaP101,
     u_norm=omegaP101_nom,
     u_start=omegaP101_nom) annotation (Placement(visible=true, transformation(
-        origin={-210,-180},
+        origin={-212,-182},
         extent={{10,-10},{-10,10}},
         rotation=0)));
   OffSetBlocks.InputOffset omegaP401Offset(
@@ -262,7 +262,7 @@ model CentralisedSystemI_B_InitForward
   OffSetBlocks.InputOffset omegaP901Offset(
     fixInput=fixomegaP901,
     u_norm=omegaP901_nom,
-    u_start=omegaP901_nom*4/5)
+    u_start=omegaP901_nom)
                        annotation (Placement(visible=true, transformation(
         origin={-730,66},
         extent={{10,-10},{-10,10}},
@@ -539,7 +539,7 @@ model CentralisedSystemI_B_InitForward
     fixOutput=fixdPTA2,
     y_fixed=dPTA2_des,
     y_norm=dPTA2_des) annotation (Placement(visible=true, transformation(
-        origin={802,260},
+        origin={804,260},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Math.Add diffPT2(k1=-1) annotation (Placement(transformation(extent={{764,250},{784,270}})));
@@ -625,8 +625,8 @@ equation
   connect(FV402_OnOff.y, FV402.u)    annotation (Line(points={{-301,-16},{-314.8,-16}}, color={255,0,255}));
   connect(FV401_OnOff.y, FV401.u) annotation (Line(points={{-377,-14},{-369.1,-14},{-369.1,-16},{-361.2,
           -16}}, color={255,0,255}));
-  connect(omegaP101Offset.u, P101.in_omega) annotation (Line(points={{-219,-180},{-226.5,-180},{-226.5,
-          -179.8},{-234,-179.8}}, color={0,0,127}));
+  connect(omegaP101Offset.u, P101.in_omega) annotation (Line(points={{-221,-182},{-226.5,-182},{-226.5,-179.8},{-234,-179.8}},
+                                  color={0,0,127}));
   connect(omegaP401Offset.u, P401.in_omega) annotation (Line(points={{-305,-176},{-308.5,-176},{-308.5,
           -175.8},{-312,-175.8}}, color={0,0,127}));
   connect(FT701.m_flow, FT701Offset.y) annotation (Line(points={{145,-100.5},{145,-98},{154,-98},{154,
@@ -645,7 +645,7 @@ equation
   connect(coldSourcePEX721.in_T0, coldSourcePEX701.in_T0)
     annotation (Line(points={{641,-288.6},{641,-270},{674,-270},{674,-346},{450,-346},{450,-354},{182,-354},{182,-274},{159,-274},{159,-290.6}}, color={0,0,127}));
   connect(controlSignalBus.domegaP101, omegaP101Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-706,-3},{-706,-202},{-176,-202},{-176,-180},{-202,-180}},
+      points={{-897,-3},{-706,-3},{-706,-202},{-176,-202},{-176,-182},{-204,-182}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -968,8 +968,8 @@ equation
       horizontalAlignment=TextAlignment.Right));
   connect(PTA20.p, diffPT2.u2) annotation (Line(points={{681,197.8},{681,198},{698,198},{698,218},{754,218},{754,254},{762,254}}, color={0,0,127}));
   connect(PTA19.p, diffPT2.u1) annotation (Line(points={{682,272.2},{682,276},{754,276},{754,266},{762,266}}, color={0,0,127}));
-  connect(diffPT2.y, dPTA2Offset.y) annotation (Line(points={{785,260},{794,260}}, color={0,0,127}));
-  connect(dPTA2Offset.deltaYnorm, processVariableBus.dPTA2) annotation (Line(points={{811,260},{858,260},{858,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(diffPT2.y, dPTA2Offset.y) annotation (Line(points={{785,260},{796,260}}, color={0,0,127}));
+  connect(dPTA2Offset.deltaYnorm, processVariableBus.dPTA2) annotation (Line(points={{813,260},{858,260},{858,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

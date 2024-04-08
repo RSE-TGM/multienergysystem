@@ -10,7 +10,7 @@ model StratifiedWaterTankSystem
       use_in_T0=true,
       T0=288.15,
            R=1e-3),
-    sink(T0=333.15),
+    sink(T0=333.15, G=1e-8),
     ramp(height=-1.5*m_flow_S2, startTime=2e4),
     FCV201theta= [0, 1; 100, 1; 105, 1; 200, 1]);
 

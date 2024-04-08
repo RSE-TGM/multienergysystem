@@ -161,6 +161,10 @@ model CentralisedSystemI_B_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure PT732_des = 0.05e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure dPTS100_des = 0E5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
+  parameter DistrictHeatingNetwork.Types.Pressure dPTS400_des = 0E5 "Desired low circuit pressure" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure dPTA1_des = 0.1e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 0.1e5 "Desired low circuit pressure" annotation (
@@ -419,16 +423,16 @@ model CentralisedSystemI_B_InitForward
         rotation=0)));
   OffSetBlocks.OutputOffset PT102Offset(
     fixOutput=fixPT102,
-    y_fixed=PT102_des,
+    y_fixed=dPTS100_des,
     y_norm=PT102_nom) annotation (Placement(visible=true, transformation(
-        origin={-214,-84},
+        origin={-150,-80},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   OffSetBlocks.OutputOffset PT402Offset(
     fixOutput=fixPT402,
-    y_fixed=PT402_des,
+    y_fixed=dPTS400_des,
     y_norm=PT402_nom) annotation (Placement(visible=true, transformation(
-        origin={-292,-82},
+        origin={-150,-30},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   OffSetBlocks.OutputOffset FTA12Offset(
@@ -566,6 +570,12 @@ model CentralisedSystemI_B_InitForward
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
     y_start=0) annotation (Placement(transformation(extent={{-200,-120},{-220,-100}})));
+  Modelica.Blocks.Continuous.FirstOrder FCV901Dynamics(
+    T=1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=0) annotation (Placement(transformation(extent={{-720,102},{-740,122}})));
+  Modelica.Blocks.Math.Add diffPTS400(k1=-1) annotation (Placement(transformation(extent={{-204,-40},{-184,-20}})));
+  Modelica.Blocks.Math.Add diffPTS100(k1=-1) annotation (Placement(transformation(extent={{-200,-90},{-180,-70}})));
 equation
   connect(FCV701.opening, thetaFCV701Offset.u)    annotation (Line(points={{148,-150},{161,-150}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731.opening)    annotation (Line(points={{321,-150},{308,-150}}, color={0,0,127}));
@@ -678,8 +688,6 @@ equation
           {-365.2,-195.9}}, color={0,0,127}));
   connect(FT101Offset.y, FT101.m_flow) annotation (Line(points={{-406,-248},{-284,-248},{-284,-199.9},
           {-283.2,-199.9}}, color={0,0,127}));
-  connect(PT102.p, PT102Offset.y)    annotation (Line(points={{-230.2,-84},{-222,-84}}, color={0,0,127}));
-  connect(PT402.p, PT402Offset.y)    annotation (Line(points={{-308.2,-82},{-300,-82}}, color={0,0,127}));
   connect(FTA12.m_flow, FTA12Offset.y)    annotation (Line(points={{672.8,200.6},{676,200.6},{676,190},{702,190}}, color={0,0,127}));
   connect(controlSignalBus.dthetaFCV701, thetaFCV701Offset.deltaUnorm) annotation (Line(
       points={{-897,-3},{-724,-3},{-724,-434},{200,-434},{200,-150},{178,-150}},
@@ -761,8 +769,8 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(PT102Offset.deltaYnorm, processVariableBus.dPT102) annotation (Line(points={{-205,-84},{-116,
-          -84},{-116,-78},{-32,-78},{-32,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(PT102Offset.deltaYnorm, processVariableBus.dPT102) annotation (Line(points={{-141,-80},{40,-80},{40,-3},{896,-3}},
+                                                        color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -773,8 +781,8 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(PT402Offset.deltaYnorm, processVariableBus.dPT402) annotation (Line(points={{-283,-82},{-252,
-          -82},{-252,-62},{26,-62},{26,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(PT402Offset.deltaYnorm, processVariableBus.dPT402) annotation (Line(points={{-141,-30},{-40,-30},{-40,-3},{896,-3}},
+                                                      color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -988,7 +996,14 @@ equation
   connect(thetaFCVC01Offset.u, FCVC01Dynamics.u) annotation (Line(points={{305,234},{292,234}}, color={0,0,127}));
   connect(thetaFCV101Offset.u, FCV101Dynamics.u) annotation (Line(points={{-189,-110},{-198,-110}}, color={0,0,127}));
   connect(FCV101Dynamics.y, FCV101.opening) annotation (Line(points={{-221,-110},{-232,-110}}, color={0,0,127}));
-  connect(thetaFCV901Offset.u, FCV901.opening) annotation (Line(points={{-699,114},{-714,114},{-714,112},{-744,112},{-744,140.5},{-749.9,140.5}}, color={0,0,127}));
+  connect(thetaFCV901Offset.u, FCV901Dynamics.u) annotation (Line(points={{-699,114},{-714,114},{-714,112},{-718,112}}, color={0,0,127}));
+  connect(FCV901Dynamics.y, FCV901.opening) annotation (Line(points={{-741,112},{-744,112},{-744,140.5},{-749.9,140.5}}, color={0,0,127}));
+  connect(PT402.p, diffPTS400.u2) annotation (Line(points={{-308.2,-82},{-254,-82},{-254,-36},{-206,-36}}, color={0,0,127}));
+  connect(PT401.p, diffPTS400.u1) annotation (Line(points={{-367.8,-114},{-384,-114},{-384,-76},{-260,-76},{-260,-24},{-206,-24}}, color={0,0,127}));
+  connect(diffPTS400.y, PT402Offset.y) annotation (Line(points={{-183,-30},{-158,-30}}, color={0,0,127}));
+  connect(diffPTS100.y, PT102Offset.y) annotation (Line(points={{-179,-80},{-158,-80}}, color={0,0,127}));
+  connect(PT102.p, diffPTS100.u2) annotation (Line(points={{-230.2,-84},{-226,-84},{-226,-82},{-220,-82},{-220,-86},{-202,-86}}, color={0,0,127}));
+  connect(PT101.p, diffPTS100.u1) annotation (Line(points={{-285.8,-124},{-290,-124},{-290,-78},{-206,-78},{-206,-74},{-202,-74}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-60,40},{60,-40}},

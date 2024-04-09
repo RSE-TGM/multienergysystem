@@ -2799,7 +2799,7 @@ package Tests
       parameter Real domega_P401[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_FCV401[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_FCVC01[:, :] = [0, -1; 1e6, -1];
-      parameter Real dtheta_FCVC02[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCVC02[:, :] = [0, 0; 2e3, 0; 2.5e3, -0.5; 4e4, -0.5];
       parameter Real dtheta_FCV701[:, :] = [0, -0.2; 1e6, -0.2];
       parameter Real dtheta_FCV711[:, :] = [0, -0.2; 1e6, -0.2];
       parameter Real dtheta_FCV721[:, :] = [0, -0.2; 1e6, -0.2];

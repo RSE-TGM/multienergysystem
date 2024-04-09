@@ -2808,6 +2808,10 @@ package Tests
       parameter Real dmflowcool_EX711[:, :] = [0, -0.8; 1e6, -0.8];
       parameter Real dmflowcool_EX721[:, :] = [0, -0.8; 1e6, -0.8];
       parameter Real dmflowcool_EX731[:, :] = [0, -0.8; 1e6, -0.8];
+      parameter Real dEX701Pt[:, :] = [0, (32.306e3 - 50e3)/50e3; 1e3, (32.306e3 - 50e3)/50e3];
+      parameter Real dEX711Pt[:, :] = [0, (32.306e3 - 50e3)/50e3; 1e3, (32.306e3 - 50e3)/50e3];
+      parameter Real dEX721Pt[:, :] = [0, (32.306e3 - 50e3)/50e3; 1e3, (32.306e3 - 50e3)/50e3];
+      parameter Real dEX731Pt[:, :] = [0, (32.306e3 - 50e3)/50e3; 1e3, (32.306e3 - 50e3)/50e3];
       parameter Real ddPT100[:, :] = [0, 0; 0, 0];
       parameter Real ddPTA2[:, :] = [0, 0; 0, 0];
       parameter Real dTT704[:, :] = [0, (37 - 20)/(20 + 273.15); 1e3, (37 - 20)/(20 + 273.15)];
@@ -2930,21 +2934,42 @@ package Tests
         Umin=-1,
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,85},{50,95}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX721Pt(
+        Kp=2.2431,
+        Ti=1.1516,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-140},{50,-130}})));
+      Modelica.Blocks.Sources.TimeTable dEX721PtSP(table=dEX721Pt) annotation (Placement(transformation(extent={{14,-138},{24,-128}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX701Pt(
+        Kp=1.5095,
+        Ti=0.87195,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-100},{50,-90}})));
+      Modelica.Blocks.Sources.TimeTable dEX701PtSP(table=dEX701Pt) annotation (Placement(transformation(extent={{20,-95},{30,-85}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX711Pt(
+        Kp=1.8772,
+        Ti=1.0201,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-120},{50,-110}})));
+      Modelica.Blocks.Sources.TimeTable dEX711PtSP(table=dEX711Pt) annotation (Placement(transformation(extent={{20,-115},{30,-105}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX731Pt(
+        Kp=2.2431,
+        Ti=1.1516,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-160},{50,-150}})));
+      Modelica.Blocks.Sources.TimeTable dEX731PtSP1(table=dEX731Pt)
+                                                                   annotation (Placement(transformation(extent={{14,-155},{24,-145}})));
     equation
       connect(dthetaFCVC02.y, controlSignalBus.dthetaFCVC02) annotation (
         Line(points = {{-69.5, 5}, {6, 5}, {6, -5}, {110, -5}}, color = {0, 0, 127}),
-        Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-      connect(dmflowcoolEX701.y, controlSignalBus.dmflowcoolEX701) annotation (
-        Line(points = {{-69.5, -70}, {4, -70}, {4, -5}, {110, -5}}, color = {0, 0, 127}),
-        Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-      connect(dmflowcoolEX711.y, controlSignalBus.dmflowcoolEX711) annotation (
-        Line(points = {{-69.5, -85}, {-32, -85}, {-32, -68}, {6, -68}, {6, -5}, {110, -5}}, color = {0, 0, 127}),
-        Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-      connect(dmflowcoolEX721.y, controlSignalBus.dmflowcoolEX721) annotation (
-        Line(points = {{-69.5, -100}, {4, -100}, {4, -5}, {110, -5}}, color = {0, 0, 127}),
-        Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-      connect(dmflowcoolEX731.y, controlSignalBus.dmflowcoolEX731) annotation (
-        Line(points = {{-69.5, -115}, {0, -115}, {0, -5}, {110, -5}}, color = {0, 0, 127}),
         Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
       connect(dTT704SP.y, PI_TT704.REF) annotation (Line(points={{30.5,35},{37,35},{37,32},{41,32}},
                                                                                      color={0,0,127}));
@@ -3072,6 +3097,64 @@ package Tests
           index=1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
+      connect(dEX721PtSP.y, PI_dEX721Pt.REF) annotation (Line(points={{24.5,-133},{41,-133}},                 color={0,0,127}));
+      connect(processVariableBus.dEX721Pt, PI_dEX721Pt.FeedBack) annotation (Line(
+          points={{-102,0},{-51,0},{-51,-44},{7,-44},{7,-141},{36,-141},{36,-137},{41,-137}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_dEX721Pt.controlAction, controlSignalBus.dmflowcoolEX721) annotation (Line(points={{49,-135},{86,-135},{86,-5},{110,-5}},
+                                                                                                                                         color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dEX701PtSP.y, PI_dEX701Pt.REF) annotation (Line(points={{30.5,-90},{34,-90},{34,-93},{41,-93}}, color={0,0,127}));
+      connect(processVariableBus.dEX701Pt, PI_dEX701Pt.FeedBack) annotation (Line(
+          points={{-102,0},{14,0},{14,-101},{35,-101},{35,-97},{41,-97}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_dEX701Pt.controlAction, controlSignalBus.dmflowcoolEX701) annotation (Line(points={{49,-95},{83,-95},{83,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dEX711PtSP.y, PI_dEX711Pt.REF) annotation (Line(points={{30.5,-110},{33,-110},{33,-111},{35,-111},{35,-113},{41,-113}}, color={0,0,127}));
+      connect(processVariableBus.dEX711Pt, PI_dEX711Pt.FeedBack) annotation (Line(
+          points={{-102,0},{-46,0},{-46,-1},{11,-1},{11,-119},{36,-119},{36,-117},{41,-117}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_dEX711Pt.controlAction, controlSignalBus.dmflowcoolEX711) annotation (Line(points={{49,-115},{88,-115},{88,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dEX731PtSP1.y, PI_dEX731Pt.REF) annotation (Line(points={{24.5,-150},{30,-150},{30,-153},{41,-153}}, color={0,0,127}));
+      connect(processVariableBus.dEX731Pt, PI_dEX731Pt.FeedBack) annotation (Line(
+          points={{-102,0},{-50,0},{-50,-2},{5,-2},{5,-157},{41,-157}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_dEX731Pt.controlAction, controlSignalBus.dmflowcoolEX731) annotation (Line(points={{49,-155},{71,-155},{71,-149},{90,-149},{90,-5},{110,-5}}, color={0,0,127}),
+          Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-60, 32}, {60, -28}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "PI
 Control")}),
@@ -3084,8 +3167,7 @@ Control")}),
 
     model TestActuator
       extends Modelica.Icons.Example;
-      replaceable ThermalPlantController thermalPlantController(
-        PI_TT704(y_start=-0.27))   annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
+      replaceable ThermalPlantController thermalPlantController  annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
       replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
         m_flowcool_nom = 0.35,
         TT704Offset(fixOffset = true, y_Offset_fixed = 20 + 273.15),
@@ -3096,9 +3178,14 @@ Control")}),
         FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
         PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
         dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.075e5),
+        EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        EX711PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        EX721PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        EX731PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         thetaFCVC01Offset(fixInput=false, fixOffset=true),
         thetaFCVC02Offset(fixInput=false, fixOffset=true),
-        thetaFCV101Offset(fixInput=false, fixOffset=true))                                                                                                                                                                                                         annotation (
+        thetaFCV101Offset(fixInput=false, fixOffset=true),
+        thetaFCV401Offset(fixInput=false, fixOffset=true, u_Offset_fixed = 0.191))   annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
     equation
       connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus) annotation (
@@ -3110,7 +3197,7 @@ Control")}),
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),
         experiment(
-          StopTime=3000,
+          StopTime=4000,
           Tolerance=1e-06,
           __Dymola_Algorithm="Dassl"));
     end TestActuator;

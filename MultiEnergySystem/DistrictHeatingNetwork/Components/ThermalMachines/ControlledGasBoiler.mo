@@ -32,7 +32,7 @@ equation
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
 
   //Pheat = delay(if heat_on then min(Pheat_ref, Pmaxnom) else 0, tdelay);
-  Pheat = if heat_on then min(Pheat_ref, Pmaxnom) else 0;
+  Pheat = if heat_on then max(min(Pheat_ref, Pmaxnom),0) else 0;
   //Pheat = min(Pheat_ref, Pmaxnom);
 
 //   when Tout_ref - T_bandwidth > Tout and pre(heat_on)==false then

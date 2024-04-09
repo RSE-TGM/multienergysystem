@@ -31,7 +31,7 @@ equation
   hout_ref = fluidOut_ref.h;
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
   990*9.81*h = inlet.p - outlet.p "Momentum Balance";
-  Pheat = if heat_on then min(Pheat_ref, Pmaxres*nR) else 0;
+  Pheat = if heat_on then max(min(Pheat_ref, Pmaxres*nR),0) else 0;
 annotation (
     Icon(graphics={  Polygon( lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));
 end ControlledElectricBoiler;

@@ -2823,7 +2823,7 @@ package Tests
       parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 1000, (1 - 1.3)/1.3];
       parameter Real dTT731[:, :] = [0, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 1000, (55 - 65)/(65 + 273.15)];
       parameter Real dFT901[:, :] = [0, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 1000, (3 - 8.8)/8.8];
-      parameter Real dFT101[:, :] = [0, (2.1 - 5.7166667)/5.7166667; 500, (2.1 - 5.7166667)/5.7166667];
+      parameter Real dFT101[:, :] = [0, (2 - 5.7166667)/5.7166667; 500, (2 - 5.7166667)/5.7166667];
       parameter Real dFT401[:, :] = [0, (1.5 - 3.2666667)/3.2666667; 500, (1.5 - 3.2666667)/3.2666667];
       Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
         Placement(transformation(extent = {{-80, 90}, {-70, 100}})));
@@ -3149,8 +3149,7 @@ package Tests
           index=-1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
-      connect(PI_dEX731Pt.controlAction, controlSignalBus.dmflowcoolEX731) annotation (Line(points={{49,-155},{71,-155},{71,-149},{90,-149},{90,-5},{110,-5}}, color={0,0,127}),
-          Text(
+      connect(PI_dEX731Pt.controlAction, controlSignalBus.dmflowcoolEX731) annotation (Line(points={{49,-155},{71,-155},{71,-149},{90,-149},{90,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3185,7 +3184,7 @@ Control")}),
         thetaFCVC01Offset(fixInput=false, fixOffset=true),
         thetaFCVC02Offset(fixInput=false, fixOffset=true),
         thetaFCV101Offset(fixInput=false, fixOffset=true),
-        thetaFCV401Offset(fixInput=false, fixOffset=true, u_Offset_fixed = 0.191))   annotation (
+        thetaFCV401Offset(fixInput=false, fixOffset=true))   annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
     equation
       connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus) annotation (

@@ -21,7 +21,8 @@ equation
   rho = 1/v;
   v_mol = MM/rho;
   h = u + p/rho;
-  h = h_T(T,cp_coeff);
+  //h = h_T(T,cp_coeff);
+  h = cp*T;
   cp = du_dT;
   cv = cp;
   du_dp = 0.00001 "Pressure derivative of the Specific Internal Energy";

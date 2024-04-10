@@ -3200,6 +3200,12 @@ Control")}),
           Tolerance=1e-06,
           __Dymola_Algorithm="Dassl"));
     end TestActuator;
+
+    model TestActuator_IdealWater
+      extends TestActuator(centralisedSystemI_B_InitForward(
+        redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidIdeal,
+        redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidIdeal));
+    end TestActuator_IdealWater;
     annotation (Icon(graphics={Bitmap(
             extent={{-80,-80},{82,80}},
             imageSource=

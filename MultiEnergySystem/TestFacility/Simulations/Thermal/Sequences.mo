@@ -147,6 +147,102 @@ package Sequences
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end Seq_0412_Test2;
 
+      model Seq_2903_Test1 "Sequence 3 done on 29/03/24"
+        extends Modelica.Icons.Example;
+        extends Thermal.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_B(
+          coldSourcePEX721(T0=EX721_Tin_cold),
+          coldSourcePEX711(T0=EX711_Tin_cold),
+          coldSourcePEX731(T0=EX731_Tin_cold),
+          coldSourcePEX701(T0=EX701_Tin_cold),
+          FT703_mflow(table=kq*[0, 0.01; 1e6, 0.01]),
+          FT713_mflow(table=kq*[0, 0.01; 1e6, 0.01]),
+          FT723_mflow(table=kq*[0, 0.01; 1e6, 0.01]),
+          FT733_mflow(table=kq*[0, 0.01; 1e6, 0.01]),
+          GB101_ToutSP=[0, 12 + 273.15; 1e6, 12 + 273.15],
+          EB401_ToutSP=[0, 12 + 273.15; 1e6, 12 + 273.15],
+          EX701_Tin_hot=T_start_hot,
+          EX711_Tin_hot=T_start_hot,
+          EX721_Tin_hot=T_start_hot,
+          EX731_Tin_hot=T_start_hot,
+          EX701_Tout_hot=T_start_hot,
+          EX711_Tout_hot=T_start_hot,
+          EX721_Tout_hot=T_start_hot,
+          EX731_Tout_hot=T_start_hot,
+          EX701_q_m3h_hot=0.62,
+          EX701_Tin_cold=9.5 + 273.15,
+          EX711_Tin_cold=9.5 + 273.15,
+          EX721_Tin_cold=9.5 + 273.15,
+          EX731_Tin_cold=9.5 + 273.15,
+          FCVC01theta=[0,0; 1e6,0],
+          FCVC02theta=[0,0; 1e6,0],
+          FCV101theta=[0, 1; 3668, 1; 3670, 0.75; 4466, 0.75; 4468, 0.5; 4986, 0.5; 4988, 1; 6000, 1],
+          FCV401theta=[0, 1; 6e3, 1],
+          FCV901theta=[0, 1; 1322, 1; 1324, 0.5; 2288, 0.5; 2290, 0.5; 2686, 0.5; 2688, 1; 6e3, 1],
+          FCV701theta=[0, 1; 6e3, 1],
+          FCV711theta=[0, 1; 6e3, 1],
+          FCV721theta=[0, 1; 6e3, 1],
+          FCV731theta=[0, 1; 6e3, 1],
+          VE901(p0=1.94e5),
+          Tout_start_S9= 10 + 273.15,
+          T_start_hot= 10 + 273.15,
+          GB101(
+            Tout_start= 10 + 273.15,
+            initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
+            Pmaxnom=GB101_Pmaxnom),
+          EB401(
+            Tout_start= 10 + 273.15,
+            initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
+            h=0.5,
+            nR=4),
+          FCVC01(Kv=25, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage, Tin_start=T_start_hot),
+          FCVC02(Kv=25, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV901(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot),
+          FCV101(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV401(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear),
+          EB401_Status(table={537,768,2271,2500}),
+          rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
+          TT703_SPP(y=Tcoolsin),
+          FCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FV401(Kv=33),
+          FV402(Kv=33),
+          PL4_S901(h = 1),
+          P101(correctionfactor = 1.2),
+          P401(correctionfactor = 1.2),
+          P101omega = [0, 2*pi*30; 2828, 2*pi*30; 2830, 2*pi*35; 3012, 2*pi*35; 3014, 2*pi*40; 3344, 2*pi*40; 3346, 2*pi*45; 3512, 2*pi*45; 3514, 2*pi*50; 3632, 2*pi*50],
+          P401omega = [0, 2*pi*30; 5008, 2*pi*30; 5010, 2*pi*50; 6000, 2*pi*50],
+          P901omega = [0, 2*pi*30; 156, 2*pi*30; 158, 2*pi*40; 224, 2*pi*40; 226, 2*pi*30; 474, 2*pi*30],
+          PL_S100_P101_FCV101(L = 2, h = h_comp_S1),
+          PL4_S401(h=h_comp_S4),
+          FT703(G = 1e-8),
+          FT733(G = 1e-8),
+          FT713(G = 1e-8),
+          FT723(G = 1e-8));
+        //FCV701theta = [0, 0.6269; 1e6, 0.6269],
+        parameter Real kq = 1;
+        parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
+        parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";
+        parameter Real pi = Modelica.Constants.pi;
+        parameter DistrictHeatingNetwork.Types.Length h_comp_S1 = 0;
+        parameter DistrictHeatingNetwork.Types.Length h_comp_S4 = 0;
+        Real Tcoolsin;
+      equation
+        Tcoolsin = 273.15 + 9.5;
+        connect(TT703_SPP.y, coldSourcePEX701.in_T0) annotation (Line(points={{169,-240},{159,-240},{159,-290.6}}, color={0,0,127}));
+        connect(TT703_SPP.y, coldSourcePEX731.in_T0) annotation (Line(points={{169,-240},{164,-240},{164,-250},{242,-250},{242,-280},{319,-280},{319,-290.6}}, color={0,0,127}));
+        connect(coldSourcePEX711.in_T0, coldSourcePEX731.in_T0) annotation (Line(points={{479,-290.6},{479,-278},{319,-278},{319,-290.6}}, color={0,0,127}));
+        connect(coldSourcePEX721.in_T0, coldSourcePEX711.in_T0) annotation (Line(points={{641,-288.6},{640,-288.6},{640,-280},{479,-280},{479,-290.6}}, color={0,0,127}));
+        annotation (
+          experiment(
+            StopTime=8000,
+            Interval=20,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"),
+          Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
+      end Seq_2903_Test1;
+
       model TestDynamics
         extends MultiEnergySystem.TestFacility.Simulations.Thermal.Sequences.Networks.Centralised.Seq_0412_Test2(
             GB101_ToutSP = [0, 80+273.15; 1e6, 80+273.15],

@@ -482,7 +482,8 @@ package Tests
           use_in_T0=true,
           redeclare model Medium = Medium,
           p0=pin_start_S9,
-          T0=Tin_start_S9)                                                                                annotation (Placement(
+          T0=Tin_start_S9,
+          R=1e-3)                                                                                         annotation (Placement(
               transformation(
               extent={{-6,6},{6,-6}},
               rotation=90,
@@ -493,7 +494,7 @@ package Tests
               rotation=-90,
               origin={-10,-84})));
         Modelica.Blocks.Sources.TimeTable P901_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-80,22},{-68,34}})));
-        Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-80,0},{-68,12}})));
+        Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-80,2},{-68,14}})));
         Modelica.Blocks.Sources.TimeTable PT902_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{56,28},{44,40}})));
         DistrictHeatingNetwork.Sources.SinkPressure
                              sinkP(
@@ -501,7 +502,8 @@ package Tests
           redeclare model Medium = Medium,
           p0=pout_start_S9,
           T0=Tout_start_S9,
-          R=1) annotation (Placement(transformation(extent={{32,64},{44,52}})));
+          R=1e-3)
+               annotation (Placement(transformation(extent={{32,64},{44,52}})));
         Modelica.Blocks.Sources.TimeTable m_flow_ref(table=[ts,m_flow_approx]) annotation (Placement(transformation(extent={{48,84},{60,96}})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex m_flow_index annotation (Placement(transformation(extent={{74,74},{86,86}})));
 
@@ -515,7 +517,7 @@ package Tests
           k=1,
           T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState,
-          y_start=thetav[1, 1])                            annotation (Placement(transformation(extent={{-56,0},{-44,12}})));
+          y_start=thetav[1, 1])                            annotation (Placement(transformation(extent={{-56,2},{-44,14}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -555,13 +557,14 @@ package Tests
         connect(circulationPump.m_flow_, m_flow_index.u_sim) annotation (Line(points={{35,21},{66,21},{66,77},{72.8,77}}, color={0,0,127}));
         connect(P901_omega.y, lowPassomega.u) annotation (Line(points={{-67.4,28},{-57.2,28}}, color={0,0,127}));
         connect(lowPassomega.y, circulationPump.omega) annotation (Line(points={{-43.4,28},{-38,28},{-38,21},{-31,21}}, color={0,0,127}));
-        connect(FCV901_theta.y, lowPasstheta.u) annotation (Line(points={{-67.4,6},{-57.2,6}}, color={0,0,127}));
-        connect(lowPasstheta.y, circulationPump.theta) annotation (Line(points={{-43.4,6},{-38,6},{-38,15},{-31,15}}, color={0,0,127}));
+        connect(FCV901_theta.y, lowPasstheta.u) annotation (Line(points={{-67.4,8},{-57.2,8}}, color={0,0,127}));
+        connect(lowPasstheta.y, circulationPump.theta) annotation (Line(points={{-43.4,8},{-38,8},{-38,15},{-31,15}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end TestBase;
 
       model S900_Seq_0412Test3
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat"));
+        annotation (experiment(StopTime=4200, __Dymola_Algorithm="Dassl"));
       end S900_Seq_0412Test3;
 
       model S900_Seq_1701Test1

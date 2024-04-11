@@ -177,7 +177,7 @@ package Sequences
           FCVC02theta=[0,0; 1e6,0],
           FCV101theta=[0, 1; 3668, 1; 3670, 0.75; 4466, 0.75; 4468, 0.5; 4986, 0.5; 4988, 1; 6000, 1],
           FCV401theta=[0, 1; 6e3, 1],
-          FCV901theta=[0, 1; 1322, 1; 1324, 0.5; 2288, 0.5; 2290, 0.5; 2686, 0.5; 2688, 1; 6e3, 1],
+          FCV901theta=[0, 1; 1322, 1; 1324, 0.5; 2288, 0.5; 2290, 0.25; 2686, 0.25; 2688, 1; 6e3, 1],
           FCV701theta=[0, 1; 6e3, 1],
           FCV711theta=[0, 1; 6e3, 1],
           FCV721theta=[0, 1; 6e3, 1],
@@ -192,14 +192,14 @@ package Sequences
           EB401(
             Tout_start= 10 + 273.15,
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-            h=0.5,
             nR=4),
-          FCVC01(Kv=25, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage, Tin_start=T_start_hot),
-          FCVC02(Kv=25, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCVC01(Kv=33, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage, Tin_start=T_start_hot),
+          FCVC02(Kv=33, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           FCV901(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot),
           FCV101(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
-          FCV401(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear),
-          EB401_Status(table={537,768,2271,2500}),
+          FCV401(Kv=33, openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          GB101_Status(startValue = false),
+          EB401_Status(table = {1e6}, startValue = false),
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
           TT703_SPP(y=Tcoolsin),
           FCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
@@ -209,11 +209,12 @@ package Sequences
           FV401(Kv=33),
           FV402(Kv=33),
           PL4_S901(h = 1),
-          P101(correctionfactor = 1.2),
-          P401(correctionfactor = 1.2),
-          P101omega = [0, 2*pi*30; 2828, 2*pi*30; 2830, 2*pi*35; 3012, 2*pi*35; 3014, 2*pi*40; 3344, 2*pi*40; 3346, 2*pi*45; 3512, 2*pi*45; 3514, 2*pi*50; 3632, 2*pi*50],
+          P101(correctionfactor = correctionfactorP101),
+          P401(correctionfactor = correctionfactorP401),
+          P901(correctionfactor = correctionfactorP901),
+          P101omega = [0, 2*pi*30; 2828, 2*pi*30; 2830, 2*pi*35; 3012, 2*pi*35; 3014, 2*pi*40; 3344, 2*pi*40; 3346, 2*pi*45; 3512, 2*pi*45; 3514, 2*pi*50; 3632, 2*pi*50; 3634, 2*pi*30; 3820, 2*pi*30; 3822, 2*pi*35; 3922, 2*pi*35; 3924, 2*pi*40; 4142, 2*pi*40; 4144, 2*pi*45; 4262, 2*pi*45; 4264, 2*pi*50; 4442, 2*pi*50; 4444, 2*pi*30; 4584, 2*pi*30; 4586, 2*pi*35; 4636, 2*pi*35; 4638, 2*pi*40; 4758, 2*pi*40; 4760, 2*pi*45; 4880, 2*pi*45; 4882, 2*pi*50; 5e3, 2*pi*50],
           P401omega = [0, 2*pi*30; 5008, 2*pi*30; 5010, 2*pi*50; 6000, 2*pi*50],
-          P901omega = [0, 2*pi*30; 156, 2*pi*30; 158, 2*pi*40; 224, 2*pi*40; 226, 2*pi*30; 474, 2*pi*30],
+          P901omega = [0, 2*pi*30; 156, 2*pi*30; 158, 2*pi*40; 224, 2*pi*40; 226, 2*pi*30; 474, 2*pi*30; 484, 2*pi*35; 764, 2*pi*35; 766, 2*pi*40; 994, 2*pi*40; 996, 2*pi*45; 1124, 2*pi*45; 1126, 2*pi*50; 1282, 2*pi*50; 1284, 2*pi*40; 1312, 2*pi*40; 1314, 2*pi*30; 1546, 2*pi*30; 1548, 2*pi*35; 1614, 2*pi*35; 1616, 2*pi*40; 2008, 2*pi*40; 2010, 2*pi*45; 2084, 2*pi*45; 2086, 2*pi*50; 2156, 2*pi*50; 2158, 2*pi*40; 2268, 2*pi*40; 2270, 2*pi*30; 2346, 2*pi*30; 2348, 2*pi*35; 2442, 2*pi*35; 2444, 2*pi*40; 2498, 2*pi*40; 2500, 2*pi*45; 2616, 2*pi*45; 2618, 2*pi*50; 1e6, 2*pi*50],
           PL_S100_P101_FCV101(L = 2, h = h_comp_S1),
           PL4_S401(h=h_comp_S4),
           FT703(G = 1e-8),
@@ -227,6 +228,9 @@ package Sequences
         parameter Real pi = Modelica.Constants.pi;
         parameter DistrictHeatingNetwork.Types.Length h_comp_S1 = 0;
         parameter DistrictHeatingNetwork.Types.Length h_comp_S4 = 0;
+        parameter Real correctionfactorP101 = 1;
+        parameter Real correctionfactorP401 = 1;
+        parameter Real correctionfactorP901 = 1;
         Real Tcoolsin;
       equation
         Tcoolsin = 273.15 + 9.5;

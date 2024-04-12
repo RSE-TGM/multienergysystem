@@ -11,7 +11,11 @@ model RoundPipe1DFV
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
+     constrainedby
+     DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance
+      "Water model" annotation (
+     choicesAllMatching = true);
 
   constant Types.Acceleration g = Modelica.Constants.g_n;
 
@@ -144,10 +148,10 @@ equation
 
   // Momentum Balance
   if hctype == Choices.Pipe.HCtypes.Middle then
-    pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
-    ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+    pin - ptilde = (L/A)*der(inlet.m_flow)/2 + (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+    ptilde - pout = (L/A)*der(m_flow[end])/2 + (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
   else
-    pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+    pin - pout = (L/A)*der(inlet.m_flow) + rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
     ptilde = pout;
   end if;
 
@@ -189,6 +193,7 @@ equation
 initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Ttilde) = zeros(n);
+    der(inlet.m_flow) = 0;
     //der(ptilde) = 0;
     if not noInitialPressure then
       //der(ptilde) = 0;

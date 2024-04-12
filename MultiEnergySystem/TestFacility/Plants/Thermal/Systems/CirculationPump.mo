@@ -13,36 +13,42 @@ model CirculationPump
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Real pumpcorrectionfactor = 1;
   parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
   parameter DistrictHeatingNetwork.Types.Length Di = 51e-3;
   parameter DistrictHeatingNetwork.Types.Length L_v = 1;
-  parameter DistrictHeatingNetwork.Types.Length L_RL2L3 = 4.53;
-  parameter DistrictHeatingNetwork.Types.Length L_RL3L4 = 3.02;
-  parameter DistrictHeatingNetwork.Types.Length L_RL4L5 = 2.5;
-  parameter DistrictHeatingNetwork.Types.Length L_RL5L6 = 2.5;
-  parameter DistrictHeatingNetwork.Types.Length L_RL6L7 = 3;
   parameter Real q_m3h_S9 = 10;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S9=q_m3h_S9*990/3600;
 
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S9 = 2.3e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S9 = 3.2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S9 = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S9 = 80 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature T_hot_start = 80 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature T_cold_start = 60 + 273.15;
 
-  parameter DistrictHeatingNetwork.Types.Length L_S9_PL1 = 0.82;
+  parameter Real b[3] = {24.122662, 0.669933, -0.039537} "Head Characteristic coefficients";
+
+//   parameter DistrictHeatingNetwork.Types.Length L_S9_PL1 = 0.82;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL2 = 2.3;
   parameter DistrictHeatingNetwork.Types.Length h_S9_PL2 = 0.5;
-  parameter DistrictHeatingNetwork.Types.Length L_S9_PL3 = 1.5;
-  parameter DistrictHeatingNetwork.Types.Length h_S9_PL3 = 1;
-  parameter DistrictHeatingNetwork.Types.Length L_S9_PL4 = 0.65;
-  parameter DistrictHeatingNetwork.Types.Length L_rCD_H7 = 15;
+//   parameter DistrictHeatingNetwork.Types.Length L_S9_PL3 = 1.5;
+//   parameter DistrictHeatingNetwork.Types.Length h_S9_PL3 = 1;
+//   parameter DistrictHeatingNetwork.Types.Length L_S9_PL4 = 0.65;
+//   parameter DistrictHeatingNetwork.Types.Length L_rCD_H7 = 15;
   parameter DistrictHeatingNetwork.Types.Length Di_S9 = 51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S9 = 1.5e-3;
-
+  parameter DistrictHeatingNetwork.Types.Length Di_rCD = 72e-3;
   parameter DistrictHeatingNetwork.Types.Length t_rCD = 2e-3;
+
+  parameter DistrictHeatingNetwork.Types.Length L_P901_FCV901 = 0.5 + 1.4;
+  parameter DistrictHeatingNetwork.Types.Length h_P901_FCV901 = 1.4;
+  parameter DistrictHeatingNetwork.Types.Length L_FCV901_PT902 = 0.6+0.3+1.3+0.1+1.1+0.2;
+  parameter DistrictHeatingNetwork.Types.Length h_FCV901_PT902 = 0.9- 0.1- 0.2;
+  parameter DistrictHeatingNetwork.Types.Length L_rCD_P901 = 0.3+0.25+2.3+3+0.5+7.5+1.7;
+  parameter DistrictHeatingNetwork.Types.Length h_rCD_P901 = -2.3-0.5+1.7;
+
   parameter DistrictHeatingNetwork.Types.Pressure p_VE901 = 2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature T_VE901 = 60 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature T_VE901 = T_cold_start;
 
 
   DistrictHeatingNetwork.Sources.SourcePressure VE901(redeclare model Medium = Medium, p0=p_VE901, T0(displayUnit="K") = T_VE901)   annotation (Placement(transformation(
@@ -57,7 +63,7 @@ model CirculationPump
     pin_start=pin_start_S9,
     pout_start=pout_start_S9,
     a=DistrictHeatingNetwork.Data.PumpData.P901.a,
-    b=DistrictHeatingNetwork.Data.PumpData.P901.b,
+    b=b,
     dpnom=DistrictHeatingNetwork.Data.PumpData.P901.dpnom,
     etaelec=DistrictHeatingNetwork.Data.PumpData.P901.etaelec,
     etamech=DistrictHeatingNetwork.Data.PumpData.P901.etamech,
@@ -74,44 +80,49 @@ model CirculationPump
     correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                                                   annotation (
     Placement(visible = true, transformation(                 extent={{-10,-10},{10,10}},      rotation=90,
-        origin={20,-42})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium = Medium, T_start=Tout_start_S9,
+        origin={20,-36})));
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium = Medium,
+    T_start=T_hot_start,
       p_start=pout_start_S9)
     annotation (Placement(transformation(
-        extent={{-5,5},{5,-5}},
+        extent={{-4,4},{4,-4}},
         rotation=90,
-        origin={23,48})));
+        origin={22,38})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
     PT902 "Pressure sensor at the outlet of pump 901" annotation (Placement(
         transformation(
-        extent={{-5,5},{5,-5}},
+        extent={{-3.75,4},{3.75,-4}},
         rotation=90,
-        origin={23,57.5})));
+        origin={22,76.25})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT902(redeclare model Medium = Medium, T_start=Tout_start_S9, p_start=pout_start_S9)
+    TT902(redeclare model Medium = Medium,
+    T_start=T_hot_start,                                          p_start=pout_start_S9)
     "Temperature sensor at the outlet of pump 901"       annotation (Placement(
         transformation(
-        extent={{-4.75,4.75},{4.75,-4.75}},
+        extent={{-4.25,3.75},{4.25,-3.75}},
         rotation=90,
-        origin={23.25,68.25})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S901(
-    h=h_S9_PL3,
+        origin={22.25,87.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_P901_FCV901(
+    h=h_P901_FCV901,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_S9_PL3,
+    L=L_P901_FCV901,
     t=t_S9,
     pin_start=pout_start_S9,
-    Tin_start=Tout_start_S9,
-    Tout_start=Tout_start_S9,
+    Tin_start=T_hot_start,
+    Tout_start=T_hot_start,
     Di=Di_S9,
     q_m3h_start=q_m3h_S9,
     n=n,
-    hctype=hctype) annotation (Placement(transformation(
+    hctype=hctype,
+    cf=cf)         "Pipeline connecting pump P901 and control valve FCV901"
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={18,-16})));
+        origin={20,-10})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT901(redeclare model Medium = Medium, T_start=Tin_start_S9, p_start=pin_start_S9)
+    TT901(redeclare model Medium = Medium,
+    T_start=T_cold_start,                                        p_start=pin_start_S9)
     "Temperature sensor at the inlet of pump 901" annotation (Placement(
         transformation(
         extent={{-4.75,-4.75},{4.75,4.75}},
@@ -130,61 +141,81 @@ model CirculationPump
     h=h_S9_PL2,
     t=t_S9,
     pin_start=pin_start_S9,
-    Tin_start=Tin_start_S9,
-    Tout_start=Tin_start_S9,
+    Tin_start=T_cold_start,
+    Tout_start=T_cold_start,
     Di=Di_S9,
     q_m3h_start=q_m3h_S9,
     n=n,
-    hctype=hctype) annotation (Placement(transformation(
+    hctype=hctype,
+    cf=cf)         annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
-        origin={-20,-31})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(
+        origin={-20,-25})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_rCD_P901(
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_rCD_H7,
-    h=0,
-    t=t_rCD,
+    L=L_rCD_P901,
+    h=h_rCD_P901,
+    t=t_S9,
     pin_start=pin_start_S9,
-    Tin_start=Tout_start_S9,
-    Tout_start=Tout_start_S9,
-    Di=Di,
+    Tin_start=T_hot_start,
+    Tout_start=T_hot_start,
+    Di=Di_S9,
     q_m3h_start=q_m3h_S9,
     nPipes=1,
     n=n,
-    hctype=hctype)
-    "Pipe connecting the outlet of future heat storage and the outlet of hot side of CHP system"
+    hctype=hctype,
+    cf=cf)         "Pipe connecting the outlet of rack CD - hot side with pump P901"
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={20,-72})));
+        origin={20,-60})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV901(
     redeclare model Medium = Medium,
     Kv=Kv,
     dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV901.dp_nom,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot,
+    openingChar=openingChar,
     rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.rho_nom,
     q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.q_nom_m3h,
-    Tin_start(displayUnit="K") = Tout_start_S9,
+    Tin_start(displayUnit="K") = T_hot_start,
     pin_start=pout_start_S9,
     q_m3h_start=q_m3h_S9)  annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
-        origin={20,30})));
+        origin={20,14})));
 
 
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_FCV901_PT902(
+    h=h_FCV901_PT902,
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    L=L_FCV901_PT902,
+    t=t_S9,
+    pin_start=pout_start_S9,
+    Tin_start=T_hot_start,
+    Tout_start=T_hot_start,
+    Di=Di_S9,
+    q_m3h_start=q_m3h_S9,
+    n=n,
+    hctype=hctype,
+    cf=cf)         "Pipeline connecting control valve FCV901 and pressure transmitter PT902"
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20,60})));
+  DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange rCD_S900(D_i=Di_rCD,D_o=Di_S9)
+    annotation (Placement(transformation(
+        extent={{-6,-6},{6,6}},
+        rotation=90,
+        origin={20,-80})));
 equation
-  connect(FT901.outlet,PT902. inlet) annotation (Line(
-      points={{21,51},{21,57.5}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PT902.inlet,TT902. inlet) annotation (Line(
-      points={{21,57.5},{21,66.875},{21.35,66.875},{21.35,68.25}},
+      points={{20.4,76.25},{20.4,86.875},{20.75,86.875},{20.75,87.75}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.inlet,PT901. inlet) annotation (Line(
-      points={{-20,-21},{-20,30.5}},
+      points={{-20,-15},{-20,30.5}},
       color={140,56,54},
       thickness=0.5));
   connect(PT901.inlet,TT901. inlet) annotation (Line(
@@ -195,56 +226,70 @@ equation
       points={{-51,-1},{-20,-1},{-20,30.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL4_S901.inlet, P901.outlet) annotation (Line(
-      points={{18,-26},{18,-30},{20,-30},{20,-34}},
+  connect(PL_S900_P901_FCV901.inlet, P901.outlet) annotation (Line(
+      points={{20,-20},{20,-28}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV901.inlet, PL4_S901.outlet) annotation (Line(
-      points={{20,24},{20,-6},{18,-6}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT901.inlet, FCV901.outlet) annotation (Line(
-      points={{21,45},{21,42},{20,42},{20,36}},
+  connect(FCV901.inlet, PL_S900_P901_FCV901.outlet) annotation (Line(
+      points={{20,8},{20,0}},
       color={140,56,54},
       thickness=0.5));
   connect(PL2_S901.outlet, outletcold) annotation (Line(
-      points={{-20,-41},{-20,-88},{-22,-88},{-22,-102}},
+      points={{-20,-35},{-20,-88},{-22,-88},{-22,-102}},
       color={140,56,54},
       thickness=0.5));
   connect(TT902.inlet, outlethot) annotation (Line(
-      points={{21.35,68.25},{20,68.25},{20,110}},
+      points={{20.75,87.75},{20,87.75},{20,110}},
       color={140,56,54},
       thickness=0.5));
   connect(TT901.inlet, inletcold) annotation (Line(
       points={{-19.85,68.25},{-20,68.25},{-20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(omega, P901.in_omega) annotation (Line(points={{-110,70},{-68,70},{-68,-46},{15,-46}}, color={0,0,127}));
-  connect(theta, FCV901.opening) annotation (Line(points={{-110,50},{2,50},{2,30},{15.2,30}}, color={0,0,127}));
-  connect(PT902.p, PTout) annotation (Line(points={{29.5,57.5},{46,57.5},{46,-10},{110,-10}}, color={0,0,127}));
-  connect(FT901.m_flow, m_flow_) annotation (Line(points={{26,51.5},{26,52},{58,52},{58,70},{110,70}}, color={0,0,127}));
-  connect(TT902.T, TTout) annotation (Line(points={{29.425,68.25},{78,68.25},{78,30},{110,30}}, color={0,0,127}));
-  connect(TT901.T, PTin) annotation (Line(points={{-27.925,68.25},{-34,68.25},{-34,10},{110,10}}, color={0,0,127}));
-  connect(PT901.p, TTin) annotation (Line(points={{-28.5,30.5},{-28.5,20},{72,20},{72,50},{110,50}}, color={0,0,127}));
-  connect(P901.inlet, rackCD_Hot_S200_S900.outlet) annotation (Line(
-      points={{20,-50},{20,-62}},
+  connect(omega, P901.in_omega) annotation (Line(points={{-110,70},{-68,70},{-68,-40},{15,-40}}, color={0,0,127}));
+  connect(theta, FCV901.opening) annotation (Line(points={{-110,50},{-84,50},{-84,14},{15.2,14}},
+                                                                                              color={0,0,127}));
+  connect(PT902.p, PTout) annotation (Line(points={{27.2,76.25},{46,76.25},{46,-10},{110,-10}},
+                                                                                              color={0,0,127}));
+  connect(TT902.T, TTout) annotation (Line(points={{27.125,87.75},{78,87.75},{78,30},{110,30}}, color={0,0,127}));
+  connect(P901.inlet, PL_S900_rCD_P901.outlet) annotation (Line(
+      points={{20,-44},{20,-50}},
       color={140,56,54},
       thickness=0.5));
-  connect(rackCD_Hot_S200_S900.inlet, inlethot) annotation (Line(
-      points={{20,-82},{20,-86},{24,-86},{24,-100}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(rackCD_Hot_S200_S900.wall, MultiPort) annotation (Line(
-      points={{15.9,-72},{-48,-72},{-48,-70},{-110,-70}},
+  connect(PL_S900_rCD_P901.wall, MultiPort) annotation (Line(
+      points={{15.9,-60},{-48,-60},{-48,-70},{-110,-70}},
       color={255,101,98},
       thickness=0.5));
   connect(PL2_S901.wall, MultiPort) annotation (Line(
-      points={{-24.1,-31},{-48,-31},{-48,-70},{-110,-70}},
+      points={{-24.1,-25},{-48,-25},{-48,-70},{-110,-70}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL4_S901.wall, MultiPort) annotation (Line(
-      points={{13.9,-16},{-48,-16},{-48,-70},{-110,-70}},
+  connect(PL_S900_P901_FCV901.wall, MultiPort) annotation (Line(
+      points={{15.9,-10},{-48,-10},{-48,-70},{-110,-70}},
       color={255,101,98},
+      thickness=0.5));
+  connect(PL_S900_FCV901_PT902.inlet, FT901.outlet) annotation (Line(
+      points={{20,50},{20,43.5},{20.4,43.5},{20.4,40.4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT901.inlet, FCV901.outlet) annotation (Line(
+      points={{20.4,35.6},{20.4,23.5},{20,23.5},{20,20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT902.inlet, PL_S900_FCV901_PT902.outlet) annotation (Line(
+      points={{20.4,76.25},{20.4,73.125},{20,73.125},{20,70}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT901.m_flow, m_flow_) annotation (Line(points={{24.4,40.8},{24.4,52},{62,52},{62,70},{110,70}}, color={0,0,127}));
+  connect(TT901.T, TTin) annotation (Line(points={{-27.925,68.25},{-36,68.25},{-36,46},{110,46},{110,50}}, color={0,0,127}));
+  connect(PT901.p, PTin) annotation (Line(points={{-28.5,30.5},{-36,30.5},{-36,24},{80,24},{80,10},{110,10}}, color={0,0,127}));
+  connect(PL_S900_rCD_P901.inlet, rCD_S900.outlet) annotation (Line(
+      points={{20,-70},{20,-74}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rCD_S900.inlet, inlethot) annotation (Line(
+      points={{20,-86},{20,-100},{24,-100}},
+      color={140,56,54},
       thickness=0.5));
   annotation (Icon(coordinateSystem(grid={1,1}), graphics={
         Bitmap(

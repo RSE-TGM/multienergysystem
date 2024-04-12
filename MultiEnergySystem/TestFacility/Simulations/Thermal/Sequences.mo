@@ -147,6 +147,78 @@ package Sequences
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end Seq_0412_Test2;
 
+      model Seq_0412_Test2_indexes
+        extends Seq_0412_Test2;
+
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
+          Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+
+        parameter String matrixFT101 = "FT101" "Matrix name in file";
+        parameter String matrixFT401 = "FT401" "Matrix name in file";
+        parameter String matrixFT901 = "FT901" "Matrix name in file";
+        parameter String matrixTT101 = "TT101" "Matrix name in file";
+        parameter String matrixTT102 = "TT102" "Matrix name in file";
+        parameter String matrixTT401 = "TT401" "Matrix name in file";
+        parameter String matrixTT402 = "TT402" "Matrix name in file";
+        parameter String matrixTT901 = "TT901" "Matrix name in file";
+        parameter String matrixTT902 = "TT902" "Matrix name in file";
+        parameter String timenoscale = "time" "Matrix name in file";
+
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex FT401Analysis annotation (Placement(transformation(extent={{-412,-220},{-432,-200}})));
+        Modelica.Blocks.Sources.TimeTable FT401_meas(table=[ts,FT401real])
+                                                     annotation (Placement(transformation(extent={{-380,-190},{-400,-170}})));
+
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex FT101Analysis annotation (Placement(transformation(extent={{-412,-256},{-432,-236}})));
+        Modelica.Blocks.Sources.TimeTable FT101_meas(table=[ts,FT101real]) annotation (Placement(transformation(extent={{-380,-250},{-400,-230}})));
+        Modelica.Blocks.Sources.TimeTable dTS400_meas(table=[ts,TT402real - TT401real])
+                                                     annotation (Placement(transformation(extent={{-400,-100},{-420,-80}})));
+        Modelica.Blocks.Math.Feedback substractdTS400 annotation (Placement(transformation(extent={{-398,-120},{-416,-102}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex dTS400Analysis
+                                                                   annotation (Placement(transformation(extent={{-440,-116},{-460,-96}})));
+        Modelica.Blocks.Sources.TimeTable dTS100_meas(table=[ts,TT102real - TT101real]) annotation (Placement(transformation(extent={{-220,-60},{-200,-40}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex dTS100Analysis annotation (Placement(transformation(extent={{-180,-80},{-160,-60}})));
+        Modelica.Blocks.Math.Feedback feedback annotation (Placement(transformation(extent={{-220,-82},{-200,-62}})));
+        Modelica.Blocks.Sources.TimeTable FT901_meas(table=[ts,FT901real]) annotation (Placement(transformation(extent={{-720,172},{-700,192}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex FT401Analysis1
+                                                                   annotation (Placement(transformation(extent={{-680,160},{-660,180}})));
+        Modelica.Blocks.Sources.TimeTable dTS900_meas(table=[ts,TT902real - TT901real]) annotation (Placement(transformation(extent={{-826,210},{-846,230}})));
+        Modelica.Blocks.Math.Feedback substractdTS900 annotation (Placement(transformation(extent={{-832,194},{-848,178}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex dTS400Analysis1
+                                                                   annotation (Placement(transformation(extent={{-856,180},{-876,200}})));
+      protected
+        final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixFT401) "dimension of matrix";
+        final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
+        final parameter Real FT101real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT101, dim[1], dim[2]);
+        final parameter Real FT401real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT401, dim[1], dim[2]);
+        final parameter Real FT901real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT901, dim[1], dim[2]);
+        final parameter Real TT101real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTT101, dim[1], dim[2]);
+        final parameter Real TT102real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTT102, dim[1], dim[2]);
+        final parameter Real TT401real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTT401, dim[1], dim[2]);
+        final parameter Real TT402real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTT402, dim[1], dim[2]);
+        final parameter Real TT901real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTT901, dim[1], dim[2]);
+        final parameter Real TT902real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTT902, dim[1], dim[2]);
+      equation
+        connect(FT401_meas.y, FT401Analysis.u_meas) annotation (Line(points={{-401,-180},{-406,-180},{-406,-205},{-410,-205}}, color={0,0,127}));
+        connect(FT101_meas.y, FT101Analysis.u_meas) annotation (Line(points={{-401,-240},{-405.5,-240},{-405.5,-241},{-410,-241}}, color={0,0,127}));
+        connect(FT101.q_m3hr, FT101Analysis.u_sim) annotation (Line(points={{-288.1,-195},{-304,-195},{-304,-266},{-404,-266},{-404,-251},{-410,-251}}, color={0,0,127}));
+        connect(TT402.T, substractdTS400.u1) annotation (Line(points={{-312.2,-74},{-310,-74},{-310,-80},{-384,-80},{-384,-111},{-399.8,-111}}, color={0,0,127}));
+        connect(TT401.T, substractdTS400.u2) annotation (Line(points={{-371.8,-106},{-380,-106},{-380,-124},{-407,-124},{-407,-118.2}}, color={0,0,127}));
+        connect(substractdTS400.y, dTS400Analysis.u_sim) annotation (Line(points={{-415.1,-111},{-438,-111}}, color={0,0,127}));
+        connect(dTS400_meas.y, dTS400Analysis.u_meas) annotation (Line(points={{-421,-90},{-426,-90},{-426,-101},{-438,-101}}, color={0,0,127}));
+        connect(FT401.q_m3hr, FT401Analysis.u_sim) annotation (Line(points={{-374.1,-195},{-378,-195},{-378,-215},{-410,-215}}, color={0,0,127}));
+        connect(TT102.T, feedback.u1) annotation (Line(points={{-230.2,-72},{-218,-72}}, color={0,0,127}));
+        connect(TT101.T, feedback.u2) annotation (Line(points={{-285.8,-94},{-292,-94},{-292,-90},{-210,-90},{-210,-80}}, color={0,0,127}));
+        connect(feedback.y, dTS100Analysis.u_sim) annotation (Line(points={{-201,-72},{-192,-72},{-192,-75},{-182,-75}}, color={0,0,127}));
+        connect(dTS100_meas.y, dTS100Analysis.u_meas) annotation (Line(points={{-199,-50},{-192,-50},{-192,-65},{-182,-65}}, color={0,0,127}));
+        connect(FT901_meas.y, FT401Analysis1.u_meas) annotation (Line(points={{-699,182},{-690,182},{-690,175},{-682,175}}, color={0,0,127}));
+        connect(FT901.q_m3hr, FT401Analysis1.u_sim) annotation (Line(points={{-748.5,166},{-715.25,166},{-715.25,165},{-682,165}}, color={0,0,127}));
+        connect(TT901.T, substractdTS900.u2) annotation (Line(points={{-815.925,200.25},{-840,200.25},{-840,192.4}}, color={0,0,127}));
+        connect(TT902.T, substractdTS900.u1) annotation (Line(points={{-748.575,196.25},{-740,196.25},{-740,186},{-833.6,186}}, color={0,0,127}));
+        connect(substractdTS900.y, dTS400Analysis1.u_sim) annotation (Line(points={{-847.2,186},{-850.6,186},{-850.6,185},{-854,185}}, color={0,0,127}));
+        connect(dTS900_meas.y, dTS400Analysis1.u_meas) annotation (Line(points={{-847,220},{-850,220},{-850,195},{-854,195}}, color={0,0,127}));
+        annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
+      end Seq_0412_Test2_indexes;
+
       model Seq_2903_Test1 "Sequence 3 done on 29/03/24"
         extends Modelica.Icons.Example;
         extends Thermal.Tests.Networks.Centralised.CentralisedSystemLoadSimplifiedI_B(

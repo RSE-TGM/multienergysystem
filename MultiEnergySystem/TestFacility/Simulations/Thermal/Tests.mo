@@ -1075,15 +1075,15 @@ package Tests
       connect(dT_hot_meas.y, dT_hot_indexes.u_meas) annotation (Line(points={{80.5,65},{85,65},{85,57.5},{89,57.5}}, color={0,0,127}));
       connect(dT_hot_sim.y, dT_hot_indexes.u_sim) annotation (Line(points={{80.5,45},{85,45},{85,52.5},{89,52.5}}, color={0,0,127}));
       connect(EX7X1.outcold, TT7X4.inlet) annotation (Line(
-          points={{-6.7,-3.55},{-6.7,-11},{-28,-11},{-28,31},{-37,31}},
+          points={{-8.095,-4.325},{-8.095,-11},{-28,-11},{-28,31},{-37,31}},
           color={140,56,54},
           thickness=0.5));
       connect(EX7X1.incold, TT7X3.inlet) annotation (Line(
-          points={{5.7,-3.55},{5.7,-32},{-35,-32}},
+          points={{7.095,-4.325},{7.095,-32},{-35,-32}},
           color={140,56,54},
           thickness=0.5));
       connect(EX7X1.outhot, TT7X1.inlet) annotation (Line(
-          points={{5.7,30.55},{5.7,38},{25,38},{25,-33},{36,-33}},
+          points={{7.405,31.325},{7.405,38},{25,38},{25,-33},{36,-33}},
           color={140,56,54},
           thickness=0.5));
       connect(sourceHot_mflow.outlet, TT7X2.inlet) annotation (Line(
@@ -1091,7 +1091,7 @@ package Tests
           color={140,56,54},
           thickness=0.5));
       connect(EX7X1.inhot, TT7X2.inlet) annotation (Line(
-          points={{-6.7,30.55},{-6.7,43},{28,43},{28,31},{32,31}},
+          points={{-7.94,31.325},{-7.94,43},{28,43},{28,31},{32,31}},
           color={140,56,54},
           thickness=0.5));
       connect(theta.y, EX7X1.theta) annotation (Line(points={{-21.5,48},{-17,48},{-17,33},{-23,33},{-23,24.35},{-17.55,24.35}}, color={0,0,127}));
@@ -1189,7 +1189,7 @@ package Tests
       Modelica.Blocks.Sources.TimeTable cold_m_flow(table = [t, m_flow703]) annotation (
         Placement(transformation(extent={{-68,-15},{-58,-5}})));
       Modelica.Blocks.Sources.TimeTable outcold_Tref(table = [t, TT704]) annotation (
-        Placement(transformation(origin = {50, 10}, extent = {{-100, 70}, {-80, 90}}, rotation = -0)));
+        Placement(transformation(origin={50,10},    extent={{-100,70},{-80,90}},      rotation = -0)));
       Modelica.Blocks.Sources.TimeTable outhot_Tref(table = [t, TT701]) annotation (
         Placement(transformation(origin = {-50, 10}, extent = {{100, 70}, {80, 90}}, rotation = -0)));
       MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(
@@ -1280,22 +1280,22 @@ package Tests
       connect(TT7X1.T, dT_hot_sim.u2) annotation (Line(points={{36,-24.5},{36,42},{69,42}}, color={0,0,127}));
       connect(TT7X2.T, dT_hot_sim.u1) annotation (Line(points={{32,39.5},{32,48},{69,48}}, color={0,0,127}));
       connect(incold_T.y, dT_cold_meas.u1) annotation (Line(points={{-57.5,5},{-50,5},{-50,68},{-69,68}}, color={0,0,127}));
-      connect(outcold_Tref.y, dT_cold_meas.u2) annotation (Line(points={{-29,90},{-28,90},{-28,62},{-69,62}}, color={0,0,127}));
+      connect(outcold_Tref.y, dT_cold_meas.u2) annotation (Line(points={{-29,90},{-24,90},{-24,62},{-69,62}}, color={0,0,127}));
       connect(dT_hot_meas.u2, sourceHot_mflow.in_T) annotation (Line(points={{69,62},{55,62},{55,0},{51,0},{51,26}}, color={0,0,127}));
       connect(dT_cold_sim.y, dT_cold_indexes.u_sim) annotation (Line(points={{-80.5,45},{-85,45},{-85,52.5},{-89,52.5}}, color={0,0,127}));
       connect(dT_cold_meas.y, dT_cold_indexes.u_meas) annotation (Line(points={{-80.5,65},{-85,65},{-85,57.5},{-89,57.5}}, color={0,0,127}));
       connect(dT_hot_meas.y, dT_hot_indexes.u_meas) annotation (Line(points={{80.5,65},{85,65},{85,57.5},{89,57.5}}, color={0,0,127}));
       connect(dT_hot_sim.y, dT_hot_indexes.u_sim) annotation (Line(points={{80.5,45},{85,45},{85,52.5},{89,52.5}}, color={0,0,127}));
       connect(EX7X1.outcold, TT7X4.inlet) annotation (Line(
-          points={{-6.7,-3.55},{-6.7,-11},{-28,-11},{-28,31},{-37,31}},
+          points={{-8.095,-4.325},{-8.095,-11},{-28,-11},{-28,31},{-37,31}},
           color={140,56,54},
           thickness=0.5));
       connect(EX7X1.incold, TT7X3.inlet) annotation (Line(
-          points={{5.7,-3.55},{5.7,-32},{-35,-32}},
+          points={{7.095,-4.325},{7.095,-32},{-35,-32}},
           color={140,56,54},
           thickness=0.5));
       connect(EX7X1.outhot, TT7X1.inlet) annotation (Line(
-          points={{5.7,30.55},{5.7,38},{25,38},{25,-33},{36,-33}},
+          points={{7.405,31.325},{7.405,38},{25,38},{25,-33},{36,-33}},
           color={140,56,54},
           thickness=0.5));
       connect(sourceHot_mflow.outlet, TT7X2.inlet) annotation (Line(
@@ -1303,10 +1303,11 @@ package Tests
           color={140,56,54},
           thickness=0.5));
       connect(EX7X1.inhot, TT7X2.inlet) annotation (Line(
-          points={{-6.7,30.55},{-6.7,43},{28,43},{28,31},{32,31}},
+          points={{-7.94,31.325},{-7.94,43},{28,43},{28,31},{32,31}},
           color={140,56,54},
           thickness=0.5));
       connect(theta.y, EX7X1.theta) annotation (Line(points={{-21.5,48},{-17,48},{-17,33},{-23,33},{-23,24.35},{-17.55,24.35}}, color={0,0,127}));
+      connect(outhot_Tref.y, dT_hot_meas.u1) annotation (Line(points={{29,90},{19,90},{19,68},{69,68}}, color={0,0,127}));
       annotation (
         Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}},
             grid={1,1})),

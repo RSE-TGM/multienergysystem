@@ -55,13 +55,17 @@ model E700Test "HX70X test with real data"
     gamma_nom_cold=11200.497,
     gamma_nom_hot=4313.9346,                                                                                                                                                                                                        h_cold = BPHE.E701.h_cold, h_hot = BPHE.E701.h_hot, hin_start_cold = BPHE.E701.hin_start_cold, hin_start_hot = BPHE.E701.hin_start_hot, k_cold = BPHE.E701.k_cold, k_hot = BPHE.E701.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = BPHE.E701.lambdam_cold, lambdam_hot = BPHE.E701.lambdam_hot, m_flow_start_cold = BPHE.E701.m_flow_start_cold, m_flow_start_hot = BPHE.E701.m_flow_start_hot, n = 9, nPipes_cold = BPHE.E701.nPipes_cold, nPipes_hot = BPHE.E701.nPipes_hot, nPlates = BPHE.E701.nPlates, pin_start_cold = BPHE.E701.pin_start_cold, pin_start_hot = BPHE.E701.pin_start_hot, pout_start_cold = BPHE.E701.pout_start_cold, pout_start_hot = BPHE.E701.pout_start_hot, rho_nom_cold = (BPHE.E701.rhoin_nom_cold + BPHE.E701.rhoout_nom_cold)/2, rho_nom_hot = (BPHE.E701.rhoin_nom_hot + BPHE.E701.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = BPHE.E701.rhom_cold, rhom_hot(displayUnit = "g/cm3") = BPHE.E701.rhom_hot, thermalInertia = false, u_nom_cold = BPHE.E701.u_nom_cold, u_nom_hot = BPHE.E701.u_nom_hot) annotation (
     Placement(transformation(origin = {-2, -0.83871}, extent = {{-28, -45.1613}, {28, 45.1613}})));
-  Sources.SourceMassFlow sourceHot_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = BPHE.E701.pin_start_hot, T0 = BPHE.E701.Tin_start_hot, m_flow0 = BPHE.E701.m_flow_start_hot) annotation (
+  Sources.SourceMassFlow sourceHot_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = BPHE.E701.pin_start_hot, T0 = BPHE.E701.Tin_start_hot, m_flow0 = BPHE.E701.m_flow_start_hot,
+    G=1e-8)                                                                                                                                                                                                        annotation (
     Placement(transformation(extent={{61,41},{41,21}})));
-  Sources.SourceMassFlow sourceCold_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = BPHE.E701.pin_start_cold, T0 = BPHE.E701.Tin_start_cold, m_flow0 = 0.32) annotation (
+  Sources.SourceMassFlow sourceCold_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = BPHE.E701.pin_start_cold, T0 = BPHE.E701.Tin_start_cold, m_flow0 = 0.32,
+    G=1e-8)                                                                                                                                                                                     annotation (
     Placement(transformation(extent={{-60,-42},{-40,-22}})));
-  Sources.SinkPressure sinkHot_p(redeclare model Medium = Medium, use_in_p0 = true, p0 = BPHE.E701.pout_start_hot, T0 = BPHE.E701.Tout_start_hot) annotation (
+  Sources.SinkPressure sinkHot_p(redeclare model Medium = Medium, use_in_p0 = true, p0 = BPHE.E701.pout_start_hot, T0 = BPHE.E701.Tout_start_hot,
+    R=1e-3)                                                                                                                                       annotation (
     Placement(transformation(extent={{44,-43},{64,-23}})));
-  Sources.SinkPressure sinkCold_p(redeclare model Medium = Medium, use_in_p0 = false, p0 = BPHE.E701.pout_start_cold, T0 = BPHE.E701.Tout_start_cold) annotation (
+  Sources.SinkPressure sinkCold_p(redeclare model Medium = Medium, use_in_p0 = false, p0 = BPHE.E701.pout_start_cold, T0 = BPHE.E701.Tout_start_cold,
+    R=1e-3)                                                                                                                                           annotation (
     Placement(transformation(extent={{-43,21},{-62,40}})));
   Modelica.Blocks.Sources.TimeTable inhot_T(table = [t, TT702]) annotation (
     Placement(transformation(extent={{69,-5},{59,5}})));
@@ -73,12 +77,13 @@ model E700Test "HX70X test with real data"
     Placement(transformation(extent={{69,10},{59,20}})));
   Modelica.Blocks.Sources.TimeTable cold_m_flow(table = [t, m_flow703]) annotation (
     Placement(transformation(extent={{-68,-15},{-58,-5}})));
-  Sources.SinkPressure sinkCold_ref(redeclare model Medium = Medium, T0 = BPHE.E701.Tout_start_cold, p0 = BPHE.E701.pout_start_cold, use_in_p0 = false, use_in_T0 = true, R = 1) annotation (
+  Sources.SinkPressure sinkCold_ref(redeclare model Medium = Medium, T0 = BPHE.E701.Tout_start_cold, p0 = BPHE.E701.pout_start_cold, use_in_p0 = false, use_in_T0 = true,
+    R=1e-3)                                                                                                                                                                      annotation (
     Placement(transformation(origin = {40, 42}, extent = {{-50, 18}, {-70, 38}})));
   Modelica.Blocks.Sources.TimeTable outcold_Tref(table = [t, TT704]) annotation (
     Placement(transformation(origin = {50, 10}, extent = {{-100, 70}, {-80, 90}}, rotation = -0)));
   Sources.SinkPressure sinkHot_ref(redeclare model Medium = Medium, T0 = BPHE.E701.Tout_start_hot, p0 = BPHE.E701.pout_start_hot, use_in_p0 = false, use_in_T0 = true,
-    R=1)                                                                                                                                                               annotation (
+    R=1e-3)                                                                                                                                                            annotation (
     Placement(transformation(origin = {-58, 110}, extent = {{68, -50}, {88, -30}})));
   Modelica.Blocks.Sources.TimeTable outhot_Tref(table = [t, TT701]) annotation (
     Placement(transformation(origin = {-50, 10}, extent = {{100, 70}, {80, 90}}, rotation = -0)));

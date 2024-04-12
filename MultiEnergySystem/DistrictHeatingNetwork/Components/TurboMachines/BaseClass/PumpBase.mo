@@ -127,7 +127,7 @@ equation
   q_m3h = q*3600;
   f = omega/(2*pi);
 
-  head = dp/(rhoin*g);
+  head = correctionfactor*dp/(rhoin*g);
   W = dp*q/eta;
 
   // Mass Balance

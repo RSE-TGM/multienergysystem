@@ -65,7 +65,7 @@ equation
   outlet.h_out = fluid[n+1].h;
 
   // State variables
-  Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*1e-4);
+  Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*1e-5);
   ptilde = p[2:n+1];
 
   // Other variables
@@ -79,19 +79,20 @@ equation
 
   // Mass Balance
   //inlet.m_flow + outlet.m_flow = 0;
-  M = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*1e-4)*(V/n);
+  M = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*1e-5)*(V/n);
 
   // Energy balance
   for i in 1:n loop
     // Mass Balance
     //m_flow[i] - m_flow[i+1] = (V/n)*(fluid[i+1].drho_dT*der(Ttilde[i]) + 1e-5*der(ptilde[i]));
     //m_flow[i] - m_flow[i+1] = 0;
-    m_flow[i] - m_flow[i+1] = (V/n)*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*1e-4)*der(Ttilde[i]));
+    m_flow[i] - m_flow[i+1] = (V/n)*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*1e-5)*der(Ttilde[i]));
     // Volume energy balance
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
     //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
     //(M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
-    (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-4))*der(Ttilde[i]) = m_flow[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-4)*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+    //(M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-5))*der(Ttilde[i]) = m_flow[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-5)*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
+    (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-5))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
 
     if i == 1 then
       // Heat exchange with the ambient from flat top face
@@ -131,8 +132,8 @@ equation
     T[end] = fluid_temp.T;
   end if;
 
-  fluid_temp.p = homotopy(regStep(inlet.m_flow, inlet.p, outlet.p, m_flow_nom*1e-4), pin_start*1e-4);
-  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*1e-4), hin_start);
+  fluid_temp.p = homotopy(regStep(inlet.m_flow, inlet.p, outlet.p, m_flow_nom*1e-5), pin_start);
+  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*1e-5), hin_start);
 
 
   T1 = (T[1]+T[2])/2;

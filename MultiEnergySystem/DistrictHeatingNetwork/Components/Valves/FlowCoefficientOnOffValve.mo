@@ -57,8 +57,9 @@ model FlowCoefficientOnOffValve
         origin={0,32})));
   Modelica.Blocks.Continuous.FirstOrder firstOrder(
     k=1,
-    T=0.5,
-    initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(
+    T=1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=1)                                       annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={0,32})));

@@ -111,7 +111,8 @@ model ElectricBoiler "System 400"
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
     Di=Di_S4,
-    q_m3h_start=q_m3h_S4) "Pipe connecting outlet of electric boiler and pump P401"
+    q_m3h_start=q_m3h_S4,
+    n=n)                  "Pipe connecting outlet of electric boiler and pump P401"
               annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -126,7 +127,8 @@ model ElectricBoiler "System 400"
     Tin_start=Tin_start_S4,
     Tout_start=Tin_start_S4,
     Di=Di_S4,
-    q_m3h_start=q_m3h_S4) "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
+    q_m3h_start=q_m3h_S4,
+    n=n)                  "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
@@ -141,7 +143,8 @@ model ElectricBoiler "System 400"
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
     Di=Di_S4,
-    q_m3h_start=q_m3h_S4) annotation (Placement(transformation(
+    q_m3h_start=q_m3h_S4,
+    n=n)                  annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,10})));

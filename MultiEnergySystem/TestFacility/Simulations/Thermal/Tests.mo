@@ -74,7 +74,7 @@ package Tests
           use_in_T0=true,
           p0=pin_start_S1,
           T0=Tin_start_S1,
-          R=1)
+          R=1e-3)
           annotation (Placement(transformation(extent={{-10,10},{10,-10}},
               rotation=-90,
               origin={-14,60})));
@@ -83,7 +83,7 @@ package Tests
           use_in_p0=true,
           p0=pout_start_S1,
           T0=Tout_start_S1,
-          R=1)              annotation (Placement(transformation(extent={{-10,10},{10,-10}},
+          R=1e-3)           annotation (Placement(transformation(extent={{-10,10},{10,-10}},
               rotation=90,
               origin={64,88})));
         Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
@@ -205,6 +205,13 @@ package Tests
             GB101_Status(startValue=false));
         annotation (experiment(StopTime=5200, __Dymola_Algorithm="Dassl"));
       end S100_Seq_2903Test1;
+
+      model S100_Seq_1004Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1004_Test1/Temperatures.mat"),
+            GB101_Status(table={900,4.05e3,4.6e3}, startValue=false),
+          gasBoiler(Pmaxnom=147.6e3*0.92, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState), Tout_start_S1 = TTo[1,1]));
+        annotation (experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_1004Test1;
     end S100;
 
     package S200
@@ -604,8 +611,19 @@ package Tests
         connect(PT402_profile.y, lowPasspin.u) annotation (Line(points={{51.4,-92},{45.2,-92}}, color={0,0,127}));
         connect(lowPasspin.y, sourceP.in_p0) annotation (Line(points={{31.4,-92},{28,-92},{28,-94.4},{19.04,-94.4}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
-          experiment(StopTime=1280, __Dymola_Algorithm="Dassl"));
+          experiment(
+            StartTime=3500,
+            StopTime=9500,
+            __Dymola_Algorithm="Dassl"));
       end TestBase;
+
+      model S900_Seq_0412Test2
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"));
+        annotation (experiment(
+            StopTime=2600,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
+      end S900_Seq_0412Test2;
 
       model S900_Seq_0412Test3
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat"));
@@ -621,7 +639,7 @@ package Tests
 
       model S900_Seq_2601Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2601_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=1940, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(StopTime=7000, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2601Test1;
 
       model S900_Seq_2901Test1
@@ -629,14 +647,32 @@ package Tests
         annotation (experiment(StopTime=6800, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2901Test1;
 
+      model S900_Seq_2703Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2703_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=1300, __Dymola_Algorithm="Dassl"));
+      end S900_Seq_2703Test1;
+
       model S900_Seq_2903Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2903_Test1/Temperatures.mat"));
         annotation (experiment(StopTime=5100, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2903Test1;
 
+      model S900_Seq_3001Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
+      end S900_Seq_3001Test1;
+
+      model S900_Seq_3001Test2
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test2/Temperatures.mat"));
+        annotation (experiment(StopTime=3900, __Dymola_Algorithm="Dassl"));
+      end S900_Seq_3001Test2;
+
       model S900_Seq_0304Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/0304_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=4800, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(
+            StartTime=100,
+            StopTime=4800,
+            __Dymola_Algorithm="Dassl"));
       end S900_Seq_0304Test1;
 
       model S900_Seq_0804Test1

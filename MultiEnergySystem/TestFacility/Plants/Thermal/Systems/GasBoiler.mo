@@ -16,7 +16,7 @@ model GasBoiler "System 100"
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 65 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
   parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
-  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
   final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;

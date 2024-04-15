@@ -11,7 +11,7 @@ package Tests
         replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
         parameter Integer n = 3;
         parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-        parameter Real pumpcorrectionfactor = 1.5;
+        parameter Real pumpcorrectionfactor = 1;
         parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
         // Temperatures and pressures
@@ -27,8 +27,8 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
         //parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
         parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0; //0.7 + 0.95;
-        parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2;
-        parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2;
+        parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2.6;
+        parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2.6;
 
       //   parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold = 0.66+0.25+0.54+0.5+1.3+1+3+4+0.5+0.2+0.3 "12.25";
       //   parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
@@ -38,7 +38,7 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
         parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
 
-        parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
+        parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
         parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
         final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
@@ -164,13 +164,13 @@ package Tests
         connect(lowPassomega.y, gasBoiler.omega) annotation (Line(points={{-55.4,32},{-48,32},{-48,19.6},{-32.8,19.6}}, color={0,0,127}));
         connect(FCV101_theta.y, lowPasstheta.u) annotation (Line(points={{-75.4,14},{-69.2,14}}, color={0,0,127}));
         connect(lowPasstheta.y, gasBoiler.theta) annotation (Line(points={{-55.4,14},{-32.8,14}}, color={0,0,127}));
+        connect(sinkMassFlow.in_m_flow, val_m_flow.u_meas) annotation (Line(points={{15,56},{30,56},{30,40},{60,40},{60,35},{64.8,35}}, color={0,0,127}));
+        connect(val_pout.u_meas, sink.in_p0) annotation (Line(points={{72.8,61},{68,61},{68,72},{78,72},{78,82},{76,84},{72.4,84}}, color={0,0,127}));
+        connect(gasBoiler.PTout, val_pout.u_sim) annotation (Line(points={{28.8,-2.8},{38,-2.8},{38,44},{68,44},{68,55},{72.8,55}}, color={0,0,127}));
         connect(sinkMassFlow.inlet, gasBoiler.outlet) annotation (Line(
             points={{10,52},{10,42.1},{9.48,42.1},{9.48,32.2}},
             color={140,56,54},
             thickness=0.5));
-        connect(sinkMassFlow.in_m_flow, val_m_flow.u_meas) annotation (Line(points={{15,56},{30,56},{30,40},{60,40},{60,35},{64.8,35}}, color={0,0,127}));
-        connect(val_pout.u_meas, sink.in_p0) annotation (Line(points={{72.8,61},{68,61},{68,72},{78,72},{78,82},{76,84},{72.4,84}}, color={0,0,127}));
-        connect(gasBoiler.PTout, val_pout.u_sim) annotation (Line(points={{28.8,-2.8},{38,-2.8},{38,44},{68,44},{68,55},{72.8,55}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
       end TestBase;
 

@@ -25,7 +25,7 @@ model ControlledGasBoiler
         transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-80,-60},{-60,-40}})));
 equation
   //inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
-  inlet.p - outlet.p = rho*9.81*h;
+  inlet.p - outlet.p = rho*9.81*h + (0.410603*m_flow - 0.359991)*1e5;
   fluidOut_ref.p = pout;
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;

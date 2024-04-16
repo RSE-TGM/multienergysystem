@@ -27,8 +27,8 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
         //parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
         parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0; //0.7 + 0.95;
-        parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2.6;
-        parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2.6;
+        parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2;
+        parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2*0;
 
       //   parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold = 0.66+0.25+0.54+0.5+1.3+1+3+4+0.5+0.2+0.3 "12.25";
       //   parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
@@ -196,7 +196,7 @@ package Tests
 
       model S100_Seq_3101Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3101_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(StopTime=15000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_3101Test1;
 
       model S100_Seq_2703Test1
@@ -217,6 +217,11 @@ package Tests
           gasBoiler(Pmaxnom=147.6e3*0.92, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState), Tout_start_S1 = TTo[1,1]));
         annotation (experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_1004Test1;
+
+      model S100_Seq_3001Test2
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test2/Temperatures.mat"));
+        annotation (experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_3001Test2;
     end S100;
 
     package S200

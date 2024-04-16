@@ -194,6 +194,11 @@ package Tests
         annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
       end S100_Seq_3001Test1;
 
+      model S100_Seq_3101Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3101_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_3101Test1;
+
       model S100_Seq_2703Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2703_Test1/Temperatures.mat"),
           GB101_Status(startValue=false),

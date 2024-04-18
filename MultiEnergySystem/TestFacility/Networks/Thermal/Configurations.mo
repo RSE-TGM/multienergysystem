@@ -843,15 +843,15 @@ package Configurations
       Plants.Thermal.Systems.CirculationPump S900 annotation (
         Placement(transformation(extent = {{-18, -18}, {18, 18}}, rotation = -90, origin = {-105, 63})));
       Loads.Thermal.Systems.CoolingSingleLoad EX701 annotation (
-        Placement(transformation(extent = {{-36, -67}, {0, -31}})));
+        Placement(transformation(extent={{-36,-68},{0,-32}})));
       Plants.Thermal.Systems.ElectricBoiler S400 annotation (
         Placement(transformation(extent = {{-149, -67}, {-113, -31}})));
       Loads.Thermal.Systems.CoolingSingleLoad EX711 annotation (
-        Placement(transformation(extent = {{21, -66}, {57, -30}})));
+        Placement(transformation(extent={{21,-68},{57,-32}})));
       Loads.Thermal.Systems.CoolingSingleLoad EX721 annotation (
-        Placement(transformation(extent = {{83, -67}, {119, -31}})));
+        Placement(transformation(extent={{83,-68},{119,-32}})));
       Loads.Thermal.Systems.CoolingSingleLoad EX731 annotation (
-        Placement(transformation(extent = {{138, -67}, {174, -31}})));
+        Placement(transformation(extent={{138,-68},{174,-32}})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV933(Kv = 33, dp_nom = 50000, Tin_start = T_start, pin_start = pin_start) annotation (
         Placement(visible = true, transformation(origin = {-48, 10}, extent = {{-4, 4}, {4, -4}}, rotation = 90)));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC02(q_m3h_start = q_m3h_rackHot/4, Kv = DistrictHeatingNetwork.Data.ValveData.FCVC02.Kv, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = T_start_hot, pin_start = 200000) annotation (
@@ -872,9 +872,9 @@ package Configurations
         Placement(transformation(extent = {{-95, -8}, {-59, 28}})));
     equation
       connect(EX701.inhot, connectorTypeI.outletComp) annotation (
-        Line(points = {{-26.64, -28.3}, {-26.64, 9}, {-27, 9}, {-27, 42.48}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{-26.64,-29.3},{-26.64,9},{-27,9},{-27,42.48}},          color = {140, 56, 54}, thickness = 0.5));
       connect(EX701.outhot, connectorTypeI.inletComp) annotation (
-        Line(points = {{-8.82, -28.3}, {-8.82, 42.66}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{-8.82,-29.3},{-8.82,42.66}},      color = {140, 56, 54}, thickness = 0.5));
       connect(S900.inletcold, connectorTypeI.outletCold) annotation (
         Line(points = {{-84.3, 70.02}, {-61.41, 70.02}, {-61.41, 70.2}, {-38.52, 70.2}}, color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI.inletCold, connectorTypeI1.outletCold) annotation (
@@ -884,9 +884,9 @@ package Configurations
       connect(S900.outlethot, connectorTypeI.inletHot) annotation (
         Line(points = {{-84.3, 55.98}, {-65, 55.98}, {-65, 55.8}, {-38.52, 55.8}}, color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI1.inletComp, EX711.outhot) annotation (
-        Line(points = {{48.18, 42.66}, {48.18, -27.3}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{48.18,42.66},{48.18,-29.3}},      color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI1.outletComp, EX711.inhot) annotation (
-        Line(points = {{30, 42.48}, {31, 42.48}, {31, -27.3}, {30.36, -27.3}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{30,42.48},{31,42.48},{31,-29.3},{30.36,-29.3}},          color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI1.outletHot, connectorTypeI2.inletHot) annotation (
         Line(points = {{59.52, 55.8}, {81.48, 55.8}}, color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI1.inletCold, connectorTypeI2.outletCold) annotation (
@@ -904,13 +904,13 @@ package Configurations
       connect(connectorTypeI3.inletCold, FCVC02.outlet) annotation (
         Line(points = {{176.52, 70.2}, {190, 70.2}, {190, 67}}, color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI2.outletComp, EX721.inhot) annotation (
-        Line(points = {{93, 42.48}, {92, 42.48}, {92, -14}, {92.36, -14}, {92.36, -28.3}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{93,42.48},{92,42.48},{92,-14},{92.36,-14},{92.36,-29.3}},            color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI2.inletComp, EX721.outhot) annotation (
-        Line(points = {{111.18, 42.66}, {110.18, 42.66}, {110.18, -28.3}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{111.18,42.66},{110.18,42.66},{110.18,-29.3}},        color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI3.outletComp, EX731.inhot) annotation (
-        Line(points = {{147, 42.48}, {147, 11.09}, {147.36, 11.09}, {147.36, -28.3}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{147,42.48},{147,11.09},{147.36,11.09},{147.36,-29.3}},          color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI3.inletComp, EX731.outhot) annotation (
-        Line(points = {{165.18, 42.66}, {165.18, -28.3}}, color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{165.18,42.66},{165.18,-29.3}},      color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI5.outletCold, connectorTypeI4.inletCold) annotation (
         Line(points = {{-97.52, 17.2}, {-110.48, 17.2}}, color = {140, 56, 54}, thickness = 0.5));
       connect(connectorTypeI5.inletComp, S100.outlet) annotation (

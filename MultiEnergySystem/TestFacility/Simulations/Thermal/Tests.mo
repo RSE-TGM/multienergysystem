@@ -177,10 +177,8 @@ package Tests
       end TestBase;
 
       model S100_Seq_0412Test2
-        extends TestBase(Kv= 21, MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"),
-            gasBoiler(
-            openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear,
-                      Pmaxnom=147.6e3*0.75, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
+        extends TestBase(Kv= 33, MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"),
+            gasBoiler(Pmaxnom=147.6e3*0.75, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
         annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test2;
 
@@ -236,7 +234,7 @@ package Tests
 
       model S100_Seq_0804Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/0804_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=1185, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(StopTime=1750, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0804Test1;
 
       model S100_Seq_1004Test1
@@ -2935,7 +2933,7 @@ package Tests
       parameter Real domega_P401[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_FCV401[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_FCVC01[:, :] = [0, -1; 1e6, -1];
-      parameter Real dtheta_FCVC02[:, :] = [0, 0; 2e3, 0; 2.5e3, -0.5; 4e4, -0.5];
+      parameter Real dtheta_FCVC02[:, :] = [0, 0; 2e3, 0; 2.5e3, -0.9; 4e4, -0.9];
       parameter Real dtheta_FCV701[:, :] = [0, -0.2; 1e6, -0.2];
       parameter Real dtheta_FCV711[:, :] = [0, -0.2; 1e6, -0.2];
       parameter Real dtheta_FCV721[:, :] = [0, -0.2; 1e6, -0.2];
@@ -2956,7 +2954,7 @@ package Tests
       parameter Real dTT734[:, :] = [0, (37 - 20)/(20 + 273.15); 1e3, (37 - 20)/(20 + 273.15)];
       parameter Real dFT701[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
       parameter Real dFT711[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
-      parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 1000, (1 - 1.3)/1.3];
+      parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 1000, (0.8 - 1.3)/1.3];
       parameter Real dTT731[:, :] = [0, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 1000, (55 - 65)/(65 + 273.15)];
       parameter Real dFT901[:, :] = [0, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 1000, (3 - 8.8)/8.8];
       parameter Real dFT101[:, :] = [0, (2 - 5.7166667)/5.7166667; 500, (2 - 5.7166667)/5.7166667];
@@ -3293,11 +3291,7 @@ package Tests
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-60, 32}, {60, -28}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "PI
 Control")}),
-        Diagram(coordinateSystem(preserveAspectRatio = false, grid = {1, 1})),
-        experiment(
-          StopTime=3000,
-          Tolerance=1e-06,
-          __Dymola_Algorithm="Dassl"));
+        Diagram(coordinateSystem(preserveAspectRatio = false, grid = {1, 1})));
     end ThermalPlantController;
 
     model TestActuator
@@ -3312,7 +3306,7 @@ Control")}),
         FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
         FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
         PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
-        dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.075e5),
+        dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.015e5),
         EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         EX711PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         EX721PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
@@ -3341,6 +3335,10 @@ Control")}),
       extends TestActuator(centralisedSystemI_B_InitForward(
         redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidIdeal,
         redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidIdeal));
+      annotation (experiment(
+          StopTime=6000,
+          Tolerance=1e-06,
+          __Dymola_Algorithm="Dassl"));
     end TestActuator_IdealWater;
     annotation (Icon(graphics={Bitmap(
             extent={{-80,-80},{82,80}},

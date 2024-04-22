@@ -70,8 +70,8 @@ model CentralisedSystemI_B_FMU
 equation
   connect(P901.in_omega, q_P901) annotation (Line(points={{-747.25,66.3},{-728.625,
           66.3},{-728.625,66},{-710,66}}, color={0,0,127}));
-  connect(FCV901.opening, FVC_901) annotation (Line(points={{-749,115},{-730.5,115},
-          {-730.5,114},{-712,114}}, color={0,0,127}));
+  connect(FCV901.opening, FVC_901) annotation (Line(points={{-749.9,140.5},{-730.5,140.5},{-730.5,114},{-712,114}},
+                                    color={0,0,127}));
   connect(FCVC01.opening, FCV_C01) annotation (Line(points={{258,235},{276,235},
           {276,234},{294,234}}, color={0,0,127}));
   connect(FCV_C02, FCVC02.opening)

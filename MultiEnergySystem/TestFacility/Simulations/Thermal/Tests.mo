@@ -245,7 +245,8 @@ package Tests
       end S100_Seq_1004Test1;
 
       model S100_Seq_1704Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"),
+            gasBoiler(GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
         annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
       end S100_Seq_1704Test1;
     end S100;

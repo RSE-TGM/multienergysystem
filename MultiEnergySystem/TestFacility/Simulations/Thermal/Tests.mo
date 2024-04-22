@@ -243,6 +243,11 @@ package Tests
           gasBoiler(Pmaxnom=147.6e3*0.92, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState), Tout_start_S1 = TTo[1,1]));
         annotation (experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_1004Test1;
+
+      model S100_Seq_1704Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_1704Test1;
     end S100;
 
     package S200

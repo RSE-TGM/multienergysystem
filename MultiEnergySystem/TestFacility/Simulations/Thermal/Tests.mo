@@ -61,6 +61,8 @@ package Tests
         Plants.Thermal.Systems.GasBoiler gasBoiler(
           pumpcorrectionfactor=pumpcorrectionfactor,
                                                    hctype=hctype,
+          pin_start_S1=pin_start_S1,
+          pout_start_S1=pout_start_S1,
           Tin_start_S1=Tin_start_S1,
           Tout_start_S1=Tout_start_S1,
           cf=cf,
@@ -271,7 +273,7 @@ package Tests
         parameter Integer n = 3 "Number of volumes in each pipe";
         parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
             DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-        parameter Real pumpcorrectionfactor = 2;
+        parameter Real pumpcorrectionfactor = 1;
         parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear "opening characteristic";
 
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = PTi[1,1];
@@ -282,16 +284,19 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
         parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
         parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
-        parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1;
+        parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
         parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
-        parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -1;
+        parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -0.8;
         parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
-        parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2;
+        parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
 
-        parameter Real q_m3h_S4 = 5;
+        parameter Real q_m3h_S4 = FT[1,1];
         final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
         parameter Real P401omega[:,:] = [0, 2*3.141592654*30; 100, 2*3.141592654*30];
         parameter Real FCV401theta[:,:] = [0, 1];
+
+        parameter Integer nR = 5 "Total number of resistors";
+        parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Electric power of each resistor";
 
         parameter DistrictHeatingNetwork.Types.Density rhohotref = 985 "Reference hot water density";
         parameter DistrictHeatingNetwork.Types.Density rhocoldref = 999 "Reference cold water density";
@@ -309,31 +314,37 @@ package Tests
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
 
         Plants.Thermal.Systems.ElectricBoiler electricBoiler(redeclare model Medium = Medium,
+          n=n,
           hctype=hctype,
           pumpcorrectionfactor=pumpcorrectionfactor,
           pin_start_S4=pin_start_S4,
           pout_start_S4=pout_start_S4,
           Tin_start_S4=Tin_start_S4,
           Tout_start_S4=Tout_start_S4,
+          Di_S4=Di_S4,
+          t_S4=t_S4,
           L_PT401_EB401=L_PT401_EB401,
           h_PT401_EB401=h_PT401_EB401,
           L_EB401_P401=L_EB401_P401,
           h_EB401_P401=h_EB401_P401,
           L_P401_FCV401=L_P401_FCV401,
           h_P401_FCV401=h_P401_FCV401,
+          q_m3h_S4=q_m3h_S4,
           Kv=Kv,
-          openingChar=openingChar)                                                            annotation (Placement(transformation(extent={{-28,-32},{30,26}})));
+          openingChar=openingChar,
+          nR=nR,
+          Pmaxres=Pmaxres)                                                                    annotation (Placement(transformation(extent={{-28,-32},{30,26}})));
 
         Modelica.Blocks.Sources.TimeTable FCV401_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-90,4},{-78,16}})));
         Modelica.Blocks.Sources.TimeTable P401_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-90,22},{-78,34}})));
         Modelica.Blocks.Continuous.FirstOrder lowPasstheta(
           k=1,
-          T=2,
+          T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState,
           y_start=thetav[1, 1])                            annotation (Placement(transformation(extent={{-68,4},{-56,16}})));
         Modelica.Blocks.Continuous.FirstOrder lowPassomega(
           k=1,
-          T=2,
+          T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState,
           y_start=omega[1, 1])                             annotation (Placement(transformation(extent={{-68,22},{-56,34}})));
         Modelica.Blocks.Sources.TimeTable PT402_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{94,70},{82,82}})));
@@ -350,7 +361,8 @@ package Tests
           use_in_T0=true,
           redeclare model Medium = Medium,
           p0=pin_start_S4,
-          T0=Tin_start_S4)
+          T0=Tin_start_S4,
+          R=1e-3)
           annotation (Placement(transformation(extent={{-10,10},{10,-10}},
               rotation=-90,
               origin={-12,62})));
@@ -360,7 +372,8 @@ package Tests
           redeclare model Medium = Medium,
           p0=pout_start_S4,
           T0=Tout_start_S4,
-          R=1) annotation (Placement(transformation(extent={{-10,10},{10,-10}},
+          R=1e-3)
+               annotation (Placement(transformation(extent={{-10,10},{10,-10}},
               rotation=90,
               origin={64,78})));
         Modelica.Blocks.Sources.BooleanTable EB401_Status1(table={1e6}, startValue=true)
@@ -416,35 +429,74 @@ package Tests
         connect(EB401_Status1.y, electricBoiler.status) annotation (Line(points={{-57.4,-34},{-44,-34},{-44,-0.1},{-30.9,-0.1}}, color={255,0,255}));
         connect(electricBoiler.PTout, val_pout.u_sim) annotation (Line(points={{32.9,-5.9},{48,-5.9},{48,47},{68.8,47}}, color={0,0,127}));
         connect(val_pout.u_meas, sinkP.in_p0) annotation (Line(points={{68.8,53},{62,53},{62,60},{78,60},{78,74},{72.4,74}}, color={0,0,127}));
-        connect(sinkP.inlet, electricBoiler.outlet) annotation (Line(
-            points={{64,68},{64,64},{12.89,64},{12.89,30.35}},
+        connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (Line(points={{40.6,40},{44,40},{44,78},{21,78}}, color={0,0,127}));
+        connect(electricBoiler.outlet, sinkP.inlet)
+          annotation (Line(
+            points={{12.89,30.35},{12.89,54},{12,54},{12,62},{64,62},{64,68}},
             color={140,56,54},
             thickness=0.5));
-        connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (Line(points={{40.6,40},{44,40},{44,78},{21,78}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
       end TestBase;
 
+      model S400_Seq_0412Test2
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"));
+        annotation (experiment(StopTime=9500, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_0412Test2;
+
+      model S400_Seq_0412Test3
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat"));
+        annotation (experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_0412Test3;
+
       model S400_Seq_2601Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2601_Test1/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2601_Test1/Temperatures.mat"),
+            electricBoiler(FCV401(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear)));
+        annotation (experiment(
+            StopTime=7000,
+            Interval=0.166889,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
       end S400_Seq_2601Test1;
 
       model S400_Seq_3001Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
       end S400_Seq_3001Test1;
 
       model S400_Seq_3001Test2
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test2/Temperatures.mat"));
+        annotation (experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
       end S400_Seq_3001Test2;
 
       model S400_Seq_2703Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2703_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(StopTime=1300, __Dymola_Algorithm="Dassl"));
       end S400_Seq_2703Test1;
 
       model S400_Seq_2903Test1
         extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Marzo 2024/2903_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=5000, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(StopTime=5150, __Dymola_Algorithm="Dassl"));
       end S400_Seq_2903Test1;
+
+      model S400_Seq_0304Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/0304_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=4900, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_0304Test1;
+
+      model S400_Seq_0804Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/0804_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=1700, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_0804Test1;
+
+      model S400_Seq_1004Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1004_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=18400, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_1004Test1;
+
+      model S400_Seq_1704Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"));
+        annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_1704Test1;
     end S400;
 
     package S900 "Validation tests of pumping system"

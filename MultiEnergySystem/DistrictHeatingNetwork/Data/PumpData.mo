@@ -99,7 +99,8 @@ package PumpData
     etaelec = 1,
     etamech = 1,
     a = {93.844686, 30.594342, -1.033072},
-    b = {8.868240, 0.186740, -0.041518});
+    b = {6.5, 0.186740, -0.041518});
+    //b = {8.868240, 0.186740, -0.041518});
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P501(
     Name = "P501",

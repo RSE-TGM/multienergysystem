@@ -21,18 +21,18 @@ model ElectricBoiler "System 400"
   parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
   parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
-  parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1;
+  parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
   parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
-  parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -1;
+  parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -1*0;
   parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
-  parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2;
+  parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
 
   parameter Real q_m3h_S4 = 5;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4;
 
   parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear "opening characteristic";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Data.ValveData.FCV401.openingChar "opening characteristic";
 
   parameter Integer nR = 5 "Number of resistors";
   parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
@@ -112,7 +112,8 @@ model ElectricBoiler "System 400"
     Tout_start=Tout_start_S4,
     Di=Di_S4,
     q_m3h_start=q_m3h_S4,
-    n=n)                  "Pipe connecting outlet of electric boiler and pump P401"
+    n=n,
+    hctype=hctype)        "Pipe connecting outlet of electric boiler and pump P401"
               annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -128,7 +129,8 @@ model ElectricBoiler "System 400"
     Tout_start=Tin_start_S4,
     Di=Di_S4,
     q_m3h_start=q_m3h_S4,
-    n=n)                  "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
+    n=n,
+    hctype=hctype)        "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
@@ -144,7 +146,8 @@ model ElectricBoiler "System 400"
     Tout_start=Tout_start_S4,
     Di=Di_S4,
     q_m3h_start=q_m3h_S4,
-    n=n)                  annotation (Placement(transformation(
+    n=n,
+    hctype=hctype)        annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,10})));
@@ -181,7 +184,9 @@ model ElectricBoiler "System 400"
         extent={{7,-7},{-7,7}},
         rotation=90,
         origin={-23,-11})));
+  Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}})));
 equation
+  Pe = P401.W;
   connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(
       points={{20,-28.6},{20,-40}},
       color={140,56,54},

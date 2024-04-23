@@ -209,7 +209,9 @@ model CirculationPump
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={20,-80})));
+  Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{100,-40},{120,-20}})));
 equation
+  Pe = P901.W;
   connect(PT902.inlet,TT902. inlet) annotation (Line(
       points={{20.4,76.25},{20.4,86.875},{20.75,86.875},{20.75,87.75}},
       color={140,56,54},

@@ -194,7 +194,9 @@ model GasBoiler "System 100"
         extent={{6,6},{-6,-6}},
         rotation=90,
         origin={22,82})));
+  Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{100,-40},{120,-20}})));
 equation
+  Pe = P101.W;
   connect(P101.inlet,PL_S100_GB101_P101. outlet) annotation (Line(
       points={{20,-4.6},{20,-14}},
       color={140,56,54},

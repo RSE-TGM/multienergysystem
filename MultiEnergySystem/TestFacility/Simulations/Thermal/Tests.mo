@@ -1252,6 +1252,7 @@ package Tests
       parameter String matrixFT701 = "FT701" "Matrix name in file";
       parameter String matrixFT703 = "FT703" "Matrix name in file";
       parameter String matrixPT701 = "PT701" "Matrix name in file";
+      parameter String matrixPT702 = "PT702" "Matrix name in file";
       parameter String matrixthetaFCV701 = "theta_FCV701" "Matrix name in file";
       parameter String timenoscale = "time" "Matrix name in file";
       parameter Real EX701_q_m3h_hot = 2.5;
@@ -1285,74 +1286,73 @@ package Tests
         use_in_T=true,
         p0=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
         T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-        m_flow0=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot) annotation (Placement(transformation(extent={{61,41},{41,21}})));
+        m_flow0=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        G=1e-8)                                                             annotation (Placement(transformation(extent={{10,-10},{-10,10}},
+            rotation=90,
+            origin={-14,60})));
       DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold_mflow(
         redeclare model Medium = Medium,
         use_in_m_flow=true,
         use_in_T=true,
         p0=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
         T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-        m_flow0=0.32) annotation (Placement(transformation(extent={{-60,-42},{-40,-22}})));
+        m_flow0=0.32,
+        G=1e-8)       annotation (Placement(transformation(extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={9,-48})));
       DistrictHeatingNetwork.Sources.SinkPressure sinkHot_p(
         redeclare model Medium = Medium,
         use_in_p0=true,
         p0=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot) annotation (Placement(transformation(extent={{44,-43},{64,-23}})));
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+        R=1e-3)                                                      annotation (Placement(transformation(extent={{14,50},{34,70}})));
       DistrictHeatingNetwork.Sources.SinkPressure sinkCold_p(
         redeclare model Medium = Medium,
         use_in_p0=false,
+        use_in_T0=false,
         p0=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold) annotation (Placement(transformation(extent={{-43,21},{-62,40}})));
-      Modelica.Blocks.Sources.TimeTable inhot_T(table = [t, TT702]) annotation (
-        Placement(transformation(extent={{69,-5},{59,5}})));
-      Modelica.Blocks.Sources.TimeTable incold_T(table = [t, TT703]) annotation (
-        Placement(transformation(extent={{-68,0},{-58,10}})));
-      Modelica.Blocks.Sources.TimeTable outhot_p(table = [0, 2e5; 100, 2e5]) annotation (
-        Placement(transformation(extent={{65,-20},{55,-10}})));
-      Modelica.Blocks.Sources.TimeTable hot_m_flow(table = [t, m_flow701]) annotation (
-        Placement(transformation(extent={{69,10},{59,20}})));
-      Modelica.Blocks.Sources.TimeTable cold_m_flow(table = [t, m_flow703]) annotation (
-        Placement(transformation(extent={{-68,-15},{-58,-5}})));
-      Modelica.Blocks.Sources.TimeTable outcold_Tref(table = [t, TT704]) annotation (
-        Placement(transformation(origin={50,10},    extent={{-100,70},{-80,90}},      rotation = -0)));
-      Modelica.Blocks.Sources.TimeTable outhot_Tref(table = [t, TT701]) annotation (
-        Placement(transformation(origin = {-50, 10}, extent = {{100, 70}, {80, 90}}, rotation = -0)));
-      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(
-        redeclare model Medium = Medium,
-        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
-        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot)
-        annotation (Placement(transformation(extent={{31,-36},{41,-26}})));
-      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(
-        redeclare model Medium = Medium,
-        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold)
-        annotation (Placement(transformation(extent={{-42,28},{-32,38}})));
-      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(
-        redeclare model Medium = Medium,
-        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold)
-        annotation (Placement(transformation(extent={{-40,-35},{-30,-25}})));
-      MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(
-        redeclare model Medium = Medium,
-        T_start=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-        p_start=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot)
-        annotation (Placement(transformation(extent={{27,28},{37,38}})));
-      Modelica.Blocks.Math.Add dT_cold_sim(k1=-1) annotation (Placement(transformation(extent={{-70,40},{-80,50}})));
-      Modelica.Blocks.Math.Add dT_hot_sim(k1=+1, k2=-1) annotation (Placement(transformation(extent={{70,40},{80,50}})));
-      Modelica.Blocks.Math.Add dT_cold_meas(k1=-1) annotation (Placement(transformation(extent={{-70,60},{-80,70}})));
-      Modelica.Blocks.Math.Add dT_hot_meas(k1=-1) annotation (Placement(transformation(extent={{70,60},{80,70}})));
-      DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_cold_indexes "ASHRAE indexes for delta T cold" annotation (Placement(transformation(extent={{-90,50},{-100,60}})));
-      DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_hot_indexes "ASHRAE indexes for delta T hot" annotation (Placement(transformation(extent={{90,50},{100,60}})));
-      MultiEnergySystem.TestFacility.Loads.Thermal.Systems.CoolingSingleLoad EX7X1 annotation (Placement(transformation(extent={{-16,-2},{15,29}})));
-      Modelica.Blocks.Sources.TimeTable theta(table=[t,thetaValve])
-                                                               annotation (Placement(transformation(extent={{-32,43},{-22,53}})));
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
+        R=1e-3)                                                       annotation (Placement(transformation(extent={{9.5,-9.5},{-9.5,9.5}},
+            rotation=90,
+            origin={-14.5,-48.5})));
+      Modelica.Blocks.Sources.TimeTable inhot_T(table=[ts,TT702])   annotation (
+        Placement(transformation(extent={{-40,55},{-30,65}})));
+      Modelica.Blocks.Sources.TimeTable incold_T(table=[ts,TT703])   annotation (
+        Placement(transformation(extent={{40,-49},{30,-39}})));
+      Modelica.Blocks.Sources.TimeTable outhot_p(table=[ts,PT701])           annotation (
+        Placement(transformation(extent={{35,73},{25,83}})));
+      Modelica.Blocks.Sources.TimeTable hot_m_flow(table=[ts,m_flow701])   annotation (
+        Placement(transformation(extent={{-40,70},{-30,80}})));
+      Modelica.Blocks.Sources.TimeTable cold_m_flow(table=[ts,m_flow703])   annotation (
+        Placement(transformation(extent={{40,-64},{30,-54}})));
+      Modelica.Blocks.Sources.TimeTable outcold_Tref(table=[ts,TT704])   annotation (
+        Placement(transformation(origin={78,-53},   extent={{-50,35},{-40,45}},       rotation = -0)));
+      Modelica.Blocks.Sources.TimeTable outhot_Tref(table=[ts,TT701])   annotation (
+        Placement(transformation(origin={90,0},      extent={{-50,35},{-40,45}},     rotation = -0)));
+      Modelica.Blocks.Math.Add dT_cold_sim(k1=-1) annotation (Placement(transformation(extent={{60,-35},{70,-25}})));
+      Modelica.Blocks.Math.Add dT_hot_sim(k1=+1, k2=-1) annotation (Placement(transformation(extent={{60,20},{70,10}})));
+      Modelica.Blocks.Math.Add dT_cold_meas(k1=-1) annotation (Placement(transformation(extent={{60,-15},{70,-5}})));
+      Modelica.Blocks.Math.Add dT_hot_meas(k1=-1) annotation (Placement(transformation(extent={{60,30},{70,40}})));
+      DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_cold_indexes "ASHRAE indexes for delta T cold" annotation (Placement(transformation(extent={{80,-25},{90,-15}})));
+      DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_hot_indexes "ASHRAE indexes for delta T hot" annotation (Placement(transformation(extent={{80,20},{90,30}})));
+      MultiEnergySystem.TestFacility.Loads.Thermal.Systems.CoolingSingleLoad EX7X1 annotation (Placement(transformation(extent={{-26,-20},{21,27}})));
+      Modelica.Blocks.Sources.TimeTable theta(table=[ts,thetaValve])
+                                                               annotation (Placement(transformation(extent={{-48,15},{-38,25}})));
+      DistrictHeatingNetwork.Sources.SourcePressure sourceHot_P(redeclare model Medium = Medium,
+        use_in_p0=true,
+        p0=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        T0=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,                              R=1E-3) annotation (Placement(transformation(extent={{-66,33},{-46,53}})));
+      Modelica.Blocks.Sources.TimeTable PT7X2_profile(table=[ts,PT702])
+        annotation (Placement(transformation(extent={{-76,54},{-64,66}})));
     protected
       final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures, matrixTT701) "dimension of matrix";
-      final parameter Real t[:, :] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, timenoscale, dim[1], dim[2]) "Matrix data";
+      final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, timenoscale, dim[1], dim[2]) "Matrix data";
       final parameter Real TT701[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT701,dim[1],dim[2]);
       final parameter Real TT702[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixTT702, dim[1], dim[2]);
       final parameter Real TT703[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixTT703, dim[1], dim[2]);
       final parameter Real TT704[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixTT704, dim[1], dim[2]);
+      final parameter Real PT701[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixPT701, dim[1], dim[2]);
+      final parameter Real PT702[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Temperatures, matrixPT702, dim[1], dim[2]);
       final parameter Real FT701[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows, matrixFT701, dim[1], dim[2]);
       final parameter Real FT703[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Flows, matrixFT703, dim[1], dim[2]);
       final parameter Real m_flow701[dim[1], dim[2]] = FT701*rhohotref*CorrectFactorHot/3600;
@@ -1378,61 +1378,42 @@ package Tests
       //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
       // Connections
       connect(outhot_p.y, sinkHot_p.in_p0) annotation (
-        Line(points={{54.5,-15},{50,-15},{50,-24.6}},      color = {0, 0, 127}));
-      connect(incold_T.y, sourceCold_mflow.in_T) annotation (
-        Line(points={{-57.5,5},{-50,5},{-50,-27}},        color = {0, 0, 127}));
-      connect(cold_m_flow.y, sourceCold_mflow.in_m_flow)
-        annotation (Line(points={{-57.5,-10},{-56,-10},{-56,-27}}, color={0,0,127}));
-      connect(hot_m_flow.y, sourceHot_mflow.in_m_flow)
-        annotation (Line(points={{58.5,15},{57,15},{57,26}}, color={0,0,127}));
-      connect(inhot_T.y, sourceHot_mflow.in_T)
-        annotation (Line(points={{58.5,0},{51,0},{51,26}}, color={0,0,127}));
-      connect(sinkHot_p.inlet, TT7X1.inlet)
+        Line(points={{24.5,78},{20,78},{20,68.4}},         color = {0, 0, 127}));
+      connect(dT_hot_meas.y, dT_hot_indexes.u_meas) annotation (Line(points={{70.5,35},{75,35},{75,27.5},{79,27.5}}, color={0,0,127}));
+      connect(EX7X1.TT7X2_TT, dT_hot_sim.u1) annotation (Line(points={{23.35,15.25},{55,15.25},{55,12},{59,12}},                                 color={0,0,127}));
+      connect(dT_hot_sim.y, dT_hot_indexes.u_sim) annotation (Line(points={{70.5,15},{75,15},{75,22.5},{79,22.5}}, color={0,0,127}));
+      connect(sourceCold_mflow.outlet, EX7X1.incold) annotation (Line(
+          points={{9,-38},{9,-23.525},{9.015,-23.525}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(sinkCold_p.inlet, EX7X1.outcold)
         annotation (Line(
-          points={{44,-33},{36,-33}},
+          points={{-14.5,-39},{-14.5,-30},{-14,-30},{-14,-23.525},{-14.015,-23.525}},
           color={140,56,54},
           thickness=0.5));
-      connect(sinkCold_p.inlet, TT7X4.inlet) annotation (Line(
-          points={{-43,30.5},{-40.5,30.5},{-40.5,31},{-37,31}},
+      connect(dT_cold_sim.y, dT_cold_indexes.u_sim) annotation (Line(points={{70.5,-30},{75,-30},{75,-22.5},{79,-22.5}}, color={0,0,127}));
+      connect(dT_cold_meas.y, dT_cold_indexes.u_meas) annotation (Line(points={{70.5,-10},{75,-10},{75,-17.5},{79,-17.5}}, color={0,0,127}));
+      connect(cold_m_flow.y, sourceCold_mflow.in_m_flow) annotation (Line(points={{29.5,-59},{24,-59},{24,-54},{14,-54}}, color={0,0,127}));
+      connect(incold_T.y, sourceCold_mflow.in_T) annotation (Line(points={{29.5,-44},{24,-44},{24,-48},{14,-48}}, color={0,0,127}));
+      connect(outcold_Tref.y, dT_cold_meas.u2) annotation (Line(points={{38.5,-13},{59,-13}}, color={0,0,127}));
+      connect(dT_cold_meas.u1, sourceCold_mflow.in_T) annotation (Line(points={{59,-7},{41,-7},{41,-36},{24,-36},{24,-48},{14,-48}},                     color={0,0,127}));
+      connect(EX7X1.TT7X3_TT, dT_cold_sim.u1) annotation (Line(points={{23.35,10.55},{52,10.55},{52,-27},{59,-27}}, color={0,0,127}));
+      connect(EX7X1.TT7X4_TT, dT_cold_sim.u2) annotation (Line(points={{23.35,5.85},{46,5.85},{46,-33},{59,-33}}, color={0,0,127}));
+      connect(sourceHot_mflow.outlet, EX7X1.inhot) annotation (Line(
+          points={{-14,50},{-14,30.525},{-13.78,30.525}},
           color={140,56,54},
           thickness=0.5));
-      connect(sourceCold_mflow.outlet, TT7X3.inlet) annotation (Line(
-          points={{-40,-32},{-35,-32}},
+      connect(theta.y, EX7X1.theta) annotation (Line(points={{-37.5,20},{-32.925,20},{-32.925,19.95},{-28.35,19.95}}, color={0,0,127}));
+      connect(inhot_T.y, sourceHot_mflow.in_T) annotation (Line(points={{-29.5,60},{-19,60}}, color={0,0,127}));
+      connect(hot_m_flow.y, sourceHot_mflow.in_m_flow) annotation (Line(points={{-29.5,75},{-25,75},{-25,66},{-19,66}}, color={0,0,127}));
+      connect(EX7X1.TT7X1_TT, dT_hot_sim.u2) annotation (Line(points={{23.35,19.95},{55,19.95},{55,18},{59,18}}, color={0,0,127}));
+      connect(outhot_Tref.y, dT_hot_meas.u1) annotation (Line(points={{50.5,40},{55,40},{55,38},{59,38}}, color={0,0,127}));
+      connect(dT_hot_meas.u2, dT_hot_sim.u1) annotation (Line(points={{59,32},{50,32},{50,16},{49,16},{49,15.25},{55,15.25},{55,12},{59,12}}, color={0,0,127}));
+      connect(sinkHot_p.inlet, EX7X1.outhot) annotation (Line(
+          points={{14,60},{9.485,60},{9.485,30.525}},
           color={140,56,54},
           thickness=0.5));
-      connect(TT7X4.T, dT_cold_sim.u2) annotation (Line(points={{-37,39.5},{-37,42},{-69,42}}, color={0,0,127}));
-      connect(TT7X3.T, dT_cold_sim.u1) annotation (Line(points={{-35,-23.5},{-35,17},{-66,17},{-66,48},{-69,48}}, color={0,0,127}));
-      connect(TT7X1.T, dT_hot_sim.u2) annotation (Line(points={{36,-24.5},{36,42},{69,42}}, color={0,0,127}));
-      connect(TT7X2.T, dT_hot_sim.u1) annotation (Line(points={{32,39.5},{32,48},{69,48}}, color={0,0,127}));
-      connect(incold_T.y, dT_cold_meas.u1) annotation (Line(points={{-57.5,5},{-50,5},{-50,68},{-69,68}}, color={0,0,127}));
-      connect(outcold_Tref.y, dT_cold_meas.u2) annotation (Line(points={{-29,90},{-24,90},{-24,62},{-69,62}}, color={0,0,127}));
-      connect(dT_hot_meas.u2, sourceHot_mflow.in_T) annotation (Line(points={{69,62},{55,62},{55,0},{51,0},{51,26}}, color={0,0,127}));
-      connect(dT_cold_sim.y, dT_cold_indexes.u_sim) annotation (Line(points={{-80.5,45},{-85,45},{-85,52.5},{-89,52.5}}, color={0,0,127}));
-      connect(dT_cold_meas.y, dT_cold_indexes.u_meas) annotation (Line(points={{-80.5,65},{-85,65},{-85,57.5},{-89,57.5}}, color={0,0,127}));
-      connect(dT_hot_meas.y, dT_hot_indexes.u_meas) annotation (Line(points={{80.5,65},{85,65},{85,57.5},{89,57.5}}, color={0,0,127}));
-      connect(dT_hot_sim.y, dT_hot_indexes.u_sim) annotation (Line(points={{80.5,45},{85,45},{85,52.5},{89,52.5}}, color={0,0,127}));
-      connect(EX7X1.outcold, TT7X4.inlet) annotation (Line(
-          points={{-8.095,-4.325},{-8.095,-11},{-28,-11},{-28,31},{-37,31}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(EX7X1.incold, TT7X3.inlet) annotation (Line(
-          points={{7.095,-4.325},{7.095,-32},{-35,-32}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(EX7X1.outhot, TT7X1.inlet) annotation (Line(
-          points={{7.405,31.325},{7.405,38},{25,38},{25,-33},{36,-33}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(sourceHot_mflow.outlet, TT7X2.inlet) annotation (Line(
-          points={{41,31},{32,31}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(EX7X1.inhot, TT7X2.inlet) annotation (Line(
-          points={{-7.94,31.325},{-7.94,43},{28,43},{28,31},{32,31}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(theta.y, EX7X1.theta) annotation (Line(points={{-21.5,48},{-17,48},{-17,33},{-23,33},{-23,24.35},{-17.55,24.35}}, color={0,0,127}));
-      connect(outhot_Tref.y, dT_hot_meas.u1) annotation (Line(points={{29,90},{19,90},{19,68},{69,68}}, color={0,0,127}));
+      connect(PT7X2_profile.y, sourceHot_P.in_p0) annotation (Line(points={{-63.4,60},{-60,60},{-60,51.4}}, color={0,0,127}));
       annotation (
         Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}},
             grid={1,1})),

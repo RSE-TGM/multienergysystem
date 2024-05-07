@@ -1,13 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseII "Distribution network example from [2]"
   extends Modelica.Icons.Example;
-  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG5_H2;
+  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG6_H2;
   replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean quasiStatic = false;
   parameter Boolean computeTransport = true;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
-  parameter Integer n = 11 "Number of volumes in each pipeline";
+  parameter Integer n = 5 "Number of volumes in each pipeline";
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X;
   parameter Types.MassFraction X_start_H2[7] = X_start;
   parameter Types.MassFlowRate m_flow_H2_ref = 0.0016666*0;
@@ -34,7 +34,9 @@ model PaperCaseII "Distribution network example from [2]"
             Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0013452, k_linear = 41747.55164, kc = 1, m_flow_start = 0.045847, n = n, pin_start(displayUnit = "Pa") = 6608.999999999999, pout_start(displayUnit = "Pa") = 4694.999999999999, rho_nom = 0.045862759, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-50,60},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe4(Di = 0.11, L = 500, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0013330, k_linear = 47153.38245, kc = 1, m_flow_start = 0.052255, n = n, pin_start(displayUnit = "Pa") = 6608.999999999999, pout_start(displayUnit = "Pa") = 4694.999999999999, rho_nom = 0.045862759, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+            Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,                         k = 0.0013330, k_linear = 47153.38245, kc = 1, m_flow_start = 0.052255, n = n, pin_start(displayUnit = "Pa") = 6608.999999999999, pout_start(displayUnit = "Pa") = 4694.999999999999, rho_nom = 0.045862759, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-110,60},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(Di = 0.11, L = 600, redeclare model
             Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009341, k_linear = 29824.94057, kc = 1, m_flow_start = 0.027762, n = n, pin_start(displayUnit = "Pa") = 4756.87, pout_start(displayUnit = "Pa") = 3840, rho_nom = 0.032393306, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (

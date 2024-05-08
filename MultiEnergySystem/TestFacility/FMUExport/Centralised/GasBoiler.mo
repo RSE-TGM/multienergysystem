@@ -43,17 +43,18 @@ equation
   connect(GB101_Status.y, S100.Status)
     annotation (Line(points={{53,0},{25.6,0}}, color={255,0,255}));
   connect(source.outlet, S100.inlet) annotation (Line(
-      points={{-20,60},{-9.6,60},{-9.6,25.6}},
+      points={{-20,60},{-12.48,60},{-12.48,36.8}},
       color={140,56,54},
       thickness=0.5));
   connect(sink.inlet, S100.outlet) annotation (Line(
-      points={{18,60},{9.6,60},{9.6,25.6}},
+      points={{18,60},{13.12,60},{13.12,36.8}},
       color={140,56,54},
       thickness=0.5));
   connect(theta, S100.theta)
-    annotation (Line(points={{-86,22},{-38,22},{-38,16},{-25.6,16}}, color={0,0,127}));
+    annotation (Line(points={{-86,22},{-38,22},{-38,16},{-35.2,16}}, color={0,0,127}));
   connect(omega, S100.omega)
-    annotation (Line(points={{-86,-8},{-38,-8},{-38,0},{-25.6,0}}, color={0,0,127}));
+    annotation (Line(points={{-86,-8},{-38,-8},{-38,22.4},{-35.2,22.4}},
+                                                                   color={0,0,127}));
   connect(Tout_SP, S100.Tout_SP) annotation (Line(points={{-86,-38},{-66,-38},{-66,-40},{-34,-40},{
           -34,-16},{-25.6,-16}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(

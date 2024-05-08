@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.FMUExport.Interfaces;
-model SignalBusConnector
+model SignalBusConnector "Partial model with two ControlSignalBus connectors"
   ControlSignalBus controlSignalBus annotation (
     Placement(visible = true, transformation(origin={-897,-3},    extent = {{51, 41}, {-51, -41}}, rotation = -90), iconTransformation(origin = {-87, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
   ControlSignalBus processVariableBus annotation (

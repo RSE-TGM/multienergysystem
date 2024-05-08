@@ -223,5 +223,9 @@ the offset is set to the initial value of the physical output, so that the initi
       Icon(coordinateSystem(preserveAspectRatio = false)),
       Diagram(coordinateSystem(preserveAspectRatio = false)));
   end TestPiecewiseLinear2;
-  annotation ();
+  annotation (Icon(graphics={                                             Text(
+          extent={{-80,100},{80,-100}},
+          textColor={28,108,200},
+          textStyle={TextStyle.Bold},
+          textString="Off")}));
 end OffSetBlocks;

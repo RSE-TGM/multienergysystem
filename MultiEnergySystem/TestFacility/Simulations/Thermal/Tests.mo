@@ -71,7 +71,9 @@ package Tests
           L_P101_FCV101=L_P101_FCV101,
           h_P101_FCV101=h_P101_FCV101,
           Kv=Kv,
-          openingChar=openingChar)                                annotation (Placement(transformation(extent={{-30,-28},{26,28}})));
+          openingChar=openingChar,
+          GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState))
+                                                                  annotation (Placement(transformation(extent={{-30,-28},{26,28}})));
         DistrictHeatingNetwork.Sources.SourcePressure
                                source(
           use_in_p0=true,
@@ -179,13 +181,14 @@ package Tests
       end TestBase;
 
       model S100_Seq_0412Test2
-        extends TestBase(Kv= 33, MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"),
-            gasBoiler(Pmaxnom=147.6e3*0.75, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
+        extends TestBase(Kv= 33, MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"),
+            gasBoiler(Pmaxnom=147.6e3*0.75, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)),
+          GB101_ToutSP(table=[0,76 + 273.15; 3400, 75 + 273.15; 1e6,75 + 273.15]));
         annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test2;
 
       model S100_Seq_0412Test3
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3/Temperatures.mat"));
         annotation (experiment(StopTime=7200, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test3;
 
@@ -240,14 +243,14 @@ package Tests
       end S100_Seq_0804Test1;
 
       model S100_Seq_1004Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1004_Test1/Temperatures.mat"),
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1004_Test1.mat"),
             GB101_Status(table={900,4.05e3,4.6e3}, startValue=false),
           gasBoiler(Pmaxnom=147.6e3*0.92, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState), Tout_start_S1 = TTo[1,1]));
         annotation (experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_1004Test1;
 
       model S100_Seq_1704Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"),
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1704_Test1.mat"),
             gasBoiler(GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
         annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
       end S100_Seq_1704Test1;
@@ -295,7 +298,7 @@ package Tests
         parameter Real P401omega[:,:] = [0, 2*3.141592654*30; 100, 2*3.141592654*30];
         parameter Real FCV401theta[:,:] = [0, 1];
 
-        parameter Integer nR = 5 "Total number of resistors";
+        parameter Real nR = 5 "Total number of resistors";
         parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Electric power of each resistor";
 
         parameter DistrictHeatingNetwork.Types.Density rhohotref = 985 "Reference hot water density";
@@ -333,7 +336,9 @@ package Tests
           Kv=Kv,
           openingChar=openingChar,
           nR=nR,
-          Pmaxres=Pmaxres)                                                                    annotation (Placement(transformation(extent={{-28,-32},{30,26}})));
+          Pmaxres=Pmaxres,
+          EB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState))
+                                                                                              annotation (Placement(transformation(extent={{-28,-32},{30,26}})));
 
         Modelica.Blocks.Sources.TimeTable FCV401_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-90,4},{-78,16}})));
         Modelica.Blocks.Sources.TimeTable P401_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-90,22},{-78,34}})));
@@ -439,7 +444,9 @@ package Tests
       end TestBase;
 
       model S400_Seq_0412Test2
-        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"));
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"),
+            nR = 3.8, EB401_ToutSP1(table=[0,76 + 273.15; 1e6,76 + 273.15]),
+          EB401_Status1(table={537,768,2271,2500}));
         annotation (experiment(StopTime=9500, __Dymola_Algorithm="Dassl"));
       end S400_Seq_0412Test2;
 
@@ -707,7 +714,7 @@ package Tests
       end TestBase;
 
       model S900_Seq_0412Test2
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"));
         annotation (experiment(
             StopTime=2600,
             Tolerance=1e-06,
@@ -785,13 +792,13 @@ package Tests
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h3 = 3;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h4 = 5;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Pressure dpRR = 1e5;
-      parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Temperatures.mat") "File name of matrix" annotation (
+      parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test 2024/01_Test Gennaio 2024/1701_Test2/Temperatures.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-      parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Pressures.mat") "File name of matrix" annotation (
+      parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test 2024/Test Gennaio 2024/1701_Test2/Pressures.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-      parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Flow.mat") "File name of matrix" annotation (
+      parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test 2024/Test Gennaio 2024/1701_Test2/Flow.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
-      parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test2/Actuators.mat") "File name of matrix" annotation (
+      parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test 2024/Test Gennaio 2024/1701_Test2/Actuators.mat") "File name of matrix" annotation (
         Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
       parameter String matrixTT702 = "TT702" "Matrix name in file";
       parameter String matrixTT712 = "TT712" "Matrix name in file";

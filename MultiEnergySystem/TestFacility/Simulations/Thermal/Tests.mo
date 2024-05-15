@@ -509,7 +509,7 @@ package Tests
     package S900 "Validation tests of pumping system"
       extends Modelica.Icons.ExamplesPackage;
 
-      model TestBase
+      model TestBase "Test base for validation of system 900, using S400 as reference"
         extends Modelica.Icons.Example;
 
         // Medium
@@ -543,7 +543,7 @@ package Tests
 
         parameter DistrictHeatingNetwork.Types.Density rhohotref = 985 "Reference hot water density";
         parameter DistrictHeatingNetwork.Types.Density rhocoldref = 999 "Reference cold water density";
-        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat") "File name of matrix" annotation (
           Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
 
         parameter String matrixPTi = "PT402" "Matrix name in file";
@@ -727,7 +727,7 @@ package Tests
             __Dymola_Algorithm="Dassl"));
       end TestBase;
 
-      model S900_Seq_0412Test1
+      model S900_Seq_0412Test1 "Validation test using data from sequence 0412_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test1.mat"));
         annotation (experiment(
             StopTime=3900,
@@ -735,7 +735,7 @@ package Tests
             __Dymola_Algorithm="Dassl"));
       end S900_Seq_0412Test1;
 
-      model S900_Seq_0412Test2
+      model S900_Seq_0412Test2 "Validation test using data from sequence 0412_Test2"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"));
         annotation (experiment(
             StopTime=9500,
@@ -743,7 +743,7 @@ package Tests
             __Dymola_Algorithm="Dassl"));
       end S900_Seq_0412Test2;
 
-      model S900_Seq_0412Test3
+      model S900_Seq_0412Test3 "Validation test using data from sequence 0412_Test3"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat"));
         annotation (experiment(
             StopTime=7200,
@@ -751,60 +751,65 @@ package Tests
             __Dymola_Algorithm="Dassl"));
       end S900_Seq_0412Test3;
 
-      model S900_Seq_1701Test1
+      model S900_Seq_1701Test1 "Validation test using data from sequence 1701_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test1.mat"));
         annotation (experiment(StopTime=2700, __Dymola_Algorithm="Dassl"));
       end S900_Seq_1701Test1;
 
-      model S900_Seq_1701Test2
+      model S900_Seq_1701Test2 "Validation test using data from sequence 1701_Test2"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test2.mat"));
         annotation (experiment(StopTime=5600, __Dymola_Algorithm="Dassl"));
       end S900_Seq_1701Test2;
 
-      model S900_Seq_1701Test3
+      model S900_Seq_1701Test3 "Validation test using data from sequence 1701_Test3"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test3.mat"));
         annotation (experiment(StopTime=7800, __Dymola_Algorithm="Dassl"));
       end S900_Seq_1701Test3;
 
-      model S900_Seq_2601Test1
+      model S900_Seq_2601Test1 "Validation test using data from sequence 2601_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2601_Test1.mat"));
         annotation (experiment(StopTime=7000, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2601Test1;
 
-      model S900_Seq_3001Test1
+      model S900_Seq_3001Test1 "Validation test using data from sequence 3001_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test1.mat"));
         annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
       end S900_Seq_3001Test1;
 
-      model S900_Seq_3001Test2
+      model S900_Seq_3001Test2 "Validation test using data from sequence 3001_Test2"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test2.mat"));
         annotation (experiment(StopTime=3900, __Dymola_Algorithm="Dassl"));
       end S900_Seq_3001Test2;
 
-      model S900_Seq_2102Test1
+      model S900_Seq_2102Test1 "Validation test using data from sequence 2102_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2102_Test1.mat"));
         annotation (experiment(StopTime=2000, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2102Test1;
 
-      model S900_Seq_1004Test1
+      model S900_Seq_1004Test1 "Validation test using data from sequence 1004_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1004_Test1.mat"));
         annotation (experiment(StopTime=18000, __Dymola_Algorithm="Dassl"));
       end S900_Seq_1004Test1;
 
-      model S900_Seq_1704Test1
+      model S900_Seq_1704Test1 "Validation test using data from sequence 1704_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1704_Test1.mat"));
         annotation (experiment(StopTime=7900, __Dymola_Algorithm="Dassl"));
       end S900_Seq_1704Test1;
 
-      model S900_Seq_2904Test1
+      model S900_Seq_2904Test1 "Validation test using data from sequence 2904_Test1"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test1.mat"));
         annotation (experiment(StopTime=14400, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2904Test1;
 
-      model S900_Seq_2904Test2
+      model S900_Seq_2904Test2 "Validation test using data from sequence 2904_Test2"
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test1.mat"));
         annotation (experiment(StopTime=4140, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2904Test2;
+      annotation (Documentation(info="<html>
+<p><span style=\"font-size: 12pt;\">This package includes all the tests used for validation of system S900 hot side. This includes the <b>pump</b> <b>P901</b>, valve <b>FCV901</b>, pipes connecting the inlet of pump P901 with the system S400 outlet pressure transmitter <b>PT402</b> and the pipe connecting the outlet of valve FCV901 and the pressure transmitter <b>PT902</b>.</span></p>
+<p><span style=\"font-size: 12pt;\">The cold side is neglected in this test, then not real data in its boundary conditions.</span></p>
+<p><span style=\"font-size: 12pt;\">The analysis takes into account the <b>outlet pressure of the hot side</b>, comparing the simulated outlet pressure with the measured outlet pressure in PT902. The mass flow rate through the hot side (FT902 values approximatly converted from m3/h to kg/s) and the inlet temperature in the hot side (TT902 considered as reference, assuming negligible temperature losses).</span></p>
+</html>"));
     end S900;
   end Systems;
 

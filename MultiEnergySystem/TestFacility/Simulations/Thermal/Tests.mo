@@ -13,6 +13,7 @@ package Tests
         parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
         parameter Real pumpcorrectionfactor = 1;
         parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
+        parameter DistrictHeatingNetwork.Types.Temperature Tout_SP[:,:] = [0, 76 + 273.15; 1e6, 76 + 273.15];
 
         // Temperatures and pressures
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = PTi[1, 1];
@@ -93,7 +94,7 @@ package Tests
           R=1e-3)           annotation (Placement(transformation(extent={{-10,10},{10,-10}},
               rotation=90,
               origin={64,88})));
-        Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
+        Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=Tout_SP)
           annotation (Placement(transformation(extent={{-68,-12},{-56,0}})));
         Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
           "Input to decide whether or nor the gas boiler is working"
@@ -183,21 +184,38 @@ package Tests
 
       model S100_Seq_0412Test1
         extends TestBase(Kv= 33, MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test1.mat"),
-            gasBoiler(Pmaxnom=147.6e3*0.78), GB101_ToutSP(table=[0, 75 + 273.15; 3400, 75 + 273.15; 1e6, 75 + 273.15]));
+            gasBoiler(Pmaxnom=147.6e3*0.78));
         annotation (experiment(StopTime=3325, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test1;
 
       model S100_Seq_0412Test2
         extends TestBase(Kv= 33, MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"),
-            gasBoiler(Pmaxnom=147.6e3*0.75, GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)),
+            gasBoiler(Pmaxnom=147.6e3*0.75),
           GB101_ToutSP(table=[0,76 + 273.15; 3400, 75 + 273.15; 1e6,75 + 273.15]));
         annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test2;
 
       model S100_Seq_0412Test3
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat"));
         annotation (experiment(StopTime=7200, __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test3;
+
+      model S100_Seq_1701Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test1.mat"));
+        annotation (experiment(StopTime=2700, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_1701Test1;
+
+      model S100_Seq_1701Test2
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test2.mat"), gasBoiler(GB(
+                tdelay=20)));
+        annotation (experiment(StopTime=5600, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_1701Test2;
+
+      model S100_Seq_1701Test3
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test3.mat"), gasBoiler(Pmaxnom=147.6e3
+                *0.75,                                                                                                                                                     GB(tdelay=20)));
+        annotation (experiment(StopTime=7800, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_1701Test3;
 
       model S100_Seq_2601Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2601_Test1/Temperatures.mat"));
@@ -266,14 +284,14 @@ package Tests
       model S100_Seq_2904Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test1.mat"),
         gasBoiler(Pmaxnom=147.6e3*0.85), GB101_ToutSP(table=[0, 77 + 273.15; 3400, 77 + 273.15; 1e6, 77 + 273.15]),
-          GB101_Status(table={970}, startValue=false));
+          GB101_Status(table={970, 8600, 12845}, startValue=false));
         annotation (experiment(StopTime=14400, __Dymola_Algorithm="Dassl"));
       end S100_Seq_2904Test1;
 
       model S100_Seq_2904Test2
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test2.mat"),
-        gasBoiler(Pmaxnom=147.6e3*0.85), GB101_ToutSP(table=[0, 77 + 273.15; 3400, 77 + 273.15; 1e6, 77 + 273.15]));
-        annotation (experiment(StopTime=7900, __Dymola_Algorithm="Dassl"));
+        gasBoiler(Pmaxnom=147.6e3*0.85), GB101_ToutSP(table=[0, 76.8 + 273.15; 3400, 76.8 + 273.15; 1e6, 76.8 + 273.15]));
+        annotation (experiment(StopTime=4140, __Dymola_Algorithm="Dassl"));
       end S100_Seq_2904Test2;
     end S100;
 

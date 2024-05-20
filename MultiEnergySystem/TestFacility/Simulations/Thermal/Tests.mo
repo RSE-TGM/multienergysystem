@@ -9,11 +9,16 @@ package Tests
       model TestBase
         extends Modelica.Icons.Example;
         replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+        replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+
         parameter Integer n = 3;
         parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
         parameter Real pumpcorrectionfactor = 1;
         parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
         parameter DistrictHeatingNetwork.Types.Temperature Tout_SP[:,:] = [0, 76 + 273.15; 1e6, 76 + 273.15];
+
+        // Gas composition
+        parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
 
         // Temperatures and pressures
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = PTi[1, 1];
@@ -139,6 +144,14 @@ package Tests
               rotation=90,
               origin={10,62})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_pout annotation (Placement(transformation(extent={{74,52},{86,64}})));
+        H2GasFacility.Sources.SourcePressure sourceGas(
+          redeclare model Medium = Gas,
+          X0=X_gas,
+          R=1e-3,
+          computeEnergyVariables=true) annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={-2,-60})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -178,6 +191,10 @@ package Tests
         connect(gasBoiler.outlet, sinkMassFlow.inlet) annotation (Line(
             points={{9.48,32.2},{9.48,42.1},{10,42.1},{10,52}},
             color={140,56,54},
+            thickness=0.5));
+        connect(sourceGas.outlet, gasBoiler.inletFuel) annotation (Line(
+            points={{-2,-50},{-2,-41.24},{-2,-41.24},{-2,-32.48}},
+            color={182,109,49},
             thickness=0.5));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
       end TestBase;

@@ -29,7 +29,7 @@ partial model PartialBoiler
     Dialog(tab = "Boiler Data"));
   parameter SI.Power Pnimnom = 40.2e3 "Minimum heating capacity" annotation (
     Dialog(tab = "Boiler Data"));
-  parameter SI.Power Pnom = 100e3 "Nominal Power" annotation (
+  parameter SI.Power Pnom = Pmaxnom "Nominal Power" annotation (
     Dialog(tab = "Boiler Data"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 147.6e3/(20*4186) "Nominal fluid mass flow rate" annotation (
     Dialog(tab = "Boiler Data"));

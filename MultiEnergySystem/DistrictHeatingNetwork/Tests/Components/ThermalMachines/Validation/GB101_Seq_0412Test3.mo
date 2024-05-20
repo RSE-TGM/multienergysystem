@@ -1,15 +1,21 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines.Validation;
 model GB101_Seq_0412Test3
-  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines.GasBoilerTest(sourceCH4(use_in_m_flow0 = true), sourceP(use_in_p0 = false, use_in_T0 = true), sinkM(use_in_m_flow = true),
-    boiler(convf=convf));
+  extends MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines.GasBoilerTest(sourceCH4(computeEnergyVariables=true,
+                                                                                                            use_in_m_flow0 = true), sourceP(use_in_p0 = false, use_in_T0 = true), sinkM(use_in_m_flow = true),
+    boiler(
+      Tout_start=TT102[1, 1],
+           Pmaxnom=147.6e3,
+      etanom=etaboiler,
+           convf=convf));
 
-  parameter String Data = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix" annotation (
+  parameter String Data = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat") "File name of matrix" annotation (
     Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
 
   parameter Real CorrectFactorHot = 1;
   parameter Real CorrectFactorCold = 1;
   parameter Types.Density rhohotref = 985;
   parameter Types.Density rhocoldref = 999;
+  parameter Types.PerUnit etaboiler = 1.02;
   parameter String matrixTT101 = "TT101" "Matrix name in file";
   parameter String matrixTT102 = "TT102" "Matrix name in file";
   parameter String matrixTT801 = "TT801" "Matrix name in file";
@@ -44,7 +50,7 @@ protected
   final parameter Real PT101[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Data, matrixPT101, dim[1], dim[2]);
   final parameter Real PT102[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Data, matrixPT102, dim[1], dim[2]);
   final parameter Real m_flow101[dim[1], dim[2]] = FT101*rhohotref*CorrectFactorHot/3600;
-  final parameter Real m_flow801[dim[1], dim[2]] = FT801;
+  final parameter Real m_flow801[dim[1], dim[2]] = FT801/3600;
 equation
   Tout_ref = Toutref.y;
   connect(fuel_m_flow.y, sourceCH4.in_m_flow0)    annotation (Line(points={{-63.4,20},{-56,20},{-56,5}}, color={0,0,127}));

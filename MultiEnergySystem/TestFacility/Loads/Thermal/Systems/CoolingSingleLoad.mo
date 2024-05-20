@@ -58,24 +58,23 @@ model CoolingSingleLoad
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
 
   // Lengths of pipelines Cold Side
-  parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
-  parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0;
 
-  parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.5;
-  parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=0;
-
-  parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
+//   parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
+//   parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
 
   // Lengths of pipelines Hot side
   parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=2.9;
   parameter DistrictHeatingNetwork.Types.Length h_HX701_TT702_SourceIn=2.5;
-  parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1;
+  parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
+  parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0;
+  parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.5;
+  parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=0;
+//   parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1;
+//   parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1;
+
+
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_cold = 16 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_cold = 7 + 273.15;
-
-
   // Length of pipelines Cooling side
   parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT7X3=1.65 + 0.45;
   parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT7X3=-1.65*0.1;

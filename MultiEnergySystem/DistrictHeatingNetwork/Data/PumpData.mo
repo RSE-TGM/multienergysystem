@@ -260,7 +260,8 @@ package PumpData
     etaelec = 1,
     etamech = 1,
     a = {909.586813, 55.353560, -0.574542},
-    b = {24.122662, 0.669933, -0.039537});
+    b = {23.6, 0.62, -0.0435});
+    //b = {24.122662, 0.669933, -0.039537});
 
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump PR01(
     Name = "PR01",

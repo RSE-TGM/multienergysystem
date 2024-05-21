@@ -375,7 +375,8 @@ equation
           {-1.11022e-15,2},{-1.11022e-15,8}}, color={0,127,255}));
   connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-113.6,-16},
           {-94,-16},{-94,-29}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  annotation (
+    Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},
                 fillPattern = FillPattern.Solid,
@@ -384,6 +385,7 @@ equation
                 fillColor = {75,138,73},
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
-                points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+                points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
+    Diagram(coordinateSystem(preserveAspectRatio=false)),
+    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
 end PaperCaseI_MSL;

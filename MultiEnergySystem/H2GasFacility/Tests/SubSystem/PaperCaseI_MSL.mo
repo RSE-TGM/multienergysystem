@@ -295,7 +295,7 @@ model PaperCaseI_MSL
     startTime=50)                                                                                           annotation (
     Placement(visible = true, transformation(origin={-118,-16},    extent={{-4,-4},
             {4,4}},                                                                                 rotation = 0)));
-  inner Modelica.Fluid.System system
+  inner Modelica.Fluid.System system(T_ambient=288.15)
     annotation (Placement(transformation(extent={{-96,68},{-76,88}})));
 equation
   connect(pipe10.port_a, pipe5.port_a)

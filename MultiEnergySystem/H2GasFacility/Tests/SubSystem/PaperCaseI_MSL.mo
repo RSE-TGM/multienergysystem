@@ -416,7 +416,8 @@ equation
           1.11022e-15,2},{1.11022e-15,-2}}, color={0,127,255}));
   connect(boundary.ports[1], pipe2.port_b) annotation (Line(points={{-84,-33},{
           -58,-33},{-58,-34},{-30,-34},{-30,-10},{-8,-10},{-8,-2},{-6,-2},{-6,2},
-          {-1.11022e-15,2},{-1.11022e-15,8}}, color={0,127,255}));
+          {-1.11022e-15,2},{-1.11022e-15,8}}, color={0,127,255},
+      thickness=0.5));
   connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-113.6,-16},
           {-94,-16},{-94,-29}}, color={0,0,127}));
   annotation (

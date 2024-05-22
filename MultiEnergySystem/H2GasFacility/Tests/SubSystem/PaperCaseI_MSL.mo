@@ -8,7 +8,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe1.kappa,
     p_a_start=Pipe.pipe1.pin_start,
     p_b_start=Pipe.pipe1.pout_start,
-    m_flow_start=Pipe.pipe1.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe1.Tin_start,
+    m_flow_start=Pipe.pipe1.m_flow_start,
+    nNodes=3)                             annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,44})));
@@ -19,7 +21,8 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe2.kappa,
     p_a_start=Pipe.pipe2.pin_start,
     p_b_start=Pipe.pipe2.pout_start,
-    m_flow_start=Pipe.pipe2.m_flow_start) annotation (Placement(transformation(
+    m_flow_start=Pipe.pipe2.m_flow_start,
+    nNodes=3)                             annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,14})));
@@ -30,7 +33,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe3.kappa,
     p_a_start=Pipe.pipe3.pin_start,
     p_b_start=Pipe.pipe3.pout_start,
-    m_flow_start=Pipe.pipe3.m_flow_start)
+    T_start=Pipe.pipe3.Tin_start,
+    m_flow_start=Pipe.pipe3.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{8,22},{20,34}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe4(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -39,7 +44,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe4.kappa,
     p_a_start=Pipe.pipe4.pin_start,
     p_b_start=Pipe.pipe4.pout_start,
-    m_flow_start=Pipe.pipe4.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe4.Tin_start,
+    m_flow_start=Pipe.pipe4.m_flow_start,
+    nNodes=3)                             annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
         origin={-16,28})));
@@ -50,7 +57,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe5.kappa,
     p_a_start=Pipe.pipe5.pin_start,
     p_b_start=Pipe.pipe5.pout_start,
-    m_flow_start=Pipe.pipe5.m_flow_start)
+    T_start=Pipe.pipe5.Tin_start,
+    m_flow_start=Pipe.pipe5.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{-22,-4},{-10,8}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe6(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -59,7 +68,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe6.kappa,
     p_a_start=Pipe.pipe6.pin_start,
     p_b_start=Pipe.pipe6.pout_start,
-    m_flow_start=Pipe.pipe6.m_flow_start)
+    T_start=Pipe.pipe6.Tin_start,
+    m_flow_start=Pipe.pipe6.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{6,-4},{18,8}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe7(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -68,7 +79,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe7.kappa,
     p_a_start=Pipe.pipe7.pin_start,
     p_b_start=Pipe.pipe7.pout_start,
-    m_flow_start=Pipe.pipe7.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe7.Tin_start,
+    m_flow_start=Pipe.pipe7.m_flow_start,
+    nNodes=3)                             annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,-8})));
@@ -79,7 +92,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe8.kappa,
     p_a_start=Pipe.pipe8.pin_start,
     p_b_start=Pipe.pipe8.pout_start,
-    m_flow_start=Pipe.pipe8.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe8.Tin_start,
+    m_flow_start=Pipe.pipe8.m_flow_start,
+    nNodes=3)                             annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-42,14})));
@@ -90,7 +105,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe9.kappa,
     p_a_start=Pipe.pipe9.pin_start,
     p_b_start=Pipe.pipe9.pout_start,
-    m_flow_start=Pipe.pipe9.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe9.Tin_start,
+    m_flow_start=Pipe.pipe9.m_flow_start,
+    nNodes=3)                             annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={28,14})));
@@ -101,7 +118,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe10.kappa,
     p_a_start=Pipe.pipe10.pin_start,
     p_b_start=Pipe.pipe10.pout_start,
-    m_flow_start=Pipe.pipe10.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe10.Tin_start,
+    m_flow_start=Pipe.pipe10.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={-42,-8})));
@@ -112,7 +131,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe11.kappa,
     p_a_start=Pipe.pipe11.pin_start,
     p_b_start=Pipe.pipe11.pout_start,
-    m_flow_start=Pipe.pipe11.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe11.Tin_start,
+    m_flow_start=Pipe.pipe11.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={28,-10})));
@@ -123,7 +144,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe12.kappa,
     p_a_start=Pipe.pipe12.pin_start,
     p_b_start=Pipe.pipe12.pout_start,
-    m_flow_start=Pipe.pipe12.m_flow_start)
+    T_start=Pipe.pipe12.Tin_start,
+    m_flow_start=Pipe.pipe12.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{6,-30},{18,-18}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe13(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -132,7 +155,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe13.kappa,
     p_a_start=Pipe.pipe13.pin_start,
     p_b_start=Pipe.pipe13.pout_start,
-    m_flow_start=Pipe.pipe13.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe13.Tin_start,
+    m_flow_start=Pipe.pipe13.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
         origin={-18,-24})));
@@ -140,7 +165,12 @@ model PaperCaseI_MSL
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
     length=Pipe.pipe14.L,
     diameter=Pipe.pipe14.Di,
-    roughness=Pipe.pipe14.kappa)
+    roughness=Pipe.pipe14.kappa,
+    p_a_start=Pipe.pipe14.pin_start,
+    p_b_start=Pipe.pipe14.pout_start,
+    T_start=Pipe.pipe14.Tin_start,
+    m_flow_start=Pipe.pipe14.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{34,-30},{46,-18}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe15(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -149,7 +179,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe15.kappa,
     p_a_start=Pipe.pipe15.pin_start,
     p_b_start=Pipe.pipe15.pout_start,
-    m_flow_start=Pipe.pipe15.m_flow_start)
+    T_start=Pipe.pipe15.Tin_start,
+    m_flow_start=Pipe.pipe15.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{70,-30},{82,-18}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe16(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -158,7 +190,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe16.kappa,
     p_a_start=Pipe.pipe16.pin_start,
     p_b_start=Pipe.pipe16.pout_start,
-    m_flow_start=Pipe.pipe16.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe16.Tin_start,
+    m_flow_start=Pipe.pipe16.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={88,-46})));
@@ -169,7 +203,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe17.kappa,
     p_a_start=Pipe.pipe17.pin_start,
     p_b_start=Pipe.pipe17.pout_start,
-    m_flow_start=Pipe.pipe17.m_flow_start)
+    T_start=Pipe.pipe17.Tin_start,
+    m_flow_start=Pipe.pipe17.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{38,-4},{50,8}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe18(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
@@ -178,7 +214,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe18.kappa,
     p_a_start=Pipe.pipe18.pin_start,
     p_b_start=Pipe.pipe18.pout_start,
-    m_flow_start=Pipe.pipe18.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe18.Tin_start,
+    m_flow_start=Pipe.pipe18.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={60,18})));
@@ -189,7 +227,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe19.kappa,
     p_a_start=Pipe.pipe19.pin_start,
     p_b_start=Pipe.pipe19.pout_start,
-    m_flow_start=Pipe.pipe19.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe19.Tin_start,
+    m_flow_start=Pipe.pipe19.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,-38})));
@@ -200,7 +240,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe20.kappa,
     p_a_start=Pipe.pipe20.pin_start,
     p_b_start=Pipe.pipe20.pout_start,
-    m_flow_start=Pipe.pipe20.m_flow_start) annotation (Placement(transformation(
+    T_start=Pipe.pipe20.Tin_start,
+    m_flow_start=Pipe.pipe20.m_flow_start,
+    nNodes=3)                              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
         origin={-18,-52})));
@@ -211,7 +253,9 @@ model PaperCaseI_MSL
     roughness=Pipe.pipe21.kappa,
     p_a_start=Pipe.pipe21.pin_start,
     p_b_start=Pipe.pipe21.pout_start,
-    m_flow_start=Pipe.pipe21.m_flow_start)
+    T_start=Pipe.pipe21.Tin_start,
+    m_flow_start=Pipe.pipe21.m_flow_start,
+    nNodes=3)
     annotation (Placement(transformation(extent={{-64,-4},{-52,8}})));
   Modelica.Fluid.Sources.MassFlowSource_T User5(redeclare package Medium =
         Modelica.Media.IdealGases.SingleGases.CH4, nPorts=2)

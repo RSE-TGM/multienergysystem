@@ -654,9 +654,9 @@ package Tests
               extent={{-10,-10},{10,10}},
               rotation=-90,
               origin={-10,-90})));
-        Modelica.Blocks.Sources.TimeTable P901_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-80,32},{-68,44}})));
-        Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-80,12},{-68,24}})));
-        Modelica.Blocks.Sources.TimeTable PT902_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{58,44},{46,56}})));
+        Modelica.Blocks.Sources.TimeTable P901_omega(table=[ts,omega]) annotation (Placement(transformation(extent={{-72,32},{-60,44}})));
+        Modelica.Blocks.Sources.TimeTable FCV901_theta(table=[ts,thetav]) annotation (Placement(transformation(extent={{-72,12},{-60,24}})));
+        Modelica.Blocks.Sources.TimeTable PT902_profile(table=[ts,PTo]) annotation (Placement(transformation(extent={{96,32},{84,44}})));
         DistrictHeatingNetwork.Sources.SinkPressure
                              sinkP(
           use_in_p0=true,
@@ -664,7 +664,7 @@ package Tests
           p0=pout_start_S9,
           T0=Tout_start_S9,
           R=1e-3)
-               annotation (Placement(transformation(extent={{32,74},{44,62}})));
+               annotation (Placement(transformation(extent={{56,62},{68,50}})));
         Modelica.Blocks.Sources.TimeTable m_flow_ref(table=[ts,m_flow_approx]) annotation (Placement(transformation(extent={{48,86},{60,98}})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex m_flow_index annotation (Placement(transformation(extent={{74,84},{86,96}})));
 
@@ -673,12 +673,12 @@ package Tests
           k=1,
           T=5,
           initType=Modelica.Blocks.Types.Init.SteadyState,
-          y_start=omega[1, 1])                             annotation (Placement(transformation(extent={{-56,32},{-44,44}})));
+          y_start=omega[1, 1])                             annotation (Placement(transformation(extent={{-54,32},{-42,44}})));
         Modelica.Blocks.Continuous.FirstOrder lowPasstheta(
           k=1,
           T=5,
           initType=Modelica.Blocks.Types.Init.SteadyState,
-          y_start=thetav[1, 1])                            annotation (Placement(transformation(extent={{-56,12},{-44,24}})));
+          y_start=thetav[1, 1])                            annotation (Placement(transformation(extent={{-54,12},{-42,24}})));
         DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange(D_i=Di_S4, D_o=Di_rCD)
           annotation (Placement(transformation(
               extent={{-4,-4},{4,4}},
@@ -703,7 +703,7 @@ package Tests
           k=1,
           T=5,
           initType=Modelica.Blocks.Types.Init.SteadyState,
-          y_start=PTo[1, 1]) annotation (Placement(transformation(extent={{40,44},{28,56}})));
+          y_start=PTo[1, 1]) annotation (Placement(transformation(extent={{74,32},{62,44}})));
         Modelica.Blocks.Continuous.FirstOrder lowPasspin(
           k=1,
           T=5,
@@ -743,11 +743,11 @@ package Tests
         connect(TT402_profile.y, sourceP.in_T0) annotation (Line(points={{35.4,-72},{28,-72},{28,-89.6},{19.04,-89.6}}, color={0,0,127}));
         connect(m_flow_ref.y, m_flow_index.u_meas) annotation (Line(points={{60.6,92},{72.8,92},{72.8,93}},                 color={0,0,127}));
         connect(circulationPump.m_flow_, m_flow_index.u_sim) annotation (Line(points={{35,29},{66,29},{66,87},{72.8,87}}, color={0,0,127}));
-        connect(P901_omega.y, lowPassomega.u) annotation (Line(points={{-67.4,38},{-57.2,38}}, color={0,0,127}));
-        connect(lowPassomega.y, circulationPump.omega) annotation (Line(points={{-43.4,38},{-38,38},{-38,29},{-31,29}}, color={0,0,127}));
-        connect(FCV901_theta.y, lowPasstheta.u) annotation (Line(points={{-67.4,18},{-57.2,18}},
+        connect(P901_omega.y, lowPassomega.u) annotation (Line(points={{-59.4,38},{-55.2,38}}, color={0,0,127}));
+        connect(lowPassomega.y, circulationPump.omega) annotation (Line(points={{-41.4,38},{-38,38},{-38,29},{-31,29}}, color={0,0,127}));
+        connect(FCV901_theta.y, lowPasstheta.u) annotation (Line(points={{-59.4,18},{-55.2,18}},
                                                                                                color={0,0,127}));
-        connect(lowPasstheta.y, circulationPump.theta) annotation (Line(points={{-43.4,18},{-38,18},{-38,23},{-31,23}},
+        connect(lowPasstheta.y, circulationPump.theta) annotation (Line(points={{-41.4,18},{-38,18},{-38,23},{-31,23}},
                                                                                                                       color={0,0,127}));
         connect(suddenAreaChange.outlet, PL_S400_rCD.outlet) annotation (Line(
             points={{14,-60},{14,-66}},
@@ -765,12 +765,12 @@ package Tests
             points={{14,-34},{14,-29.25},{13.7,-29.25},{13.7,-26.5}},
             color={140,56,54},
             thickness=0.5));
-        connect(lowPasspout.y, sinkP.in_p0) annotation (Line(points={{27.4,50},{22,50},{22,60},{35.6,60},{35.6,62.96}}, color={0,0,127}));
-        connect(lowPasspout.u, PT902_profile.y) annotation (Line(points={{41.2,50},{45.4,50}}, color={0,0,127}));
+        connect(lowPasspout.y, sinkP.in_p0) annotation (Line(points={{61.4,38},{61.4,42},{59.6,42},{59.6,50.96}},       color={0,0,127}));
+        connect(lowPasspout.u, PT902_profile.y) annotation (Line(points={{75.2,38},{83.4,38}}, color={0,0,127}));
         connect(PT402_profile.y, lowPasspin.u) annotation (Line(points={{51.4,-92},{45.2,-92}}, color={0,0,127}));
         connect(lowPasspin.y, sourceP.in_p0) annotation (Line(points={{31.4,-92},{28,-92},{28,-94.4},{19.04,-94.4}}, color={0,0,127}));
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (Line(points={{60.6,92},{64,92},{64,78},{28,78},{28,84},{19,84}}, color={0,0,127}));
-        connect(val_pout.u_meas, sinkP.in_p0) annotation (Line(points={{50.8,19},{44,19},{44,40},{24,40},{24,50},{22,50},{22,60},{35.6,60},{35.6,62.96}}, color={0,0,127}));
+        connect(val_pout.u_meas, sinkP.in_p0) annotation (Line(points={{50.8,19},{50.8,18},{44,18},{44,50.96},{59.6,50.96}},                              color={0,0,127}));
         connect(circulationPump.PTout, val_pout.u_sim) annotation (Line(points={{35,5},{44,5},{44,13},{50.8,13}}, color={0,0,127}));
         connect(sinkMassFlow.inlet, circulationPump.outlethot) annotation (Line(
             points={{14,80},{14,61.25},{13.7,61.25},{13.7,42.5}},

@@ -68,8 +68,8 @@ package Sequences
           FT713_mflow(table=kq*[0,1.6193*998/3600; 1e6,1.6193*998/3600]),
           FT723_mflow(table=kq*[0,1.1859*998/3600; 1e6,1.1859*998/3600]),
           FT733_mflow(table=kq*[0,1.3281*998/3600; 1e6,1.3281*998/3600]),
-          GB101_ToutSP=[0,76 + 273.15; 1e6,273.15],
-          EB401_ToutSP=[0,74 + 273.15; 1e6,273.15],
+          GB101_ToutSP=[0, 76 + 273.15; 3500, 76 + 273.15; 3500, 75 + 273.15; 1e6,75 + 273.15],
+          EB401_ToutSP=[0, 74 + 273.15; 1e6,273.15],
           EX701_Tin_hot=T_start_hot,
           EX711_Tin_hot=T_start_hot,
           EX721_Tin_hot=T_start_hot,
@@ -106,15 +106,15 @@ package Sequences
             Tout_start=342.15,
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
             h=0.5,
-            nR=4),
+            nR=3.8),
           FCVC01(
             openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage,
             Tin_start=T_start_hot,
-            Kv=25),
+            Kv=33),
           FCV101(Kv= 33, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
-          EB401_Status(table={537,768,2271,2500}),
+          EB401_Status(table={548,778,2271,2500}),
           rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
-          FCVC02(Kv=25, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+          FCVC02(Kv=33, openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           TT703_SPP(y=Tcoolsin),
           FCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
           FCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
@@ -123,27 +123,43 @@ package Sequences
           FCV401(Kv= 33),
           FV402(Kv= 33),
           PL4_S901(h = 1),
-          P101(correctionfactor = 1.5),
+          P101(correctionfactor = 1),
           FV401(Kv = 33),
-          P401(correctionfactor = 2),
+          P401(correctionfactor = 1),
           PL_S100_P101_FCV101(L = 2, h = 2),
           FT703(G = 1e-8),
           FT733(G = 1e-8),
           FT713(G = 1e-8),
           FT723(G = 1e-8));
+          //GB101_ToutSP=[ts, TTo],
+          //GB101_ToutSP=[0,76 + 273.15; 1e6,273.15],
         //FCV701theta = [0, 0.6269; 1e6, 0.6269],
-        parameter Real kq = 0.7;
-        parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.8;
+        parameter Real kq = 0.6;
+        //parameter Real kq = 0.7;
+        parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.78;
         parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";
+
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
+          Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+        parameter String matrixTTo = "TT102" "Matrix name in file";
+        parameter String timenoscale = "time" "Matrix name in file";
+
         Real Tcoolsin;
+      protected
+        final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixTTo) "dimension of matrix";
+        final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
+        final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
       equation
-        Tcoolsin = 273.15 + 16.7 + 1.7*sin(2*3.1415*freq*(time + 200));
+        Tcoolsin = 273.15 + 16.7 + 1.7*sin(2*pi*freq*time - 1.2);
         connect(TT703_SPP.y, coldSourcePEX701.in_T0) annotation (Line(points={{169,-240},{159,-240},{159,-290.6}}, color={0,0,127}));
         connect(TT703_SPP.y, coldSourcePEX731.in_T0) annotation (Line(points={{169,-240},{164,-240},{164,-250},{242,-250},{242,-280},{319,-280},{319,-290.6}}, color={0,0,127}));
         connect(coldSourcePEX711.in_T0, coldSourcePEX731.in_T0) annotation (Line(points={{479,-290.6},{479,-278},{319,-278},{319,-290.6}}, color={0,0,127}));
         connect(coldSourcePEX721.in_T0, coldSourcePEX711.in_T0) annotation (Line(points={{641,-288.6},{640,-288.6},{640,-280},{479,-280},{479,-290.6}}, color={0,0,127}));
         annotation (
-          experiment(StopTime = 10000, Tolerance = 1e-06, StartTime = 0, Interval = 20),
+          experiment(
+            StopTime=7200,
+            Interval=20,
+            __Dymola_Algorithm="Dassl"),
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end Seq_0412_Test2;
 

@@ -275,7 +275,7 @@ model PaperCaseI_MSL
         origin={32,48})));
   Modelica.Fluid.Sources.FixedBoundary SourceP1(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
-    p=50000,
+    p=150000,
     T=288.15,
     nPorts=1) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
@@ -283,7 +283,7 @@ model PaperCaseI_MSL
         origin={0,64})));
   Modelica.Fluid.Sources.FixedBoundary SourceP2(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
-    p=50000,
+    p=150000,
     T=288.15,
     nPorts=1) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},

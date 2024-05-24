@@ -38,6 +38,7 @@ package ValveCharacteristics
       MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
       //parameter Real N = 50;
   algorithm
-  rp := 50^(pos-1);
+    //rp := 50^(pos-1);
+    rp := 14^(pos^3 -1); // gas boiler;
   end equalPercentage;
 end ValveCharacteristics;

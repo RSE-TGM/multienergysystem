@@ -275,7 +275,7 @@ model PaperCaseI_MSL_A
         origin={32,48})));
   Modelica.Fluid.Sources.FixedBoundary SourceP1(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
-    p=50000,
+    p=150000,
     T=288.15,
     nPorts=1) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
@@ -283,18 +283,12 @@ model PaperCaseI_MSL_A
         origin={0,64})));
   Modelica.Fluid.Sources.FixedBoundary SourceP2(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
-    p=50000,
+    p=150000,
     T=288.15,
     nPorts=1) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-78,2})));
-  Modelica.Fluid.Sources.MassFlowSource_T User10(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
-    m_flow=-0.041533,
-    T=288.15,
-    nPorts=1)
-    annotation (Placement(transformation(extent={{-56,-50},{-44,-38}})));
   Modelica.Fluid.Sources.MassFlowSource_T User15(redeclare package Medium =
         Modelica.Media.IdealGases.SingleGases.CH4,
     m_flow=-0.017800,
@@ -357,9 +351,9 @@ model PaperCaseI_MSL_A
         origin={-45,-65})));
   inner Modelica.Fluid.System system(
     T_ambient=288.15,
-    energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
-    massDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
-    momentumDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
+    massDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
+    momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
     m_flow_start=0.03,
     use_eps_Re=false)
     annotation (Placement(transformation(extent={{-96,68},{-76,88}})));
@@ -406,13 +400,13 @@ model PaperCaseI_MSL_A
         rotation=270,
         origin={-39,-37})));
   Modelica.Fluid.Sources.MassFlowSource_T boundary(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.C2H4,
+    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
     use_m_flow_in=true,
     T=288.15,
     nPorts=1)
-    annotation (Placement(transformation(extent={{-94,-52},{-82,-40}})));
+    annotation (Placement(transformation(extent={{-100,-56},{-88,-44}})));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    duration=0,
+    duration=1,
     height=0.005,
     offset=0,
     startTime=50)                                                                                           annotation (
@@ -504,21 +498,21 @@ equation
           {-42,-32},{-42,-26}},          color={0,127,255}));
   connect(teeJunctionIdeal6.port_3, pipe13.port_b) annotation (Line(points={{-34,-37},
           {-29,-37},{-29,-36},{-24,-36}},          color={0,127,255}));
-  connect(User10.ports[1], teeJunctionIdeal6.port_2) annotation (Line(points={{-44,-44},
-          {-44,-42},{-39,-42}},          color={0,127,255}));
   connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-111.4,-32},
-          {-94,-32},{-94,-41.2}}, color={0,0,127}));
-  connect(teeJunctionIdeal7.port_1, boundary.ports[1]) annotation (Line(points=
-          {{-76,-61},{-82,-61},{-82,-46}}, color={0,127,255}));
-  connect(teeJunctionIdeal7.port_3, pipe2.port_b) annotation (Line(points={{-71,
-          -56},{-62,-56},{-62,-8},{-1.11022e-15,-8},{-1.11022e-15,12}}, color={
-          0,127,255}));
-  connect(teeJunctionIdeal7.port_2, pipe6.port_a) annotation (Line(points={{-66,
-          -61},{-64,-61},{-64,-6},{6,-6},{6,2},{12,2}}, color={0,127,255}));
-  connect(pipe5.port_b, pipe7.port_a) annotation (Line(points={{-20,2},{-14,2},
-          {-14,-14},{1.11022e-15,-14},{1.11022e-15,-20}}, color={0,127,255}));
-  connect(pipe5.port_b, pipe6.port_a) annotation (Line(points={{-20,2},{-14,2},
-          {-14,-6},{6,-6},{6,2},{12,2}}, color={0,127,255}));
+          {-100,-32},{-100,-45.2}},
+                                  color={0,0,127}));
+  connect(teeJunctionIdeal7.port_1, boundary.ports[1]) annotation (Line(points={{-76,-61},
+          {-88,-61},{-88,-50}},            color={0,127,255}));
+  connect(pipe5.port_b, pipe6.port_a)
+    annotation (Line(points={{-20,2},{12,2}}, color={0,127,255}));
+  connect(pipe2.port_b, pipe7.port_a) annotation (Line(points={{-1.11022e-15,12},
+          {-1.11022e-15,-4},{1.11022e-15,-4},{1.11022e-15,-20}}, color={0,127,
+          255}));
+  connect(pipe5.port_b, teeJunctionIdeal7.port_3) annotation (Line(points={{-20,
+          2},{-18,2},{-18,-12},{-71,-12},{-71,-56}}, color={0,127,255}));
+  connect(teeJunctionIdeal7.port_2, pipe7.port_a) annotation (Line(points={{-66,
+          -61},{-64,-61},{-64,-62},{-52,-62},{-52,-8},{1.11022e-15,-8},{
+          1.11022e-15,-20}}, color={0,127,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},

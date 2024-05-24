@@ -34,7 +34,7 @@ model ElectricBoiler "System 400"
   parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Data.ValveData.FCV401.openingChar "opening characteristic";
 
-  parameter Integer nR = 5 "Number of resistors";
+  parameter Real nR = 5 "Number of resistors";
   parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
   parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 50e3;
   parameter DistrictHeatingNetwork.Types.Power Pminnom = 0;

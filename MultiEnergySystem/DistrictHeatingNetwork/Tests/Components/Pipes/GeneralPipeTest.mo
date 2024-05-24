@@ -16,7 +16,7 @@ model GeneralPipeTest "Comparison between all different pipe models"
   parameter Integer n = 5 "Number of volumes";
   parameter Types.Length L = 50;
   parameter Types.Length Di = 0.085;
-  parameter Types.Length H= 0.01;
+  parameter Types.Length H= 0;
   parameter Types.Length t = 2e-3;
   parameter Types.Length tIns = 60e-3;
   parameter Types.PerUnit cf = 0.004;
@@ -65,14 +65,14 @@ model GeneralPipeTest "Comparison between all different pipe models"
     kc=1,
     n=n,
     pin_start=pin_start,
-    pout_start=pout_start,
     rho_nom=rho_start,
     t=t,
     tIns=tIns,
     u_nom=u_start,
     gamma_nom=5)
     annotation (Placement(visible=true, transformation(extent={{-184,6},{-156,34}}, rotation=0)));
-  Sources.SinkMassFlow sinkmassflow(G = 0, T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start, pin_start = pout_start, use_in_m_flow = true) annotation (
+  Sources.SinkMassFlow sinkmassflow(
+    G=1e-8,                                T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start, pin_start = pout_start, use_in_m_flow = true) annotation (
     Placement(visible = true, transformation(origin={-130,20},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.Wall_FixedT wall_FixedT(Twall = system.T_amb, n = n) annotation (
     Placement(visible = true, transformation(origin={-250,60},  extent = {{-10, 10}, {10, -10}}, rotation = 270)));
@@ -119,7 +119,8 @@ model GeneralPipeTest "Comparison between all different pipe models"
         origin={-122,-20},
         extent={{-14,-14},{14,14}},
         rotation=0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkmassflow2(G = 0, T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start2, pin_start = pout_start2, use_in_m_flow = true) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkmassflow2(
+    G=1e-8,                                                                          T0 = Tout_start, m_flow0 = m_flow_start, p0 = pout_start2, pin_start = pout_start2, use_in_m_flow = true) annotation (
     Placement(visible = true, transformation(origin={-84,-20},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp pout_set(duration = 50, height = 0.1*pout_start, offset = pout_start, startTime = 150) annotation (
     Placement(visible = true, transformation(origin={-100,130}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
@@ -130,7 +131,7 @@ model GeneralPipeTest "Comparison between all different pipe models"
     p0=pin_start)                                                                                                                  annotation (
     Placement(visible = true, transformation(origin={-220,-100},extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Sources.SinkMassFlow sinkmassflow1(
-    G=0,
+    G=1e-8,
     T0=Tout_start,
     m_flow0=m_flow_start,
     p0=pout_start,
@@ -153,7 +154,6 @@ model GeneralPipeTest "Comparison between all different pipe models"
     kc=1,
     n=n,
     pin_start=pin_start,
-    pout_start=pout_start,
     rho_nom=rho_start,
     t=t,
     tIns=tIns,
@@ -207,7 +207,7 @@ model GeneralPipeTest "Comparison between all different pipe models"
         extent={{-14,-14},{14,14}},
         rotation=0)));
   Sources.SinkMassFlow                                          sinkmassflow3(
-    G=0,
+    G=1e-8,
     T0=Tout_start,
     m_flow0=m_flow_start,
     p0=pout_start2,
@@ -219,8 +219,8 @@ model GeneralPipeTest "Comparison between all different pipe models"
     M=218.655,
     cm=445,
     WallRes=true,
-    UA_ext=0.294*L,
-    UA_int=6148*L,
+    UA_ext=0.29439855*L,
+    UA_int=6148.584*L,
     Tstartbar=353.15,
     Tstart1=353.15,
     TstartN=352.15) annotation (Placement(transformation(extent={{-180,52},{-160,32}})));
@@ -292,6 +292,10 @@ equation
     annotation (Line(points={{-170,39},{-170,25.74}}, color={255,238,44}));
   annotation (
     Documentation(info = "<html><head></head><body>Base test to verify the difference between considering linear or non-linear drop pressure.</body></html>"),
-    experiment(StartTime = 0, StopTime = 250, Tolerance = 1e-06, Interval = 0.166889),
+    experiment(
+      StopTime=50,
+      Interval=0.166889,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"),
     Diagram(coordinateSystem(extent={{-300,-160},{300,160}})));
 end GeneralPipeTest;

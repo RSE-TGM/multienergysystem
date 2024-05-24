@@ -1,9 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_H2 "Same as PaperCaseI with pure H2 and without H2 injection across the net for S.S. validation"
   extends Tests.SubSystem.PaperCaseI(
-    redeclare model Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.H2,
-    redeclare model MediumUsers = MultiEnergySystem.H2GasFacility.Media.IdealGases.H2,
-    redeclare model Hydrogen = MultiEnergySystem.H2GasFacility.Media.IdealGases.H2,
+    redeclare model Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.H2,
+    redeclare model MediumUsers =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.H2,
+    redeclare model Hydrogen =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.H2,
     nX = 1,
     constantFrictionFactor = true,
     useEnergyDemand = false,

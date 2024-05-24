@@ -113,11 +113,12 @@ equation
     m_flow[i] - m_flow[i+1] = 0;
     //(Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u, m_flow_nom*cons) + M[i]*regStep(inlet.m_flow,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   end for;
-
+  //(M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
   if thermalInertia then
     for i in 1:n loop
-      M[i]*cp[i+1]*der(Ttilde[i]) = m_flow[i + 1]*cp[i + 1]*(T[i] - T[i + 1]) - Q_int[i] "Energy balance water volume";
-      L/n*rhom*cm*Am*der(Twall[i]) = Q_int[i] + Q_ext[i] "Energy balance wall";
+      (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_int[i];
+      //M[i]*cp[i+1]*der(Ttilde[i]) = m_flow[i + 1]*cp[i + 1]*(T[i] - T[i + 1]) - Q_int[i] "Energy balance water volume";
+      Cm/n*der(Twall[i]) = Q_int[i] + Q_ext[i] "Energy balance wall";
       // Heat conduction through the internal half-thickness water to wall
       Q_int[i] = U_wm*L/n*(Ttilde[i] - Twall[i]);
       // Heat conduction through the external half-thickness wall to ambient
@@ -141,7 +142,7 @@ equation
   if hctype == Choices.Pipe.HCtypes.Middle then
     pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
     ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
-  else
+ else
     pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
     ptilde = pout;
   end if;

@@ -1,9 +1,0 @@
-within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
-model Pipe_FV_vs_PF "Test to compare Plug Flow and Finite Volume"
-  MultiEnergySystem.H2GasFacility.Components.Pipes.PipePF pipePF
-    annotation (Placement(transformation(extent={{-10,-38},{22,-2}})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV round1DFV
-    annotation (Placement(transformation(extent={{-10,24},{22,56}})));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
-end Pipe_FV_vs_PF;

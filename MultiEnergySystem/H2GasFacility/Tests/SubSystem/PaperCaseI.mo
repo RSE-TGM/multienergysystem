@@ -3,19 +3,20 @@ partial model PaperCaseI "Distribution network example from [1]"
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumUsers =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+   replaceable model Hydrogen =
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND(posDom = 7) constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = true;
   parameter Boolean constantFrictionFactor = true;
   parameter Integer n = 3 "Number of volumes in each pipeline";
-  parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
-  parameter Types.MassFraction X_start_H2[7] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  parameter Integer nX = 7 "Number of components in the gas fluid";
+  parameter Types.MassFraction X_start[nX] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
+  parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
-  parameter Types.Pressure p_nom = 0.5e5;
+  parameter Types.Pressure p_nom = 1.5e5;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.00119840; 15*3600, 0.00169773; 16*3600, 0.00109853; 17*3600, 0; 24*3600, 0];
   parameter Types.Length kappa = 0.045e-3;
@@ -116,8 +117,7 @@ constantFrictionFactor=constantFrictionFactor)                                  
     rho_nom=Pipe.pipe9.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {30, 20}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di = Pipe.pipe10.Di, L = Pipe.pipe10.L, redeclare model
-            Medium =                                                                                                                 Medium, Tin_start = Pipe.pipe10.Tin_start, Tout_start = Pipe.pipe10.Tout_start, X_start = X_start, hin_start = Pipe.pipe10.hin_start, k = Pipe.pipe10.k, kc = 1, m_flow_start = Pipe.pipe10.m_flow_start, n = n, pin_start = Pipe.pipe10.pin_start, pout_start = Pipe.pipe10.pout_start, momentum = momentum,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di = Pipe.pipe10.Di, L = Pipe.pipe10.L, redeclare model Medium = Medium, Tin_start = Pipe.pipe10.Tin_start, Tout_start = Pipe.pipe10.Tout_start, X_start = X_start, hin_start = Pipe.pipe10.hin_start, k = Pipe.pipe10.k, kc = 1, m_flow_start = Pipe.pipe10.m_flow_start, n = n, pin_start = Pipe.pipe10.pin_start, pout_start = Pipe.pipe10.pout_start, momentum = momentum,
     quasiStatic=quasiStatic,
     pin_nom=p_nom,
     rho_nom=Pipe.pipe10.rho_nom,
@@ -191,52 +191,71 @@ constantFrictionFactor=constantFrictionFactor)                                  
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe3.pout_start,                                                                       X0 = X_start, m_flow0 = 0.044645108, massflowratedemand = [0, 0.044645108; 0.5*3600, 0.044645108; 1*3600, 0.4*0.044645108; 6*3600, 0.4*0.044645108], useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe3.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.045489,
+    massflowratedemand=[0,0.045489; 3600,0.045489],                                                                                                                                                                                                      useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {30, 40}, extent={{-10,10},{10,-10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user5(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe4.pout_start,                                                                       X0 = X_start, m_flow0 = 0.03493965, massflowratedemand = [0, 0.03493965; 0.5*3600, 0.03493965; 1*3600, 1*0.03493965; 6*3600, 1*0.03493965], useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe4.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.0356,
+    massflowratedemand=[0,0.0356; 3600,0.0356],                                                                                                                                                                                                 useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-70, 40}, extent = {{-10, -10}, {10, 10}}, rotation=180)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user10(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe10.pout_start,                                                                       X0 = X_start, m_flow0 = 0.040762925, massflowratedemand = [0, 0.040762925; 0.5*3600, 0.040762925; 1*3600, 1*0.040762925; 6*3600, 1*0.040762925], useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe10.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.041533,
+    massflowratedemand=[0,0.041533; 3600,0.041533],                                                                                                                                                                                                   useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-70, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user11(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe14.pout_start,                                                                       X0 = X_start, m_flow0 = 0.009705458, useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe14.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.009889,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {90, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user12(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe15.pout_start,                                                                       X0 = X_start, m_flow0 = 0.014558188, useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe15.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.014833,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {150, -40}, extent={{-10,10},{10,-10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user13(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe16.pout_start,                                                                       X0 = X_start, m_flow0 = 0.006793821, useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe16.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.006922,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {150, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user14(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe17.pout_start,                                                                       X0 = X_start, m_flow0 = 0.008734913, useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe17.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.008900,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user15(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe18.pout_start,                                                                       X0 = X_start, m_flow0 = 0.017469825, massflowratedemand = [0, 0.017469825; 0.5*3600, 0.017469825; 1*3600, 1*0.017469825; 6*3600, 1*0.017469825], useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe18.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.017800,                                                                                                                                                                                                        useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {90, 40}, extent = {{-10, -10}, {10, 10}}, rotation=180)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user16(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe19.pout_start,                                                                       X0 = X_start, m_flow0 = 0.012723856, useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe19.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.012856,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-20, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user17(redeclare model Medium =
         MediumUsers,
-    p0=Pipe.pipe20.pout_start,                                                                       X0 = X_start, m_flow0 = 0.010676004, useEnergyDemand = useEnergyDemand) annotation (
+    p0=Pipe.pipe20.pout_start,                                                                       X0 = X_start,
+    m_flow0=0.010878,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-70, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium =
-        MediumUsers,                                                                                    T0 = 15 + 273.15, X0 = X_start, p0 = 0.5e5) annotation (
+        MediumUsers,
+    T0=288.15,                                                                                                            X0 = X_start,
+    p0=150000,
+    R=1e-3)                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={-20,96},     extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP18(redeclare model Medium =
-        MediumUsers,                                                                                     T0 = 15 + 273.15, X0 = X_start, p0 = 0.5e5) annotation (
+        MediumUsers,
+    T0=288.15,                                                                                                             X0 = X_start,
+    p0=150000,
+    R=1e-3)                                                                                                                                          annotation (
     Placement(visible = true, transformation(origin={-132,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(redeclare model Medium =
-        MediumUsers (                                                                                    posDom = 7), G = 1000, T0 = 15 + 273.15, X0 = X_start_H2, computeEnthalpyWithFixedPressure = true, m_flow0 = m_flow_H2_ref, p0 = 0.5e5, use_in_m_flow0 = true) annotation (
+        Hydrogen, G = 1e-8, T0 = 15 + 273.15, X0 = X_start_H2, computeEnthalpyWithFixedPressure = true, m_flow0 = m_flow_H2_ref, p0 = 1.5e5, use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin={-104,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(duration = 50, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation (
     Placement(visible = true, transformation(origin={-160,-30},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));

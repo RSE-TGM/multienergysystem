@@ -70,8 +70,9 @@ initial equation
   assert(abs(p/p_start - 1) < 0.25, "Please check p_start, you may get convergence to wrong solution of EoS", AssertionLevel.warning);
 
 equation
-  X[1:nXi] = Xi;
+
   if nX > 1 then
+    X[1:nXi] = Xi;
     X[nX] = 1 - sum(Xi);
   else
     X[1] = 1;

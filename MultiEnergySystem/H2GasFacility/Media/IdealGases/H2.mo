@@ -1,7 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
 model H2
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
-      nXi = 0,
+      nXi = 1,
+      nX = 1,
       X_start = {1},
       T_start = 25 + 273.15,
       p_start = 1e5,

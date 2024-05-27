@@ -351,9 +351,9 @@ model PaperCaseI_MSL_A
         origin={-45,-65})));
   inner Modelica.Fluid.System system(
     T_ambient=288.15,
-    energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
-    massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
-    momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    momentumDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
     m_flow_start=0.03,
     use_eps_Re=false)
     annotation (Placement(transformation(extent={{-96,68},{-76,88}})));
@@ -405,7 +405,7 @@ model PaperCaseI_MSL_A
     T=288.15,
     nPorts=1)
     annotation (Placement(transformation(extent={{-100,-56},{-88,-44}})));
-  Modelica.Blocks.Sources.Ramp m_flow_H2(
+  Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0.5,
     height=0.005,
     offset=0,
@@ -492,7 +492,7 @@ equation
           {-42,-32},{-42,-26}},          color={0,127,255}));
   connect(teeJunctionIdeal6.port_3, pipe13.port_b) annotation (Line(points={{-34,-37},
           {-29,-37},{-29,-36},{-24,-36}},          color={0,127,255}));
-  connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-111.4,-32},
+  connect(m_flow_in.y, boundary.m_flow_in) annotation (Line(points={{-111.4,-32},
           {-100,-32},{-100,-45.2}},
                                   color={0,0,127}));
   connect(pipe5.port_b, pipe6.port_a)

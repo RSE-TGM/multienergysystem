@@ -518,5 +518,8 @@ equation
                 fillPattern = FillPattern.Solid,
                 points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
     Diagram(coordinateSystem(preserveAspectRatio=false)),
-    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+    experiment(
+      StopTime=100,
+      Interval=1,
+      __Dymola_Algorithm="Dassl"));
 end PaperCaseI_MSL_A;

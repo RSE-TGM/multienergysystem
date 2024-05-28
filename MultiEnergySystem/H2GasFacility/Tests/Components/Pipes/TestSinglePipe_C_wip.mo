@@ -8,7 +8,7 @@ model TestSinglePipe_C_wip
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
   parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
-  parameter Integer n = 3 "Number of volumes in Flow1DFV";
+  parameter Integer n = 10 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
   parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start "Initial temperature at the inlet";
   parameter Types.Length kappa = 0.045e-3;
@@ -17,8 +17,11 @@ model TestSinglePipe_C_wip
   // Components
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+<<<<<<< Updated upstream
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin={-74,26},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+=======
+>>>>>>> Stashed changes
   Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0,
     height=0.01,
@@ -40,7 +43,7 @@ model TestSinglePipe_C_wip
     constantFrictionFactor=false,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
     rho_nom=Pipe.pipe1.rho_nom,
-    n=5,
+    n=n,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{-8,-18},{12,2}})));
 
@@ -66,8 +69,13 @@ model TestSinglePipe_C_wip
     m_flow0=m_flow_start,
     G=0,
     use_in_m_flow0=true,
+<<<<<<< Updated upstream
     use_in_T0=true)
     annotation (Placement(transformation(extent={{-42,-18},{-22,2}})));
+=======
+    use_in_T0=false)
+    annotation (Placement(transformation(extent={{-58,-18},{-38,2}})));
+>>>>>>> Stashed changes
 equation
   connect(round1DFV_wip.outlet, sinkPressure.inlet) annotation (Line(
       points={{12,-8},{48,-8}},
@@ -79,10 +87,15 @@ equation
       points={{-22,-8},{-8,-8}},
       color={182,109,49},
       thickness=0.5));
+<<<<<<< Updated upstream
   connect(sourceMassFlow.in_m_flow0, m_flow_in.y) annotation (Line(points={{-38,-3},
           {-40,-3},{-40,-4},{-63,-4}},     color={0,0,127}));
   connect(T_in.y, sourceMassFlow.in_T0)
     annotation (Line(points={{-63,26},{-32,26},{-32,-3}}, color={0,0,127}));
+=======
+  connect(sourceMassFlow.in_m_flow0, m_flow_in.y) annotation (Line(points={{-54,
+          -3},{-68,-3},{-68,20},{-75,20}}, color={0,0,127}));
+>>>>>>> Stashed changes
   annotation (
     experiment(
       StopTime=100,

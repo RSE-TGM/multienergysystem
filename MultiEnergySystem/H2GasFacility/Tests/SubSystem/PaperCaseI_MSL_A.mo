@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_MSL_A
   "PaperCaseI implemented using the Modelica Standard Library"
-  extends PaperCaseI_MSL(system(momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState));
+  extends PaperCaseI_MSL;
 
   Modelica.Fluid.Sources.MassFlowSource_T boundary(
     redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,

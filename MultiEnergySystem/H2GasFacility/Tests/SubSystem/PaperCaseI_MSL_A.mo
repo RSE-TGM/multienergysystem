@@ -351,9 +351,9 @@ model PaperCaseI_MSL_A
         origin={-45,-65})));
   inner Modelica.Fluid.System system(
     T_ambient=288.15,
-    energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
-    massDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
-    momentumDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
+    momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
     m_flow_start=0.03,
     use_eps_Re=false)
     annotation (Placement(transformation(extent={{-96,68},{-76,88}})));

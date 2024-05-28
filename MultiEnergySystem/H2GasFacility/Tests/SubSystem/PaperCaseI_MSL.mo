@@ -1,8 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_MSL
   "PaperCaseI implemented using the Modelica Standard Library"
+  replaceable package Medium =
+        Modelica.Media.IdealGases.SingleGases.CH4 constrainedby Modelica.Media.Interfaces.PartialMedium;
   Modelica.Fluid.Pipes.DynamicPipe pipe1(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe1.L,
     diameter=Pipe.pipe1.Di,
     roughness=Pipe.pipe1.kappa,
@@ -10,13 +12,12 @@ model PaperCaseI_MSL
     p_b_start=Pipe.pipe1.pout_start,
     T_start=Pipe.pipe1.Tin_start,
     m_flow_start=Pipe.pipe1.m_flow_start,
-    nNodes=3,
-    useLumpedPressure=false)              annotation (Placement(transformation(
+    nNodes=3)              annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={0,44})));
   Modelica.Fluid.Pipes.DynamicPipe pipe2(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe2.L,
     diameter=Pipe.pipe2.Di,
     roughness=Pipe.pipe2.kappa,
@@ -28,7 +29,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={0,14})));
   Modelica.Fluid.Pipes.DynamicPipe pipe3(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe3.L,
     diameter=Pipe.pipe3.Di,
     roughness=Pipe.pipe3.kappa,
@@ -39,7 +40,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{8,22},{20,34}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe4(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe4.L,
     diameter=Pipe.pipe4.Di,
     roughness=Pipe.pipe4.kappa,
@@ -52,7 +53,7 @@ model PaperCaseI_MSL
         rotation=180,
         origin={-16,28})));
   Modelica.Fluid.Pipes.DynamicPipe pipe5(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe5.L,
     diameter=Pipe.pipe5.Di,
     roughness=Pipe.pipe5.kappa,
@@ -63,7 +64,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{-22,-4},{-10,8}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe6(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe6.L,
     diameter=Pipe.pipe6.Di,
     roughness=Pipe.pipe6.kappa,
@@ -74,7 +75,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{6,-4},{18,8}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe7(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe7.L,
     diameter=Pipe.pipe7.Di,
     roughness=Pipe.pipe7.kappa,
@@ -87,7 +88,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={0,-8})));
   Modelica.Fluid.Pipes.DynamicPipe pipe8(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe8.L,
     diameter=Pipe.pipe8.Di,
     roughness=Pipe.pipe8.kappa,
@@ -100,7 +101,7 @@ model PaperCaseI_MSL
         rotation=90,
         origin={-42,14})));
   Modelica.Fluid.Pipes.DynamicPipe pipe9(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe9.L,
     diameter=Pipe.pipe9.Di,
     roughness=Pipe.pipe9.kappa,
@@ -113,7 +114,7 @@ model PaperCaseI_MSL
         rotation=90,
         origin={28,14})));
   Modelica.Fluid.Pipes.DynamicPipe pipe10(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe10.L,
     diameter=Pipe.pipe10.Di,
     roughness=Pipe.pipe10.kappa,
@@ -126,7 +127,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={-42,-8})));
   Modelica.Fluid.Pipes.DynamicPipe pipe11(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe11.L,
     diameter=Pipe.pipe11.Di,
     roughness=Pipe.pipe11.kappa,
@@ -139,7 +140,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={28,-10})));
   Modelica.Fluid.Pipes.DynamicPipe pipe12(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe12.L,
     diameter=Pipe.pipe12.Di,
     roughness=Pipe.pipe12.kappa,
@@ -150,7 +151,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{6,-30},{18,-18}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe13(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe13.L,
     diameter=Pipe.pipe13.Di,
     roughness=Pipe.pipe13.kappa,
@@ -163,7 +164,7 @@ model PaperCaseI_MSL
         rotation=180,
         origin={-18,-24})));
   Modelica.Fluid.Pipes.DynamicPipe pipe14(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe14.L,
     diameter=Pipe.pipe14.Di,
     roughness=Pipe.pipe14.kappa,
@@ -174,7 +175,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{34,-30},{46,-18}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe15(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe15.L,
     diameter=Pipe.pipe15.Di,
     roughness=Pipe.pipe15.kappa,
@@ -185,7 +186,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{70,-30},{82,-18}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe16(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe16.L,
     diameter=Pipe.pipe16.Di,
     roughness=Pipe.pipe16.kappa,
@@ -198,7 +199,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={88,-46})));
   Modelica.Fluid.Pipes.DynamicPipe pipe17(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe17.L,
     diameter=Pipe.pipe17.Di,
     roughness=Pipe.pipe17.kappa,
@@ -209,7 +210,7 @@ model PaperCaseI_MSL
     nNodes=3)
     annotation (Placement(transformation(extent={{38,-4},{50,8}})));
   Modelica.Fluid.Pipes.DynamicPipe pipe18(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe18.L,
     diameter=Pipe.pipe18.Di,
     roughness=Pipe.pipe18.kappa,
@@ -222,7 +223,7 @@ model PaperCaseI_MSL
         rotation=90,
         origin={60,20})));
   Modelica.Fluid.Pipes.DynamicPipe pipe19(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe19.L,
     diameter=Pipe.pipe19.Di,
     roughness=Pipe.pipe19.kappa,
@@ -235,7 +236,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={0,-38})));
   Modelica.Fluid.Pipes.DynamicPipe pipe20(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe20.L,
     diameter=Pipe.pipe20.Di,
     roughness=Pipe.pipe20.kappa,
@@ -248,7 +249,7 @@ model PaperCaseI_MSL
         rotation=180,
         origin={-18,-54})));
   Modelica.Fluid.Pipes.DynamicPipe pipe21(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe21.L,
     diameter=Pipe.pipe21.Di,
     roughness=Pipe.pipe21.kappa,
@@ -258,14 +259,12 @@ model PaperCaseI_MSL
     m_flow_start=Pipe.pipe21.m_flow_start,
     nNodes=3)
     annotation (Placement(transformation(extent={{-64,-4},{-52,8}})));
-  Modelica.Fluid.Sources.MassFlowSource_T User5(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User5(redeclare package Medium = Medium,
     m_flow=-0.035600,
     T=288.15,
     nPorts=1)
-    annotation (Placement(transformation(extent={{-56,26},{-44,38}})));
-  Modelica.Fluid.Sources.MassFlowSource_T User4(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+    annotation (Placement(transformation(extent={{-58,22},{-46,34}})));
+  Modelica.Fluid.Sources.MassFlowSource_T User4(redeclare package Medium = Medium,
     m_flow=-0.045489,
     T=288.15,
     nPorts=1)                                                annotation (
@@ -274,7 +273,7 @@ model PaperCaseI_MSL
         rotation=270,
         origin={32,48})));
   Modelica.Fluid.Sources.FixedBoundary SourceP1(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     p=150000,
     T=288.15,
     nPorts=1) annotation (Placement(transformation(
@@ -282,29 +281,26 @@ model PaperCaseI_MSL
         rotation=270,
         origin={0,64})));
   Modelica.Fluid.Sources.FixedBoundary SourceP2(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     p=150000,
     T=288.15,
     nPorts=1) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-78,2})));
-  Modelica.Fluid.Sources.MassFlowSource_T User10(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User10(redeclare package Medium = Medium,
     m_flow=-0.041533,
     T=288.15,
-    nPorts=1)
-    annotation (Placement(transformation(extent={{-56,-38},{-44,-26}})));
-  Modelica.Fluid.Sources.MassFlowSource_T User15(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+    nPorts=1) annotation (Placement(transformation(extent={{-66,-42},{-54,-30}})));
+  Modelica.Fluid.Sources.MassFlowSource_T User15(redeclare package Medium = Medium,
     m_flow=-0.017800,
-    T=288.15,                                      nPorts=1) annotation (
+    T=288.15,
+    nPorts=1) annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
         origin={60,36})));
-  Modelica.Fluid.Sources.MassFlowSource_T User14(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User14(redeclare package Medium = Medium,
     m_flow=-0.008900,
     T=288.15,
     nPorts=1)                                                annotation (
@@ -312,16 +308,15 @@ model PaperCaseI_MSL
         extent={{-5,-5},{5,5}},
         rotation=180,
         origin={83,-1})));
-  Modelica.Fluid.Sources.MassFlowSource_T User13(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User13(redeclare package Medium = Medium,
     m_flow=-0.006922,
-    T=288.15,                                      nPorts=1) annotation (
+    T=288.15,
+    nPorts=1) annotation (
       Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={87,-63})));
-  Modelica.Fluid.Sources.MassFlowSource_T User12(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User12(redeclare package Medium = Medium,
     m_flow=-0.014833,
     T=288.15,
     nPorts=1)                                                annotation (
@@ -329,28 +324,26 @@ model PaperCaseI_MSL
         extent={{-5,-5},{5,5}},
         rotation=180,
         origin={103,-29})));
-  Modelica.Fluid.Sources.MassFlowSource_T User11(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User11(redeclare package Medium = Medium,
     m_flow=-0.009889,
     T=288.15,
-    nPorts=1)                                                annotation (
+    nPorts=1) annotation (
       Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={57,-17})));
-  Modelica.Fluid.Sources.MassFlowSource_T User16(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User16(redeclare package Medium = Medium,
     m_flow=-0.012856,
     T=288.15,
-    nPorts=1)                                                annotation (
+    nPorts=1)  annotation (
       Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=180,
         origin={19,-55})));
-  Modelica.Fluid.Sources.MassFlowSource_T User17(redeclare package Medium =
-        Modelica.Media.IdealGases.SingleGases.CH4,
+  Modelica.Fluid.Sources.MassFlowSource_T User17(redeclare package Medium = Medium,
     m_flow=-0.010878,
-    T=288.15,                                      nPorts=1) annotation (
+    T=288.15,
+    nPorts=1) annotation (
       Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
@@ -363,44 +356,37 @@ model PaperCaseI_MSL
     m_flow_start=0.03,
     use_eps_Re=false)
     annotation (Placement(transformation(extent={{-96,68},{-76,88}})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={61,3})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal1(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal1(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={-1,-51})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal2(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal2(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={87,-31})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal3(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal3(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={57,-29})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal4(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal4(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=180,
         origin={-37,29})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal5(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal5(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={31,29})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal6(redeclare package
-      Medium = Modelica.Media.IdealGases.SingleGases.CH4) annotation (Placement(
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal6(redeclare package Medium = Medium) annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
@@ -482,7 +468,7 @@ equation
   connect(teeJunctionIdeal4.port_1, pipe4.port_b)
     annotation (Line(points={{-32,29},{-32,28},{-22,28}}, color={0,127,255}));
   connect(teeJunctionIdeal4.port_2, User5.ports[1])
-    annotation (Line(points={{-42,29},{-44,29},{-44,32}}, color={0,127,255}));
+    annotation (Line(points={{-42,29},{-46,29},{-46,28}}, color={0,127,255}));
   connect(pipe3.port_b, teeJunctionIdeal5.port_3)
     annotation (Line(points={{20,28},{20,29},{26,29}}, color={0,127,255}));
   connect(pipe9.port_b, teeJunctionIdeal5.port_1)
@@ -493,8 +479,7 @@ equation
           -39,-20},{-42,-20},{-42,-14}}, color={0,127,255}));
   connect(teeJunctionIdeal6.port_3, pipe13.port_b) annotation (Line(points={{
           -34,-25},{-29,-25},{-29,-24},{-24,-24}}, color={0,127,255}));
-  connect(User10.ports[1], teeJunctionIdeal6.port_2) annotation (Line(points={{
-          -44,-32},{-44,-30},{-39,-30}}, color={0,127,255}));
+  connect(teeJunctionIdeal6.port_2, User10.ports[1]) annotation (Line(points={{-39,-30},{-38,-30},{-38,-36},{-54,-36}}, color={0,127,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},

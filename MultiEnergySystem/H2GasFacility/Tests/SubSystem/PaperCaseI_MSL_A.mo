@@ -1,17 +1,24 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_MSL_A
   "PaperCaseI implemented using the Modelica Standard Library"
-  extends PaperCaseI_MSL;
+  extends PaperCaseI_MSL(redeclare package Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+  X_start_H2 = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1},
+      system(
+      energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
+      massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
+      momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial));
 
   Modelica.Fluid.Sources.MassFlowSource_T boundary(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     use_m_flow_in=true,
     T=288.15,
+    X=X_start_H2,
     nPorts=1)
     annotation (Placement(transformation(extent={{-100,-56},{-88,-44}})));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    duration=0,
-    height=0.005,
+    duration=0.5,
+    height=0.001,
     offset=0,
     startTime=50)                                                                                           annotation (
     Placement(visible = true, transformation(origin={-118,-32},    extent={{-6,-6},
@@ -36,7 +43,7 @@ equation
     Diagram(coordinateSystem(preserveAspectRatio=false)),
     experiment(
       StopTime=100,
-      Interval=44,
+      Interval=1,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end PaperCaseI_MSL_A;

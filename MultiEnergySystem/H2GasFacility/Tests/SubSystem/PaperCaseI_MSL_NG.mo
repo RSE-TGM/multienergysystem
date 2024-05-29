@@ -1,7 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_MSL_NG
   "PaperCaseI implemented using the Modelica Standard Library"
-  extends PaperCaseI_MSL(redeclare package Medium = Modelica.Media.IdealGases.MixtureGases.SimpleNaturalGas);
+  extends PaperCaseI_MSL(redeclare package Medium =
+        Modelica.Media.IdealGases.MixtureGases.SimpleNaturalGas);
 
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={

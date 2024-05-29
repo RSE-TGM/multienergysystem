@@ -21,7 +21,7 @@ partial model PaperCaseI "Distribution network example from [1]"
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.00119840; 15*3600, 0.00169773; 16*3600, 0.00109853; 17*3600, 0; 24*3600, 0];
   parameter Types.Length kappa = 0.045e-3;
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle;
 
 // Maximum mass flowrate demand for each user
   parameter Types.MassFlowRate m_flow_max_user4 = 0.044645108;

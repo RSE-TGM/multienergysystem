@@ -7,4 +7,8 @@ model Test3Pipes_A_IG
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2_ND(computeEnergyVariables = false));
 equation
 
+  annotation (experiment(
+      StopTime=280,
+      Interval=0.0392047,
+      __Dymola_Algorithm="Dassl"));
 end Test3Pipes_A_IG;

@@ -38,7 +38,6 @@ model Test_H2_injection
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     constantFrictionFactor=false,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
-
     rho_nom=Pipe.pipe1.rho_nom,
     n=n,
     k=Pipe.pipe1.k)
@@ -58,7 +57,6 @@ model Test_H2_injection
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     constantFrictionFactor=false,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
-
     rho_nom=Pipe.pipe1.rho_nom,
     n=n,
     k=Pipe.pipe1.k)
@@ -78,11 +76,11 @@ model Test_H2_injection
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     constantFrictionFactor=false,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
-
     rho_nom=Pipe.pipe1.rho_nom,
     n=n,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{34,16},{54,36}})));
+
   MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow1(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,

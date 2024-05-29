@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_A "Same as PaperCaseI with injection of pure hydrogen in node 3"
   extends Tests.SubSystem.PaperCaseI(
+    m_flow_H2_ref = 0.005,
     useEnergyDemand = false,
     sourceH2_A(G=0,use_in_m_flow0 = true),
     m_flow_H2(duration = 0),

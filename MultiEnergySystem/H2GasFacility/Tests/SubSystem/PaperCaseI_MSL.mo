@@ -3,9 +3,7 @@ model PaperCaseI_MSL
   "PaperCaseI implemented using the Modelica Standard Library"
   replaceable package Medium =
         Modelica.Media.IdealGases.SingleGases.CH4 constrainedby Modelica.Media.Interfaces.PartialMedium;
-  parameter Integer nX = 7 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[nX]= {0.9, 0, 0, 0, 0, 0, 0.1};
-  parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+
 
   Modelica.Fluid.Pipes.DynamicPipe pipe1(
     redeclare package Medium = Medium,

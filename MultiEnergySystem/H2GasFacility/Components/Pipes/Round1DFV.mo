@@ -293,10 +293,10 @@ equation
 
     // Momentum Balance - Hydraulic Capacitance Position
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
-//       -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-//       -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
-      -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rhotilde[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rhotilde[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-      -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rhotilde[i]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rhotilde[i]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+      -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+      -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+//      -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rhotilde[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rhotilde[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+//      -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rhotilde[i]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rhotilde[i]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
       -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];

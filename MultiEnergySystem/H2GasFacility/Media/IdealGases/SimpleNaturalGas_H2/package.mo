@@ -17,8 +17,8 @@ package SimpleNaturalGas_H2 "Taken from the MSL. Simple natural gas mix with 6 c
       Modelica.Media.IdealGases.Common.FluidData.CO2,
       Modelica.Media.IdealGases.Common.FluidData.H2},
   substanceNames={"Methane","Ethane","Propane","N-Butane,","Nitrogen","Carbondioxide","Hydrogen"},
-  reference_X={0.9,0,0,0,0,0,0.1});
-  //reference_X={0.9,0.04,0.04,0.005,0.01,0.005,0});
+  reference_X={0.9,0.04,0.04,0.005,0.01,0.005,0});
+  //reference_X={1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
 
 
   annotation (Documentation(info="<html>

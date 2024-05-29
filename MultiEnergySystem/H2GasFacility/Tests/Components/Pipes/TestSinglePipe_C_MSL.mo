@@ -1,7 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
 model TestSinglePipe_C_MSL
+  replaceable model Medium = Modelica.Media.IdealGases.SingleGases.CH4;
+  parameter Integer n = 5 "Number of volumes in each pipeline";
+  parameter Integer nX = 7 "Number of components in the gas fluid";
+  parameter Types.MassFraction X_start[nX] = {0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1};
   Modelica.Fluid.Pipes.DynamicPipe pipe(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     length=Pipe.pipe1.L,
     diameter=Pipe.pipe1.Di,
     roughness=Pipe.pipe1.k,
@@ -9,14 +13,14 @@ model TestSinglePipe_C_MSL
     p_b_start=Pipe.pipe1.pout_start,
     T_start=Pipe.pipe1.Tin_start,
     m_flow_start=Pipe.pipe1.m_flow_start,
-    nNodes=5) annotation (Placement(transformation(extent={{4,-24},{36,8}})));
+    nNodes=n) annotation (Placement(transformation(extent={{4,-24},{36,8}})));
   Modelica.Fluid.Sources.MassFlowSource_T boundary(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     use_m_flow_in=true,
     use_T_in=true,
     nPorts=1) annotation (Placement(transformation(extent={{-36,-18},{-16,2}})));
   Modelica.Fluid.Sources.FixedBoundary boundary1(
-    redeclare package Medium = Modelica.Media.IdealGases.SingleGases.CH4,
+    redeclare package Medium = Medium,
     use_p=true,
     p=49000,
     nPorts=1) annotation (Placement(transformation(

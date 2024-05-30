@@ -134,7 +134,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
 
   // Complementary variables
   Types.Time taur "Residence time";
-  Types.PerUnit Re[n + 1](each nominal = 1e5) "Reynolds";
+  Types.PerUnit Re[n + 1](each nominal = 1e5) "Reynolds number";
   Types.PerUnit ff[n + 1](each nominal = 5e-2, each min = 0, each start = ff_nom) "Friction factor";
   Real kf(unit = "1/m4");
   Types.Pressure dp(start = dp_nom, nominal = 1e4) "Delta pressure";
@@ -233,11 +233,6 @@ equation
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)+
                 {dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
-                //{regStep(inlet.m_flow, fluid[i+1].dv_dp, fluid[i].dv_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(inlet.m_flow, fluid[i+1].dv_dT, fluid[i].dv_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n}
-                //{regStep(inlet.m_flow, fluid[i+1].dv_dp, fluid[i].dv_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(inlet.m_flow, fluid[i+1].dv_dT, fluid[i].dv_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n} +
-                //{regStep(inlet.m_flow, fluid[i+1].dv_dX[1:end-1], fluid[i].dv_dX[1:end-1], m_flow_start*dp_small)*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = if quasiStatic then
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)
@@ -245,11 +240,6 @@ equation
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)+
                 {du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
-                //{regStep(inlet.m_flow, fluid[i+1].du_dp, fluid[i].du_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(inlet.m_flow, fluid[i+1].du_dT, fluid[i].du_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n}
-                //{regStep(inlet.m_flow, fluid[i+1].du_dp, fluid[i].du_dp, m_flow_start*dp_small)*der(ptilde[i]) for i in 1:n} +
-                //{regStep(inlet.m_flow, fluid[i+1].du_dT, fluid[i].du_dT, m_flow_start*dp_small)*der(Ttilde[i]) for i in 1:n} +
-                //{regStep(inlet.m_flow, fluid[i+1].du_dX[1:nXi], fluid[i].du_dX[1:nXi], m_flow_start*dp_small)*der(Xitilde[i,:]) for i in 1:n};
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -273,45 +263,23 @@ equation
   m_flow[1:n]-m_flow[2:n+1] = -Vi*rhotilde.^2 .*dvdttilde;
   m_flow[1:n].*fluid[1:n].h - m_flow[2:n+1].*fluid[2:n+1].h = M.*dudttilde + (m_flow[1:n]-m_flow[2:n+1]).*utilde;
   for i in 1:n loop
+    // Composition mass balance
     if quasiStatic then
-      //m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*dvdttilde[i];
-      //m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h = M[i]*dudttilde[i] + (m_flow[i] - m_flow[i+1])*utilde[i] "Energy Balance";
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
     else
-      //m_flow[i] - m_flow[i+1] = -Vi*rhotilde[i]^2*dvdttilde[i] "Mass Balance";
-      //m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h = M[i]*dudttilde[i] + (m_flow[i] - m_flow[i+1])*utilde[i] "Energy Balance";
-//      for j in 1:nXi loop
-//        if abs(fluid_temp.Xi[j])<1e-6 then
-//          0 = Xi[i,j] - Xi[i+1,j];
-//        else
-//          M[i]*der(Xitilde[i,j]) + Xitilde[i,j]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,j] - m_flow[i+1]*Xi[i+1,j];
-//        end if;
-//      end for;
-        //M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
-        M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
+      //M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
+      M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
 
     // Momentum Balance - Hydraulic Capacitance Position
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
       -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
       -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
-//      -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rhotilde[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rhotilde[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-//      -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rhotilde[i]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rhotilde[i]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
       -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];
     end if;
-
-//    if not computeInertialTerm then
-//    //-L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))*fluid[i+1].rho*A^2*squareReg(u[i]);
-//      p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
-//      //p[i] - p[i+1] = rho[i+1]*g_n*H + ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*regSquare(m_flow[i+1], m_flow_start*0.05);
-//      //pin - pout = rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]);
-//    else
-//      -L/(A*n)*der(m_flow[i+1]) + p[i] - p[i+1] = ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/fluid[i+1].rho*squareReg(m_flow[i+1]);
-//    end if;
   end for;
-  //m_flow_tilde = (m_flow[i] + m_flow[i+1])/2
 
   inh = inStream(inlet.h_out);
   outh = inStream(outlet.h_out);

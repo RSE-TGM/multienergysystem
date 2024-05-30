@@ -11,20 +11,20 @@ model PaperCaseI_MSL_A
     use_m_flow_in=true,
     T=288.15,
     nPorts=1)
-    annotation (Placement(transformation(extent={{-100,-56},{-88,-44}})));
+    annotation (Placement(transformation(extent={{-78,-42},{-66,-30}})));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     duration=0.5,
     height=0.001,
     offset=0,
     startTime=50)                                                                                           annotation (
-    Placement(visible = true, transformation(origin={-118,-32},    extent={{-6,-6},
+    Placement(visible = true, transformation(origin={-92,-32},     extent={{-6,-6},
             {6,6}},                                                                                 rotation = 0)));
 equation
 
 
 
-  connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-111.4,-32},{-106,-32},{-106,-46},{-100,-46},{-100,-45.2}}, color={0,0,127}));
-  connect(boundary.ports[1], pipe2.port_b) annotation (Line(points={{-88,-50},{-66,-50},{-66,-18},{-28,-18},{-28,0},{0,0},{0,8},{-1.11022e-15,8}}, color={0,127,255}));
+  connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-85.4,-32},{-85.4,-31.2},{-78,-31.2}},                      color={0,0,127}));
+  connect(boundary.ports[1], pipe2.port_b) annotation (Line(points={{-66,-36},{-64,-36},{-64,-35},{-61,-35},{-61,-14},{-17,-14},{-17,3},{-10,3},{-10,10}}, color={0,127,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
@@ -36,7 +36,7 @@ equation
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
                 points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
-    Diagram(coordinateSystem(preserveAspectRatio=false)),
+    Diagram(coordinateSystem(preserveAspectRatio=false, grid={1,1})),
     experiment(
       StopTime=100,
       Interval=1,

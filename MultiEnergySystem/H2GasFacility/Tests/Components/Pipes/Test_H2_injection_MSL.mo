@@ -85,8 +85,8 @@ model Test_H2_injection_MSL
   Modelica.Blocks.Sources.Ramp m_flow_in1(
     duration=0,
     height=0.01,
-    offset=Pipe.pipe1.m_flow_start,
-    startTime=50)  annotation (Placement(visible=true, transformation(
+    offset=0,
+    startTime=100) annotation (Placement(visible=true, transformation(
         origin={-88,-32},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -98,12 +98,6 @@ model Test_H2_injection_MSL
     massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
     momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState)
     annotation (Placement(transformation(extent={{-92,76},{-72,96}})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal(redeclare package Medium =
-        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2)                                                                                annotation (
-      Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-4,12})));
 equation
   connect(pipe3.port_b, boundary3.ports[1])
     annotation (Line(points={{52,-15},{52,-16},{62,-16}}, color={0,127,255}));
@@ -115,14 +109,12 @@ equation
           -42,-64}},                     color={0,0,127}));
   connect(boundary.ports[1], pipe1.port_a) annotation (Line(points={{-74,12},{-74,
           13},{-64,13}},          color={0,127,255}));
-  connect(pipe1.port_b, teeJunctionIdeal.port_3) annotation (Line(points={{-30,13},
-          {-18,13},{-18,12},{-14,12}}, color={0,127,255}));
-  connect(teeJunctionIdeal.port_1, boundary1.ports[1])
-    annotation (Line(points={{-4,2},{-4,-60},{-20,-60}}, color={0,127,255}));
-  connect(pipe3.port_a, teeJunctionIdeal.port_2) annotation (Line(points={{18,-15},
-          {18,-16},{10,-16},{10,26},{-4,26},{-4,22}}, color={0,127,255}));
-  connect(pipe2.port_a, teeJunctionIdeal.port_2)
-    annotation (Line(points={{16,31},{-4,31},{-4,22}}, color={0,127,255}));
+  connect(pipe1.port_b, pipe3.port_a) annotation (Line(points={{-30,13},{12,13},
+          {12,-15},{18,-15}}, color={0,127,255}));
+  connect(pipe2.port_a, pipe3.port_a) annotation (Line(points={{16,31},{10,31},{
+          10,14},{4,14},{4,13},{12,13},{12,-15},{18,-15}}, color={0,127,255}));
+  connect(boundary1.ports[1], pipe3.port_a) annotation (Line(points={{-20,-60},{
+          -4,-60},{-4,13},{12,13},{12,-15},{18,-15}}, color={0,127,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},

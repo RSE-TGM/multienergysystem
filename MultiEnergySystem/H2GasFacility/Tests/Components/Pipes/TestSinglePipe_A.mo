@@ -14,8 +14,8 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   // Components
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(Di = Pipe.pipe1.Di, H = 0, L = Pipe.pipe1.L, redeclare model
-            Medium =                                                                                                                         Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, quasiStatic = false, rho_nom = Pipe.pipe1.rho_nom) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(Di = Pipe.pipe1.Di, H = 0, L = Pipe.pipe1.L, redeclare
+      model Medium =                                                                                                                         Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, quasiStatic = false, rho_nom = Pipe.pipe1.rho_nom) annotation (
     Placement(visible = true, transformation(origin = {0, 2.22045e-16}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
   H2GasFacility.Sources.SourcePressure sourceP(redeclare model Medium = Medium,
     T0=293.15,                                                                               X0 = Xref, p0 = pin_start,
@@ -28,11 +28,15 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
     Placement(visible = true, transformation(origin = {52, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = -m_flow_start*2, offset = m_flow_start, startTime = 75) annotation (
+  Modelica.Blocks.Sources.Ramp m_flow(duration = 100,
+    height=-m_flow_start*2.5,                                                   offset = m_flow_start, startTime = 75) annotation (
     Placement(visible = true, transformation(origin = {26, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp p_in(duration = 50, height = 1000*0, offset = pin_start, startTime = 200) annotation (
+  Modelica.Blocks.Sources.Ramp p_in(
+    duration=0,
+    height=0.1e5,                                                   offset = pin_start,
+    startTime=50)                                                                                        annotation (
     Placement(visible = true, transformation(origin = {-86, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(sourceP.outlet, roundPipe.inlet) annotation (

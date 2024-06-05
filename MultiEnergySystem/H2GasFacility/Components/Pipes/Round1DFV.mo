@@ -96,7 +96,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:end]) "State variable temperatures";
   Types.Density rhotilde[n](each start = rho_nom);
   Types.SpecificEnergy utilde[n];
-  Types.MassFlowRate m_flowtilde[n](each stateSelect = StateSelect.prefer, each start = m_flow_start);
+  //Types.MassFlowRate m_flowtilde[n](each stateSelect = StateSelect.prefer, each start = m_flow_start);
+  Types.MassFlowRate m_flowtilde[n](each start = m_flow_start);
 
 
   // Inlet/Outlet Variables
@@ -193,12 +194,12 @@ equation
 
 // Relationships for state variables
   if allowFlowReversal then
-    //Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1],m_flow_start*dp_small);
-    Ttilde = (T[2:end] + T[1:end-1])/2;
-    //Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
-    Xitilde = (Xi[2:end,:] + Xi[1:end-1,:])/2;
-    //rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_start*dp_small);
-    rhotilde = (rho[2:end] + rho[1:end-1])/2;
+    Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1],m_flow_start*dp_small);
+    //Ttilde = (T[2:end] + T[1:end-1])/2;
+    Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    //Xitilde = (Xi[2:end,:] + Xi[1:end-1,:])/2;
+    rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_start*dp_small);
+    //rhotilde = (rho[2:end] + rho[1:end-1])/2;
     utilde = regStep(inlet.m_flow, fluid[2:end].u, fluid[1:end-1].u, m_flow_start*dp_small);
 
     dv_dT = regStep(inlet.m_flow, fluid[2:end].dv_dT, fluid[1:end-1].dv_dT, m_flow_start*dp_small);
@@ -222,7 +223,8 @@ equation
   end if;
   //ptilde = p[2:end];
   //m_flowtilde = regStep(inlet.m_flow, m_flow[2:end], m_flow[1:end-1], dp_nom*dp_small);
-  m_flowtilde = (m_flow[2:end] + m_flow[1:end-1])/2;
+  m_flowtilde =  m_flow[1:end-1];
+  //m_flowtilde = (m_flow[2:end] + m_flow[1:end-1])/2;
 
   M = Vi*rhotilde;
 
@@ -272,11 +274,20 @@ equation
     end if;
 
     // Momentum Balance - Hydraulic Capacitance Position
+//     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
+//       -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+//       -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+//     else
+//       -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
+//       ptilde[i] = p[i+1];
+//     end if;
+
+    // Momentum Balance - Hydraulic Capacitance Position
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
-      -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-      -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+      p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+      ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
-      -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
+      p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];
     end if;
   end for;
@@ -324,7 +335,7 @@ equation
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
-      der(m_flowtilde[i]) = 0;
+      //der(m_flowtilde[i]) = 0;
       if quasiStatic then
       // nothing
         der(Ttilde[i]) = 0;
@@ -355,5 +366,9 @@ initial equation
 
   annotation (Documentation(info="<html>
 <p><span style=\"font-size: 12pt;\">** Friction factor equation -&gt; Add bibliography</span></p>
-</html>"));
+</html>"), experiment(
+      StopTime=500,
+      Interval=0.0167,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end Round1DFV;

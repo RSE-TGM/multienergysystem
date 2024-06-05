@@ -6,7 +6,7 @@ model PaperCaseI_MSL_NG_H2_A
       system(
       energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
       massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
-      momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial),
+      momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState),
     SourceP1(X=X_net),
     User5(X=X_net),
     pipe4(X_start=X_net),
@@ -39,7 +39,7 @@ model PaperCaseI_MSL_NG_H2_A
     SourceP2(X=X_net));
   parameter Integer nX = 7 "Number of components in the gas fluid";
   parameter Types.MassFraction X_start[nX]= {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
-  parameter Types.MassFraction X_start_H2[nX] = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
+  parameter Types.MassFraction X_start_H2[nX] = {0.8, 0.04, 0.04, 0.005, 0.01, 0.005, 0.1};
   parameter Types.MassFraction X_net[nX] = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
 
   Modelica.Fluid.Sources.MassFlowSource_T boundary(
@@ -51,7 +51,7 @@ model PaperCaseI_MSL_NG_H2_A
     annotation (Placement(transformation(extent={{-80,-35},{-70,-25}})));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     duration=0,
-    height=0.005,
+    height=0.001,
     offset=0,
     startTime=50)                                                                                           annotation (
     Placement(visible = true, transformation(origin={-92,-26},     extent={{-6,-6},

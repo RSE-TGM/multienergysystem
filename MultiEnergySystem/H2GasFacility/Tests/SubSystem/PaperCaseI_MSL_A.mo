@@ -24,7 +24,9 @@ equation
 
 
   connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-85.4,-32},{-85.4,-31.2},{-78,-31.2}},                      color={0,0,127}));
-  connect(boundary.ports[1], pipe2.port_b) annotation (Line(points={{-66,-36},{-64,-36},{-64,-35},{-61,-35},{-61,-14},{-17,-14},{-17,3},{-10,3},{-10,10}}, color={0,127,255}));
+  connect(boundary.ports[1], pipe2.port_b) annotation (Line(points={{-66,-36},{
+          -64,-36},{-64,-35},{-61,-35},{-61,-14},{-17,-14},{-17,3},{-10,3},{-10,
+          6}},                                                                                                                                             color={0,127,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},

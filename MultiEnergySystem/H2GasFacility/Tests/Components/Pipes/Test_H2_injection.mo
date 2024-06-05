@@ -59,7 +59,7 @@ model Test_H2_injection
     duration=0,
     height=0.01,
     offset=0,
-    startTime=100) annotation (Placement(visible=true, transformation(
+    startTime=250) annotation (Placement(visible=true, transformation(
         origin={-90,-60},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -82,6 +82,7 @@ model Test_H2_injection
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
     rho_nom=Pipe.pipe1.rho_nom,
     n=n,
+    kappa=Pipe.pipe1.kappa,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{-36,-2},{-16,18}})));
 
@@ -103,6 +104,7 @@ model Test_H2_injection
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
     rho_nom=Pipe.pipe1.rho_nom,
     n=n,
+    kappa=Pipe.pipe1.kappa,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{24,14},{44,34}})));
 
@@ -124,6 +126,7 @@ model Test_H2_injection
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
     rho_nom=Pipe.pipe1.rho_nom,
     n=n,
+    kappa=Pipe.pipe1.kappa,
     k=Pipe.pipe1.k)
     annotation (Placement(transformation(extent={{24,-16},{44,4}})));
 

@@ -15,6 +15,7 @@ model Test_H2_injection_MSL
     p_a_start=Pipe.pipe1.pin_start,
     p_b_start=Pipe.pipe1.pout_start,
     T_start=Pipe.pipe1.Tin_start,
+    X_start=X_net,
     m_flow_start=Pipe.pipe1.m_flow_start,
     nNodes=n,
     modelStructure=Modelica.Fluid.Types.ModelStructure.a_v_b)
@@ -63,6 +64,7 @@ model Test_H2_injection_MSL
     p_a_start=Pipe.pipe1.pin_start,
     p_b_start=Pipe.pipe1.pout_start,
     T_start=Pipe.pipe1.Tin_start,
+    X_start=X_net,
     m_flow_start=Pipe.pipe1.m_flow_start,
     nNodes=n,
     modelStructure=Modelica.Fluid.Types.ModelStructure.a_v_b,
@@ -79,6 +81,7 @@ model Test_H2_injection_MSL
     p_a_start=Pipe.pipe1.pin_start,
     p_b_start=Pipe.pipe1.pout_start,
     T_start=Pipe.pipe1.Tin_start,
+    X_start=X_net,
     m_flow_start=Pipe.pipe1.m_flow_start,
     nNodes=n,
     useLumpedPressure=false)              annotation (Placement(transformation(
@@ -89,7 +92,7 @@ model Test_H2_injection_MSL
     duration=0,
     height=0.01,
     offset=0,
-    startTime=100) annotation (Placement(visible=true, transformation(
+    startTime=250) annotation (Placement(visible=true, transformation(
         origin={-88,-32},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -99,7 +102,7 @@ model Test_H2_injection_MSL
   inner Modelica.Fluid.System system(
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
-    momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState)
+    momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial)
     annotation (Placement(transformation(extent={{-92,76},{-72,96}})));
   Modelica.Blocks.Sources.Ramp pin(
     duration=0,

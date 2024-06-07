@@ -15,7 +15,7 @@ model ControlledPump
     "Prescribed outlet pressure" annotation (Placement(
       visible=true,
       transformation(
-        origin={-54,60},
+        origin={-58,60},
         extent={{-20,-20},{20,20}},
         rotation=0),
       iconTransformation(

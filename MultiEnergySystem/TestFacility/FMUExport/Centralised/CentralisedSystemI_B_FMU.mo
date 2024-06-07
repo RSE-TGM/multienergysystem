@@ -10,7 +10,7 @@ model CentralisedSystemI_B_FMU
   Modelica.Blocks.Interfaces.RealInput m_flow_P401
     annotation (Placement(transformation(extent={{-266,-196},{-306,-156}})));
   Modelica.Blocks.Interfaces.RealInput FVC_901
-    annotation (Placement(transformation(extent={{-692,94},{-732,134}})));
+    annotation (Placement(transformation(extent={{-694,122},{-734,162}})));
   Modelica.Blocks.Interfaces.RealInput q_P901
     annotation (Placement(transformation(extent={{-690,46},{-730,86}})));
   Modelica.Blocks.Interfaces.RealInput omega_PR01
@@ -70,7 +70,7 @@ model CentralisedSystemI_B_FMU
 equation
   connect(P901.in_omega, q_P901) annotation (Line(points={{-747.25,66.3},{-728.625,
           66.3},{-728.625,66},{-710,66}}, color={0,0,127}));
-  connect(FCV901.opening, FVC_901) annotation (Line(points={{-749.9,140.5},{-730.5,140.5},{-730.5,114},{-712,114}},
+  connect(FCV901.opening, FVC_901) annotation (Line(points={{-749.9,140.5},{-731.95,140.5},{-731.95,142},{-714,142}},
                                     color={0,0,127}));
   connect(FCVC01.opening, FCV_C01) annotation (Line(points={{258,235},{276,235},
           {276,234},{294,234}}, color={0,0,127}));

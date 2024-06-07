@@ -71,6 +71,12 @@ package Configurations
 
     partial model CentralizedSystemI "System with only Gas Boiler as source of heat"
       extends BaseClass.CentralizedNetworkBase;
+
+      replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+
+      // Gas composition
+      parameter Integer nX = 4 "Number of components in gas";
+      parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {0.9553316, 0.0341105, 0.0105579, 0} "Mass composition";
       // System S100
       parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
       parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
@@ -119,6 +125,14 @@ package Configurations
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-240, -40})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(L = L_S1_rCD_cold, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype, n = n) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-276, -40})));
+      H2GasFacility.Sources.SourcePressure sourceGas(
+        redeclare model Medium = Gas,
+        X0=X_gas,
+        R=1e-3,
+        computeEnergyVariables=true) annotation (Placement(transformation(
+            extent={{9,-9},{-9,9}},
+            rotation=0,
+            origin={-207,-301})));
     equation
       connect(P101.inlet, PL3_S101.outlet) annotation (
         Line(points = {{-240, -184.6}, {-240, -220}}, color = {140, 56, 54}, thickness = 0.5));
@@ -150,6 +164,10 @@ package Configurations
         Line(points = {{-240, -240}, {-240, -254}, {-246.5, -254}, {-246.5, -273}}, color = {140, 56, 54}, thickness = 0.5));
       connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (
         Line(points = {{-240, -30}, {-242, -30}, {-242, 44.75}, {-257.5, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
+      connect(sourceGas.outlet, GB101.inletfuel) annotation (Line(
+          points={{-216,-301},{-236,-301}},
+          color={182,109,49},
+          thickness=0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)));
@@ -606,6 +624,12 @@ package Configurations
 
     partial model CentralizedSystemLoadSimplifiedI "System with only Gas Boiler as source of heat"
       extends BaseClass.CentralizedNetworkBaseLoadSimplified;
+      replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+
+      // Gas composition
+      parameter Integer nX = 4 "Number of components in gas";
+      parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {0.9553316, 0.0341105, 0.0105579, 0} "Mass composition";
+
       // System S100
       parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
       parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
@@ -666,6 +690,14 @@ package Configurations
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-276, -162})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(redeclare model Medium = WaterHot, L = L_P101_FCV101, h = h_P101_FCV101, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-240, -142})));
+      H2GasFacility.Sources.SourcePressure sourceGas(
+        redeclare model Medium = Gas,
+        X0=X_gas,
+        R=1e-3,
+        computeEnergyVariables=true) annotation (Placement(transformation(
+            extent={{9,-9},{-9,9}},
+            rotation=0,
+            origin={-205,-301})));
     equation
       connect(TT102.inlet, PT102.inlet) annotation (
         Line(points = {{-240.4, -72}, {-240.4, -84}}, color = {140, 56, 54}, thickness = 0.5));
@@ -698,6 +730,10 @@ package Configurations
         Line(points = {{-240, -152}, {-240, -165.4}}, color = {140, 56, 54}, thickness = 0.5));
       connect(FCV101.inlet, PL_S100_P101_FCV101.outlet) annotation (
         Line(points = {{-240, -120}, {-240, -132}}, color = {140, 56, 54}, thickness = 0.5));
+      connect(sourceGas.outlet, GB101.inletfuel) annotation (Line(
+          points={{-214,-301},{-236,-301}},
+          color={182,109,49},
+          thickness=0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)));

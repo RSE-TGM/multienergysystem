@@ -148,10 +148,6 @@ equation
       points={{-60,6},{-44,6},{-44,8},{-36,8}},
       color={182,109,49},
       thickness=0.5));
-  connect(pipe1.outlet, pipe2.inlet) annotation (Line(
-      points={{-16,8},{16,8},{16,24},{24,24}},
-      color={182,109,49},
-      thickness=0.5));
   connect(pipe2.outlet, sinkMassFlow1.inlet) annotation (Line(
       points={{44,24},{64,24},{64,26},{72,26}},
       color={182,109,49},
@@ -160,16 +156,20 @@ equation
       points={{44,-6},{70,-6}},
       color={182,109,49},
       thickness=0.5));
-  connect(pipe1.outlet, pipe3.inlet) annotation (Line(
-      points={{-16,8},{16,8},{16,-6},{24,-6}},
+  connect(pin.y, sourcePressure.in_p0)
+    annotation (Line(points={{-79,30},{-74,30},{-74,14.4}}, color={0,0,127}));
+  connect(pipe1.outlet, pipe2.inlet) annotation (Line(
+      points={{-16,8},{16,8},{16,24},{24,24}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(pipe3.inlet, pipe2.inlet) annotation (Line(
+      points={{24,-6},{12,-6},{12,8},{16,8},{16,24},{24,24}},
       color={182,109,49},
       thickness=0.5));
   connect(sourceMassFlow1.outlet, pipe2.inlet) annotation (Line(
-      points={{-42,-72},{2,-72},{2,8},{16,8},{16,24},{24,24}},
+      points={{-42,-72},{4,-72},{4,8},{16,8},{16,24},{24,24}},
       color={182,109,49},
       thickness=0.5));
-  connect(pin.y, sourcePressure.in_p0)
-    annotation (Line(points={{-79,30},{-74,30},{-74,14.4}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},

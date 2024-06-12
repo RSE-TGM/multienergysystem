@@ -13,6 +13,8 @@ model System
     annotation(Dialog(group="Ambient conditions"));
   parameter Modelica.Units.SI.Temperature T_wb = 288.15 "Ambient temperature (wet bulb)"
     annotation(Dialog(group="Ambient conditions"));
+  parameter Modelica.Units.SI.Frequency fnom = 50 "Nominal grid frequency"
+    annotation(Dialog(group="Electrical system defaults"));
   Modelica.Blocks.Sources.RealExpression Amb_T(y=21 + 273.15)
     annotation (Placement(transformation(extent={{-32,18},{-12,38}})));
   annotation (

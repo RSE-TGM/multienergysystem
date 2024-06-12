@@ -22,7 +22,7 @@ model TestSinglePipe_B "Base test model of a single pipe (Flow1DFV) with a press
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(duration = 100, height = -m_flow_start*2.5, offset = m_flow_start, startTime = 50) annotation (
-    Placement(visible = true, transformation(origin = {26, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={28,38},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp p_in(duration = 50, height = 1000*0, offset = pin_start, startTime = 200) annotation (
@@ -34,7 +34,7 @@ model TestSinglePipe_B "Base test model of a single pipe (Flow1DFV) with a press
     Placement(visible = true, transformation(origin = {68, 36}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(m_flow.y, sink.in_m_flow0) annotation (
-    Line(points = {{37, 38}, {46, 38}, {46, 5}}, color = {0, 0, 127}));
+    Line(points={{39,38},{46,38},{46,5}},        color = {0, 0, 127}));
   connect(p_in.y, sourceP.in_p0) annotation (
     Line(points = {{-75, 20}, {-54, 20}, {-54, 8.4}}, color = {0, 0, 127}));
   connect(T_in.y, sourceP.in_T0) annotation (

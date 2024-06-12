@@ -8,26 +8,33 @@ model TestSinglePipe_C_wip
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
   parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
-  parameter Integer n = 3 "Number of volumes in Flow1DFV";
+  parameter Integer n = 5 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
   parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start "Initial temperature at the inlet";
   parameter Types.Length kappa = 0.045e-3;
-  parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
+  parameter Integer nX = 7 "Number of components in the gas fluid";
+  parameter Types.MassFraction X_start[nX] = {0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1};
   // Components
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
-    Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow(
+      use_in_m_flow0=true,
+      redeclare model Medium = Medium, p0 = Pipe.pipe1.pin_start, T0 = Pipe.pipe1.Tin_start, X0 = X_start, m_flow0 = Pipe.pipe1.m_flow_start, G = 1e-6)
+    annotation (Placement(transformation(extent={{-62,-10},{-42,10}})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(p0=49000, redeclare
+      model                                                                                   Medium = Medium, T0 = 293.15, X0 = X_start, R = 1e-6)
+    annotation (Placement(transformation(extent={{52,-10},{72,10}})));
   Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0,
     height=0.01,
     offset=Pipe.pipe1.m_flow_start,
     startTime=50)  annotation (Placement(visible=true, transformation(
-        origin={-86,20},
+        origin={-86,24},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV_wip round1DFV_wip(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(
+    redeclare model Gas = Medium,
     L=Pipe.pipe1.L,
     m_flow_start=Pipe.pipe1.m_flow_start,
     pin_start=Pipe.pipe1.pin_start,
@@ -37,59 +44,25 @@ model TestSinglePipe_C_wip
     Tout_start=Pipe.pipe1.Tout_start,
     X_start=X_start,
     Di=Pipe.pipe1.Di,
-    constantFrictionFactor=false,
-    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,
+    constantFrictionFactor=true,
+    hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
+    momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
     rho_nom=Pipe.pipe1.rho_nom,
-    n=5,
+    n=n,
+    kappa=Pipe.pipe1.kappa,
     k=Pipe.pipe1.k)
-    annotation (Placement(transformation(extent={{-8,-18},{12,2}})));
+    annotation (Placement(transformation(extent={{-14,-16},{20,18}})));
 
-  MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(
-    T0(displayUnit="K") = 15 + 273.15,
-    R=1,
-    redeclare model Medium = Medium,
-    X0=Xref,
-    p0(displayUnit="Pa") = 48999.99999999999,
-    use_in_p0=true)                                                                                                                                                                                                       annotation (
-    Placement(transformation(extent={{48,-18},{68,2}})));
-  Modelica.Blocks.Sources.Ramp p_out(
-    height=0*0.3e5,
-    duration=0,
-    startTime=050,
-    offset=0.49e5)                                                                                     annotation (
-    Placement(visible = true, transformation(origin={36,44},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow(
-    p0=Pipe.pipe1.pin_start,
-    T0=Pipe.pipe1.Tin_start,
-    redeclare model Medium = Medium,
-    X0=Xref,
-    m_flow0=m_flow_start,
-    G=0,
-    use_in_m_flow0=true,
-    use_in_T0=true)
-    annotation (Placement(transformation(extent={{-58,-18},{-38,2}})));
 equation
-  connect(round1DFV_wip.outlet, sinkPressure.inlet) annotation (Line(
-      points={{12,-8},{48,-8}},
+  connect(m_flow_in.y, sourceMassFlow.in_m_flow0)
+    annotation (Line(points={{-75,24},{-58,24},{-58,5}}, color={0,0,127}));
+  connect(pipe1.outlet, sinkPressure.inlet) annotation (Line(
+      points={{20,1},{20,0},{52,0}},
       color={182,109,49},
       thickness=0.5));
-  connect(p_out.y, sinkPressure.in_p0) annotation (Line(points={{47,44},{60,44},
-          {60,6},{54,6},{54,0.4}}, color={0,0,127}));
-  connect(sourceMassFlow.outlet, round1DFV_wip.inlet) annotation (Line(
-      points={{-38,-8},{-8,-8}},
+  connect(pipe1.inlet, sourceMassFlow.outlet) annotation (Line(
+      points={{-14,1},{-14,0},{-42,0}},
       color={182,109,49},
       thickness=0.5));
-  connect(sourceMassFlow.in_m_flow0, m_flow_in.y) annotation (Line(points={{-54,
-          -3},{-68,-3},{-68,20},{-75,20}}, color={0,0,127}));
-  connect(T_in.y, sourceMassFlow.in_T0)
-    annotation (Line(points={{-75,52},{-48,52},{-48,-3}}, color={0,0,127}));
-  annotation (
-    experiment(
-      StopTime=100,
-      Interval=0.0350042,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"),
-      Documentation(info="<html>
-<p>This test doesn&apos;t wotk because there is a conflict in giving the pressure at the inlet and the m_flow at the outlet. </p>
-</html>"));
+  annotation (experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
 end TestSinglePipe_C_wip;

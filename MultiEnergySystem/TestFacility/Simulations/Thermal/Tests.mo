@@ -61,6 +61,7 @@ package Tests
         parameter String matrixtheta = "theta_FCV101" "Matrix name in file";
         parameter String matrixfreq = "f_P101";
         parameter String matrixFT = "FT101" "Matrix name in file";
+        parameter String matrixmflowGas = "FT801" "Matrix name in file";
         parameter String timenoscale = "time" "Matrix name in file";
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
 
@@ -152,6 +153,7 @@ package Tests
               extent={{-10,-10},{10,10}},
               rotation=90,
               origin={-2,-60})));
+        Modelica.Blocks.Sources.TimeTable m_flowgas_ref(table=[ts,m_flow_Gas]) annotation (Placement(transformation(extent={{40,-46},{52,-34}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -162,6 +164,7 @@ package Tests
         final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
         final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
+        final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
         final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
         final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1,1];
@@ -196,13 +199,19 @@ package Tests
             points={{-2,-50},{-2,-41.24},{-2,-41.24},{-2,-32.48}},
             color={182,109,49},
             thickness=0.5));
-        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
+            StopTime=4000,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
       end TestBase;
 
       model S100_Seq_0412Test1
         extends TestBase(Kv= 33, MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test1.mat"),
             gasBoiler(Pmaxnom=147.6e3*0.78));
-        annotation (experiment(StopTime=3325, __Dymola_Algorithm="Dassl"));
+        annotation (experiment(
+            StopTime=3325,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
       end S100_Seq_0412Test1;
 
       model S100_Seq_0412Test2

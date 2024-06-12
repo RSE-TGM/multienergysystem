@@ -98,6 +98,7 @@ model GasBoiler "System 100"
         origin={20,62})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB(
     redeclare model Medium = Medium,
+    redeclare model Gas = Gas,
     h=h,
     D=D,
     Pmaxnom=Pmaxnom,

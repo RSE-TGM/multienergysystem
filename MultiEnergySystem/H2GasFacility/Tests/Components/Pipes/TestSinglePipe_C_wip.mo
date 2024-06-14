@@ -22,8 +22,7 @@ model TestSinglePipe_C_wip
       use_in_m_flow0=true,
       redeclare model Medium = Medium, p0 = Pipe.pipe1.pin_start, T0 = Pipe.pipe1.Tin_start, X0 = X_start, m_flow0 = Pipe.pipe1.m_flow_start, G = 1e-6)
     annotation (Placement(transformation(extent={{-62,-10},{-42,10}})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(p0=49000, redeclare
-      model                                                                                   Medium = Medium, T0 = 293.15, X0 = X_start, R = 1e-6)
+  MultiEnergySystem.H2GasFacility.Sources.SinkPressure sinkPressure(p0=49000, redeclare model Medium = Medium, T0 = 293.15, X0 = X_start, R = 1e-6)
     annotation (Placement(transformation(extent={{52,-10},{72,10}})));
   Modelica.Blocks.Sources.Ramp m_flow_in(
     duration=0,

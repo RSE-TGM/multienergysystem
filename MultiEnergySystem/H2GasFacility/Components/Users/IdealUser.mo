@@ -1,7 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Components.Users;
 model IdealUser
-  replaceable model Medium = H2GasFacility.Media.IdealGases.CH4 constrainedby
-    H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model Medium = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
 // Parameters
   parameter Boolean useEnergyDemand = false "True if the demand approach uses energy instead of mass flowrate";

@@ -23,35 +23,33 @@ model Test_H2_injection_MSL
         extent={{-17,-17},{17,17}},
         rotation=0,
         origin={-47,13})));
-  Modelica.Fluid.Sources.Boundary_pT boundary(redeclare package Medium =
-        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+  Modelica.Fluid.Sources.Boundary_pT sourcePressure(
+    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     use_p_in=true,
     p=150000,
     T=288.15,
-    X=X_net,                                  nPorts=1)
-    annotation (Placement(transformation(extent={{-94,2},{-74,22}})));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary1(
-    redeclare package Medium =
-        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+    X=X_net,
+    nPorts=1) annotation (Placement(transformation(extent={{-94,2},{-74,22}})));
+  Modelica.Fluid.Sources.MassFlowSource_T sourceMassFlow1(
+    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     use_m_flow_in=true,
     use_X_in=true,
-    nPorts=1)
-    annotation (Placement(transformation(extent={{-40,-70},{-20,-50}})));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary2(redeclare package Medium =
-        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+    nPorts=1) annotation (Placement(transformation(extent={{-40,-50},{-20,-30}})));
+  Modelica.Fluid.Sources.MassFlowSource_T sinkMassFlow2(
+    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     m_flow=-Pipe.pipe1.m_flow_start,
     T=Pipe.pipe1.Tout_start,
-    X=X_net,                                                                   nPorts=1) annotation (
-      Placement(transformation(
+    X=X_net,
+    nPorts=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={74,32})));
-  Modelica.Fluid.Sources.MassFlowSource_T boundary3(redeclare package Medium =
-        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+  Modelica.Fluid.Sources.MassFlowSource_T sinkMassFlow3(
+    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     m_flow=-Pipe.pipe1.m_flow_start,
     T=Pipe.pipe1.Tout_start,
-    X=X_net,                                                                  nPorts=1) annotation (
-      Placement(transformation(
+    X=X_net,
+    nPorts=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={72,-16})));
@@ -87,18 +85,18 @@ model Test_H2_injection_MSL
     useLumpedPressure=false)              annotation (Placement(transformation(
         extent={{-17,-17},{17,17}},
         rotation=0,
-        origin={35,-15})));
+        origin={33,-15})));
   Modelica.Blocks.Sources.Ramp m_flow_in1(
     duration=0,
     height=0.01,
     offset=0,
     startTime=250) annotation (Placement(visible=true, transformation(
-        origin={-88,-32},
+        origin={-88,-20},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.RealExpression realExpression[7](y=if time < 50 then
         X_start_H2 else X_start_H2)
-    annotation (Placement(transformation(extent={{-98,-74},{-78,-54}})));
+    annotation (Placement(transformation(extent={{-98,-54},{-78,-34}})));
   inner Modelica.Fluid.System system(
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.SteadyStateInitial,
@@ -113,24 +111,15 @@ model Test_H2_injection_MSL
         extent={{-10,-10},{10,10}},
         rotation=0)));
 equation
-  connect(pipe3.port_b, boundary3.ports[1])
-    annotation (Line(points={{52,-15},{52,-16},{62,-16}}, color={0,127,255}));
-  connect(pipe2.port_b, boundary2.ports[1])
-    annotation (Line(points={{50,31},{50,32},{64,32}}, color={0,127,255}));
-  connect(m_flow_in1.y, boundary1.m_flow_in) annotation (Line(points={{-77,-32},
-          {-48,-32},{-48,-52},{-40,-52}}, color={0,0,127}));
-  connect(realExpression.y, boundary1.X_in) annotation (Line(points={{-77,-64},{
-          -42,-64}},                     color={0,0,127}));
-  connect(boundary.ports[1], pipe1.port_a) annotation (Line(points={{-74,12},{-74,
-          13},{-64,13}},          color={0,127,255}));
-  connect(pipe1.port_b, pipe3.port_a) annotation (Line(points={{-30,13},{12,13},
-          {12,-15},{18,-15}}, color={0,127,255}));
-  connect(pipe2.port_a, pipe3.port_a) annotation (Line(points={{16,31},{10,31},{
-          10,14},{4,14},{4,13},{12,13},{12,-15},{18,-15}}, color={0,127,255}));
-  connect(boundary1.ports[1], pipe3.port_a) annotation (Line(points={{-20,-60},{
-          -4,-60},{-4,13},{12,13},{12,-15},{18,-15}}, color={0,127,255}));
-  connect(pin.y, boundary.p_in)
-    annotation (Line(points={{-107,20},{-96,20}}, color={0,0,127}));
+  connect(pipe3.port_b, sinkMassFlow3.ports[1]) annotation (Line(points={{50,-15},{50,-16},{62,-16}}, color={0,127,255}));
+  connect(pipe2.port_b, sinkMassFlow2.ports[1]) annotation (Line(points={{50,31},{50,32},{64,32}}, color={0,127,255}));
+  connect(m_flow_in1.y, sourceMassFlow1.m_flow_in) annotation (Line(points={{-77,-20},{-48,-20},{-48,-32},{-40,-32}}, color={0,0,127}));
+  connect(realExpression.y, sourceMassFlow1.X_in) annotation (Line(points={{-77,-44},{-42,-44}}, color={0,0,127}));
+  connect(sourcePressure.ports[1], pipe1.port_a) annotation (Line(points={{-74,12},{-74,13},{-64,13}}, color={0,127,255}));
+  connect(pin.y, sourcePressure.p_in) annotation (Line(points={{-107,20},{-96,20}}, color={0,0,127}));
+  connect(pipe1.port_b, pipe2.port_a) annotation (Line(points={{-30,13},{-22,13},{-22,12},{-10,12},{-10,31},{16,31}}, color={0,127,255}));
+  connect(pipe1.port_b, pipe3.port_a) annotation (Line(points={{-30,13},{-20,13},{-20,12},{-10,12},{-10,-15},{16,-15}}, color={0,127,255}));
+  connect(sourceMassFlow1.ports[1], pipe2.port_a) annotation (Line(points={{-20,-40},{-16,-40},{-16,12},{-10,12},{-10,31},{16,31}}, color={0,127,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
                 fillColor={255,255,255},

@@ -97,6 +97,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Density rhotilde[n](each start = rho_nom);
   Types.SpecificEnergy utilde[n];
   Types.MassFlowRate m_flowtilde[n](each stateSelect = StateSelect.prefer, each start = m_flow_start);
+  Types.MassFraction Xtilde[n, nX](start = fill(X_start, n), nominal = 0.1*fill(ones(nX),n));
   //Types.MassFlowRate m_flowtilde[n](each start = m_flow_start);
 
 
@@ -117,6 +118,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1] "Specific enthalpy at each fluid";
   //Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";
+  Types.MassFraction X[n+1, nX](nominal = fill(ones(nX),n+1)) "Mass fractions at each volume boundary";
   Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";
   Types.Velocity vel[n + 1](each start = vel_nom, each nominal = 1) "Velocity at each volume boundary";
   Types.Pressure p[n + 1](each nominal = pin_nom) "Pressure at each fluid";
@@ -124,6 +126,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Real dudttilde[n](each start = 0);
   Types.SpecificVolume dv_dXi[n,nXi];
   Types.SpecificEnergy du_dXi[n,nXi];
+  Types.SpecificVolume dv_dX[n,nX];
+  Types.SpecificEnergy du_dX[n,nX];
   Types.SpecificEnthalpy inh;
   Types.SpecificEnthalpy outh;
   Types.MassFraction inXi[nXi];
@@ -171,6 +175,8 @@ equation
   fluid.Xi = Xi;
   fluid.p = p;
 
+  X = fluid.X;
+
   {fluidIn.p, fluidIn.h} = {fluid[1].p, fluid[1].h};
   fluidIn.Xi = fluid[1].Xi;
   {fluidOut.p, fluidOut.h} = {fluid[n+1].p, fluid[n+1].h};
@@ -194,10 +200,12 @@ equation
 
 // Relationships for state variables
   if allowFlowReversal then
-    Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1],m_flow_start*dp_small);
+    Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1], m_flow_start*dp_small);
     //Ttilde = (T[2:end] + T[1:end-1])/2;
-    Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    //Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
     //Xitilde = (Xi[2:end,:] + Xi[1:end-1,:])/2;
+    Xitilde = Xi[2:end,:];
+    Xtilde = X[2:end,:];
     rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_start*dp_small);
     //rhotilde = (rho[2:end] + rho[1:end-1])/2;
     utilde = regStep(inlet.m_flow, fluid[2:end].u, fluid[1:end-1].u, m_flow_start*dp_small);
@@ -205,9 +213,11 @@ equation
     dv_dT = regStep(inlet.m_flow, fluid[2:end].dv_dT, fluid[1:end-1].dv_dT, m_flow_start*dp_small);
     dv_dp = regStep(inlet.m_flow, fluid[2:end].dv_dp, fluid[1:end-1].dv_dp, m_flow_start*dp_small);
     dv_dXi = regStep(inlet.m_flow, fluid[2:end].dv_dX[1:nXi], fluid[1:end-1].dv_dX[1:nXi], m_flow_start*dp_small);
+    dv_dX = regStep(inlet.m_flow, fluid[2:end].dv_dX, fluid[1:end-1].dv_dX, m_flow_start*dp_small);
     du_dT = regStep(inlet.m_flow, fluid[2:end].du_dT, fluid[1:end-1].du_dT, m_flow_start*dp_small);
     du_dp = regStep(inlet.m_flow, fluid[2:end].du_dp, fluid[1:end-1].du_dp, m_flow_start*dp_small);
     du_dXi = regStep(inlet.m_flow, fluid[2:end].du_dX[1:nXi], fluid[1:end-1].du_dX[1:nXi], m_flow_start*dp_small);
+    du_dX = regStep(inlet.m_flow, fluid[2:end].du_dX, fluid[1:end-1].du_dX, m_flow_start*dp_small);
   else
     Ttilde = T[2:end];
     Xitilde = Xi[2:end,:];
@@ -217,13 +227,16 @@ equation
     dv_dT = fluid[2:end].dv_dT;
     dv_dp = fluid[2:end].dv_dp;
     dv_dXi = fluid[2:end].dv_dX[1:nXi];
+    dv_dX = fluid[2:end].dv_dX;
     du_dT = fluid[2:end].du_dT;
     du_dp = fluid[2:end].du_dp;
     du_dXi = fluid[2:end].du_dX[1:nXi];
+    du_dX = fluid[2:end].du_dX;
   end if;
   //ptilde = p[2:end];
   //m_flowtilde = regStep(inlet.m_flow, m_flow[2:end], m_flow[1:end-1], dp_nom*dp_small);
-  m_flowtilde =  m_flow[1:end-1];
+  m_flowtilde = m_flow[1:end-1];
+  //m_flowtilde = m_flow[2:end];
   //m_flowtilde = (m_flow[2:end] + m_flow[1:end-1])/2;
 
   M = Vi*rhotilde;
@@ -234,14 +247,16 @@ equation
               else
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)+
-                {dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                {dv_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
+                //{dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
   dudttilde = if quasiStatic then
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)
               else
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)+
-                {du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                {du_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
+                //{du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -269,7 +284,7 @@ equation
     if quasiStatic then
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
     else
-      //M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
+      //M[i]/m_flow[i]*der(Xitilde[i,:]) = (Xi[i,:] - Xi[i+1,:]);
       M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
 
@@ -288,7 +303,9 @@ equation
       ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
       -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i]*g_n*H + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
+      //p[i] - p[i+1] = rho[i]*g_n*H + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];
+      //ptilde[i] = regStep(inlet.m_flow, p[i+1], p[i], m_flow_start*dp_small);
     end if;
   end for;
 
@@ -366,9 +383,5 @@ initial equation
 
   annotation (Documentation(info="<html>
 <p><span style=\"font-size: 12pt;\">** Friction factor equation -&gt; Add bibliography</span></p>
-</html>"), experiment(
-      StopTime=500,
-      Interval=0.0167,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+</html>"));
 end Round1DFV;

@@ -19,7 +19,8 @@ partial model PaperCaseI "Distribution network example from [1]"
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Pressure p_nom = 1.5e5;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
-  parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.00119840; 15*3600, 0.00169773; 16*3600, 0.00109853; 17*3600, 0; 24*3600, 0];
+  //parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.00119840; 15*3600, 0.00169773; 16*3600, 0.00109853; 17*3600, 0; 24*3600, 0];
+  parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.0008655; 15*3600, 0.0003956; 16*3600, 0.0003956; 17*3600, 0; 24*3600, 0];
   parameter Types.Length kappa = 0.045e-3;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
 
@@ -148,31 +149,31 @@ constantFrictionFactor=constantFrictionFactor)                                  
     pin_nom=p_nom,
     rho_nom=Pipe.pipe14.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin = {60, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={55,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe15(redeclare model Medium = Medium, Di = Pipe.pipe15.Di, L = Pipe.pipe15.L, Tin_start = Pipe.pipe15.Tin_start, Tout_start = Pipe.pipe15.Tout_start, X_start = X_start, hin_start = Pipe.pipe15.hin_start, k = Pipe.pipe15.k, kc = 1, m_flow_start = Pipe.pipe15.m_flow_start, n = n, pin_start = Pipe.pipe15.pin_start, pout_start = Pipe.pipe15.pout_start, momentum = momentum,
     quasiStatic=quasiStatic, hctype = hctype,
     pin_nom=p_nom,
     rho_nom=Pipe.pipe15.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin = {120, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={105,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe16(redeclare model Medium = Medium, Di = Pipe.pipe16.Di, L = Pipe.pipe16.L, Tin_start = Pipe.pipe16.Tin_start, Tout_start = Pipe.pipe16.Tout_start, X_start = X_start, hin_start = Pipe.pipe16.hin_start, k = Pipe.pipe16.k, kc = 1, m_flow_start = Pipe.pipe16.m_flow_start, n = n, pin_start = Pipe.pipe16.pin_start, pout_start = Pipe.pipe16.pout_start, momentum = momentum,
     quasiStatic=quasiStatic, hctype = hctype,
     pin_nom=p_nom,
     rho_nom=Pipe.pipe16.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin = {150, -60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+    Placement(visible = true, transformation(origin={130,-60},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe17(redeclare model Medium = Medium, Di = Pipe.pipe17.Di, L = Pipe.pipe17.L, Tin_start = Pipe.pipe17.Tin_start, Tout_start = Pipe.pipe17.Tout_start, X_start = X_start, hin_start = Pipe.pipe17.hin_start, k = Pipe.pipe17.k, kc = 1, m_flow_start = Pipe.pipe17.m_flow_start, n = n, pin_start = Pipe.pipe17.pin_start, pout_start = Pipe.pipe17.pout_start, momentum = momentum,
     quasiStatic=quasiStatic, hctype = hctype,
     pin_nom=p_nom,
     rho_nom=Pipe.pipe17.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin = {60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={55,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe18(redeclare model Medium = Medium, Di = Pipe.pipe18.Di, L = Pipe.pipe18.L, Tin_start = Pipe.pipe18.Tin_start, Tout_start = Pipe.pipe18.Tout_start, X_start = X_start, hin_start = Pipe.pipe18.hin_start, k = Pipe.pipe18.k, kc = 1, m_flow_start = Pipe.pipe18.m_flow_start, n = n, pin_start = Pipe.pipe18.pin_start, pout_start = Pipe.pipe18.pout_start, momentum = momentum,
     quasiStatic=quasiStatic, hctype = hctype,
     pin_nom=p_nom,
     rho_nom=Pipe.pipe18.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin = {90, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+    Placement(visible = true, transformation(origin={80,20},    extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe19(redeclare model Medium = Medium, Di = Pipe.pipe19.Di, L = Pipe.pipe19.L, Tin_start = Pipe.pipe19.Tin_start, Tout_start = Pipe.pipe19.Tout_start, X_start = X_start, hin_start = Pipe.pipe19.hin_start, k = Pipe.pipe19.k, kc = 1, m_flow_start = Pipe.pipe19.m_flow_start, n = n, pin_start = Pipe.pipe19.pin_start, pout_start = Pipe.pipe19.pout_start, momentum = momentum,
     quasiStatic=quasiStatic, hctype = hctype,
     pin_nom=p_nom,
@@ -213,27 +214,27 @@ constantFrictionFactor=constantFrictionFactor)                                  
         MediumUsers,
     p0=Pipe.pipe14.pout_start,                                                                       X0 = X_start,
     m_flow0=0.009889,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
-    Placement(visible = true, transformation(origin = {90, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={80,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user12(redeclare model Medium =
         MediumUsers,
     p0=Pipe.pipe15.pout_start,                                                                       X0 = X_start,
     m_flow0=0.014833,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
-    Placement(visible = true, transformation(origin = {150, -40}, extent={{-10,10},{10,-10}},      rotation = 0)));
+    Placement(visible = true, transformation(origin={130,-40},    extent={{-10,10},{10,-10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user13(redeclare model Medium =
         MediumUsers,
     p0=Pipe.pipe16.pout_start,                                                                       X0 = X_start,
     m_flow0=0.006922,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
-    Placement(visible = true, transformation(origin = {150, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={130,-80},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user14(redeclare model Medium =
         MediumUsers,
     p0=Pipe.pipe17.pout_start,                                                                       X0 = X_start,
     m_flow0=0.008900,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
-    Placement(visible = true, transformation(origin = {90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Placement(visible = true, transformation(origin={80,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user15(redeclare model Medium =
         MediumUsers,
     p0=Pipe.pipe18.pout_start,                                                                       X0 = X_start,
     m_flow0=0.017800,                                                                                                                                                                                                        useEnergyDemand = useEnergyDemand) annotation (
-    Placement(visible = true, transformation(origin = {90, 40}, extent = {{-10, -10}, {10, 10}}, rotation=180)));
+    Placement(visible = true, transformation(origin={80,40},    extent = {{-10, -10}, {10, 10}}, rotation=180)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user16(redeclare model Medium =
         MediumUsers,
     p0=Pipe.pipe19.pout_start,                                                                       X0 = X_start,
@@ -264,6 +265,22 @@ constantFrictionFactor=constantFrictionFactor)                                  
   Modelica.Blocks.Sources.TimeTable H2_Production(table=H2Production)
     annotation (Placement(visible = true, transformation(origin={35,0},    extent = {{-180, -70}, {-160, -50}}, rotation = 0)));
 
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I2O manifold2I2O(redeclare model Medium = Medium,
+    p_start=Pipe.pipe8.pin_start,
+    T_start=Pipe.pipe8.Tin_start,
+    X_start=X_start)                                                                                             annotation (Placement(transformation(extent={{-74,-4},{-66,4}})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I2O manifold2I2O1(
+    redeclare model Medium = Medium,
+    p_start=Pipe.pipe9.pin_start,
+    T_start=Pipe.pipe9.Tin_start,
+    X_start=X_start)                                                                                             annotation (Placement(transformation(extent={{26,-4},{34,4}})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I2O manifold2I2O2(
+    redeclare model Medium = Medium,
+    p_start=Pipe.pipe2.pin_start,
+    T_start=Pipe.pipe2.Tin_start,
+    X_start=X_start)                                                                                             annotation (Placement(transformation(extent={{-4,-4},{4,4}},
+        rotation=-90,
+        origin={-20,40})));
 protected
   function residentialDemand_mfr
     input Types.MassFlowRate m_flow_max;
@@ -286,17 +303,11 @@ protected
 equation
   total_m_flow_demand = user4.inlet.m_flow + user5.inlet.m_flow + user10.inlet.m_flow + user11.inlet.m_flow + user12.inlet.m_flow + user13.inlet.m_flow + user14.inlet.m_flow + user15.inlet.m_flow + user16.inlet.m_flow + user17.inlet.m_flow;
   connect(pipe16.outlet, user13.inlet) annotation (
-    Line(points = {{150, -70}, {150, -80}}, color = {182, 109, 49}));
+    Line(points={{130,-70},{130,-80}},      color = {182, 109, 49}));
   connect(user5.inlet, pipe8.outlet) annotation (
     Line(points = {{-70, 40}, {-70, 30}}, color = {182, 109, 49}));
   connect(user5.inlet, pipe4.outlet) annotation (
     Line(points = {{-70, 40}, {-50, 40}}, color = {182, 109, 49}));
-  connect(pipe4.inlet, pipe2.inlet) annotation (
-    Line(points = {{-30, 40}, {-20, 40}, {-20, 30}}, color = {182, 109, 49}));
-  connect(pipe3.inlet, pipe2.inlet) annotation (
-    Line(points = {{-10, 40}, {-20, 40}, {-20, 30}}, color = {182, 109, 49}));
-  connect(pipe1.outlet, pipe2.inlet) annotation (
-    Line(points = {{-20, 50}, {-20, 30}}, color = {182, 109, 49}));
   connect(pipe2.outlet, pipe7.inlet) annotation (
     Line(points = {{-20, 10}, {-20, -10}}, color = {182, 109, 49}));
   connect(pipe5.outlet, pipe7.inlet) annotation (
@@ -312,25 +323,21 @@ equation
   connect(pipe7.outlet, pipe19.inlet) annotation (
     Line(points = {{-20, -30}, {-20, -50}}, color = {182, 109, 49}));
   connect(pipe11.outlet, pipe14.inlet) annotation (
-    Line(points = {{30, -30}, {30, -40}, {50, -40}}, color = {182, 109, 49}));
+    Line(points={{30,-30},{30,-40},{45,-40}},        color = {182, 109, 49}));
   connect(pipe15.outlet, user12.inlet) annotation (
-    Line(points = {{130, -40}, {150, -40}}, color = {182, 109, 49}));
+    Line(points={{115,-40},{130,-40}},      color = {182, 109, 49}));
   connect(user12.inlet, pipe16.inlet) annotation (
-    Line(points = {{150, -40}, {150, -50}}, color = {182, 109, 49}));
+    Line(points={{130,-40},{130,-50}},      color = {182, 109, 49}));
   connect(pipe17.outlet, user14.inlet) annotation (
-    Line(points = {{70, 0}, {90, 0}}, color = {182, 109, 49}));
+    Line(points={{65,0},{80,0}},      color = {182, 109, 49}));
   connect(user14.inlet, pipe18.inlet) annotation (
-    Line(points = {{90, 0}, {90, 10}}, color = {182, 109, 49}));
+    Line(points={{80,0},{80,10}},      color = {182, 109, 49}));
   connect(pipe18.outlet, user15.inlet) annotation (
-    Line(points = {{90, 30}, {90, 40}}, color = {182, 109, 49}));
+    Line(points={{80,30},{80,40}},      color = {182, 109, 49}));
   connect(pipe14.outlet, user11.inlet) annotation (
-    Line(points = {{70, -40}, {90, -40}}, color = {182, 109, 49}));
+    Line(points={{65,-40},{80,-40}},      color = {182, 109, 49}));
   connect(user11.inlet, pipe15.inlet) annotation (
-    Line(points = {{90, -40}, {110, -40}}, color = {182, 109, 49}));
-  connect(pipe21.outlet, pipe5.inlet) annotation (
-    Line(points = {{-90, 0}, {-50, 0}}, color = {182, 109, 49}));
-  connect(pipe21.outlet, pipe8.inlet) annotation (
-    Line(points = {{-90, 0}, {-70, 0}, {-70, 10}}, color = {182, 109, 49}));
+    Line(points={{80,-40},{95,-40}},       color = {182, 109, 49}));
   connect(user10.inlet, pipe13.outlet) annotation (
     Line(points = {{-70, -40}, {-50, -40}}, color = {182, 109, 49}));
   connect(pipe13.inlet, pipe19.inlet) annotation (
@@ -339,24 +346,64 @@ equation
     Line(points = {{10, 40}, {30, 40}}, color = {182, 109, 49}));
   connect(user4.inlet, pipe9.outlet) annotation (
     Line(points = {{30, 40}, {30, 30}}, color = {182, 109, 49}));
-  connect(pipe9.inlet, pipe11.inlet) annotation (
-    Line(points = {{30, 10}, {30, -10}}, color = {182, 109, 49}));
-  connect(pipe6.outlet, pipe9.inlet) annotation (
-    Line(points = {{10, 0}, {30, 0}, {30, 10}}, color = {182, 109, 49}));
-  connect(pipe6.outlet, pipe17.inlet) annotation (
-    Line(points = {{10, 0}, {50, 0}}, color = {182, 109, 49}));
   connect(pipe12.inlet, pipe19.inlet) annotation (
     Line(points = {{-10, -40}, {-20, -40}, {-20, -50}}, color = {182, 109, 49}));
   connect(pipe12.outlet, pipe11.outlet) annotation (
     Line(points = {{10, -40}, {30, -40}, {30, -30}}, color = {182, 109, 49}));
-  connect(pipe21.outlet, pipe10.inlet) annotation (
-    Line(points = {{-90, 0}, {-70, 0}, {-70, -8}}, color = {182, 109, 49}));
   connect(pipe10.outlet, user10.inlet) annotation (
     Line(points = {{-70, -28}, {-70, -40}}, color = {182, 109, 49}));
   connect(sourceP18.outlet, pipe21.inlet) annotation (
     Line(points={{-122,0},{-110,0}},      color = {182, 109, 49}));
   connect(sourceP1.outlet, pipe1.inlet) annotation (
     Line(points={{-20,86},{-20,70}},       color = {182, 109, 49}));
+  connect(manifold2I2O.outlet, pipe8.inlet) annotation (Line(
+      points={{-70,3.92},{-70,10}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O.outlet1, pipe5.inlet) annotation (Line(
+      points={{-66,0},{-50,0}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O.outlet2, pipe10.inlet) annotation (Line(
+      points={{-70,-4},{-70,-8}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O.inlet, pipe21.outlet) annotation (Line(
+      points={{-74,0},{-90,0}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O1.inlet, pipe6.outlet) annotation (Line(
+      points={{26,0},{10,0}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O1.outlet, pipe9.inlet) annotation (Line(
+      points={{30,3.92},{30,10}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O1.outlet1, pipe17.inlet) annotation (Line(
+      points={{34,0},{45,0}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O1.outlet2, pipe11.inlet) annotation (Line(
+      points={{30,-4},{30,-10}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O2.outlet2, pipe4.inlet) annotation (Line(
+      points={{-24,40},{-30,40}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O2.outlet, pipe3.inlet) annotation (Line(
+      points={{-16.08,40},{-10,40}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O2.outlet1, pipe2.inlet) annotation (Line(
+      points={{-20,36},{-20,30}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(manifold2I2O2.inlet, pipe1.outlet) annotation (Line(
+      points={{-20,44},{-20,50}},
+      color={182,109,49},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})),
     experiment(StartTime = 0, StopTime = 22000, Tolerance = 1e-06, Interval = 44),

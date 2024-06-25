@@ -54,7 +54,7 @@ model PaperCaseI_MSL_NG_H2_A
     annotation (Placement(transformation(extent={{-80,-35},{-70,-25}})));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     duration=0,
-    height=0.001,
+    height=0.01,
     offset=0,
     startTime=50)                                                                                           annotation (
     Placement(visible = true, transformation(origin={-92,-26},     extent={{-6,-6},
@@ -63,7 +63,7 @@ equation
 
   connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-85.4,-26},{-80,-26}}, color={0,0,127}));
   connect(boundary.ports[1], pipe5.port_b)
-    annotation (Line(points={{-70,-30},{-59,-30},{-59,-3},{-16,-3},{-16,4.16334e-16},{-16.5,4.16334e-16},{-16.5,0},{-20,0}}, color={0,127,255}));
+    annotation (Line(points={{-70,-30},{-59,-30},{-59,-3},{-16,-3},{-16,4.16334e-16},{-16.5,4.16334e-16},{-16.5,0},{-23,0}}, color={0,127,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},
@@ -79,6 +79,6 @@ equation
     experiment(
       StopTime=4000,
       Interval=1,
-      Tolerance=1e-06,
+      Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end PaperCaseI_MSL_NG_H2_A;

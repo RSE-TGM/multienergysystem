@@ -80,5 +80,8 @@ equation
       StopTime=4000,
       Interval=1,
       Tolerance=1e-05,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p><span style=\"font-family: Arial;\">Dynamic analysis of injection of pure hydrogen in node 3. </span></p>
+</html>"));
 end PaperCaseI_MSL_NG_H2_A;

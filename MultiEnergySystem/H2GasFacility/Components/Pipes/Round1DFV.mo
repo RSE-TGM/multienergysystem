@@ -382,6 +382,6 @@ initial equation
   end if;
 
   annotation (Documentation(info="<html>
-<p><span style=\"font-size: 12pt;\">** Friction factor equation -&gt; Add bibliography</span></p>
+<p><span style=\"font-size: 12pt;\">Friction factor: Haaland Equation </span></p>
 </html>"));
 end Round1DFV;

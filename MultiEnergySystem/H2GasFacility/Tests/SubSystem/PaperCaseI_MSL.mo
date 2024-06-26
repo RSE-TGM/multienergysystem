@@ -412,13 +412,15 @@ model PaperCaseI_MSL
         extent={{-3,3},{3,-3}},
         rotation=90,
         origin={-10,-26})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal10(redeclare package Medium = Medium)
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal10(redeclare package
+                                                                                Medium = Medium)
                                                                                                annotation (Placement(
         transformation(
         extent={{-3,3},{3,-3}},
         rotation=180,
         origin={-49,0})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal11(redeclare package Medium = Medium)
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal11(redeclare package
+                                                                                Medium = Medium)
                                                                                                annotation (Placement(
         transformation(
         extent={{3,3},{-3,-3}},
@@ -504,5 +506,8 @@ equation
                 fillPattern = FillPattern.Solid,
                 points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
     Diagram(coordinateSystem(preserveAspectRatio=false, grid={1,1})),
-    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+    experiment(StopTime=100, __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p>Used to simulate the S.S. of the network with MSL.</p>
+</html>"));
 end PaperCaseI_MSL;

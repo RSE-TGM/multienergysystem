@@ -32,5 +32,9 @@ equation
     experiment(
       StopTime=4000,
       Interval=0.166667,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p><span style=\"font-family: Arial;\">Dynamic analysis of injection of pure hydrogen in node 3.</span></p>
+<p>Not working: simulation failed.</p>
+</html>"));
 end PaperCaseI_NG_H2_A;

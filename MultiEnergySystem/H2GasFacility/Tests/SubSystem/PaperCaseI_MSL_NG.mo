@@ -16,5 +16,8 @@ model PaperCaseI_MSL_NG
                 fillPattern = FillPattern.Solid,
                 points={{-36,60},{64,0},{-36,-60},{-36,60}})}),
     Diagram(coordinateSystem(preserveAspectRatio=false)),
-    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+    experiment(StopTime=100, __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p>Used to simulate the S.S. of the network with MSL.</p>
+</html>"));
 end PaperCaseI_MSL_NG;

@@ -186,6 +186,7 @@ equation
   for i in 1:n + 1 loop
     if not constantFrictionFactor then
       Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000) "Reynold's number";
+      // Haaland formula for friction factor
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
     else
       Re[i]=0;
@@ -239,7 +240,7 @@ equation
   //m_flowtilde = m_flow[2:end];
   //m_flowtilde = (m_flow[2:end] + m_flow[1:end-1])/2;
 
-  M = Vi*rhotilde;
+  M = Vi*rhotilde; // Total mass in the i-th volume
 
   dvdttilde = if quasiStatic then
                 dv_dp.*der(ptilde)+
@@ -276,7 +277,10 @@ equation
   inlet.Xi= fluid[1].Xi;
   outlet.Xi = fluid[end].Xi;
 
+//--------------------
 // Balances
+//--------------------
+  // Mass balance
   m_flow[1:n]-m_flow[2:n+1] = -Vi*rhotilde.^2 .*dvdttilde;
   m_flow[1:n].*fluid[1:n].h - m_flow[2:n+1].*fluid[2:n+1].h = M.*dudttilde + (m_flow[1:n]-m_flow[2:n+1]).*utilde;
   for i in 1:n loop
@@ -289,13 +293,13 @@ equation
     end if;
 
     // Momentum Balance - Hydraulic Capacitance Position
-//     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
-//       -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-//       -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
-//     else
-//       -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
-//       ptilde[i] = p[i+1];
-//     end if;
+    // if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
+    //   -L/(A*n)*der(m_flowtilde[i])/2 + p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+    //   -L/(A*n)*der(m_flowtilde[i])/2 + ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+    // else
+    //   -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i+1]*g_n*H + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
+    //   ptilde[i] = p[i+1];
+    // end if;
 
     // Momentum Balance - Hydraulic Capacitance Position
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
@@ -354,7 +358,7 @@ initial equation
     for i in 1:n loop
       der(m_flowtilde[i]) = 0;
       if quasiStatic then
-      // nothing
+        // nothing
         der(Ttilde[i]) = 0;
       else
         der(Xitilde[i,:]) = zeros(nXi);
@@ -375,13 +379,16 @@ initial equation
     if not noInitialPressure then
       ptilde = linspace(pin_start, pout_start, n);
     else
-//  No initial pressure
+    // No initial pressure
     end if;
   else
-// No initial equations
+  // No initial equations
   end if;
 
   annotation (Documentation(info="<html>
-<p><span style=\"font-size: 12pt;\">Friction factor: Haaland Equation </span></p>
+<p>Finite Volume model fo a Pipe. </p>
+<p>The dynamic model includes the following equations: Mass balance, 
+Balance, Momentu Balance, and Mass composition Balance.</p>
+<p><span style=\"font-size: 10pt;\">The Friction factor is computed using the explicit Haaland Formula. </span></p>
 </html>"));
 end Round1DFV;

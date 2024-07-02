@@ -210,7 +210,7 @@ model PaperCaseII_MSL
         origin={0,48})));
   Modelica.Fluid.Sources.FixedBoundary SourceP1(
     redeclare package Medium = Medium,
-    p=75000,
+    p(displayUnit="Pa") = 75000,
     T=288.15,
     X=X_start,
     nPorts=1) annotation (Placement(transformation(

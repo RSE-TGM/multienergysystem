@@ -9,7 +9,11 @@ model Test_PF_vs_FV
   parameter Types.MassFraction Xref[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
   //parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter Types.MassFraction X_start[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
-
+  parameter Boolean useEnergyDemand = false;
+  parameter Boolean quasiStatic = true;
+  parameter Boolean constantFrictionFactor = true;
+  parameter Boolean computeInertialTerm = false;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
   parameter Integer n = 3 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
@@ -92,6 +96,9 @@ model Test_PF_vs_FV
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV round1DFV(
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    hctype=hctype,
     redeclare model Medium = Medium,
     L=Pipe.pipe1.L,
     H=Pipe.pipe1.h,

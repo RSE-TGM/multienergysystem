@@ -26,7 +26,8 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
   parameter Real dp_small = 1e-5;
   // Components
   H2GasFacility.Sources.SourcePressure sourceP(redeclare model Medium =
-        MediumBoundaries,                                                                 T0(displayUnit = "K") = 293.15, X0 = Xref, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (
+        MediumBoundaries,                                                                 T0(displayUnit = "K") = 293.15, X0 = Xref, p0 = pin_start,
+    R=1e-3,                                                                                                                                          use_in_T0 = true, use_in_p0 = true) annotation (
     Placement(visible = true, transformation(origin = {-68, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   H2GasFacility.Sources.SinkMassFlow sink(G = 0, redeclare model Medium =
         MediumBoundaries,                                                                   T0(displayUnit = "K") = 288.15 + 5,
@@ -36,7 +37,8 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
     Placement(visible = true, transformation(origin = {90, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp m_flow(duration = 50, height = -m_flow_start*2.5, offset = m_flow_start, startTime = 50) annotation (
+  Modelica.Blocks.Sources.Ramp m_flow(duration = 50,
+    height=0.1*m_flow_start,                                                     offset = m_flow_start, startTime = 50) annotation (
     Placement(visible = true, transformation(origin = {26, 38}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -63,11 +65,13 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
     Placement(visible = true, transformation(origin = {6, -50}, extent = {{22, -22}, {-22, 22}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare
       model                                                                       Medium =
-        MediumBoundaries,                                                                                    R = 0, T0(displayUnit = "K") = 293.15, X0 = Xref_2, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (
+        MediumBoundaries,
+    R=1e-3,                                                                                                         T0(displayUnit = "K") = 293.15, X0 = Xref_2, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (
     Placement(visible = true, transformation(origin = {-20, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp T_in3(duration = 20, height = 0, offset = 15 + 273.15, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-60, -58}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Sources.Ramp p_in3(duration = 50, height = 0.5e5, offset = pin_start, startTime = 150) annotation (
+  Modelica.Blocks.Sources.Ramp p_in3(duration = 50,
+    height=0*0.5e5,                                                 offset = pin_start, startTime = 150) annotation (
     Placement(visible = true, transformation(origin = {-62, -86}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(m_flow.y, sink.in_m_flow0) annotation (

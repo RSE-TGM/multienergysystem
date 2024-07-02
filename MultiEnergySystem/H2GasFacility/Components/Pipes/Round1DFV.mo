@@ -282,7 +282,10 @@ equation
 //--------------------
   // Mass balance
   m_flow[1:n]-m_flow[2:n+1] = -Vi*rhotilde.^2 .*dvdttilde;
+
+  // Energy Balance
   m_flow[1:n].*fluid[1:n].h - m_flow[2:n+1].*fluid[2:n+1].h = M.*dudttilde + (m_flow[1:n]-m_flow[2:n+1]).*utilde;
+
   for i in 1:n loop
     // Composition mass balance
     if quasiStatic then

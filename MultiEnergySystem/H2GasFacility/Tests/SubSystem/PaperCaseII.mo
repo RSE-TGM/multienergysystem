@@ -4,6 +4,7 @@ model PaperCaseII "Distribution network example from [2]"
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG6_H2;
   replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = false;
   parameter Boolean computeTransport = true;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
@@ -86,7 +87,7 @@ model PaperCaseII "Distribution network example from [2]"
     k=Pipe.pipeII_5.k,                                                                                                                                                                                                        k_linear = 29824.94057, kc = 1,
     m_flow_start=Pipe.pipeII_5.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_5.pin_start,
-    pout_start(displayUnit="Pa") = Pipe.pipeII_5.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_5.pout_start,
     rho_nom=Pipe.pipeII_5.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-110,0},      extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe6(
@@ -208,42 +209,53 @@ model PaperCaseII "Distribution network example from [2]"
     Placement(visible = true, transformation(origin={130,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node2(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.043611, p0(displayUnit = "Pa") = 6608.999999999999, massflowratedemand = [0, 0.043611; 1000, 0.043611]) annotation (
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.043611,
+    p0(displayUnit="Pa") = Pipe.pipeII_1.pout_start,                                                                                                                              massflowratedemand = [0, 0.043611; 1000, 0.043611]) annotation (
     Placement(visible = true, transformation(origin={-80,60},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node3(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.038333,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.038333,
     p0(displayUnit="Pa") = Pipe.pipeII_2.pout_start,                                                                                                                 massflowratedemand = [0, 0.038333; 1000, 0.038333]) annotation (
     Placement(visible = true, transformation(origin={-80,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node4(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.034722,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.034722,
     p0(displayUnit="Pa") = Pipe.pipeII_3.pout_start,                                                                                                                              massflowratedemand = [0, 0.034722; 1000, 0.034722]) annotation (
     Placement(visible = true, transformation(origin={-20,60},    extent = {{-10, -10}, {10, 10}}, rotation=90)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node5(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.045278,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.045278,
     p0(displayUnit="Pa") = Pipe.pipeII_4.pout_start,                                                                                                                 massflowratedemand = [0, 0.045278; 1000, 0.045278]) annotation (
     Placement(visible = true, transformation(origin={-140,60},    extent = {{-10, -10}, {10, 10}}, rotation=-90)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node6(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.031389,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.031389,
     p0(displayUnit="Pa") = Pipe.pipeII_8.pout_start,                                                                                                                 massflowratedemand = [0, 0.031389; 1000, 0.031389]) annotation (
     Placement(visible = true, transformation(origin={-140,0},      extent = {{-10, -10}, {10, 10}}, rotation=-90)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node7(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.008611,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.008611,
     p0(displayUnit="Pa") = Pipe.pipeII_6.pout_start,                                                                                                                 massflowratedemand = [0, 0.008611; 1000, 0.008611]) annotation (
     Placement(visible = true, transformation(origin={-20,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node8(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.040833,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.040833,
     p0(displayUnit="Pa") = Pipe.pipeII_7.pout_start,                                                                                                                 massflowratedemand = [0, 0.040833; 1000, 0.040833]) annotation (
     Placement(visible = true, transformation(origin={-80,-64},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node9(redeclare
-      model Medium =                                                                        Medium, X0 = X_start, m_flow0 = 0.009444,
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.009444,
     p0(displayUnit="Pa") = Pipe.pipeII_12.pout_start,                                                                                                                massflowratedemand = [0, 0.009444; 1000, 0.009444]) annotation (
     Placement(visible = true, transformation(origin={40,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare
-      model Medium =                                                                         Medium, X0 = X_start, m_flow0 = 0.008304,
+      model Medium =                                                                         Medium,
+    useEnergyDemand=useEnergyDemand,                                                                 X0 = X_start, m_flow0 = 0.008304,
     p0(displayUnit="Pa") = Pipe.pipeII_13.pout_start,                                                                                                                 massflowratedemand = [0, 0.008333; 1000, 0.008333]) annotation (
     Placement(visible = true, transformation(origin={100,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare
-      model Medium =                                                                         Medium, X0 = X_start, m_flow0 = 0.006111,
+      model Medium =                                                                         Medium,
+    useEnergyDemand=useEnergyDemand,                                                                 X0 = X_start, m_flow0 = 0.006111,
     p0(displayUnit="Pa") = Pipe.pipeII_14.pout_start,                                                                                                                 massflowratedemand = [0, 0.006111; 1000, 0.006111]) annotation (
     Placement(visible = true, transformation(origin={160,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 

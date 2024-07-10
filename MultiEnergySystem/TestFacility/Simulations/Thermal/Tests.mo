@@ -316,7 +316,8 @@ package Tests
 
       model S100_Seq_2904Test2
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test2.mat"),
-        gasBoiler(Pmaxnom=147.6e3*0.85), GB101_ToutSP(table=[0, 76.8 + 273.15; 3400, 76.8 + 273.15; 1e6, 76.8 + 273.15]));
+        gasBoiler(Pmaxnom=147.6e3*0.85, GB(tdelay=60)),
+                                         GB101_ToutSP(table=[0, 76.8 + 273.15; 3400, 76.8 + 273.15; 1e6, 76.8 + 273.15]));
         annotation (experiment(StopTime=4140, __Dymola_Algorithm="Dassl"));
       end S100_Seq_2904Test2;
     end S100;

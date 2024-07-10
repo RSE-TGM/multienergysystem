@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledGasBoiler
   extends MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.BaseClass.PartialBoiler;
 
-  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model Gas = MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
 
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Boiler Data"));

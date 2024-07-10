@@ -2109,7 +2109,8 @@ equation
                 pattern = LinePattern.None,
                 fillPattern = FillPattern.Solid,
                 points={{-36,60},{64,0},{-36,-60},{-36,60}})}), Diagram(
-        coordinateSystem(preserveAspectRatio=false), graphics={
+        coordinateSystem(preserveAspectRatio=false, extent={{-1000,-1000},{1000,
+            1000}}),                                 graphics={
         Text(
           extent={{78,40},{128,-10}},
           textColor={0,0,0},
@@ -2117,23 +2118,19 @@ equation
 Dati Taratura: 
 Pressione = 4.93 bar 
 Portata = 2088 Stm3/h
-"),
-        Text(
+"),     Text(
           extent={{558,768},{640,712}},
           textColor={28,108,200},
           textString="Sambuca di Sicilia
-"),
-        Text(
+"),     Text(
           extent={{868,1036},{950,978}},
           textColor={28,108,200},
           textString="Contessa Entellina
-"),
-        Text(
+"),     Text(
           extent={{194,-494},{244,-512}},
           textColor={28,108,200},
           textString="Sciacca - C. So Miraglia
-"),
-        Text(
+"),     Text(
           extent={{672,-368},{722,-386}},
           textColor={28,108,200},
           textString="Sciacca -Via Lioni

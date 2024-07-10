@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseII "Distribution network example from [2]"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG6_H2;
   replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby

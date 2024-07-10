@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i "Distribution gas network Sciacca 2i Rete Gas"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV DorsaleSciacca239(
       L=88.965) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},

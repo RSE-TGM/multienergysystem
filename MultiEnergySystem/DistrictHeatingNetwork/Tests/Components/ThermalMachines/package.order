@@ -3,4 +3,5 @@ ControlledChillerNoDynamicsTest
 ElectricBoilerTest
 ControlledElectricBoilerTest
 ControlledHeatPumpNoDynamicsTest
+ControlledCHPTest
 Validation

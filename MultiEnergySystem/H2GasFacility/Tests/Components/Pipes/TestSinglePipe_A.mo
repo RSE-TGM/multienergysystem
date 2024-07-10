@@ -4,6 +4,11 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  parameter Boolean useEnergyDemand = false;
+  parameter Boolean quasiStatic = true;
+  parameter Boolean constantFrictionFactor = true;
+  parameter Boolean computeInertialTerm = false;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
   parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
   parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
@@ -14,8 +19,11 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   // Components
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(Di = Pipe.pipe1.Di, H = 0, L = Pipe.pipe1.L, redeclare
-      model Medium =                                                                                                                         Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, quasiStatic = false, rho_nom = Pipe.pipe1.rho_nom) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(Di = Pipe.pipe1.Di, H = 0, L = Pipe.pipe1.L,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    hctype=hctype,                                                                                                  redeclare
+      model Medium =                                                                                                                         Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start,                      n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start,                      rho_nom = Pipe.pipe1.rho_nom) annotation (
     Placement(visible = true, transformation(origin = {0, 2.22045e-16}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
   H2GasFacility.Sources.SourcePressure sourceP(redeclare model Medium = Medium,
     T0=293.15,                                                                               X0 = Xref, p0 = pin_start,

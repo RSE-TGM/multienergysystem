@@ -19,5 +19,8 @@ equation
       StopTime=600,
       Interval=0.166667,
       Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p><span style=\"font-size: 12pt;\">Injection of pure Hydrogen in node 3 with a step at t=50 s. </span></p>
+</html>"));
 end PaperCaseI_A;

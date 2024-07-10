@@ -11,5 +11,7 @@ equation
       StopTime=500,
       Interval=44,
       Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+<p>Step of hydrogen at node 3.</p>
+</html>"));
 end PaperCaseI_A_IG;

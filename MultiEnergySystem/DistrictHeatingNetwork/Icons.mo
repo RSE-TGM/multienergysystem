@@ -182,6 +182,16 @@ package Icons "Icon package for DHN components"
               preserveAspectRatio=false)));
 
     end Facilities;
+
+    partial model InProgress
+      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+              Rectangle(
+              extent={{-100,100},{100,-100}},
+              lineColor={28,108,200},
+              lineThickness=0.5,
+              pattern=LinePattern.Dash)}), Diagram(coordinateSystem(
+              preserveAspectRatio=false)));
+    end InProgress;
   end Generic;
 
   package ThermalMachines

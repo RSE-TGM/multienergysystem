@@ -9,16 +9,18 @@ model PaperCaseI_NG_H2_A
     redeclare model Hydrogen =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
     nX = 7,
-    constantFrictionFactor = true,
     useEnergyDemand = false,
-    sourceH2_A(G=0,use_in_m_flow0 = true),
+    constantFrictionFactor = false,
+    sourceH2_A(
+      G=0,         use_in_m_flow0 = true),
     m_flow_H2(duration = 0),
-    m_flow_H2_ref = 0.001,
+    m_flow_H2_ref = 0.01,
     quasiStatic = false,
     n = 3,
     X_start = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0},
-    X_start_H2 = {0.8, 0.04, 0.04, 0.005, 0.01, 0.005, 0.1},
+    X_start_H2 = {0.0, 0.00, 0.00, 0.000, 0.00, 0.000, 1},
     system(allowFlowReversal=true));
+    //constantFrictionFactor = true,
 equation
   connect(sourceH2_A.outlet, pipe7.inlet) annotation (
     Line(points={{-94,-40},{-90,-40},{-90,-60},{-55,-60},{-55,-6},{-20,-6},{-20,
@@ -28,8 +30,11 @@ equation
   annotation (
     Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})),
     experiment(
-      StopTime=100,
+      StopTime=4000,
       Interval=0.166667,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p><span style=\"font-family: Arial;\">Dynamic analysis of injection of pure hydrogen in node 3.</span></p>
+<p>Not working: simulation failed.</p>
+</html>"));
 end PaperCaseI_NG_H2_A;

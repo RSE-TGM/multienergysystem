@@ -9,5 +9,7 @@ model PaperCaseI_CH4_A "Same as PaperCaseI_CH4 with pure CH4 and with at step CH
       StopTime=100,
       __Dymola_NumberOfIntervals=1000,
       Tolerance=2.5e-05,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+<p><span style=\"font-size: 12pt;\">Not working</span></p>
+</html>"));
 end PaperCaseI_CH4_A;

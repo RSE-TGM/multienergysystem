@@ -7,12 +7,15 @@ model PaperCaseI_Demand_C
       startTime=3*3600));
 equation
   connect(sourceH2_A.outlet, pipe14.inlet) annotation (Line(
-      points={{-94,-40},{-98,-40},{-98,-108},{22,-108},{22,-40},{50,-40}},
+      points={{-94,-40},{-98,-40},{-98,-108},{22,-108},{22,-40},{45,-40}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(
       StopTime=86400,
       Interval=44,
       Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+<p>Hydrogen injection in node 9 following the H2 production profile. </p>
+<p>WI results are the same ad PaperCaseI --&gt; Ok.</p>
+</html>"));
 end PaperCaseI_Demand_C;

@@ -1,9 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseII "Distribution network example from [2]"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Modelica.Icons.Example;
   //replaceable model Medium = H2GasFacility.Media.IdealGases.NG6_H2;
   replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = false;
   parameter Boolean computeTransport = true;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
@@ -19,78 +21,249 @@ model PaperCaseII "Distribution network example from [2]"
     redeclare model Medium = Medium,
     T0=288.15,
     X0=X_start,
-    p0(displayUnit="Pa") = 7499.999999999999) annotation (Placement(visible=true,
+    p0(displayUnit="Pa") = 101000 + 7500)     annotation (Placement(visible=true,
         transformation(
         origin={-80,120},
         extent={{-10,-10},{10,10}},
         rotation=-90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(Di = 0.16, L = 50, redeclare model
-            Medium =                                                                                           Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0013676, k_linear = 3341.245823, kc = 1, m_flow_start = 0.266667, n = n, pin_start(displayUnit = "Pa") = 7499.999999999999, pout_start(displayUnit = "Pa") = 6608.999999999999, rho_nom = 0.0520458, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(
+    Di=Pipe.pipeII_1.Di,
+    L=Pipe.pipeII_1.L,                                                                redeclare
+      model Medium =                                                                                           Medium,
+    Tin_start=Pipe.pipeII_1.Tin_start,
+    Tout_start=Pipe.pipeII_1.Tout_start,                                                                                                                                  X_start = X_start,
+    hin_start=-4.38097e6,                                                                                                                                                                                            k = 0.0013676, k_linear = 3341.245823, kc = 1,
+    m_flow_start=Pipe.pipeII_1.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_1.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_1.pout_start,
+    rho_nom=Pipe.pipeII_1.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-80,90},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(Di = 0.16, L = 500, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0011957, k_linear = 15533.71641, kc = 1, m_flow_start = 0.124954, n = n, pin_start(displayUnit = "Pa") = 6608.999999999999, pout_start(displayUnit = "Pa") = 4668, rho_nom = 0.045862759, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
-    Placement(visible = true, transformation(origin={-80,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(Di = 0.11, L = 500, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0013452, k_linear = 41747.55164, kc = 1, m_flow_start = 0.045847, n = n, pin_start(displayUnit = "Pa") = 6608.999999999999, pout_start(displayUnit = "Pa") = 4694.999999999999, rho_nom = 0.045862759, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
-    Placement(visible = true, transformation(origin={-50,60},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe4(Di = 0.11, L = 500, redeclare model
-            Medium =                                                                                            Medium,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(
+    Di=Pipe.pipeII_2.Di,
+    L=Pipe.pipeII_2.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
     Tin_start=288.15,
-    Tout_start=288.15,                                                                                                                                                     X_start = X_start,                         k = 0.0013330, k_linear = 47153.38245, kc = 1, m_flow_start = 0.052255, n = n, pin_start(displayUnit = "Pa") = 6608.999999999999, pout_start(displayUnit = "Pa") = 4694.999999999999, rho_nom = 0.045862759, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_2.hin_start,
+    k=Pipe.pipeII_2.k,
+    k_linear=15533.71641,                                                                                                                                                                                                        kc = 1,
+    m_flow_start=Pipe.pipeII_2.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_2.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_2.pout_start,
+    rho_nom=Pipe.pipeII_2.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    Placement(visible = true, transformation(origin={-80,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(
+    Di=Pipe.pipeII_3.Di,
+    L=Pipe.pipeII_3.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_3.hin_start,
+    k=Pipe.pipeII_3.k,
+    k_linear=41747.55164,                                                                                                                                                                                                        kc = 1,
+    m_flow_start=Pipe.pipeII_3.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_3.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_3.pout_start,
+    rho_nom=Pipe.pipeII_3.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    Placement(visible = true, transformation(origin={-50,60},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe4(
+    Di=Pipe.pipeII_4.Di,
+    L=Pipe.pipeII_4.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    k=Pipe.pipeII_4.k,                                                                                                                                                                                                        k_linear = 47153.38245, kc = 1,
+    m_flow_start=Pipe.pipeII_4.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_4.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_4.pout_start,
+    rho_nom=Pipe.pipeII_4.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-110,60},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(Di = 0.11, L = 600, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009341, k_linear = 29824.94057, kc = 1, m_flow_start = 0.027762, n = n, pin_start(displayUnit = "Pa") = 4756.87, pout_start(displayUnit = "Pa") = 3840, rho_nom = 0.032393306, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(
+    Di=Pipe.pipeII_5.Di,
+    L=Pipe.pipeII_5.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_5.hin_start,
+    k=Pipe.pipeII_5.k,                                                                                                                                                                                                        k_linear = 29824.94057, kc = 1,
+    m_flow_start=Pipe.pipeII_5.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_5.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_5.pout_start,
+    rho_nom=Pipe.pipeII_5.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-110,0},      extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe6(Di = 0.11, L = 600, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009427, k_linear = 28286.69989, kc = 1, m_flow_start = 0.02609, n = n, pin_start(displayUnit = "Pa") = 4668, pout_start(displayUnit = "Pa") = 3930, rho_nom = 0.032393306, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe6(
+    Di=Pipe.pipeII_6.Di,
+    L=Pipe.pipeII_6.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_6.hin_start,
+    k=Pipe.pipeII_6.k,                                                                                                                                                                                                        k_linear = 28286.69989, kc = 1,
+    m_flow_start=Pipe.pipeII_6.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_6.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_6.pout_start,
+    rho_nom=Pipe.pipeII_6.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-50,0},      extent={{-10,-10},{10,10}},      rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe7(Di = 0.11, L = 500, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009027, k_linear = 28350.83008, kc = 1, m_flow_start = 0.032768, n = n, pin_start(displayUnit = "Pa") = 4668, pout_start(displayUnit = "Pa") = 3739, rho_nom = 0.032393306, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe7(
+    Di=Pipe.pipeII_7.Di,
+    L=Pipe.pipeII_7.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_7.hin_start,
+    k=Pipe.pipeII_7.k,                                                                                                                                                                                                        k_linear = 28350.83008, kc = 1,
+    m_flow_start=Pipe.pipeII_7.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_7.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_7.pout_start,
+    rho_nom=Pipe.pipeII_7.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-80,-30},    extent={{-10,-10},{10,10}},      rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe8(Di = 0.08, L = 600, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009843, k_linear = 43715.06378, kc = 1, m_flow_start = 0.006977, n = n, pin_start(displayUnit = "Pa") = 4145, pout_start(displayUnit = "Pa") = 3840, rho_nom = 0.028763979, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe8(
+    Di=Pipe.pipeII_8.Di,
+    L=Pipe.pipeII_8.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_8.hin_start,
+    k=Pipe.pipeII_8.k,                                                                                                                                                                                                        k_linear = 43715.06378, kc = 1,
+    m_flow_start=Pipe.pipeII_8.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_8.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_8.pout_start,
+    rho_nom=Pipe.pipeII_8.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-140,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe9(Di = 0.08, L = 600, redeclare model
-            Medium =                                                                                            Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0010998, k_linear = 68764.04494, kc = 1, m_flow_start = 0.011125, n = n, pin_start(displayUnit = "Pa") = 4694.999999999999, pout_start(displayUnit = "Pa") = 3930, rho_nom = 0.032580671, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe9(
+    Di=Pipe.pipeII_9.Di,
+    L=Pipe.pipeII_9.L,                                                                 redeclare
+      model Medium =                                                                                            Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                     X_start = X_start,
+    hin_start=Pipe.pipeII_9.hin_start,
+    k=Pipe.pipeII_9.k,                                                                                                                                                                                                        k_linear = 68764.04494, kc = 1,
+    m_flow_start=Pipe.pipeII_9.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_9.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_9.pout_start,
+    rho_nom=Pipe.pipeII_9.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-20,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di = 0.08, L = 780, redeclare model
-            Medium =                                                                                             Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0010075, k_linear = 30149.25373, kc = 1, m_flow_start = 0.00335, n = n, pin_start(displayUnit = "Pa") = 3840, pout_start(displayUnit = "Pa") = 3739, rho_nom = 0.02664745, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(
+    Di=Pipe.pipeII_10.Di,
+    L=Pipe.pipeII_10.L,                                                                 redeclare
+      model Medium =                                                                                             Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                      X_start = X_start,
+    hin_start=Pipe.pipeII_10.hin_start,
+    k=Pipe.pipeII_10.k,                                                                                                                                                                                                        k_linear = 30149.25373, kc = 1,
+    m_flow_start=Pipe.pipeII_10.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_10.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_10.pout_start,
+    rho_nom=Pipe.pipeII_10.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-140,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe11(Di = 0.08, L = 780, redeclare model
-            Medium =                                                                                             Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.0009843, k_linear = 40509.01379, kc = 1, m_flow_start = 0.004715, n = n, pin_start(displayUnit = "Pa") = 3930, pout_start(displayUnit = "Pa") = 3739, rho_nom = 0.02727200, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe11(
+    Di=Pipe.pipeII_11.Di,
+    L=Pipe.pipeII_11.L,                                                                 redeclare
+      model Medium =                                                                                             Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                      X_start = X_start,
+    hin_start=Pipe.pipeII_11.hin_start,
+    k=Pipe.pipeII_11.k,                                                                                                                                                                                                        k_linear = 40509.01379, kc = 1,
+    m_flow_start=Pipe.pipeII_11.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_11.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_11.pout_start,
+    rho_nom=Pipe.pipeII_11.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-20,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(Di = 0.08, L = 200, redeclare model
-            Medium =                                                                                             Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000873, k_linear = 46674.20152, kc = 1, m_flow_start = 0.023889, n = n, pin_start(displayUnit = "Pa") = 3930, pout_start(displayUnit = "Pa") = 2815, rho_nom = 0.02727200, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(
+    Di=Pipe.pipeII_12.Di,
+    L=Pipe.pipeII_12.L,                                                                 redeclare
+      model Medium =                                                                                             Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                      X_start = X_start,
+    hin_start=Pipe.pipeII_12.hin_start,
+    k=Pipe.pipeII_12.k,                                                                                                                                                                                                        k_linear = 46674.20152, kc = 1,
+    m_flow_start=Pipe.pipeII_12.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_12.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_12.pout_start,
+    rho_nom=Pipe.pipeII_12.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={10,0},      extent={{-10,-10},{10,10}},      rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(Di = 0.08, L = 200, redeclare model
-            Medium =                                                                                             Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000615, k_linear = 27762.39269, kc = 1, m_flow_start = 0.014444, n = n, pin_start(displayUnit = "Pa") = 2815, pout_start(displayUnit = "Pa") = 2414, rho_nom = 0.019534524, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(
+    Di=Pipe.pipeII_13.Di,
+    L=Pipe.pipeII_13.L,                                                                 redeclare
+      model Medium =                                                                                             Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                      X_start = X_start,
+    hin_start=Pipe.pipeII_13.hin_start,
+    k=Pipe.pipeII_13.k,                                                                                                                                                                                                        k_linear = 27762.39269, kc = 1,
+    m_flow_start=Pipe.pipeII_13.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_13.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_13.pout_start,
+    rho_nom=Pipe.pipeII_13.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={70,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe14(Di = 0.08, L = 200, redeclare model
-            Medium =                                                                                             Medium, Tin_start = 15 + 273.15, Tout_start = 15 + 273.15, X_start = X_start, hin_start = -4.38097e6, k = 0.000529, k_linear = 11782.0324, kc = 1, m_flow_start = 0.006111, n = n, pin_start(displayUnit = "Pa") = 2414, pout_start(displayUnit = "Pa") = 2342, rho_nom = 0.016751808, quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe14(
+    Di=Pipe.pipeII_14.Di,
+    L=Pipe.pipeII_14.L,                                                                 redeclare
+      model Medium =                                                                                             Medium,
+    Tin_start=288.15,
+    Tout_start=288.15,                                                                                                                                                      X_start = X_start,
+    hin_start=Pipe.pipeII_14.hin_start,
+    k=Pipe.pipeII_14.k,                                                                                                                                                                                                        k_linear = 11782.0324, kc = 1,
+    m_flow_start=Pipe.pipeII_14.m_flow_start,                                                                                                                                                                                                        n = n,
+    pin_start(displayUnit="Pa") = Pipe.pipeII_14.pin_start,
+    pout_start(displayUnit="Pa") = Pipe.pipeII_14.pout_start,
+    rho_nom=Pipe.pipeII_14.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={130,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node2(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.043611, p0(displayUnit = "Pa") = 6608.999999999999, massflowratedemand = [0, 0.043611; 1000, 0.043611]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node2(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.043611,
+    p0(displayUnit="Pa") = Pipe.pipeII_1.pout_start)                                                                                                                                                                                  annotation (
     Placement(visible = true, transformation(origin={-80,60},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node3(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.038333, p0(displayUnit = "Pa") = 4668, massflowratedemand = [0, 0.038333; 1000, 0.038333]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node3(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.038333,
+    p0(displayUnit="Pa") = Pipe.pipeII_2.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={-80,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node4(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.034722, p0(displayUnit = "Pa") = 4694.999999999999, massflowratedemand = [0, 0.034722; 1000, 0.034722]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node4(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.034722,
+    p0(displayUnit="Pa") = Pipe.pipeII_3.pout_start)                                                                                                                                                                                  annotation (
     Placement(visible = true, transformation(origin={-20,60},    extent = {{-10, -10}, {10, 10}}, rotation=90)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node5(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.045278, p0(displayUnit = "Pa") = 4145, massflowratedemand = [0, 0.045278; 1000, 0.045278]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node5(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.045278,
+    p0(displayUnit="Pa") = Pipe.pipeII_4.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={-140,60},    extent = {{-10, -10}, {10, 10}}, rotation=-90)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node6(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.031389, p0(displayUnit = "Pa") = 3840, massflowratedemand = [0, 0.031389; 1000, 0.031389]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node6(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.031389,
+    p0(displayUnit="Pa") = Pipe.pipeII_8.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={-140,0},      extent = {{-10, -10}, {10, 10}}, rotation=-90)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node7(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.008611, p0(displayUnit = "Pa") = 3930, massflowratedemand = [0, 0.008611; 1000, 0.008611]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node7(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.008611,
+    p0(displayUnit="Pa") = Pipe.pipeII_6.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={-20,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node8(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.040833, p0(displayUnit = "Pa") = 3739, massflowratedemand = [0, 0.040833; 1000, 0.040833]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node8(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.040833,
+    p0(displayUnit="Pa") = Pipe.pipeII_7.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={-80,-64},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node9(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.009444, p0(displayUnit = "Pa") = 2815, massflowratedemand = [0, 0.009444; 1000, 0.009444]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node9(redeclare
+      model Medium =                                                                        Medium,
+    useEnergyDemand=useEnergyDemand,                                                                X0 = X_start, m_flow0 = 0.009444,
+    p0(displayUnit="Pa") = Pipe.pipeII_12.pout_start)                                                                                                                                                                    annotation (
     Placement(visible = true, transformation(origin={40,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.008304, p0(displayUnit = "Pa") = 2414, massflowratedemand = [0, 0.008333; 1000, 0.008333]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node10(redeclare
+      model Medium =                                                                         Medium,
+    useEnergyDemand=useEnergyDemand,                                                                 X0 = X_start, m_flow0 = 0.008304,
+    p0(displayUnit="Pa") = Pipe.pipeII_13.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={100,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare model Medium = Medium, X0 = X_start, m_flow0 = 0.006111, p0(displayUnit = "Pa") = 2342, massflowratedemand = [0, 0.006111; 1000, 0.006111]) annotation (
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node11(redeclare
+      model Medium =                                                                         Medium,
+    useEnergyDemand=useEnergyDemand,                                                                 X0 = X_start, m_flow0 = 0.006111,
+    p0(displayUnit="Pa") = Pipe.pipeII_14.pout_start)                                                                                                                                                                     annotation (
     Placement(visible = true, transformation(origin={160,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(G = 0, redeclare model Medium = Medium, T0 = 15 + 273.15, X0 = X_start_H2, m_flow0 = m_flow_H2_ref, p0( displayUnit = "Pa")= 7500, use_in_m_flow0 = true) annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceH2_A(G = 0, redeclare
+      model Medium =                                                                                Medium,
+    T0=288.15,                                                                                                                X0 = X_start_H2, m_flow0 = m_flow_H2_ref,
+    p0(displayUnit="Pa") = 101000 + 7500,                                                                                                                                                              use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin={-6,-62},   extent={{10,-10},{-10,10}},      rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(duration = duration, height = m_flow_H2_ref, offset = 0, startTime = 50) annotation (
     Placement(visible = true, transformation(origin={32,-40},   extent = {{10, -10}, {-10, 10}}, rotation = 0)));

@@ -20,18 +20,16 @@ model Test_H2_injection
     X0=X_net,
     use_in_p0=true)
     annotation (Placement(transformation(extent={{-80,-4},{-60,16}})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow(
-    redeclare model Medium =
-        Medium,
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow3(
+    redeclare model Medium = Medium,
     pin_start=Pipe.pipe1.pin_start,
     p0=Pipe.pipe1.pin_start,
     T0=Pipe.pipe1.Tin_start,
     X0=X_net,
     m_flow0=Pipe.pipe1.m_flow_start,
-    G=0)
-    annotation (Placement(transformation(extent={{70,-16},{90,4}})));
+    G=0) annotation (Placement(transformation(extent={{70,-16},{90,4}})));
 
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow1(
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow2(
     redeclare model Medium =
         Medium,
     pin_start=Pipe.pipe1.pin_start,
@@ -148,11 +146,11 @@ equation
       points={{-60,6},{-44,6},{-44,8},{-36,8}},
       color={182,109,49},
       thickness=0.5));
-  connect(pipe2.outlet, sinkMassFlow1.inlet) annotation (Line(
+  connect(pipe2.outlet,sinkMassFlow2. inlet) annotation (Line(
       points={{44,24},{64,24},{64,26},{72,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(pipe3.outlet, sinkMassFlow.inlet) annotation (Line(
+  connect(pipe3.outlet, sinkMassFlow3.inlet) annotation (Line(
       points={{44,-6},{70,-6}},
       color={182,109,49},
       thickness=0.5));

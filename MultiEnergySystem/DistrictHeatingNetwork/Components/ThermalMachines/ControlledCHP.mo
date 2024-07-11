@@ -1,21 +1,30 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledCHP "Model of an ideal controlled CHP"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.BaseClass.PartialBoiler;
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.BaseClass.PartialBoiler(m_flow_nom = Pth_nom/(20 + 273.15)/1);
 
   // Generic Gas model
   replaceable model Gas = MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+
+  // Conditional for operating condition
+  parameter Boolean control_Pel = true "= false to control outlet water temperature instead of electric power" annotation (
+    Evaluate = true);
+  parameter Boolean use_Pel_ref = true "= true to use input signal Pel_ref instead of Tout_ref"  annotation (
+    Dialog(group = "External inputs", enable = control_Pel));
+  parameter Boolean use_Tout_ref = false "= true to use input signal Tout_ref instead of Pel_ref"  annotation (
+    Dialog(group = "External inputs", enable = not control_Pel));
+
 
   // Parameters
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Combustion Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
     Dialog(tab = "Combustion Data"));
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
-  parameter SI.Time tdelay = 10 "Delay time to obtain 100% thermal power";
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_nom = 90 + 273.15 "Reference value for internal control";
   parameter SI.Time tau_el = 10 "Time constant of electric power first order response";
-  parameter DistrictHeatingNetwork.Types.PerUnit eta_el_nom = 0.3448 "Nominal electrical efficiency";
-  parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5453 "Nominal thermal efficiency" annotation (
-    Dialog(tab = "Combustion Data"));
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_el_nom = 0.3448 "Nominal electrical efficiency" annotation (
+    Dialog(tab = "Nominal Data"));
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5586 "Nominal thermal efficiency" annotation (
+    Dialog(tab = "Nominal Data"));
   parameter DistrictHeatingNetwork.Types.Power Pel_nom = eta_el_nom*Pnom "Electrical Nominal Power" annotation (
     Dialog(tab = "Nominal Data"));
   parameter DistrictHeatingNetwork.Types.Power Pth_nom = eta_th_nom*Pnom "Thermal Nominal Power" annotation (
@@ -23,27 +32,35 @@ model ControlledCHP "Model of an ideal controlled CHP"
 
   // Variables
   DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel "mass flowrate of the motor fuel";
-  DistrictHeatingNetwork.Types.Power Pheat_in;
-  DistrictHeatingNetwork.Types.Power Pheat_ref "Reference value for computed Heat Power required";
+  //DistrictHeatingNetwork.Types.Power Pheat_in;
+  DistrictHeatingNetwork.Types.Power Pth_ref "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
+  DistrictHeatingNetwork.Types.Temperature Tout_ref;
+  DistrictHeatingNetwork.Types.Power Pel_ref;
+  DistrictHeatingNetwork.Types.Power Pel_actual;
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference gas fluid";
   Boolean TlimitOnOff(start = false);
 
 
-
   // Inputs
-  Modelica.Blocks.Interfaces.RealInput Pel_ref "Electric power reference (set-point) request to the CHP" annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
+  Modelica.Blocks.Interfaces.RealInput in_Pel_ref if use_Pel_ref "Electric power reference (set-point) request to the CHP"  annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
   Modelica.Blocks.Interfaces.BooleanInput heat_on "ON/OFF for the operation of the thermal side in the CHP" annotation (Placement(
-        transformation(extent={{-80,-60},{-60,-40}}),
-                                                    iconTransformation(extent={{-80,-60},{-60,-40}})));
+        transformation(extent={{-80,-60},{-60,-40}}), iconTransformation(extent={{-80,-60},{-60,-40}})));
+  Modelica.Blocks.Interfaces.RealInput in_Tout_ref if use_Tout_ref "Outlet temperature set-point for water"
+    annotation (Placement(transformation(extent={{-80,16},{-60,36}}), iconTransformation(extent={{-80,10},{-60,30}})));
 
   // Fluid port
   H2GasFacility.Interfaces.FluidPortInlet inletfuel(nXi=fuel.nXi) "Inlet connector for the motor fuel" annotation (Placement(visible = true, transformation(origin={0,-100},   extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={70,0},    extent={{-10,-10},{10,10}},
                       rotation = 0)));
 
   // Outputs
-  Modelica.Blocks.Interfaces.RealOutput Pel_actual "Actual output electric power generated by the CHP" annotation (Placement(transformation(extent={{60,-56},{72,-44}}), iconTransformation(extent={{60,-56},{72,-44}})));
+  Modelica.Blocks.Interfaces.RealOutput Pel_out "Actual output electric power generated by the CHP" annotation (Placement(transformation(extent={{60,-56},{72,-44}}), iconTransformation(extent={{60,-56},{72,-44}})));
+
+
+protected
+  Modelica.Blocks.Interfaces.RealInput in_Tout_ref_int(unit="K") "Internal connector for setpoint temperature in Kelvin";
+  Modelica.Blocks.Interfaces.RealInput in_Pel_ref_int(unit="W") "Internal connector for Electric Power setpoint in W";
 equation
   // Momentum balance
   inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
@@ -52,14 +69,16 @@ equation
   fluidOut_ref.p = pout;
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;
-  0 =inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
+  0 =inlet.m_flow*(-hout_ref + hin) + Pth_ref;
 
   // Power calculations
-  Pheat_in = Pel_ref*eta_th_nom/eta_el_nom;
-  Pheat = if heat_on and TlimitOnOff then min(Pheat_ref, Pheat_in) else 0;
+  Pth_ref = Pel_ref*eta_th_nom/eta_el_nom;
+  Pheat = if heat_on and TlimitOnOff then max(min(Pth_ref, Pth_nom),0) else 0;
+  Pheat = Pel_actual*eta_th_nom/eta_el_nom;
+
 
   // Fuel flow calculations
-  Pheat = m_flow_fuel*HH*etanom;
+  Pth_ref = m_flow_fuel*fuel.HHV_mix*etanom; // Computation of m_flow_fuel
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";
   inletfuel.Xi = fuel.Xi_start "Dummy equation considering not fuel flow reversal";
   fuel.h = inStream(inletfuel.h_out);
@@ -68,12 +87,31 @@ equation
   m_flow_fuel = inletfuel.m_flow;
 
   // First-order response for electric power
-  tau_el * der(Pel_actual) + Pel_actual = Pel_ref;
+  tau_el * der(Pel_out) + Pel_out = Pel_actual;
 
   TlimitOnOff = if Tin >= 70 + 273.15 then false else true;
 
+
+  // Ideal control
+  if control_Pel then
+    Pel_ref = in_Pel_ref_int;
+  else
+    Tout_ref = in_Tout_ref_int;
+    //Pth_ref = in_Tout_ref_int;
+  end if;
+  // Internal connector value when use_m_flow_set = false
+  if not use_Pel_ref then
+    in_Pel_ref_int = Pel_nom;
+  end if;
+  if not use_Tout_ref then
+    in_Tout_ref_int = Tout_nom;
+  end if;
+
+  connect(in_Tout_ref, in_Tout_ref_int);
+  connect(in_Pel_ref, in_Pel_ref_int);
+
 initial equation
-  der(Pel_actual) = 0;
+  der(Pel_out) = 0;
 
 annotation (
     Icon(graphics={  Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Horizontal, points = {{-21, -37}, {-27, -3}, {-21, -13}, {-19, 25}, {-11, 13}, {1, 37}, {13, 13}, {19, 25}, {23, -15}, {27, -5}, {21, -37}, {1, -43}, {-21, -37}}), Polygon(origin={-1,3},    lineColor = {255, 0, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-15, -37}, {-23, -13}, {-15, -17}, {-15, 3}, {-9, -1}, {1, 25}, {9, -1}, {15, 3}, {17, -17}, {23, -13}, {15, -37}, {1, -43}, {-15, -37}})}),

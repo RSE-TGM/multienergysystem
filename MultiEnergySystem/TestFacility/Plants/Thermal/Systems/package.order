@@ -2,6 +2,7 @@ GasBoiler
 ElectricBoiler
 CirculationPump
 TES
+CHP
 ControlledGasBoiler
 ControlledElectricBoiler
 CoolingSingleLoad

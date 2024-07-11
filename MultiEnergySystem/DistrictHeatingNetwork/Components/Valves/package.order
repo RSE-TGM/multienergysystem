@@ -3,3 +3,4 @@ FlowCoefficientValve
 FlowCoefficientOnOffValve
 ClosedLoopInitializer
 HomotopyInitializer
+ThreeWayValve

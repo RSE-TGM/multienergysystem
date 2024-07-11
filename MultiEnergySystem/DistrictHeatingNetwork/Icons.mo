@@ -29,6 +29,23 @@ package Icons "Icon package for DHN components"
         Icon(graphics={  Polygon(lineColor = {255, 255, 255}, fillColor = {0, 255, 0}, fillPattern = FillPattern.Solid, points = {{-100, 0}, {100, 0}, {100, 0}, {0, 0}, {-100, 0}, {-100, 0}}), Polygon(points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Line(visible = false, points = {{-20, 25}, {-20, 63}, {0, 41}, {20, 63}, {20, 25}}, thickness = 0.5), Line(points = {{0, 52}, {0, 0}}), Rectangle(fillPattern = FillPattern.Solid, extent = {{-20, 60}, {20, 52}}), Ellipse(visible = false, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 94}, {40, 14}}), Polygon(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, lineThickness = 0.75, points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Text(origin = {0, 14}, textColor = {140, 56, 54}, extent = {{-100, -74}, {100, -114}}, textString = "%name")}));
     end Valve;
 
+    partial model ThreeWayValve "Icon for three-way valve models"
+    equation
+
+      annotation (
+        Icon(graphics={  Polygon(lineColor = {255, 255, 255}, fillColor = {0, 255, 0}, fillPattern = FillPattern.Solid, points = {{-100, 0}, {100, 0}, {100, 0}, {0, 0}, {-100, 0}, {-100, 0}}), Polygon(points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Line(visible = false, points = {{-20, 25}, {-20, 63}, {0, 41}, {20, 63}, {20, 25}}, thickness = 0.5), Line(points={{0,52},{
+                  0,0}}),                                                                                                                                                                                                        Rectangle(fillPattern = FillPattern.Solid, extent={{-20,60},
+                  {20,52}}),                                                                                                                                                                                                        Ellipse(visible = false, lineColor = {0, 0, 127}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 94}, {40, 14}}), Polygon(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Solid, lineThickness = 0.75, points = {{-100, 50}, {100, -50}, {100, 50}, {0, 0}, {-100, -50}, {-100, 50}}), Text(                  textColor = {140, 56, 54}, extent={{-130,
+                  -96},{-30,-116}},                                                                                                                                                                                                        textString = "%name"),
+            Line(points={{-16,-2}}, color={28,108,200}),
+            Polygon(
+              points={{0,0},{50,-100},{-50,-100},{0,0}},
+              lineColor={140,56,54},
+              lineThickness=0.5,
+              fillColor={192,80,77},
+              fillPattern=FillPattern.Solid)}));
+    end ThreeWayValve;
+
     partial model ThroughSensor
     equation
 

@@ -1,6 +1,6 @@
 BaseClass
 FlowCoefficientValve
 FlowCoefficientOnOffValve
+ThreeWayValve
 ClosedLoopInitializer
 HomotopyInitializer
-ThreeWayValve

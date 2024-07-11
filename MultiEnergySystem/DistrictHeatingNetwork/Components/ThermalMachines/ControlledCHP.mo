@@ -28,6 +28,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference gas fluid";
+  Boolean TlimitOnOff(start = false);
 
 
 
@@ -54,8 +55,8 @@ equation
   0 =inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
 
   // Power calculations
-  Pheat_in =Pel_ref*eta_th_nom/eta_el_nom;
-  Pheat = delay(if heat_on then min(Pheat_ref, Pheat_in) else 0, tdelay);
+  Pheat_in = Pel_ref*eta_th_nom/eta_el_nom;
+  Pheat = if heat_on and TlimitOnOff then min(Pheat_ref, Pheat_in) else 0;
 
   // Fuel flow calculations
   Pheat = m_flow_fuel*HH*etanom;
@@ -68,6 +69,8 @@ equation
 
   // First-order response for electric power
   tau_el * der(Pel_actual) + Pel_actual = Pel_ref;
+
+  TlimitOnOff = if Tin >= 70 + 273.15 then false else true;
 
 initial equation
   der(Pel_actual) = 0;

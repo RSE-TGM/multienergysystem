@@ -13,7 +13,6 @@ model ControlledCHP "Model of an ideal controlled CHP"
   parameter Boolean use_Tout_ref = false "= true to use input signal Tout_ref instead of Pel_ref"  annotation (
     Dialog(group = "External inputs", enable = not control_Pel));
 
-
   // Parameters
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Combustion Data"));
@@ -47,8 +46,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
   Modelica.Blocks.Interfaces.RealInput in_Pel_ref if use_Pel_ref "Electric power reference (set-point) request to the CHP"  annotation (Placement(transformation(extent={{-80,-10},{-60,10}}), iconTransformation(extent={{-80,-10},{-60,10}})));
   Modelica.Blocks.Interfaces.BooleanInput heat_on "ON/OFF for the operation of the thermal side in the CHP" annotation (Placement(
         transformation(extent={{-80,-60},{-60,-40}}), iconTransformation(extent={{-80,-60},{-60,-40}})));
-  Modelica.Blocks.Interfaces.RealInput in_Tout_ref if use_Tout_ref "Outlet temperature set-point for water"
-    annotation (Placement(transformation(extent={{-80,16},{-60,36}}), iconTransformation(extent={{-80,10},{-60,30}})));
+  Modelica.Blocks.Interfaces.RealInput in_Tout_ref if use_Tout_ref "Outlet temperature set-point for water"  annotation (Placement(transformation(extent={{-80,16},{-60,36}}), iconTransformation(extent={{-80,10},{-60,30}})));
 
   // Fluid port
   H2GasFacility.Interfaces.FluidPortInlet inletfuel(nXi=fuel.nXi) "Inlet connector for the motor fuel" annotation (Placement(visible = true, transformation(origin={0,-100},   extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={70,0},    extent={{-10,-10},{10,10}},

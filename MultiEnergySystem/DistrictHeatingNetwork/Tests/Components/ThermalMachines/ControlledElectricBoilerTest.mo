@@ -46,9 +46,9 @@ equation
   connect(add.y, sourceP.in_T0)
     annotation (Line(points={{-31,38},{-18,38},{-18,16.4}}, color={0,0,127}));
   connect(ToutSP.y, eBoiler.Tout_ref)
-    annotation (Line(points={{-11,-22},{15.2,-22}}, color={0,0,127}));
+    annotation (Line(points={{-11,-22},{17.8,-22}}, color={0,0,127}));
   connect(EB401_Status.y, eBoiler.heat_on)
-    annotation (Line(points={{-11,-60},{0,-60},{0,-37.6},{15.2,-37.6}}, color={255,0,255}));
+    annotation (Line(points={{-11,-60},{0,-60},{0,-35},{17.8,-35}},     color={255,0,255}));
   annotation (
     experiment(StartTime = 0, StopTime = 3000, Tolerance = 1e-06, Interval = 6),
     Documentation(info = "<html><head></head><body>Test model for the component:

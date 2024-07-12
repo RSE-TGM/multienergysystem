@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Storage;
-model StratifiedTankTest "System of two tanks"
+model StratifiedTankTest "Test of a single stratified tank"
   extends Modelica.Icons.Example;
 
   parameter Integer n = 41 "Number of volumes in each pipe";
@@ -52,7 +52,8 @@ model StratifiedTankTest "System of two tanks"
     pin_start=pin_start_S2_tank,
     m_flow_start=m_flow_S2/2, n = n)
     annotation (Placement(transformation(extent={{-16,-50},{-58,18}})));
-  Sources.SourcePressure source(p0=pin_start_S2, T0=Tin_start_S2)
+  Sources.SourcePressure source(p0=pin_start_S2, T0=Tin_start_S2,
+    R=1e-3)
     annotation (Placement(transformation(extent={{60,-48},{40,-28}})));
   Sources.SinkMassFlow sink(
     use_in_m_flow=true,
@@ -60,7 +61,8 @@ model StratifiedTankTest "System of two tanks"
     pin_start=pout_start_S2_tank,
     p0=pout_start_S2_tank,
     T0=Tout_start_S2,
-    m_flow0=m_flow_S2)
+    m_flow0=m_flow_S2,
+    G=1e-8)
     annotation (Placement(transformation(extent={{36,-4},{56,16}})));
   Modelica.Blocks.Sources.Ramp ramp(
     height=-2*m_flow_S2,
@@ -124,7 +126,7 @@ equation
   connect(ramp1.y, sink.in_T) annotation (Line(points={{49,62},{46,62},{46,11}}, color={0,0,127}));
   annotation (
     experiment(
-      StopTime=50000,
+      StopTime=60000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end StratifiedTankTest;

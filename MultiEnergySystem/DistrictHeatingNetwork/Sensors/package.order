@@ -2,5 +2,6 @@ IdealMassFlowSensor
 IdealTemperatureSensor
 IdealPressureSensor
 IdealAbsoluteTemperatureSensor
+IdealAbsoluteTemperatureSensorFirstOrderDyn
 IdealAbsolutePressureSensor
 BaseClass

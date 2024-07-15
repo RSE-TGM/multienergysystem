@@ -32,7 +32,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
     Dialog(tab = "Combustion Data"));
   parameter DistrictHeatingNetwork.Types.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
-  parameter SI.Time tau_el = 10 "Time constant of electric power first order response";
+  parameter DistrictHeatingNetwork.Types.Time tau_el = 10 "Time constant of electric power first order response";
   parameter DistrictHeatingNetwork.Types.PerUnit eta_el_nom = 0.3448 "Nominal electrical efficiency" annotation (
     Dialog(tab = "Nominal Data"));
   parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5453 "Nominal thermal efficiency" annotation (
@@ -49,47 +49,241 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
   ////////////////////////////////////
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference outlet fluid";
 
-  DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(redeclare model Medium = Medium, use_Tout_ref=true) annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
         rotation=90,
-        origin={71.25,-0.25})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV annotation (Placement(transformation(extent={{26.75,-2.5},{36.75,-12.5}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV1
-                                                                      annotation (Placement(transformation(extent={{36.5,1.5},{26.5,11.5}})));
+        origin={79.75,-49.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV(redeclare model Medium = Medium) annotation (Placement(transformation(extent={{36.25,-52},{46.25,-62}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV1(redeclare model Medium = Medium) annotation (Placement(transformation(extent={{46,-38},{36,-48}})));
   H2GasFacility.Interfaces.FluidPortInlet inletFuel(nXi=fuel.nXi)   annotation (Placement(transformation(extent={{61.25,100},{81.25,120}}),
                                                                                                                                          iconTransformation(extent={{-16,-132},{16,-100}})));
-  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump coolingPump annotation (Placement(transformation(extent={{-0.25,-14.5},{13.75,-0.5}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV2
-                                                                      annotation (Placement(transformation(extent={{-17.5,-2.5},{-7.5,-12.5}})));
+  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump CHPWaterPump(redeclare model Medium = Medium) "Water circulating pump from CHP system"
+    annotation (Placement(transformation(extent={{14.25,-50},{28.25,-64}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV2(redeclare model Medium = Medium)
+                                                                      annotation (Placement(transformation(extent={{-3,-52},{7,-62}})));
+  Modelica.Blocks.Interfaces.RealInput Pelset "Electric power set-point of thermal machine"
+    annotation (Placement(transformation(extent={{-120,-20},{-100,0}}), iconTransformation(extent={{-120,-20},{-100,0}})));
+  DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501
+    annotation (Placement(transformation(
+        extent={{-11.875,-19.875},{11.875,19.875}},
+        rotation=-90,
+        origin={0.625,24.125})));
+  DistrictHeatingNetwork.Components.Valves.ThreeWayValve FV502(redeclare model Medium = Medium) "Control three-way valve - hot (sent) side" annotation (Placement(transformation(extent={{19.5,-38},{9.5,-48}})));
+  DistrictHeatingNetwork.Components.Valves.ThreeWayValve FV501(redeclare model Medium = Medium) "Control three-way valve - cold (return) side" annotation (Placement(transformation(extent={{-8,-52},{-18,-62}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV3(redeclare model Medium = Medium)
+                                                                      annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+        rotation=-90,
+        origin={-13,-30.5})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV4(redeclare model Medium = Medium)
+                                                                      annotation (Placement(transformation(extent={{5,5},{-5,-5}},
+        rotation=-90,
+        origin={14.5,-30.5})));
+  DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange ReducerCold "Pipe fitting reducer in the cold side"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={-13,-18})));
+  DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange ReducerHot "Pipe fitting reducer in the hot side"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={14.5,-18})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV5(redeclare model Medium = Medium)    annotation (Placement(transformation(extent={{5,5},{-5,-5}},
+        rotation=-90,
+        origin={14.5,-5.5})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV6(redeclare model Medium = Medium)    annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+        rotation=-90,
+        origin={-13,-5.5})));
+
+  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(redeclare model Medium = Medium, use_in_omega=true,
+    Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P501.Tin_start,
+    Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P501.Tout_start,
+    a=DistrictHeatingNetwork.Data.PumpData.P501.a,
+    b=DistrictHeatingNetwork.Data.PumpData.P501.b,
+    dpnom=DistrictHeatingNetwork.Data.PumpData.P501.dpnom,
+    etaelec=DistrictHeatingNetwork.Data.PumpData.P501.etaelec,
+    etamech=DistrictHeatingNetwork.Data.PumpData.P501.etamech,
+    etanom=DistrictHeatingNetwork.Data.PumpData.P501.etanom,
+    hin_start=DistrictHeatingNetwork.Data.PumpData.P501.hin_start,
+    m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P501.m_flow_nom,
+    omeganom=DistrictHeatingNetwork.Data.PumpData.P501.omeganom,
+    pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pin_start,
+    pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pout_start,
+    qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h,
+    rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P501.rhonom,
+    headnom=DistrictHeatingNetwork.Data.PumpData.P501.headnom,
+    headmax=DistrictHeatingNetwork.Data.PumpData.P501.headnommax,
+    headmin=DistrictHeatingNetwork.Data.PumpData.P501.headnommin,
+    qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h,
+    qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h) "Water pump in CHP system (side heat exchanger)"
+    annotation (Placement(transformation(
+        extent={{-5.75,-5.75},{5.75,5.75}},
+        rotation=90,
+        origin={20,60.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV7(redeclare model Medium = Medium)
+                                                                      annotation (Placement(transformation(extent={{5,5},{-5,-5}},
+        rotation=-90,
+        origin={20,46.5})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV8(redeclare model Medium = Medium)
+                                                                      annotation (Placement(transformation(extent={{5,5},{-5,-5}},
+        rotation=-90,
+        origin={20,76})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT501(redeclare model Medium = Medium) "Temperature sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={-21,86})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT502(redeclare model Medium = Medium) "Temperature sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=-90,
+        origin={21,85.75})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT503(redeclare model Medium = Medium) "Temperature sensor - outlet EX501"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={-14,2.75})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT504(redeclare model Medium = Medium) "Temperature sensor - inlet EX501"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=-90,
+        origin={15.75,2.5})));
+  DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT501 "Pressure sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={-21,88.5})));
+  DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT502 "Pressure sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=-90,
+        origin={21,88.5})));
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT501(redeclare model Medium = Medium) "Flow sensor" annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={-21,92.25})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV9(redeclare model Medium = Medium)
+                                                                      annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+        rotation=-90,
+        origin={-20,61})));
 equation
   connect(CHP.inletfuel, inletFuel) annotation (Line(
-      points={{71.25,16.725},{71.25,110}},
+      points={{79.75,-32.775},{79.75,110},{71.25,110}},
       color={182,109,49},
       thickness=0.5));
-  connect(coolingPump.outlet, roundPipe1DFV.inlet) annotation (Line(
-      points={{12.35,-7.5},{26.75,-7.5}},
+  connect(CHPWaterPump.outlet, roundPipe1DFV.inlet) annotation (Line(
+      points={{26.85,-57},{36.25,-57}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV1.inlet, CHP.outlet) annotation (Line(
-      points={{36.5,6.5},{44,6.5},{44,7.025},{51.85,7.025}},
+      points={{46,-43},{52.5,-43},{52.5,-42.475},{60.35,-42.475}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV.outlet, CHP.inlet) annotation (Line(
-      points={{36.75,-7.5},{44.3,-7.5},{44.3,-7.525},{51.85,-7.525}},
+      points={{46.25,-57},{52.8,-57},{52.8,-57.025},{60.35,-57.025}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV2.outlet, coolingPump.inlet) annotation (Line(
-      points={{-7.5,-7.5},{1.15,-7.5}},
+  connect(roundPipe1DFV2.outlet, CHPWaterPump.inlet) annotation (Line(
+      points={{7,-57},{15.65,-57}},
       color={140,56,54},
       thickness=0.5));
-  connect(inlet, roundPipe1DFV2.inlet) annotation (Line(
-      points={{-20,110},{-20.75,110},{-20.75,-7.5},{-17.5,-7.5}},
+  connect(status, CHP.heat_on) annotation (Line(points={{-110,10},{-71.75,10},{-71.75,-97},{91.875,-97},{91.875,-66.725}},     color={255,0,255}));
+  connect(Toutset, CHP.in_Tout_ref) annotation (Line(points={{-110,30},{-43.25,30},{-43.25,-79.75},{74.9,-79.75},{74.9,-66.725}},
+                                                                                                                            color={0,0,127}));
+  connect(Pelset, CHP.in_Pel_ref) annotation (Line(points={{-110,-10},{-56.75,-10},{-56.75,-84.5},{79.75,-84.5},{79.75,-66.725}},
+                                                                                                                              color={0,0,127}));
+  connect(roundPipe1DFV1.outlet, FV502.inlet) annotation (Line(
+      points={{36,-43},{19.5,-43}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV1.outlet, outlet) annotation (Line(
-      points={{26.5,6.5},{20,6.5},{20,110}},
+  connect(roundPipe1DFV2.inlet, FV501.inlet) annotation (Line(
+      points={{-3,-57},{-8,-57}},
       color={140,56,54},
       thickness=0.5));
-  connect(status, CHP.heat_on) annotation (Line(points={{-110,10},{-80.25,10},{-80.25,-47.5},{83.375,-47.5},{83.375,-17.225}}, color={255,0,255}));
+  connect(roundPipe1DFV3.outlet, FV501.outlet2) annotation (Line(
+      points={{-13,-35.5},{-13,-52}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV4.inlet, FV502.outlet2) annotation (Line(
+      points={{14.5,-35.5},{14.5,-38}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV3.inlet, ReducerCold.inlet) annotation (Line(
+      points={{-13,-25.5},{-13,-20.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(ReducerHot.inlet, roundPipe1DFV4.outlet)
+    annotation (Line(
+      points={{14.5,-20.5},{14.5,-25.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV5.inlet, ReducerHot.outlet) annotation (Line(
+      points={{14.5,-10.5},{14.5,-15.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV6.outlet, ReducerCold.outlet) annotation (Line(
+      points={{-13,-10.5},{-13,-15.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV9.outlet, EX501.incold) annotation (Line(
+      points={{-20,56},{-20,38.75},{-13.2875,38.75},{-13.2875,30.0625}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV7.inlet, EX501.outcold) annotation (Line(
+      points={{20,41.5},{20,38.25},{14.5375,38.25},{14.5375,30.0625}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV7.outlet, P501.inlet) annotation (Line(
+      points={{20,51.5},{20,56.15}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(P501.outlet, roundPipe1DFV8.inlet) annotation (Line(
+      points={{20,65.35},{20,71}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV8.outlet, TT502.inlet) annotation (Line(
+      points={{20,81},{20,85.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT502.inlet, PT502.inlet) annotation (Line(
+      points={{20,85.75},{20,88.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(outlet, PT502.inlet) annotation (Line(
+      points={{20,110},{20,88.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV9.inlet, TT501.inlet) annotation (Line(
+      points={{-20,66},{-20,86}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT501.outlet, inlet) annotation (Line(
+      points={{-20,93.75},{-20,110}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT501.inlet, PT501.inlet) annotation (Line(
+      points={{-20,90.75},{-20,88.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT501.inlet, PT501.inlet) annotation (Line(
+      points={{-20,86},{-20,88.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV6.inlet, TT503.inlet) annotation (Line(
+      points={{-13,-0.5},{-13,2.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EX501.outhot, TT503.inlet) annotation (Line(
+      points={{-13.2875,18.1875},{-13.2875,10.4688},{-13,10.4688},{-13,2.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EX501.inhot, TT504.inlet) annotation (Line(
+      points={{14.5375,18.1875},{14.5375,10.3438},{14.75,10.3438},{14.75,2.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV5.outlet, TT504.inlet) annotation (Line(
+      points={{14.5,-0.5},{14.5,1},{14.75,1},{14.75,2.5}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={            Bitmap(
           extent={{8,-30},{58,30}},
           imageSource="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",

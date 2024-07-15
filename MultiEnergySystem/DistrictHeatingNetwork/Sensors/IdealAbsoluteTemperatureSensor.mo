@@ -16,7 +16,6 @@ model IdealAbsoluteTemperatureSensor
 equation
   fluid.h = inStream(inlet.h_out);
   fluid.p = inlet.p;
-  //T = inStream(inlet.h_out)/cp;
   T = fluid.T;
   T_meas = T;
 annotation (

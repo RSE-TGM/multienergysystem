@@ -115,5 +115,4 @@ equation
       points={{0,-30},{0,0},{100,0}},
       color={140,56,54},
       thickness=0.5));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
 end PartialThreeWayValve;

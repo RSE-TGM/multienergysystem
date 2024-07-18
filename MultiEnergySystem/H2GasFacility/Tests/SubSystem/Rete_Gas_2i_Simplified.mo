@@ -2,6 +2,23 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
   extends Modelica.Icons.Example;
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  parameter Boolean useEnergyDemand = false;
+  parameter Boolean quasiStatic = true;
+  parameter Boolean constantFrictionFactor = true;
+  parameter Boolean computeInertialTerm = false;
+  parameter Integer n = 3 "Number of volumes in each pipeline";
+  parameter Integer nX = 7 "Number of components in the gas fluid";
+  parameter Types.MassFraction X_start[nX] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
+  parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
+
+  parameter Types.Pressure p_nom = 1.5e5;
+  parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
+  parameter Types.Length kappa = 0.045e-3;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
+
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(L=842.777, Di=
         2.091) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -9,9 +26,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
         origin={-172,26})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure REMI annotation (
       Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-24,-24},{24,24}},
         rotation=180,
-        origin={-138,26})));
+        origin={-122,26})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(L=3273.422, Di=
         1.603) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -281,9 +298,50 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-176,270})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM1
+    "GRM - Sciacca C.so Marsiglia" annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=180,
+        origin={35,-115})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM2
+    "Sciacca Ospedale Riuniti" annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=0,
+        origin={233,-135})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM3 "Sciacca Via Lioni"
+    annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=270,
+        origin={253,-325})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM17
+    "Contessa Entellina SP.12 Ingresso Paese" annotation (Placement(
+        transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=90,
+        origin={75,217})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GR "Cantina Cellaro"
+    annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=180,
+        origin={-261,241})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM13 "Viale Berlinguer"
+    annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=180,
+        origin={-189,201})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM16 "Via 25 Aprile"
+    annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=90,
+        origin={-21,325})));
+  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM15 "Via Marx"
+    annotation (Placement(transformation(
+        extent={{-15,-15},{15,15}},
+        rotation=0,
+        origin={47,255})));
 equation
   connect(s1.inlet, REMI.outlet) annotation (Line(
-      points={{-162,26},{-148,26}},
+      points={{-162,26},{-146,26}},
       color={182,109,49},
       thickness=0.5));
   connect(s2.inlet, s1.outlet) annotation (Line(
@@ -496,6 +554,38 @@ equation
       thickness=0.5));
   connect(sds18.inlet, sds16.outlet) annotation (Line(
       points={{-176,260},{-176,242},{-158,242}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM1.inlet, s36_Stadio.outlet) annotation (Line(
+      points={{50,-115},{50,-114},{76,-114}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s21.outlet, GRM2.inlet) annotation (Line(
+      points={{186,-136},{188,-135},{218,-135}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM3.inlet, s30.outlet) annotation (Line(
+      points={{253,-310},{252,-308},{252,-296}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM17.inlet, sds8.outlet) annotation (Line(
+      points={{75,202},{74,204},{74,184}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GR.inlet, sds17.outlet) annotation (Line(
+      points={{-246,241},{-244,242},{-216,242}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM13.inlet, sds10.outlet) annotation (Line(
+      points={{-174,201},{-172,200},{-156,200}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM16.inlet, sds15.outlet) annotation (Line(
+      points={{-21,310},{-20,310},{-20,292}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds14.outlet, GRM15.inlet) annotation (Line(
+      points={{12,256},{12,255},{32,255}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

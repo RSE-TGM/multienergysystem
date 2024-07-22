@@ -1,11 +1,11 @@
 RoundPipeTest
+GeneralPipeTest
 DropPressure
 BPHETest
 E700Test
 E701_Seq_0412Test3
 E701_Seq_1701Test3
 E701_Seq_2301Test2
-E701_Seq_2401Test1
 E701_Seq_2401Test2
 E701_Seq_2601Test1
 E701_Seq_2901Test2
@@ -18,7 +18,6 @@ E711_Seq_3001Test2
 E711_Seq_3101Test1
 E700Test_B
 E700Test_C
-GeneralPipeTest
 E721_Seq_0412Test3
 E721_Seq_2401Test2
 E721_Seq_2601Test1

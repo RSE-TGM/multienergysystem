@@ -155,13 +155,13 @@ equation
   connect(pout_set.y, sinkP.in_p0) annotation (
     Line(points={{59,110},{36,110},{36,88.4}},    color = {0, 0, 127}));
   connect(wall_FixedT.MultiPort, pipe1.wall) annotation (
-    Line(points={{-80,40},{-66,40},{-66,98},{0,98},{0,86.02}},       color = {255, 238, 44}));
+    Line(points={{-80,40},{-66,40},{-66,98},{0,98},{0,85.74}},       color = {255, 238, 44}));
   connect(wall_FixedT.MultiPort, pipe2.wall) annotation (
-    Line(points={{-80,40},{-66,40},{-66,10},{0,10},{0,6.02}},           color = {255, 238, 44}));
+    Line(points={{-80,40},{-66,40},{-66,10},{0,10},{0,5.74}},           color = {255, 238, 44}));
   connect(wall_FixedT.MultiPort, pipe3.wall) annotation (
-    Line(points={{-80,40},{-66,40},{-66,-20},{0,-20},{0,-33.98}},       color = {255, 238, 44}));
+    Line(points={{-80,40},{-66,40},{-66,-20},{0,-20},{0,-34.26}},       color = {255, 238, 44}));
   connect(pipe4.wall, pipe3.wall) annotation (
-    Line(points={{48,-33.98},{48,-20},{0,-20},{0,-33.98}},    color = {255, 238, 44}));
+    Line(points={{48,-34.26},{48,-20},{0,-20},{0,-34.26}},    color = {255, 238, 44}));
   connect(sourceP1.outlet, pipe5.inlet) annotation (Line(
       points={{-30,-80},{-14,-80}},
       color={140,56,54},

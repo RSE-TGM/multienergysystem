@@ -69,7 +69,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-176,-6})));
+        origin={-176,-72})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(redeclare model
       Medium =                                                                              Medium,
       L=1663.921,
@@ -82,7 +82,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-198,-30})));
+        origin={-198,-96})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s5_ViaCartabubbo(
   redeclare model Medium =                                                                  Medium,
       L
@@ -96,7 +96,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-226,-44})));
+        origin={-226,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(redeclare model
       Medium =                                                                              Medium,
       L=154.637,
@@ -109,7 +109,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-174,-44})));
+        origin={-174,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s6(redeclare model
       Medium =                                                                              Medium,
       L=147.629,
@@ -122,7 +122,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-248,-26})));
+        origin={-248,-92})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s7(redeclare model
       Medium =                                                                              Medium,
       L=817.587,
@@ -135,7 +135,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-270,-44})));
+        origin={-270,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(redeclare model
       Medium =                                                                              Medium,
       L=1.635,
@@ -148,7 +148,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-142,-44})));
+        origin={-142,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s10(L=13.807,
     X_start=X_start,                                                       Di=
         1.603,
@@ -159,7 +159,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-124,-62})));
+        origin={-124,-128})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188,
     X_start=X_start,                                                        Di=
         1.603,
@@ -170,7 +170,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-104,-44})));
+        origin={-104,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385,
     X_start=X_start,                                                        Di=
         1.325,
@@ -181,7 +181,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-70,-44})));
+        origin={-70,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s13(L=10.754,
     X_start=X_start,                                                       Di=
         1.603,
@@ -192,7 +192,7 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={-48,-60})));
+        origin={-48,-126})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227,
     X_start=X_start,                                                        Di=
         1.603,
@@ -709,62 +709,76 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     p0=482900,
       m_flow0=0,
     X0=X_start)  "C/da Scunchiapani"
-    annotation (Placement(transformation(extent={{-160,-26},{-120,14}})));
+    annotation (Placement(transformation(extent={{-160,-92},{-120,-52}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
-    annotation (Placement(transformation(extent={{-308,-54},{-288,-34}})));
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{-308,-120},{-288,-100}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser1(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
-    annotation (Placement(transformation(extent={{-258,-12},{-238,8}})));
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{-258,-78},{-238,-58}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser2(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
-    annotation (Placement(transformation(extent={{-134,-98},{-114,-78}})));
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{-134,-164},{-114,-144}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser3(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
-    annotation (Placement(transformation(extent={{-58,-96},{-38,-76}})));
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{-58,-162},{-38,-142}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser4(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{44,-196},{64,-176}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser5(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{100,-240},{120,-220}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser6(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{136,-224},{156,-204}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser7(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{174,-224},{194,-204}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser8(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{282,-176},{302,-156}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser9(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{192,-134},{212,-114}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser10(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{32,-52},{52,-32}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser11(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{-10,-54},{10,-34}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser12(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{-82,90},{-62,110}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser13(redeclare
-      model Medium =                                                                        Medium, X0
-      =X_start)
+      model Medium =                                                                        Medium,
+    m_flow0=0,
+    X0=X_start)
     annotation (Placement(transformation(extent={{-194,262},{-174,282}})));
 equation
   connect(s1.inlet, REMI.outlet) annotation (Line(
@@ -776,51 +790,51 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(s2.outlet, s3.inlet) annotation (Line(
-      points={{-198,-2},{-198,-6},{-186,-6}},
+      points={{-198,-2},{-198,-72},{-186,-72}},
       color={182,109,49},
       thickness=0.5));
   connect(s4.inlet, s2.outlet) annotation (Line(
-      points={{-198,-20},{-198,-2}},
+      points={{-198,-86},{-198,-2}},
       color={182,109,49},
       thickness=0.5));
   connect(s5_ViaCartabubbo.inlet, s4.outlet) annotation (Line(
-      points={{-216,-44},{-198,-44},{-198,-40}},
+      points={{-216,-110},{-198,-110},{-198,-106}},
       color={182,109,49},
       thickness=0.5));
   connect(s8.inlet, s4.outlet) annotation (Line(
-      points={{-184,-44},{-198,-44},{-198,-40}},
+      points={{-184,-110},{-198,-110},{-198,-106}},
       color={182,109,49},
       thickness=0.5));
   connect(s7.inlet, s5_ViaCartabubbo.outlet) annotation (Line(
-      points={{-260,-44},{-236,-44}},
+      points={{-260,-110},{-236,-110}},
       color={182,109,49},
       thickness=0.5));
   connect(s6.inlet, s5_ViaCartabubbo.outlet) annotation (Line(
-      points={{-248,-36},{-248,-44},{-236,-44}},
+      points={{-248,-102},{-248,-110},{-236,-110}},
       color={182,109,49},
       thickness=0.5));
   connect(s8.outlet, s9.inlet) annotation (Line(
-      points={{-164,-44},{-152,-44}},
+      points={{-164,-110},{-152,-110}},
       color={182,109,49},
       thickness=0.5));
   connect(s9.outlet, s10.inlet) annotation (Line(
-      points={{-132,-44},{-124,-44},{-124,-52}},
+      points={{-132,-110},{-124,-110},{-124,-118}},
       color={182,109,49},
       thickness=0.5));
   connect(s9.outlet, s11.inlet) annotation (Line(
-      points={{-132,-44},{-114,-44}},
+      points={{-132,-110},{-114,-110}},
       color={182,109,49},
       thickness=0.5));
   connect(s11.outlet, s12.inlet) annotation (Line(
-      points={{-94,-44},{-80,-44}},
+      points={{-94,-110},{-80,-110}},
       color={182,109,49},
       thickness=0.5));
   connect(s12.outlet, s13.inlet) annotation (Line(
-      points={{-60,-44},{-48,-44},{-48,-50}},
+      points={{-60,-110},{-48,-110},{-48,-116}},
       color={182,109,49},
       thickness=0.5));
   connect(s12.outlet, s14.inlet) annotation (Line(
-      points={{-60,-44},{-40,-44},{-40,-6},{-28,-6}},
+      points={{-60,-110},{-48,-110},{-48,-6},{-28,-6}},
       color={182,109,49},
       thickness=0.5));
   connect(s14.outlet, s15.inlet) annotation (Line(
@@ -1017,23 +1031,23 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(s3.outlet, Immissione_1.inlet) annotation (Line(
-      points={{-166,-6},{-140,-6}},
+      points={{-166,-72},{-140,-72}},
       color={182,109,49},
       thickness=0.5));
   connect(idealUser.inlet, s7.outlet) annotation (Line(
-      points={{-298,-44},{-280,-44}},
+      points={{-298,-110},{-280,-110}},
       color={182,109,49},
       thickness=0.5));
   connect(idealUser1.inlet, s6.outlet) annotation (Line(
-      points={{-248,-2},{-248,-16}},
+      points={{-248,-68},{-248,-82}},
       color={182,109,49},
       thickness=0.5));
   connect(idealUser2.inlet, s10.outlet) annotation (Line(
-      points={{-124,-88},{-124,-72}},
+      points={{-124,-154},{-124,-138}},
       color={182,109,49},
       thickness=0.5));
   connect(idealUser3.inlet, s13.outlet) annotation (Line(
-      points={{-48,-86},{-48,-70}},
+      points={{-48,-152},{-48,-136}},
       color={182,109,49},
       thickness=0.5));
   connect(idealUser4.inlet, s35_ViaAndretta.outlet) annotation (Line(

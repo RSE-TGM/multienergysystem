@@ -20,6 +20,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Contributors
 
-**MultiEnergySystem** was developed by Marcelo Muro and Guido Sassaroli at Ricerca sul Sistema Energetico RSE S.p.A. We hope this library proves to be a valuable resource for your multi-energy system studies and applications.
+**MultiEnergySystem** was developed by Marcelo Andre Muro Alvarado ([@marcelo-muro](https://github.com/marcelo-muro)) and Guido Sassaroli ([@guidosassaroli](https://github.com/guidosassaroli)) at Ricerca sul Sistema Energetico RSE S.p.A. We hope this library proves to be a valuable resource for your multi-energy system studies and applications.
 
 

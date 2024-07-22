@@ -1,9 +1,10 @@
-within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
+﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
   extends Modelica.Icons.Example;
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = true;
   parameter Boolean constantFrictionFactor = true;
@@ -19,326 +20,752 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
   parameter Types.Length kappa = 0.045e-3;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
 
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(L=842.777, Di=
-        2.091) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(redeclare model
+      Medium =       Medium,
+      L=842.777,
+    X_start=X_start,                                                       Di=
+        2.091,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum)
+               annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-172,26})));
-  MultiEnergySystem.H2GasFacility.Sources.SourcePressure REMI annotation (
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure REMI(redeclare model
+      Medium = Medium,
+    p0=493000,         X0
+      =X_start)                                               annotation (
       Placement(transformation(
         extent={{-24,-24},{24,24}},
         rotation=180,
         origin={-122,26})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(L=3273.422, Di=
-        1.603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(redeclare model
+      Medium =       Medium,
+      L=3273.422,
+    X_start=X_start,                                                        Di=
+        1.603,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum)
+               annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-198,8})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(L=100.058, Di=
-        1.325) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
+  redeclare model Medium =
+                     Medium,
+      L=100.058,
+    X_start=X_start,                                                       Di=
+        1.325,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-176,-6})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(L=1663.921, Di=
-        1.325) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(redeclare model
+      Medium =                                                                              Medium,
+      L=1663.921,
+    X_start=X_start,                                                        Di=
+        1.325,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-198,-30})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s5_ViaCartabubbo(L
-      =341.125, Di=1.079) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s5_ViaCartabubbo(
+  redeclare model Medium =                                                                  Medium,
+      L
+      =341.125,
+    X_start=X_start,
+                Di=1.079,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-226,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(L=154.637, Di=
-        1.325) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(redeclare model
+      Medium =                                                                              Medium,
+      L=154.637,
+    X_start=X_start,                                                       Di=
+        1.325,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-174,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s6(L=147.629, Di=
-        1.079) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s6(redeclare model
+      Medium =                                                                              Medium,
+      L=147.629,
+    X_start=X_start,                                                       Di=
+        1.079,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-248,-26})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s7(L=817.587, Di=
-        1.079) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s7(redeclare model
+      Medium =                                                                              Medium,
+      L=817.587,
+    X_start=X_start,                                                       Di=
+        1.079,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-270,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(L=1.635, Di=
-        1.603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(redeclare model
+      Medium =                                                                              Medium,
+      L=1.635,
+    X_start=X_start,                                                     Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-142,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s10(L=13.807, Di=
-        1.603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s10(L=13.807,
+    X_start=X_start,                                                       Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-124,-62})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188, Di=
-        1.603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188,
+    X_start=X_start,                                                        Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-104,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385, Di=
-        1.325) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385,
+    X_start=X_start,                                                        Di=
+        1.325,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-70,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s13(L=10.754, Di=
-        1.603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s13(L=10.754,
+    X_start=X_start,                                                       Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-48,-60})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227, Di=
-        1.603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227,
+    X_start=X_start,                                                        Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-14,-60})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s15(L=57.126, Di=
-        1.603) annotation (Placement(transformation(
+        origin={-18,-6})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s15(L=57.126,
+    X_start=X_start,                                                       Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={4,-80})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s16(L=19.065, Di=
-        1.603) annotation (Placement(transformation(
+        origin={0,-26})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s16(L=19.065,
+    X_start=X_start,                                                       Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={22,-60})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s17(L=60.53, Di=
-        1.603) annotation (Placement(transformation(
+        origin={18,-6})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s17(L=60.53,
+    X_start=X_start,                                                      Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={46,-80})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(L=880.651, Di=
-        1.603) annotation (Placement(transformation(
+        origin={42,-20})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(L=880.651,
+    X_start=X_start,                                                        Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={72,-60})));
+        origin={68,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s19(
     L=540.807,
     cm=880,
     rhom=2000,
     lambdam=0.25,
-    Di=1.472) "Polyester" annotation (Placement(transformation(
+    X_start=X_start,
+    Di=1.472,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) "Polyester" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={150,-88})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(L=14.682, Di=
-        1.603) annotation (Placement(transformation(
+        origin={146,-34})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(L=14.682,
+    X_start=X_start,                                                       Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={150,-118})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(L=13.074, Di=
-        0.831) annotation (Placement(transformation(
+        origin={146,-64})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(L=13.074,
+    X_start=X_start,                                                       Di=
+        0.831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={176,-136})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(L=95.937, Di=
-        1.603) annotation (Placement(transformation(
+        origin={172,-82})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(L=95.937,
+    X_start=X_start,                                                       Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={150,-156})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s23(L=220.886, Di=
-        0.831) annotation (Placement(transformation(
+        origin={146,-102})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s23(L=220.886,
+    X_start=X_start,                                                        Di=
+        0.831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={176,-178})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(L=92.59, Di=
-        1.603) annotation (Placement(transformation(
+        origin={172,-124})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(L=92.59,
+    X_start=X_start,                                                      Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={150,-200})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(L=181.028, Di=
-        1.325) "Viale Siena" annotation (Placement(transformation(
+        origin={146,-146})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(L=181.028,
+    X_start=X_start,                                                        Di=
+        1.325,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) "Viale Siena" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={194,-220})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s25(L=984.053, Di=
-        1.603) annotation (Placement(transformation(
+        origin={190,-166})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s25(L=984.053,
+    X_start=X_start,                                                        Di=
+        1.603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={150,-242})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s27(L=14.527, Di=
-        1.325) annotation (Placement(transformation(
+        origin={146,-188})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s27(L=14.527,
+    X_start=X_start,                                                       Di=
+        1.325,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={288,-220})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28(L=84.565, Di=
-        0.831) annotation (Placement(transformation(
+        origin={270,-166})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28(L=84.565,
+    X_start=X_start,                                                       Di=
+        0.831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={252,-248})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s29(L=69.945, Di=
-        0.831) annotation (Placement(transformation(
+        origin={234,-194})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s29(L=69.945,
+    X_start=X_start,                                                       Di=
+        0.831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={228,-268})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s30(L=138.527, Di=
-        0.831) annotation (Placement(transformation(
+        origin={210,-214})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s30(L=138.527,
+    X_start=X_start,                                                        Di=
+        0.831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={252,-286})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s31(L=256.081, Di=
-        0.1603) annotation (Placement(transformation(
+        origin={234,-232})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s31(L=256.081,
+    X_start=X_start,                                                        Di=
+        0.1603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={114,-90})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s32(L=133.021, Di=
-        0.1603) annotation (Placement(transformation(
+        origin={110,-84})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s32(L=133.021,
+    X_start=X_start,                                                        Di=
+        0.1603,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={114,-136})));
+        origin={110,-132})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s36_Stadio(L=
-        1224.898, Di=0.0831) annotation (Placement(transformation(
+        1224.898,
+    X_start=X_start,
+                  Di=0.0831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={86,-114})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s33(L=75.784, Di=
-        0.0831) annotation (Placement(transformation(
+        origin={82,-110})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s33(L=75.784,
+    X_start=X_start,                                                       Di=
+        0.0831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={114,-170})));
+        origin={110,-166})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s34_ViaSalerno(L=
-        155.756, Di=0.0831) annotation (Placement(transformation(
+        155.756,
+    X_start=X_start,
+                 Di=0.0831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={114,-210})));
+        origin={110,-206})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s35_ViaAndretta(L=
-        226.029, Di=0.0831) annotation (Placement(transformation(
+        226.029,
+    X_start=X_start,
+                 Di=0.0831,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={86,-190})));
+        origin={82,-186})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds1(L=2081.109,
-      Di=0.1603) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.1603,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-198,46})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds2(L=92.5, Di=
-        0.1472) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds2(L=92.5,
+    X_start=X_start,                                                      Di=
+        0.1472,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-180,66})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds3(L=677.303, Di
-      =0.1603) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds3(L=677.303,
+    X_start=X_start,                                                         Di
+      =0.1603,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-146,66})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds4(L=433.985, Di
-      =0.1325) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds4(L=433.985,
+    X_start=X_start,                                                         Di
+      =0.1325,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-124,82})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds5(L=303.305, Di
-      =0.0831) annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds5(L=303.305,
+    X_start=X_start,                                                         Di
+      =0.0831,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-96,100})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds6(L=8027.812,
-      Di=0.1325) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.1325,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-114,144})));
+        origin={-122,120})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds7(L=2103.419,
-      Di=0.1325) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.1325,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-6,130})));
+        origin={162,140})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds8(L=13379.322,
-      Di=0.1325) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.1325,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={74,174})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds9(L=193.484, Di
-      =0.1325) annotation (Placement(transformation(
+        origin={242,176})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds9(L=193.484,
+    X_start=X_start,                                                         Di
+      =0.1325,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-114,186})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds10(L=7.845, Di=
-        0.1079) annotation (Placement(transformation(
+        origin={-122,162})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds10(L=7.845,
+    X_start=X_start,                                                        Di=
+        0.1079,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum)
+                annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-146,200})));
+        origin={-154,176})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds11(L=357.121,
-      Di=0.1079) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+    X_start=X_start,
+      Di=0.1079,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
+        extent={{-9,-9},{9,9}},
         rotation=90,
-        origin={-114,220})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds12(L=787.51, Di
-      =0.1079) annotation (Placement(transformation(
+        origin={-121,201})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds12(L=787.51,
+    X_start=X_start,                                                         Di
+      =0.1079,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-76,242})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds13(L=190.14, Di
-      =0.0831) annotation (Placement(transformation(
+        origin={-8,202})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds13(L=190.14,
+    X_start=X_start,                                                         Di
+      =0.0831,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={-44,242})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds14(L=36.829, Di
-      =0.0831) annotation (Placement(transformation(
+        origin={24,202})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds14(L=36.829,
+    X_start=X_start,                                                         Di
+      =0.0831,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
-        origin={2,256})));
+        origin={70,216})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds15(L=1015.74,
-      Di=0.0831) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.0831,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-20,282})));
+        origin={48,242})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(L=194.511,
-      Di=0.0831) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.0831,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-148,242})));
+        origin={-156,218})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(L=1077.595,
-      Di=0.0831) annotation (Placement(transformation(
+    X_start=X_start,
+      Di=0.0831,
+      quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-206,242})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(L=6.1, Di=
-        0.0514) annotation (Placement(transformation(
+        origin={-214,218})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(L=6.1,
+    X_start=X_start,                                                      Di=
+        0.0514,
+        quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-176,270})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM1
-    "GRM - Sciacca C.so Marsiglia" annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=180,
-        origin={35,-115})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM2
-    "Sciacca Ospedale Riuniti" annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=0,
-        origin={233,-135})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM3 "Sciacca Via Lioni"
-    annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=270,
-        origin={253,-325})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM17
-    "Contessa Entellina SP.12 Ingresso Paese" annotation (Placement(
-        transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=90,
-        origin={75,217})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GR "Cantina Cellaro"
-    annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=180,
-        origin={-261,241})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM13 "Viale Berlinguer"
-    annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=180,
-        origin={-189,201})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM16 "Via 25 Aprile"
-    annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=90,
-        origin={-21,325})));
-  MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow GRM15 "Via Marx"
-    annotation (Placement(transformation(
-        extent={{-15,-15},{15,15}},
-        rotation=0,
-        origin={47,255})));
+        origin={-184,246})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser Immissione_2(redeclare
+      model Medium =                                                                        Medium,
+    p0=664600,
+      m_flow0=0,
+    X0=X_start)  "Cantina Cellaro"
+    annotation (Placement(transformation(extent={{-294,196},{-250,240}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(redeclare
+      model Medium =                                                                        Medium,
+    p0=463200,
+    m_flow0=0.021261,
+    X0=X_start)
+    "Viale Berlinguer"
+    annotation (Placement(transformation(extent={{-246,154},{-202,198}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(redeclare
+      model Medium =                                                                        Medium,
+    p0=437100,
+    m_flow0=0.098685,
+    X0=X_start)
+    "Contessa Entellina Ingresso paese SP.12 "
+    annotation (Placement(transformation(extent={{222,216},{262,256}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(redeclare
+      model Medium =                                                                        Medium,
+    p0=461900,
+    m_flow0=0.019358,
+    X0=X_start)                                                                                     "Via Marx"
+    annotation (Placement(transformation(extent={{96,200},{130,234}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(redeclare
+      model Medium =                                                                        Medium,
+    p0=460300,
+    m_flow0=0.007765,
+    X0=X_start)
+    "Via 25 Aprile"
+    annotation (Placement(transformation(extent={{30,264},{68,302}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_3(redeclare
+      model Medium =                                                                        Medium,
+    p0=459100,
+    m_flow0=0.034069,
+    X0=X_start)
+    "C.so Marsiglia"
+    annotation (Placement(transformation(extent={{18,-128},{54,-92}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_1(redeclare
+      model Medium =                                                                        Medium,
+    p0=459500,
+    m_flow0=0.112338,
+    X0=X_start)                                                                                     "Osèedaòe"
+    annotation (Placement(transformation(extent={{202,-102},{242,-62}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(redeclare
+      model Medium =                                                                        Medium,
+    p0=454700,
+    m_flow0=0.119588,
+    X0=X_start)                                                                                     "Via Lioni"
+    annotation (Placement(transformation(extent={{212,-292},{256,-248}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser Immissione_1(redeclare
+      model Medium =                                                                        Medium,
+    p0=482900,
+      m_flow0=0,
+    X0=X_start)  "C/da Scunchiapani"
+    annotation (Placement(transformation(extent={{-160,-26},{-120,14}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-308,-54},{-288,-34}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser1(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-258,-12},{-238,8}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser2(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-134,-98},{-114,-78}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser3(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-58,-96},{-38,-76}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser4(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{44,-196},{64,-176}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser5(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{100,-240},{120,-220}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser6(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{136,-224},{156,-204}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser7(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{174,-224},{194,-204}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser8(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{282,-176},{302,-156}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser9(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{192,-134},{212,-114}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser10(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{32,-52},{52,-32}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser11(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-10,-54},{10,-34}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser12(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-82,90},{-62,110}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser13(redeclare
+      model Medium =                                                                        Medium, X0
+      =X_start)
+    annotation (Placement(transformation(extent={{-194,262},{-174,282}})));
 equation
   connect(s1.inlet, REMI.outlet) annotation (Line(
       points={{-162,26},{-146,26}},
@@ -393,95 +820,95 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(s12.outlet, s14.inlet) annotation (Line(
-      points={{-60,-44},{-48,-44},{-48,-40},{-32,-40},{-32,-60},{-24,-60}},
+      points={{-60,-44},{-40,-44},{-40,-6},{-28,-6}},
       color={182,109,49},
       thickness=0.5));
   connect(s14.outlet, s15.inlet) annotation (Line(
-      points={{-4,-60},{4,-60},{4,-70}},
+      points={{-8,-6},{0,-6},{0,-16}},
       color={182,109,49},
       thickness=0.5));
   connect(s14.outlet, s16.inlet) annotation (Line(
-      points={{-4,-60},{12,-60}},
+      points={{-8,-6},{8,-6}},
       color={182,109,49},
       thickness=0.5));
   connect(s16.outlet, s17.inlet) annotation (Line(
-      points={{32,-60},{46,-60},{46,-70}},
+      points={{28,-6},{42,-6},{42,-10}},
       color={182,109,49},
       thickness=0.5));
   connect(s16.outlet, s18.inlet) annotation (Line(
-      points={{32,-60},{62,-60}},
+      points={{28,-6},{58,-6}},
       color={182,109,49},
       thickness=0.5));
   connect(s18.outlet, s19.inlet) annotation (Line(
-      points={{82,-60},{150,-60},{150,-78}},
+      points={{78,-6},{146,-6},{146,-24}},
       color={182,109,49},
       thickness=0.5));
   connect(s19.outlet, s20.inlet) annotation (Line(
-      points={{150,-98},{150,-108}},
+      points={{146,-44},{146,-54}},
       color={182,109,49},
       thickness=0.5));
   connect(s20.outlet, s21.inlet) annotation (Line(
-      points={{150,-128},{150,-136},{166,-136}},
+      points={{146,-74},{146,-82},{162,-82}},
       color={182,109,49},
       thickness=0.5));
   connect(s20.outlet, s22.inlet) annotation (Line(
-      points={{150,-128},{150,-146}},
+      points={{146,-74},{146,-92}},
       color={182,109,49},
       thickness=0.5));
   connect(s22.outlet, s23.inlet) annotation (Line(
-      points={{150,-166},{150,-178},{166,-178}},
+      points={{146,-112},{146,-124},{162,-124}},
       color={182,109,49},
       thickness=0.5));
   connect(s22.outlet, s24.inlet) annotation (Line(
-      points={{150,-166},{150,-190}},
+      points={{146,-112},{146,-136}},
       color={182,109,49},
       thickness=0.5));
   connect(s24.outlet, s26.inlet) annotation (Line(
-      points={{150,-210},{150,-220},{184,-220}},
+      points={{146,-156},{146,-166},{180,-166}},
       color={182,109,49},
       thickness=0.5));
   connect(s24.outlet, s25.inlet) annotation (Line(
-      points={{150,-210},{150,-232}},
+      points={{146,-156},{146,-178}},
       color={182,109,49},
       thickness=0.5));
   connect(s26.outlet, s27.inlet) annotation (Line(
-      points={{204,-220},{278,-220}},
+      points={{200,-166},{260,-166}},
       color={182,109,49},
       thickness=0.5));
   connect(s26.outlet, s28.inlet) annotation (Line(
-      points={{204,-220},{252,-220},{252,-238}},
+      points={{200,-166},{234,-166},{234,-184}},
       color={182,109,49},
       thickness=0.5));
   connect(s30.inlet, s28.outlet) annotation (Line(
-      points={{252,-276},{252,-258}},
+      points={{234,-222},{234,-204}},
       color={182,109,49},
       thickness=0.5));
   connect(s28.outlet, s29.inlet) annotation (Line(
-      points={{252,-258},{252,-268},{238,-268}},
+      points={{234,-204},{234,-214},{220,-214}},
       color={182,109,49},
       thickness=0.5));
   connect(s31.inlet, s19.inlet) annotation (Line(
-      points={{114,-80},{114,-60},{150,-60},{150,-78}},
+      points={{110,-74},{112,-74},{112,-6},{146,-6},{146,-24}},
       color={182,109,49},
       thickness=0.5));
   connect(s32.inlet, s31.outlet) annotation (Line(
-      points={{114,-126},{114,-100}},
+      points={{110,-122},{110,-94}},
       color={182,109,49},
       thickness=0.5));
   connect(s36_Stadio.inlet, s31.outlet) annotation (Line(
-      points={{96,-114},{114,-114},{114,-100}},
+      points={{92,-110},{92,-112},{110,-112},{110,-94}},
       color={182,109,49},
       thickness=0.5));
   connect(s32.outlet, s33.inlet) annotation (Line(
-      points={{114,-146},{114,-160}},
+      points={{110,-142},{110,-156}},
       color={182,109,49},
       thickness=0.5));
   connect(s33.outlet, s34_ViaSalerno.inlet) annotation (Line(
-      points={{114,-180},{114,-200}},
+      points={{110,-176},{110,-196}},
       color={182,109,49},
       thickness=0.5));
   connect(s35_ViaAndretta.inlet, s34_ViaSalerno.inlet) annotation (Line(
-      points={{96,-190},{114,-190},{114,-200}},
+      points={{92,-186},{110,-186},{110,-196}},
       color={182,109,49},
       thickness=0.5));
   connect(sds1.inlet, s1.outlet) annotation (Line(
@@ -497,7 +924,7 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(sds3.outlet, sds4.inlet) annotation (Line(
-      points={{-136,66},{-136,72},{-124,72}},
+      points={{-136,66},{-124,66},{-124,72}},
       color={182,109,49},
       thickness=0.5));
   connect(sds4.outlet, sds5.inlet) annotation (Line(
@@ -505,87 +932,148 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(sds6.inlet, sds4.outlet) annotation (Line(
-      points={{-114,134},{-116,134},{-116,100},{-124,100},{-124,92}},
+      points={{-122,110},{-122,104},{-124,104},{-124,92}},
       color={182,109,49},
       thickness=0.5));
   connect(sds6.outlet, sds7.inlet) annotation (Line(
-      points={{-114,154},{-114,164},{-26,164},{-26,130},{-16,130}},
+      points={{-122,130},{-122,140},{152,140}},
       color={182,109,49},
       thickness=0.5));
   connect(sds7.outlet, sds8.inlet) annotation (Line(
-      points={{4,130},{74,130},{74,164}},
+      points={{172,140},{242,140},{242,166}},
       color={182,109,49},
       thickness=0.5));
   connect(sds9.inlet, sds6.outlet) annotation (Line(
-      points={{-114,176},{-114,154}},
+      points={{-122,152},{-122,130}},
       color={182,109,49},
       thickness=0.5));
   connect(sds10.inlet, sds9.outlet) annotation (Line(
-      points={{-136,200},{-114,200},{-114,196}},
+      points={{-144,176},{-122,176},{-122,172}},
       color={182,109,49},
       thickness=0.5));
   connect(sds11.inlet, sds9.outlet) annotation (Line(
-      points={{-114,210},{-114,196}},
+      points={{-121,192},{-122,192},{-122,172}},
       color={182,109,49},
       thickness=0.5));
   connect(sds11.outlet, sds12.inlet) annotation (Line(
-      points={{-114,230},{-114,242},{-86,242}},
+      points={{-121,210},{-121,214},{-122,214},{-122,218},{-32,218},{-32,202},{
+          -18,202}},
       color={182,109,49},
       thickness=0.5));
   connect(sds12.outlet, sds13.inlet) annotation (Line(
-      points={{-66,242},{-54,242}},
+      points={{2,202},{14,202}},
       color={182,109,49},
       thickness=0.5));
   connect(sds13.outlet, sds14.inlet) annotation (Line(
-      points={{-34,242},{-20,242},{-20,256},{-8,256}},
+      points={{34,202},{48,202},{48,216},{60,216}},
       color={182,109,49},
       thickness=0.5));
   connect(sds15.inlet, sds14.inlet) annotation (Line(
-      points={{-20,272},{-20,256},{-8,256}},
+      points={{48,232},{48,216},{60,216}},
       color={182,109,49},
       thickness=0.5));
   connect(sds16.inlet, sds11.outlet) annotation (Line(
-      points={{-138,242},{-114,242},{-114,230}},
+      points={{-146,218},{-122,218},{-122,210},{-121,210}},
       color={182,109,49},
       thickness=0.5));
   connect(sds17.inlet, sds16.outlet) annotation (Line(
-      points={{-196,242},{-158,242}},
+      points={{-204,218},{-166,218}},
       color={182,109,49},
       thickness=0.5));
   connect(sds18.inlet, sds16.outlet) annotation (Line(
-      points={{-176,260},{-176,242},{-158,242}},
+      points={{-184,236},{-184,218},{-166,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(GRM1.inlet, s36_Stadio.outlet) annotation (Line(
-      points={{50,-115},{50,-114},{76,-114}},
+  connect(Immissione_2.inlet, sds17.outlet) annotation (Line(
+      points={{-272,218},{-224,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(s21.outlet, GRM2.inlet) annotation (Line(
-      points={{186,-136},{188,-135},{218,-135}},
+  connect(GRM_4.inlet, sds10.outlet) annotation (Line(
+      points={{-224,176},{-164,176}},
       color={182,109,49},
       thickness=0.5));
-  connect(GRM3.inlet, s30.outlet) annotation (Line(
-      points={{253,-310},{252,-308},{252,-296}},
+  connect(GRM_7.inlet, sds8.outlet) annotation (Line(
+      points={{242,236},{242,186}},
       color={182,109,49},
       thickness=0.5));
-  connect(GRM17.inlet, sds8.outlet) annotation (Line(
-      points={{75,202},{74,204},{74,184}},
+  connect(sds14.outlet, GRM_6.inlet) annotation (Line(
+      points={{80,216},{113,216},{113,217}},
       color={182,109,49},
       thickness=0.5));
-  connect(GR.inlet, sds17.outlet) annotation (Line(
-      points={{-246,241},{-244,242},{-216,242}},
+  connect(GRM_5.inlet, sds15.outlet) annotation (Line(
+      points={{49,283},{48,283},{48,252}},
       color={182,109,49},
       thickness=0.5));
-  connect(GRM13.inlet, sds10.outlet) annotation (Line(
-      points={{-174,201},{-172,200},{-156,200}},
+  connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
+      points={{36,-110},{72,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(GRM16.inlet, sds15.outlet) annotation (Line(
-      points={{-21,310},{-20,310},{-20,292}},
+  connect(GRM_1.inlet, s21.outlet) annotation (Line(
+      points={{222,-82},{182,-82}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds14.outlet, GRM15.inlet) annotation (Line(
-      points={{12,256},{12,255},{32,255}},
+  connect(GRM_2.inlet, s30.outlet) annotation (Line(
+      points={{234,-270},{234,-242}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s3.outlet, Immissione_1.inlet) annotation (Line(
+      points={{-166,-6},{-140,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser.inlet, s7.outlet) annotation (Line(
+      points={{-298,-44},{-280,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser1.inlet, s6.outlet) annotation (Line(
+      points={{-248,-2},{-248,-16}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser2.inlet, s10.outlet) annotation (Line(
+      points={{-124,-88},{-124,-72}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser3.inlet, s13.outlet) annotation (Line(
+      points={{-48,-86},{-48,-70}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser4.inlet, s35_ViaAndretta.outlet) annotation (Line(
+      points={{54,-186},{72,-186}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser5.inlet, s34_ViaSalerno.outlet) annotation (Line(
+      points={{110,-230},{110,-216}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s25.outlet, idealUser6.inlet) annotation (Line(
+      points={{146,-198},{146,-214}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealUser7.inlet, s29.outlet) annotation (Line(
+      points={{184,-214},{200,-214}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s27.outlet, idealUser8.inlet) annotation (Line(
+      points={{280,-166},{292,-166}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s23.outlet, idealUser9.inlet) annotation (Line(
+      points={{182,-124},{202,-124}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s17.outlet, idealUser10.inlet) annotation (Line(
+      points={{42,-30},{42,-42}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s15.outlet, idealUser11.inlet) annotation (Line(
+      points={{0,-36},{0,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds5.outlet, idealUser12.inlet) annotation (Line(
+      points={{-86,100},{-72,100}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds18.outlet, idealUser13.inlet) annotation (Line(
+      points={{-184,256},{-184,272}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

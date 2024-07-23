@@ -14,13 +14,15 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
   parameter Types.MassFraction X_start[nX] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
+  parameter Types.Density rho_nom = 0.712;
 
   parameter Types.Pressure p_nom = 1.5e5;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   parameter Types.Length kappa = 0.045e-3;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
 
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(
+    rho_nom=rho_nom,                                            redeclare model
       Medium =       Medium,
       L=842.777,
     X_start=X_start,                                                       Di=
@@ -42,7 +44,10 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
         extent={{-24,-24},{24,24}},
         rotation=180,
         origin={-122,26})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(
+    H=-42,
+    rho_nom=rho_nom,
+    n=5,                                                        redeclare model
       Medium =       Medium,
       L=3273.422,
     X_start=X_start,                                                        Di=
@@ -66,11 +71,14 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-176,-72})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(
+    H=-42,
+    n=5,                                                        redeclare model
       Medium =                                                                              Medium,
       L=1663.921,
     X_start=X_start,                                                        Di=
@@ -79,11 +87,13 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-198,-96})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s5_ViaCartabubbo(
+    H=-5,
   redeclare model Medium =                                                                  Medium,
       L
       =341.125,
@@ -93,11 +103,13 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-226,-110})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(
+    H=-11,                                                      redeclare model
       Medium =                                                                              Medium,
       L=154.637,
     X_start=X_start,                                                       Di=
@@ -106,11 +118,13 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-174,-110})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s6(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s6(
+    H=17,                                                       redeclare model
       Medium =                                                                              Medium,
       L=147.629,
     X_start=X_start,                                                       Di=
@@ -119,11 +133,13 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-248,-92})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s7(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s7(
+    H=7,                                                        redeclare model
       Medium =                                                                              Medium,
       L=817.587,
     X_start=X_start,                                                       Di=
@@ -132,11 +148,13 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-270,-110})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(redeclare model
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(
+    H=-1,                                                       redeclare model
       Medium =                                                                              Medium,
       L=1.635,
     X_start=X_start,                                                     Di=
@@ -145,7 +163,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-142,-110})));
@@ -156,51 +175,60 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-124,-128})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188,
+    H=-31,
     X_start=X_start,                                                        Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-104,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385,
+    H=11,
     X_start=X_start,                                                        Di=
         1.325,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-70,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s13(L=10.754,
+    H=-1,
     X_start=X_start,                                                       Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-48,-126})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227,
+    H=-15,
     X_start=X_start,                                                        Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-18,-6})));
@@ -211,7 +239,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-26})));
@@ -222,7 +251,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={18,-6})));
@@ -233,23 +263,27 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={42,-20})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(L=880.651,
+    H=-1,
     X_start=X_start,                                                        Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={68,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s19(
     L=540.807,
+    H=-18,
     cm=880,
     rhom=2000,
     lambdam=0.25,
@@ -259,18 +293,21 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) "Polyester" annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) "Polyester" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={146,-34})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(L=14.682,
+    H=14,
     X_start=X_start,                                                       Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={146,-64})));
@@ -281,18 +318,21 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={172,-82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(L=95.937,
+    H=-3,
     X_start=X_start,                                                       Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={146,-102})));
@@ -303,18 +343,21 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={172,-124})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(L=92.59,
+    H=2,
     X_start=X_start,                                                      Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={146,-146})));
@@ -325,18 +368,21 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) "Viale Siena" annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) "Viale Siena" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={190,-166})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s25(L=984.053,
+    H=35,
     X_start=X_start,                                                        Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={146,-188})));
@@ -347,7 +393,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={270,-166})));
@@ -358,7 +405,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={234,-194})));
@@ -369,7 +417,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={210,-214})));
@@ -380,7 +429,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={234,-232})));
@@ -391,7 +441,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={110,-84})));
@@ -402,7 +453,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={110,-132})));
@@ -414,7 +466,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={82,-110})));
@@ -425,7 +479,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={110,-166})));
@@ -437,7 +492,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={110,-206})));
@@ -449,7 +505,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={82,-186})));
@@ -460,7 +517,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-198,46})));
@@ -471,7 +530,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-180,66})));
@@ -482,7 +542,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-146,66})));
@@ -493,7 +554,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-124,82})));
@@ -504,7 +566,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-96,100})));
@@ -515,7 +578,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-122,120})));
@@ -526,7 +591,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={162,140})));
@@ -537,7 +604,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={242,176})));
@@ -548,7 +617,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-122,162})));
@@ -559,7 +629,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum)
+    momentum=momentum,
+    rho_nom=rho_nom)
                 annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
@@ -571,7 +642,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-9,-9},{9,9}},
         rotation=90,
         origin={-121,201})));
@@ -582,7 +654,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-8,202})));
@@ -593,7 +667,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={24,202})));
@@ -604,7 +679,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={70,216})));
@@ -615,7 +691,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={48,242})));
@@ -626,7 +704,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-156,218})));
@@ -637,7 +716,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-214,218})));
@@ -648,7 +729,8 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
-    momentum=momentum) annotation (Placement(transformation(
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-184,246})));

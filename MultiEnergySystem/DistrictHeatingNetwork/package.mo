@@ -9,11 +9,4 @@ package DistrictHeatingNetwork "Components for District Heating and Cooling Syst
   import Valve = MultiEnergySystem.DistrictHeatingNetwork.Data.ValveData;
   import      Modelica.Constants.pi;
 
-                                  annotation (
-    Icon(graphics={                                                                                                                                                                                      Text(
-        extent={{-78,80},{78,-80}},
-        textColor={140,56,54},
-        textStyle={TextStyle.Bold},
-        fontName="Tahoma",
-        textString="DH")}));
 end DistrictHeatingNetwork;

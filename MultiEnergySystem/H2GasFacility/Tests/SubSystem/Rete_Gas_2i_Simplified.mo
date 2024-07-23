@@ -738,7 +738,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-184,246})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser Immissione_2(redeclare
       model Medium =                                                                        Medium,
-    p0=664600,
+    p0=464600,
       m_flow0=0,
     X0=X_start)  "Cantina Cellaro"
     annotation (Placement(transformation(extent={{-294,196},{-250,240}})));

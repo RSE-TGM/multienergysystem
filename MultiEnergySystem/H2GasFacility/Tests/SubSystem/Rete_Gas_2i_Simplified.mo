@@ -39,7 +39,9 @@ model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure REMI(redeclare model
       Medium = Medium,
     p0=493000,         X0
-      =X_start)                                               annotation (
+      =X_start) "REMI - Sciacca Presa 2. Dati Taratura: 
+Pressione = 4.93 bar;
+Portata = 2088 Stm3/h;"                                       annotation (
       Placement(transformation(
         extent={{-24,-24},{24,24}},
         rotation=180,
@@ -1174,13 +1176,5 @@ equation
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-300,-300},{300,
-            300}}), graphics={
-        Text(
-          extent={{-82,30},{-42,16}},
-          textColor={0,0,0},
-          textString="REMI - Sciacca Presa 2 
-Dati Taratura: 
-Pressione = 4.93 bar 
-Portata = 2088 Stm3/h
-")}));
+            300}})));
 end Rete_Gas_2i_Simplified;

@@ -161,6 +161,8 @@ package BPHEData
     rhom_cold = 8000,
     lambdam_hot = 16.3,
     lambdam_cold = 16.3,
+    alpha_hot = 0.67402256,
+    alpha_cold = 0.67402256,
     Rfoul = 2.8e-4,
     Qnom = 50e3,
     MWall = 3.9);

@@ -46,7 +46,7 @@ package BaseClasses
     input Modelica.Units.SI.Temperature Twall[n]
       "Temperature of the wall for each finite volume";
     input Modelica.Units.SI.Temperature Tmean[n]
-      "Mean temperature of the gas in each finite volume";
+      "Mean temperature of the fluid in each finite volume";
     input Modelica.Units.SI.MassFlowRate m_flow[n]
       "Mass flow exiting the finite volume";
     input Modelica.Units.SI.Pressure p

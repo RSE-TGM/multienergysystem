@@ -1024,23 +1024,7 @@ package Tests
       final parameter Real m_flow703[dim[1], dim[2]] = FT703*rhocoldref*CorrectFactorCold/3600;
       final parameter Real thetaValve[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Data, matrixthetaFCV701, dim[1], dim[2]);
     equation
-      // Variables
-      //   Tout_hot_ref = sinkHot_ref.fluid.T;
-      //   Tout_cold_ref = sinkCold_ref.fluid.T;
-      //   deltaTouthot = E7X1.Tout_hot  - Tout_hot_ref;
-      //   deltaToutcold = E7X1.Tout_cold  - Tout_cold_ref;
-      //   deltaThot_ref = E7X1.Tin_hot  - Tout_hot_ref;
-      //   deltaTcold_ref = Tout_cold_ref -E7X1.Tin_cold;
-      //   deltaThot =E7X1.Tin_hot  -E7X1.Tout_hot;
-      //   deltaTcold =E7X1.Tout_cold  -E7X1.Tin_cold;
-      //   //deviationHot = abs((deltaThot - deltaThot_ref)./deltaThot_ref)*100;
-      //   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
-      //   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
-      //   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
-      //   LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
-      //   gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
-      //   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
-      //   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
+
       // Connections
       connect(outhot_p.y, sinkHot_p.in_p0) annotation (
         Line(points={{54.5,-15},{50,-15},{50,-24.6}},      color = {0, 0, 127}));

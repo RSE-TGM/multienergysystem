@@ -54,6 +54,8 @@ record BPHeatExchanger
   SI.Density rhom_cold "Nominal density of metal cold side";
   SI.ThermalConductivity lambdam_hot "Nominal thermal conductivity of metal hot side";
   SI.ThermalConductivity lambdam_cold "Nominal thermal conductivity of metal cold side";
+  SI.PerUnit alpha_hot "Exponent in the flow-dependency law hot side";
+  SI.PerUnit alpha_cold "Exponent in the flow-dependency law cold side";
 
 
                                                            annotation (

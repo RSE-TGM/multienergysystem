@@ -39,8 +39,8 @@ model E700Test "HX70X base test with real data"
   DistrictHeatingNetwork.Types.TemperatureDifference deltaTcold;
   DistrictHeatingNetwork.Types.TemperatureDifference deltaThot;
   Real deviationCold, deviationHot;
-  DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
-  Types.CoefficientOfHeatTransfer gamma_ref;
+  //DistrictHeatingNetwork.Types.TemperatureDifference LMTD_ref;
+  //Types.CoefficientOfHeatTransfer gamma_ref;
   Types.Power Ptcold_ref;
   Types.Power Pthot_ref;
 
@@ -138,8 +138,8 @@ equation
   //deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcold_ref)*100;
   deviationHot = abs((deltaThot - deltaThot_ref)/deltaThotmax)*100;
   deviationCold = abs((deltaTcold - deltaTcold_ref)./deltaTcoldmax)*100;
-  LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
-  gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
+  //LMTD_ref = ((E7X1.Tin_hot - Tout_cold_ref) - (Tout_hot_ref -E7X1.Tin_cold)) /log(abs((E7X1.Tin_hot - Tout_cold_ref)/(Tout_hot_ref -E7X1.Tin_cold)));
+  //gamma_ref = Pthot_ref/(E7X1.hotside.Stot*LMTD_ref);
   Ptcold_ref =E7X1.incold.m_flow *abs((sourceCold_mflow.fluid.h - sinkCold_ref.fluid.h));
   Pthot_ref =E7X1.inhot.m_flow *abs((sourceHot_mflow.fluid.h - sinkHot_ref.fluid.h));
 

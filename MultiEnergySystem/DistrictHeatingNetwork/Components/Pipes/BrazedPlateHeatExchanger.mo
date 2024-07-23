@@ -19,7 +19,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(tab = "Hot Side", group = "Pipe"));
   parameter Modelica.Units.SI.Length t_hot = 3e-3 "Thickness of the tube" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length Di_hot "Internal Diameter of a single tube" annotation (
+  parameter Modelica.Units.SI.Length Di_hot = 51e-3 "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
   parameter Modelica.Units.SI.Area Stot_hot "Total surface of a single tube" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));
@@ -70,7 +70,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(tab = "Cold Side", group = "Pipe"));
   parameter Modelica.Units.SI.Length t_cold = 0.003 "Thickness of the tube" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
-  parameter Modelica.Units.SI.Length Di_cold "Internal Diameter of a single tube" annotation (
+  parameter Modelica.Units.SI.Length Di_cold = 51e-3 "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
   parameter Modelica.Units.SI.Area Stot_cold "Internal Diameter of a single tube" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
@@ -168,16 +168,29 @@ equation
   //LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log(abs((Tin_hot - Tout_cold)/(Tout_hot - Tin_cold)));
   Pt = inhot.m_flow*(hotside.fluid[1].h - hotside.fluid[n + 1].h);
   //gamma_real = Pt/(hotside.Stot*LMTD);
-  connect(coldside.outlet, outcold);
-  connect(coldside.inlet, incold);
-  connect(hotside.outlet, outhot);
-  connect(hotside.inlet, inhot);
+
   connect(coldside.wall, topology.side2) annotation (
     Line(points={{-65.9,0},{-23.1,0}},  color = {255, 238, 44}));
   connect(wall.ext, topology.side1) annotation (
     Line(points={{16.9,0},{-17,0}},    color = {255, 238, 44}));
   connect(hotside.wall, wall.int) annotation (
     Line(points={{65.9,0},{23,0}},    color = {255, 238, 44}));
+  connect(coldside.outlet, outcold) annotation (Line(
+      points={{-70,10},{-70,70}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(coldside.inlet, incold) annotation (Line(
+      points={{-70,-10},{-70,-70}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(hotside.outlet, outhot) annotation (Line(
+      points={{70,-10},{70,-70}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(hotside.inlet, inhot) annotation (Line(
+      points={{70,10},{70,70}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, lineThickness = 0.5, extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name"), Line(origin = {-66.58, -69.45}, points = {{8, 0}, {16, 0}}, color = {94, 82, 255}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {-58.73, 70.36}, points = {{8, 0}, {0, 0}}, color = {57, 0, 172}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {43.2, -68.29}, points = {{8, 0}, {16, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {51.29, 69.9}, points = {{8, 0}, {0, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {30.22, -8.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.Filled, Arrow.None}, arrowSize = 20), Line(origin = {-29.78, -12.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {76, 0, 227}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 20)}),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, grid = {1, 1})));

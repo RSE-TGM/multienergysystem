@@ -6,10 +6,8 @@ model ControlledChillerNoDynamicsSP
   //   choicesAllMatching = true);
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
      choicesAllMatching = true);
-  // Declaration of fluid models
 
-  Medium fluidInCold(T_start = Tin_cold_start, p_start = pin_cold_start) "Cold inlet fluid";
-  Medium fluidOutCold(T_start = Tout_cold_start, p_start = pout_cold_start) "Cold outlet fluid";
+
   parameter SI.PerUnit COP_nom = 2.7 "Nominal coefficient of performance";
   parameter SI.Temperature Tin_cold_start = 14 + 273.15 "Start/Nominal value for Cold side inlet temperature";
   final parameter SI.Temperature Tout_cold_start = Tout_cold_set "Start/Nominal value for Cold side outlet temperature";
@@ -20,6 +18,10 @@ model ControlledChillerNoDynamicsSP
   parameter SI.MassFlowRate m_flow_cold_start = 1 "Cold fluid mass flow rate";
   parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_cold_start - pout_cold_start)/m_flow_cold_start "Pressure loss across the cold side";
   parameter SI.Volume V = 0.1;
+
+  // Declaration of fluid models
+  Medium fluidInCold(T_start = Tin_cold_start, p_start = pin_cold_start) "Cold inlet fluid";
+  Medium fluidOutCold(T_start = Tout_cold_start, p_start = pout_cold_start) "Cold outlet fluid";
 
   SI.Pressure pin_cold "Cold side inlet pressure";
   SI.Pressure pout_cold "Cold side outlet pressure";
@@ -51,11 +53,13 @@ model ControlledChillerNoDynamicsSP
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,60})));
+protected
+  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_internal;
+
 equation
 // Fluid Definition
 
   {fluidInCold.p, fluidInCold.h} = {pin_cold, hin_cold};
-
   {fluidOutCold.p, fluidOutCold.h} = {pout_cold, hout_cold};
 
 // Assignation of name variables

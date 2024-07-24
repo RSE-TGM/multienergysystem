@@ -1,6 +1,5 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model CoolingSystemOpenLoop
-  "Users Systems and some pipelines connected on the heating side"
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.RR00;
+model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
 
   parameter Integer n = 3 "Number of volumes";
   parameter Types.MassFlowRate m_flow_total = 2.4;
@@ -22,8 +21,11 @@ model CoolingSystemOpenLoop
   parameter Types.PerUnit cf = 4e-3;
   parameter Types.Pressure dp_RR01 = 0.5e5;
   parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
-  //parameter Real PR01omega[:,:] = [0, 2*3.141592654*40; 100, 2*3.141592654*40; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
   parameter Real PR01omega[:,:] = [0, 2*3.141592653*50; 100, 2*3.141592653*50];
+  parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
+  parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 3000, 16 + 273.15];
+  parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
+  parameter Real PTR02_profile[:,:] = [0, 2.2e5; 3000, 2.2e5];
 
   //2. Users System
   parameter Types.Pressure pin_start_Users = 3e5;
@@ -88,17 +90,6 @@ model CoolingSystemOpenLoop
   parameter Types.Length L_TCV701_rUsersOut = 1 + 0.45;
   parameter Types.Length h_TCV701_rUsersOut = 1;
   parameter Types.Length L_TCV711_rUsersOut = 1 + 0.45;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
-    FCVR01(
-    Kv=Kvalve,
-    dp_nom(displayUnit="Pa") = 1.09928e5,
-    rho_nom(displayUnit="kg/m3") = 1000,
-    Tin_start(displayUnit="K") = Tout_start_Cool,
-    pin_start(displayUnit="Pa") = 2.77476e5) annotation (Placement(
-        transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-5,-91})));
   parameter Types.Length h_TCV711_rUsersOut = 1;
   parameter Types.Length L_TCV721_rUsersOut = 1 + 0.45;
   parameter Types.Length h_TCV721_rUsersOut = 1;
@@ -120,8 +111,6 @@ model CoolingSystemOpenLoop
   parameter Types.Length L_RR_UsersOut = 2;
   parameter Types.Length h_RR_UsersOut = 0;
 
-
-
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={290,210},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
@@ -140,6 +129,7 @@ model CoolingSystemOpenLoop
     omeganom=Pump.PR01.omeganom,
     pin_start(displayUnit="Pa") = 2e5,
     pout_start(displayUnit="Pa") = 2.6e5,
+    headnom=Pump.PR01.headnom,
     qnom_inm3h=Pump.PR01.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = Pump.PR01.rhonom,
     headmax=Pump.PR01.headnommax,
@@ -150,50 +140,14 @@ model CoolingSystemOpenLoop
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={-55,24})));
-  Sources.SinkPressure VER901(p0=200000, T0(displayUnit="K") = 30 + 273.15)
-    "Expansion Vessel for cooling circuit" annotation (Placement(transformation(
+  Sources.SinkPressure PTR02_Source(
+    use_in_p0=true,
+    p0=220000,
+    T0(displayUnit="K") = 14.76 + 273.15)                                         "Reference pressure at PTR02"
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-86,-32})));
-  Modelica.Blocks.Sources.TimeTable FCVR01_theta(table=FCVR01theta)
-    annotation (Placement(transformation(extent={{36,-51},{16,-31}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_VER901_FCVR01(
-    L=L_VER901_FCVR01,
-    h=h_VER901_FCVR01,
-    t=t_RR,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool - q_Users_total,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=0,
-        origin={-35,-91})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FCVR01_FTR03(
-    L=L_FCVR01_FTR03,
-    h=h_FCVR01_FTR03,
-    t=t_RR,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool - q_Users_total,
-    hctype=hctype,
-    n=n,
-    cf=cf)
-         annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=0,
-        origin={25,-91})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR03(T_start=
-        Tout_start_Cool, p_start=pin_start_Cool)
-    "Flow Sensor at the outlet of valve FCVR01" annotation (Placement(
-        transformation(
-        extent={{-5,5},{5,-5}},
-        rotation=0,
-        origin={45,-93})));
+        origin={-97,-51})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PTR01_FTR01(
     L=L_PTR01_FTR01,
     h=h_PTR01_FTR01,
@@ -294,77 +248,38 @@ model CoolingSystemOpenLoop
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-55,-21})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_TTR02_VER901(
-    L=L_TTR02_VER901,
-    h=h_TTR02_VER901,
-    t=t_RR,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    hctype=hctype,
-    n=n,
-    cf=cf)
-         annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=-90,
-        origin={-55,-71})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FTR03_PTR01(
-    L=L_FTR03_PTR01,
-    h=h_FTR03_PTR01,
-    t=t_RR,
-    pin_start=pin_start_Users,
-    Tin_start=Tin_start_Cool,
-    Tout_start=Tin_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n,
-    cf=cf)
-         annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=-90,
-        origin={55,-71})));
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{-95,19},{-75,39}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(
-    use_in_Tout_cold_set=false,
+    use_in_Tout_cold_set=true,
+    Tout_cold_nom(displayUnit="K") = 15 + 237.15,
          dp_cold_start=dp_RR01, m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{-35,83},{36,154}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
     annotation (Placement(transformation(extent={{73,17},{114,52}})));
-  Modelica.Blocks.Interaction.Show.RealValue FTR01_1(use_numberPort=true,
-      significantDigits=4)
-    annotation (Placement(transformation(extent={{36,-131},{-5,-96}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_6(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{76,-43},{117,-8}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_7(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{-75,-31},{-116,4}})));
-  Sources.SinkMassFlow sinkMassFlow(
-    pin_start=310000,
-    p0=310000,
-    T0=288.15,
-    m_flow0=4.1666,
-    G=1)
-    annotation (Placement(transformation(extent={{-84,-101},{-104,-81}})));
-  Sources.SourceMassFlow sourceMassFlow(
-    p0=200000,
-    T0=303.15,
-    m_flow0=4.1666,
-    G=1)            annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+  Sources.SinkPressure PTR01_Source(
+    use_in_p0=true,
+    use_in_T0=true,
+    p0=123000,
+    T0(displayUnit="K") = 16.5 + 273.15)                                          "Reference pressure at PTR01"
+    annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
         rotation=90,
-        origin={76,-120})));
-  Sources.SourcePressure sourcePressure(p0=100000, T0=303.15)
-    annotation (Placement(transformation(extent={{24,-154},{44,-134}})));
+        origin={76,-53})));
+  Modelica.Blocks.Sources.TimeTable PTR02_TimeTable(table=PTR02_profile)
+                                                                     annotation (Placement(transformation(extent={{-135,-66},{-115,-46}})));
+  Modelica.Blocks.Sources.TimeTable PTR01_TimeTable(table=PTR01_profile)
+                                                                     annotation (Placement(transformation(extent={{114,-67},{94,-47}})));
+  Modelica.Blocks.Sources.TimeTable TTR01_TimeTable(table=TTR01_profile) annotation (Placement(transformation(extent={{115,-99},{95,-79}})));
+  Modelica.Blocks.Sources.TimeTable TTSP_TimeTable(table=TTRSP_profile) annotation (Placement(transformation(extent={{34,151},{14,171}})));
 equation
-  connect(RR00_PL_VER901_FCVR01.outlet, FCVR01.inlet) annotation (Line(
-      points={{-25,-91},{-15,-91}},
-      color={140,56,54},
-      thickness=0.5));
   connect(RR00_PL_RR01_PR01.outlet, PR01.inlet) annotation (Line(
       points={{-55,49},{-55,34.4}},
       color={140,56,54},
@@ -379,27 +294,6 @@ equation
       thickness=0.5));
   connect(PTR02.inlet, TTR02.inlet) annotation (Line(
       points={{-55.6,-41},{-55.6,-51}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TTR02.inlet, RR00_PL_TTR02_VER901.inlet) annotation (Line(
-      points={{-55.6,-51},{-55.6,-56},{-55,-56},{-55,-61}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_TTR02_VER901.outlet, RR00_PL_VER901_FCVR01.inlet) annotation (
-     Line(
-      points={{-55,-81},{-55,-91},{-45,-91}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FCVR01.outlet, RR00_PL_FCVR01_FTR03.inlet) annotation (Line(
-      points={{5,-91},{15,-91}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_FCVR01_FTR03.outlet, FTR03.inlet) annotation (Line(
-      points={{35,-91},{42,-91}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FTR03.outlet, RR00_PL_FTR03_PTR01.inlet) annotation (Line(
-      points={{48,-91},{55,-91},{55,-81}},
       color={140,56,54},
       thickness=0.5));
   connect(TTR01.inlet, PTR01.inlet) annotation (Line(
@@ -418,12 +312,6 @@ equation
       points={{55,37},{55,49}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCVR01_theta.y, FCVR01.opening)
-    annotation (Line(points={{15,-41},{-5,-41},{-5,-83}},  color={0,0,127}));
-  connect(TTR01.inlet, RR00_PL_FTR03_PTR01.outlet) annotation (Line(
-      points={{54.6,-36},{55,-36},{55,-61}},
-      color={140,56,54},
-      thickness=0.5));
   connect(RR00_PL_FTR01_RR01.outlet, RR01.incold) annotation (Line(
       points={{55,69},{55,80},{22,80},{22,97.2},{21.8,97.2}},
       color={140,56,54},
@@ -435,26 +323,28 @@ equation
 
   connect(FTR01.q_m3hr, FTR01_.numberPort) annotation (Line(points={{63.5,34},{66.712,34},{66.712,34.5},{69.925,34.5}},
                                                        color={0,0,127}));
-  connect(FTR03.q_m3hr, FTR01_1.numberPort) annotation (Line(points={{45,-99.5},{45,-105},{39.075,-105},{39.075,-113.5}},
-                                                            color={0,0,127}));
   connect(PTR01.p, FTR01_6.numberPort) annotation (Line(points={{64.8,-26},{68.862,-26},{68.862,-25.5},{72.925,-25.5}},
                                                       color={0,0,127}));
   connect(FTR01_7.numberPort, PTR02.p) annotation (Line(points={{-71.925,-13.5},{-65.8,-13.5},{-65.8,-41}},
                                     color={0,0,127}));
   connect(PR01_omega.y, PR01.in_omega) annotation (Line(points={{-74,29},{-67.75,29},{-67.75,29.2},{-61.5,29.2}},
                                            color={0,0,127}));
-  connect(sourcePressure.outlet, RR00_PL_FTR03_PTR01.inlet) annotation (Line(
-      points={{44,-144},{52,-144},{52,-91},{55,-91},{55,-81}},
+  connect(PTR01_Source.inlet, TTR01.inlet) annotation (Line(
+      points={{76,-63},{76,-67},{54.6,-67},{54.6,-36}},
       color={140,56,54},
       thickness=0.5));
-  connect(VER901.inlet, RR00_PL_VER901_FCVR01.inlet) annotation (Line(
-      points={{-86,-42},{-86,-63},{-69,-63},{-69,-91},{-45,-91}},
+  connect(PTR02_Source.inlet, TTR02.inlet) annotation (Line(
+      points={{-97,-61},{-97,-69},{-55.6,-69},{-55.6,-51}},
       color={140,56,54},
       thickness=0.5));
+  connect(PTR01_TimeTable.y, PTR01_Source.in_p0) annotation (Line(points={{93,-57},{84.4,-57}}, color={0,0,127}));
+  connect(PTR02_TimeTable.y, PTR02_Source.in_p0) annotation (Line(points={{-114,-56},{-105.4,-56},{-105.4,-55}}, color={0,0,127}));
+  connect(TTR01_TimeTable.y, PTR01_Source.in_T0) annotation (Line(points={{94,-89},{91,-89},{91,-53},{85.6,-53}}, color={0,0,127}));
+  connect(TTSP_TimeTable.y, RR01.in_Tout_cold_set) annotation (Line(points={{13,161},{0.5,161},{0.5,139.8}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(
-      StopTime=500,
+      StopTime=3000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end CoolingSystemOpenLoop;

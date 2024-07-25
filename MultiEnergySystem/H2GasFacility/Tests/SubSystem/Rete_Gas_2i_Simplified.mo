@@ -736,12 +736,6 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-184,246})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser Immissione_2(redeclare
-      model Medium =                                                                        Medium,
-    p0=464600,
-      m_flow0=0,
-    X0=X_start)  "Cantina Cellaro"
-    annotation (Placement(transformation(extent={{-294,196},{-250,240}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(redeclare
       model Medium =                                                                        Medium,
     p0=463200,
@@ -788,12 +782,6 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow0=0.119588,
     X0=X_start)                                                                                     "Via Lioni"
     annotation (Placement(transformation(extent={{212,-292},{256,-248}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser Immissione_1(redeclare
-      model Medium =                                                                        Medium,
-    p0=482900,
-      m_flow0=0,
-    X0=X_start)  "C/da Scunchiapani"
-    annotation (Placement(transformation(extent={{-160,-92},{-120,-52}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser(redeclare
       model Medium =                                                                        Medium,
     m_flow0=0,
@@ -864,6 +852,42 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow0=0,
     X0=X_start)
     annotation (Placement(transformation(extent={{-194,262},{-174,282}})));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
+    redeclare model Medium = Medium,
+    p0=480000,
+    G=1e-8,
+    T0=288.15,
+    X0=X_start,
+    computeEnthalpyWithFixedPressure=true,
+    m_flow0=0.1,
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
+        origin={-116,-54},
+        extent={{-10,-10},{10,10}},
+        rotation=180)));
+  Modelica.Blocks.Sources.Ramp m_flow_H2(
+    duration=50,
+    height=0.1,
+    offset=0,
+    startTime=50)                                                                                           annotation (
+    Placement(visible = true, transformation(origin={-101,-26},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
+    redeclare model Medium = Medium,
+    p0=480000,
+    G=1e-8,
+    T0=288.15,
+    X0=X_start,
+    computeEnthalpyWithFixedPressure=true,
+    m_flow0=0.1,
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
+        origin={-268,220},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H1(
+    duration=50,
+    height=0.1,
+    offset=0,
+    startTime=50)                                                                                           annotation (
+    Placement(visible = true, transformation(origin={-299,238},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
 equation
   connect(s1.inlet, REMI.outlet) annotation (Line(
       points={{-162,26},{-146,26}},
@@ -1082,10 +1106,6 @@ equation
       points={{-184,236},{-184,218},{-166,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(Immissione_2.inlet, sds17.outlet) annotation (Line(
-      points={{-272,218},{-224,218}},
-      color={182,109,49},
-      thickness=0.5));
   connect(GRM_4.inlet, sds10.outlet) annotation (Line(
       points={{-224,176},{-164,176}},
       color={182,109,49},
@@ -1112,10 +1132,6 @@ equation
       thickness=0.5));
   connect(GRM_2.inlet, s30.outlet) annotation (Line(
       points={{234,-270},{234,-242}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s3.outlet, Immissione_1.inlet) annotation (Line(
-      points={{-166,-72},{-140,-72}},
       color={182,109,49},
       thickness=0.5));
   connect(idealUser.inlet, s7.outlet) annotation (Line(
@@ -1174,7 +1190,21 @@ equation
       points={{-184,256},{-184,272}},
       color={182,109,49},
       thickness=0.5));
+  connect(s3.outlet, Immissione_1.outlet) annotation (Line(
+      points={{-166,-72},{-140,-72},{-140,-54},{-126,-54}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(Immissione_1.in_m_flow0, m_flow_H2.y) annotation (Line(points={{-110,
+          -59},{-112,-59},{-112,-72},{-84,-72},{-84,-26},{-90,-26}}, color={0,0,
+          127}));
+  connect(Immissione_2.outlet, sds17.outlet) annotation (Line(
+      points={{-258,220},{-256,218},{-224,218}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(m_flow_H1.y, Immissione_2.in_m_flow0) annotation (Line(points={{-288,
+          238},{-288,232},{-274,232},{-274,225}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-300,-300},{300,
-            300}})));
+            300}})),
+    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_Simplified;

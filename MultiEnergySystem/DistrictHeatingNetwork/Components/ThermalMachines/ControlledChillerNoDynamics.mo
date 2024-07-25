@@ -87,8 +87,10 @@ equation
   //der(M) = incold.m_flow + outcold.m_flow;
   //pin_cold - pout_cold = k_cold*m_flow_cold  "Momentum balance cold side";
   //pin_cold - pout_cold = (0.222802761867126*m_flow_cold -0.485096261101112)*1e5  "Momentum balance cold side";
-  pin_cold - pout_cold = (0.2228*m_flow_cold -0.56)*1e5  "Momentum balance cold side";
-
+  //pin_cold - pout_cold = (0.2228*m_flow_cold -0.56)*1e5  "Momentum balance cold side";
+  //pin_cold - pout_cold = (0.243353*m_flow_cold - 0.76)*1e5  "Momentum balance cold side";
+  //pin_cold - pout_cold = (0.245867*m_flow_cold - 0.77)*1e5  "Momentum balance cold side";
+  pin_cold - pout_cold = (0.2692545*m_flow_cold - 0.97)*1e5  "Momentum balance cold side";
 
   //pin_cold = pout_cold;
   Pcold = m_flow_cold*(hin_cold - hout_cold) "Themal Power Cold side";

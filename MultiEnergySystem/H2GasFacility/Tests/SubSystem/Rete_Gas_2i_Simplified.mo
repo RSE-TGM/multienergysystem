@@ -1,7 +1,7 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_Simplified "Simplified version of Rete Gas 2i"
   extends Modelica.Icons.Example;
-  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
@@ -1194,17 +1194,16 @@ equation
       points={{-166,-72},{-140,-72},{-140,-54},{-126,-54}},
       color={182,109,49},
       thickness=0.5));
-  connect(Immissione_1.in_m_flow0, m_flow_H2.y) annotation (Line(points={{-110,
-          -59},{-112,-59},{-112,-72},{-84,-72},{-84,-26},{-90,-26}}, color={0,0,
-          127}));
+  connect(Immissione_1.in_m_flow0, m_flow_H2.y) annotation (Line(points={{-110,-59},
+          {-112,-59},{-112,-72},{-84,-72},{-84,-26},{-90,-26}}, color={0,0,127}));
   connect(Immissione_2.outlet, sds17.outlet) annotation (Line(
       points={{-258,220},{-256,218},{-224,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(m_flow_H1.y, Immissione_2.in_m_flow0) annotation (Line(points={{-288,
-          238},{-288,232},{-274,232},{-274,225}}, color={0,0,127}));
+  connect(m_flow_H1.y, Immissione_2.in_m_flow0) annotation (Line(points={{-288,238},
+          {-288,232},{-274,232},{-274,225}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-300,-300},{300,
             300}})),
-    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+    experiment(StopTime=5400, __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_Simplified;

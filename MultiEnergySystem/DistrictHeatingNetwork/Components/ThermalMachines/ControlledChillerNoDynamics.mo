@@ -18,13 +18,27 @@ model ControlledChillerNoDynamics
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_cold_start = 1 "Cold fluid mass flow rate";
   parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_cold_start - pout_cold_start)/m_flow_cold_start "Pressure loss across the cold side";
   parameter DistrictHeatingNetwork.Types.Volume V = 0.1;
+  parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option";
+  parameter Real T_bandwidth = 4 "Temperature Bandwidth for the on/off temperature controller";
+
+  outer DistrictHeatingNetwork.System system "system object for global defaults";
+
+  Boolean compressor1_on(start = false); // Compressor 1 ON/OFF state
+  Boolean compressor2_on(start = false); // Compressor 2 ON/OFF state
+  Real P_compressor1; // Power of compressor 1 (W)
+  Real P_compressor2; // Power of compressor 2 (W)
+
+// Internal control signals
+  Boolean comp1_control(start=true);
+  Boolean comp2_control(start=false);
+  Boolean cooling_phase(start=true); // Indicates cooling phase
 
   DistrictHeatingNetwork.Types.Pressure pin_cold "Cold side inlet pressure";
   DistrictHeatingNetwork.Types.Pressure pout_cold "Cold side outlet pressure";
 
   DistrictHeatingNetwork.Types.Temperature Tin_cold(start = Tin_cold_start) "Cold side inlet temperature";
   DistrictHeatingNetwork.Types.Temperature Tout_cold(start = Tout_cold_start) "Cold side outlet temperature";
-  DistrictHeatingNetwork.Types.Temperature Tout_cold_min "Minimum possible cold side outlet temperature";
+  //DistrictHeatingNetwork.Types.Temperature Tout_cold_min "Minimum possible cold side outlet temperature";
   DistrictHeatingNetwork.Types.Temperature Tout_cold_set "Actual set-point for the outlet cold temperature";
 
   DistrictHeatingNetwork.Types.SpecificEnthalpy hin_cold "Cold side inlet Specific Enthalpy";
@@ -37,12 +51,19 @@ model ControlledChillerNoDynamics
   DistrictHeatingNetwork.Types.Power Pcold "Thermal Power cold side (cold source side)";
   //SI.Power Phot "Themal Power hot side (lato utenze)";
   DistrictHeatingNetwork.Types.Mass M;
-
+  //DistrictHeatingNetwork.Types.Power Pcold "Total power";
+  DistrictHeatingNetwork.Types.SpecificHeatCapacity cp "Outlet specific heat capacity of the fluid";
 
   // Declaration of fluid models
+  Medium fluidIn(T_start = Tin_cold_start, p_start = pin_cold_start) "Cold inlet fluid";
+  Medium fluidOut(T_start = Tout_cold_start, p_start = pout_cold_start) "Cold outlet fluid";
 
-  Medium fluidInCold(T_start = Tin_cold_start, p_start = pin_cold_start) "Cold inlet fluid";
-  Medium fluidOutCold(T_start = Tout_cold_start, p_start = pout_cold_start) "Cold outlet fluid";
+
+  // Reference Variables
+  DistrictHeatingNetwork.Types.Power Pcold_ref "Reference value for computed Heat Power required";
+  DistrictHeatingNetwork.Types.SpecificEnthalpy hout_cold_ref "Reference required temperature";
+
+  Medium fluidOut_ref(T_start = Tout_cold_start, p_start = pout_cold_start) "Reference outlet fluid";
 
 
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet incold annotation (
@@ -56,14 +77,26 @@ model ControlledChillerNoDynamics
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,60})));
+  Modelica.Blocks.Logical.TriggeredTrapezoid TT1(
+    amplitude=-100e3,
+    rising=15,
+    falling=15) annotation (Placement(transformation(extent={{-10,-12},{10,10}})));
+  Modelica.Blocks.Sources.BooleanExpression C1(y=compressor1_on) annotation (Placement(transformation(extent={{-44,-10},{-24,10}})));
+  Modelica.Blocks.Logical.TriggeredTrapezoid TT2(
+    amplitude=-100e3,
+    rising=10,
+    falling=10) annotation (Placement(transformation(extent={{-10,-42},{10,-20}})));
+  Modelica.Blocks.Sources.BooleanExpression C2(y=compressor2_on) annotation (Placement(transformation(extent={{-44,-40},{-24,-20}})));
 protected
   Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set_internal;
 
 equation
 // Fluid Definition
 
-  {fluidInCold.p, fluidInCold.h} = {pin_cold, hin_cold};
-  {fluidOutCold.p, fluidOutCold.h} = {pout_cold, hout_cold};
+  {fluidIn.p, fluidIn.h} = {pin_cold, hin_cold};
+  {fluidOut.p, fluidOut.h} = {pout_cold, hout_cold};
+
+  cp = fluidOut.cp;
 
 // Assignation of name variables
 
@@ -72,28 +105,32 @@ equation
   hin_cold = inStream(incold.h_out);
   hout_cold = outcold.h_out;
 
-  Tin_cold = fluidInCold.T;
-  Tout_cold = fluidOutCold.T;
+  Tin_cold = fluidIn.T;
+  Tout_cold = fluidOut.T;
   m_flow_cold = incold.m_flow;
-  q_m3h_cold = m_flow_cold/fluidInCold.rho;
+  q_m3h_cold = m_flow_cold/fluidIn.rho;
 
 // Ideal Controlled variables
-  Tout_cold_min = min(Tout_cold_set, Tin_cold);
-  Tout_cold = Tout_cold_min "Fixed hot side outlet temperature";
+  // Tout_cold_min = min(Tout_cold_set, Tin_cold);
+  // Tout_cold = Tout_cold_min "Fixed hot side outlet temperature";
 
 // Balance equation
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";
-  M = V*fluidInCold.rho;
+  M = V*fluidIn.rho;
   //der(M) = incold.m_flow + outcold.m_flow;
   //pin_cold - pout_cold = k_cold*m_flow_cold  "Momentum balance cold side";
-  //pin_cold - pout_cold = (0.222802761867126*m_flow_cold -0.485096261101112)*1e5  "Momentum balance cold side";
-  //pin_cold - pout_cold = (0.2228*m_flow_cold -0.56)*1e5  "Momentum balance cold side";
   //pin_cold - pout_cold = (0.243353*m_flow_cold - 0.76)*1e5  "Momentum balance cold side";
   //pin_cold - pout_cold = (0.245867*m_flow_cold - 0.77)*1e5  "Momentum balance cold side";
-  pin_cold - pout_cold = (0.2692545*m_flow_cold - 0.97)*1e5  "Momentum balance cold side";
+  //pin_cold - pout_cold = (0.2692545*m_flow_cold - 0.92)*1e5  "Momentum balance cold side";
+  //pin_cold - pout_cold = (0.24522758*m_flow_cold -0.732359)*1e5  "Momentum balance cold side";
+  pin_cold - pout_cold = (0.24522758*m_flow_cold -0.772359)*1e5  "Momentum balance cold side";
 
   //pin_cold = pout_cold;
-  Pcold = m_flow_cold*(hin_cold - hout_cold) "Themal Power Cold side";
+  //Pcold = m_flow_cold*(hin_cold - hout_cold) "Themal Power Cold side";
+
+  //M*cp*der(Tout_cold) = outcold.m_flow*hout_cold + incold.m_flow*hin_cold + Pcold;
+  M*cp*der(Tout_cold) = incold.m_flow*(hin_cold-hout_cold) + Pcold;
+
 //  Phot = Pcomp + Pcold "Energy Balance";
 //Pcomp =  a[1]*m_flow_hot + a[2]*m_flow_cold + a[3]*Tin_cold + a[4]*m_flow_hot*Tin_cold + a[5]*m_flow_cold*Tin_cold + a[6]*m_flow_hot*m_flow_cold;
 //  COP = Phot/Pcomp;
@@ -101,6 +138,13 @@ equation
 // Dummy equations for energy balance
 
   incold.h_out = inStream(incold.h_out);
+
+
+  fluidOut_ref.p = pin_cold;
+  fluidOut_ref.T = Tout_cold_set;
+  hout_cold_ref = fluidOut_ref.h;
+  0 = incold.m_flow*(-hout_cold_ref + hin_cold) + Pcold_ref;
+
 
   // Definition of Tout_cold_set
   Tout_cold_set = in_Tout_cold_set_internal;
@@ -112,6 +156,114 @@ equation
   connect(in_Tout_cold_set, in_Tout_cold_set_internal);
 
 
+
+
+///////////////////////
+
+
+  // Power of compressors
+  //P_compressor1 = if compressor1_on then -100e3 else 0;
+  //P_compressor2 = if compressor2_on then -100e3 else 0;
+  P_compressor1 = if compressor1_on then TT1.y else 0;
+  P_compressor2 = if compressor2_on then TT2.y else 0;
+  // Total cooling power
+  Pcold = P_compressor1 + P_compressor2;
+  //Pcold = -100e3;
+
+
+///////////
+
+
+initial equation
+  if initOpt == Choices.Init.Options.steadyState then
+    //der(M) = 0;
+    der(Tout_cold) = 0;
+    //der(pout) = 0;
+  elseif initOpt == Choices.Init.Options.fixedState then
+    Tout_cold = Tout_cold_start;
+  else
+//No initial equations
+  end if;
+
+equation
+//   when sample(0, 0.1) then
+//     compressor1_on := if Tout_cold > Tout_cold_set + T_bandwidth then false else if Tout_cold < Tout_cold_set - T_bandwidth and Pcold_ref <= 100e3 then true else pre(compressor1_on);
+// Hysteresis control for compressor 2
+//     compressor2_on := if Tout_cold > Tout_cold_set + T_bandwidth then false else if Tout_cold < Tout_cold_set - T_bandwidth and Pcold_ref > 100e3 then true else pre(compressor2_on);
+// Ensure only one compressor is activated if the required power is less than 100 kW
+//     if Pcold_ref <= 100e3 then
+//       compressor2_on := false;
+//     end if;
+// Ensure both compressors are not activated at the same time unless necessary
+//     if Pcold_ref > 100e3 then
+//       compressor1_on := true;
+//       compressor2_on := true;
+//     end if;
+//   end when;
+
+
+
+    // Cooling phase logic
+algorithm
+  if Tout_cold <= Tout_cold_set - T_bandwidth then
+    cooling_phase :=false; // Enter heating phase
+  elseif Tout_cold >= Tout_cold_set + T_bandwidth then
+    cooling_phase :=true; // Enter cooling phase
+  end if;
+
+  // Hysteresis control logic for compressor 1
+  if cooling_phase then
+    // In cooling phase, turn on compressors based on required cooling power
+    if Pcold_ref >= -100e3 then
+      comp1_control :=true;
+      comp2_control :=false;
+    else
+      comp1_control :=true;
+      comp2_control :=true;
+    end if;
+  else
+    // In heating phase, turn off compressors based on temperature
+    if Tout_cold > Tout_cold_set + T_bandwidth then
+      comp1_control :=false;
+      comp2_control :=false;
+    else
+      comp1_control :=if Tout_cold > Tout_cold_set then true else false;
+      comp2_control :=false;
+    end if;
+  end if;
+
+
+//   if cooling_phase then
+//     // In cooling phase, control compressors based on temperature thresholds
+//     if Tout_cold > Tout_cold_set then
+//       comp1_control :=true;
+//       comp2_control :=false;
+//     else
+//       comp1_control :=false;
+//       comp2_control :=false;
+//     end if;
+//
+//     if Tout_cold <= Tout_cold_set -  T_bandwidth then
+//       comp2_control :=true;
+//     end if;
+//   else
+//     // In heating phase, turn off compressors based on temperature thresholds
+//     if Tout_cold > Tout_cold_set +  T_bandwidth then
+//       comp1_control :=false;
+//       comp2_control :=false;
+//     else
+//       comp1_control :=if Tout_cold > Tout_cold_set then true else false;
+//       comp2_control :=false;
+//     end if;
+//   end if;
+
+    // Actual compressor ON/OFF state
+  compressor1_on :=comp1_control;
+  compressor2_on :=comp2_control;
+
+equation
+  connect(C1.y, TT1.u) annotation (Line(points={{-23,0},{-17.5,0},{-17.5,-1},{-12,-1}}, color={255,0,255}));
+  connect(C2.y, TT2.u) annotation (Line(points={{-23,-30},{-17.5,-30},{-17.5,-31},{-12,-31}}, color={255,0,255}));
   annotation (
     Icon);
 end ControlledChillerNoDynamics;

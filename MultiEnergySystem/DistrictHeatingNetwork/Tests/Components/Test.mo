@@ -636,7 +636,7 @@ package Test "Package to test component equation and behaviour"
       Placement(visible = true, transformation(origin = {36, -18}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
     MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealTemperatureSensor TSensorWarm annotation (
       Placement(visible = true, transformation(origin = {36, 22}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.ElectricBoiler eBoilerHot(onOffController(pre_y_start = true)) annotation (
+    MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.ElectricBoiler eBoilerHot                                      annotation (
       Placement(transformation(extent = {{-6, 10}, {14, 30}})));
     MultiEnergySystem.DistrictHeatingNetwork.Components.Machines.ElectricBoiler eBoilerCold annotation (
       Placement(transformation(extent = {{-6, -30}, {14, -10}})));
@@ -648,25 +648,31 @@ package Test "Package to test component equation and behaviour"
       Placement(visible = true, transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   equation
     connect(TSensorCold.outlet, expansionTank1.inlet) annotation (
-      Line(points = {{40, -20}, {58, -20}, {58, -14}}, color = {168, 168, 168}));
+      Line(points={{39.6,-20.4},{58,-20.4},{58,-14}},  color = {168, 168, 168}));
     connect(TSensorWarm.outlet, expansionTank.inlet) annotation (
-      Line(points = {{40, 20}, {58, 20}, {58, 26}}, color = {168, 168, 168}));
+      Line(points={{39.6,19.6},{58,19.6},{58,26}},  color = {168, 168, 168}));
     connect(mflowSensor1.outlet, eBoilerHot.inlet) annotation (
-      Line(points = {{-26, 20}, {-6, 20}}, color = {168, 168, 168}));
+      Line(points={{-26.4,19.6},{-16,19.6},{-16,20},{-6,20}},
+                                           color = {168, 168, 168}));
     connect(eBoilerHot.outlet, TSensorWarm.inlet) annotation (
-      Line(points = {{14, 20}, {32, 20}}, color = {168, 168, 168}));
+      Line(points={{14,20},{24,20},{24,19.6},{32.4,19.6}},
+                                          color = {168, 168, 168}));
     connect(mflowSensor2.outlet, eBoilerCold.inlet) annotation (
-      Line(points = {{-26, -20}, {-6, -20}}, color = {168, 168, 168}));
+      Line(points={{-26.4,-20.4},{-16,-20.4},{-16,-20},{-6,-20}},
+                                             color = {168, 168, 168}));
     connect(eBoilerCold.outlet, TSensorCold.inlet) annotation (
-      Line(points = {{14, -20}, {32, -20}}, color = {168, 168, 168}));
+      Line(points={{14,-20},{24,-20},{24,-20.4},{32.4,-20.4}},
+                                            color = {168, 168, 168}));
     connect(TrefBoiler2.y, eBoilerCold.referenceT) annotation (
-      Line(points = {{-11.2, -4}, {0.6, -4}, {0.6, -10}}, color = {0, 0, 127}));
+      Line(points={{-11.2,-4},{4,-4},{4,-10}},            color = {0, 0, 127}));
     connect(TrefBoiler1.y, eBoilerHot.referenceT) annotation (
-      Line(points = {{-11.2, 36}, {0.6, 36}, {0.6, 30}}, color = {0, 0, 127}));
+      Line(points={{-11.2,36},{4,36},{4,30}},            color = {0, 0, 127}));
     connect(sourceCold.outlet, mflowSensor2.inlet) annotation (
-      Line(points = {{-49.8, -20}, {-34, -20}}, color = {168, 168, 168}));
+      Line(points={{-49.8,-20},{-42,-20},{-42,-20.4},{-33.6,-20.4}},
+                                                color = {168, 168, 168}));
     connect(sourceHot.outlet, mflowSensor1.inlet) annotation (
-      Line(points = {{-49.8, 20}, {-34, 20}}, color = {168, 168, 168}));
+      Line(points={{-49.8,20},{-42,20},{-42,19.6},{-33.6,19.6}},
+                                              color = {168, 168, 168}));
     annotation (
       Diagram(coordinateSystem(extent = {{-80, -80}, {80, 80}})));
   end ElectricBoilerTest;
@@ -875,7 +881,7 @@ package Test "Package to test component equation and behaviour"
                  annotation (Placement(transformation(extent={{82,10},{62,30}})));
   equation
     connect(wall_FixedT.MultiPort, rpipe1.wall)
-      annotation (Line(points={{0,124},{0,104.3}},
+      annotation (Line(points={{0,124},{0,104.1}},
                                                  color={255,238,44}));
     connect(sourceP.outlet, rpipe1.inlet) annotation (Line(points={{-60,80},{-40,80},
             {-40,100},{-10,100}},
@@ -884,7 +890,7 @@ package Test "Package to test component equation and behaviour"
             {40,80},{58,80}},
                            color={168,168,168}));
     connect(wall_inputQ.MultiPort, rpipe2.wall)
-      annotation (Line(points={{0,54},{0,44.3}},color={255,238,44}));
+      annotation (Line(points={{0,54},{0,44.1}},color={255,238,44}));
     connect(Q.y, wall_inputQ.S) annotation (Line(points={{-9,68},{2,68}, {2, 58},{0,58}},
                             color={0,0,127}));
     connect(sourceP.outlet, rpipe2.inlet)
@@ -898,11 +904,11 @@ package Test "Package to test component equation and behaviour"
     connect(sinkHot.inlet, hotside.outlet)
       annotation (Line(points={{62,-32},{10,-32}}, color={168,168,168}));
     connect(heatExchangerTopologyFV.side2, hotside.wall)
-      annotation (Line(points={{0,-19.1},{0,-27.7}}, color={255,238,44}));
+      annotation (Line(points={{0,-19.1},{0,-27.9}}, color={255,238,44}));
     connect(metalWallFV.ext, heatExchangerTopologyFV.side1)
       annotation (Line(points={{0,-3.1},{0,-13}},  color={255,238,44}));
     connect(coldside.wall, metalWallFV.int)
-      annotation (Line(points={{0,15.7},{0,3}},    color={255,238,44}));
+      annotation (Line(points={{0,15.9},{0,3}},    color={255,238,44}));
     connect(sinkCold.inlet, coldside.outlet)
       annotation (Line(points={{-60,20},{-10,20}},   color={168,168,168}));
     connect(coldside.inlet, sourceCold.outlet)
@@ -1190,7 +1196,7 @@ package Test "Package to test component equation and behaviour"
     connect(add.y, sourceP.in_T0)
       annotation (Line(points={{-19,-22},{-6,-22},{-6,-12.4}}, color={0,0,127}));
     connect(Tout_ref.y, eBoiler.Tout_ref)
-      annotation (Line(points={{-23,8},{7.2,8}}, color={0,0,127}));
+      annotation (Line(points={{-23,8},{9.8,8}}, color={0,0,127}));
     annotation (
       experiment(StartTime = 0, StopTime = 3500, Tolerance = 1e-06, Interval = 7),
       Documentation(info = "<html><head></head><body>Test model for the component:

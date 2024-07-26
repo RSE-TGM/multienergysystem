@@ -23,7 +23,7 @@ model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
   parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
   parameter Real PR01omega[:,:] = [0, 2*3.141592653*50; 100, 2*3.141592653*50];
   parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
-  parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 3000, 16 + 273.15];
+  parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 500, 16 + 273.15; 1000, 25 + 273.15; 3000, 16 + 273.15; 4000, 16 + 273.15];
   parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
   parameter Real PTR02_profile[:,:] = [0, 2.2e5; 3000, 2.2e5];
 
@@ -253,7 +253,7 @@ model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(
     use_in_Tout_cold_set=true,
-    Tout_cold_nom(displayUnit="K") = 15 + 237.15,
+    Tout_cold_nom(displayUnit="K") = 15 + 273.15,
          dp_cold_start=dp_RR01, m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{-35,83},{36,154}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)

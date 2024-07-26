@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.RR00;
 model RR01_Test "Test using real data"
   extends CoolingSystemOpenLoop(PTR01_TimeTable(table=[ts,PTi]), PTR02_TimeTable(table=[ts,PTo]),
-    TTR01_TimeTable(table=[ts,TTi]));
+    TTR01_TimeTable(table=[ts,TTi]), Tin_start_Cool = TTi[1,1]);
 
   parameter Types.Density rhohotref = 985 "Reference hot water density";
   parameter Types.Density rhocoldref = 999 "Reference cold water density";
@@ -19,7 +19,7 @@ model RR01_Test "Test using real data"
   parameter String timenoscale = "time" "Matrix name in file";
   parameter Real Kv(unit = "m3/h") = 20.5 "Metri Flow Coefficient";
 
-  Utilities.ASHRAEIndex                        val_pout annotation (Placement(transformation(extent={{88,54},{100,66}})));
+  Utilities.ASHRAEIndex val_Q annotation (Placement(transformation(extent={{88,54},{100,66}})));
   Modelica.Blocks.Sources.TimeTable PTR02_TimeTable1(table=[ts,FT])  annotation (Placement(transformation(extent={{51,88},{71,108}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
@@ -38,6 +38,6 @@ protected
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = m_flow_approx[1,1];
 
 equation
-  connect(val_pout.u_sim, FTR01_.numberPort) annotation (Line(points={{86.8,57},{86.8,58},{69.925,58},{69.925,34.5}}, color={0,0,127}));
-  connect(PTR02_TimeTable1.y, val_pout.u_meas) annotation (Line(points={{72,98},{76,98},{76,66},{86.8,66},{86.8,63}}, color={0,0,127}));
+  connect(val_Q.u_sim, FTR01_.numberPort) annotation (Line(points={{86.8,57},{86.8,58},{69.925,58},{69.925,34.5}}, color={0,0,127}));
+  connect(PTR02_TimeTable1.y, val_Q.u_meas) annotation (Line(points={{72,98},{76,98},{76,66},{86.8,66},{86.8,63}}, color={0,0,127}));
 end RR01_Test;

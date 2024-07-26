@@ -789,7 +789,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     annotation (Placement(transformation(extent={{-308,-120},{-288,-100}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser1(redeclare
       model Medium =                                                                        Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{-258,-78},{-238,-58}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser2(redeclare
@@ -1205,5 +1205,8 @@ equation
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-300,-300},{300,
             300}})),
-    experiment(StopTime=5400, __Dymola_Algorithm="Dassl"));
+    experiment(
+      StopTime=5400,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_Simplified;

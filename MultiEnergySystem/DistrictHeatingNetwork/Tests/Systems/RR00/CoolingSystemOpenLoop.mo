@@ -255,8 +255,8 @@ model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
     use_in_Tout_cold_set=true,
     Tout_cold_nom(displayUnit="K") = 15 + 273.15,
          dp_cold_start=dp_RR01, m_flow_cold_start=m_flow_Cool,
-    V=0.6)
-    annotation (Placement(transformation(extent={{-35,83},{36,154}})));
+    V=0.001) "Chiller"
+    annotation (Placement(transformation(extent={{-35,85},{35,155}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
     annotation (Placement(transformation(extent={{73,17},{114,52}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_6(use_numberPort=true,
@@ -279,7 +279,9 @@ model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
   Modelica.Blocks.Sources.TimeTable PTR01_TimeTable(table=PTR01_profile)
                                                                      annotation (Placement(transformation(extent={{114,-67},{94,-47}})));
   Modelica.Blocks.Sources.TimeTable TTR01_TimeTable(table=TTR01_profile) annotation (Placement(transformation(extent={{115,-99},{95,-79}})));
-  Modelica.Blocks.Sources.TimeTable TTSP_TimeTable(table=TTRSP_profile) annotation (Placement(transformation(extent={{34,151},{14,171}})));
+  Modelica.Blocks.Sources.TimeTable TTSP_TimeTable(table=TTRSP_profile) annotation (Placement(transformation(extent={{34,150},{14,170}})));
+  Modelica.Blocks.Sources.BooleanTable RR101_Status(table={1e6}, startValue=true) "Input to decide whether or nor the chiller is working"
+    annotation (Placement(transformation(extent={{-75,110},{-55,130}})));
 equation
   connect(RR00_PL_RR01_PR01.outlet, PR01.inlet) annotation (Line(
       points={{-55,49},{-55,34.4}},
@@ -314,11 +316,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(RR00_PL_FTR01_RR01.outlet, RR01.incold) annotation (Line(
-      points={{55,69},{55,80},{22,80},{22,97.2},{21.8,97.2}},
+      points={{55,69},{55,80},{21,80},{21,99}},
       color={140,56,54},
       thickness=0.5));
   connect(RR01.outcold, RR00_PL_RR01_PR01.inlet) annotation (Line(
-      points={{-20.8,97.2},{-20.8,79},{-55,79},{-55,69}},
+      points={{-21,99},{-21,79},{-55,79},{-55,69}},
       color={140,56,54},
       thickness=0.5));
 
@@ -341,7 +343,8 @@ equation
   connect(PTR01_TimeTable.y, PTR01_Source.in_p0) annotation (Line(points={{93,-57},{84.4,-57}}, color={0,0,127}));
   connect(PTR02_TimeTable.y, PTR02_Source.in_p0) annotation (Line(points={{-114,-56},{-105.4,-56},{-105.4,-55}}, color={0,0,127}));
   connect(TTR01_TimeTable.y, PTR01_Source.in_T0) annotation (Line(points={{94,-89},{91,-89},{91,-53},{85.6,-53}}, color={0,0,127}));
-  connect(TTSP_TimeTable.y, RR01.in_Tout_cold_set) annotation (Line(points={{13,161},{0.5,161},{0.5,139.8}}, color={0,0,127}));
+  connect(TTSP_TimeTable.y, RR01.in_Tout_cold_set) annotation (Line(points={{13,160},{0,160},{0,144.5}},     color={0,0,127}));
+  connect(RR101_Status.y, RR01.cold_on) annotation (Line(points={{-54,120},{-38.5,120}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(

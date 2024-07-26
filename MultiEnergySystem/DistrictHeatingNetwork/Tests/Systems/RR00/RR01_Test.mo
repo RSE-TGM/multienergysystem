@@ -1,7 +1,12 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.RR00;
 model RR01_Test "Test using real data"
   extends CoolingSystemOpenLoop(PTR01_TimeTable(table=[ts,PTi]), PTR02_TimeTable(table=[ts,PTo]),
-    TTR01_TimeTable(table=[ts,TTi]), Tin_start_Cool = TTi[1,1]);
+    TTR01_TimeTable(table=[ts,TTi]), Tin_start_Cool = TTi[1,1],
+    RR01(
+      Tin_cold_start=TTi[1, 1],
+      Tout_cold_nom=TTo[1, 1],
+      pin_cold_start=PTi[1, 1],
+      initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState));
 
   parameter Types.Density rhohotref = 985 "Reference hot water density";
   parameter Types.Density rhocoldref = 999 "Reference cold water density";

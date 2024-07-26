@@ -74,17 +74,17 @@ model ControlledChillerNoDynamics
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={10,70}), iconTransformation(
-        extent={{-20,-20},{20,20}},
+        extent={{-10,-10},{10,10}},
         rotation=-90,
-        origin={0,60})));
+        origin={0,70})));
   Modelica.Blocks.Logical.TriggeredTrapezoid TT1(
-    amplitude=110e3,
-    rising=0,
+    amplitude=100e3,
+    rising=10,
     falling=0)  annotation (Placement(transformation(extent={{-2,-36},{18,-14}})));
   Modelica.Blocks.Sources.BooleanExpression C1(y=compressor1_on) annotation (Placement(transformation(extent={{-36,-34},{-16,-14}})));
   Modelica.Blocks.Logical.TriggeredTrapezoid TT2(
     amplitude=100e3,
-    rising=0,
+    rising=10,
     falling=0)  annotation (Placement(transformation(extent={{-2,-66},{18,-44}})));
   Modelica.Blocks.Sources.BooleanExpression C2(y=compressor2_on) annotation (Placement(transformation(extent={{-36,-64},{-16,-44}})));
   Modelica.Blocks.Logical.OnOffController onOffController(bandwidth=3, pre_y_start=true)
@@ -101,6 +101,8 @@ model ControlledChillerNoDynamics
   Modelica.Blocks.Sources.RealExpression Toutref(y=Tout_cold_set) annotation (Placement(transformation(extent={{-48,16},{-28,36}})));
   Modelica.Blocks.Continuous.FirstOrder FO1(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{28,-36},{48,-16}})));
   Modelica.Blocks.Continuous.FirstOrder FO2(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{28,-64},{48,-44}})));
+  Modelica.Blocks.Interfaces.BooleanInput cold_on annotation (Placement(
+        transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-120,-10},{-100,10}})));
 protected
   Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set_internal;
 
@@ -131,7 +133,6 @@ equation
 // Balance equation
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";
   M = V*fluidIn.rho;
-  //der(M) = incold.m_flow + outcold.m_flow;
   //pin_cold - pout_cold = k_cold*m_flow_cold  "Momentum balance cold side";
   //pin_cold - pout_cold = (0.243353*m_flow_cold - 0.76)*1e5  "Momentum balance cold side";
   //pin_cold - pout_cold = (0.245867*m_flow_cold - 0.77)*1e5  "Momentum balance cold side";
@@ -183,7 +184,7 @@ equation
   P_compressor1 = FO1.y;
   P_compressor2 = FO2.y;
   // Total cooling power
-  Pcold = P_compressor1 + P_compressor2;
+  Pcold = if cold_on then P_compressor1 + P_compressor2 else 0;
   //Pcold = TT.y;
   //Pcold = -100e3;
 

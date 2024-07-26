@@ -254,7 +254,8 @@ model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
     RR01(
     use_in_Tout_cold_set=true,
     Tout_cold_nom(displayUnit="K") = 15 + 273.15,
-         dp_cold_start=dp_RR01, m_flow_cold_start=m_flow_Cool)
+         dp_cold_start=dp_RR01, m_flow_cold_start=m_flow_Cool,
+    V=0.6)
     annotation (Placement(transformation(extent={{-35,83},{36,154}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
     annotation (Placement(transformation(extent={{73,17},{114,52}})));
@@ -344,7 +345,7 @@ equation
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(
-      StopTime=3000,
+      StopTime=4000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end CoolingSystemOpenLoop;

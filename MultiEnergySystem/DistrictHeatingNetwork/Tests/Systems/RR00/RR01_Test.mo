@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.RR00;
 model RR01_Test "Test using real data"
-  extends CoolingSystemOpenLoop(PTR01_TimeTable(table=[ts,PTi]), PTR02_TimeTable(table=[ts,PTo]),
+  extends ChillerOpenLoop(PTR01_TimeTable(table=[ts,PTi]), PTR02_TimeTable(table=[ts,PTo]),
     TTR01_TimeTable(table=[ts,TTi]), Tin_start_Cool = TTi[1,1],
     RR01(
       Tin_cold_start=TTi[1, 1],

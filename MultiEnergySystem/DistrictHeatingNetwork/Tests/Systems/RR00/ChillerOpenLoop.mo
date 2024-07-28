@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.RR00;
-model CoolingSystemOpenLoop "Ideal Chiller test connected to a pump"
+model ChillerOpenLoop "Ideal Chiller test connected to a pump"
   extends Modelica.Icons.Example;
   parameter Integer n = 3 "Number of volumes";
   parameter Types.MassFlowRate m_flow_total = 2.4;
@@ -351,4 +351,4 @@ equation
       StopTime=4000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end CoolingSystemOpenLoop;
+end ChillerOpenLoop;

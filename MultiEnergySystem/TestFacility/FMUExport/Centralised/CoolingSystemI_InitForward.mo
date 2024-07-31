@@ -415,9 +415,7 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     Tout_cold_nom(displayUnit="K") = Tout_start_Cool,
     dp_cold_start=dp_RR01,
     m_flow_cold_start=m_flow_Cool,
-    V=0.001,
-    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)
-             "Chiller"
+    V=0.001) "Chiller"
     annotation (Placement(transformation(extent={{297,69},{367,139}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
     annotation (Placement(transformation(extent={{405,1},{446,36}})));
@@ -2000,5 +1998,11 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-    annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-560,-240},{560,240}})));
+    annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+        Text(
+          extent={{-60,44},{60,-36}},
+          textColor={140,56,54},
+          textStyle={TextStyle.Bold},
+          textString="Cooling
+System")}),                                                        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-560,-240},{560,240}})));
 end CoolingSystemI_InitForward;

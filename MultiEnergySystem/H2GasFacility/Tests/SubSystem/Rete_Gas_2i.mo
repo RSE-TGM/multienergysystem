@@ -580,7 +580,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     duration=50,
     height=0.1,
     offset=0,
-    startTime=100000)                                                                                       annotation (
+    startTime=100)                                                                                          annotation (
     Placement(visible = true, transformation(origin={-101,-26},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
     redeclare model Medium = Medium,
@@ -598,7 +598,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     duration=50,
     height=0.1,
     offset=0,
-    startTime=10000)                                                                                        annotation (
+    startTime=100)                                                                                          annotation (
     Placement(visible = true, transformation(origin={-299,238},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
 equation
   connect(s1.inlet, REMI.outlet) annotation (Line(

@@ -266,6 +266,7 @@ model Rete_Gas_2i_extended "Rete Gas 2i with all the pipes"
     annotation (Placement(transformation(extent={{174,-224},{194,-204}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds5(
     L=303.305,
+    H=16,
     X_start=X_start,
     Di=0.0831,
     quasiStatic=quasiStatic,

@@ -64,7 +64,7 @@ model Rete_Gas_2i_wSource
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={-156,-64})));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
     redeclare model Medium = Medium,
@@ -85,10 +85,6 @@ model Rete_Gas_2i_wSource
     startTime=100)                                                                                          annotation (
     Placement(visible = true, transformation(origin={-81,-18},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
 equation
-  connect(sds16.inlet, sds11.outlet) annotation (Line(
-      points={{-168,228},{-121,228},{-121,210}},
-      color={182,109,49},
-      thickness=0.5));
   connect(sds17.inlet,sds16. outlet) annotation (Line(
       points={{-226,228},{-188,228}},
       color={182,109,49},
@@ -100,14 +96,18 @@ equation
   connect(m_flow_H1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-310,
           248},{-310,242},{-296,242},{-296,235}},
                                              color={0,0,127}));
-  connect(s3.outlet,Immissione_1. outlet) annotation (Line(
+  connect(Immissione_1.in_m_flow0,m_flow_H2. y) annotation (Line(points={{-90,-51},
+          {-92,-51},{-92,-64},{-64,-64},{-64,-18},{-70,-18}},   color={0,0,127}));
+  connect(s3.outlet, s2.inlet) annotation (Line(
+      points={{-166,-64},{-182,-64},{-182,-62},{-198,-62},{-198,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s3.inlet, Immissione_1.outlet) annotation (Line(
       points={{-146,-64},{-120,-64},{-120,-46},{-106,-46}},
       color={182,109,49},
       thickness=0.5));
-  connect(Immissione_1.in_m_flow0,m_flow_H2. y) annotation (Line(points={{-90,-51},
-          {-92,-51},{-92,-64},{-64,-64},{-64,-18},{-70,-18}},   color={0,0,127}));
-  connect(s3.inlet, s2.inlet) annotation (Line(
-      points={{-166,-64},{-198,-64},{-198,-44}},
+  connect(sds16.inlet, sds11.outlet) annotation (Line(
+      points={{-168,228},{-121,228},{-121,210}},
       color={182,109,49},
       thickness=0.5));
 end Rete_Gas_2i_wSource;

@@ -81,8 +81,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-198,-96})));
+        rotation=90,
+        origin={-200,-82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(
     H=-11,                                                      redeclare model
       Medium =                                                                              Medium,
@@ -96,7 +96,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={-174,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(
     H=-1,                                                       redeclare model
@@ -111,7 +111,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={-142,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188,
     H=-31,
@@ -125,7 +125,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={-104,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385,
     H=11,
@@ -139,7 +139,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={-70,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227,
     H=-15,
@@ -153,7 +153,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={-18,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s16(L=19.065,
     X_start=X_start,                                  redeclare model Medium =              Medium,Di=
@@ -165,7 +165,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={18,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(L=880.651,
     H=-1,
@@ -179,7 +179,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={68,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s19(
     L=540.807,
@@ -197,7 +197,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) "Polyester" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={146,-34})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(L=14.682,
     H=14,
@@ -211,7 +211,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={146,-64})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(L=13.074,
   redeclare model Medium =                                                                  Medium,
@@ -224,7 +224,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={172,-82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(L=95.937,
   redeclare model Medium =                                                                  Medium,
@@ -238,7 +238,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={146,-102})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(L=92.59,
   redeclare model Medium =                                                                  Medium,
@@ -252,7 +252,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={146,-146})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(L=181.028,
   redeclare model Medium =                                                                  Medium,
@@ -265,7 +265,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) "Viale Siena" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=0,
+        rotation=180,
         origin={190,-166})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28(L=84.565,
   redeclare model Medium =                                                                  Medium,
@@ -278,7 +278,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={234,-194})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s30(L=138.527,
   redeclare model Medium =                                                                  Medium,
@@ -291,7 +291,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={234,-232})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s31(L=256.081,
   redeclare model Medium =                                                                  Medium,
@@ -304,7 +304,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
+        rotation=90,
         origin={110,-84})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s36_Stadio(L=
         1224.898,
@@ -573,74 +573,6 @@ equation
       points={{-162,26},{-146,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(s8.inlet, s4.outlet) annotation (Line(
-      points={{-184,-110},{-198,-110},{-198,-106}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s8.outlet, s9.inlet) annotation (Line(
-      points={{-164,-110},{-152,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s9.outlet, s11.inlet) annotation (Line(
-      points={{-132,-110},{-114,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s11.outlet, s12.inlet) annotation (Line(
-      points={{-94,-110},{-80,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s12.outlet, s14.inlet) annotation (Line(
-      points={{-60,-110},{-48,-110},{-48,-6},{-28,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s14.outlet, s16.inlet) annotation (Line(
-      points={{-8,-6},{8,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s16.outlet, s18.inlet) annotation (Line(
-      points={{28,-6},{58,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s18.outlet, s19.inlet) annotation (Line(
-      points={{78,-6},{146,-6},{146,-24}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s19.outlet, s20.inlet) annotation (Line(
-      points={{146,-44},{146,-54}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s20.outlet, s21.inlet) annotation (Line(
-      points={{146,-74},{146,-82},{162,-82}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s20.outlet, s22.inlet) annotation (Line(
-      points={{146,-74},{146,-92}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s22.outlet, s24.inlet) annotation (Line(
-      points={{146,-112},{146,-136}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s24.outlet, s26.inlet) annotation (Line(
-      points={{146,-156},{146,-166},{180,-166}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s26.outlet, s28.inlet) annotation (Line(
-      points={{200,-166},{234,-166},{234,-184}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s30.inlet, s28.outlet) annotation (Line(
-      points={{234,-222},{234,-204}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s31.inlet, s19.inlet) annotation (Line(
-      points={{110,-74},{112,-74},{112,-6},{146,-6},{146,-24}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s36_Stadio.inlet, s31.outlet) annotation (Line(
-      points={{92,-110},{92,-112},{110,-112},{110,-94}},
-      color={182,109,49},
-      thickness=0.5));
   connect(sds1.inlet, s1.outlet) annotation (Line(
       points={{-198,36},{-198,26},{-182,26}},
       color={182,109,49},
@@ -714,24 +646,92 @@ equation
       points={{49,283},{46,283},{46,252}},
       color={182,109,49},
       thickness=0.5));
-  connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
-      points={{36,-110},{72,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_1.inlet, s21.outlet) annotation (Line(
-      points={{222,-82},{182,-82}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_2.inlet, s30.outlet) annotation (Line(
-      points={{234,-270},{234,-242}},
-      color={182,109,49},
-      thickness=0.5));
   connect(s2.outlet, s1.outlet) annotation (Line(
       points={{-198,-24},{-200,-24},{-200,26},{-182,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(s2.inlet, s4.inlet) annotation (Line(
-      points={{-198,-44},{-198,-86}},
+  connect(s4.outlet, s2.inlet) annotation (Line(
+      points={{-200,-72},{-198,-72},{-198,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s4.inlet, s8.outlet) annotation (Line(
+      points={{-200,-92},{-200,-110},{-184,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s8.inlet, s9.outlet) annotation (Line(
+      points={{-164,-110},{-152,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s9.inlet, s11.outlet) annotation (Line(
+      points={{-132,-110},{-114,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s11.inlet, s12.outlet) annotation (Line(
+      points={{-94,-110},{-80,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s12.inlet, s14.outlet) annotation (Line(
+      points={{-60,-110},{-46,-110},{-46,-6},{-28,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s14.inlet, s16.outlet) annotation (Line(
+      points={{-8,-6},{8,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s16.inlet, s18.outlet) annotation (Line(
+      points={{28,-6},{58,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s18.inlet, s31.outlet) annotation (Line(
+      points={{78,-6},{94,-6},{94,-4},{110,-4},{110,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s19.outlet, s18.inlet) annotation (Line(
+      points={{146,-24},{146,-6},{78,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s20.outlet, s19.inlet) annotation (Line(
+      points={{146,-54},{146,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s20.inlet, s21.outlet) annotation (Line(
+      points={{146,-74},{152,-74},{152,-82},{162,-82}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s21.inlet, GRM_1.inlet) annotation (Line(
+      points={{182,-82},{222,-82}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s20.inlet, s22.outlet) annotation (Line(
+      points={{146,-74},{146,-92}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s22.inlet, s24.outlet) annotation (Line(
+      points={{146,-112},{146,-136}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s24.inlet, s26.outlet) annotation (Line(
+      points={{146,-156},{146,-166},{180,-166}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s26.inlet, s28.outlet) annotation (Line(
+      points={{200,-166},{234,-166},{234,-184}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s28.inlet, s30.outlet) annotation (Line(
+      points={{234,-204},{234,-222}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s30.inlet, GRM_2.inlet) annotation (Line(
+      points={{234,-242},{234,-270}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
+      points={{36,-110},{36,-136},{64,-136},{64,-110},{72,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s36_Stadio.inlet, s31.inlet) annotation (Line(
+      points={{92,-110},{92,-112},{110,-112},{110,-94}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

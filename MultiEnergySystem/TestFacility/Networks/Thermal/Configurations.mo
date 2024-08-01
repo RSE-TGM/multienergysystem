@@ -9,6 +9,9 @@ package Configurations
 
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase;
       extends Loads.Thermal.Configurations.BaseClass.LoadPlantBase;
+      replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+
       inner DistrictHeatingNetwork.System system annotation (
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation

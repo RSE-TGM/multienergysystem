@@ -166,6 +166,7 @@ package Configurations "Different possible configurations for the loads"
         Tin_start=EX701_Tin_hot,
         Tout_start=EX701_Tin_hot,
         Di=Di_S700,
+        redeclare model Medium = MediumLPHot,
         q_m3h_start=EX701_q_m3h_hot,
         n=n,
         hctype=hctype) annotation (Placement(transformation(
@@ -1283,16 +1284,20 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={704,-178})));
 
-        DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamicsSP
+        DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
         RR01(
-        Tout_cold_set=Tout_start_Cool,
-        dp_cold_start=50000,
-        m_flow_cold_start=m_flow_Cool)
+        use_in_Tout_cold_set=true,
+        Tout_cold_nom(displayUnit="K") = Tout_start_Cool,
+        dp_cold_start=dp_RR01,
+        m_flow_cold_start=m_flow_Cool,
+        V=0.001) "Chiller"
         annotation (Placement(transformation(extent={{732,-154},{803,-83}})));
 
       parameter Integer n = 2 "Number of volumes in each pipe";
       parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-          DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle                                     "Location of pressure state";
+          DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+      replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
       // EX701
       parameter Real EX701_q_m3h_hot = 2.5;
@@ -1438,18 +1443,19 @@ package Configurations "Different possible configurations for the loads"
 
       //1. Cooling System
 
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool=0.92e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool=0.92e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_PR01=
-          pout_start_Cool;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_PR01=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool=16 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool=7 + 273.15;
-      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool=q_Cool*998/3600;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool = 0.92e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool = 0.92e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_PR01 = pout_start_Cool;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_PR01 = 2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool = 20 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool = 15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool = 8.88;
       parameter Real q_Cool(unit = "m3/h") = 32;
-      parameter DistrictHeatingNetwork.Types.Length t_RR=1.5e-3;
-      parameter DistrictHeatingNetwork.Types.Length Di_RR=85e-3;
-      parameter Real Kvalve = 90;
+      parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
+      parameter Real Kvalve(unit = "m3/h") = 90;
+      parameter DistrictHeatingNetwork.Types.PerUnit cf = 4e-3;
+      parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
       parameter Real FCVR01theta[:,:] = [0, 0.5; 100, 0.5];
       //parameter Real PR01omega[:,:] = [0, 2*3.141592654*40; 100, 2*3.141592654*40; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
       parameter Real PR01omega[:,:] = [0, 32.5; 100, 32.5];

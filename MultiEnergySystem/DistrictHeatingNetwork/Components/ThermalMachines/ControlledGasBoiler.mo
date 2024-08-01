@@ -19,7 +19,7 @@ model ControlledGasBoiler
   DistrictHeatingNetwork.Types.Power Pheat_ref(nominal = Pnom) "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
-  DistrictHeatingNetwork.Types.Pressure ploss;
+  DistrictHeatingNetwork.Types.Pressure ploss(start = 0.005482696604412 + m_flow_nom*(0.004710088236134 + 0.141767086689464*m_flow_nom));
 
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference outlet fluid";
 

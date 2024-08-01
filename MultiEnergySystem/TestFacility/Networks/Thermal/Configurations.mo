@@ -35,10 +35,8 @@ package Configurations
 
     partial model CentralizedNetworkBaseLoadSimplified
       // Fluids
-      replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
-      DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-      replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
-      DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase(redeclare model MediumCP = WaterHot, rackL2L3_rackL3L4_hot(q_m3h_start = q_m3h_rackHot*3/4), rackL3L4_FCVC01_hot(q_m3h_start = q_m3h_rackHot/2), FCVC01_rackL4L5_hot(q_m3h_start = q_m3h_rackHot/2), rackL4L5_rackL5L6_hot(q_m3h_start = q_m3h_rackHot/4), rackL2L3_rackL3L4_cold(q_m3h_start = q_m3h_rackCold*3/4), rackL3L4_FCVC01_cold(q_m3h_start = q_m3h_rackCold/2), rackL5L6_rackL6L7_hot(q_m3h_start = q_m3h_rackHot/4), rackL4L5_rackL5L6_cold(q_m3h_start = q_m3h_rackCold/4), rackL5L6_rackL6L7_cold(q_m3h_start = q_m3h_rackCold/4), FCVC01_rackL4L5_cold(q_m3h_start = q_m3h_rackCold/2), rackL6L7_FCVC02_hot(q_m3h_start = q_m3h_rackHot/4), FCVC02(q_m3h_start = q_m3h_rackHot/4));
       extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseSimplified(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
       inner DistrictHeatingNetwork.System system annotation (
@@ -633,8 +631,8 @@ package Configurations
       // System S100
       parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
       parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
-      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 30 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 30 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 70 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
       parameter DistrictHeatingNetwork.Types.Length L_S1 = 10;
       parameter DistrictHeatingNetwork.Types.Length L_S1_PL1 = 0.4;
       parameter DistrictHeatingNetwork.Types.Length L_S1_PL2 = 0.8;

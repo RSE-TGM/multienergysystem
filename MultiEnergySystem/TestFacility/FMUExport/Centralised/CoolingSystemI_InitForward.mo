@@ -1897,7 +1897,7 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(controlSignalBus.dthetaFCVR01, thetaFCVR01Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-746,-3},{-746,-112},{307.2,-112}},
+      points={{-897,-3},{-806,-3},{-806,-112},{307.2,-112}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -2000,7 +2000,7 @@ equation
       horizontalAlignment=TextAlignment.Left));
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
-          extent={{-60,44},{60,-36}},
+          extent={{-70,100},{70,-100}},
           textColor={140,56,54},
           textStyle={TextStyle.Bold},
           textString="Cooling

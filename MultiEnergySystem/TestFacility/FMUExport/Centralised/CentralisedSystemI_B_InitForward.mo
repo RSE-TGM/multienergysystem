@@ -2,7 +2,22 @@ within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemI_B_InitForward
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(T_start_hot = 80 +273.15, T_start_cold = 70 + 273.15, GB101(Pmaxnom = 147.6e3*0.8));
+  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
+    T_start_hot = 80 +273.15,
+    T_start_cold = 70 + 273.15,
+    GB101(Pmaxnom = 147.6e3*0.8),
+    EX701_Tin_cold = 15 + 273.15,
+    EX711_Tin_cold = 15 + 273.15,
+    EX721_Tin_cold = 15 + 273.15,
+    EX731_Tin_cold = 15 + 273.15,
+    EX701_Tout_cold = 25 + 273.15,
+    EX711_Tout_cold = 25 + 273.15,
+    EX721_Tout_cold = 25 + 273.15,
+    EX731_Tout_cold = 25 + 273.15,
+    EX701(wall(Tstart1=345.15, TstartN=328.15)),
+    EX731(wall(Tstart1=345.15, TstartN=328.15)),
+    EX711(wall(Tstart1=345.15, TstartN=328.15)),
+    sourceGas(computeTransport=false, computeEnergyVariables=false));
 
 //Boolean Parameters
   //Initialization type
@@ -1123,7 +1138,7 @@ equation
   connect(thetaFCV401Offset.u, FCV401.opening) annotation (Line(points={{-271.4,-140},{-300,-140},{-300,-110},{-310,-110}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
-          extent={{-60,40},{60,-40}},
+          extent={{-70,100},{70,-100}},
           textColor={140,56,54},
           textStyle={TextStyle.Bold},
           textString="Thermal

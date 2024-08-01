@@ -112,9 +112,9 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(group = "Initialisation"));
   parameter Modelica.Units.SI.SpecificEnthalpy hin_start_cold "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tin_start_cold "Temperature start value of fluid at the start of the heat exchanger" annotation (
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_cold "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tout_start_cold "Temperature start value of fluid at the end of the heat exchanger" annotation (
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_cold "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
   // Wall
   parameter Boolean WallRes = false "Wall thermal resistance accounted for";
@@ -123,7 +123,10 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(enable = WallRes));
   parameter Modelica.Units.SI.ThermalConductance UA_int = 0.1 "Equivalent thermal conductance of inner half-wall" annotation (
     Dialog(enable = WallRes));
+  parameter SI.TemperatureDifference LMTD_nom = DistrictHeatingNetwork.Data.BPHEData.E701.LMTD;
   final parameter SI.SpecificHeatCapacity cpWall = cpm_hot "Specific heat capacity of the wall";
+
+
   Types.Temperature Tin_hot;
   Types.Temperature Tout_hot;
   Types.Temperature Tin_cold;
@@ -132,7 +135,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   Types.Pressure pout_hot;
   Types.Pressure pin_cold;
   Types.Pressure pout_cold;
-  SI.TemperatureDifference LMTD;
+  SI.TemperatureDifference LMTD(start = LMTD_nom);
   Types.Power Pt;
   Real dT2(start = Tout_start_hot - Tin_start_cold), dT1(start = Tin_start_hot - Tout_start_cold);
   Types.CoefficientOfHeatTransfer gamma_real;
@@ -169,7 +172,6 @@ equation
     gamma_real = 0;
   end if;
 
-  //LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log(abs(max(dT1, Modelica.Constants.small)/max(dT2, Modelica.Constants.small)));
   Tin_hot = hotside.T[1];
   Tout_hot = hotside.T[hotside.n + 1];
   Tin_cold = coldside.T[1];

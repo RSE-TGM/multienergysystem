@@ -167,8 +167,8 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool = 0.92e5;
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_PR01 = pout_start_Cool;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_PR01 = 2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool = 16 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool = 8 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool = 20 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool = 15 + 273.15;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool = 8.88;
   parameter Real q_Cool(unit = "m3/h") = 32;
   parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
@@ -234,14 +234,14 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.Length L_EX701_EX731_hot=0.50;
   parameter DistrictHeatingNetwork.Types.Length h_EX701_EX731_hot=0;
 
-  parameter DistrictHeatingNetwork.Types.Length L_TT704_TCV701=0.65;
-  parameter DistrictHeatingNetwork.Types.Length h_TT704_TCV701=0; //0.65;
-  parameter DistrictHeatingNetwork.Types.Length L_TT714_TCV711=0.65;
-  parameter DistrictHeatingNetwork.Types.Length h_TT714_TCV711=0.4; //0.65;
-  parameter DistrictHeatingNetwork.Types.Length L_TT724_TCV721=1.8;//0.65;
-  parameter DistrictHeatingNetwork.Types.Length h_TT724_TCV721=1.8; //0.65;
+  parameter DistrictHeatingNetwork.Types.Length L_TT704_TCV701=0.85;
+  parameter DistrictHeatingNetwork.Types.Length h_TT704_TCV701=0.85; //0.65;
+  parameter DistrictHeatingNetwork.Types.Length L_TT714_TCV711=0.80;
+  parameter DistrictHeatingNetwork.Types.Length h_TT714_TCV711=0.80; //0.65;
+  parameter DistrictHeatingNetwork.Types.Length L_TT724_TCV721=1.25;//0.65;
+  parameter DistrictHeatingNetwork.Types.Length h_TT724_TCV721=1.25; //0.65;
   parameter DistrictHeatingNetwork.Types.Length L_TT734_TCV731=0.65;
-  parameter DistrictHeatingNetwork.Types.Length h_TT734_TCV731=0.45; //0.65;
+  parameter DistrictHeatingNetwork.Types.Length h_TT734_TCV731=0.40; //0.65;
 
   parameter DistrictHeatingNetwork.Types.Length L_TCV701_rUsersOut=1 + 0.45;
   parameter DistrictHeatingNetwork.Types.Length h_TCV701_rUsersOut=1;

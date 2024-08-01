@@ -3,6 +3,8 @@ model Rete_Gas_2i_wSource
   extends Rete_Gas_2i_nosources;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
+     redeclare model
+      Medium =       Medium,
     H=0,
     X_start=X_start,
     Di=0.0831,
@@ -17,6 +19,8 @@ model Rete_Gas_2i_wSource
         origin={-178,228})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
     L=1077.595,
+     redeclare model
+      Medium =       Medium,
     H=0,
     X_start=X_start,
     Di=0.0831,
@@ -102,8 +106,8 @@ equation
       thickness=0.5));
   connect(Immissione_1.in_m_flow0,m_flow_H2. y) annotation (Line(points={{-90,-51},
           {-92,-51},{-92,-64},{-64,-64},{-64,-18},{-70,-18}},   color={0,0,127}));
-  connect(s3.inlet, s4.inlet) annotation (Line(
-      points={{-166,-64},{-186,-64},{-186,-60},{-198,-60},{-198,-86}},
+  connect(s3.inlet, s2.inlet) annotation (Line(
+      points={{-166,-64},{-198,-64},{-198,-44}},
       color={182,109,49},
       thickness=0.5));
 end Rete_Gas_2i_wSource;

@@ -1,6 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_complete
-  extends Rete_Gas_2i_wSource;
+  extends Rete_Gas_2i_wSource(
+    break connect(s19.outlet, s18.inlet),
+    break connect(s18.inlet, s31.outlet),
+    break connect(s20.inlet, s21.outlet),
+    break connect(s26.inlet, s28.outlet),
+    break connect(s24.inlet, s26.outlet));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(
     L=6.1,
     X_start=X_start,
@@ -334,10 +339,6 @@ equation
       points={{-264,-66},{-264,-80}},
       color={182,109,49},
       thickness=0.5));
-  connect(s5_ViaCartabubbo.inlet, s4.outlet) annotation (Line(
-      points={{-232,-108},{-216,-108},{-216,-116},{-198,-116},{-198,-106}},
-      color={182,109,49},
-      thickness=0.5));
   connect(idealUser2.inlet,s10. outlet) annotation (Line(
       points={{-94,-230},{-122,-230},{-122,-170}},
       color={182,109,49},
@@ -346,28 +347,12 @@ equation
       points={{-22,-228},{-22,-212}},
       color={182,109,49},
       thickness=0.5));
-  connect(s13.inlet, s14.inlet) annotation (Line(
-      points={{-22,-192},{-34,-192},{-34,-110},{-48,-110},{-48,-6},{-28,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s10.inlet, s11.inlet) annotation (Line(
-      points={{-122,-150},{-122,-110},{-114,-110}},
-      color={182,109,49},
-      thickness=0.5));
   connect(s17.outlet,idealUser10. inlet) annotation (Line(
       points={{44,-58},{44,-70}},
       color={182,109,49},
       thickness=0.5));
   connect(s15.outlet,idealUser11. inlet) annotation (Line(
       points={{2,-64},{2,-72}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s15.inlet, s16.inlet) annotation (Line(
-      points={{2,-44},{2,-24},{0,-24},{0,-6},{8,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s17.inlet, s18.inlet) annotation (Line(
-      points={{44,-38},{44,-6},{58,-6}},
       color={182,109,49},
       thickness=0.5));
   connect(s32.outlet,s33. inlet) annotation (Line(
@@ -386,10 +371,6 @@ equation
       points={{110,-240},{110,-226}},
       color={182,109,49},
       thickness=0.5));
-  connect(s32.inlet, s31.outlet) annotation (Line(
-      points={{110,-132},{110,-94}},
-      color={182,109,49},
-      thickness=0.5));
   connect(idealUser4.inlet, s35_ViaAndretta.outlet) annotation (Line(
       points={{46,-196},{72,-196}},
       color={182,109,49},
@@ -398,20 +379,8 @@ equation
       points={{146,-216},{146,-254}},
       color={182,109,49},
       thickness=0.5));
-  connect(s25.inlet, s26.inlet) annotation (Line(
-      points={{146,-196},{146,-166},{180,-166}},
-      color={182,109,49},
-      thickness=0.5));
   connect(s23.outlet,idealUser9. inlet) annotation (Line(
       points={{234,-126},{254,-126}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s23.inlet, s24.inlet) annotation (Line(
-      points={{214,-126},{146,-126},{146,-136}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s26.outlet,s27. inlet) annotation (Line(
-      points={{200,-166},{292,-166}},
       color={182,109,49},
       thickness=0.5));
   connect(s27.outlet,idealUser8. inlet) annotation (Line(
@@ -422,8 +391,64 @@ equation
       points={{184,-214},{200,-214}},
       color={182,109,49},
       thickness=0.5));
-  connect(s29.inlet, s28.outlet) annotation (Line(
-      points={{220,-214},{226,-214},{226,-216},{234,-216},{234,-204}},
+  connect(s5_ViaCartabubbo.inlet, s8.outlet) annotation (Line(
+      points={{-232,-108},{-200,-110},{-184,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s10.inlet, s11.outlet) annotation (Line(
+      points={{-122,-150},{-122,-110},{-114,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s13.inlet, s14.outlet) annotation (Line(
+      points={{-22,-192},{-34,-192},{-34,-110},{-46,-110},{-46,-6},{-28,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s15.inlet, s16.outlet) annotation (Line(
+      points={{2,-44},{2,-6},{8,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s17.inlet, s18.outlet) annotation (Line(
+      points={{44,-38},{44,-6},{58,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s32.inlet, s31.inlet) annotation (Line(
+      points={{110,-132},{110,-94}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s31.outlet, s18.inlet) annotation (Line(
+      points={{110,-74},{110,-6},{78,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s19.outlet, s18.inlet) annotation (Line(
+      points={{146,-24},{146,-6},{78,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s21.outlet, s22.outlet) annotation (Line(
+      points={{162,-82},{154,-82},{154,-80},{146,-80},{146,-92}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s23.inlet, s24.outlet) annotation (Line(
+      points={{214,-126},{182,-126},{182,-124},{146,-124},{146,-136}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s25.inlet, s24.inlet) annotation (Line(
+      points={{146,-196},{146,-156}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s26.outlet, s24.inlet) annotation (Line(
+      points={{180,-166},{146,-166},{146,-156}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s26.inlet, s27.inlet) annotation (Line(
+      points={{200,-166},{292,-166}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s29.inlet, s30.outlet) annotation (Line(
+      points={{220,-214},{228,-214},{228,-210},{234,-210},{234,-222}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s28.outlet, s27.inlet) annotation (Line(
+      points={{234,-184},{236,-184},{236,-166},{292,-166}},
       color={182,109,49},
       thickness=0.5));
 end Rete_Gas_2i_complete;

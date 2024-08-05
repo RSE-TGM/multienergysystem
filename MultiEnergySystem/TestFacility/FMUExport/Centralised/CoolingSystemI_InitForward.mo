@@ -1979,7 +1979,7 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(TT714Offset.deltaYnorm, processVariableBus.dTT714) annotation (Line(points={{-105.4,-50},{-112,-50},{-112,-238},{644,-238},{644,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(TT714Offset.deltaYnorm, processVariableBus.dTT714) annotation (Line(points={{-105.4,-50},{-136,-50},{-136,-238},{620,-238},{620,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
@@ -1989,7 +1989,7 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(TT734Offset.deltaYnorm, processVariableBus.dTT734) annotation (Line(points={{-247.4,-52},{-256,-52},{-256,-228},{630,-228},{630,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(TT734Offset.deltaYnorm, processVariableBus.dTT734) annotation (Line(points={{-247.4,-52},{-270,-52},{-270,-228},{616,-228},{616,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},

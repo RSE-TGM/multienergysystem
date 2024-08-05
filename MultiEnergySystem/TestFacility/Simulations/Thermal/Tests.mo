@@ -1283,7 +1283,19 @@ package Tests
     end EX7X1Test;
 
     model ParallelConfiguration4Loads
-      extends MultiEnergySystem.TestFacility.Loads.Thermal.Configurations.BaseClass.LoadPlantBase(VER901(p0 = 219000), Kvalve = 90, PL701_rackL2L3_TT702(L = 0.001, h = 0), PL731_rackL6L7_TT732(L = 0.001, h = 0), PL711_rackL3L4_TT712(L = 0.001, h = 0), PL721_rackL4L5_TT722(L = 0.001, h = 0), RR01(pin_cold_start = 120000, dp_cold_start = dpRR), RR00_PL_TTR02_VER901(h = h1), RR00_PL_VER901_FCVR01(h = h2), RR00_PL_FCVR01_FTR03(h = h3), RR00_PL_FTR03_PTR01(h = h4), FCVR01(openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot, q_m3h_nom = 14.5), PL_RR_UsersIn(h = 0.2));
+      extends MultiEnergySystem.TestFacility.Loads.Thermal.Configurations.BaseClass.LoadPlantBase(
+        VER901(p0=219000),
+        Kvalve=90,
+        PL701_rackL2L3_TT702(L=0.001, h=0),
+        PL731_rackL6L7_TT732(L=0.001, h=0),
+        PL711_rackL3L4_TT712(L=0.001, h=0),
+        PL721_rackL4L5_TT722(L=0.001, h=0),
+        RR01(pin_cold_start=120000, dp_cold_start=dpRR),
+        RR00_PL_TTR02_VER901(h=h1),
+        RR00_PL_VER901_FCVR01(h=h2),
+        RR00_PL_FCVR01_FTR03(h=h3),
+        RR00_PL_FTR03_PTR01(h=h4),
+        FCVR01(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot, q_m3h_nom=14.5));
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h1 = 0;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h2 = 0;
       parameter MultiEnergySystem.DistrictHeatingNetwork.Types.Length h3 = 3;
@@ -1508,7 +1520,7 @@ package Tests
       extends DistrictHeatingNetwork.Icons.Generic.Centralised;
       model CentralisedSystemI_A "Sequence using Gas Boiler as heat source only"
         extends
-          MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemI(      FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*3.141592654*30; 100, 2*3.141592654*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15]);
+          MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemI(FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*3.141592654*30; 100, 2*3.141592654*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15]);
         Modelica.Blocks.Sources.TimeTable FCV901_theta(table = FCV901theta) annotation (
           Placement(transformation(extent = {{-714, 93}, {-734, 113}})));
         DistrictHeatingNetwork.Sources.PumpInput P901_input(useOmega = true, omega = P901omega, q_m3h = P901qm3h) annotation (
@@ -1547,9 +1559,13 @@ package Tests
           Placement(transformation(extent = {{728, -70}, {748, -50}})));
         Modelica.Blocks.Sources.TimeTable GB101_Tout_SP(table = GB101_ToutSP) annotation (
           Placement(transformation(extent = {{-318, -310}, {-298, -290}})));
+        Modelica.Blocks.Sources.BooleanTable RR101_Status(table={1e6}, startValue=true) "Input to decide whether or nor the chiller is working"
+          annotation (Placement(transformation(extent={{683,-130},{703,-110}})));
+        Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e8}, startValue=true)     "Input to decide whether or nor the gas boiler is working" annotation (
+          Placement(transformation(extent={{-320,-340},{-300,-320}})));
       equation
         connect(FCV901_theta.y, FCV901.opening) annotation (
-          Line(points = {{-735, 103}, {-742, 103}, {-742, 115}, {-749, 115}}, color = {0, 0, 127}));
+          Line(points={{-735,103},{-742,103},{-742,140.5},{-749.9,140.5}},    color = {0, 0, 127}));
         connect(P901_input.y, P901.in_omega) annotation (
           Line(points = {{-735, 64.5}, {-743.5, 64.5}, {-743.5, 66.3}, {-747.25, 66.3}}, color = {0, 0, 127}));
         connect(FCVC01_theta.y, FCVC01.opening) annotation (
@@ -1580,12 +1596,13 @@ package Tests
           Line(points = {{540, -320}, {549.1, -320}}, color = {0, 0, 127}));
         connect(FCVR01_theta.y, FCVR01.opening) annotation (
           Line(points = {{778, -330}, {766, -330}, {766, -352}}, color = {0, 0, 127}));
-        connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (
-          Line(points = {{749, -60}, {767.5, -60}, {767.5, -97.2}}, color = {0, 0, 127}));
         connect(GB101_Tout_SP.y, GB101.Tout_ref) annotation (
           Line(points={{-297,-300},{-297,-301},{-281.5,-301}},      color = {0, 0, 127}));
         connect(PR01_omega.y, PR01.in_omega) annotation (
           Line(points = {{681, -208}, {689.25, -208}, {689.25, -207.8}, {697.5, -207.8}}, color = {0, 0, 127}));
+        connect(RR101_Status.y, RR01.cold_on) annotation (Line(points={{704,-120},{716.225,-120},{716.225,-118.5},{728.45,-118.5}}, color={255,0,255}));
+        connect(Tout_cool_SP.y, RR01.in_Tout_cold_set) annotation (Line(points={{749,-60},{767.5,-60},{767.5,-93.65}}, color={0,0,127}));
+        connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-299,-330},{-290,-330},{-290,-318.5},{-281.5,-318.5}}, color={255,0,255}));
       end CentralisedSystemI_A;
 
       model CentralisedSystemI_B
@@ -1657,6 +1674,8 @@ package Tests
           Placement(transformation(extent = {{-394, -30}, {-374, -10}})));
         Modelica.Blocks.Sources.BooleanTable FV402_Status(table = FV402_s, startValue = FV402_startValue) "Input for the status (open/close) of valve FV402" annotation (
           Placement(transformation(extent = {{-290, -30}, {-310, -10}})));
+        Modelica.Blocks.Sources.BooleanTable EB401_Status(table={1e8}, startValue=true)     "Input to decide whether or nor the electric boiler is working" annotation (
+          Placement(transformation(extent={{-408,-340},{-388,-320}})));
       equation
         connect(P401.inlet, PL3_S401.outlet) annotation (
           Line(points = {{-322, -184.6}, {-322, -226}}, color = {140, 56, 54}, thickness = 0.5));
@@ -1702,6 +1721,7 @@ package Tests
           Line(points = {{-311, -20}, {-318.8, -20}}, color = {255, 0, 255}));
         connect(P401_input.y, P401.in_m_flow) annotation (
           Line(points = {{-309, -180.5}, {-316.48, -180.5}, {-316.48, -179.8}}, color = {0, 0, 127}));
+        connect(EB401_Status.y, EB401.heat_on) annotation (Line(points={{-387,-330},{-378,-330},{-378,-319},{-365.8,-319}}, color={255,0,255}));
         annotation (
           Icon(coordinateSystem(preserveAspectRatio = false)),
           Diagram(coordinateSystem(preserveAspectRatio = false)),
@@ -3701,7 +3721,7 @@ System")}),
     model TestActuator
       extends Modelica.Icons.Example;
       replaceable ThermalPlantController thermalPlantController  annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
-      replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
+      replaceable FMUExport.Centralised.CentralisedSystemCoolingSimplifiedI_B_InitForward centralisedSystemI_B_InitForward(
         m_flowcool_nom = 0.35,
         TT704Offset(fixOffset = true, y_Offset_fixed = 20 + 273.15),
         TT714Offset(fixOffset = true, y_Offset_fixed = 20 + 273.15),

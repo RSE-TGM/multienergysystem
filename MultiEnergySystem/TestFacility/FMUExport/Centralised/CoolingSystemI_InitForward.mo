@@ -85,7 +85,7 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.Temperature TT734_des = 30 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
 
-
+  parameter Real pi = Modelica.Constants.pi;
   parameter Integer n = 3 "Number of volumes";
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_total = 2.4;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
@@ -177,7 +177,7 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 4e-3;
   parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
   parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
-  parameter Real PR01omega[:,:] = [0, 2*3.141592653*50; 100, 2*3.141592653*50];
+  parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
   parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
   parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 500, 16 + 273.15; 1000, 25 + 273.15; 3000, 16 + 273.15; 4000, 16 + 273.15];
   parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
@@ -1197,7 +1197,8 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     dp_nom(displayUnit="Pa") = 1.09928e5,
     rho_nom(displayUnit="kg/m3") = 1000,
     Tin_start(displayUnit="K") = Tout_start_Cool,
-    pin_start(displayUnit="Pa") = 2.77476e5) annotation (Placement(
+    pin_start(displayUnit="Pa") = 2.77476e5,
+    q_m3h_start=18)                          annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,

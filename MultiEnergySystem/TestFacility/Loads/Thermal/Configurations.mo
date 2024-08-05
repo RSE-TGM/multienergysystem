@@ -5,6 +5,253 @@ package Configurations "Different possible configurations for the loads"
   package BaseClass
     extends Modelica.Icons.BasesPackage;
     partial model LoadPlantBase
+
+      constant Real pi = Modelica.Constants.pi;
+      parameter Integer n = 3 "Number of volumes in each pipe";
+      parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
+          DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+      replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+
+
+      // EX701
+      parameter Real EX701_q_m3h_hot(unit = "m3/h") = 2.5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_hot=2.5e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_hot=2.4e5;
+      parameter DistrictHeatingNetwork.Types.Pressure FCV701_pout=2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_hot=60 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_hot=45 + 273.15;
+
+      parameter Real EX701_q_m3h_cold(unit = "m3/h") = 1.5;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX701_cold=EX701_q_m3h_cold*1000/3600;
+      parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_cold=2.2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_cold=2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_cold=7 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_cold=14 + 273.15;
+
+      // EX711
+      parameter Real EX711_q_m3h_hot(unit = "m3/h") = 2.5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_hot=2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_hot=1.99e5;
+      parameter DistrictHeatingNetwork.Types.Pressure FCV711_pout=1.98e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_hot=60 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot=45 + 273.15;
+
+      parameter Real EX711_q_m3h_cold(unit = "m3/h") = 1.5;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_cold=EX711_q_m3h_cold*1000/3600;
+      parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_cold=2.2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_cold=2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_cold=7 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_cold=14 + 273.15;
+
+      // EX721
+      parameter Real EX721_q_m3h_hot(unit = "m3/h") = 2.5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_hot=2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_hot=1.99e5;
+      parameter DistrictHeatingNetwork.Types.Pressure FCV721_pout=1.98e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_hot=60 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=45 + 273.15;
+
+      parameter Real EX721_q_m3h_cold(unit = "m3/h") = 1.5;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_cold=EX721_q_m3h_cold*1000/3600;
+      parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_cold=2.2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_cold=2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_cold=7 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_cold=14 + 273.15;
+
+      // EX731
+      parameter Real EX731_q_m3h_hot(unit = "m3/h") = 2.5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_hot=2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_hot=1.99e5;
+      parameter DistrictHeatingNetwork.Types.Pressure FCV731_pout=1.98e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_hot=60 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_hot=45 + 273.15;
+
+      parameter Real EX731_q_m3h_cold(unit = "m3/h") = 1;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX731_cold=0.5*1000/3600;
+      parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_cold=2.2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_cold=2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_cold=7 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_cold=14 + 273.15;
+
+      parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
+
+      parameter Real FCV701theta[:,:] = [0, 1; 100, 1];
+      parameter Real FCV711theta[:,:] = [0, 1; 100, 1];
+      parameter Real FCV721theta[:,:] = [0, 1; 100, 1];
+      parameter Real FCV731theta[:,:] = [0, 1; 100, 1];
+
+
+      //1. Cooling System
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool = 0.92e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool = 0.92e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_PR01 = pout_start_Cool;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_PR01 = 2e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool = 20 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool = 15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool = 8.88;
+      parameter Real q_Cool(unit = "m3/h") = 32;
+      parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
+      parameter Real Kvalve(unit = "m3/h") = 90;
+      parameter DistrictHeatingNetwork.Types.PerUnit cf = 4e-3;
+      parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
+      parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
+      parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
+      parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
+      parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 500, 16 + 273.15; 1000, 25 + 273.15; 3000, 16 + 273.15; 4000, 16 + 273.15];
+      parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
+      parameter Real PTR02_profile[:,:] = [0, 2.2e5; 3000, 2.2e5];
+
+      //2. Users System
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Users = 3e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Users = 2.5e5;
+      parameter DistrictHeatingNetwork.Types.Temperature T_start_UserIn = 7 + 273.15;
+      parameter Real q_Users_total(unit = "m3/h") = 20;
+      parameter Real q_Users(unit = "m3/h") = q_Users_total/4;
+      parameter DistrictHeatingNetwork.Types.Length t_Users = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_Users = 32e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_Rack = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_Rack = 51e-3;
+      parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
+      parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
+      parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
+      parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
+
+      // Lengths of pipelines COLD SIDE
+      parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
+      parameter DistrictHeatingNetwork.Types.Length L_HX711_SourceOut_FCV711=0.6;
+      parameter DistrictHeatingNetwork.Types.Length L_HX721_SourceOut_FCV721=0.6;
+      parameter DistrictHeatingNetwork.Types.Length L_HX731_SourceOut_FCV731=0.6;
+      parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0;
+      parameter DistrictHeatingNetwork.Types.Length h_HX711_SourceOut_FCV711=0;
+      parameter DistrictHeatingNetwork.Types.Length h_HX721_SourceOut_FCV721=0;
+      parameter DistrictHeatingNetwork.Types.Length h_HX731_SourceOut_FCV731=0;
+
+    //   parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.50;
+    //   parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=2.50;
+    //   parameter DistrictHeatingNetwork.Types.Length L_FCV711_FT711=2.50;
+    //   parameter DistrictHeatingNetwork.Types.Length h_FCV711_FT711=2.50;
+    //   parameter DistrictHeatingNetwork.Types.Length L_FCV721_FT721=2.50;
+    //   parameter DistrictHeatingNetwork.Types.Length h_FCV721_FT721=2.50;
+    //   parameter DistrictHeatingNetwork.Types.Length L_FCV731_FT731=2.25;
+    //   parameter DistrictHeatingNetwork.Types.Length h_FCV731_FT731=2.25;
+
+      parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.5;
+      parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=0;
+      parameter DistrictHeatingNetwork.Types.Length L_FCV711_FT711=2.5;
+      parameter DistrictHeatingNetwork.Types.Length h_FCV711_FT711=0;
+      parameter DistrictHeatingNetwork.Types.Length L_FCV721_FT721=2.5;
+      parameter DistrictHeatingNetwork.Types.Length h_FCV721_FT721=0;
+      parameter DistrictHeatingNetwork.Types.Length L_FCV731_FT731=2.25;
+      parameter DistrictHeatingNetwork.Types.Length h_FCV731_FT731=0;
+
+      parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
+      parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
+      parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2 + 1;
+      parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1;
+      parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 + 1 + 1;
+      parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1;
+      parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 + 0.25 + 0.3 + 3 + 0.4 + 0.5;
+      parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-0.25 - 0.5;
+
+      // Lengths of pipelines HOT SIDE
+      parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=1.5 + 1.0 + 0.4;
+      parameter DistrictHeatingNetwork.Types.Length L_HX711_TT712_SourceIn=1.5 + 1.0 + 0.4;
+      parameter DistrictHeatingNetwork.Types.Length L_HX721_TT722_SourceIn=1.5 + 1.0 + 0.4;
+      parameter DistrictHeatingNetwork.Types.Length L_HX731_TT732_SourceIn=1.5 + 1.0 + 0.4;
+      parameter DistrictHeatingNetwork.Types.Length h_HX701_TT702_SourceIn=1.5 + 1.0;
+      parameter DistrictHeatingNetwork.Types.Length h_HX711_TT712_SourceIn=1.5 + 1.0;
+      parameter DistrictHeatingNetwork.Types.Length h_HX721_TT722_SourceIn=1.5 + 1.0;
+      parameter DistrictHeatingNetwork.Types.Length h_HX731_TT732_SourceIn=1.5 + 1.0;
+
+      parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1;
+      parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1;
+      parameter DistrictHeatingNetwork.Types.Length L_rackL3L4_TT712=1 + 0.7 + 5 + 9.2 + 1;
+      parameter DistrictHeatingNetwork.Types.Length h_rackL3L4_TT712=-1;
+      parameter DistrictHeatingNetwork.Types.Length L_rackL4L5_TT722=1 + 2 + 5 + 9 + 1 + 1;
+      parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1;
+      parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 + 0.3 + 3 + 0.4 + 0.5;
+      parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5;
+
+      // Internal diameters & thickness
+      parameter DistrictHeatingNetwork.Types.Length t_Source=1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_Source=32e-3;
+
+      // Lengths of pipelines source side
+      parameter DistrictHeatingNetwork.Types.Length L_VER901_FCVR01=1;
+      parameter DistrictHeatingNetwork.Types.Length h_VER901_FCVR01=-0.8;
+      parameter DistrictHeatingNetwork.Types.Length L_FCVR01_FTR03=2.95;
+      parameter DistrictHeatingNetwork.Types.Length h_FCVR01_FTR03=2.35;
+      parameter DistrictHeatingNetwork.Types.Length L_FTR03_PTR01=1.05;
+      parameter DistrictHeatingNetwork.Types.Length h_FTR03_PTR01=0.25;
+      parameter DistrictHeatingNetwork.Types.Length L_PTR01_FTR01=1.90;
+      parameter DistrictHeatingNetwork.Types.Length h_PTR01_FTR01=-1.90;
+      parameter DistrictHeatingNetwork.Types.Length L_FTR01_RR01=1.97;
+      parameter DistrictHeatingNetwork.Types.Length h_FTR01_RR01=-0.72;
+      parameter DistrictHeatingNetwork.Types.Length L_RR01_PR01=1.275;
+      parameter DistrictHeatingNetwork.Types.Length h_RR01_PR01=0;
+      parameter DistrictHeatingNetwork.Types.Length L_PR01_PTR02=2.8;
+      parameter DistrictHeatingNetwork.Types.Length h_PR01_PTR02=1;
+      parameter DistrictHeatingNetwork.Types.Length L_TTR02_VER901=0.43;
+      parameter DistrictHeatingNetwork.Types.Length h_TTR02_VER901=0;
+
+      parameter DistrictHeatingNetwork.Types.Length L_UsersIn_EX721=0.75;
+      parameter DistrictHeatingNetwork.Types.Length h_UsersIn_EX721=0.50*1;
+      parameter DistrictHeatingNetwork.Types.Length L_EX721_EX711_cold=1.50;
+      parameter DistrictHeatingNetwork.Types.Length h_EX721_EX711_cold=0.50*1;
+      parameter DistrictHeatingNetwork.Types.Length L_EX711_EX701_cold=0.50;
+      parameter DistrictHeatingNetwork.Types.Length h_EX711_EX701_cold=0.50*1;
+      parameter DistrictHeatingNetwork.Types.Length L_EX701_EX731_cold=0.50;
+      parameter DistrictHeatingNetwork.Types.Length h_EX701_EX731_cold=0.50*1;
+
+      parameter DistrictHeatingNetwork.Types.Length L_UsersOut_EX721=0.75;
+      parameter DistrictHeatingNetwork.Types.Length h_UsersOut_EX721=0;
+      parameter DistrictHeatingNetwork.Types.Length L_EX721_EX711_hot=1.50;
+      parameter DistrictHeatingNetwork.Types.Length h_EX721_EX711_hot=0;
+      parameter DistrictHeatingNetwork.Types.Length L_EX711_EX701_hot=0.50;
+      parameter DistrictHeatingNetwork.Types.Length h_EX711_EX701_hot=0;
+      parameter DistrictHeatingNetwork.Types.Length L_EX701_EX731_hot=0.50;
+      parameter DistrictHeatingNetwork.Types.Length h_EX701_EX731_hot=0;
+
+      parameter DistrictHeatingNetwork.Types.Length L_TT704_TCV701=0.85;
+      parameter DistrictHeatingNetwork.Types.Length h_TT704_TCV701=0.85; //0.65;
+      parameter DistrictHeatingNetwork.Types.Length L_TT714_TCV711=0.80;
+      parameter DistrictHeatingNetwork.Types.Length h_TT714_TCV711=0.80; //0.65;
+      parameter DistrictHeatingNetwork.Types.Length L_TT724_TCV721=1.25;//0.65;
+      parameter DistrictHeatingNetwork.Types.Length h_TT724_TCV721=1.25; //0.65;
+      parameter DistrictHeatingNetwork.Types.Length L_TT734_TCV731=0.65;
+      parameter DistrictHeatingNetwork.Types.Length h_TT734_TCV731=0.40; //0.65;
+
+      parameter DistrictHeatingNetwork.Types.Length L_TCV701_rUsersOut=1 + 0.45;
+      parameter DistrictHeatingNetwork.Types.Length h_TCV701_rUsersOut=1;
+      parameter DistrictHeatingNetwork.Types.Length L_TCV711_rUsersOut=1 + 0.45;
+      parameter DistrictHeatingNetwork.Types.Length h_TCV711_rUsersOut=1;
+      parameter DistrictHeatingNetwork.Types.Length L_TCV721_rUsersOut=1 + 0.45;
+      parameter DistrictHeatingNetwork.Types.Length h_TCV721_rUsersOut=1;
+      parameter DistrictHeatingNetwork.Types.Length L_TCV731_rUsersOut=1 + 0.66 + 0.66;
+      parameter DistrictHeatingNetwork.Types.Length h_TCV731_rUsersOut=1;
+
+      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT703=1.65 + 0.45;
+      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT703=-1.65*0.1;
+      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT713=1.65 + 0.45;
+      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT713=-1.65*0.1;
+      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT723=1.65 + 0.45;
+      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT723=-1.65*0.1;
+      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT733=1.65 + 0.66 + 0.66;
+      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT733=-1.65*0.1;
+
+      parameter DistrictHeatingNetwork.Types.Length L_RR_UsersIn=0.8 + 1.2 + 0.5 + 2;
+      parameter DistrictHeatingNetwork.Types.Length h_RR_UsersIn=0.8 + 0.6;
+
+      parameter DistrictHeatingNetwork.Types.Length L_RR_UsersOut=2;
+      parameter DistrictHeatingNetwork.Types.Length h_RR_UsersOut=0;
+
+      parameter Real ToutcoolSP[:,:] = [0, 7; 50, 7; 60, 17; 100, 17];
+
+
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
         dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom,
@@ -16,12 +263,16 @@ package Configurations "Different possible configurations for the loads"
             origin={138,-150})));
 
       DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX701(
+        redeclare model Medium = MediumLPHot,
+        redeclare model HeatTransferModel = HeatTransferModel,
         hctype_hot=hctype,
+        alpha_hot=0.67402256,
         Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
         Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
         L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
         L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
         hctype_cold=hctype,
+        alpha_cold=0.67402256,
         MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
         Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
         Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
@@ -33,8 +284,8 @@ package Configurations "Different possible configurations for the loads"
         cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
         t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
         t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
+        gamma_nom_cold=11200.497,
+        gamma_nom_hot=4313.9346,
         h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
         h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
         hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
@@ -55,10 +306,8 @@ package Configurations "Different possible configurations for the loads"
         pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
         pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
         pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
         rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
         rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
         thermalInertia=false,
@@ -68,7 +317,171 @@ package Configurations "Different possible configurations for the loads"
             extent={{17.5,29},{-17.5,-29}},
             rotation=-90,
             origin={117,-215.5})));
-
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX711(
+        redeclare model Medium = MediumLPHot,
+        redeclare model HeatTransferModel = HeatTransferModel,
+        hctype_hot=hctype,
+        alpha_hot=0.67402256,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        alpha_cold=0.67402256,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
+        Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
+        Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
+        Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=11200.497,
+        gamma_nom_hot=4313.9346,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={419,-218.5})));
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX721(
+        redeclare model Medium = MediumLPHot,
+        redeclare model HeatTransferModel = HeatTransferModel,
+        hctype_hot=hctype,
+        alpha_hot=0.8257757,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        alpha_cold=0.8257757,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
+        Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
+        Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
+        Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=9520.42245,
+        gamma_nom_hot=3666.84441,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={577,-218.5})));
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX731(
+        redeclare model Medium = MediumLPHot,
+        redeclare model HeatTransferModel = HeatTransferModel,
+        hctype_hot=hctype,
+        alpha_hot=0.67402256,
+        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
+        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
+        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
+        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+        hctype_cold=hctype,
+        alpha_cold=0.67402256,
+        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
+        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
+        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+        Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
+        Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
+        Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
+        Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
+        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
+        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
+        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
+        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+        gamma_nom_cold=9520.42245,
+        gamma_nom_hot=3666.84441,
+        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
+        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
+        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
+        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
+        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
+        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+        kc_cold=1,
+        kc_hot=1,
+        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
+        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
+        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+        n=5,
+        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
+        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
+        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
+        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
+        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
+        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
+        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
+        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
+        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+        thermalInertia=false,
+        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
+        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+          Placement(transformation(
+            extent={{17.5,29},{-17.5,-29}},
+            rotation=-90,
+            origin={277,-217.5})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
         L=L_FCV701_FT701,
         h=h_FCV701_FT701,
@@ -173,59 +586,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={98,-58})));
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX711(
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-        Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-        Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-        Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={419,-218.5})));
+
 
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
@@ -340,60 +701,6 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={398,-56})));
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX721(
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-        Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-        Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-        Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={577,-218.5})));
-
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
         dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom,
@@ -403,7 +710,6 @@ package Configurations "Different possible configurations for the loads"
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={598,-150})));
-
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FCV721_FT721(
         L=L_FCV721_FT721,
         h=h_FCV721_FT721,
@@ -507,59 +813,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={558,-56})));
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX731(
-        hctype_hot=hctype,
-        Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-        Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-        L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-        L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
-        hctype_cold=hctype,
-        MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-        Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-        Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
-        Tin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_cold,
-        Tin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tin_start_hot,
-        Tout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_cold,
-        Tout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Tout_start_hot,
-        cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-        cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-        t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-        t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-        gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-        gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
-        h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-        h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-        hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-        hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
-        k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-        k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
-        kc_cold=1,
-        kc_hot=1,
-        lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-        lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-        m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-        m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
-        n=5,
-        nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-        nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-        nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-        pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-        pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-        pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-        pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
-        rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)/2,
-        rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot +
-            DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)/2,
-        rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-        rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
-        thermalInertia=false,
-        u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-        u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
-          Placement(transformation(
-            extent={{17.5,29},{-17.5,-29}},
-            rotation=-90,
-            origin={277,-217.5})));
+
 
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
@@ -1293,258 +1547,7 @@ package Configurations "Different possible configurations for the loads"
         V=0.001) "Chiller"
         annotation (Placement(transformation(extent={{732,-154},{803,-83}})));
 
-      parameter Integer n = 2 "Number of volumes in each pipe";
-      parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-          DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-      replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-      replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
-      // EX701
-      parameter Real EX701_q_m3h_hot = 2.5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_hot=2.5e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_hot=2.4e5;
-      parameter DistrictHeatingNetwork.Types.Pressure FCV701_pout=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_hot=15 + 273.15;
-
-      parameter Real EX701_q_m3h_cold(unit = "m3/h") = 1.5;
-      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX701_cold=
-          EX701_q_m3h_cold*1000/3600;
-      parameter DistrictHeatingNetwork.Types.Pressure EX701_pin_cold=2.2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX701_pout_cold=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tin_cold=7 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX701_Tout_cold=14 + 273.15;
-
-      // EX711
-      parameter Real EX711_q_m3h_hot = 2.5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_hot=2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_hot=1.99e5;
-      parameter DistrictHeatingNetwork.Types.Pressure FCV711_pout=1.98e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot=15 + 273.15;
-
-      parameter Real EX711_q_m3h_cold(unit = "m3/h") = 1.5;
-      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_cold=
-          EX711_q_m3h_cold*1000/3600;
-      parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_cold=2.2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_cold=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_cold=7 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_cold=14 + 273.15;
-
-      // EX721
-      parameter Real EX721_q_m3h_hot = 2.5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_hot=2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_hot=1.99e5;
-      parameter DistrictHeatingNetwork.Types.Pressure FCV721_pout=1.98e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=15 + 273.15;
-
-      parameter Real EX721_q_m3h_cold(unit = "m3/h") = 1.5;
-      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_cold=
-          EX721_q_m3h_cold*1000/3600;
-      parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_cold=2.2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_cold=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_cold=7 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_cold=14 + 273.15;
-
-      // EX731
-      parameter Real EX731_q_m3h_hot = 2.5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_hot=2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_hot=1.99e5;
-      parameter DistrictHeatingNetwork.Types.Pressure FCV731_pout=1.98e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_hot=17 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_hot=15 + 273.15;
-
-      parameter Real EX731_q_m3h_cold(unit = "m3/h") = 1;
-      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX731_cold=0.5*1000/
-          3600;
-      parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_cold=2.2e5;
-      parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_cold=2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tin_cold=7 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature EX731_Tout_cold=14 + 273.15;
-
-      parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
-      parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
-
-      parameter Real FCV701theta[:,:] = [0, 1; 100, 1];
-      parameter Real FCV711theta[:,:] = [0, 1; 100, 1];
-      parameter Real FCV721theta[:,:] = [0, 1; 100, 1];
-      parameter Real FCV731theta[:,:] = [0, 1; 100, 1];
-
-      // Lengths of pipelines COLD SIDE
-      parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
-      parameter DistrictHeatingNetwork.Types.Length L_HX711_SourceOut_FCV711=0.6;
-      parameter DistrictHeatingNetwork.Types.Length L_HX721_SourceOut_FCV721=0.6;
-      parameter DistrictHeatingNetwork.Types.Length L_HX731_SourceOut_FCV731=0.6;
-      parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0;
-      parameter DistrictHeatingNetwork.Types.Length h_HX711_SourceOut_FCV711=0;
-      parameter DistrictHeatingNetwork.Types.Length h_HX721_SourceOut_FCV721=0;
-      parameter DistrictHeatingNetwork.Types.Length h_HX731_SourceOut_FCV731=0;
-
-    //   parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.50;
-    //   parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=2.50;
-    //   parameter DistrictHeatingNetwork.Types.Length L_FCV711_FT711=2.50;
-    //   parameter DistrictHeatingNetwork.Types.Length h_FCV711_FT711=2.50;
-    //   parameter DistrictHeatingNetwork.Types.Length L_FCV721_FT721=2.50;
-    //   parameter DistrictHeatingNetwork.Types.Length h_FCV721_FT721=2.50;
-    //   parameter DistrictHeatingNetwork.Types.Length L_FCV731_FT731=2.25;
-    //   parameter DistrictHeatingNetwork.Types.Length h_FCV731_FT731=2.25;
-
-      parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.5;
-      parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=0;
-      parameter DistrictHeatingNetwork.Types.Length L_FCV711_FT711=2.5;
-      parameter DistrictHeatingNetwork.Types.Length h_FCV711_FT711=0;
-      parameter DistrictHeatingNetwork.Types.Length L_FCV721_FT721=2.5;
-      parameter DistrictHeatingNetwork.Types.Length h_FCV721_FT721=0;
-      parameter DistrictHeatingNetwork.Types.Length L_FCV731_FT731=2.25;
-      parameter DistrictHeatingNetwork.Types.Length h_FCV731_FT731=0;
-
-      parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
-      parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2
-           + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1;
-      parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 +
-          1 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1;
-      parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 +
-          0.25 + 0.3 + 3 + 0.4 + 0.5;
-      parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-0.25 - 0.5;
-
-      // Lengths of pipelines HOT SIDE
-      parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=1.5 + 1.0
-           + 0.4;
-      parameter DistrictHeatingNetwork.Types.Length L_HX711_TT712_SourceIn=1.5 + 1.0
-           + 0.4;
-      parameter DistrictHeatingNetwork.Types.Length L_HX721_TT722_SourceIn=1.5 + 1.0
-           + 0.4;
-      parameter DistrictHeatingNetwork.Types.Length L_HX731_TT732_SourceIn=1.5 + 1.0
-           + 0.4;
-      parameter DistrictHeatingNetwork.Types.Length h_HX701_TT702_SourceIn=1.5 + 1.0;
-      parameter DistrictHeatingNetwork.Types.Length h_HX711_TT712_SourceIn=1.5 + 1.0;
-      parameter DistrictHeatingNetwork.Types.Length h_HX721_TT722_SourceIn=1.5 + 1.0;
-      parameter DistrictHeatingNetwork.Types.Length h_HX731_TT732_SourceIn=1.5 + 1.0;
-
-      parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1;
-      parameter DistrictHeatingNetwork.Types.Length L_rackL3L4_TT712=1 + 0.7 + 5 + 9.2
-           + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_rackL3L4_TT712=-1;
-      parameter DistrictHeatingNetwork.Types.Length L_rackL4L5_TT722=1 + 2 + 5 + 9 +
-          1 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1;
-      parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 +
-          0.3 + 3 + 0.4 + 0.5;
-      parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5;
-
-      // Internal diameters & thickness
-      parameter DistrictHeatingNetwork.Types.Length t_Source=1.5e-3;
-      parameter DistrictHeatingNetwork.Types.Length Di_Source=32e-3;
-
-      //1. Cooling System
-
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool = 0.92e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool = 0.92e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_PR01 = pout_start_Cool;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_PR01 = 2e5;
-      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool = 20 + 273.15;
-      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool = 15 + 273.15;
-      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool = 8.88;
-      parameter Real q_Cool(unit = "m3/h") = 32;
-      parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
-      parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
-      parameter Real Kvalve(unit = "m3/h") = 90;
-      parameter DistrictHeatingNetwork.Types.PerUnit cf = 4e-3;
-      parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
-      parameter Real FCVR01theta[:,:] = [0, 0.5; 100, 0.5];
-      //parameter Real PR01omega[:,:] = [0, 2*3.141592654*40; 100, 2*3.141592654*40; 300, 2*3.141592654*40; 400, 2*3.141592654*40];
-      parameter Real PR01omega[:,:] = [0, 32.5; 100, 32.5];
-
-      //2. Users System
-      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Users=3e5;
-      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Users=2.5e5;
-      parameter DistrictHeatingNetwork.Types.Temperature T_start_UserIn=7 + 273.15;
-      parameter Real q_Users_total(unit = "m3/h") = 20;
-      parameter Real q_Users(unit = "m3/h") = q_Users_total/4;
-      parameter DistrictHeatingNetwork.Types.Length t_Users=1.5e-3;
-      parameter DistrictHeatingNetwork.Types.Length Di_Users=32e-3;
-      parameter DistrictHeatingNetwork.Types.Length t_Rack=1.5e-3;
-      parameter DistrictHeatingNetwork.Types.Length Di_Rack=51e-3;
-      parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
-      parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
-      parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
-      parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
-
-       // Lengths of pipelines source side
-      parameter DistrictHeatingNetwork.Types.Length L_VER901_FCVR01=1;
-      parameter DistrictHeatingNetwork.Types.Length h_VER901_FCVR01=-0.8;
-      parameter DistrictHeatingNetwork.Types.Length L_FCVR01_FTR03=2.95;
-      parameter DistrictHeatingNetwork.Types.Length h_FCVR01_FTR03=2.35;
-      parameter DistrictHeatingNetwork.Types.Length L_FTR03_PTR01=1.05;
-      parameter DistrictHeatingNetwork.Types.Length h_FTR03_PTR01=0.25;
-      parameter DistrictHeatingNetwork.Types.Length L_PTR01_FTR01=1.90;
-      parameter DistrictHeatingNetwork.Types.Length h_PTR01_FTR01=-1.90;
-      parameter DistrictHeatingNetwork.Types.Length L_FTR01_RR01=1.97;
-      parameter DistrictHeatingNetwork.Types.Length h_FTR01_RR01=-0.72;
-      parameter DistrictHeatingNetwork.Types.Length L_RR01_PR01=1.275;
-      parameter DistrictHeatingNetwork.Types.Length h_RR01_PR01=0;
-      parameter DistrictHeatingNetwork.Types.Length L_PR01_PTR02=2.8;
-      parameter DistrictHeatingNetwork.Types.Length h_PR01_PTR02=1;
-      parameter DistrictHeatingNetwork.Types.Length L_TTR02_VER901=0.43;
-      parameter DistrictHeatingNetwork.Types.Length h_TTR02_VER901=0;
-
-      parameter DistrictHeatingNetwork.Types.Length L_UsersIn_EX721=0.75;
-      parameter DistrictHeatingNetwork.Types.Length h_UsersIn_EX721=0;
-      parameter DistrictHeatingNetwork.Types.Length L_EX721_EX711_cold=1.50;
-      parameter DistrictHeatingNetwork.Types.Length h_EX721_EX711_cold=0;
-      parameter DistrictHeatingNetwork.Types.Length L_EX711_EX701_cold=0.50;
-      parameter DistrictHeatingNetwork.Types.Length h_EX711_EX701_cold=0;
-      parameter DistrictHeatingNetwork.Types.Length L_EX701_EX731_cold=0.50;
-      parameter DistrictHeatingNetwork.Types.Length h_EX701_EX731_cold=0;
-
-      parameter DistrictHeatingNetwork.Types.Length L_UsersOut_EX721=0.75;
-      parameter DistrictHeatingNetwork.Types.Length h_UsersOut_EX721=0;
-      parameter DistrictHeatingNetwork.Types.Length L_EX721_EX711_hot=1.50;
-      parameter DistrictHeatingNetwork.Types.Length h_EX721_EX711_hot=0;
-      parameter DistrictHeatingNetwork.Types.Length L_EX711_EX701_hot=0.50;
-      parameter DistrictHeatingNetwork.Types.Length h_EX711_EX701_hot=0;
-      parameter DistrictHeatingNetwork.Types.Length L_EX701_EX731_hot=0.50;
-      parameter DistrictHeatingNetwork.Types.Length h_EX701_EX731_hot=0;
-
-      parameter DistrictHeatingNetwork.Types.Length L_TT704_TCV701=0.65;
-      parameter DistrictHeatingNetwork.Types.Length h_TT704_TCV701=0.65;
-      parameter DistrictHeatingNetwork.Types.Length L_TT714_TCV711=0.65;
-      parameter DistrictHeatingNetwork.Types.Length h_TT714_TCV711=0.65;
-      parameter DistrictHeatingNetwork.Types.Length L_TT724_TCV721=0.65;
-      parameter DistrictHeatingNetwork.Types.Length h_TT724_TCV721=0.65;
-      parameter DistrictHeatingNetwork.Types.Length L_TT734_TCV731=0.65;
-      parameter DistrictHeatingNetwork.Types.Length h_TT734_TCV731=0.65;
-
-      parameter DistrictHeatingNetwork.Types.Length L_TCV701_rUsersOut=1 + 0.45;
-      parameter DistrictHeatingNetwork.Types.Length h_TCV701_rUsersOut=1;
-      parameter DistrictHeatingNetwork.Types.Length L_TCV711_rUsersOut=1 + 0.45;
-      parameter DistrictHeatingNetwork.Types.Length h_TCV711_rUsersOut=1;
-      parameter DistrictHeatingNetwork.Types.Length L_TCV721_rUsersOut=1 + 0.45;
-      parameter DistrictHeatingNetwork.Types.Length h_TCV721_rUsersOut=1;
-      parameter DistrictHeatingNetwork.Types.Length L_TCV731_rUsersOut=1 + 0.66 + 0.66;
-      parameter DistrictHeatingNetwork.Types.Length h_TCV731_rUsersOut=1;
-
-      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT703=1.65 + 0.45;
-      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT703=-1.65;
-      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT713=1.65 + 0.45;
-      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT713=-1.65;
-      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT723=1.65 + 0.45;
-      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT723=-1.65;
-      parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT733=1.65 + 0.66 + 0.66;
-      parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT733=-1.65;
-
-      parameter DistrictHeatingNetwork.Types.Length L_RR_UsersIn=0.8 + 1.2 + 0.5 + 2;
-      parameter DistrictHeatingNetwork.Types.Length h_RR_UsersIn=0.8 + 0.6;
-
-      parameter DistrictHeatingNetwork.Types.Length L_RR_UsersOut=2;
-      parameter DistrictHeatingNetwork.Types.Length h_RR_UsersOut=0;
-
-      parameter Real ToutcoolSP[:,:] = [0, 7; 50, 7; 60, 17; 100, 17];
     equation
       connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
           points={{138,-132},{138,-140}},

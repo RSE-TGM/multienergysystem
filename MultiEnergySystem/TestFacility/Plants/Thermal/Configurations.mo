@@ -9,9 +9,9 @@ package Configurations "Different possible configurations of the heat generating
       //Fluids
       replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       //Constants
-      parameter Real pi = Modelica.Constants.pi;
+      constant Real pi = Modelica.Constants.pi;
       //General parameters of pipes
-      parameter Integer n = 2 "Number of volumes in each pipe";
+      parameter Integer n = 3 "Number of volumes in each pipe";
       parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
       parameter DistrictHeatingNetwork.Types.Temperature T_start_cold = T_start;
       parameter DistrictHeatingNetwork.Types.Temperature T_start_hot = T_start;

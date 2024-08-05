@@ -3505,22 +3505,22 @@ System")}),
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{44,-20},{54,-10}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX711Pt(
-        Kp=2.35,
-        Ti=0.9412,
+        Kp=1.6237,
+        Ti=0.53763,
         Umax=0,
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{44,49},{54,59}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX701Pt(
-        Kp=2.539,
-        Ti=0.9729,
+        Kp=1.7773,
+        Ti=0.5592,
         Umax=0,
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{44,66},{54,76}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX731Pt(
-        Kp=3.53,
-        Ti=1.09,
+        Kp=1.4378,
+        Ti=0.31466,
         Umax=0,
         Umin=-1,
         y_start=1,
@@ -3528,8 +3528,8 @@ System")}),
       Modelica.Blocks.Sources.RealExpression dFTR01SPvar(y=dm_flow_cool_total)
                                                                               annotation (Placement(transformation(extent={{-9,93},{11,113}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX721Pt(
-        Kp=2.0215,
-        Ti=0.3133,
+        Kp=1.4734,
+        Ti=0.49585,
         Umax=0,
         Umin=-1,
         y_start=1,

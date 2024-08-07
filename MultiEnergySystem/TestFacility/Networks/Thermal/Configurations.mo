@@ -1064,19 +1064,19 @@ package Configurations
 
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(redeclare model Medium = WaterHot,L = L_S1_rCD_hot, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
         n=np)                                                                                                                                                                                                         annotation (
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-226,-20})));
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-232,-206})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(redeclare model Medium = WaterHot,L = L_S1_rCD_cold, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
         n=np)                                                                                                                                                                                                         annotation (
-        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-260,-20})));
+        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-266,-206})));
       H2GasFacility.Sources.SourcePressure sourceGas(
         redeclare model Medium = Gas,
         X0=X_gas,
         R=1e-3,
         computeEnergyVariables=true) annotation (Placement(transformation(
             extent={{14,-14},{-14,14}},
-            rotation=0,
-            origin={-160,-140})));
-      Plants.Thermal.Systems.GasBoiler gasBoiler(
+            rotation=-90,
+            origin={-250,-376})));
+      Plants.Thermal.Systems.GasBoiler S100(
         redeclare model Medium = WaterHot,
         hctype=hctype,
         n=np,
@@ -1092,23 +1092,25 @@ package Configurations
         q_m3h_S1=q_m3h_S1,
         Kv=Kv_FCV101,
         openingChar=openingChar_FCV101,
-        Pmaxnom=147.6e3*0.78)                                   annotation (Placement(transformation(extent={{-288,-142},{-200,-54}})));
+        Pmaxnom=147.6e3*0.78) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
     equation
       connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
-        Line(points={{-260,-10},{-260,5.25},{-326.5,5.25}},        color = {140, 56, 54}, thickness = 0.5));
-      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (
-        Line(points={{-226,-10},{-226,24},{-240,24},{-240,44.75},{-257.5,44.75}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(PL_S100_rCD_cold.outlet, gasBoiler.inlet) annotation (Line(
-          points={{-260,-30},{-260,-39.775},{-261.16,-39.775},{-261.16,-47.4}},
+        Line(points={{-266,-196},{-266,5.25},{-326.5,5.25}},       color = {140, 56, 54}, thickness = 0.5));
+      connect(PL_S100_rCD_cold.outlet, S100.inlet) annotation (Line(
+          points={{-266,-216},{-266,-225.775},{-267.16,-225.775},{-267.16,-233.4}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_S100_rCD_hot.inlet, gasBoiler.outlet) annotation (Line(
-          points={{-226,-30},{-226,-39.775},{-225.96,-39.775},{-225.96,-47.4}},
+      connect(PL_S100_rCD_hot.inlet, S100.outlet) annotation (Line(
+          points={{-232,-216},{-232,-225.775},{-231.96,-225.775},{-231.96,-233.4}},
           color={140,56,54},
           thickness=0.5));
-      connect(gasBoiler.inletFuel, sourceGas.outlet) annotation (Line(
-          points={{-244,-149.04},{-192,-149.04},{-192,-140},{-174,-140}},
+      connect(S100.inletFuel, sourceGas.outlet) annotation (Line(
+          points={{-250,-335.04},{-250,-362}},
           color={182,109,49},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+          points={{-232,-196},{-232,45},{-235.75,45},{-235.75,44.75},{-257.5,44.75}},
+          color={140,56,54},
           thickness=0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
@@ -1154,7 +1156,7 @@ package Configurations
       parameter Real FV402_s[:] = {5e6};
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_hot(redeclare model Medium = WaterHot, L = L_S4_rCD_hot, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype,
         n=np)                                                                                                                                                                                                         annotation (
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-48})));
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-50})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(redeclare model Medium = WaterHot, L = L_S4_rCD_cold, t = t_S4, pin_start = pin_start_S4, Tin_start = Tin_start_S4, Tout_start = Tin_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype,
         n=np)                                                                                                                                                                                                         annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-354,-50})));
@@ -1162,7 +1164,7 @@ package Configurations
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin={-354,-16})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(redeclare model Medium = WaterHot, Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-16})));
-      Plants.Thermal.Systems.ElectricBoiler electricBoiler(
+      Plants.Thermal.Systems.ElectricBoiler S400(
         redeclare model Medium = WaterHot,
         n=np,
         hctype=hctype,
@@ -1182,22 +1184,22 @@ package Configurations
         Kv=Kv_FCV401,
         openingChar=openingChar_FCV401,
         nR=nR,
-        Pmaxres=Pmaxres)                                                                    annotation (Placement(transformation(extent={{-380,-258},{-292,-170}})));
+        Pmaxres=Pmaxres) annotation (Placement(transformation(extent={{-380,-170},{-292,-82}})));
     equation
       connect(PL_S400_rCD_cold.inlet, FV401.outlet) annotation (
         Line(points={{-354,-40},{-354,-26}},      color = {140, 56, 54}, thickness = 0.5));
       connect(PL_S400_rCD_hot.outlet, FV402.inlet) annotation (
-        Line(points={{-318,-38},{-318,-26}},      color = {140, 56, 54}, thickness = 0.5));
+        Line(points={{-318,-40},{-318,-26}},      color = {140, 56, 54}, thickness = 0.5));
       connect(FV401.inlet, rackCD_Cold_S300_S400.outlet) annotation (
         Line(points={{-354,-6},{-354,5.25},{-408.5,5.25}},        color = {140, 56, 54}, thickness = 0.5));
       connect(FV402.outlet, rackCD_Hot_S400_S300.inlet) annotation (
         Line(points={{-318,-6},{-318,45},{-338,45}},        color = {140, 56, 54}, thickness = 0.5));
-      connect(PL_S400_rCD_cold.outlet, electricBoiler.inlet) annotation (Line(
-          points={{-354,-60},{-354,-111.7},{-353.16,-111.7},{-353.16,-163.4}},
+      connect(PL_S400_rCD_cold.outlet, S400.inlet) annotation (Line(
+          points={{-354,-60},{-354,-67.7},{-353.16,-67.7},{-353.16,-75.4}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_S400_rCD_hot.inlet, electricBoiler.outlet) annotation (Line(
-          points={{-318,-58},{-318,-110.7},{-317.96,-110.7},{-317.96,-163.4}},
+      connect(PL_S400_rCD_hot.inlet, S400.outlet) annotation (Line(
+          points={{-318,-60},{-318,-66.7},{-317.96,-66.7},{-317.96,-75.4}},
           color={140,56,54},
           thickness=0.5));
     end CentralisedSystem_GBEB;

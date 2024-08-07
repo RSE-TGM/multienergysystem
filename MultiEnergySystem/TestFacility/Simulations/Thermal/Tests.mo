@@ -3891,29 +3891,29 @@ System")}),
         outMin=-1,
         initType=Modelica.Blocks.Types.Init.InitialState) annotation (Placement(transformation(extent={{52,189},{62,199}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX711Pt(
-        Kp=1.6237,
-        Ti=0.53763,
+        Kp=1.5578,
+        Ti=0.42627,
         Umax=0,
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,159},{64,169}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX701Pt(
-        Kp=1.7773,
-        Ti=0.5592,
+        Kp=1.3737,
+        Ti=0.38217,
         Umax=0,
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,174},{64,184}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX721Pt(
-        Kp=1.4734,
-        Ti=0.49585,
+        Kp=1.5575,
+        Ti=0.41948,
         Umax=0,
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,144},{64,154}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX731Pt(
-        Kp=1.4378,
-        Ti=0.31466,
+        Kp=3.5178,
+        Ti=0.64312,
         Umax=0,
         Umin=-1,
         y_start=1,
@@ -4248,7 +4248,7 @@ System")}),
     model TestFullPlantController
       extends Modelica.Icons.Example;
       replaceable FullPlantController thermalPlantController  annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
-      replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
+      replaceable FMUExport.Centralised.CentralisedSystemGBEB_InitForward centralisedSystemI_B_InitForward(
         m_flowcool_nom = 0.35,
         TT704Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
         TT714Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),

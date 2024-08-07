@@ -96,7 +96,7 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
       parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
       parameter Real Kvalve(unit = "m3/h") = 90;
-      parameter DistrictHeatingNetwork.Types.PerUnit cf = 4e-3;
+      parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
       parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
       parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
       parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];

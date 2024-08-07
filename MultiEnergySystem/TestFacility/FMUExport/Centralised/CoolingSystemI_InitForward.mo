@@ -25,14 +25,14 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   final parameter Boolean fixEX711Pt = not fixthetaTCV711;
   final parameter Boolean fixEX721Pt = not fixthetaTCV721;
   final parameter Boolean fixEX731Pt = not fixthetaTCV731;
-  final parameter Boolean fixFTR01 = not fixthetaFCVR01;
+  final parameter Boolean fixdFTR00 = not fixthetaFCVR01;
   final parameter Boolean fixTT704 = not fixmflowhotEX701;
   final parameter Boolean fixTT714 = not fixmflowhotEX711;
   final parameter Boolean fixTT724 = not fixmflowhotEX721;
   final parameter Boolean fixTT734 = not fixmflowhotEX731;
   final parameter Boolean fixTTR02 = not fixToutRR01;
 
-
+  final parameter Boolean fixFTR01 = false;
 
 
 
@@ -62,6 +62,8 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.Pressure EX731Pt_nom = 50e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR03_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate dFTR00_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
   parameter DistrictHeatingNetwork.Types.Temperature TTR02_nom = 30 + 273.15 "Desired temperature at the outlet of the loads";
 
 
@@ -74,6 +76,10 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.Pressure EX731Pt_des = 50e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_des= DistrictHeatingNetwork.Data.PumpData.PR01.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR03_des= 5 "Desired total hot mass flowrate" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
+  parameter DistrictHeatingNetwork.Types.MassFlowRate dFTR00_des= FTR01_des-FTR03_des "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
   parameter DistrictHeatingNetwork.Types.Temperature TTR02_des = 15 + 273.15 "Desired temperature at the outlet of the loads";
   parameter DistrictHeatingNetwork.Types.Temperature TT704_des = 30 + 273.15 "Desired temperature at the outlet of the loads" annotation (
@@ -420,7 +426,7 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   Modelica.Blocks.Interaction.Show.RealValue FTR01_(significantDigits=4)
     annotation (Placement(transformation(extent={{405,1},{446,36}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_6(use_numberPort=true, significantDigits=4)
-    annotation (Placement(transformation(extent={{408,-59},{449,-24}})));
+    annotation (Placement(transformation(extent={{406,-51},{447,-16}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_7(use_numberPort=true, significantDigits=4)
     annotation (Placement(transformation(extent={{257,-47},{216,-12}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
@@ -1348,8 +1354,8 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     fixOutput=fixFTR01,
     y_fixed=FTR01_des,
     y_norm=FTR01_nom)     annotation (Placement(visible=true, transformation(
-        origin={423,-9},
-        extent={{-7,-7},{7,7}},
+        origin={426,36},
+        extent={{-6,-6},{6,6}},
         rotation=0)));
   OffSetBlocks.InputOffset ToutRR01Offset(
     fixInput=fixToutRR01,
@@ -1362,7 +1368,7 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     fixOutput=fixTTR02,
     y_fixed=TTR02_des,
     y_norm=TTR02_des) annotation (Placement(visible=true, transformation(
-        origin={296,-74},
+        origin={296,-80},
         extent={{-6,-6},{6,6}},
         rotation=0)));
   Modelica.Blocks.Sources.RealExpression ThotSP(y=80 + 273.15) annotation (Placement(transformation(extent={{-464,108},{-444,128}})));
@@ -1421,6 +1427,14 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     y_norm=TT734_des) annotation (Placement(visible=true, transformation(
         origin={-242,-52},
         extent={{6,-6},{-6,6}},
+        rotation=0)));
+  Modelica.Blocks.Math.Add diffPTRR01(k1=-1) annotation (Placement(transformation(extent={{434,-94},{446,-106}})));
+  OffSetBlocks.OutputOffset dFTR01Offset(
+    fixOutput=fixdFTR00,
+    y_fixed=dFTR00_des,
+    y_norm=dFTR00_nom)    annotation (Placement(visible=true, transformation(
+        origin={458,-100},
+        extent={{-6,-6},{6,6}},
         rotation=0)));
 protected
   DistrictHeatingNetwork.Sources.SourcePressure sourceP0(
@@ -1512,7 +1526,7 @@ equation
       thickness=0.5));
   connect(FTR01.q_m3hr,FTR01_. numberPort) annotation (Line(points={{395.5,18},{398.712,18},{398.712,18.5},{401.925,18.5}},
                                                        color={0,0,127}));
-  connect(PTR01.p,FTR01_6. numberPort) annotation (Line(points={{396.8,-42},{400.862,-42},{400.862,-41.5},{404.925,-41.5}},
+  connect(PTR01.p,FTR01_6. numberPort) annotation (Line(points={{396.8,-42},{400.862,-42},{400.862,-33.5},{402.925,-33.5}},
                                                       color={0,0,127}));
   connect(FTR01_7.numberPort,PTR02. p) annotation (Line(points={{260.075,-29.5},{266.2,-29.5},{266.2,-57}},
                                     color={0,0,127}));
@@ -1847,16 +1861,12 @@ equation
   connect(thetaTCV731Offset.u, TCV731.opening) annotation (Line(points={{-240.6,-102},{-228,-102}}, color={0,0,127}));
   connect(thetaTCV711Offset.u, TCV711.opening) annotation (Line(points={{-100.6,-102},{-88,-102}}, color={0,0,127}));
   connect(thetaTCV721Offset.u, TCV721.opening) annotation (Line(points={{63.4,-102},{71.1,-102}}, color={0,0,127}));
-  connect(thetaFCVR01Offset.u, FCVR01.opening) annotation (Line(points={{317.4,-112},{324,-112},{324,-110},{327,-110},{327,-131}}, color={0,0,127}));
   connect(EX701Power.y,EX701PtOffset. y) annotation (Line(points={{513,-106},{529.2,-106}}, color={0,0,127}));
   connect(EX711Power.y,EX711PtOffset. y) annotation (Line(points={{513,-126},{529.2,-126}}, color={0,0,127}));
   connect(EX721Power.y,EX721PtOffset. y) annotation (Line(points={{513,-146},{529.2,-146}}, color={0,0,127}));
   connect(EX731Power.y,EX731PtOffset. y) annotation (Line(points={{513,-166},{529.2,-166}}, color={0,0,127}));
-  connect(FTR01Offset.y, FTR01_.numberPort) annotation (Line(points={{417.4,-9},{398,-9},{398,18},{398.712,18},{398.712,18.5},{401.925,18.5}},
-                                                                                                                                             color={0,0,127}));
   connect(ToutRR01Offset.u, RR01.in_Tout_cold_set) annotation (Line(points={{319.4,156},{332,156},{332,128.5}}, color={0,0,127}));
-  connect(TTR02.T,TTR02Offset. y) annotation (Line(points={{266.2,-67},{260,-67},{260,-76},{286,-76},{286,-74},{291.2,-74}},
-                                                                                                                           color={0,0,127}));
+  connect(TTR02.T,TTR02Offset. y) annotation (Line(points={{266.2,-67},{258,-67},{258,-80},{291.2,-80}},                   color={0,0,127}));
   connect(ThotSP.y, sourceP0.in_T0) annotation (Line(points={{-443,118},{-424,118},{-424,114.4},{-404,114.4}}, color={0,0,127}));
   connect(ThotSP.y, sourceP3.in_T0) annotation (Line(points={{-443,118},{-388,118},{-388,122},{-242,122},{-242,114.4}}, color={0,0,127}));
   connect(sourceP1.in_T0, sourceP3.in_T0) annotation (Line(points={{-104,114.4},{-104,122},{-242,122},{-242,114.4}}, color={0,0,127}));
@@ -1965,7 +1975,7 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(FTR01Offset.deltaYnorm, processVariableBus.dFTR01)  annotation (Line(points={{429.3,-9},{520,-9},{520,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(FTR01Offset.deltaYnorm, processVariableBus.dFTR01)  annotation (Line(points={{431.4,36},{672,36},{672,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -1994,7 +2004,18 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(TTR02Offset.deltaYnorm, processVariableBus.dTTR02) annotation (Line(points={{301.4,-74},{440,-74},{440,-80},{564,-80},{564,-3},{896,-3}}, color={0,0,127}), Text(
+  connect(TTR02Offset.deltaYnorm, processVariableBus.dTTR02) annotation (Line(points={{301.4,-80},{564,-80},{564,-3},{896,-3}},                     color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(thetaFCVR01Offset.u, FCVR01.opening) annotation (Line(points={{317.4,-112},{327,-112},{327,-131}}, color={0,0,127}));
+  connect(FTR01Offset.y, FTR01.m_flow) annotation (Line(points={{421.2,36},{392,36},{392,21.5}}, color={0,0,127}));
+  connect(FTR03.m_flow, diffPTRR01.u1) annotation (Line(points={{380.5,-144},{410,-144},{410,-103.6},{432.8,-103.6}}, color={0,0,127}));
+  connect(FTR01.m_flow, diffPTRR01.u2) annotation (Line(points={{392,21.5},{392,36},{410,36},{410,-96.4},{432.8,-96.4}}, color={0,0,127}));
+  connect(diffPTRR01.y, dFTR01Offset.y) annotation (Line(points={{446.6,-100},{453.2,-100}}, color={0,0,127}));
+  connect(dFTR01Offset.deltaYnorm, processVariableBus.ddFTR00)
+    annotation (Line(points={{463.4,-100},{476,-100},{476,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

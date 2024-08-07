@@ -3461,6 +3461,7 @@ System")}),
     //   parameter Real dTT724[:, :] = [0, (35 - 20)/(20 + 273.15); 1e3, (35 - 20)/(20 + 273.15)];
     //   parameter Real dTT734[:, :] = [0, (35 - 20)/(20 + 273.15); 1e3, (35 - 20)/(20 + 273.15)];
       parameter Real dFTR01[:, :] = [0, 0; 1000, 0; 1000, -0.05; 1E5, -0.05];
+      parameter Real ddFTR00[:, :] = [0, 0; 1000, 0];
 
       Real Ptotal(start = 200e3);
       Real m_flow_cool_total;
@@ -3495,7 +3496,7 @@ System")}),
       Modelica.Blocks.Sources.TimeTable dTT734SP(table=dTT734)   annotation (
         Placement(transformation(extent={{-5,-61},{5,-51}})));
       Modelica.Blocks.Sources.TimeTable dFTR01SP(table=dFTR01)   annotation (
-        Placement(transformation(extent={{-4,85},{6,95}})));
+        Placement(transformation(extent={{-5,115},{5,125}})));
       Modelica.Blocks.Sources.TimeTable dToutRR01(table=dTout_RR01) annotation (Placement(transformation(extent={{-74,-75},{-64,-65}})));
       Modelica.Blocks.Sources.TimeTable dthetaFCVR01(table=dtheta_FCVR01) annotation (Placement(transformation(extent={{-74,-57},{-64,-47}})));
       Modelica.Blocks.Sources.TimeTable dEX721PtSP(table=dEX721Pt) annotation (Placement(transformation(extent={{-5,31},{5,41}})));
@@ -3504,7 +3505,7 @@ System")}),
       Modelica.Blocks.Sources.TimeTable dEX731PtSP1(table=dEX731Pt)
                                                                    annotation (Placement(transformation(extent={{-5,14},{5,24}})));
       Modelica.Blocks.Continuous.LimIntegrator limIntegrator(
-        k=1.2,
+        k=-0.5529,
         outMax=0,
         outMin=-1,
         initType=Modelica.Blocks.Types.Init.InitialState)
@@ -3546,7 +3547,7 @@ System")}),
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{43,14},{53,24}})));
       Modelica.Blocks.Sources.RealExpression dFTR01SPvar(y=dm_flow_cool_total)
-                                                                              annotation (Placement(transformation(extent={{-9,93},{11,113}})));
+                                                                              annotation (Placement(transformation(extent={{-38,81},{-18,101}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX721Pt(
         Kp=1.4734,
         Ti=0.49585,
@@ -3568,8 +3569,11 @@ System")}),
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{44,-40},{54,-30}})));
+      Modelica.Blocks.Sources.TimeTable ddFTR00SP(table=ddFTR00) annotation (
+        Placement(transformation(extent={{-5,85},{5,95}})));
     equation
-      Ptotal = if time < 1000 then 120e3 else 160e3;
+      //Ptotal = if time < 1000 then 120e3 else 160e3;
+      Ptotal = 4*32.306e3;
       Ptotal = 4185*15*m_flow_cool_total;
       dm_flow_cool_total = (m_flow_cool_total - DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600)/DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
       connect(dToutRR01.y, controlSignalBus.dToutRR01) annotation (Line(points={{-63.5,-70},{-46,-70},{-46,-68},{-11,-68},{-11,-5},{110,-5}}, color={0,0,127}), Text(
@@ -3582,16 +3586,7 @@ System")}),
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dFTR01SP.y, feedback.u1) annotation (Line(points={{6.5,90},{24.4,90}},            color={0,0,127}));
       connect(feedback.y, limIntegrator.u) annotation (Line(points={{36.3,90},{45,90}},           color={0,0,127}));
-      connect(processVariableBus.dFTR01, feedback.u2) annotation (Line(
-          points={{-102,0},{-30,0},{-30,80},{30,80},{30,84.4}},
-          color={255,204,51},
-          thickness=0.5), Text(
-          string="%first",
-          index=-1,
-          extent={{-3,-6},{-3,-6}},
-          horizontalAlignment=TextAlignment.Right));
       connect(dTT704SP.y, PI_dTT704.REF) annotation (Line(points={{5.5,1},{22,1},{22,0},{38,0},{38,4},{45,4}}, color={0,0,127}));
       connect(processVariableBus.dTT704, PI_dTT704.FeedBack) annotation (Line(
           points={{-102,0},{-30,0},{-30,-2},{43,-2},{43,0},{45,0}},
@@ -3602,12 +3597,14 @@ System")}),
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
       connect(PI_dTT704.controlAction, controlSignalBus.dmflowhotEX701)
-        annotation (Line(points={{53,2},{81,2},{81,-5},{110,-5}}, color={0,0,127}), Text(
+        annotation (Line(points={{54.5,2},{81,2},{81,-5},{110,-5}},
+                                                                  color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(PI_dTT714.controlAction, controlSignalBus.dmflowhotEX711) annotation (Line(points={{53,-15},{66,-15},{66,-14},{84,-14},{84,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(PI_dTT714.controlAction, controlSignalBus.dmflowhotEX711) annotation (Line(points={{54.5,-15},{66,-15},{66,-14},{84,-14},{84,-5},{110,-5}},
+                                                                                                                                                        color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3630,13 +3627,15 @@ System")}),
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
       connect(PI_dEX711Pt.controlAction, controlSignalBus.dthetaTCV711)
-        annotation (Line(points={{53,54},{61,54},{61,-5},{110,-5}}, color={0,0,127}), Text(
+        annotation (Line(points={{54.5,54},{61,54},{61,-5},{110,-5}},
+                                                                    color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
       connect(PI_dEX701Pt.controlAction, controlSignalBus.dthetaTCV701)
-        annotation (Line(points={{53,71},{59,71},{59,-5},{110,-5}}, color={0,0,127}), Text(
+        annotation (Line(points={{54.5,71},{59,71},{59,-5},{110,-5}},
+                                                                    color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3661,7 +3660,8 @@ System")}),
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
       connect(PI_dEX731Pt.controlAction, controlSignalBus.dthetaTCV731)
-        annotation (Line(points={{52,19},{85,19},{85,-5},{110,-5}}, color={0,0,127}), Text(
+        annotation (Line(points={{53.5,19},{85,19},{85,-5},{110,-5}},
+                                                                    color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3676,7 +3676,8 @@ System")}),
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
       connect(dTT734SP.y, PI_dTT1.REF) annotation (Line(points={{5.5,-56},{19,-56},{19,-53},{46,-53}}, color={0,0,127}));
-      connect(PI_dTT1.controlAction, controlSignalBus.dmflowhotEX731) annotation (Line(points={{54,-55},{64,-55},{64,-54},{85,-54},{85,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(PI_dTT1.controlAction, controlSignalBus.dmflowhotEX731) annotation (Line(points={{55.5,-55},{64,-55},{64,-54},{85,-54},{85,-5},{110,-5}},
+                                                                                                                                                      color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3698,12 +3699,453 @@ System")}),
           index=-1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
-      connect(PI_dTT724.controlAction, controlSignalBus.dmflowhotEX721) annotation (Line(points={{53,-35},{63,-35},{63,-33},{75,-33},{75,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(PI_dTT724.controlAction, controlSignalBus.dmflowhotEX721) annotation (Line(points={{54.5,-35},{63,-35},{63,-33},{75,-33},{75,-5},{110,-5}},
+                                                                                                                                                        color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(PI_dEX721Pt.controlAction, controlSignalBus.dthetaTCV721) annotation (Line(points={{53,35},{66,35},{66,36},{81,36},{81,-5},{110,-5}}, color={0,0,127}), Text(
+      connect(PI_dEX721Pt.controlAction, controlSignalBus.dthetaTCV721) annotation (Line(points={{54.5,35},{66,35},{66,36},{81,36},{81,-5},{110,-5}},
+                                                                                                                                                    color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.ddFTR00, feedback.u2)
+        annotation (Line(
+          points={{-102,0},{-31,0},{-31,80},{30,80},{30,84.4}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-3,-6},{-3,-6}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(dFTR01SPvar.y, feedback.u1) annotation (Line(points={{-17,91},{-14,91},{-14,90},{-12,90},{-12,105},{16,105},{16,90},{24.4,90}}, color={0,0,127}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false),   graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
+                  {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={
+                  TextStyle.Bold},
+              textString="PID
+Control
+System")}),
+        Diagram(coordinateSystem(preserveAspectRatio = false, grid = {1, 1})));
+    end CoolingPlantController;
+
+    model FullPlantController
+      parameter Real dTout_GB101[:,:] = [0, 0; 1e6, 0];
+      parameter Real dTout_EB401[:,:] = [0, 0; 1e6, 0];
+      parameter Real domega_P901[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCV901[:, :] = [0, 0; 1e6, 0];
+      parameter Real domega_P101[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCV101[:, :] = [0, 0; 1e6, 0];
+      parameter Real domega_P401[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCV401[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCVC01[:, :] = [0, -1; 1e6, -1];
+      parameter Real dtheta_FCVC02[:, :] = [0, -1; 2e3, -1];
+      parameter Real dtheta_FCV701[:, :] = [0, -0.2; 1e6, -0.2];
+      parameter Real dtheta_FCV711[:, :] = [0, -0.2; 1e6, -0.2];
+      parameter Real dtheta_FCV721[:, :] = [0, -0.2; 1e6, -0.2];
+      parameter Real dtheta_FCV731[:, :] = [0, -0.2; 1e6, -0.2];
+      parameter Real dmflowcool_EX701[:, :] = [0, -0.8; 1e6, -0.8];
+      parameter Real dmflowcool_EX711[:, :] = [0, -0.8; 1e6, -0.8];
+      parameter Real dmflowcool_EX721[:, :] = [0, -0.8; 1e6, -0.8];
+      parameter Real dmflowcool_EX731[:, :] = [0, -0.8; 1e6, -0.8];
+      parameter Real dEX701Pt[:, :] = [0, (25e3 - 50e3)/50e3; 1e3, (25e3 - 50e3)/50e3];
+      parameter Real dEX711Pt[:, :] = [0, (25e3 - 50e3)/50e3; 1e3, (25e3 - 50e3)/50e3];
+      parameter Real dEX721Pt[:, :] = [0, (25e3 - 50e3)/50e3; 1e3, (25e3 - 50e3)/50e3];
+      parameter Real dEX731Pt[:, :] = [0, (25e3 - 50e3)/50e3; 1e3, (25e3 - 50e3)/50e3];
+      parameter Real ddPT100[:, :] = [0, 0; 1e3, 0];
+      parameter Real ddPTA2[:, :] = [0, 0; 1e3, 0];
+      parameter Real dTT704[:, :] = [0, 0; 1e3, 0];
+      parameter Real dTT714[:, :] = [0, 0; 1e3, 0];
+      parameter Real dTT724[:, :] = [0, 0; 1e3, 0];
+      parameter Real dTT734[:, :] = [0, 0; 1e3, 0];
+      parameter Real dFT701[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
+      parameter Real dFT711[:, :] = [0, (1 - 1.3)/1.3; 500, (1 - 1.3)/1.3; 500, (1.2 - 1.3)/1.3; 1000, (1.2 - 1.3)/1.3];
+      parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 1000, (0.8 - 1.3)/1.3];
+      parameter Real dTT731[:, :] = [0, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 1000, (55 - 65)/(65 + 273.15)];
+      parameter Real dFT901[:, :] = [0, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 1000, (3 - 8.8)/8.8];
+      parameter Real dFT101[:, :] = [0, (2 - 5.7166667)/5.7166667; 500, (2 - 5.7166667)/5.7166667];
+      parameter Real dFT401[:, :] = [0, (1.5 - 3.2666667)/3.2666667; 500, (1.5 - 3.2666667)/3.2666667];
+
+      parameter Real dtheta_TCV701[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_TCV711[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_TCV721[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_TCV731[:, :] = [0, 0; 1e6, 0];
+      parameter Real dtheta_FCVR01[:, :] = [0, -0.5; 1e6, -0.5];
+      parameter Real dTout_RR01[:,:] = [0, (15-30)/(30+273.15); 1e6, (15-30)/(30+273.15)];
+      parameter Real dFTR01[:, :] = [0, 0; 1000, 0; 1000, -0.05; 1E5, -0.05];
+
+
+      Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
+        Placement(transformation(extent = {{-80, 90}, {-70, 100}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV901(table = dtheta_FCV901) annotation (
+        Placement(transformation(extent = {{-80, 75}, {-70, 85}})));
+      Modelica.Blocks.Sources.TimeTable domegaP101(table = domega_P101) annotation (
+        Placement(transformation(extent = {{-80, 60}, {-70, 70}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV101(table = dtheta_FCV101) annotation (
+        Placement(transformation(extent = {{-80, 45}, {-70, 55}})));
+      Modelica.Blocks.Sources.TimeTable domegaP401(table = domega_P401) annotation (
+        Placement(transformation(extent = {{-80, 30}, {-70, 40}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV401(table = dtheta_FCV401) annotation (
+        Placement(transformation(extent = {{-80, 15}, {-70, 25}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCVC02(table = dtheta_FCVC02) annotation (
+        Placement(transformation(extent = {{-80, 0}, {-70, 10}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV701(table = dtheta_FCV701) annotation (
+        Placement(transformation(extent = {{-80, -15}, {-70, -5}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV711(table = dtheta_FCV711) annotation (
+        Placement(transformation(extent = {{-80, -30}, {-70, -20}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV721(table = dtheta_FCV721) annotation (
+        Placement(transformation(extent = {{-80, -45}, {-70, -35}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX701(table = dmflowcool_EX701) annotation (
+        Placement(transformation(extent = {{-80, -75}, {-70, -65}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX711(table = dmflowcool_EX711) annotation (
+        Placement(transformation(extent = {{-80, -90}, {-70, -80}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX721(table = dmflowcool_EX721) annotation (
+        Placement(transformation(extent = {{-80, -105}, {-70, -95}})));
+      Modelica.Blocks.Sources.TimeTable dmflowcoolEX731(table = dmflowcool_EX731) annotation (
+        Placement(transformation(extent = {{-80, -120}, {-70, -110}})));
+      FMUExport.Interfaces.ControlSignalBus controlSignalBus annotation (
+        Placement(visible = true, transformation(origin = {110, -5}, extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin = {94, 0}, extent = {{-30, -30}, {30, 30}}, rotation = -90)));
+      Modelica.Blocks.Sources.TimeTable dthetaFCV731(table = dtheta_FCV731) annotation (
+        Placement(transformation(extent = {{-80, -60}, {-70, -50}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT704(
+        Kp=0.13801,
+        Ti=0.1,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,25},{50,35}})));
+      Modelica.Blocks.Sources.TimeTable dTT704SP(table=dTT704)   annotation (
+        Placement(transformation(extent={{20,30},{30,40}})));
+      FMUExport.Interfaces.ControlSignalBus processVariableBus annotation (
+        Placement(visible = true, transformation(origin = {-102, 0}, extent = {{51, 41}, {-51, -41}}, rotation = -90), iconTransformation(origin = {-91, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT714(
+        Kp=0.02135,
+        Ti=0.0125,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,10},{50,20}})));
+      Modelica.Blocks.Sources.TimeTable dTT714SP(table=dTT714)   annotation (
+        Placement(transformation(extent={{20,12},{30,22}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT724(
+        Kp=0.018753,
+        Ti=0.01,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,-40},{50,-30}})));
+      Modelica.Blocks.Sources.TimeTable dTT724SP(table=dTT724)   annotation (
+        Placement(transformation(extent={{20,-35},{30,-25}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT734(
+        Kp=0.014619,
+        Ti=0.01,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,-60},{50,-50}})));
+      Modelica.Blocks.Sources.TimeTable dTT734SP(table=dTT734)   annotation (
+        Placement(transformation(extent={{20,-55},{30,-45}})));
+      Modelica.Blocks.Sources.TimeTable dFT101SP(table = dFT101) annotation (
+        Placement(transformation(extent={{20,87},{30,97}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT401(
+        Kp=0.064422,
+        Ti=0.32626,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,70},{50,80}})));
+      Modelica.Blocks.Sources.TimeTable dFT401SP(table = dFT401) annotation (
+        Placement(transformation(extent={{20,72},{30,82}})));
+      Modelica.Blocks.Sources.TimeTable dToutEB401(table=dTout_EB401) annotation (Placement(transformation(extent={{-80,105},{-70,115}})));
+      Modelica.Blocks.Sources.TimeTable dToutGB101(table=dTout_GB101) annotation (Placement(transformation(extent={{-80,122},{-70,132}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dPTA2(
+        Kp=0.14484,
+        Ti=0.92999,
+        Umax=0,
+        Umin=-0.4,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-80},{50,-70}})));
+      Modelica.Blocks.Sources.TimeTable ddPTA2SP(table=ddPTA2) annotation (Placement(transformation(extent={{20,-75},{30,-65}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCVC01(table=dtheta_FCVC01) annotation (Placement(transformation(extent={{-80,-137},{-70,-127}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dPT100(
+        Kp=0.00024658,
+        Ti=0.0002,
+        Umax=0,
+        Umin=-0.4,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,55},{50,65}})));
+      Modelica.Blocks.Sources.TimeTable ddPT100SP(table=ddPT100)
+                                                               annotation (Placement(transformation(extent={{20,57},{30,67}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(
+        Kp=0.064422,
+        Ti=0.32626,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,85},{50,95}})));
+      Modelica.Blocks.Continuous.LimIntegrator I_FTR01(
+        k=1.2,
+        outMax=0,
+        outMin=-1,
+        initType=Modelica.Blocks.Types.Init.InitialState) annotation (Placement(transformation(extent={{52,189},{62,199}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX711Pt(
+        Kp=1.6237,
+        Ti=0.53763,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,159},{64,169}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX701Pt(
+        Kp=1.7773,
+        Ti=0.5592,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,174},{64,184}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX721Pt(
+        Kp=1.4734,
+        Ti=0.49585,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,144},{64,154}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX731Pt(
+        Kp=1.4378,
+        Ti=0.31466,
+        Umax=0,
+        Umin=-1,
+        y_start=1,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,129},{64,139}})));
+      Modelica.Blocks.Math.Feedback fbFTR01 annotation (Placement(transformation(extent={{32,187},{46,201}})));
+      Modelica.Blocks.Sources.TimeTable dFTR01SP(table=dFTR01)   annotation (
+        Placement(transformation(extent={{19,189},{29,199}})));
+      Modelica.Blocks.Sources.TimeTable dEX721PtSP(table=dEX721Pt) annotation (Placement(transformation(extent={{19,144},{29,154}})));
+      Modelica.Blocks.Sources.TimeTable dEX701PtSP(table=dEX701Pt) annotation (Placement(transformation(extent={{19,174},{29,184}})));
+      Modelica.Blocks.Sources.TimeTable dEX711PtSP(table=dEX711Pt) annotation (Placement(transformation(extent={{19,159},{29,169}})));
+      Modelica.Blocks.Sources.TimeTable dEX731PtSP(table=dEX731Pt) annotation (Placement(transformation(extent={{19,129},{29,139}})));
+      Modelica.Blocks.Sources.TimeTable dToutRR01(table=dTout_RR01) annotation (Placement(transformation(extent={{-80,-155},{-70,-145}})));
+      Modelica.Blocks.Sources.TimeTable dthetaFCVR01(table=dtheta_FCVR01) annotation (Placement(transformation(extent={{-80,-175},{-70,-165}})));
+    equation
+      connect(dthetaFCVC02.y, controlSignalBus.dthetaFCVC02) annotation (
+        Line(points = {{-69.5, 5}, {6, 5}, {6, -5}, {110, -5}}, color = {0, 0, 127}),
+        Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
+      connect(dTT704SP.y, PI_TT704.REF) annotation (Line(points={{30.5,35},{37,35},{37,32},{41,32}},
+                                                                                     color={0,0,127}));
+      connect(PI_TT704.controlAction, controlSignalBus.dthetaFCV701) annotation (Line(points={{50.5,30},{62,30},{62,-5},{110,-5}},
+                                                                                                                                 color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dTT714SP.y, PI_TT714.REF) annotation (Line(points={{30.5,17},{41,17}}, color={0,0,127}));
+      connect(PI_TT714.controlAction, controlSignalBus.dthetaFCV711) annotation (Line(points={{50.5,15},{58,15},{58,-5},{110,-5}},
+                                                                                                                                 color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_TT724.controlAction, controlSignalBus.dthetaFCV721) annotation (Line(points={{50.5,-35},{59,-35},{59,-5},{110,-5}},
+                                                                                                                                   color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_TT734.controlAction, controlSignalBus.dthetaFCV731) annotation (Line(points={{50.5,-55},{57,-55},{57,-5},{110,-5}},
+                                                                                                                                   color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dTT734SP.y, PI_TT734.REF) annotation (Line(points={{30.5,-50},{36,-50},{36,-53},{41,-53}}, color={0,0,127}));
+      connect(dFT401SP.y, PI_FT401.REF) annotation (Line(points={{30.5,77},{41,77}},                 color={0,0,127}));
+      connect(processVariableBus.dFT401, PI_FT401.FeedBack) annotation (Line(
+          points={{-102,0},{11,0},{11,72},{36,72},{36,73},{41,73}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_FT401.controlAction, controlSignalBus.dthetaFCV401) annotation (Line(points={{50.5,75},{70,75},{70,-5},{110,-5}},
+                                                                                                                                 color={0,0,127}));
+      connect(domegaP401.y, controlSignalBus.domegaP401) annotation (
+        Line(points={{-69.5,35},{-5,35},{-5,-8},{110,-8},{110,-5}},          color = {0, 0, 127}));
+      connect(
+          dthetaFCV901.y, controlSignalBus.dthetaFCV901) annotation (
+        Line(points={{-69.5,80},{-32,80},{-32,-5},{110,-5}},        color = {0, 0, 127}));
+      connect(dToutEB401.y, controlSignalBus.dToutEB401) annotation (Line(points={{-69.5,110},{89,110},{89,-10},{110,-10},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dToutGB101.y, controlSignalBus.dToutGB101) annotation (Line(points={{-69.5,127},{87,127},{87,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.dTT704, PI_TT704.FeedBack) annotation (Line(
+          points={{-102,0},{13,0},{13,12},{12,12},{12,28},{41,28}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dTT714, PI_TT714.FeedBack) annotation (Line(
+          points={{-102,0},{36,0},{36,13},{41,13}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dTT724, PI_TT724.FeedBack) annotation (Line(
+          points={{-102,0},{8,0},{8,-37},{41,-37}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dTT734, PI_TT734.FeedBack) annotation (Line(
+          points={{-102,0},{17,0},{17,-57},{41,-57}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-3,-6},{-3,-6}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(dTT724SP.y, PI_TT724.REF) annotation (Line(points={{30.5,-30},{34,-30},{34,-33},{41,-33}}, color={0,0,127}));
+      connect(processVariableBus.dPTA2, PI_dPTA2.FeedBack) annotation (Line(
+          points={{-102,0},{-3,0},{-3,-77},{41,-77}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(ddPTA2SP.y, PI_dPTA2.REF) annotation (Line(points={{30.5,-70},{35,-70},{35,-73},{41,-73}}, color={0,0,127}));
+      connect(PI_dPTA2.controlAction, controlSignalBus.domegaP901) annotation (Line(points={{50.5,-75},{80,-75},{80,-5},{110,-5}},                 color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCVC01.y, controlSignalBus.dthetaFCVC01)
+        annotation (Line(points={{-69.5,-132},{-7,-132},{-7,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(ddPT100SP.y, PI_dPT100.REF) annotation (Line(points={{30.5,62},{41,62}}, color={0,0,127}));
+      connect(processVariableBus.dPT102, PI_dPT100.FeedBack) annotation (Line(
+          points={{-102,0},{7,0},{7,57},{37,57},{37,58},{41,58}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_dPT100.controlAction, controlSignalBus.domegaP101) annotation (Line(points={{50.5,60},{68,60},{68,-7},{110,-7},{110,-5}},
+                                                                                                                                         color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dFT101SP.y, PI_FT101.REF) annotation (Line(points={{30.5,92},{41,92}}, color={0,0,127}));
+      connect(PI_FT101.controlAction, controlSignalBus.dthetaFCV101) annotation (Line(points={{50.5,90},{62,90},{62,88},{76,88},{76,-5},{110,-5}},
+                                                                                                                                                 color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_FT101.FeedBack, processVariableBus.dFT101) annotation (Line(points={{41,88},{5,88},{5,2},{-102,2},{-102,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(fbFTR01.y, I_FTR01.u) annotation (Line(points={{45.3,194},{51,194}}, color={0,0,127}));
+      connect(dFTR01SP.y, fbFTR01.u1) annotation (Line(points={{29.5,194},{33.4,194}}, color={0,0,127}));
+      connect(dEX701PtSP.y, PI_dEX701Pt.REF) annotation (Line(points={{29.5,179},{49,179},{49,181},{55,181}}, color={0,0,127}));
+      connect(dEX711PtSP.y, PI_dEX711Pt.REF) annotation (Line(points={{29.5,164},{49,164},{49,166},{55,166}}, color={0,0,127}));
+      connect(dEX721PtSP.y, PI_dEX721Pt.REF) annotation (Line(points={{29.5,149},{49,149},{49,151},{55,151}}, color={0,0,127}));
+      connect(dEX731PtSP.y, PI_dEX731Pt.REF) annotation (Line(points={{29.5,134},{51,134},{51,136},{55,136}}, color={0,0,127}));
+      connect(PI_dEX701Pt.controlAction, controlSignalBus.dthetaTCV701)
+        annotation (Line(points={{64.5,179},{83,179},{83,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_dEX711Pt.controlAction, controlSignalBus.dthetaTCV711)
+        annotation (Line(points={{64.5,164},{78,164},{78,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_dEX721Pt.controlAction, controlSignalBus.dthetaTCV721)
+        annotation (Line(points={{64.5,149},{74,149},{74,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_dEX731Pt.controlAction, controlSignalBus.dthetaTCV731)
+        annotation (Line(points={{64.5,134},{72,134},{72,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.dFTR01, fbFTR01.u2)
+        annotation (Line(
+          points={{-102,0},{-10,0},{-10,183},{39,183},{39,188.4}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-3,-6},{-3,-6}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dEX701Pt, PI_dEX701Pt.FeedBack)
+        annotation (Line(
+          points={{-102,0},{-7,0},{-7,173},{49,173},{49,177},{55,177}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dEX711Pt, PI_dEX711Pt.FeedBack)
+        annotation (Line(
+          points={{-102,0},{-4,0},{-4,158},{50,158},{50,162},{55,162}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dEX721Pt, PI_dEX721Pt.FeedBack) annotation (Line(
+          points={{-102,0},{-51,0},{-51,-1},{-1,-1},{-1,143},{50,143},{50,147},{55,147}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(processVariableBus.dEX731Pt, PI_dEX731Pt.FeedBack)
+        annotation (Line(
+          points={{-102,0},{-1,0},{-1,126},{49,126},{49,132},{55,132}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(dToutRR01.y, controlSignalBus.dToutRR01) annotation (Line(points={{-69.5,-150},{-1,-150},{-1,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dthetaFCVR01.y, controlSignalBus.dthetaFCVR01)
+        annotation (Line(points={{-69.5,-170},{83,-170},{83,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -3715,8 +4157,11 @@ System")}),
               textString="PID
 Control
 System")}),
-        Diagram(coordinateSystem(preserveAspectRatio = false, grid = {1, 1})));
-    end CoolingPlantController;
+        Diagram(coordinateSystem(
+            extent={{-100,-200},{100,200}},
+            preserveAspectRatio=false,
+            grid={1,1})));
+    end FullPlantController;
 
     model TestActuator
       extends Modelica.Icons.Example;
@@ -3777,6 +4222,7 @@ System")}),
         EX711PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         EX721PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         EX731PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        dFTR01Offset(fixOffset = true, y_Offset_fixed = 5),
         mflowEX701Offset(u_start = 0.5),
         mflowEX711Offset(u_start = 0.5)) annotation (Placement(transformation(origin={-1,0}, extent={{11,-38},{55,38}})));
       inner System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
@@ -3798,6 +4244,44 @@ System")}),
           Tolerance=1e-06,
           __Dymola_Algorithm="Dassl"));
     end TestCoolingPlantController;
+
+    model TestFullPlantController
+      extends Modelica.Icons.Example;
+      replaceable FullPlantController thermalPlantController  annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
+      replaceable FMUExport.Centralised.CentralisedSystemI_B_InitForward centralisedSystemI_B_InitForward(
+        m_flowcool_nom = 0.35,
+        TT704Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
+        TT714Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
+        TT724Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
+        TT734Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
+        FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
+        FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
+        PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
+        dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.015e5),
+        EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        EX711PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        EX721PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        EX731PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
+        thetaFCVC01Offset(fixInput=false, fixOffset=true),
+        thetaFCVC02Offset(fixInput=false, fixOffset=true),
+        thetaFCVR01Offset(fixInput=false, fixOffset=true),
+        thetaFCV101Offset(fixInput=false, fixOffset=true),
+        thetaFCV401Offset(fixInput=false, fixOffset=true))   annotation (
+        Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
+    equation
+      connect(centralisedSystemI_B_InitForward.processVariableBus, thermalPlantController.processVariableBus) annotation (
+        Line(points={{51.36,0},{66,0},{66,-48},{-66,-48},{-66,-0.38},{-48.02,-0.38}},color = {255, 204, 51}, thickness = 0.5));
+      connect(thermalPlantController.controlSignalBus, centralisedSystemI_B_InitForward.controlSignalBus) annotation (
+        Line(points={{-7.32,0},{2,0},{2,-0.38},{12.86,-0.38}},
+                                          color = {255, 204, 51}, thickness = 0.5));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio = false)),
+        Diagram(coordinateSystem(preserveAspectRatio = false)),
+        experiment(
+          StopTime=100,
+          Tolerance=1e-06,
+          __Dymola_Algorithm="Dassl"));
+    end TestFullPlantController;
     annotation (Icon(graphics={Bitmap(
             extent={{-80,-80},{82,80}},
             imageSource=

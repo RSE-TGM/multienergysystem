@@ -71,7 +71,7 @@ package Configurations
     extends DistrictHeatingNetwork.Icons.Generic.Centralised;
 
     partial model CentralizedSystemI "System with only Gas Boiler as source of heat"
-      extends BaseClass.CentralizedNetworkBase;
+      extends BaseClass.CentralizedNetworkBase(Tout_start_S9 = T_start_hot, Tin_start_S9 = T_start_cold);
       replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
       // Gas composition

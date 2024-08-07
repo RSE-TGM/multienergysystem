@@ -186,7 +186,7 @@ equation
   // Total cooling power
   Pcold = if cold_on then P_compressor1 + P_compressor2 else 0;
   //Pcold = TT.y;
-  //Pcold = -100e3;
+  //Pcold = 200e3;
 
 
 ///////////

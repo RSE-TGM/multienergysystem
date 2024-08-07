@@ -813,8 +813,6 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={558,-56})));
-
-
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
         dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom,

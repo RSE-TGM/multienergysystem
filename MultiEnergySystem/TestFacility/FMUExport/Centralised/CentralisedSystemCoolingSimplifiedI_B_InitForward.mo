@@ -603,7 +603,7 @@ model CentralisedSystemCoolingSimplifiedI_B_InitForward
   Modelica.Blocks.Continuous.FirstOrder FCVC02Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{732,226},{712,246}})));
+    y_start=0) annotation (Placement(transformation(extent={{732,226},{712,246}})));
   Modelica.Blocks.Continuous.FirstOrder FCV101Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,

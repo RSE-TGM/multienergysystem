@@ -13,8 +13,7 @@ model AWPIContinuous
         Placement(visible = true, transformation(origin={-110,-32},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-80,-40},    extent={{-20,-20},
             {20,20}},                                                                                                                                                                           rotation = 0)));
   Modelica.Blocks.Interfaces.RealOutput controlAction annotation (
-        Placement(visible = true, transformation(origin={100,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={80,0},    extent={{-20,-20},
-            {20,20}},                                                                                                                                                                      rotation = 0)));
+        Placement(visible = true, transformation(origin={100,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={110,0},   extent={{-10,-10},{10,10}},      rotation = 0)));
   Modelica.Blocks.Math.Feedback feedback annotation (
         Placement(visible = true, transformation(origin={-60,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Gain gain(k = Kp)  annotation (
@@ -46,9 +45,7 @@ connect(firstOrder.u, controlAction) annotation (Line(points={{42,-10},{70,-10},
           {70,34},{100,34}},
                            color={0,0,127}));
   annotation (
-      Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,
-              100},{100,-104}}),                                                                                                                            Text(extent={{-100,
-              100},{100,-104}},
+      Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-104}}),    Text(extent={{-100,100},{100,-104}},
           textColor={0,0,0},
           textString="PI
 AW")}),

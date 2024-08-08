@@ -3765,8 +3765,8 @@ System")}),
       parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 1000, (0.8 - 1.3)/1.3];
       parameter Real dTT731[:, :] = [0, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 1000, (55 - 65)/(65 + 273.15)];
       parameter Real dFT901[:, :] = [0, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 1000, (3 - 8.8)/8.8];
-      parameter Real dFT101[:, :] = [0, (1.75 - 2.5)/2.5; 500, (1.75 - 2.5)/2.5];
-      parameter Real dFT401[:, :] = [0, (0.8 - 2)/2; 500, (0.8 - 2)/2];
+      parameter Real dFT101[:, :] = [0, (1 - 5.7166667)/5.7166667; 500, (1 - 5.7166667)/5.7166667];
+      parameter Real dFT401[:, :] = [0, (0.8 - 3.2666667)/3.2666667; 500, (0.8 - 3.2666667)/3.2666667];
 
       parameter Real dtheta_TCV701[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_TCV711[:, :] = [0, 0; 1e6, 0];
@@ -4347,8 +4347,8 @@ System")}),
         TT714Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
         TT724Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
         TT734Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
-        FT101Offset(fixOffset = true, y_Offset_fixed = 2.5),
-        FT401Offset(fixOffset = true, y_Offset_fixed = 2),
+        FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
+        FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
         PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
         dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.015e5),
         EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),

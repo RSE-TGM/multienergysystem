@@ -4196,11 +4196,6 @@ System")}),
           index=-1,
           extent={{-3,-6},{-3,-6}},
           horizontalAlignment=TextAlignment.Right));
-      connect(I_EX721Pt.y, controlSignalBus.dthetaTCV721) annotation (Line(points={{90.5,149},{98,149},{98,-5},{110,-5}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(fbEX731Pt.y, I_EX731Pt.u) annotation (Line(points={{75.6,134},{79,134}}, color={0,0,127}));
       connect(fbEX731Pt.u1, PI_dEX731Pt.REF) annotation (Line(points={{68.8,134},{66,134},{66,140},{50,140},{50,136},{55,136}}, color={0,0,127}));
       connect(dEX731PtSP.y, PI_dEX731Pt.REF) annotation (Line(points={{29.5,134},{34,134},{34,136},{55,136}}, color={0,0,127}));
@@ -4238,6 +4233,12 @@ System")}),
           horizontalAlignment=TextAlignment.Left));
       connect(dthetaFCV401.y, controlSignalBus.dthetaFCV401)
         annotation (Line(points={{-69.5,20},{-58,20},{-58,21},{-43,21},{-43,-5},{110,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_dEX721Pt.controlAction, controlSignalBus.dthetaTCV721)
+        annotation (Line(points={{64.5,149},{65,149},{65,145},{78,145},{78,105},{99,105},{99,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -4370,7 +4371,7 @@ System")}),
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),
         experiment(
-          StopTime=4000,
+          StopTime=4500,
           Tolerance=1e-06,
           __Dymola_Algorithm="Dassl"));
     end TestFullPlantController;

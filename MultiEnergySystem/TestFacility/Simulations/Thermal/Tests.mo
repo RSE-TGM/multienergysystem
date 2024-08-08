@@ -3905,15 +3905,15 @@ System")}),
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,174},{64,184}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX721Pt(
-        Kp=1.5575,
-        Ti=0.41948,
+        Kp=1.8751,
+        Ti=0.52629,
         Umax=0,
         Umin=-1,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,144},{64,154}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX731Pt(
-        Kp=3.5178,
-        Ti=0.64312,
+        Kp=3.9812,
+        Ti=0.77417,
         Umax=0,
         Umin=-1,
         y_start=1,
@@ -4227,7 +4227,8 @@ System")}),
           index=-1,
           extent={{-3,-6},{-3,-6}},
           horizontalAlignment=TextAlignment.Right));
-      connect(I_EX731Pt.y, controlSignalBus.dthetaTCV731) annotation (Line(points={{90.5,134},{110,134},{110,-5}}, color={0,0,127}), Text(
+      connect(PI_dEX731Pt.controlAction, controlSignalBus.dthetaTCV731)
+        annotation (Line(points={{64.5,134},{66,134},{66,114},{103,114},{103,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},

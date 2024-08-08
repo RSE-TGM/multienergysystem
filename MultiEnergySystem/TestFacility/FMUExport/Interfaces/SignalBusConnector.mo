@@ -5,6 +5,5 @@ model SignalBusConnector "Partial model with two ControlSignalBus connectors"
   ControlSignalBus processVariableBus annotation (
     Placement(visible = true, transformation(origin={896,-3},    extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin = {88, 0}, extent = {{-30, -30}, {30, 30}}, rotation = -90)));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false, extent={{-900,-500},{900,
-            320}})));
+        coordinateSystem(preserveAspectRatio=false, extent={{-900,-540},{900,320}})));
 end SignalBusConnector;

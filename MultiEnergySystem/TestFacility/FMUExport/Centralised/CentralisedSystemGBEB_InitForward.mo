@@ -99,6 +99,8 @@ model CentralisedSystemGBEB_InitForward
   final parameter Boolean fixFT731 = false;
   final parameter Boolean fixPT902 = false;
   final parameter Boolean fixFTR01 = false;
+  final parameter Boolean fixGB101Pt = false;
+  final parameter Boolean fixEB401Pt = false;
 
 //Normalisation values
   //Nominal values
@@ -157,6 +159,8 @@ model CentralisedSystemGBEB_InitForward
   parameter DistrictHeatingNetwork.Types.MassFlowRate dFTR00_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
   parameter DistrictHeatingNetwork.Types.Temperature TTR02_nom = 30 + 273.15 "Desired temperature at the outlet of the loads";
   parameter DistrictHeatingNetwork.Types.Temperature ToutRR01_nom = 30 + 273.15 "Desired temperature at the outlet of the loads";
+  parameter DistrictHeatingNetwork.Types.Power GB101Pt_nom = 160e3;
+  parameter DistrictHeatingNetwork.Types.Power EB401Pt_nom = 50e3;
 
   //  Desired Outputs values
   parameter DistrictHeatingNetwork.Types.Temperature ToutLoad_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
@@ -240,11 +244,16 @@ model CentralisedSystemGBEB_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate dFTR00_des= FTR01_des-FTR03_des "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
+  parameter DistrictHeatingNetwork.Types.Power GB101Pt_des = 120e3;
+  parameter DistrictHeatingNetwork.Types.Power EB401Pt_des = 50e3;
+
 
   DistrictHeatingNetwork.Types.Power Pt1(nominal = 50e3, start = 30e3);
   DistrictHeatingNetwork.Types.Power Pt2(nominal = 50e3, start = 30e3);
   DistrictHeatingNetwork.Types.Power Pt3(nominal = 50e3, start = 30e3);
   DistrictHeatingNetwork.Types.Power Pt4(nominal = 50e3, start = 30e3);
+  DistrictHeatingNetwork.Types.Power PtGB(nominal = 160e3, start = 120e3);
+  DistrictHeatingNetwork.Types.Power PtEB(nominal = 50e3, start = 50e3);
 
   OffSetBlocks.InputOffset omegaP101Offset(
     fixInput=fixomegaP101,
@@ -711,11 +720,29 @@ model CentralisedSystemGBEB_InitForward
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
     y_start=1) annotation (Placement(transformation(extent={{-450,-120},{-430,-100}})));
+  Modelica.Blocks.Sources.RealExpression GBPower(y=PtGB) annotation (Placement(transformation(extent={{702,-508},{722,-488}})));
+  Modelica.Blocks.Sources.RealExpression EBPower(y=PtEB) annotation (Placement(transformation(extent={{702,-530},{722,-510}})));
+  OffSetBlocks.OutputOffset GB101PtOffset(
+    fixOutput=fixGB101Pt,
+    y_fixed=GB101Pt_des,
+    y_norm=GB101Pt_nom) annotation (Placement(visible=true, transformation(
+        origin={744,-498},
+        extent={{-6,-6},{6,6}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset EB401PtOffset(
+    fixOutput=fixEB401Pt,
+    y_fixed=EB401Pt_des,
+    y_norm=EB401Pt_nom) annotation (Placement(visible=true, transformation(
+        origin={744,-520},
+        extent={{-6,-6},{6,6}},
+        rotation=0)));
 equation
   Pt1 = EX701.Pt;
   Pt2 = EX711.Pt;
   Pt3 = EX721.Pt;
   Pt4 = EX731.Pt;
+  PtGB = S100.GB.Pheat;
+  PtEB = S400.EB.Pheat;
   connect(FCV701.opening, thetaFCV701Offset.u)    annotation (Line(points={{146,-150},{160.6,-150}},
                                                                                                    color={0,0,127}));
   connect(thetaFCV711Offset.u, FCV711.opening)    annotation (Line(points={{480.6,-150},{446,-150}},
@@ -1235,6 +1262,20 @@ equation
   connect(S100.PTout, diffPTS100.u2) annotation (Line(points={{-201.6,-288.4},{-188,-288.4},{-188,-316},{-170,-316}}, color={0,0,127}));
   connect(FCVC01Dynamics.u, thetaFCVC01Offset.u) annotation (Line(points={{168,300},{149,300}}, color={0,0,127}));
   connect(FCVC01Dynamics.y, FCVC01.opening) annotation (Line(points={{191,300},{200,300},{200,235},{242,235}}, color={0,0,127}));
+  connect(GBPower.y, GB101PtOffset.y) annotation (Line(points={{723,-498},{739.2,-498}}, color={0,0,127}));
+  connect(EBPower.y, EB401PtOffset.y) annotation (Line(points={{723,-520},{739.2,-520}}, color={0,0,127}));
+  connect(GB101PtOffset.deltaYnorm, processVariableBus.dGB101Pt)
+    annotation (Line(points={{749.4,-498},{780,-498},{780,-496},{1022,-496},{1022,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(EB401PtOffset.deltaYnorm, processVariableBus.dEB401Pt)
+    annotation (Line(points={{749.4,-520},{858,-520},{858,-522},{1032,-522},{1032,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-70,100},{70,-100}},

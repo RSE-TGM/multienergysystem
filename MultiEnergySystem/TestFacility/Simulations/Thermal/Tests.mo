@@ -3765,8 +3765,8 @@ System")}),
       parameter Real dFT721[:, :] = [0, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 500, (0.8 - 1.3)/1.3; 1000, (0.8 - 1.3)/1.3];
       parameter Real dTT731[:, :] = [0, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 500, (55 - 65)/(65 + 273.15); 1000, (55 - 65)/(65 + 273.15)];
       parameter Real dFT901[:, :] = [0, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 500, (3 - 8.8)/8.8; 1000, (3 - 8.8)/8.8];
-      parameter Real dFT101[:, :] = [0, (2 - 5.7166667)/5.7166667; 500, (2 - 5.7166667)/5.7166667];
-      parameter Real dFT401[:, :] = [0, (1.5 - 3.2666667)/3.2666667; 500, (1.5 - 3.2666667)/3.2666667];
+      parameter Real dFT101[:, :] = [0, (2 - 2.5)/2.5; 500, (2 - 2.5)/2.5];
+      parameter Real dFT401[:, :] = [0, (1.5 - 2)/2; 500, (1.5 - 2)/2];
 
       parameter Real dtheta_TCV701[:, :] = [0, 0; 1e6, 0];
       parameter Real dtheta_TCV711[:, :] = [0, 0; 1e6, 0];
@@ -3830,8 +3830,8 @@ System")}),
       Modelica.Blocks.Sources.TimeTable dTT714SP(table=dTT714)   annotation (
         Placement(transformation(extent={{20,47},{30,57}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT724(
-        Kp=0.018753,
-        Ti=0.01,
+        Kp=50.0852,
+        Ti=0.5399,
         Umax=0,
         Umin=-1,
         y_start=1,
@@ -4336,8 +4336,8 @@ System")}),
         TT714Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
         TT724Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
         TT734Offset(fixOffset = true, y_Offset_fixed = 30 + 273.15),
-        FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
-        FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
+        FT101Offset(fixOffset = true, y_Offset_fixed = 2.5),
+        FT401Offset(fixOffset = true, y_Offset_fixed = 2),
         PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
         dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.015e5),
         EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),

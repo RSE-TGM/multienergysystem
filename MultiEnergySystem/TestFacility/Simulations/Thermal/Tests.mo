@@ -3753,7 +3753,7 @@ System")}),
       parameter Real dEX701Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
       parameter Real dEX711Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
       parameter Real dEX721Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
-      parameter Real dEX731Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
+      parameter Real dEX731Pt[:, :] = [0, (28e3 - 50e3)/50e3; 5.5e3, (28e3 - 50e3)/50e3; 5.5e3, (30e3 - 50e3)/50e3; 1e4, (30e3 - 50e3)/50e3];
       parameter Real ddPT100[:, :] = [0, 0; 1e3, 0];
       parameter Real ddPTA2[:, :] = [0, 0; 1e3, 0];
       parameter Real dTT704[:, :] = [0, 0; 1e3, 0];
@@ -3861,12 +3861,12 @@ System")}),
       Modelica.Blocks.Sources.TimeTable dToutEB401(table=dTout_EB401) annotation (Placement(transformation(extent={{-80,105},{-70,115}})));
       Modelica.Blocks.Sources.TimeTable dToutGB101(table=dTout_GB101) annotation (Placement(transformation(extent={{-80,122},{-70,132}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dPTA2(
-        Kp=0.14484,
-        Ti=0.92999,
+        Kp=2.412,
+        Ti=0.2679,
         Umax=0,
         Umin=-0.4,
-        y_start=0,
-        firstOrder(initType=Modelica.Blocks.Types.Init.InitialOutput)) annotation (Placement(transformation(extent={{40,-52},{50,-42}})));
+        y_start=-0.4,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{40,-52},{50,-42}})));
       Modelica.Blocks.Sources.TimeTable ddPTA2SP(table=ddPTA2) annotation (Placement(transformation(extent={{20,-47},{30,-37}})));
       Modelica.Blocks.Sources.TimeTable dthetaFCVC01(table=dtheta_FCVC01) annotation (Placement(transformation(extent={{-80,-137},{-70,-127}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dPT100(
@@ -3898,8 +3898,8 @@ System")}),
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{54,159},{64,169}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_dEX701Pt(
-        Kp=0.00032815,
-        Ti=0.005,
+        Kp=1.3737,
+        Ti=0.38217,
         Umax=0,
         Umin=-1,
         y_start=1,
@@ -4247,12 +4247,6 @@ System")}),
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(I_dPTA2.y, controlSignalBus.domegaP901)
-        annotation (Line(points={{68.5,-67},{72,-67},{72,-66},{78,-66},{78,-5},{110,-5}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(PI_dEX701Pt.controlAction, controlSignalBus.dthetaTCV701)
         annotation (Line(points={{64.5,179},{69,179},{69,175},{96,175},{96,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
@@ -4261,6 +4255,12 @@ System")}),
           horizontalAlignment=TextAlignment.Left));
       connect(PI_dEX711Pt.controlAction, controlSignalBus.dthetaTCV711)
         annotation (Line(points={{64.5,164},{66,164},{66,160},{92,160},{92,-5},{110,-5}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_dPTA2.controlAction, controlSignalBus.domegaP901)
+        annotation (Line(points={{50.5,-47},{76,-47},{76,-5},{110,-5}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -4372,7 +4372,7 @@ System")}),
         FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
         FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
         PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
-        dPTA2Offset(fixOffset = true, y_Offset_fixed = 0.015e5),
+        dPTA2Offset(fixOffset = true, y_Offset_fixed = 1.5e5),
         EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         EX711PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
         EX721PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
@@ -4393,7 +4393,7 @@ System")}),
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),
-        experiment(StopTime=5000, __Dymola_Algorithm="Dassl"));
+        experiment(StopTime=5500, __Dymola_Algorithm="Dassl"));
     end TestFullPlantController;
     annotation (Icon(graphics={Bitmap(
             extent={{-80,-80},{82,80}},

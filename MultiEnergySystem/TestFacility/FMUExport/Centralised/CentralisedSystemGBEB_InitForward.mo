@@ -219,7 +219,7 @@ model CentralisedSystemGBEB_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.Pressure dPTA1_des = 0.015e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
-  parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 0.015e5 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dPTA2_des = 1.5e5 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Pressure"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT901_des= DistrictHeatingNetwork.Data.PumpData.P901.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));

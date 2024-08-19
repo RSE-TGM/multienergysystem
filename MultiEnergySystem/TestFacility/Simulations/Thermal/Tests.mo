@@ -3732,6 +3732,11 @@ System")}),
     end CoolingPlantController;
 
     model FullPlantController
+      Real EX701PtSP(start = 40e3);
+      Real EX711PtSP(start = 40e3);
+      Real EX721PtSP(start = 40e3);
+      Real EX731PtSP(start = 40e3);
+
       parameter Real dTout_GB101[:,:] = [0, 0; 1e6, 0];
       parameter Real dTout_EB401[:,:] = [0, 0; 1e6, 0];
       parameter Real domega_P901[:, :] = [0, 0; 1e6, 0];
@@ -3753,7 +3758,7 @@ System")}),
       parameter Real dEX701Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
       parameter Real dEX711Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
       parameter Real dEX721Pt[:, :] = [0, (28e3 - 50e3)/50e3; 1e3, (28e3 - 50e3)/50e3];
-      parameter Real dEX731Pt[:, :] = [0, (28e3 - 50e3)/50e3; 5.5e3, (28e3 - 50e3)/50e3; 5.5e3, (30e3 - 50e3)/50e3; 1e4, (30e3 - 50e3)/50e3];
+      parameter Real dEX731Pt[:, :] = [0, (28e3 - 50e3)/50e3; 5.5e3, (28e3 - 50e3)/50e3; 5.5e3, (40e3 - 50e3)/50e3; 1e4, (40e3 - 50e3)/50e3];
       parameter Real ddPT100[:, :] = [0, 0; 1e3, 0];
       parameter Real ddPTA2[:, :] = [0, 0; 1e3, 0];
       parameter Real dTT704[:, :] = [0, 0; 1e3, 0];
@@ -3963,13 +3968,19 @@ System")}),
       Modelica.Blocks.Math.Feedback fbEX731Pt annotation (Placement(transformation(extent={{68,130},{76,138}})));
       Modelica.Blocks.Sources.TimeTable dFT901SP(table=dFT901) annotation (Placement(transformation(extent={{20,97},{30,107}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT901(
-        Kp=1.3287,
-        Ti=0.57735,
+        Kp=0.00021009,
+        Ti=0.0002,
         Umax=0,
         Umin=-0.4,
         y_start=1,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{40,97},{50,107}})));
+      Modelica.Blocks.Sources.RealExpression dEX701PtSP_var(y=(EX701PtSP - 50e3)/50e3) annotation (Placement(transformation(extent={{4,172},{14,182}})));
     equation
+      EX701PtSP = if time < 4e3 then 28e3 elseif time < 5e3 then 35e3 else 45e3;
+      EX711PtSP = if time < 4e3 then 28e3 elseif time < 5e3 then 30e3 else 40e3;
+      EX721PtSP = if time < 4e3 then 28e3 elseif time < 5e3 then 32e3 else 40e3;
+      EX731PtSP = if time < 4e3 then 28e3 elseif time < 5e3 then 35e3 else 40e3;
+
       connect(dthetaFCVC02.y, controlSignalBus.dthetaFCVC02) annotation (
         Line(points={{-69.5,5},{6,5},{6,-5},{110,-5}},          color = {0, 0, 127}),
         Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
@@ -4081,7 +4092,6 @@ System")}),
           horizontalAlignment=TextAlignment.Right));
       connect(fbFTR01.y, I_FTR01.u) annotation (Line(points={{42.5,194},{51,194}}, color={0,0,127}));
       connect(dFTR01SP.y, fbFTR01.u1) annotation (Line(points={{29.5,194},{34,194}},   color={0,0,127}));
-      connect(dEX701PtSP.y, PI_dEX701Pt.REF) annotation (Line(points={{29.5,179},{49,179},{49,181},{55,181}}, color={0,0,127}));
       connect(dEX711PtSP.y, PI_dEX711Pt.REF) annotation (Line(points={{29.5,164},{49,164},{49,166},{55,166}}, color={0,0,127}));
       connect(dEX721PtSP.y, PI_dEX721Pt.REF) annotation (Line(points={{29.5,149},{38,149},{38,151},{55,151}}, color={0,0,127}));
       connect(processVariableBus.dFTR01, fbFTR01.u2)
@@ -4265,6 +4275,7 @@ System")}),
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
+      connect(dEX701PtSP_var.y, PI_dEX701Pt.REF) annotation (Line(points={{14.5,177},{17,177},{17,176},{45,176},{45,181},{55,181}}, color={0,0,127}));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                   {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={
@@ -4393,7 +4404,7 @@ System")}),
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)),
-        experiment(StopTime=5500, __Dymola_Algorithm="Dassl"));
+        experiment(StopTime=7000, __Dymola_Algorithm="Dassl"));
     end TestFullPlantController;
     annotation (Icon(graphics={Bitmap(
             extent={{-80,-80},{82,80}},

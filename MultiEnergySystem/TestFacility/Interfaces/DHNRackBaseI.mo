@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.Interfaces;
-model DHNRackBaseI
+partial model DHNRackBaseI
   parameter Integer nComp = 2;
 
 

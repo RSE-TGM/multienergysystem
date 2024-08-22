@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.Interfaces;
-model DHNConnectorBaseI
+partial model DHNConnectorBaseI
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inletHot
     annotation (Placement(transformation(extent={{-128,-54},{-100,-26}}), iconTransformation(extent={{-128,-54},{-100,-26}})));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outletCold

@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.TestFacility.Plants.Thermal;
+within MultiEnergySystem.TestFacility.Plants.Thermal;
 package Configurations "Different possible configurations of the heat generating part of the network"
   extends Modelica.Icons.VariantsPackage;
 
@@ -504,13 +504,14 @@ package Configurations "Different possible configurations of the heat generating
         Placement(transformation(extent = {{220, 207}, {228, 199}})));
       MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07 "Pressure sensor at the outlet of valve FCVC01" annotation (
         Placement(transformation(extent = {{234, 263}, {242, 271}})));
-      Systems.CirculationPump                circulationPump(
+      Systems.CirculationPump S900(
         n=3,
         pumpcorrectionfactor=pumpcorrectionfactor,
         Kv=Kv,
         openingChar=openingChar,
         cf=cf,
-        b=b)                                                 annotation (Placement(transformation(extent={{-840,72},{-738,174}})));
+        b=b) "Pumping Circulation System"
+        annotation (Placement(transformation(extent={{-840,72},{-738,174}})));
     equation
       connect(rackL3L4_FCVC01_cold.outlet, rackL2L3_rackL3L4_cold.inlet) annotation (
         Line(points = {{210, 265}, {110, 265}}, color = {140, 56, 54}, thickness = 0.5));
@@ -583,19 +584,19 @@ package Configurations "Different possible configurations of the heat generating
         Line(points = {{-223, 45}, {-237.75, 45}, {-237.75, 44.75}, {-257.5, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (
         Line(points = {{-326.5, 5.25}, {-200, 5.25}, {-200, 45}, {-213, 45}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(S900_rackL2L3_cold.outlet, circulationPump.inletcold) annotation (Line(
+      connect(S900_rackL2L3_cold.outlet, S900.inletcold) annotation (Line(
           points={{-30,265},{-808.89,265},{-808.89,181.65}},
           color={140,56,54},
           thickness=0.5));
-      connect(S900_rackL3L4_hot.inlet, circulationPump.outlethot) annotation (Line(
+      connect(S900_rackL3L4_hot.inlet, S900.outlethot) annotation (Line(
           points={{-60,205},{-416,205},{-416,206},{-769.11,206},{-769.11,181.65}},
           color={140,56,54},
           thickness=0.5));
-      connect(rackCD_Hot_S200_S900.outlet, circulationPump.inlethot) annotation (Line(
+      connect(rackCD_Hot_S200_S900.outlet, S900.inlethot) annotation (Line(
           points={{-747,44.75},{-769.11,44.75},{-769.11,64.35}},
           color={140,56,54},
           thickness=0.5));
-      connect(rackCD_Cold_S900_S200.inlet, circulationPump.outletcold) annotation (Line(
+      connect(rackCD_Cold_S900_S200.inlet, S900.outletcold) annotation (Line(
           points={{-738,4.75},{-774,4.75},{-774,6},{-808.89,6},{-808.89,64.35}},
           color={140,56,54},
           thickness=0.5));

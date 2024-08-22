@@ -1236,13 +1236,18 @@ equation
   connect(diffPTRR01.u2, FTR01Offset.y) annotation (Line(points={{908.8,-338.4},{840,-338.4},{840,-236},{838,-222},{838,-221},{845.4,-221}}, color={0,0,127}));
   connect(thetaTCV701Offset.u, TCV701.opening) annotation (Line(points={{69.4,-320},{90,-320}}, color={0,0,127}));
   connect(thetaFCV901Offset.u, FCV901Dynamics.u) annotation (Line(points={{-901,140},{-892,140}}, color={0,0,127}));
-  connect(FCV901Dynamics.y, circulationPump.theta) annotation (Line(points={{-869,140},{-860,140},{-860,148.5},{-845.1,148.5}}, color={0,0,127}));
-  connect(circulationPump.m_flow_, FT901Offset.y) annotation (Line(points={{-732.9,158.7},{-716,158.7},{-716,200},{-698,200}}, color={0,0,127}));
-  connect(circulationPump.TTout, TT902Offset.y) annotation (Line(points={{-732.9,138.3},{-716,138.3},{-716,138},{-706,138},{-706,148},{-698,148}},
-                                                                                                                             color={0,0,127}));
-  connect(circulationPump.PTin, PT901Offset.y) annotation (Line(points={{-732.9,128.1},{-706,128.1},{-706,122},{-698,122}}, color={0,0,127}));
-  connect(circulationPump.PTout, PT902Offset.y) annotation (Line(points={{-732.9,117.9},{-712,117.9},{-712,98},{-698,98}}, color={0,0,127}));
-  connect(circulationPump.TTin, TT901Offset.y) annotation (Line(points={{-732.9,148.5},{-710,148.5},{-710,174},{-698,174}}, color={0,0,127}));
+  connect(FCV901Dynamics.y, S900.theta) annotation (Line(points={{-869,140},{-860,140},{-860,
+          148.5},{-845.1,148.5}}, color={0,0,127}));
+  connect(S900.m_flow_, FT901Offset.y) annotation (Line(points={{-732.9,158.7},{-716,
+          158.7},{-716,200},{-698,200}}, color={0,0,127}));
+  connect(S900.TTout, TT902Offset.y) annotation (Line(points={{-732.9,138.3},{-716,138.3},
+          {-716,138},{-706,138},{-706,148},{-698,148}}, color={0,0,127}));
+  connect(S900.PTin, PT901Offset.y) annotation (Line(points={{-732.9,128.1},{-706,128.1},
+          {-706,122},{-698,122}}, color={0,0,127}));
+  connect(S900.PTout, PT902Offset.y) annotation (Line(points={{-732.9,117.9},{-712,117.9},
+          {-712,98},{-698,98}}, color={0,0,127}));
+  connect(S900.TTin, TT901Offset.y) annotation (Line(points={{-732.9,148.5},{-710,148.5},
+          {-710,174},{-698,174}}, color={0,0,127}));
   connect(TT901Offset.deltaYnorm, processVariableBus.dTT901) annotation (Line(points={{-681,174},{-32,174},{-32,-3},{896,-3}}, pattern=LinePattern.None),
                                                                                         Text(
       string="%second",
@@ -1290,7 +1295,8 @@ equation
   connect(omegaP401Offset.u, P401Dynamics.u) annotation (Line(points={{-461,-80},{-452,-80}}, color={0,0,127}));
   connect(P401Dynamics.y, S400.omega) annotation (Line(points={{-429,-80},{-420,-80},{-420,-95.2},{-384.4,-95.2}}, color={0,0,127}));
   connect(omegaP901Offset.u, P901Dynamics.u) annotation (Line(points={{-901,170},{-892,170}}, color={0,0,127}));
-  connect(P901Dynamics.y, circulationPump.omega) annotation (Line(points={{-869,170},{-860,170},{-860,158.7},{-845.1,158.7}}, color={0,0,127}));
+  connect(P901Dynamics.y, S900.omega) annotation (Line(points={{-869,170},{-860,170},{-860,
+          158.7},{-845.1,158.7}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-70,100},{70,-100}},

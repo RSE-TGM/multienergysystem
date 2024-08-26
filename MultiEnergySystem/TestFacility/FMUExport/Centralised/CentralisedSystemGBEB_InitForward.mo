@@ -23,7 +23,12 @@ model CentralisedSystemGBEB_InitForward
     EX711(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX721(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX731(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
-    RR01(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState));
+    RR01(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState),
+    rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
+    FCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    FCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    FCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    FCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage));
 
 //Boolean Parameters
   //Initialization type
@@ -229,13 +234,13 @@ model CentralisedSystemGBEB_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flowhot_des= 1.3;
   parameter DistrictHeatingNetwork.Types.MassFlowRate FTA12_des= 0.2 "Desired recirculation mass flowrate";
-  parameter DistrictHeatingNetwork.Types.Pressure EX701Pt_des = 30e3 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Power EX701Pt_des = 30e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
-  parameter DistrictHeatingNetwork.Types.Pressure EX711Pt_des = 30e3 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Power EX711Pt_des = 30e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
-  parameter DistrictHeatingNetwork.Types.Pressure EX721Pt_des = 30e3 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Power EX721Pt_des = 30e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
-  parameter DistrictHeatingNetwork.Types.Pressure EX731Pt_des = 30e3 "Desired low circuit pressure" annotation (
+  parameter DistrictHeatingNetwork.Types.Power EX731Pt_des = 30e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
   parameter DistrictHeatingNetwork.Types.Temperature TTR02_des = 15 + 273.15 "Desired temperature at the outlet of the loads";
   parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_des= DistrictHeatingNetwork.Data.PumpData.PR01.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (

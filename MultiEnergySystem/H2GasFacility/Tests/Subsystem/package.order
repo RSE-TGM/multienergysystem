@@ -27,6 +27,6 @@ PaperCaseI_Demand_A_IG
 PaperCaseII_MSL
 Rete_Gas_2i_all_pipes
 Rete_Gas_2i_nosources
-Rete_Gas_2i_wSource
+Rete_Gas_2i_w1source
+Rete_Gas_2i_w2sources
 Rete_Gas_2i_complete
-Rete_Gas_2i_extended_wsources

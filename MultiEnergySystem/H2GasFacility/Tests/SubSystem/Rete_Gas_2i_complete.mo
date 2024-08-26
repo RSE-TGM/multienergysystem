@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_complete
-  extends Rete_Gas_2i_wSource(
+  extends Rete_Gas_2i_w2sources(
     break connect(s19.outlet, s18.inlet),
     break connect(s18.inlet, s31.outlet),
     break connect(s20.inlet, s21.outlet),

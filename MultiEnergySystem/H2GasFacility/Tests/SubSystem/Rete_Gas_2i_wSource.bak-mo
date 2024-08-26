@@ -1,10 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_wSource
   extends Rete_Gas_2i_nosources;
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
-     redeclare model
-      Medium =       Medium,
+     redeclare model Medium =
+                     Medium,
     H=0,
     X_start=X_start,
     Di=0.0831,
@@ -19,8 +20,8 @@ model Rete_Gas_2i_wSource
         origin={-178,228})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
     L=1077.595,
-     redeclare model
-      Medium =       Medium,
+     redeclare model Medium =
+                     Medium,
     H=0,
     X_start=X_start,
     Di=0.0831,
@@ -79,7 +80,7 @@ model Rete_Gas_2i_wSource
         extent={{-10,-10},{10,10}},
         rotation=180)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    duration=50,
+    duration=100,
     height=0.1,
     offset=0,
     startTime=100)                                                                                          annotation (

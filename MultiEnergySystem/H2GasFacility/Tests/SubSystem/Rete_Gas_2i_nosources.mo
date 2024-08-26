@@ -10,7 +10,7 @@ model Rete_Gas_2i_nosources
       MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = true;
-  parameter Boolean constantFrictionFactor = false;
+  parameter Boolean constantFrictionFactor = true;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Integer nX = 7 "Number of components in the gas fluid";

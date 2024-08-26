@@ -213,8 +213,6 @@ package Configurations "Different possible configurations of the heat generating
         Line(points = {{210, 265}, {110, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL2L3_rackL3L4_hot.outlet, rackL3L4_FCVC01_hot.inlet) annotation (
         Line(points = {{80, 205}, {180, 205}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(S900_rackL3L4_hot.outlet, rackL2L3_rackL3L4_hot.inlet) annotation (
-        Line(points = {{-40, 205}, {60, 205}}, color = {140, 56, 54}, thickness = 0.5));
       connect(FT901.outlet, PT902.inlet) annotation (
         Line(points = {{-757, 169}, {-757, 181.5}}, color = {140, 56, 54}, thickness = 0.5));
       connect(PT902.inlet, TT902.inlet) annotation (
@@ -307,6 +305,10 @@ package Configurations "Different possible configurations of the heat generating
           thickness=0.5));
       connect(PL4_S901.inlet, P901.outlet) annotation (Line(
           points={{-757,102},{-757,96.45},{-757.5,96.45},{-757.5,90.9}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(S900_rackL3L4_hot.outlet, rackL2L3_rackL3L4_hot.inlet) annotation (Line(
+          points={{-40,205},{60,205}},
           color={140,56,54},
           thickness=0.5));
       annotation (

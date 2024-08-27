@@ -1,12 +1,16 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_complete
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Rete_Gas_2i_w2sources(
     break connect(s19.outlet, s18.inlet),
     break connect(s18.inlet, s31.outlet),
     break connect(s20.inlet, s21.outlet),
     break connect(s26.inlet, s28.outlet),
-    break connect(s24.inlet, s26.outlet));
+    break connect(s24.inlet, s26.outlet),
+    m_flow_H2(height=0.1, offset=0.1),
+    m_flow_H1(height=0.1, offset=0.1));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(
+    redeclare model Medium = Medium,
     L=6.1,
     X_start=X_start,
     Di=0.0514,
@@ -21,10 +25,11 @@ model Rete_Gas_2i_complete
         origin={-200,256})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser13(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{-210,282},{-190,302}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds5(
+    redeclare model Medium = Medium,
     L=303.305,
     H=16,
     X_start=X_start,
@@ -40,7 +45,7 @@ model Rete_Gas_2i_complete
         origin={6,98})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser12(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{20,88},{40,108}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s5_ViaCartabubbo(
@@ -90,7 +95,7 @@ model Rete_Gas_2i_complete
         origin={-286,-108})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{-324,-118},{-304,-98}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser1(
@@ -99,6 +104,7 @@ model Rete_Gas_2i_complete
     X0=X_start)
     annotation (Placement(transformation(extent={{-274,-76},{-254,-56}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s10(
+  redeclare model Medium = Medium,
     L=13.807,
     X_start=X_start,
     Di=1.603,
@@ -112,6 +118,7 @@ model Rete_Gas_2i_complete
         rotation=270,
         origin={-122,-160})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s13(
+    redeclare model Medium = Medium,
     L=10.754,
     H=-1,
     X_start=X_start,
@@ -127,15 +134,16 @@ model Rete_Gas_2i_complete
         origin={-22,-202})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser2(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{-104,-240},{-84,-220}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser3(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{-32,-238},{-12,-218}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s15(
+    redeclare model Medium = Medium,
     L=57.126,
     X_start=X_start,
     Di=1.603,
@@ -149,6 +157,7 @@ model Rete_Gas_2i_complete
         rotation=270,
         origin={2,-54})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s17(
+    redeclare model Medium = Medium,
     L=60.53,
     X_start=X_start,
     Di=1.603,
@@ -163,15 +172,16 @@ model Rete_Gas_2i_complete
         origin={44,-48})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser10(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{34,-80},{54,-60}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser11(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{-8,-82},{12,-62}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s32(
+    redeclare model Medium = Medium,
     L=133.021,
     X_start=X_start,
     Di=0.1603,
@@ -185,6 +195,7 @@ model Rete_Gas_2i_complete
         rotation=270,
         origin={110,-142})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s33(
+    redeclare model Medium = Medium,
     L=75.784,
     X_start=X_start,
     Di=0.0831,
@@ -198,6 +209,7 @@ model Rete_Gas_2i_complete
         rotation=270,
         origin={110,-176})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s34_ViaSalerno(
+    redeclare model Medium = Medium,
     L=155.756,
     X_start=X_start,
     Di=0.0831,
@@ -211,6 +223,7 @@ model Rete_Gas_2i_complete
         rotation=270,
         origin={110,-216})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s35_ViaAndretta(
+    redeclare model Medium = Medium,
     L=226.029,
     X_start=X_start,
     Di=0.0831,
@@ -225,15 +238,16 @@ model Rete_Gas_2i_complete
         origin={82,-196})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser5(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{100,-250},{120,-230}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser4(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{36,-206},{56,-186}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s25(
+    redeclare model Medium = Medium,
     L=984.053,
     H=35,
     X_start=X_start,
@@ -249,10 +263,11 @@ model Rete_Gas_2i_complete
         origin={146,-206})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser6(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{136,-264},{156,-244}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s23(
+    redeclare model Medium = Medium,
     L=220.886,
     X_start=X_start,
     Di=0.831,
@@ -267,10 +282,11 @@ model Rete_Gas_2i_complete
         origin={224,-126})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser9(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{244,-136},{264,-116}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s27(
+    redeclare model Medium = Medium,
     L=14.527,
     X_start=X_start,
     Di=1.325,
@@ -285,10 +301,11 @@ model Rete_Gas_2i_complete
         origin={302,-166})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser8(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{318,-176},{338,-156}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s29(
+    redeclare model Medium = Medium,
     L=69.945,
     X_start=X_start,
     Di=0.831,
@@ -303,7 +320,7 @@ model Rete_Gas_2i_complete
         origin={210,-214})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser idealUser7(
     redeclare model Medium = Medium,
-    m_flow0=0,
+    m_flow0=1e-7,
     X0=X_start)
     annotation (Placement(transformation(extent={{174,-224},{194,-204}})));
 equation
@@ -451,4 +468,11 @@ equation
       points={{234,-184},{236,-184},{236,-166},{292,-166}},
       color={182,109,49},
       thickness=0.5));
+  annotation (experiment(
+      StopTime=0,
+      Interval=2,
+      Tolerance=0.001,
+      __Dymola_Algorithm="Dassl"),
+    Diagram(coordinateSystem(preserveAspectRatio=false)),
+    Icon(coordinateSystem(preserveAspectRatio=false)));
 end Rete_Gas_2i_complete;

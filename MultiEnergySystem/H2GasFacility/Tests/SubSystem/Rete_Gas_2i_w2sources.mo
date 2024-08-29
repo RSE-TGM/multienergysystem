@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_w2sources
-  extends Rete_Gas_2i_nosources;
+  extends Rete_Gas_2i_nosources(s1(n=10), s2(n=8),
+    REMI(R=0));
   // extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
@@ -48,11 +49,11 @@ model Rete_Gas_2i_w2sources
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
-    duration=50,
-    height=0.1,
+    duration=60,
+    height=0.09125,
     offset=0,
-    startTime=100)                                                                                          annotation (
-    Placement(visible = true, transformation(origin={-321,248},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+    startTime=32400)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-395,250},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
     redeclare model Medium = Medium,
     L=100.058,
@@ -80,11 +81,27 @@ model Rete_Gas_2i_w2sources
         extent={{-10,-10},{10,10}},
         rotation=180)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    duration=50,
-    height=0.05,
+    duration=60,
+    height=0.09125,
     offset=0,
-    startTime=50)                                                                                           annotation (
-    Placement(visible = true, transformation(origin={-81,-18},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
+    startTime=3600)                                                                                         annotation (
+    Placement(visible = true, transformation(origin={-63,40},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H3(
+    duration=60,
+    height=-0.09125,
+    offset=0,
+    startTime=18000)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-63,76},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Math.Add add
+    annotation (Placement(transformation(extent={{-4,48},{16,68}})));
+  Modelica.Blocks.Sources.Ramp m_flow_H5(
+    duration=360,
+    height=-0.09125,
+    offset=0,
+    startTime=46800)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-401,294},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Math.Add add1
+    annotation (Placement(transformation(extent={{-342,266},{-322,286}})));
 equation
   connect(sds17.inlet,sds16. outlet) annotation (Line(
       points={{-226,228},{-188,228}},
@@ -94,11 +111,6 @@ equation
       points={{-280,230},{-278,228},{-246,228}},
       color={182,109,49},
       thickness=0.5));
-  connect(m_flow_H1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-310,
-          248},{-310,242},{-296,242},{-296,235}},
-                                             color={0,0,127}));
-  connect(Immissione_1.in_m_flow0,m_flow_H2. y) annotation (Line(points={{-106,
-          -65},{-66,-65},{-66,-18},{-70,-18}},                  color={0,0,127}));
   connect(sds16.inlet, sds11.outlet) annotation (Line(
       points={{-168,228},{-121,228},{-121,210}},
       color={182,109,49},
@@ -111,8 +123,20 @@ equation
       points={{-146,-60},{-122,-60}},
       color={182,109,49},
       thickness=0.5));
+  connect(m_flow_H3.y, add.u1) annotation (Line(points={{-52,76},{-16,76},{-16,
+          64},{-6,64}}, color={0,0,127}));
+  connect(m_flow_H2.y, add.u2) annotation (Line(points={{-52,40},{-16,40},{-16,
+          52},{-6,52}}, color={0,0,127}));
+  connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{17,58},{42,
+          58},{42,18},{-80,18},{-80,-82},{-106,-82},{-106,-65}}, color={0,0,127}));
+  connect(m_flow_H5.y, add1.u1) annotation (Line(points={{-390,294},{-354,294},
+          {-354,282},{-344,282}}, color={0,0,127}));
+  connect(m_flow_H1.y, add1.u2) annotation (Line(points={{-384,250},{-356,250},
+          {-356,270},{-344,270}}, color={0,0,127}));
+  connect(add1.y, Immissione_2.in_m_flow0) annotation (Line(points={{-321,276},
+          {-312,276},{-312,235},{-296,235}}, color={0,0,127}));
   annotation (experiment(
-      StopTime=36000,
-      Interval=2,
+      StopTime=86400,
+      Interval=10,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_w2sources;

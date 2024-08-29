@@ -43,7 +43,9 @@ model Rete_Gas_2i_nosources
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure REMI(redeclare model
       Medium = Medium,
     p0=493000,         X0
-      =X_start) "REMI - Sciacca Presa 2. Dati Taratura: 
+      =X_start,
+    computeTransport=false)
+                "REMI - Sciacca Presa 2. Dati Taratura: 
 Pressione = 4.93 bar;
 Portata = 2088 Stm3/h;"                                       annotation (
       Placement(transformation(

@@ -28,7 +28,7 @@ model Rete_Gas_2i_w3sources
     Placement(visible = true, transformation(origin={293,298},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add2
     annotation (Placement(transformation(extent={{352,270},{372,290}})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds5(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo2(
     L=100,
     H=0,
     redeclare model Medium = Medium,
@@ -40,11 +40,11 @@ model Rete_Gas_2i_w3sources
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=2)             annotation (Placement(transformation(
+    n=2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={274,206})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(
+        origin={274,216})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo1(
     L=100,
     H=0,
     redeclare model Medium = Medium,
@@ -56,7 +56,7 @@ model Rete_Gas_2i_w3sources
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=2)             annotation (Placement(transformation(
+    n=2) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={338,190})));
@@ -67,20 +67,20 @@ equation
           338,274},{350,274}}, color={0,0,127}));
   connect(add2.y, Immissione_3.in_m_flow0) annotation (Line(points={{373,280},{
           382,280},{382,239},{398,239}}, color={0,0,127}));
-  connect(sds5.inlet, sds8.outlet) annotation (Line(
-      points={{274,196},{274,186},{242,186}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds5.outlet, GRM_7.inlet) annotation (Line(
-      points={{274,216},{274,236},{242,236}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds18.inlet, sds8.outlet) annotation (Line(
-      points={{328,190},{302,190},{302,188},{274,188},{274,186},{242,186}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds18.outlet, Immissione_3.outlet) annotation (Line(
+  connect(raccordo1.outlet, Immissione_3.outlet) annotation (Line(
       points={{348,190},{428,190},{428,234},{414,234}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_7.inlet, raccordo2.outlet) annotation (Line(
+      points={{242,236},{244,236},{244,268},{274,268},{274,226}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(raccordo2.inlet, sds8.outlet) annotation (Line(
+      points={{274,206},{276,206},{276,200},{242,200},{242,186}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(raccordo1.inlet, sds8.outlet) annotation (Line(
+      points={{328,190},{286,190},{286,194},{242,194},{242,186}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(

@@ -1,6 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_complete
-  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Rete_Gas_2i_w2sources(
     break connect(s19.outlet, s18.inlet),
     break connect(s18.inlet, s31.outlet),
@@ -9,6 +8,8 @@ model Rete_Gas_2i_complete
     break connect(s24.inlet, s26.outlet),
     m_flow_H2(height=0.1, offset=0.1),
     m_flow_H1(height=0.1, offset=0.1));
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(
     redeclare model Medium = Medium,
     L=6.1,

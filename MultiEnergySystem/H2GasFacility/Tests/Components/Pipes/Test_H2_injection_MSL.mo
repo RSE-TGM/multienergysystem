@@ -24,19 +24,22 @@ model Test_H2_injection_MSL
         rotation=0,
         origin={-47,13})));
   Modelica.Fluid.Sources.Boundary_pT sourcePressure(
-    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+    redeclare package Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     use_p_in=true,
     p=150000,
     T=288.15,
     X=X_net,
     nPorts=1) annotation (Placement(transformation(extent={{-94,2},{-74,22}})));
   Modelica.Fluid.Sources.MassFlowSource_T sourceMassFlow1(
-    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+    redeclare package Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     use_m_flow_in=true,
     use_X_in=true,
     nPorts=1) annotation (Placement(transformation(extent={{-40,-50},{-20,-30}})));
   Modelica.Fluid.Sources.MassFlowSource_T sinkMassFlow2(
-    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+    redeclare package Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     m_flow=-Pipe.pipe1.m_flow_start,
     T=Pipe.pipe1.Tout_start,
     X=X_net,
@@ -45,7 +48,8 @@ model Test_H2_injection_MSL
         rotation=180,
         origin={74,32})));
   Modelica.Fluid.Sources.MassFlowSource_T sinkMassFlow3(
-    redeclare package Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
+    redeclare package Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
     m_flow=-Pipe.pipe1.m_flow_start,
     T=Pipe.pipe1.Tout_start,
     X=X_net,
@@ -104,7 +108,7 @@ model Test_H2_injection_MSL
     annotation (Placement(transformation(extent={{-92,76},{-72,96}})));
   Modelica.Blocks.Sources.Ramp pin(
     duration=0,
-    height=0.1e5,
+    height=0.1e5*0,
     offset=1.5e5,
     startTime=50) annotation (Placement(visible=true, transformation(
         origin={-118,20},

@@ -130,7 +130,7 @@ model Test_H2_injection
 
   Modelica.Blocks.Sources.Ramp pin(
     duration=0,
-    height=0.1e5,
+    height=0.1e5*0,
     offset=1.5e5,
     startTime=50) annotation (Placement(visible=true, transformation(
         origin={-90,30},
@@ -181,7 +181,6 @@ equation
         coordinateSystem(preserveAspectRatio=false)),
     experiment(
       StopTime=500,
-      Interval=0.0167,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end Test_H2_injection;

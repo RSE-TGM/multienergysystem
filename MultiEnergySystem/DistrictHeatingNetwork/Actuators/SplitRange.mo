@@ -45,8 +45,8 @@ equation
   connect(uMin_Y1.y, add2.u1) annotation (Line(points={{-39,72},{-36,72},{-36,46},{-30,46}}, color={0,0,127}));
   connect(U, limiterY1.u) annotation (Line(points={{-100,0},{-68,0},{-68,40},{-62,40}}, color={0,0,127}));
   connect(U, limiterY2.u) annotation (Line(points={{-100,0},{-68,0},{-68,-40},{-62,-40}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-                     Rectangle(fillColor = {210, 210, 210}, fillPattern = FillPattern.Solid, extent={{-100,102},{100,-100}}),    Rectangle(origin={0,42},    lineColor = {0, 0, 127}, extent = {{-20, 20}, {20, -20}}), Line(origin={0.5315,
+  annotation (Icon(                                             graphics={
+                     Rectangle(fillColor = {210, 210, 210}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-102}}),    Rectangle(origin={0,42},    lineColor = {0, 0, 127}, extent = {{-20, 20}, {20, -20}}), Line(origin={0.5315,
               42.8218},                                                                                                                                                                                                        points = {{0, 18}, {0, -18}}, color = {192, 192, 192}, arrow = {Arrow.Filled, Arrow.None}), Line(origin={0.5315,
               42.8218},                                                                                                                                                                                                        points = {{-18, 0}, {18, 0}}, color = {192, 192, 192}, arrow = {Arrow.None, Arrow.Filled}), Line(origin={0.5315,
               42.8218},                                                                                                                                                                                                        points = {{-16, -16}, {-10, -16}, {10, 16}, {16, 16}}), Line(origin={-58,21},    points={{-38,-21},

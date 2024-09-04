@@ -13,7 +13,8 @@ package Configurations "Different possible configurations for the loads"
       replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
-
+      //replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient;
+      replaceable model Pipe = DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV;
 
       // EX701
       parameter Real EX701_q_m3h_hot(unit = "m3/h") = 2.5;
@@ -1352,14 +1353,14 @@ package Configurations "Different possible configurations for the loads"
              annotation (Placement(transformation(
             extent={{-10,-10},{10,10}},
             rotation=90,
-            origin={685,-331})));
+            origin={687,-331})));
       DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR03(T_start=
             Tout_start_Cool, p_start=pin_start_Cool)
         "Flow Sensor at the outlet of valve FCVR01" annotation (Placement(
             transformation(
             extent={{-5,-5},{5,5}},
             rotation=0,
-            origin={818,-358})));
+            origin={812,-358})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PTR01_FTR01(
         L=L_PTR01_FTR01,
         h=h_PTR01_FTR01,
@@ -1453,7 +1454,7 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={704,-256})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_TTR02_VER901(
+      Pipe RR00_PL_TTR02_VER901(
         L=L_TTR02_VER901,
         h=h_TTR02_VER901,
         t=t_RR,
@@ -1528,6 +1529,18 @@ package Configurations "Different possible configurations for the loads"
         annotation (Placement(transformation(extent={{444,-354},{432,-366}})));
       DistrictHeatingNetwork.Components.Fittings.Junction junction2
         annotation (Placement(transformation(extent={{604,-354},{592,-366}})));
+      DistrictHeatingNetwork.Components.Fittings.Junction junction3
+        annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+            rotation=-90,
+            origin={704,-360})));
+      DistrictHeatingNetwork.Components.Fittings.Junction junction4
+        annotation (Placement(transformation(extent={{6,-6},{-6,6}},
+            rotation=-90,
+            origin={826,-360})));
+      DistrictHeatingNetwork.Components.Fittings.Junction junction5
+        annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+            rotation=0,
+            origin={558,-400})));
     equation
       connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
           points={{138,-132},{138,-140}},
@@ -1806,11 +1819,6 @@ package Configurations "Different possible configurations for the loads"
           points={{557.5,-330},{557.5,-340.5},{558,-340.5},{558,-369}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_TCV721_rackUsersOut.outlet,PL_EX721_EX711_hot. outlet) annotation (
-         Line(
-          points={{558,-389},{558,-400},{488,-400}},
-          color={140,56,54},
-          thickness=0.5));
       connect(PL_EX711_EX701_hot.outlet,PL_TCV711_rackUsersOut. outlet) annotation (
          Line(
           points={{328,-400},{398,-400},{398,-388}},
@@ -1831,10 +1839,6 @@ package Configurations "Different possible configurations for the loads"
           points={{158,-400},{98,-400},{98,-388}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_UsersOut_EX721.inlet,PL_EX721_EX711_hot. outlet) annotation (Line(
-          points={{587,-400},{488,-400}},
-          color={140,56,54},
-          thickness=0.5));
       connect(RR00_PL_VER901_FCVR01.outlet,FCVR01. inlet) annotation (Line(
           points={{746,-360},{756,-360}},
           color={140,56,54},
@@ -1844,7 +1848,7 @@ package Configurations "Different possible configurations for the loads"
           color={140,56,54},
           thickness=0.5));
       connect(FTR03.inlet,RR00_PL_FCVR01_FTR03. outlet) annotation (Line(
-          points={{815,-360},{806,-360}},
+          points={{809,-360},{806,-360}},
           color={140,56,54},
           thickness=0.5));
       connect(TTR01.inlet,PTR01. inlet) annotation (Line(
@@ -1865,10 +1869,6 @@ package Configurations "Different possible configurations for the loads"
           thickness=0.5));
       connect(TTR01.inlet,RR00_PL_FTR03_PTR01. outlet) annotation (Line(
           points={{825.6,-299},{826,-299},{826,-324}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(RR00_PL_FTR03_PTR01.inlet,FTR03. outlet) annotation (Line(
-          points={{826,-344},{826,-360},{821,-360}},
           color={140,56,54},
           thickness=0.5));
       connect(RR00_PL_PR01_PTR02.outlet,PTR02. inlet) annotation (Line(
@@ -1903,24 +1903,8 @@ package Configurations "Different possible configurations for the loads"
           points={{646,-400},{607,-400}},
           color={140,56,54},
           thickness=0.5));
-      connect(suddenAreaChange1.outlet, FTR03.outlet) annotation (Line(
-          points={{666,-400},{826,-400},{826,-360},{821,-360}},
-          color={140,56,54},
-          thickness=0.5));
       connect(suddenAreaChange.outlet, PL_UsersIn_EX721.inlet) annotation (Line(
           points={{648,-360},{632,-360}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(suddenAreaChange.inlet, RR00_PL_VER901_FCVR01.inlet) annotation (Line(
-          points={{668,-360},{726,-360}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(RR00_PL_TTR02_VER901.outlet, RR00_PL_VER901_FCVR01.inlet) annotation (Line(
-          points={{704,-316},{704,-360},{726,-360}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(VER901.inlet, RR00_PL_VER901_FCVR01.inlet) annotation (Line(
-          points={{685,-341},{685,-360},{726,-360}},
           color={140,56,54},
           thickness=0.5));
       connect(PL_EX711_EX701_cold.outlet, PL_rackUsersIn_TT703.inlet) annotation (Line(
@@ -1961,6 +1945,46 @@ package Configurations "Different possible configurations for the loads"
           thickness=0.5));
       connect(junction2.outlet, PL_EX721_EX711_cold.inlet) annotation (Line(
           points={{592,-360},{496,-360}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(RR00_PL_TTR02_VER901.outlet, junction3.inlet) annotation (Line(
+          points={{704,-316},{704,-354}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction3.outlet, suddenAreaChange.inlet) annotation (Line(
+          points={{704,-366},{704,-370},{696,-370},{696,-360},{668,-360}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction3.inoutlet, RR00_PL_VER901_FCVR01.inlet) annotation (Line(
+          points={{710,-360},{726,-360}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(VER901.inlet, suddenAreaChange.inlet) annotation (Line(
+          points={{687,-341},{687,-360},{668,-360}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(FTR03.outlet, junction4.inoutlet) annotation (Line(
+          points={{815,-360},{820,-360}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction4.outlet, RR00_PL_FTR03_PTR01.inlet) annotation (Line(
+          points={{826,-354},{826,-344}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange1.outlet, junction4.inlet) annotation (Line(
+          points={{666,-400},{826,-400},{826,-366}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction5.inoutlet, PL_TCV721_rackUsersOut.outlet) annotation (Line(
+          points={{558,-394},{558,-389}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_UsersOut_EX721.inlet, junction5.outlet) annotation (Line(
+          points={{587,-400},{564,-400}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction5.inlet, PL_EX721_EX711_hot.outlet) annotation (Line(
+          points={{552,-400},{488,-400}},
           color={140,56,54},
           thickness=0.5));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

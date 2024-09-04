@@ -4702,8 +4702,8 @@ System")}),
       EX721PtSP = if time < 4e3 then 30e3 elseif time < 5e3 then 30e3 else 30e3;
       EX731PtSP = if time < 4e3 then 30e3 elseif time < 5e3 then 30e3 else 30e3;
       PtSP = EX701PtSP + EX711PtSP + EX721PtSP + EX731PtSP;
-      FT901SP = PtSP/(4185*15);
-      FT101SP = FT901SP*0.9;
+      FT901SP = 1.2*PtSP/(4185*15);
+      FT101SP = FT901SP*0.8;
 
       connect(dthetaFCVC02.y, controlSignalBus.dthetaFCVC02) annotation (
         Line(points={{-69.5,5},{-64,5},{-64,0},{240,0}},        color = {0, 0, 127}),
@@ -5051,8 +5051,7 @@ System")}),
       connect(greaterEqual_TT731.y, not4.u) annotation (Line(points={{11,-310},{18,-310}}, color={255,0,255}));
       connect(not4.y, switch_thetaTCV731.u2) annotation (Line(points={{41,-310},{58,-310}}, color={255,0,255}));
       connect(splitRange.U, PI_FT901.controlAction) annotation (Line(points={{59,102},{50.5,102}}, color={0,0,127}));
-      connect(splitRange.Yout1, controlSignalBus.domegaP901)
-        annotation (Line(points={{67,104},{198,104},{198,0},{240,0}}, color={0,0,127}), Text(
+      connect(splitRange.Yout1, controlSignalBus.domegaP901) annotation (Line(points={{67,104},{198,104},{198,0},{240,0}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -5235,6 +5234,7 @@ System")}),
       parameter Real Ti_PtEX721 = 0.01;
       parameter Real Kp_PtEX731 = 0.0001; // phi = 60°, omega = 0.12 rad/s;
       parameter Real Ti_PtEX731 = 0.01;
+      annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
     end TestFullPlantController_B;
     annotation (Icon(graphics={Bitmap(
             extent={{-80,-80},{82,80}},

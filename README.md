@@ -25,7 +25,7 @@ If you use information from the package *DistrictHeatingNetwork* from **MultiEne
 M. A. Muro Alvarado, C. Anderis, R. Lazzari, L. Nigro and A. La Bella, "Development and Experimental Validation of an Open-Source Model Library for District Heating Network Simulation," *2024 Open Source Modelling and Simulation of Energy Systems (OSMSES)*, Vienna, 2024. DOI: 10.1109/OSMSES62085.2024.10668994
 
 ```bibtex
-@article{MuroAnderisLazzariNigroLaBella2014,
+@article{MuroAnderisLazzariNigroLaBella2024,
   author = {Muro Alvarado, Marcelo Andre and Anderis, Claudio and Lazzari, Riccardo and Nigro, Lorenzo and La Bella, Alessio},
   title = {Development and Experimental Validation of an Open-Source Model Library for District Heating Network Simulation},
   journal = {2024 Open Source Modelling and Simulation of Energy Systems (OSMSES)},

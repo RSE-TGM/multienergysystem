@@ -41,7 +41,7 @@ model Rete_Gas_2i_w2sources
     T0=288.15,
     X0=X_start,
     computeEnthalpyWithFixedPressure=true,
-    m_flow0=0.1,
+    m_flow0=0,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={-290,230},
         extent={{-10,-10},{10,10}},
@@ -73,7 +73,7 @@ model Rete_Gas_2i_w2sources
     T0=288.15,
     X0=X_start,
     computeEnthalpyWithFixedPressure=true,
-    m_flow0=0.1,
+    m_flow0=0,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={-112,-60},
         extent={{-10,-10},{10,10}},

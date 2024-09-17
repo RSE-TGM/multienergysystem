@@ -7,7 +7,6 @@ model Rete_Gas_2i_w2sources
     L=194.511,
      redeclare model Medium =
                      Medium,
-    H=0,
     X_start=X_start,
     Di=0.0831,
     quasiStatic=quasiStatic,
@@ -23,7 +22,6 @@ model Rete_Gas_2i_w2sources
     L=1077.595,
      redeclare model Medium =
                      Medium,
-    H=0,
     X_start=X_start,
     Di=0.0831,
     quasiStatic=quasiStatic,

@@ -339,7 +339,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=90,
         origin={-198,46})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds2(L=92.5,
-    X_start=X_start,                                    redeclare model Medium =            Medium,Di=
+    X_start=X_start,                                    redeclare model Medium
+      =                                                                                     Medium,Di=
         0.1472,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
@@ -389,7 +390,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=10)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-122,120})));

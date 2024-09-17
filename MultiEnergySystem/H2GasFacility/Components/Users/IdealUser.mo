@@ -21,7 +21,8 @@ model IdealUser
 
 
   Medium fluid(p_start = p0, T_start = T0, X_start = X0);
-  H2GasFacility.Sources.SinkMassFlow sink_demand(G=1e-8, redeclare model Medium = Medium, T0 = T0, X0 = X0, m_flow0 = m_flow0, p0 = p0, pin_start = p0, use_in_m_flow0 = true) annotation (
+  H2GasFacility.Sources.SinkMassFlow sink_demand(
+    G=1e-10,                                             redeclare model Medium = Medium, T0 = T0, X0 = X0, m_flow0 = m_flow0, p0 = p0, pin_start = p0, use_in_m_flow0 = true) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inlet(nXi = sink_demand.fluid.nXi) annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, 0}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));

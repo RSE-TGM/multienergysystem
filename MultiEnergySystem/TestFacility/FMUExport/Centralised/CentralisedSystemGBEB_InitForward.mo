@@ -3,6 +3,7 @@ model CentralisedSystemGBEB_InitForward
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends Networks.Thermal.Configurations.Centralised.CentralisedSystem_GBEB(
+    Kvalve = 40,
     redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid,
     redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid,
     T_start_hot = 80 +273.15,
@@ -115,6 +116,10 @@ model CentralisedSystemGBEB_InitForward
   final parameter Boolean fixFTR01 = false;
   final parameter Boolean fixGB101Pt = false;
   final parameter Boolean fixEB401Pt = false;
+  final parameter Boolean fixTT702 = false;
+  final parameter Boolean fixTT712 = false;
+  final parameter Boolean fixTT722 = false;
+  final parameter Boolean fixTT732 = false;
 
 //Normalisation values
   //Nominal values
@@ -176,6 +181,15 @@ model CentralisedSystemGBEB_InitForward
   parameter DistrictHeatingNetwork.Types.Power GB101Pt_nom = 160e3;
   parameter DistrictHeatingNetwork.Types.Power EB401Pt_nom = 50e3;
 
+  parameter DistrictHeatingNetwork.Types.Temperature TT702_nom = 80 + 273.15 "Desired temperature at the inlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT712_nom = 80 + 273.15 "Desired temperature at the inlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT722_nom = 80 + 273.15 "Desired temperature at the inlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT732_nom = 80 + 273.15 "Desired temperature at the oinlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+
   //  Desired Outputs values
   parameter DistrictHeatingNetwork.Types.Temperature ToutLoad_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
@@ -195,6 +209,16 @@ model CentralisedSystemGBEB_InitForward
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
   parameter DistrictHeatingNetwork.Types.Temperature TT731_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+
+  parameter DistrictHeatingNetwork.Types.Temperature TT702_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT712_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT722_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+  parameter DistrictHeatingNetwork.Types.Temperature TT732_des = 80 + 273.15 "Desired temperature at the outlet of the loads" annotation (
+    Dialog(tab = "Nominal and Desired values", group = "Temperature"));
+
   parameter DistrictHeatingNetwork.Types.Temperature TT704_des = 30 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
   parameter DistrictHeatingNetwork.Types.Temperature TT714_des = 30 + 273.15 "Desired temperature at the outlet of the loads" annotation (
@@ -838,6 +862,34 @@ model CentralisedSystemGBEB_InitForward
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
     y_start=1) annotation (Placement(transformation(extent={{222,-330},{242,-310}})));
+  OffSetBlocks.OutputOffset TT702Offset(
+    fixOutput=fixTT702,
+    y_fixed=TT702_des,
+    y_norm=TT702_nom) annotation (Placement(visible=true, transformation(
+        origin={68,-140},
+        extent={{6,-6},{-6,6}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset TT712Offset(
+    fixOutput=fixTT712,
+    y_fixed=TT712_des,
+    y_norm=TT712_nom) annotation (Placement(visible=true, transformation(
+        origin={380,-146},
+        extent={{6,-6},{-6,6}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset TT722Offset(
+    fixOutput=fixTT722,
+    y_fixed=TT722_des,
+    y_norm=TT722_nom) annotation (Placement(visible=true, transformation(
+        origin={536,-156},
+        extent={{6,-6},{-6,6}},
+        rotation=0)));
+  OffSetBlocks.OutputOffset TT732Offset(
+    fixOutput=fixTT732,
+    y_fixed=TT732_des,
+    y_norm=TT732_nom) annotation (Placement(visible=true, transformation(
+        origin={234,-140},
+        extent={{6,-6},{-6,6}},
+        rotation=0)));
 equation
   Pt1 = EX701.Pt;
   Pt2 = EX711.Pt;
@@ -1444,6 +1496,34 @@ equation
   connect(TCV721Dynamics.y, TCV721.opening) annotation (Line(points={{541,-320},{549.1,-320}}, color={0,0,127}));
   connect(thetaTCV731Offset.u, TCV731Dynamics.u) annotation (Line(points={{215.4,-320},{220,-320}}, color={0,0,127}));
   connect(TCV731Dynamics.y, TCV731.opening) annotation (Line(points={{243,-320},{250,-320}}, color={0,0,127}));
+  connect(TT702Offset.y, diffTT701.u2) annotation (Line(points={{72.8,-140},{84,-140},{84,-120},{80,-120},{80,-123.6},{73.2,-123.6}}, color={0,0,127}));
+  connect(TT712Offset.y, diffTT711_.u2) annotation (Line(points={{384.8,-146},{388,-146},{388,-124},{390,-124},{390,-123.6},{381.2,-123.6}}, color={0,0,127}));
+  connect(TT722Offset.y, diffTT721.u2) annotation (Line(points={{540.8,-156},{544,-156},{544,-120},{526,-120},{526,-123.6},{491.2,-123.6}}, color={0,0,127}));
+  connect(TT732Offset.y, diffTT731.u2) annotation (Line(points={{238.8,-140},{246,-140},{246,-122},{248,-120},{248,-119.6},{245.2,-119.6}}, color={0,0,127}));
+  connect(TT702Offset.deltaYnorm, processVariableBus.dTT702)
+    annotation (Line(points={{62.6,-140},{34,-140},{34,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(TT712Offset.deltaYnorm, processVariableBus.dTT712)
+    annotation (Line(points={{374.6,-146},{370,-146},{370,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(TT722Offset.deltaYnorm, processVariableBus.dTT722)
+    annotation (Line(points={{530.6,-156},{524,-156},{524,-3},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(TT732Offset.deltaYnorm, processVariableBus.dTT732)
+    annotation (Line(points={{228.6,-140},{226,-140},{226,-8},{896,-8},{896,-3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-70,100},{70,-100}},

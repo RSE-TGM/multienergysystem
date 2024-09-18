@@ -36,21 +36,23 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
     Dialog(tab = "Nominal Data"));
   parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5453 "Nominal thermal efficiency" annotation (
     Dialog(tab = "Nominal Data"));
-  parameter DistrictHeatingNetwork.Types.Power Pnom = eta_el_nom*Pnom "Nominal Combustion Power";
+  parameter DistrictHeatingNetwork.Types.Power Pnom = 70e3 "Nominal Combustion Power";
   parameter DistrictHeatingNetwork.Types.Power Pel_nom = eta_el_nom*Pnom "Electrical Nominal Power";
   parameter DistrictHeatingNetwork.Types.Power Pth_nom = eta_th_nom*Pnom "Thermal Nominal Power";
 
 
   // Heat exchanger parameters
 
-  parameter Real EX501_q_m3h_hot = 2.5;
+  parameter Real EX501_q_m3h_hot = 2.5; //2.5;
   parameter DistrictHeatingNetwork.Types.Pressure EX501_pin_hot=2.5e5;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX501_hot=
+      EX501_q_m3h_hot*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX501_pout_hot=2.4e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV701_pout=2e5;
   parameter DistrictHeatingNetwork.Types.Temperature EX501_Tin_hot=44.84 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature EX501_Tout_hot=32.6 + 273.15;
 
-  parameter Real EX501_q_m3h_cold(unit = "m3/h") = 1.5;
+  parameter Real EX501_q_m3h_cold(unit = "m3/h") = 0.5; //1.5;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX501_cold=
       EX501_q_m3h_cold*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX501_pin_cold=2.2e5;
@@ -58,6 +60,14 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
   parameter DistrictHeatingNetwork.Types.Temperature EX501_Tin_cold=34.12 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature EX501_Tout_cold=34.74 + 273.15;
 
+  // Start values
+  parameter Real q_m3h_hot_start = 2.5;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_hot_start = q_m3h_hot_start*1000/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_cold_start = 0.5;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_hot_start = 80 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_hot_start = 70 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_cold_start = 60 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_cold_start = 70 + 273.15;
 
   // Gas composition
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
@@ -68,28 +78,25 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
 
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(redeclare model Medium = Medium,
     Tin_start=333.15,
-    Tout_start=345.15,                                                                                 use_Tout_ref=true,
+    Tout_start=345.15,
+    Pmaxnom=145e3,                                                                                     use_Tout_ref=true,
     Tout_nom=353.15)                                                                                                      annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
         rotation=90,
         origin={79.75,-69.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHPHP_CHP(
     Tin_start=Tin_start_CHP,
-    Tout_start=Tin_start_CHP,                                             redeclare model Medium = Medium, hctype=hctype) "Pipe connecting the circulating water pump with the internal CHP system"
-    annotation (Placement(transformation(extent={{36.25,-71.75},{46.25,-81.75}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHP_FV502(redeclare model Medium = Medium, hctype=hctype) "Pipe connecting CHP with three-way valve FV502"
+    Tout_start=Tin_start_CHP,                                             redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                           hctype=hctype) "Pipe connecting the circulating water pump with the internal CHP system"
+    annotation (Placement(transformation(extent={{36.5,-71.75},{46.5,-81.75}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHP_FV502(redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                           hctype=hctype) "Pipe connecting CHP with three-way valve FV502"
     annotation (Placement(transformation(extent={{46,-57.75},{36,-67.75}})));
-  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump CHPCWP(
-    redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = Tin_start_CHP,
-    Tout_start(displayUnit="K") = Tin_start_CHP,
-    pin_start=120000,
-    pout_start=250000) "Water circulating pump for heating" annotation (Placement(transformation(extent={{14.25,-69.75},{28.25,-83.75}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FV501_CHPWP(
     Tin_start=Tin_start_CHP,
-    Tout_start=Tin_start_CHP,                                               redeclare model Medium = Medium, hctype=hctype) "Pipe connecting three-way valve FV501 and CHP water circulation pump"
+    Tout_start=Tin_start_CHP,                                               redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                             hctype=hctype) "Pipe connecting three-way valve FV501 and CHP water circulation pump"
     annotation (Placement(transformation(extent={{-3,-71.75},{7,-81.75}})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501(redeclare model Medium = Medium,
-    initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
     hctype_hot=hctype,
     Di_cold=DistrictHeatingNetwork.Data.BPHEData.E501.Di_cold,
     Di_hot=DistrictHeatingNetwork.Data.BPHEData.E501.Di_hot,
@@ -143,11 +150,13 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
         extent={{-11.875,-19.875},{11.875,19.875}},
         rotation=-90,
         origin={0.625,4.375})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV3(redeclare model Medium = Medium, hctype = hctype)
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV3(redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                        hctype = hctype)
                                                                       annotation (Placement(transformation(extent={{-5,5},{5,-5}},
         rotation=-90,
         origin={-13,-50.25})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV4(redeclare model Medium = Medium, hctype = hctype)
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV4(redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                        hctype = hctype)
                                                                       annotation (Placement(transformation(extent={{5,5},{-5,-5}},
         rotation=-90,
         origin={14.5,-50.25})));
@@ -161,14 +170,17 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
         origin={14.5,-37.75})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV5(redeclare model Medium = Medium, hctype = hctype)    annotation (Placement(transformation(extent={{5,5},{-5,-5}},
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV5(redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                        hctype = hctype)    annotation (Placement(transformation(extent={{5,5},{-5,-5}},
         rotation=-90,
         origin={14.5,-25.25})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV6(redeclare model Medium = Medium, hctype = hctype)    annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV6(redeclare model Medium = Medium,
+    q_m3h_start=EX501_q_m3h_hot,                                                                        hctype = hctype)    annotation (Placement(transformation(extent={{-5,5},{5,-5}},
         rotation=-90,
         origin={-13,-25.25})));
 
-  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(redeclare model Medium = Medium, use_in_omega=true,
+  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(redeclare model Medium = Medium,
+    m_flow_start=m_flow_cold_start,                                                                    use_in_omega=true,
     Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P501.Tin_start,
     Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P501.Tout_start,
     a=DistrictHeatingNetwork.Data.PumpData.P501.a,
@@ -192,36 +204,22 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
     annotation (Placement(transformation(
         extent={{-5.75,5.75},{5.75,-5.75}},
         rotation=90,
-        origin={20,41})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_EX501_P501(redeclare model Medium = Medium, hctype=hctype)
+        origin={20,40.5})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_EX501_P501(
+    m_flow_start=m_flow_cold_start,
+    Tin_start=Tout_cold_start,
+    Tout_start=Tout_cold_start,                                            redeclare model Medium = Medium, hctype=hctype)
     annotation (Placement(transformation(
         extent={{5,5},{-5,-5}},
         rotation=-90,
-        origin={20,26.75})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV8(redeclare model Medium = Medium, hctype = hctype)
+        origin={19.75,26.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV8(
+    m_flow_start=m_flow_cold_start,
+    Tin_start=Tout_cold_start,
+    Tout_start=Tout_cold_start,                                        redeclare model Medium = Medium, hctype = hctype)
                                                                       annotation (Placement(transformation(extent={{5,5},{-5,-5}},
         rotation=-90,
         origin={20,56.25})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT501(redeclare model Medium = Medium) "Temperature sensor"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
-        rotation=90,
-        origin={-21,66.25})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT502(redeclare model Medium = Medium) "Temperature sensor"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
-        rotation=-90,
-        origin={21,66})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT503(redeclare model Medium = Medium) "Temperature sensor - outlet EX501"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
-        rotation=90,
-        origin={-14,-17})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT504(redeclare model Medium = Medium) "Temperature sensor - inlet EX501"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
-        rotation=-90,
-        origin={15.75,-17.25})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT501 "Pressure sensor"
     annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
@@ -232,74 +230,74 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=-90,
         origin={21,68.75})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT501(redeclare model Medium = Medium) "Flow sensor" annotation (Placement(transformation(
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT501(redeclare model Medium = Medium, T_start=Tin_cold_start)
+                                                                                            "Flow sensor" annotation (Placement(transformation(
         extent={{2.5,-2.5},{-2.5,2.5}},
         rotation=90,
         origin={-21,72.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FT501_EX501(redeclare model Medium = Medium, hctype=hctype) "Pipeline connecting sensor FT501 and EX501"
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FT501_EX501(
+    m_flow_start=m_flow_cold_start,
+    Tin_start(displayUnit="K") = 60 + 273.15,                               redeclare model Medium = Medium, hctype=hctype) "Pipeline connecting sensor FT501 and EX501"
     annotation (Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=-90,
-        origin={-20,41.25})));
-  Modelica.Blocks.Sources.Ramp FV501_theta(
-    height=0,
-    duration=0,
-    offset=1)                              annotation (Placement(transformation(extent={{-22.5,-90},{-17.5,-85}})));
-  Modelica.Blocks.Sources.Ramp FV502_theta(
-    height=0,
-    duration=0,
-    offset=1)                              annotation (Placement(transformation(extent={{5,-72.5},{10,-67.5}})));
+        origin={-20,41})));
   inner System system annotation (Placement(transformation(extent={{80,79.75},{100,99.75}})));
-  Sources.SourceMassFlow flowSource_FT501(redeclare model Medium = Medium,
-    p0=210000,
-    T0(displayUnit="K") = 60 + 273.15,
-    m_flow0=0.5)                                                           annotation (Placement(transformation(extent={{-43.5,74},{-23.5,94}})));
-  Sources.SinkPressure sinkP_PT502(redeclare model Medium = Medium,
-    p0=295000,
-    T0(displayUnit="K") = 68 + 273.15)                              annotation (Placement(transformation(extent={{25.25,72.25},{45.25,92.25}})));
   Modelica.Blocks.Sources.Ramp P501_omega(
     height=0,
     duration=0,
-    offset=2*pi*30) annotation (Placement(transformation(extent={{33.5,35.75},{28.5,40.75}})));
+    offset=2*pi*40) annotation (Placement(transformation(extent={{33.5,35.75},{28.5,40.75}})));
   Modelica.Blocks.Sources.Ramp PCHP_m_flow(
     height=0,
     duration=0,
-    offset=1.2)     annotation (Placement(transformation(extent={{27.5,-90},{22.5,-85}})));
+    offset=1.5)     annotation (Placement(transformation(extent={{27.75,-90},{22.75,-85}})));
   H2GasFacility.Sources.SourcePressure sourceGas(
     redeclare model Medium = Gas,
     X0=X_gas,
-    R=1e-3,
+    R=1e-4,
     computeEnergyVariables=true) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=270,
         origin={80,-37.5})));
-  Sources.SourcePressure sourcePressure(p0=120000, R=1e-3)
+  Sources.SourcePressure sourcePressure(p0=120000, R=0)
                                                    annotation (Placement(transformation(extent={{-43.75,-98.75},{-34.5,-89.5}})));
   Modelica.Blocks.Sources.Ramp ToutSP(
     height=0,
     duration=0,
     offset=80 + 273.15) annotation (Placement(transformation(extent={{67.5,-97.5},{72.5,-92.5}})));
   Modelica.Blocks.Sources.Ramp PelSP(
-    height=0,
+    height=5e3,
     duration=0,
-    offset=45e3) annotation (Placement(transformation(extent={{87.5,-97.5},{82.5,-92.5}})));
+    offset=45e3,
+    startTime=1000)
+                 annotation (Placement(transformation(extent={{87.5,-97.5},{82.5,-92.5}})));
   Modelica.Blocks.Sources.BooleanTable CHP_Status(table={1e6}, startValue=true) "Input to decide whether or nor the CHP is working"
     annotation (Placement(transformation(extent={{100.25,-99.5},{94.5,-93.75}})));
+  Sources.VariableMassFlowPump CHPCWP_ "Water circulating pump for heating" annotation (Placement(transformation(extent={{16.25,-72},{25.75,-81.5}})));
+  Sources.VariableDifferentialPressurePump variableDifferentialPressurePump annotation (Placement(transformation(
+        extent={{-4.25,4.25},{4.25,-4.25}},
+        rotation=-90,
+        origin={-13,-67})));
+  Modelica.Blocks.Sources.Ramp PCHP_m_flow1(
+    height=0,
+    duration=0,
+    offset=0.5e5)   annotation (Placement(transformation(extent={{-25.75,-66.25},{-20.75,-61.25}})));
+  Sources.SourcePressure sourcePressure1(redeclare model Medium = Medium, p0(displayUnit="Pa") = 1.8e5, T0=Tin_cold_start)
+    annotation (Placement(transformation(extent={{-54.75,69},{-34.75,89}})));
+  Sources.SinkMassFlow sinkMassFlow(redeclare model Medium = Medium,
+    pin_start=200000,
+    p0=200000,
+    T0=Tout_cold_start,
+    m_flow0=m_flow_cold_start,
+    G=1e-4)
+    annotation (Placement(transformation(extent={{26.5,72.75},{46.5,92.75}})));
 equation
-  connect(CHPCWP.outlet, PL_S500_CHPHP_CHP.inlet) annotation (Line(
-      points={{26.85,-76.75},{36.25,-76.75}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S500_CHP_FV502.inlet, CHP.outlet) annotation (Line(
       points={{46,-62.75},{52.5,-62.75},{52.5,-62.225},{60.35,-62.225}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_CHPHP_CHP.outlet, CHP.inlet) annotation (Line(
-      points={{46.25,-76.75},{52.8,-76.75},{52.8,-76.775},{60.35,-76.775}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S500_FV501_CHPWP.outlet, CHPCWP.inlet) annotation (Line(
-      points={{7,-76.75},{15.65,-76.75}},
+      points={{46.5,-76.75},{52.8,-76.75},{52.8,-76.775},{60.35,-76.775}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV3.inlet, ReducerCold.inlet) annotation (Line(
@@ -320,67 +318,26 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_FT501_EX501.outlet, EX501.incold) annotation (Line(
-      points={{-20,36.25},{-20,19},{-13.2875,19},{-13.2875,10.3125}},
+      points={{-20,36},{-20,19},{-13.2875,19},{-13.2875,10.3125}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_EX501_P501.inlet, EX501.outcold) annotation (Line(
-      points={{20,21.75},{20,18.5},{14.5375,18.5},{14.5375,10.3125}},
+      points={{19.75,21.75},{19.75,18.5},{14.5375,18.5},{14.5375,10.3125}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_EX501_P501.outlet, P501.inlet) annotation (Line(
-      points={{20,31.75},{20,36.4}},
+      points={{19.75,31.75},{19.75,35.9},{20,35.9}},
       color={140,56,54},
       thickness=0.5));
   connect(P501.outlet, roundPipe1DFV8.inlet) annotation (Line(
-      points={{20,45.6},{20,51.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV8.outlet, TT502.inlet) annotation (Line(
-      points={{20,61.25},{20,66}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT502.inlet, PT502.inlet) annotation (Line(
-      points={{20,66},{20,68.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S500_FT501_EX501.inlet, TT501.inlet) annotation (Line(
-      points={{-20,46.25},{-20,66.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT501.inlet, PT501.inlet) annotation (Line(
-      points={{-20,66.25},{-20,68.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV6.inlet, TT503.inlet) annotation (Line(
-      points={{-13,-20.25},{-13,-17}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX501.outhot, TT503.inlet) annotation (Line(
-      points={{-13.2875,-1.5625},{-13.2875,-9.2812},{-13,-9.2812},{-13,-17}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX501.inhot, TT504.inlet) annotation (Line(
-      points={{14.5375,-1.5625},{14.5375,-9.4062},{14.75,-9.4062},{14.75,-17.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV5.outlet, TT504.inlet) annotation (Line(
-      points={{14.5,-20.25},{14.5,-18.75},{14.75,-18.75},{14.75,-17.25}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(flowSource_FT501.outlet, FT501.inlet) annotation (Line(
-      points={{-23.5,84},{-21.75,84},{-21.75,83.75},{-20,83.75},{-20,74}},
+      points={{20,45.1},{20,51.25}},
       color={140,56,54},
       thickness=0.5));
   connect(FT501.outlet, PT501.inlet) annotation (Line(
       points={{-20,71},{-20,68.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(sinkP_PT502.inlet, PT502.inlet) annotation (Line(
-      points={{25.25,82.25},{20,82.25},{20,68.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(P501_omega.y, P501.in_omega) annotation (Line(points={{28.25,38.25},{28.25,38.7},{22.875,38.7}}, color={0,0,127}));
-  connect(PCHP_m_flow.y, CHPCWP.in_m_flow) annotation (Line(points={{22.25,-87.5},{18.45,-87.5},{18.45,-79.97}}, color={0,0,127}));
+  connect(P501_omega.y, P501.in_omega) annotation (Line(points={{28.25,38.25},{28.25,38.2},{22.875,38.2}}, color={0,0,127}));
   connect(sourceGas.outlet, CHP.inletfuel) annotation (Line(
       points={{80,-42.5},{80,-47.5125},{79.75,-47.5125},{79.75,-52.525}},
       color={182,109,49},
@@ -392,18 +349,55 @@ equation
       points={{14.5,-55.25},{14.75,-63},{14.75,-62.75},{36,-62.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV3.outlet, PL_S500_FV501_CHPWP.inlet) annotation (Line(
-      points={{-13,-55.25},{-13,-76.75},{-3,-76.75}},
+  connect(PCHP_m_flow.y, CHPCWP_.m_flow) annotation (Line(points={{22.5,-87.5},{17.295,-87.5},{17.295,-79.6}},  color={0,0,127}));
+  connect(PL_S500_FV501_CHPWP.inlet, variableDifferentialPressurePump.outlet) annotation (Line(
+      points={{-3,-76.75},{-13,-76.75},{-13,-71.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(sourcePressure.outlet, CHPCWP.inlet)
-    annotation (Line(
-      points={{-34.5,-94.125},{-15,-94.125},{-15,-94},{10.5,-94},{10.5,-76.75},{15.65,-76.75}},
+  connect(variableDifferentialPressurePump.inlet, roundPipe1DFV3.outlet) annotation (Line(
+      points={{-13,-62.75},{-13,-55.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_FV501_CHPWP.outlet, CHPCWP_.inlet) annotation (Line(
+      points={{7,-76.75},{16.25,-76.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_CHPHP_CHP.inlet, CHPCWP_.outlet) annotation (Line(
+      points={{36.5,-76.75},{25.75,-76.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PCHP_m_flow1.y, variableDifferentialPressurePump.Dp) annotation (Line(points={{-20.5,-63.75},{-18.025,-63.75},{-18.025,-63.685},{-15.55,-63.685}}, color={0,0,127}));
+  connect(roundPipe1DFV6.inlet, EX501.outhot) annotation (Line(
+      points={{-13,-20.25},{-13,-10.9062},{-13.2875,-10.9062},{-13.2875,-1.5625}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV5.outlet, EX501.inhot) annotation (Line(
+      points={{14.5,-20.25},{14.5,-10.9063},{14.5375,-10.9063},{14.5375,-1.5625}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT501.inlet, PL_S500_FT501_EX501.inlet) annotation (Line(
+      points={{-20,68.75},{-20,46}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(roundPipe1DFV8.outlet, PT502.inlet) annotation (Line(
+      points={{20,61.25},{20,68.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sourcePressure.outlet, CHPCWP_.inlet) annotation (Line(
+      points={{-34.5,-94.125},{11.25,-94.125},{11.25,-76.75},{16.25,-76.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sinkMassFlow.inlet, PT502.inlet) annotation (Line(
+      points={{26.5,82.75},{20,82.75},{20,68.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sourcePressure1.outlet, FT501.inlet) annotation (Line(
+      points={{-34.75,79},{-20,79},{-20,74}},
       color={140,56,54},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false, grid={0.25,0.25})),
     experiment(
-      StopTime=1000,
+      StopTime=4000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end S500;

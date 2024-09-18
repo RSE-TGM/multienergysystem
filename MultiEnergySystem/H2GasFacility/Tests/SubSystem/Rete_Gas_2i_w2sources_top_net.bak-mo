@@ -1,0 +1,128 @@
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
+model Rete_Gas_2i_w2sources_top_net
+  extends Rete_Gas_2i_nosources(s1(n=10), s2(n=8),
+    REMI(R=0),
+    break s2,
+    break s4,
+    break s8,
+    break s9,
+    break s11,
+    break s12,
+    break s14,
+    break s16,
+    break s18,
+    break s19,
+    break s20,
+    break s21,
+    break s22,
+    break s24,
+    break s26,
+    break s28,
+    break s30,
+    break s31,
+    break s36_Stadio,
+    break GRM_3,
+    break GRM_1,
+    break GRM_2,
+    break connect(s2.outlet, s1.outlet),
+    break connect(s4.outlet, s2.inlet),
+    break connect(s4.inlet, s8.outlet),
+    break connect(s8.inlet, s9.outlet),
+    break connect(s9.inlet, s11.outlet),
+    break connect(s11.inlet, s12.outlet),
+    break connect(s12.inlet, s14.outlet),
+    break connect(s18.inlet, s31.outlet),
+    break connect(s19.outlet, s18.inlet),
+    break connect(s20.outlet, s19.inlet),
+    break connect(s20.inlet, s21.outlet),
+    break connect(s21.inlet, GRM_1.inlet),
+    break connect(s20.inlet, s22.outlet),
+    break connect(s22.inlet, s24.outlet),
+    break connect(s24.inlet, s26.outlet),
+    break connect(s26.inlet, s28.outlet),
+    break connect(s28.inlet, s30.outlet),
+    break connect(s30.inlet, GRM_2.inlet),
+    break connect(GRM_3.inlet, s36_Stadio.outlet),
+    break connect(s36_Stadio.inlet, s31.inlet));
+  // extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
+    L=194.511,
+     redeclare model Medium =
+                     Medium,
+    X_start=X_start,
+    Di=0.0831,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-178,228})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
+    L=1077.595,
+     redeclare model Medium =
+                     Medium,
+    X_start=X_start,
+    Di=0.0831,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum,
+    rho_nom=rho_nom,
+    n=5)             annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-236,228})));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
+    redeclare model Medium = Medium,
+    p0=480000,
+    G=1e-8,
+    T0=288.15,
+    X0=X_start,
+    computeEnthalpyWithFixedPressure=true,
+    m_flow0=0,
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
+        origin={-290,230},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H1(
+    duration=60,
+    height=0.09125,
+    offset=0,
+    startTime=32400)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-395,250},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H5(
+    duration=360,
+    height=-0.09125,
+    offset=0,
+    startTime=46800)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-401,294},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Math.Add add1
+    annotation (Placement(transformation(extent={{-342,266},{-322,286}})));
+equation
+  connect(sds17.inlet,sds16. outlet) annotation (Line(
+      points={{-226,228},{-188,228}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(Immissione_2.outlet,sds17. outlet) annotation (Line(
+      points={{-280,230},{-278,228},{-246,228}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds16.inlet, sds11.outlet) annotation (Line(
+      points={{-168,228},{-121,228},{-121,210}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(m_flow_H5.y, add1.u1) annotation (Line(points={{-390,294},{-354,294},
+          {-354,282},{-344,282}}, color={0,0,127}));
+  connect(m_flow_H1.y, add1.u2) annotation (Line(points={{-384,250},{-356,250},
+          {-356,270},{-344,270}}, color={0,0,127}));
+  connect(add1.y, Immissione_2.in_m_flow0) annotation (Line(points={{-321,276},
+          {-312,276},{-312,235},{-296,235}}, color={0,0,127}));
+  annotation (experiment(
+      StopTime=86400,
+      Interval=10,
+      __Dymola_Algorithm="Dassl"));
+end Rete_Gas_2i_w2sources_top_net;

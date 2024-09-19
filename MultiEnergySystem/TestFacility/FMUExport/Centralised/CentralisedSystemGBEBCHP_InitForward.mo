@@ -1,0 +1,4 @@
+within MultiEnergySystem.TestFacility.FMUExport.Centralised;
+model CentralisedSystemGBEBCHP_InitForward
+  extends CentralisedSystemGBEB_InitForward;
+end CentralisedSystemGBEBCHP_InitForward;

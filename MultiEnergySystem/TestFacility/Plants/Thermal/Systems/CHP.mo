@@ -27,76 +27,188 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Integer n = 3 "Number of volumes in each pipe";
 
+  ////////////////////////////////////
+  // Start values
+  ////////////////////////////////////
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_low_start = 1.50 "Starting mass flow rate rack side";
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_high_start = 1.70 "Starting mass flow rate CHP side";
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_low_start = 80 + 273.15 "Starting Inlet temperature HX501 CHP side";
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_low_start = 70 + 273.15 "Starting Outlet temperature HX501 CHP side";
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_high_start = 60 + 273.15 "Starting Inlet temperature HX501 rack side";
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_high_start = 70 + 273.15 "Starting Outlet temperature HX501 rack side";
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = Tout_low_start "CHP Starting Inlet temperature";
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = Tin_low_start "CHP Starting Outlet temperature";
+  parameter DistrictHeatingNetwork.Types.Pressure p_low_ref = 1.2e5 "Reference pressure CHP side";
+  parameter DistrictHeatingNetwork.Types.Pressure dp_low_ref = 0.5e5 "Reference pressure CHP side";
+  parameter DistrictHeatingNetwork.Types.Pressure pout_low_start = p_low_ref "Reference pressure side";
+  parameter DistrictHeatingNetwork.Types.Pressure pin_high_start = 1.8e5 "Reference pressure rack side";
+  parameter DistrictHeatingNetwork.Types.Pressure pout_high_start = 2e5 "Reference pressure rack side";
+
+
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Combustion Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
     Dialog(tab = "Combustion Data"));
   parameter DistrictHeatingNetwork.Types.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
   parameter DistrictHeatingNetwork.Types.Time tau_el = 10 "Time constant of electric power first order response";
-  parameter DistrictHeatingNetwork.Types.PerUnit eta_el_nom = 0.3448 "Nominal electrical efficiency" annotation (
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_el_nom = 0.3448273 "Nominal electrical efficiency" annotation (
     Dialog(tab = "Nominal Data"));
-  parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5453 "Nominal thermal efficiency" annotation (
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5586210 "Nominal thermal efficiency" annotation (
     Dialog(tab = "Nominal Data"));
-  parameter DistrictHeatingNetwork.Types.Power Pel_nom = eta_el_nom*Pnom "Electrical Nominal Power" annotation (
-    Dialog(tab = "Nominal Data"));
-  parameter DistrictHeatingNetwork.Types.Power Pth_nom = eta_th_nom*Pnom "Thermal Nominal Power" annotation (
-    Dialog(tab = "Nominal Data"));
+  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 145e3 "Nominal Combustion Power";
 
-
+  // Gas composition
+  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
+  parameter DistrictHeatingNetwork.Types.Power Pel_SP[:,:] = [0, 40e3; 1e3, 40e3; 1e3, 35e3; 1e6, 35e3];
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_ref[:,:] = [0, 60+273.15; 1e3, 60+273.15; 2e3, 75+273.15; 3e3, 65+273.15];
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_SP_CHP[:,:] = [0, 90+273.15; 1e3, 90+273.15; 2e3, 90+273.15; 3e3, 90+273.15];
 
   ////////////////////////////////////
   // Instantiation of fluid
   ////////////////////////////////////
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference outlet fluid";
 
-  DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(redeclare model Medium = Medium, use_Tout_ref=true) annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
-        rotation=90,
-        origin={79.75,-49.75})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV(redeclare model Medium = Medium) annotation (Placement(transformation(extent={{36.25,-52},{46.25,-62}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV1(redeclare model Medium = Medium) annotation (Placement(transformation(extent={{46,-38},{36,-48}})));
   H2GasFacility.Interfaces.FluidPortInlet inletFuel(nXi=fuel.nXi)   annotation (Placement(transformation(extent={{61.25,100},{81.25,120}}),
                                                                                                                                          iconTransformation(extent={{-16,-132},{16,-100}})));
-  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump CHPWaterPump(redeclare model Medium = Medium) "Water circulating pump from CHP system"
-    annotation (Placement(transformation(extent={{14.25,-50},{28.25,-64}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV2(redeclare model Medium = Medium)
-                                                                      annotation (Placement(transformation(extent={{-3,-52},{7,-62}})));
-  Modelica.Blocks.Interfaces.RealInput Pelset "Electric power set-point of thermal machine"
+  Modelica.Blocks.Interfaces.RealInput Pelset
+    "Electric power set-point of thermal machine"
     annotation (Placement(transformation(extent={{-120,-20},{-100,0}}), iconTransformation(extent={{-120,-20},{-100,0}})));
-  DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501
-    annotation (Placement(transformation(
-        extent={{-11.875,-19.875},{11.875,19.875}},
+
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(
+    redeclare model Medium = Medium,
+    redeclare model Gas = Gas,
+    Tin_start=Tin_start_CHP,
+    Tout_start=Tout_start_CHP,
+    Pmaxnom=Pmaxnom,
+    use_Tout_ref=true,
+    Tout_nom=Tout_ref,
+    tau_el=tau_el,
+    eta_el_nom=eta_el_nom,
+    eta_th_nom=eta_th_nom) annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
+        rotation=90,
+        origin={63,-67.5})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHPHP_CHP(
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    Tin_start=Tout_low_start,
+    Tout_start=Tout_low_start,
+    hctype=hctype) "Pipe connecting the circulating water pump with the internal CHP system"
+    annotation (Placement(transformation(extent={{19.75,-69.75},{29.75,-79.75}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHP_FV502(
+    redeclare model HeatTransferModel = HeatTransferModel,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    Tin_start=Tin_low_start,
+    Tout_start=Tin_low_start,
+    redeclare model Medium = Medium,
+    hctype=hctype)                                                                                                        "Pipe connecting CHP with three-way valve FV502"
+    annotation (Placement(transformation(extent={{29.25,-65.75},{19.25,-55.75}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FV501_CHPWP(
+    redeclare model HeatTransferModel = HeatTransferModel,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    pin_start=pout_low_start,
+    Tin_start=Tout_low_start,
+    Tout_start=Tout_low_start,
+    redeclare model Medium = Medium,
+    hctype=hctype)                                                                                                          "Pipe connecting three-way valve FV501 and CHP water circulation pump"
+    annotation (Placement(transformation(extent={{-34,-69.75},{-24,-79.75}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_ReducerOut_FV501(
+    redeclare model HeatTransferModel = HeatTransferModel,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    pout_start=pout_low_start,
+    Tin_start=Tout_low_start,
+    Tout_start=Tout_low_start,
+    redeclare model Medium = Medium,
+    hctype=hctype) annotation (Placement(transformation(
+        extent={{-5,5},{5,-5}},
         rotation=-90,
-        origin={0.625,24.125})));
-  DistrictHeatingNetwork.Components.Valves.ThreeWayValve FV502(redeclare model Medium = Medium) "Control three-way valve - hot (sent) side" annotation (Placement(transformation(extent={{19.5,-38},{9.5,-48}})));
-  DistrictHeatingNetwork.Components.Valves.ThreeWayValve FV501(redeclare model Medium = Medium) "Control three-way valve - cold (return) side" annotation (Placement(transformation(extent={{-8,-52},{-18,-62}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV3(redeclare model Medium = Medium)
-                                                                      annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+        origin={-42.75,-48.25})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FV502_ReducerHot(
+    redeclare model HeatTransferModel = HeatTransferModel,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    Tin_start=Tin_low_start,
+    Tout_start=Tin_low_start,
+    redeclare model Medium = Medium,
+    hctype=hctype) annotation (Placement(transformation(
+        extent={{5,-5},{-5,5}},
         rotation=-90,
-        origin={-13,-30.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV4(redeclare model Medium = Medium)
-                                                                      annotation (Placement(transformation(extent={{5,5},{-5,-5}},
-        rotation=-90,
-        origin={14.5,-30.5})));
+        origin={-15.25,-48.25})));
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange ReducerCold "Pipe fitting reducer in the cold side"
     annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
-        origin={-13,-18})));
+        origin={-42.75,-35.75})));
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange ReducerHot "Pipe fitting reducer in the hot side"
     annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
-        origin={14.5,-18})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV5(redeclare model Medium = Medium)    annotation (Placement(transformation(extent={{5,5},{-5,-5}},
+        origin={-15.25,-35.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_ReducerHot_EX501(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    Tin_start=Tin_low_start,
+    Tout_start=Tin_low_start,
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    hctype=hctype) annotation (Placement(transformation(
+        extent={{5,-5},{-5,5}},
         rotation=-90,
-        origin={14.5,-5.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV6(redeclare model Medium = Medium)    annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+        origin={-15.25,-23.25})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_EX501_ReducerOut(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_low_start,
+    pin_start=pout_low_start,
+    Tin_start=Tout_low_start,
+    Tout_start=Tout_low_start,
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    hctype=hctype) annotation (Placement(transformation(
+        extent={{-5,5},{5,-5}},
         rotation=-90,
-        origin={-13,-5.5})));
-
-  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(redeclare model Medium = Medium, use_in_omega=true,
-    Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P501.Tin_start,
-    Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P501.Tout_start,
+        origin={-42.75,-23.25})));
+  DistrictHeatingNetwork.Sources.SourcePressure
+                         sourcePressure(
+    p0=p_low_ref,
+    T0=Tout_low_start,
+    R=0)                                           annotation (Placement(transformation(extent={{-29.25,
+            -70.5},{-20,-61.25}})));
+  DistrictHeatingNetwork.Sources.VariableMassFlowPump
+                               CHPCWP_ "Water circulating pump for heating" annotation (Placement(transformation(extent={{-4.25,
+            4.25},{4.25,-4.25}},
+        rotation=-90,
+        origin={-42.5,-65.25})));
+  DistrictHeatingNetwork.Sources.VariableDifferentialPressurePump
+                                           variableDifferentialPressurePump annotation (Placement(transformation(
+        extent={{-4.25,4.25},{4.25,-4.25}},
+        rotation=0,
+        origin={1,-74.75})));
+  Modelica.Blocks.Sources.Ramp PCHP_m_flow1(
+    height=0,
+    duration=0,
+    offset=dp_low_ref)
+                    annotation (Placement(transformation(extent={{-11.75,-89},{-6.75,-84}})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor                   TT504(
+      redeclare model Medium = Medium, T_start=Tin_low_start) "Temperature Sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,2.5},{2.5,-2.5}},
+        rotation=90,
+        origin={-14,-11.75})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor                   TT503(
+      redeclare model Medium = Medium, T_start=Tout_low_start) "Temperature Sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,-2.5},{2.5,2.5}},
+        rotation=90,
+        origin={-43.75,-12})));
+  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(
+    redeclare model Medium = Medium,
+    use_in_omega=true,
+    Tin_start(displayUnit="K") = Tout_high_start,
+    Tout_start(displayUnit="K") = Tout_high_start,
     a=DistrictHeatingNetwork.Data.PumpData.P501.a,
     b=DistrictHeatingNetwork.Data.PumpData.P501.b,
     dpnom=DistrictHeatingNetwork.Data.PumpData.P501.dpnom,
@@ -118,172 +230,334 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     annotation (Placement(transformation(
         extent={{-5.75,-5.75},{5.75,5.75}},
         rotation=90,
-        origin={20,60.75})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV7(redeclare model Medium = Medium)
-                                                                      annotation (Placement(transformation(extent={{5,5},{-5,-5}},
-        rotation=-90,
-        origin={20,46.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV8(redeclare model Medium = Medium)
-                                                                      annotation (Placement(transformation(extent={{5,5},{-5,-5}},
-        rotation=-90,
-        origin={20,76})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT501(redeclare model Medium = Medium) "Temperature sensor"
+        origin={-17.5,55.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_EX501_P501(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_high_start,
+    Tin_start=Tout_high_start,
+    Tout_start=Tout_high_start,
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    hctype=hctype)
+    "Pipeline connecting EX501 and P501 inlet"
     annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
-        rotation=90,
-        origin={-21,86})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT502(redeclare model Medium = Medium) "Temperature sensor"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
+        extent={{5,5},{-5,-5}},
         rotation=-90,
-        origin={21,85.75})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT503(redeclare model Medium = Medium) "Temperature sensor - outlet EX501"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
-        rotation=90,
-        origin={-14,2.75})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensorFirstOrderDyn TT504(redeclare model Medium = Medium) "Temperature sensor - inlet EX501"
-    annotation (Placement(transformation(
-        extent={{-2.5,-2.5},{2.5,2.5}},
+        origin={-17.75,42})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_P501_PT501(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_high_start,
+    pin_start=pout_high_start,
+    Tin_start=Tout_high_start,
+    Tout_start=Tout_high_start,
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    hctype=hctype) "Pipeline connecting P501 outlet and sensors" annotation (Placement(
+        transformation(
+        extent={{5,5},{-5,-5}},
         rotation=-90,
-        origin={15.75,2.5})));
+        origin={-17.5,71.5})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT501 "Pressure sensor"
     annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
-        origin={-21,88.5})));
+        origin={-43,68.25})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT502 "Pressure sensor"
     annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=-90,
-        origin={21,88.5})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT501(redeclare model Medium = Medium) "Flow sensor" annotation (Placement(transformation(
+        origin={-16.5,84})));
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT501(
+    redeclare model Medium = Medium,
+    T_start=Tin_high_start,
+    p_start=pin_high_start)                                                                 "Flow sensor" annotation (Placement(transformation(
+        extent={{2.5,-2.5},{-2.5,2.5}},
+        rotation=90,
+        origin={-43,73.5})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FT501_EX501(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_high_start,
+    pin_start=pin_high_start,
+    Tin_start(displayUnit="K") = Tin_high_start,
+    Tout_start=Tin_high_start,
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    hctype=hctype)                                                             "Pipeline connecting sensor FT501 and EX501"
+    annotation (Placement(transformation(
+        extent={{-5,5},{5,-5}},
+        rotation=-90,
+        origin={-42,42})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor                   TT501(
+    redeclare model Medium = Medium,
+    T_start=Tin_high_start,
+    p_start=pin_high_start)
+    annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
-        origin={-21,92.25})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV roundPipe1DFV9(redeclare model Medium = Medium)
-                                                                      annotation (Placement(transformation(extent={{-5,5},{5,-5}},
+        origin={-43.25,62.5})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor                   TT502(
+    redeclare model Medium = Medium,
+    T_start=Tout_high_start,
+    p_start=pout_high_start)                                    "Temperature Sensor"
+    annotation (Placement(transformation(
+        extent={{-2.5,2.5},{2.5,-2.5}},
+        rotation=90,
+        origin={-16.5,80.5})));
+  Modelica.Blocks.Interfaces.RealOutput Pel_out "Outlet Electric Power" annotation (
+      Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{
+            100,-40},{120,-20}})));
+  DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501(
+    redeclare model Medium = Medium,
+    hctype_hot=hctype,
+    Di_cold=DistrictHeatingNetwork.Data.BPHEData.E501.Di_cold,
+    Di_hot=DistrictHeatingNetwork.Data.BPHEData.E501.Di_hot,
+    L_cold=DistrictHeatingNetwork.Data.BPHEData.E501.L_cold,
+    L_hot=DistrictHeatingNetwork.Data.BPHEData.E501.L_hot,
+    hctype_cold=hctype,
+    MWall=DistrictHeatingNetwork.Data.BPHEData.E501.MWall,
+    Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E501.Stot_cold,
+    Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E501.Stot_hot,
+    Tin_start_cold=Tin_high_start,
+    Tin_start_hot=Tin_low_start,
+    Tout_start_cold=Tout_high_start,
+    Tout_start_hot=Tout_low_start,
+    cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E501.cpm_cold,
+    cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E501.cpm_hot,
+    t_cold=DistrictHeatingNetwork.Data.BPHEData.E501.t_cold,
+    t_hot=DistrictHeatingNetwork.Data.BPHEData.E501.t_hot,
+    gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_cold,
+    gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_hot,
+    h_cold=DistrictHeatingNetwork.Data.BPHEData.E501.h_cold,
+    h_hot=DistrictHeatingNetwork.Data.BPHEData.E501.h_hot,
+    hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_cold,
+    hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_hot,
+    k_cold=DistrictHeatingNetwork.Data.BPHEData.E501.k_cold,
+    k_hot=DistrictHeatingNetwork.Data.BPHEData.E501.k_hot,
+    kc_cold=1,
+    kc_hot=1,
+    lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_cold,
+    lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_hot,
+    m_flow_start_cold=m_flow_high_start,
+    m_flow_start_hot=m_flow_low_start,
+    n=9,
+    nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_cold,
+    nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_hot,
+    nPlates=DistrictHeatingNetwork.Data.BPHEData.E501.nPlates,
+    pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.pin_start_cold,
+    pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.pin_start_hot,
+    pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.pout_start_cold,
+    pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.pout_start_hot,
+    rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_cold +
+        DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_cold)/2,
+    rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_hot +
+        DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_hot)/2,
+    rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_cold,
+    rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_hot,
+    thermalInertia=true,
+    u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_cold,
+    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_hot,
+    UA_ext=750,
+    UA_int=750) annotation (Placement(transformation(
+        extent={{-11.875,-19.875},{11.875,19.875}},
         rotation=-90,
-        origin={-20,61})));
+        origin={-28.625,12.125})));
+  Modelica.Blocks.Interfaces.RealInput m_flow_CHP "Water mass flow rate through CHP"
+    annotation (Placement(transformation(extent={{-120,-40},{-100,-20}}),
+        iconTransformation(extent={{-120,-40},{-100,-20}})));
 equation
-  connect(CHP.inletfuel, inletFuel) annotation (Line(
-      points={{79.75,-32.775},{79.75,110},{71.25,110}},
+
+  fuel.Xi = inStream(inletFuel.Xi);
+  fuel.p = inletFuel.p;
+  fuel.h = inStream(inletFuel.h_out);
+  connect(PL_S500_CHP_FV502.inlet,CHP. outlet) annotation (Line(
+      points={{29.25,-60.75},{35.75,-60.75},{35.75,-60.225},{43.6,-60.225}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_CHPHP_CHP.outlet,CHP. inlet) annotation (Line(
+      points={{29.75,-74.75},{36.05,-74.75},{36.05,-74.775},{43.6,-74.775}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_ReducerOut_FV501.inlet, ReducerCold.inlet) annotation (Line(
+      points={{-42.75,-43.25},{-42.75,-38.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(ReducerHot.inlet, PL_S500_FV502_ReducerHot.outlet) annotation (Line(
+      points={{-15.25,-38.25},{-15.25,-43.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_ReducerHot_EX501.inlet, ReducerHot.outlet) annotation (Line(
+      points={{-15.25,-28.25},{-15.25,-33.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_EX501_ReducerOut.outlet, ReducerCold.outlet) annotation (Line(
+      points={{-42.75,-28.25},{-42.75,-33.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_FV502_ReducerHot.inlet, PL_S500_CHP_FV502.outlet) annotation (Line(
+      points={{-15.25,-53.25},{-15.25,-60.75},{19.25,-60.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_ReducerHot_EX501.outlet, TT504.inlet) annotation (Line(
+      points={{-15.25,-18.25},{-15.25,-15},{-15,-15},{-15,-11.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_EX501_ReducerOut.inlet, TT503.inlet) annotation (Line(
+      points={{-42.75,-18.25},{-42.75,-12}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PCHP_m_flow1.y,variableDifferentialPressurePump. Dp) annotation (Line(points={{-6.5,
+          -86.5},{-5,-86.5},{-5,-87},{-2.315,-87},{-2.315,-77.3}},     color={0,0,127}));
+  connect(PL_S500_ReducerOut_FV501.outlet, CHPCWP_.inlet) annotation (Line(
+      points={{-42.75,-53.25},{-42.75,-61},{-42.5,-61}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(CHPCWP_.outlet,PL_S500_FV501_CHPWP. inlet) annotation (Line(
+      points={{-42.5,-69.5},{-42.5,-74.75},{-34,-74.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_FV501_CHPWP.outlet,variableDifferentialPressurePump. inlet) annotation
+    (Line(
+      points={{-24,-74.75},{-3.25,-74.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(variableDifferentialPressurePump.outlet,PL_S500_CHPHP_CHP. inlet) annotation (
+      Line(
+      points={{5.25,-74.75},{19.75,-74.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(sourcePressure.outlet,variableDifferentialPressurePump. inlet) annotation (Line(
+      points={{-20,-65.875},{-13.75,-65.875},{-13.75,-74.75},{-3.25,-74.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_EX501_P501.outlet,P501. inlet) annotation (Line(
+      points={{-17.75,47},{-17.75,51.15},{-17.5,51.15}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(P501.outlet,PL_S500_P501_PT501. inlet) annotation (Line(
+      points={{-17.5,60.35},{-17.5,66.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT501.outlet,PT501. inlet) annotation (Line(
+      points={{-42,72},{-42,68.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT501.inlet,PL_S500_FT501_EX501. inlet) annotation (Line(
+      points={{-42,68.25},{-42,47}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_P501_PT501.outlet,PT502. inlet) annotation (Line(
+      points={{-17.5,76.5},{-17.5,84}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT501.inlet,TT501. inlet) annotation (Line(
+      points={{-42,68.25},{-42,65.375},{-42.25,65.375},{-42.25,62.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_P501_PT501.outlet,TT502. inlet) annotation (Line(
+      points={{-17.5,76.5},{-17.5,80.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT501.inlet, inlet) annotation (Line(
+      points={{-42,75},{-41.75,75},{-41.75,94.5},{-20,94.5},{-20,110}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(omega, P501.in_omega) annotation (Line(points={{-110,70},{-67.75,70},{-67.75,53.45},
+          {-20.375,53.45}}, color={0,0,127}));
+  connect(status, CHP.heat_on) annotation (Line(points={{-110,10},{-98,10},{-98,9.25},{-77,
+          9.25},{-77,-98.25},{75.125,-98.25},{75.125,-84.475}}, color={255,0,255}));
+  connect(Toutset, CHP.in_Tout_ref) annotation (Line(points={{-110,30},{-66.25,30},{-66.25,
+          -94.25},{58,-94.25},{58,-89.25},{58.15,-89.25},{58.15,-84.475}}, color={0,0,127}));
+  connect(Pelset, CHP.in_Pel_ref) annotation (Line(points={{-110,-10},{-69.75,-10},{-69.75,
+          -96.5},{63,-96.5},{63,-84.475}}, color={0,0,127}));
+  connect(FT501.m_flow, m_flow_) annotation (Line(points={{-44.5,71.75},{-45,71.75},{-45,69.75},
+          {110,69.75},{110,70}}, color={0,0,127}));
+  connect(TT501.T, TTin) annotation (Line(points={{-46.5,62.5},{-48.75,62.5},{-48.75,62},{
+          -49.25,62},{-49.25,61.75},{85,61.75},{85,50},{110,50}}, color={0,0,127}));
+  connect(PT502.p, PTout) annotation (Line(points={{-13.25,84},{39.25,84},{39.25,84.25},{69.5,
+          84.25},{69.5,-10},{110,-10}}, color={0,0,127}));
+  connect(PT501.p, PTin) annotation (Line(points={{-46.25,68.25},{-51.5,68.25},{-51.5,64.75},
+          {73.25,64.75},{73.25,10},{110,10}}, color={0,0,127}));
+  connect(TT502.T, TTout) annotation (Line(points={{-13.25,80.5},{76.75,80.5},{76.75,30},{
+          110,30}}, color={0,0,127}));
+  connect(CHP.Pel_out, Pel_out)
+    annotation (Line(points={{75.125,-51.495},{75.125,-30},{110,-30}}, color={0,0,127}));
+  connect(inletFuel, CHP.inletfuel) annotation (Line(
+      points={{71.25,110},{71.25,90.5},{63,90.5},{63,-50.525}},
       color={182,109,49},
       thickness=0.5));
-  connect(CHPWaterPump.outlet, roundPipe1DFV.inlet) annotation (Line(
-      points={{26.85,-57},{36.25,-57}},
+  connect(PL_S500_P501_PT501.outlet, outlet) annotation (Line(
+      points={{-17.5,76.5},{-17.5,90},{20,90},{20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV1.inlet, CHP.outlet) annotation (Line(
-      points={{46,-43},{52.5,-43},{52.5,-42.475},{60.35,-42.475}},
+  connect(EX501.outcold, PL_S500_EX501_P501.inlet) annotation (Line(
+      points={{-14.7125,18.0625},{-14.7125,31.75},{-17.75,31.75},{-17.75,37}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV.outlet, CHP.inlet) annotation (Line(
-      points={{46.25,-57},{52.8,-57},{52.8,-57.025},{60.35,-57.025}},
+  connect(PL_S500_FT501_EX501.outlet, EX501.incold) annotation (Line(
+      points={{-42,37},{-42.25,37},{-42.25,33.75},{-44,33.75},{-44,18.0625},{-42.5375,18.0625}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV2.outlet, CHPWaterPump.inlet) annotation (Line(
-      points={{7,-57},{15.65,-57}},
+  connect(PL_S500_ReducerHot_EX501.outlet, EX501.inhot) annotation (Line(
+      points={{-15.25,-18.25},{-15,-18.25},{-15,-6},{-14.75,-6},{-14.75,-5.5},{-14.7125,-5.5},
+          {-14.7125,6.1875}},
       color={140,56,54},
       thickness=0.5));
-  connect(status, CHP.heat_on) annotation (Line(points={{-110,10},{-71.75,10},{-71.75,-97},{91.875,-97},{91.875,-66.725}},     color={255,0,255}));
-  connect(Toutset, CHP.in_Tout_ref) annotation (Line(points={{-110,30},{-43.25,30},{-43.25,-79.75},{74.9,-79.75},{74.9,-66.725}},
-                                                                                                                            color={0,0,127}));
-  connect(Pelset, CHP.in_Pel_ref) annotation (Line(points={{-110,-10},{-56.75,-10},{-56.75,-84.5},{79.75,-84.5},{79.75,-66.725}},
-                                                                                                                              color={0,0,127}));
-  connect(roundPipe1DFV1.outlet, FV502.inlet) annotation (Line(
-      points={{36,-43},{19.5,-43}},
+  connect(EX501.outhot, PL_S500_EX501_ReducerOut.inlet) annotation (Line(
+      points={{-42.5375,6.1875},{-42.5375,-5},{-42.75,-5},{-42.75,-18.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(roundPipe1DFV2.inlet, FV501.inlet) annotation (Line(
-      points={{-3,-57},{-8,-57}},
-      color={140,56,54},
+  connect(MultiPort, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-110,-70},{-88,-70},{-88,-48.25},{-44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV3.outlet, FV501.outlet2) annotation (Line(
-      points={{-13,-35.5},{-13,-52}},
-      color={140,56,54},
+  connect(PL_S500_EX501_ReducerOut.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-44.8,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,-48.5},{-88,-48.25},{
+          -44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV4.inlet, FV502.outlet2) annotation (Line(
-      points={{14.5,-35.5},{14.5,-38}},
-      color={140,56,54},
+  connect(PL_S500_FV502_ReducerHot.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-13.2,-48.25},{-9,-48.25},{-9,-56.5},{-88,-56.5},{-88,-48.25},{-44.8,
+          -48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV3.inlet, ReducerCold.inlet) annotation (Line(
-      points={{-13,-25.5},{-13,-20.5}},
-      color={140,56,54},
+  connect(PL_S500_FV501_CHPWP.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-29,-76.8},{-29,-81.25},{-87.5,-81.25},{-87.5,-70.5},{-88.25,-70.5},{
+          -88.25,-70},{-88,-70},{-88,-48.25},{-44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(ReducerHot.inlet, roundPipe1DFV4.outlet)
-    annotation (Line(
-      points={{14.5,-20.5},{14.5,-25.5}},
-      color={140,56,54},
+  connect(PL_S500_CHPHP_CHP.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{24.75,-76.8},{24.75,-81.5},{-29.25,-81.5},{-29.25,-81.25},{-87.5,-81.25},{
+          -87.5,-70.5},{-88.25,-70.5},{-88.25,-70},{-88,-70},{-88,-48.25},{-44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV5.inlet, ReducerHot.outlet) annotation (Line(
-      points={{14.5,-10.5},{14.5,-15.5}},
-      color={140,56,54},
+  connect(PL_S500_CHP_FV502.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{24.25,-58.7},{24.25,-56.5},{-88,-56.5},{-88,-48.25},{-44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV6.outlet, ReducerCold.outlet) annotation (Line(
-      points={{-13,-10.5},{-13,-15.5}},
-      color={140,56,54},
+  connect(PL_S500_ReducerHot_EX501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-13.2,-23.25},{-9,-23.25},{-9,-56.5},{-88,-56.5},{-88,-48.25},{-44.8,
+          -48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV9.outlet, EX501.incold) annotation (Line(
-      points={{-20,56},{-20,38.75},{-13.2875,38.75},{-13.2875,30.0625}},
-      color={140,56,54},
+  connect(PL_S500_FT501_EX501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-44.05,42},{-87.25,42},{-87.25,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,
+          -48.5},{-88,-48.25},{-44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV7.inlet, EX501.outcold) annotation (Line(
-      points={{20,41.5},{20,38.25},{14.5375,38.25},{14.5375,30.0625}},
-      color={140,56,54},
+  connect(PL_S500_P501_PT501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-19.55,71.5},{-87.5,71.5},{-87.5,41.75},{-86.75,41.75},{-86.75,42},{-87.25,
+          42},{-87.25,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,-48.5},{-88,-48.25},{
+          -44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(roundPipe1DFV7.outlet, P501.inlet) annotation (Line(
-      points={{20,51.5},{20,56.15}},
-      color={140,56,54},
+  connect(PL_S500_EX501_P501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
+      points={{-19.8,42},{-30.5,42},{-30.5,71.5},{-87.5,71.5},{-87.5,41.75},{-86.75,41.75},
+          {-86.75,42},{-87.25,42},{-87.25,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,
+          -48.5},{-88,-48.25},{-44.8,-48.25}},
+      color={255,101,98},
       thickness=0.5));
-  connect(P501.outlet, roundPipe1DFV8.inlet) annotation (Line(
-      points={{20,65.35},{20,71}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV8.outlet, TT502.inlet) annotation (Line(
-      points={{20,81},{20,85.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT502.inlet, PT502.inlet) annotation (Line(
-      points={{20,85.75},{20,88.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(outlet, PT502.inlet) annotation (Line(
-      points={{20,110},{20,88.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV9.inlet, TT501.inlet) annotation (Line(
-      points={{-20,66},{-20,86}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT501.outlet, inlet) annotation (Line(
-      points={{-20,93.75},{-20,110}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FT501.inlet, PT501.inlet) annotation (Line(
-      points={{-20,90.75},{-20,88.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TT501.inlet, PT501.inlet) annotation (Line(
-      points={{-20,86},{-20,88.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV6.inlet, TT503.inlet) annotation (Line(
-      points={{-13,-0.5},{-13,2.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX501.outhot, TT503.inlet) annotation (Line(
-      points={{-13.2875,18.1875},{-13.2875,10.4688},{-13,10.4688},{-13,2.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(EX501.inhot, TT504.inlet) annotation (Line(
-      points={{14.5375,18.1875},{14.5375,10.3438},{14.75,10.3438},{14.75,2.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(roundPipe1DFV5.outlet, TT504.inlet) annotation (Line(
-      points={{14.5,-0.5},{14.5,1},{14.75,1},{14.75,2.5}},
-      color={140,56,54},
-      thickness=0.5));
+  connect(CHPCWP_.m_flow, m_flow_CHP) annotation (Line(points={{-45.05,-61.935},{-94.75,
+          -61.935},{-94.75,-30},{-110,-30}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={            Bitmap(
           extent={{8,-30},{58,30}},
           imageSource="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",

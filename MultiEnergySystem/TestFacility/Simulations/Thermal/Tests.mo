@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.Simulations.Thermal;
+﻿within MultiEnergySystem.TestFacility.Simulations.Thermal;
 package Tests
   extends Modelica.Icons.ExamplesPackage;
   package Systems
@@ -621,7 +621,7 @@ package Tests
 
         parameter DistrictHeatingNetwork.Types.Density rhohotref = 985 "Reference hot water density";
         parameter DistrictHeatingNetwork.Types.Density rhocoldref = 999 "Reference cold water density";
-        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat") "File name of matrix" annotation (
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2407_Test1.mat") "File name of matrix" annotation (
           Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
 
         parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_low_start = 1.4 "Starting mass flow rate rack side";
@@ -631,12 +631,13 @@ package Tests
         parameter String matrixPTo = "PT502" "Matrix name in file";
         parameter String matrixTTi = "TT501" "Matrix name in file";
         parameter String matrixTTo = "TT502" "Matrix name in file";
-        parameter String matrixTTo_CHP = "TT504";
-        parameter String matrixTTi_CHP = "TT503";
-        parameter String matrixtheta = "theta_FCV101" "Matrix name in file";
+        parameter String matrixTTo_CHP = "T2_CHP";
+        parameter String matrixTTi_CHP = "T3_CHP";
+        parameter String matrixtheta = "theta_FCV101";
         parameter String matrixfreq = "f_P501";
-        parameter String matrixFT = "FT501" "Matrix name in file";
-        //parameter String matrixmflowGas = "FT801" "Matrix name in file";
+        parameter String matrixFT = "FT501";
+        parameter String matrixFTCHP = "M1_CHP";
+        //parameter String matrixmflowGas = "FT801";
         parameter String timenoscale = "time" "Matrix name in file";
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
 
@@ -701,13 +702,18 @@ package Tests
           Tout_low_start=Tin_start_CHP,
           Tin_high_start=Tin_start_S5,
           Tout_high_start=Tout_start_S5,
-          PL_S500_FT501_EX501(L=80))
+          PL_S500_FT501_EX501(L=80),
+          EX501(n=5),
+          CHP(
+            initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
+            h=0.2,
+              control_Pel=false))
           annotation (Placement(transformation(extent={{-26,-26},{26,26}})));
         Modelica.Blocks.Sources.Ramp PCHP_m_flow(
           height=0,
           duration=0,
           offset=m_flow_low_start)
-                          annotation (Placement(transformation(extent={{-68.75,-66},{-56,-53}})));
+                          annotation (Placement(transformation(extent={{-90.75,-46},{-78,-33}})));
         Modelica.Blocks.Sources.Ramp ToutSP(
           height=0,
           duration=0,
@@ -715,9 +721,10 @@ package Tests
         Modelica.Blocks.Sources.Ramp PelSP(
           height=5e3*0,
           duration=0,
-          offset=45e3,
+          offset=35e3,
           startTime=1000)
                        annotation (Placement(transformation(extent={{-68,-46},{-56,-34}})));
+        Modelica.Blocks.Sources.TimeTable m_flow_ref_CHP(table=[ts,m_flow_CHP_approx]) annotation (Placement(transformation(extent={{-68,-66},{-56,-54}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -725,13 +732,15 @@ package Tests
         final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
         final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
         final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
-        final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
-        final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
+        final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+        final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
         final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
         final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
+        final parameter Real FTCHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFTCHP, dim[1], dim[2]);
         //final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
+        final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;
         final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
         final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1,1];
         final parameter DistrictHeatingNetwork.Types.Pressure pin_start = PTi[1,1];
@@ -759,16 +768,15 @@ package Tests
           annotation (Line(points={{-55.4,14},{-54,13},{-28.6,13}}, color={0,0,127}));
         connect(GB501_Status.y, combinedHeatPower.status) annotation (Line(points={{-55.4,
                 -24},{-42,-24},{-42,2.6},{-28.6,2.6}}, color={255,0,255}));
-        connect(PCHP_m_flow.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-55.3625,
-                -59.5},{-34,-59.5},{-34,-7.8},{-28.6,-7.8}}, color={0,0,127}));
         connect(ToutSP.y, combinedHeatPower.Toutset) annotation (Line(points={{-75.4,-6},
                 {-72,-6},{-72,4},{-44,4},{-44,7.8},{-28.6,7.8}}, color={0,0,127}));
         connect(PelSP.y, combinedHeatPower.Pelset) annotation (Line(points={{-55.4,-40},{
                 -38,-40},{-38,-2.6},{-28.6,-2.6}}, color={0,0,127}));
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow)
           annotation (Line(points={{33.4,54},{19,54}}, color={0,0,127}));
+        connect(m_flow_ref_CHP.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-55.4,-60},{-34,-60},{-34,-7.8},{-28.6,-7.8}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
-            StopTime=4000,
+            StopTime=6000,
             Tolerance=1e-06,
             __Dymola_Algorithm="Dassl"));
       end TestBase;

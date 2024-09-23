@@ -400,11 +400,19 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
   Modelica.Blocks.Interfaces.RealInput m_flow_CHP "Water mass flow rate through CHP"
     annotation (Placement(transformation(extent={{-120,-40},{-100,-20}}),
         iconTransformation(extent={{-120,-40},{-100,-20}})));
+  Modelica.Blocks.Interfaces.RealOutput TTin_CHP "Inlet temperature of CHP" annotation (
+      Placement(transformation(extent={{100.25,-58.5},{118.25,-40.5}}),
+        iconTransformation(extent={{100.5,-60.25},{120,-40}})));
+  Modelica.Blocks.Interfaces.RealOutput TTout_CHP "Outlet temperature of CHP" annotation
+    (Placement(transformation(extent={{99.75,-76},{117.75,-58}}),iconTransformation(
+          extent={{100.5,-80.25},{120,-60}})));
 equation
 
   fuel.Xi = inStream(inletFuel.Xi);
   fuel.p = inletFuel.p;
   fuel.h = inStream(inletFuel.h_out);
+  TTin_CHP = CHP.Tin;
+  TTout_CHP = CHP.Tout;
   connect(PL_S500_CHP_FV502.inlet,CHP. outlet) annotation (Line(
       points={{29.25,-60.75},{35.75,-60.75},{35.75,-60.225},{43.6,-60.225}},
       color={140,56,54},

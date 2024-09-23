@@ -31,7 +31,9 @@ model ControlledCHP "Model of an ideal controlled CHP"
     Dialog(tab = "Nominal Data"));
 
   // Variables
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel "mass flowrate of the motor fuel";
+  //DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_ref(start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
   //DistrictHeatingNetwork.Types.Power Pheat_in;
   DistrictHeatingNetwork.Types.Power Pth_ref "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
@@ -58,7 +60,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
 
 
   Modelica.Blocks.Logical.Hysteresis hysteresis(
-    uLow=65 + 273.15,
+    uLow=63 + 273.15,
     uHigh=70 + 273.15,
     pre_y_start=true) annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=Tin)
@@ -83,13 +85,16 @@ equation
   Pheat = Pel_actual*eta_th_nom/eta_el_nom;
 
   // Fuel flow calculations
-  Pth_ref = m_flow_fuel*fuel.HHV_mix*etanom; // Computation of m_flow_fuel
+  //Pth_ref = m_flow_fuel*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
+  Pth_ref = m_flow_fuel_ref*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";
   inletfuel.Xi = fuel.Xi_start "Dummy equation considering not fuel flow reversal";
   fuel.h = inStream(inletfuel.h_out);
   fuel.Xi = inStream(inletfuel.Xi);
   fuel.p = 1.013e5;
-  m_flow_fuel = inletfuel.m_flow;
+  //m_flow_fuel = inletfuel.m_flow;
+  m_flow_fuel_actual = inletfuel.m_flow;
+  m_flow_fuel_actual = min(m_flow_fuel_nom, m_flow_fuel_ref);
 
   // First-order response for electric power
   tau_el * der(Pel_out) + Pel_out = Pel_actual;

@@ -706,7 +706,7 @@ package Tests
           EX501(n=5),
           CHP(
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-            h=0.2,
+            h=1,
               control_Pel=false))
           annotation (Placement(transformation(extent={{-26,-26},{26,26}})));
         Modelica.Blocks.Sources.Ramp PCHP_m_flow(
@@ -745,6 +745,16 @@ package Tests
           annotation (Placement(transformation(extent={{60,2},{80,22}})));
         Modelica.Blocks.Sources.TimeTable TT502_ref(table=[ts,TTo])
           annotation (Placement(transformation(extent={{40,12},{50,22}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex val_TTin_CHP
+          "Validation of outlet temperature TT502"
+          annotation (Placement(transformation(extent={{60,-30},{80,-10}})));
+        Modelica.Blocks.Sources.TimeTable TTinCHP_ref(table=[ts,TTi_CHP])
+          annotation (Placement(transformation(extent={{40,-20},{50,-10}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex val_TTout_CHP
+          "Validation of outlet temperature TT502"
+          annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
+        Modelica.Blocks.Sources.TimeTable TToutCHP_ref(table=[ts,TTo_CHP])
+          annotation (Placement(transformation(extent={{40,-50},{50,-40}})));
       protected
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
         final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;
@@ -786,6 +796,15 @@ package Tests
           annotation (Line(points={{28.6,7.8},{42,7.8},{42,7},{58,7}}, color={0,0,127}));
         connect(TT502_ref.y, val_TT502.u_meas)
           annotation (Line(points={{50.5,17},{58,17}}, color={0,0,127}));
+        connect(TTinCHP_ref.y, val_TTin_CHP.u_meas)
+          annotation (Line(points={{50.5,-15},{58,-15}}, color={0,0,127}));
+        connect(combinedHeatPower.TTin_CHP, val_TTin_CHP.u_sim) annotation (Line(points={
+                {28.665,-13.0325},{34,-13.0325},{34,-25},{58,-25}}, color={0,0,127}));
+        connect(TToutCHP_ref.y, val_TTout_CHP.u_meas)
+          annotation (Line(points={{50.5,-45},{58,-45}}, color={0,0,127}));
+        connect(val_TTout_CHP.u_sim, combinedHeatPower.TTout_CHP) annotation (Line(points
+              ={{58,-55},{48,-55},{48,-56},{32,-56},{32,-18.2325},{28.665,-18.2325}},
+              color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=8000,
             Tolerance=1e-06,

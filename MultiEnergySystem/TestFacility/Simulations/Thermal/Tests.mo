@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.TestFacility.Simulations.Thermal;
+within MultiEnergySystem.TestFacility.Simulations.Thermal;
 package Tests
   extends Modelica.Icons.ExamplesPackage;
   package Systems
@@ -739,6 +739,13 @@ package Tests
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
         final parameter Real FTCHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFTCHP, dim[1], dim[2]);
         //final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
+      public
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex val_TT502
+          "Validation of outlet temperature TT502"
+          annotation (Placement(transformation(extent={{60,2},{80,22}})));
+        Modelica.Blocks.Sources.TimeTable TT502_ref(table=[ts,TTo])
+          annotation (Placement(transformation(extent={{40,12},{50,22}})));
+      protected
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
         final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;
         final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
@@ -775,8 +782,12 @@ package Tests
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow)
           annotation (Line(points={{33.4,54},{19,54}}, color={0,0,127}));
         connect(m_flow_ref_CHP.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-55.4,-60},{-34,-60},{-34,-7.8},{-28.6,-7.8}}, color={0,0,127}));
+        connect(combinedHeatPower.TTout, val_TT502.u_sim)
+          annotation (Line(points={{28.6,7.8},{42,7.8},{42,7},{58,7}}, color={0,0,127}));
+        connect(TT502_ref.y, val_TT502.u_meas)
+          annotation (Line(points={{50.5,17},{58,17}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
-            StopTime=6000,
+            StopTime=8000,
             Tolerance=1e-06,
             __Dymola_Algorithm="Dassl"));
       end TestBase;

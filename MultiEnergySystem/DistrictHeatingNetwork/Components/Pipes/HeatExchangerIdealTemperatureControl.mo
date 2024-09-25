@@ -63,6 +63,8 @@ model HeatExchangerIdealTemperatureControl
   Types.Pressure pin_cold "Cold fluid inlet pressure";
   Types.Pressure pout_cold "Cold fluid outlet pressure";
 
+  parameter Types.Power Pset = 40e3 "Required heat Power";
+
   Types.Power Qtot "Heat Power";
 //   Real LMTD "Log mean temperature difference";
 //   Real LMTD_rel;
@@ -107,7 +109,7 @@ equation
   // Boundary Conditions
 
   inhot.m_flow = m_flow_hot;
-  incold.m_flow = m_flow_cold;
+  //incold.m_flow = m_flow_cold;
   inhot.p = pin_hot;
   outhot.p = pout_hot;
   incold.p = pin_cold;
@@ -130,6 +132,7 @@ equation
   pin_hot - pout_hot = k_hot*m_flow_hot "Momentum Balance Hot Side";
   pin_cold - pout_cold = k_cold*m_flow_cold "Momentum Balance Cold Side";
   Qtot = -m_flow_cold*(hin_cold-hout_cold);
+  Qtot = Pset;
 //   LMTD = ((Tin_hot-Tout_cold)-(Tout_hot-Tin_cold))/log((Tin_hot-Tout_cold)/(Tout_hot-Tin_cold));
 //   LMTD_rel = LMTD/LMTD_nom;
 

@@ -42,16 +42,16 @@ equation
       points={{40,18},{40,2.8},{12,2.8}},
       color={140,56,54},
       thickness=0.5));
-  connect(HX.outcold, sinkCold_E701.inlet) annotation (Line(
-      points={{-32,2.8},{-42,2.8},{-42,4},{-55,4},{-55,14}},
-      color={140,56,54},
-      thickness=0.5));
   connect(sourceHot_E701.outlet, HX.inhot) annotation (Line(
       points={{-54,-30},{-56,-30},{-56,-14.8},{-32,-14.8}},
       color={140,56,54},
       thickness=0.5));
   connect(sinkHot_E701.inlet, HX.outhot) annotation (Line(
       points={{37,-32},{37,-14.8},{12,-14.8}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(HX.outcold, sinkCold_E701.inlet) annotation (Line(
+      points={{-32,2.8},{-44,2.8},{-44,6},{-55,6},{-55,14}},
       color={140,56,54},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(

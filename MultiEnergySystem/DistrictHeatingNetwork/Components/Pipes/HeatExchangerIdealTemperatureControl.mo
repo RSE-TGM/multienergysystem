@@ -13,10 +13,10 @@ model HeatExchangerIdealTemperatureControl
 
   // HX Parameters
   parameter Real LMTD_nom = 25.62051491 "Nominal LMTD";
-  parameter Types.Temperature Tout_hot_set=200 + 273.15
+  parameter Types.Temperature Tout_hot_set=65 + 273.15
     "Desired outlet temperature of the cold fluid";
-  parameter Real k_hot(unit = "Pa/(kg/s)") = (pin_start_hot - pout_start_hot)/w_start_hot "Pressure loss across the hot side";
-  parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_start_cold - pout_start_cold)/w_start_cold "Pressure loss across the cold side";
+  parameter Real k_hot(unit = "Pa/(kg/s)") = (pin_start_hot - pout_start_hot)/m_flow_start_hot "Pressure loss across the hot side";
+  parameter Real k_cold(unit = "Pa/(kg/s)") = (pin_start_cold - pout_start_cold)/m_flow_start_cold "Pressure loss across the cold side";
 
   parameter Types.SpecificEnthalpy hin_start_hot
     "Specific Enthalpy inlet start value of hot fluid"    annotation (Dialog(tab="Initialisation"));
@@ -34,7 +34,7 @@ model HeatExchangerIdealTemperatureControl
     "Temperature start value of fluid at the start of the heat exchanger"    annotation (Dialog(tab="Initialisation"));
   parameter Types.Temperature Tout_start_hot
     "Temperature start value of fluid at the end of the heat exchanger"    annotation (Dialog(tab="Initialisation"));
-  parameter Types.MassFlowRate w_start_hot "Start value for mass flow rate"    annotation (Dialog(tab="Initialisation"));
+  parameter Types.MassFlowRate m_flow_start_hot "Start value for mass flow rate"    annotation (Dialog(tab="Initialisation"));
   parameter Types.Pressure pin_start_cold
     "Pressure start value of ingoing fluid" annotation (Dialog(tab="Initialisation"));
   parameter Types.Pressure pout_start_cold
@@ -43,7 +43,7 @@ model HeatExchangerIdealTemperatureControl
     "Temperature start value of fluid at the start of the heat exchanger"    annotation (Dialog(tab="Initialisation"));
   parameter Types.Temperature Tout_start_cold
     "Temperature start value of fluid at the end of the heat exchanger"    annotation (Dialog(tab="Initialisation"));
-  parameter Types.MassFlowRate w_start_cold "Start value for mass flow rate"    annotation (Dialog(tab="Initialisation"));
+  parameter Types.MassFlowRate m_flow_start_cold "Start value for mass flow rate"    annotation (Dialog(tab="Initialisation"));
 
   // Variables
   Types.MassFlowRate m_flow_hot "Hot fluid mass flowrate";
@@ -52,7 +52,7 @@ model HeatExchangerIdealTemperatureControl
   Types.Temperature Tout_hot "Hot fluid outlet temperature";
   Types.Temperature Tin_cold "Cold fluid inlet temperature";
   Types.Temperature Tout_cold "Cold fluid outlet temperature";
-  Types.Temperature Tout_hot_min "Maximum temperature between Tout_hot_set and Tin_cold";
+  Types.Temperature Tout_hot_min "Maximum temperature between Tout_hot_set and Tin_hot";
   Types.SpecificEnthalpy hin_hot "Hot fluid inlet specific enthalpy";
   Types.SpecificEnthalpy hout_hot(start=hout_start_hot)
                                                        "Hot fluid outlet specific enthalpy";
@@ -82,7 +82,7 @@ model HeatExchangerIdealTemperatureControl
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot    annotation (Placement(transformation(extent={{92,-52},{112,-32}}), iconTransformation(
           extent={{80,-60},{120,-20}})));
 equation
-  Tout_hot_min = max(Tout_hot_set, Tin_cold);
+  Tout_hot_min = min(Tout_hot_set, Tin_hot);
   //fluidOut_cold.T = Tout_hot_min;
   fluidOut_hot.T = Tout_hot_min;
 
@@ -133,7 +133,8 @@ equation
 //   LMTD = ((Tin_hot-Tout_cold)-(Tout_hot-Tin_cold))/log((Tin_hot-Tout_cold)/(Tout_hot-Tin_cold));
 //   LMTD_rel = LMTD/LMTD_nom;
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Rectangle(origin={0.42,0.01},    lineColor = {159, 159, 223}, fillColor = {230, 230, 230},
+  annotation (Icon(                                             graphics={Rectangle(origin={-1.58,
+              0.01},                                                                                       lineColor = {159, 159, 223}, fillColor = {230, 230, 230},
             fillPattern =                                                                                                     FillPattern.Solid,
             lineThickness =                                                                                                                                      0.75, extent = {{-100.88, 99.41}, {100.88, -99.41}}), Text(origin={-7,
               -116},                                                                                                                                                                                                        extent = {{-43, 14}, {43, -14}}, textString = "%name"), Line(origin={

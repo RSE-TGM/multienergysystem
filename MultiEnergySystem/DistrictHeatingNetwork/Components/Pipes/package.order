@@ -5,3 +5,4 @@ pipePF
 RoundPipe1DFV
 RoundPipeFV
 BrazedPlateHeatExchanger
+HeatExchangerIdealTemperatureControl

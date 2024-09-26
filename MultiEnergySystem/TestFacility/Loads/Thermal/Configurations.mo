@@ -1533,14 +1533,22 @@ package Configurations "Different possible configurations for the loads"
         annotation (Placement(transformation(extent={{-6,6},{6,-6}},
             rotation=-90,
             origin={704,-360})));
-      DistrictHeatingNetwork.Components.Fittings.Junction junction4
+      DistrictHeatingNetwork.Components.Fittings.Junction2 junction4
         annotation (Placement(transformation(extent={{6,-6},{-6,6}},
             rotation=-90,
             origin={826,-360})));
-      DistrictHeatingNetwork.Components.Fittings.Junction junction5
+      DistrictHeatingNetwork.Components.Fittings.Junction2 junction5
         annotation (Placement(transformation(extent={{-6,6},{6,-6}},
             rotation=0,
             origin={558,-400})));
+      DistrictHeatingNetwork.Components.Fittings.Junction2 junction6
+        annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+            rotation=0,
+            origin={398,-400})));
+      DistrictHeatingNetwork.Components.Fittings.Junction2 junction7
+        annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+            rotation=0,
+            origin={258,-400})));
     equation
       connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
           points={{138,-132},{138,-140}},
@@ -1810,28 +1818,8 @@ package Configurations "Different possible configurations for the loads"
           points={{398,-330},{398,-368}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_EX721_EX711_hot.inlet,PL_TCV711_rackUsersOut. outlet) annotation (
-          Line(
-          points={{468,-400},{398,-400},{398,-388}},
-          color={140,56,54},
-          thickness=0.5));
       connect(TCV721.outlet,PL_TCV721_rackUsersOut. inlet) annotation (Line(
           points={{557.5,-330},{557.5,-340.5},{558,-340.5},{558,-369}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(PL_EX711_EX701_hot.outlet,PL_TCV711_rackUsersOut. outlet) annotation (
-         Line(
-          points={{328,-400},{398,-400},{398,-388}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(PL_EX711_EX701_hot.inlet,PL_TCV731_rackUsersOut. outlet) annotation (
-          Line(
-          points={{308,-400},{258,-400},{258,-388}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(PL_EX701_EX731_hot.outlet,PL_TCV731_rackUsersOut. outlet) annotation (
-         Line(
-          points={{178,-400},{258,-400},{258,-388}},
           color={140,56,54},
           thickness=0.5));
       connect(PL_EX701_EX731_hot.inlet,PL_TCV701_rackUsersOut. outlet) annotation (
@@ -1985,6 +1973,30 @@ package Configurations "Different possible configurations for the loads"
           thickness=0.5));
       connect(junction5.inlet, PL_EX721_EX711_hot.outlet) annotation (Line(
           points={{552,-400},{488,-400}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction6.inoutlet, PL_TCV711_rackUsersOut.outlet) annotation (Line(
+          points={{398,-394},{398,-388}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction6.inlet, PL_EX711_EX701_hot.outlet) annotation (Line(
+          points={{392,-400},{328,-400}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_EX721_EX711_hot.inlet, junction6.outlet) annotation (Line(
+          points={{468,-400},{404,-400}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction7.inoutlet, PL_TCV731_rackUsersOut.outlet) annotation (Line(
+          points={{258,-394},{258,-388}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_EX711_EX701_hot.inlet, junction7.outlet) annotation (Line(
+          points={{308,-400},{264,-400}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction7.inlet, PL_EX701_EX731_hot.outlet) annotation (Line(
+          points={{252,-400},{178,-400}},
           color={140,56,54},
           thickness=0.5));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

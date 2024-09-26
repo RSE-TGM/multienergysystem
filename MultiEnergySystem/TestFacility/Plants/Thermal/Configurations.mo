@@ -439,7 +439,7 @@ package Configurations "Different possible configurations of the heat generating
       MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC02(redeclare model Medium = MediumCP, Kv = DistrictHeatingNetwork.Data.ValveData.FCVC02.Kv, openingChar=DistrictHeatingNetwork.Data.ValveData.FCVC02.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = T_start_hot, pin_start=200000,                                                                                                                                                                                                        q_m3h_start = q_m3h_rackHot) annotation (
         Placement(transformation(extent={{10,10},{-10,-10}},      rotation = -90, origin = {690, 235})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC01(redeclare model Medium = MediumCP, Kv = DistrictHeatingNetwork.Data.ValveData.FCVC01.Kv, openingChar=DistrictHeatingNetwork.Data.ValveData.FCVC01.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = 60 + 273.15, pin_start=200000)                                                                                                                                                                                                         annotation (
-        Placement(transformation(extent={{10,10},{-10,-10}},      rotation = -90, origin = {250, 235})));
+        Placement(transformation(extent={{5,5},{-5,-5}},          rotation = -90, origin={249,223})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S100_S400(redeclare model Medium = MediumCP, L = L_rCD_H1, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of gas boiler and the outlet of electric boiler" annotation (
         Placement(transformation(extent = {{-10.25, 10.25}, {10.25, -10.25}}, rotation = 180, origin = {-267.75, 44.75})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S400_S300(redeclare model Medium = MediumCP, L = L_rCD_H2, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of the electric boiler and the outlet of heat pump HP301" annotation (
@@ -472,8 +472,6 @@ package Configurations "Different possible configurations of the heat generating
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {-50, 205})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_hot(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_H, t = t_rL_H, pin_start = pin_start_Users - 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {190, 205})));
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV FCVC01_rackL4L5_hot(redeclare model Medium = MediumCP, L = L_FCVC01_rL4L5_H, t = t_rL_H, pin_start = pin_start_Users - 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {290, 205})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_hot(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {410, 205})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL5L6_rackL6L7_hot(redeclare model Medium = MediumCP, L = L_rL5L6_rL6L7_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
@@ -483,9 +481,7 @@ package Configurations "Different possible configurations of the heat generating
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL2L3_cold(redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pout_start_Users - 0.03e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
         Placement(transformation(extent={{11,-11},{-11,11}},      rotation = 0, origin={-71,241})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_cold(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_C, t = t_rL_C, pin_start = pout_start_Users - 0.01e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
-        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin = {220, 265})));
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV FCVC01_rackL4L5_cold(redeclare model Medium = MediumCP, L = L_FCVC01_rL4L5_C, t = t_rL_C, pin_start = pin_start_Users - 0.01e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
-        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin = {320, 265})));
+        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={210,241})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_cold(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_C, t = t_rL_C, pin_start = pout_start_Users, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin = {440, 265})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL5L6_rackL6L7_cold(redeclare model Medium = MediumCP, L = L_rL5L6_rL6L7_C, t = t_rL_C, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
@@ -501,7 +497,7 @@ package Configurations "Different possible configurations of the heat generating
       MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08 "Pressure sensor at the inlet of valve FCVC01" annotation (
         Placement(transformation(extent = {{220, 207}, {228, 199}})));
       MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07 "Pressure sensor at the outlet of valve FCVC01" annotation (
-        Placement(transformation(extent = {{234, 263}, {242, 271}})));
+        Placement(transformation(extent={{230,237},{238,245}})));
       Systems.CirculationPump S900(
         n=3,
         pumpcorrectionfactor=pumpcorrectionfactor,
@@ -530,9 +526,29 @@ package Configurations "Different possible configurations of the heat generating
         h_outcold=0,
         t=t,
         Di=Di) annotation (Placement(transformation(extent={{24,178},{114,268}})));
+      DistrictHeatingNetwork.Components.Fittings.Junction junctionHotFCVC01 annotation (Placement(transformation(extent={{244,210},{254,200}})));
+      DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdFCVC01 annotation (Placement(transformation(extent={{254,236},{244,246}})));
+      Systems.ConnectorTypeI rackL4L5(
+        redeclare model Medium = MediumCP,
+        hctype=hctype,
+        n=n,
+        q_m3h_line_start=q_m3h_rackHot/2,
+        q_m3h_load_start=q_m3h_rackHot/4,
+        T_start_hot=T_start_hot,
+        T_start_cold=T_start_cold,
+        pin_start_hot=pin_start_Users,
+        pin_start_cold=pout_start_Users - 0.02e5,
+        L_inhot=L_FCVC01_rL4L5_H,
+        L_outhot=0.2,
+        L_incold=0.2,
+        L_outcold=L_FCVC01_rL4L5_C,
+        h_inhot=0,
+        h_outhot=0,
+        h_incold=0,
+        h_outcold=0,
+        t=t,
+        Di=Di) annotation (Placement(transformation(extent={{282,178},{372,268}})));
     equation
-      connect(FCVC01.outlet, rackL3L4_FCVC01_cold.inlet) annotation (
-        Line(points = {{250, 245}, {250, 265}, {230, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackCD_Hot_S400_S300.outlet, rackCD_Hot_S300_S500.inlet) annotation (
         Line(points = {{-358, 45}, {-418, 45}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackCD_Hot_S300_S500.outlet, rackCD_Hot_S500_SXXX.inlet) annotation (
@@ -558,12 +574,6 @@ package Configurations "Different possible configurations of the heat generating
         Line(points = {{-506.5, 5.25}, {-470, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackCD_Cold_S300_S300.outlet, rackCD_Cold_S300_S400.inlet) annotation (
         Line(points = {{-448.5, 5.25}, {-430, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(rackL3L4_FCVC01_hot.outlet, FCVC01_rackL4L5_hot.inlet) annotation (
-        Line(points = {{200, 205}, {280, 205}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(FCVC01_rackL4L5_hot.outlet, rackL4L5_rackL5L6_hot.inlet) annotation (
-        Line(points = {{300, 205}, {400, 205}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(FCVC01.inlet, FCVC01_rackL4L5_hot.inlet) annotation (
-        Line(points = {{250, 225}, {250, 205}, {280, 205}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL4L5_rackL5L6_hot.outlet, rackL5L6_rackL6L7_hot.inlet) annotation (
         Line(points = {{420, 205}, {520, 205}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL5L6_rackL6L7_hot.outlet, rackL6L7_FCVC02_hot.inlet) annotation (
@@ -578,18 +588,12 @@ package Configurations "Different possible configurations of the heat generating
         Line(points = {{450, 265}, {550, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL5L6_rackL6L7_cold.inlet, rackL6L7_FCVC02_cold.outlet) annotation (
         Line(points = {{570, 265}, {650, 265}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(rackL4L5_rackL5L6_cold.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
-        Line(points = {{430, 265}, {330, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(FTA12.outlet, FCVC02.inlet) annotation (
         Line(points = {{672.4, 204.6}, {690, 204.6}, {690, 225}}, color = {140, 56, 54}, thickness = 0.5));
       connect(FTA12.outlet, PTA20.inlet) annotation (
         Line(points = {{672.4, 204.6}, {681, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (
         Line(points = {{200, 205}, {212, 205}, {212, 204.6}, {224, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(FCVC01.outlet, PTA07.inlet) annotation (
-        Line(points = {{250, 245}, {250, 265}, {238, 265.4}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(FCVC01_rackL4L5_cold.outlet, rackL3L4_FCVC01_cold.inlet) annotation (
-        Line(points = {{310, 265}, {230, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(FV933.outlet, rackCD_Hot_S100_S400.inlet) annotation (
         Line(points = {{-223, 45}, {-237.75, 45}, {-237.75, 44.75}, {-257.5, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (
@@ -622,13 +626,51 @@ package Configurations "Different possible configurations of the heat generating
           points={{17.7,241},{-60,241}},
           color={140,56,54},
           thickness=0.5));
+      connect(junctionHotFCVC01.inoutlet, FCVC01.inlet) annotation (Line(
+          points={{249,210},{249,218}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junctionHotFCVC01.inlet, PTA08.inlet) annotation (Line(
+          points={{244,205},{235,205},{235,204.6},{224,204.6}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junctionColdFCVC01.inoutlet, FCVC01.outlet) annotation (Line(
+          points={{249,236},{249,228}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PTA07.inlet, rackL3L4_FCVC01_cold.inlet) annotation (Line(
+          points={{234,239.4},{234,241},{220,241}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL4L5.inletHot, junctionHotFCVC01.outlet) annotation (Line(
+          points={{275.7,205},{254,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL4L5_rackL5L6_hot.inlet, rackL4L5.outletHot) annotation (Line(
+          points={{400,205},{384,205},{384,205},{378.3,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL4L5.outletCold, junctionColdFCVC01.inlet) annotation (Line(
+          points={{275.7,241},{254,241}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junctionColdFCVC01.outlet, rackL3L4_FCVC01_cold.inlet) annotation (Line(
+          points={{244,241},{240,241},{240,240},{236,240},{236,241},{220,241}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL4L5_rackL5L6_cold.outlet, rackL4L5.inletCold) annotation (Line(
+          points={{430,265},{412,265},{412,241},{378.3,241}},
+          color={140,56,54},
+          thickness=0.5));
       connect(rackL3L4_FCVC01_cold.outlet, rackL3L4.inletCold) annotation (Line(
-          points={{210,265},{190,265},{190,264},{164,264},{164,241},{120.3,241}},
+          points={{200,241},{120.3,241}},
           color={140,56,54},
           thickness=0.5));
       annotation (
         Diagram(coordinateSystem(extent = {{-900, -500}, {900, 320}}), graphics={  Text(extent={{-82,187},{-22,149}},     textColor = {28, 108, 200}, textString = "RackL2L3_hot"), Text(extent={{-8,309},{52,269}},      textColor = {28, 108, 200}, textString = "RackL2L3_cold"), Text(extent = {{-590, 105}, {-460, 67}}, textColor = {28, 108, 200}, textString = "Rack C/D"), Text(extent={{-162,
-                  181},{-102,143}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_hot"), Text(extent = {{320, 217}, {380, 179}}, textColor = {28, 108, 200}, textString = "RackL4L5_hot"), Text(extent = {{442, 217}, {502, 179}}, textColor = {28, 108, 200}, textString = "RackL5L6_hot"), Text(extent = {{558, 217}, {618, 179}}, textColor = {28, 108, 200}, textString = "RackL6L7_hot"),                                                                                                    Text(extent = {{350, 291}, {410, 251}}, textColor = {28, 108, 200}, textString = "RackL4L5_cold"), Text(extent = {{470, 291}, {530, 251}}, textColor = {28, 108, 200}, textString = "RackL5L6_cold"),
+                  181},{-102,143}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_hot"), Text(extent={{116,123},
+                  {176,85}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL4L5_hot"), Text(extent = {{442, 217}, {502, 179}}, textColor = {28, 108, 200}, textString = "RackL5L6_hot"), Text(extent = {{558, 217}, {618, 179}}, textColor = {28, 108, 200}, textString = "RackL6L7_hot"),                                                                                                    Text(extent={{100,153},
+                  {160,113}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL4L5_cold"), Text(extent = {{470, 291}, {530, 251}}, textColor = {28, 108, 200}, textString = "RackL5L6_cold"),
                                                                                                                                                                                                         Text(extent={{-118,
                   311},{-58,271}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_cold")}),
         Icon(coordinateSystem(grid = {0.5, 0.5})),

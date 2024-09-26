@@ -50,10 +50,6 @@ package Configurations
         Line(points = {{258, -50}, {256, -50}, {256, 60}, {618, 60}, {618, 205}, {640, 205}}, color = {140, 56, 54}, thickness = 0.5));
       connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation (
         Line(points = {{298, -50}, {298, 38}, {636, 38}, {636, 265}, {650, 265}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(PL721_rackL4L5_TT722.inlet, rackL4L5_rackL5L6_hot.inlet) annotation (
-        Line(points = {{558, -46}, {558, 132}, {330, 132}, {330, 205}, {400, 205}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(PL721_FT721_rackL4L5.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
-        Line(points = {{598, -46}, {598, 158}, {358, 158}, {358, 264}, {354, 264}, {354, 265}, {330, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
           points={{46.5,171.7},{46.5,100},{398,100},{398,-46}},
           color={140,56,54},
@@ -68,6 +64,14 @@ package Configurations
           thickness=0.5));
       connect(PL701_FT701_rackL2L3.outlet, S900_rackL2L3_cold.inlet) annotation (Line(
           points={{138,-48},{138,82},{-4,82},{-4,241},{-60,241}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
+          points={{304.5,171.7},{304.5,120},{558,120},{558,-46}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL721_FT721_rackL4L5.outlet, rackL4L5.inletComp) annotation (Line(
+          points={{598,-46},{596,-46},{596,154},{349.95,154},{349.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       annotation (

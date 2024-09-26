@@ -34,8 +34,8 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
   ////////////////////////////////////
   // Start values
   ////////////////////////////////////
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_low_start = 1.50 "Starting mass flow rate rack side";
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_high_start = 1.70 "Starting mass flow rate CHP side";
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_low_start = 1.50 "Starting mass flow rate CHP side";
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_high_start = 1.70 "Starting mass flow rate rack side";
   parameter DistrictHeatingNetwork.Types.Temperature Tin_low_start = 80 + 273.15 "Starting Inlet temperature HX501 CHP side";
   parameter DistrictHeatingNetwork.Types.Temperature Tout_low_start = 70 + 273.15 "Starting Outlet temperature HX501 CHP side";
   parameter DistrictHeatingNetwork.Types.Temperature Tin_high_start = 60 + 273.15 "Starting Inlet temperature HX501 rack side";
@@ -156,8 +156,8 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
         extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-15.25,-48.25})));
-  DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange ReducerCold(D_i=Di_CHP, D_o
-      =Di_S5)                                                             "Pipe fitting reducer in the cold side"
+  DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange ReducerCold(D_i=Di_CHP, D_o=
+       Di_S5)                                                             "Pipe fitting reducer in the cold side"
     annotation (Placement(transformation(
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
@@ -403,8 +403,8 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
   Modelica.Blocks.Interfaces.RealOutput TTin_CHP "Inlet temperature of CHP" annotation (
       Placement(transformation(extent={{100.25,-58.5},{118.25,-40.5}}),
         iconTransformation(extent={{100.5,-60.25},{120,-40}})));
-  Modelica.Blocks.Interfaces.RealOutput TTout_CHP "Outlet temperature of CHP" annotation
-    (Placement(transformation(extent={{99.75,-76},{117.75,-58}}),iconTransformation(
+  Modelica.Blocks.Interfaces.RealOutput TTout_CHP "Outlet temperature of CHP" annotation (
+     Placement(transformation(extent={{99.75,-76},{117.75,-58}}),iconTransformation(
           extent={{100.5,-80.25},{120,-60}})));
 equation
 
@@ -459,8 +459,8 @@ equation
       points={{-42.5,-69.5},{-42.5,-74.75},{-34,-74.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S500_FV501_CHPWP.outlet,variableDifferentialPressurePump. inlet) annotation
-    (Line(
+  connect(PL_S500_FV501_CHPWP.outlet,variableDifferentialPressurePump. inlet) annotation (
+     Line(
       points={{-24,-74.75},{-3.25,-74.75}},
       color={140,56,54},
       thickness=0.5));

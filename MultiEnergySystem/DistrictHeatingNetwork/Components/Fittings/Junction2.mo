@@ -1,10 +1,10 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Fittings;
-model Junction
+model Junction2
   Interfaces.FluidPortInlet inlet "First Inlet" annotation (Placement(transformation(
           extent={{-120,-20},{-80,20}}), iconTransformation(extent={{-120,-20},{-80,20}})));
   Interfaces.FluidPortOutlet outlet "first outlet" annotation (Placement(transformation(
           extent={{80,-20},{120,20}}), iconTransformation(extent={{80,-20},{120,20}})));
-  Interfaces.FluidPortOutlet inoutlet annotation (Placement(transformation(extent={{-20,
+  Interfaces.FluidPortInlet inoutlet "Second Inlet" annotation (Placement(transformation(extent={{-20,
             -120},{20,-80}}), iconTransformation(extent={{-20,-120},{20,-80}})));
 equation
   connect(inlet, inoutlet) annotation (Line(
@@ -25,4 +25,4 @@ equation
               FillPattern.Solid,                                                                                                                          extent={{-100,36},
               {100,-36}},
           radius=5)}), Diagram(coordinateSystem(preserveAspectRatio=false)));
-end Junction;
+end Junction2;

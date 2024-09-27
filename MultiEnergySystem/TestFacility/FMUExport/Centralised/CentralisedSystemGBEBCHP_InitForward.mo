@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemGBEBCHP_InitForward
-  extends CentralisedSystemGBEB_InitForward(sourceGas(computeEnergyVariables=true), RR01(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState));
+  extends CentralisedSystemGBEB_InitForward(sourceGas(computeEnergyVariables=true));
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
@@ -37,13 +37,13 @@ model CentralisedSystemGBEBCHP_InitForward
   parameter DistrictHeatingNetwork.Types.Temperature TT502_des = 80 + 273.15 "Desired temperature at the outlet of S500";
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h*980/3600;
 
-  Plants.Thermal.Systems.CHP cHP(
+  Plants.Thermal.Systems.CHP S500(
     n=n,
     Tin_low_start=Tin_Source_start_S5,
     Tout_low_start=Tout_Source_start_S5,
     Tin_high_start=Tin_User_start_S5,
     Tout_high_start=Tout_User_start_S5,
-    Pel_SP=PeCHP)                annotation (Placement(transformation(extent={{-614,-324},{-528,-238}})));
+    Pel_SP=PeCHP) annotation (Placement(transformation(extent={{-614,-324},{-528,-238}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_hot1(
     L=5,
     t=t_S5,
@@ -130,11 +130,11 @@ equation
       thickness=0.5));
   connect(suddenAreaChange3.outlet,S5_PL_CHP_EX501_cold1. inlet) annotation (
     Line(points={{-588,-186},{-588,-197}},    color = {140, 56, 54}, thickness = 0.5));
-  connect(S5_PL_CHP_EX501_cold1.outlet, cHP.inlet) annotation (Line(
+  connect(S5_PL_CHP_EX501_cold1.outlet, S500.inlet) annotation (Line(
       points={{-588,-217},{-588,-224.275},{-587.77,-224.275},{-587.77,-231.55}},
       color={140,56,54},
       thickness=0.5));
-  connect(S5_PL_CHP_EX501_hot1.inlet, cHP.outlet) annotation (Line(
+  connect(S5_PL_CHP_EX501_hot1.inlet, S500.outlet) annotation (Line(
       points={{-552,-217},{-552,-224.275},{-553.37,-224.275},{-553.37,-231.55}},
       color={140,56,54},
       thickness=0.5));
@@ -146,22 +146,22 @@ equation
       points={{-552,-166},{-552,-36},{-484,-36},{-484,45},{-500,45}},
       color={140,56,54},
       thickness=0.5));
-  connect(CHP501Status.y, cHP.status) annotation (Line(points={{-661,-278},{-620,-278},{-620,-276.7},{-618.3,-276.7}}, color={255,0,255}));
-  connect(P501Dynamics.y, cHP.omega) annotation (Line(points={{-659,-210},{-640,-210},{-640,-250.9},{-618.3,-250.9}}, color={0,0,127}));
+  connect(CHP501Status.y, S500.status) annotation (Line(points={{-661,-278},{-620,-278},{-620,-276.7},{-618.3,-276.7}}, color={255,0,255}));
+  connect(P501Dynamics.y, S500.omega) annotation (Line(points={{-659,-210},{-640,-210},{-640,-250.9},{-618.3,-250.9}}, color={0,0,127}));
   connect(P501Dynamics.u, omegaP501Offset.u) annotation (Line(points={{-682,-210},{-697,-210}}, color={0,0,127}));
-  connect(m_flow_ref_CHP.y, cHP.m_flow_CHP) annotation (Line(points={{-659,-340},{-638,-340},{-638,-293.9},{-618.3,-293.9}}, color={0,0,127}));
-  connect(PelSP.y, cHP.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));
-  connect(ToutCHP501Offset.u, cHP.Toutset) annotation (Line(points={{-697,-256},{-646,-256},{-646,-268.1},{-618.3,-268.1}}, color={0,0,127}));
-  connect(FCV501theta.y, cHP.theta) annotation (Line(points={{-659,-236},{-642,-236},{-642,-259.5},{-618.3,-259.5}}, color={0,0,127}));
-  connect(cHP.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-510,-250.9},{-510,-230},{-498,-230}}, color={0,0,127}));
-  connect(cHP.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-510.85,-268.1},{-510.85,-270},{-498,-270}}, color={0,0,127}));
+  connect(m_flow_ref_CHP.y, S500.m_flow_CHP) annotation (Line(points={{-659,-340},{-638,-340},{-638,-293.9},{-618.3,-293.9}}, color={0,0,127}));
+  connect(PelSP.y, S500.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));
+  connect(ToutCHP501Offset.u, S500.Toutset) annotation (Line(points={{-697,-256},{-646,-256},{-646,-268.1},{-618.3,-268.1}}, color={0,0,127}));
+  connect(FCV501theta.y, S500.theta) annotation (Line(points={{-659,-236},{-642,-236},{-642,-259.5},{-618.3,-259.5}}, color={0,0,127}));
+  connect(S500.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-510,-250.9},{-510,-230},{-498,-230}}, color={0,0,127}));
+  connect(S500.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-510.85,-268.1},{-510.85,-270},{-498,-270}}, color={0,0,127}));
   connect(omegaP501Offset.deltaUnorm, controlSignalBus.domegaP501)
     annotation (Line(points={{-714,-210},{-786,-210},{-786,-212},{-897,-212},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(ToutCHP501Offset.deltaUnorm, controlSignalBus.dToutTT502)
+  connect(ToutCHP501Offset.deltaUnorm, controlSignalBus.dToutCHP501)
     annotation (Line(points={{-714,-256},{-897,-256},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
@@ -179,9 +179,9 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(sourceGas1.outlet, cHP.inletFuel) annotation (Line(
+  connect(sourceGas1.outlet, S500.inletFuel) annotation (Line(
       points={{-568,-366},{-568,-348.44},{-571,-348.44},{-571,-330.88}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemGBEBCHP_InitForward;

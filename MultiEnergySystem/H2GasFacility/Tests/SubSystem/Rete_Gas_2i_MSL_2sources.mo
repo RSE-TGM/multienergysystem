@@ -36,7 +36,7 @@ model Rete_Gas_2i_MSL_2sources
     massDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
     momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
     m_flow_start=0.03,
-    use_eps_Re=false)
+    use_eps_Re=true)
     annotation (Placement(transformation(extent={{-148,130},{-128,150}})));
   Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal1(redeclare package
       Medium =                                                                          Medium) annotation (Placement(
@@ -73,6 +73,8 @@ model Rete_Gas_2i_MSL_2sources
     length=92.5,
     diameter=0.1472,
     roughness=1e-08,
+    redeclare model FlowModel =
+        Modelica.Fluid.Pipes.BaseClasses.FlowModels.DetailedPipeFlow,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -138,7 +140,7 @@ model Rete_Gas_2i_MSL_2sources
     nNodes=3) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
-        origin={-8,49})));
+        origin={-8,51})));
   Modelica.Fluid.Pipes.DynamicPipe sds8(
     redeclare package Medium = Medium,
     length=13379.322,
@@ -341,6 +343,7 @@ model Rete_Gas_2i_MSL_2sources
     length=3273.422,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=42,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -369,6 +372,7 @@ model Rete_Gas_2i_MSL_2sources
     length=1663.921,
     diameter=1.325,
     roughness=1e-08,
+    height_ab=-42,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -383,6 +387,7 @@ model Rete_Gas_2i_MSL_2sources
     length=154.637,
     diameter=1.325,
     roughness=1e-08,
+    height_ab=-11,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -397,6 +402,7 @@ model Rete_Gas_2i_MSL_2sources
     length=1.635,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=-1,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -411,6 +417,7 @@ model Rete_Gas_2i_MSL_2sources
     length=503.188,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=-31,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -425,6 +432,7 @@ model Rete_Gas_2i_MSL_2sources
     length=238.385,
     diameter=1.325,
     roughness=1e-08,
+    height_ab=11,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -439,6 +447,7 @@ model Rete_Gas_2i_MSL_2sources
     length=589.227,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=-15,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -467,6 +476,7 @@ model Rete_Gas_2i_MSL_2sources
     length=880.651,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=-1,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -509,6 +519,7 @@ model Rete_Gas_2i_MSL_2sources
     length=540.807,
     diameter=1.472,
     roughness=1e-08,
+    height_ab=-18,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -523,6 +534,7 @@ model Rete_Gas_2i_MSL_2sources
     length=14.682,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=14,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -551,6 +563,7 @@ model Rete_Gas_2i_MSL_2sources
     length=95.937,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=-3,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -565,6 +578,7 @@ model Rete_Gas_2i_MSL_2sources
     length=92.59,
     diameter=1.603,
     roughness=1e-08,
+    height_ab=2,
     p_a_start=490000,
     p_b_start=450000,
     T_start=288.15,
@@ -669,7 +683,7 @@ equation
   connect(sds4.port_b, sds6.port_a)
     annotation (Line(points={{-41,16},{-41,21}}, color={0,127,255}));
   connect(sds7.port_b, sds8.port_a)
-    annotation (Line(points={{-2,49},{123,49},{123,67}}, color={0,127,255}));
+    annotation (Line(points={{-2,51},{123,51},{123,67}}, color={0,127,255}));
   connect(sds8.port_b, GRM_7.ports[1]) annotation (Line(points={{123,79},{123,
           84},{124,84},{124,87}}, color={0,127,255}));
   connect(sds12.port_b, sds13.port_a)
@@ -688,8 +702,8 @@ equation
     annotation (Line(points={{-41,53},{-41,58}}, color={0,127,255}));
   connect(sds6.port_b, teeJunctionIdeal1.port_1)
     annotation (Line(points={{-41,33},{-41,43}}, color={0,127,255}));
-  connect(teeJunctionIdeal1.port_3, sds7.port_a) annotation (Line(points={{-36,
-          48},{-18,48},{-18,49},{-14,49}}, color={0,127,255}));
+  connect(teeJunctionIdeal1.port_3, sds7.port_a) annotation (Line(points={{-36,48},
+          {-18,48},{-18,51},{-14,51}},     color={0,127,255}));
   connect(sds9.port_b, teeJunctionIdeal2.port_1) annotation (Line(points={{-41,
           70},{-40,70},{-40,73},{-41,73}}, color={0,127,255}));
   connect(teeJunctionIdeal2.port_2, sds11.port_a)

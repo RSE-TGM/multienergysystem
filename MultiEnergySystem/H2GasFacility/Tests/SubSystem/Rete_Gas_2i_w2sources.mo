@@ -1,8 +1,9 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_w2sources
-  extends Rete_Gas_2i_nosources(s1(n=10), s2(n=8),
+  extends Rete_Gas_2i_nosources(s1(n=10), s2(n=8),constantFrictionFactor = false,
     REMI(R=0),
     sds1(pin_start=490000));
+
   // extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,

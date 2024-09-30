@@ -2,7 +2,10 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_w2sources
   extends Rete_Gas_2i_nosources(s1(n=10), s2(n=8),constantFrictionFactor = false,
     REMI(R=0),
-    sds1(pin_start=490000));
+    sds1(pin_start=490000),
+    sds8(n=25),
+    sds7(n=20),
+    sds6(n=15));
 
   // extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
@@ -136,7 +139,8 @@ equation
   connect(add1.y, Immissione_2.in_m_flow0) annotation (Line(points={{-321,276},
           {-312,276},{-312,235},{-296,235}}, color={0,0,127}));
   annotation (experiment(
-      StopTime=86400,
+      StopTime=100,
       Interval=10,
+      Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_w2sources;

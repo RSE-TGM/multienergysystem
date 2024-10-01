@@ -6954,10 +6954,10 @@ Act")}),Diagram(coordinateSystem(
         Umax=0,
         Umin=-1,
         y_start=0,
-        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-180},{60,-170}})));
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-195},{60,-185}})));
       Modelica.Blocks.Sources.RealExpression dFT401SP_var1(y=dFT401SP)
                                                                       annotation (Placement(transformation(extent={{46,-125},{56,-115}})));
-      Modelica.Blocks.Sources.RealExpression dFT701SP_var(y=dFT701SP) annotation (Placement(transformation(extent={{30,-175},{40,-165}})));
+      Modelica.Blocks.Sources.RealExpression dFT701SP_var(y=dFT701SP) annotation (Placement(transformation(extent={{30,-190},{40,-180}})));
     equation
       // S900
       dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -7278,15 +7278,15 @@ Act")}),Diagram(coordinateSystem(
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(dFT701SP_var.y, PI_FT701.REF) annotation (Line(points={{40.5,-170},{44,-170},{44,-173},{51,-173}}, color={0,0,127}));
+      connect(dFT701SP_var.y, PI_FT701.REF) annotation (Line(points={{40.5,-185},{44,-185},{44,-188},{51,-188}}, color={0,0,127}));
       connect(PI_FT701.controlAction, controlSignalBus.dthetaFCV701)
-        annotation (Line(points={{60.5,-175},{103,-175},{103,-174},{160,-174},{160,0}}, color={0,0,127}), Text(
+        annotation (Line(points={{60.5,-190},{154,-190},{154,-95},{160,-95},{160,0}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
       connect(processVariableBus.dFT701, PI_FT701.FeedBack) annotation (Line(
-          points={{-170,-2},{-157,-2},{-157,-198},{22,-198},{22,-177},{51,-177}},
+          points={{-170,-2},{-157,-2},{-157,-200},{25,-200},{25,-192},{51,-192}},
           color={255,204,51},
           thickness=0.5), Text(
           string="%first",

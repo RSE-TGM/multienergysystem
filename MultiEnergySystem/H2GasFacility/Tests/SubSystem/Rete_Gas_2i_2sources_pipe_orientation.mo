@@ -1,11 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_pipe_orientation
-  extends Rete_Gas_2i_nosources_pipe_orientation(constantFrictionFactor = true, FrictionFactor = 0.005,
-    sds7(n=10),
-    sds8(n=20),
-    sds15(n=10),
-    sds1(n=10),
-    sds6(n=15));
+  extends Rete_Gas_2i_nosources_pipe_orientation(constantFrictionFactor = false, FrictionFactor = 0.005,
+    s16(n=1),
+    s9(n=1));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
     redeclare model Medium = Medium,

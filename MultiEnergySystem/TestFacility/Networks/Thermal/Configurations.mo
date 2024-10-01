@@ -46,10 +46,6 @@ package Configurations
       inner DistrictHeatingNetwork.System system annotation (
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
-      connect(PL731_rackL6L7_TT732.inlet, rackL6L7_FCVC02_hot.inlet) annotation (
-        Line(points = {{258, -50}, {256, -50}, {256, 60}, {618, 60}, {618, 205}, {640, 205}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(PL731_FT731_rackL6L7.outlet, rackL6L7_FCVC02_cold.outlet) annotation (
-        Line(points = {{298, -50}, {298, 38}, {636, 38}, {636, 265}, {650, 265}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
           points={{46.5,171.7},{46.5,100},{398,100},{398,-46}},
           color={140,56,54},
@@ -67,11 +63,19 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
-          points={{304.5,171.7},{304.5,120},{558,120},{558,-46}},
+          points={{304.5,171.7},{304.5,134},{558,134},{558,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL721_FT721_rackL4L5.outlet, rackL4L5.inletComp) annotation (Line(
           points={{598,-46},{596,-46},{596,154},{349.95,154},{349.95,172.15}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL731_rackL6L7_TT732.inlet, rackL6L7.outletComp) annotation (Line(
+          points={{258,-50},{260,-50},{260,58},{528.5,58},{528.5,171.7}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL6L7.inletComp, PL731_FT731_rackL6L7.outlet) annotation (Line(
+          points={{573.95,172.15},{573.95,92},{574,92},{574,20},{298,20},{298,-50}},
           color={140,56,54},
           thickness=0.5));
       annotation (

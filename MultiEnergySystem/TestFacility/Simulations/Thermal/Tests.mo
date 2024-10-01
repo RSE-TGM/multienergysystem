@@ -6704,6 +6704,8 @@ Act")}),Diagram(coordinateSystem(
       // S500
       parameter Real dTout_CHP501[:,:] = [0, 0; 1e6, 0];
       parameter Real domega_P501[:, :] = [0, (35-50)/50; 1e6, (35-50)/50];
+      parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_nom= DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h*980/3600;
+
 
       // S700
       parameter Real dtheta_FCV701[:, :] = [0, -0.2; 1e6, -0.2];
@@ -6806,6 +6808,8 @@ Act")}),Diagram(coordinateSystem(
       Real dFT101SP(min = -1, max = 0);
       Real FT401SP(nominal = 3.2666667);
       Real dFT401SP(min = -1, max = 0);
+      Real FT501SP(nominal = FT501_nom);
+      Real dFT501SP(min = -1, max = 0);
       Real FT701SP(nominal = 2);
       Real dFT701SP(min = -1, max = 0);
 
@@ -6955,9 +6959,15 @@ Act")}),Diagram(coordinateSystem(
         Umin=-1,
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-195},{60,-185}})));
-      Modelica.Blocks.Sources.RealExpression dFT401SP_var1(y=dFT401SP)
-                                                                      annotation (Placement(transformation(extent={{46,-125},{56,-115}})));
+      Modelica.Blocks.Sources.RealExpression dFT501SP_var(y=dFT501SP) annotation (Placement(transformation(extent={{30,-173},{40,-163}})));
       Modelica.Blocks.Sources.RealExpression dFT701SP_var(y=dFT701SP) annotation (Placement(transformation(extent={{30,-190},{40,-180}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT501(
+        Kp=0.55085,
+        Ti=0.26795,
+        Umax=0,
+        Umin=-0.4,
+        y_start=-0.4,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-177},{60,-167}})));
     equation
       // S900
       dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -7044,6 +7054,8 @@ Act")}),Diagram(coordinateSystem(
       dFT101SP = (FT101SP - 5.7166667)/5.7166667;
       FT401SP = 1.33;
       dFT401SP = (FT401SP - 3.2666667)/3.2666667;
+      FT501SP = 2.3;
+      dFT501SP = (FT501SP - FT501_nom)/FT501_nom;
       FT701SP = 1.4;
       dFT701SP = (FT701SP - 2)/2;
 
@@ -7236,11 +7248,6 @@ Act")}),Diagram(coordinateSystem(
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(switch_domegaP501.y, controlSignalBus.domegaP501) annotation (Line(points={{-21.5,-115},{-20,-115},{-20,-103},{-19,-103},{-19,-100},{23,-100},{23,-53},{133,-53},{133,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(switch_dToutCHP501.y, controlSignalBus.dToutCHP501)
         annotation (Line(points={{-22.5,-150},{-21,-150},{-21,-140},{24,-140},{24,-54},{134,-54},{134,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
@@ -7280,7 +7287,7 @@ Act")}),Diagram(coordinateSystem(
           horizontalAlignment=TextAlignment.Left));
       connect(dFT701SP_var.y, PI_FT701.REF) annotation (Line(points={{40.5,-185},{44,-185},{44,-188},{51,-188}}, color={0,0,127}));
       connect(PI_FT701.controlAction, controlSignalBus.dthetaFCV701)
-        annotation (Line(points={{60.5,-190},{154,-190},{154,-95},{160,-95},{160,0}}, color={0,0,127}), Text(
+        annotation (Line(points={{60.5,-190},{153,-190},{153,0},{160,0}},             color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -7293,6 +7300,21 @@ Act")}),Diagram(coordinateSystem(
           index=-1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
+      connect(dFT501SP_var.y, PI_FT501.REF) annotation (Line(points={{40.5,-168},{46,-168},{46,-170},{51,-170}}, color={0,0,127}));
+      connect(processVariableBus.dFT501, PI_FT501.FeedBack) annotation (Line(
+          points={{-170,-2},{-156,-2},{-156,-198},{22,-198},{22,-174},{51,-174}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_FT501.controlAction, controlSignalBus.domegaP501)
+        annotation (Line(points={{60.5,-172},{160,-172},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                   {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={
@@ -7595,6 +7617,8 @@ System")}),
         omegaP101Offset(fixInput=false, fixOffset=true),
         FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
         omegaP401Offset(fixInput=false, fixOffset=true),
+        FT501Offset(fixOffset = true, y_Offset_fixed = FT501_nom, y_norm = FT501_nom),
+        omegaP501Offset(fixInput=false, fixOffset=true),
         FT701Offset(fixOffset = true, y_Offset_fixed = 2, y_norm = 2),
         thetaFCV701Offset(fixInput=false, fixOffset=true))                              annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
@@ -7602,6 +7626,8 @@ System")}),
         //omegaP401Offset(fixInput=false, fixOffset=true),
         //omegaP501Offset(fixInput=false, fixOffset=true),
         //omegaP101Offset(fixInput=false, fixOffset=true),
+      parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_nom= DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h*980/3600;
+
     equation
       connect(thermalPlantController.controlSignalBus, centralisedSystemI_B_InitForward.controlSignalBus) annotation (
         Line(points={{-7.32,0},{2,0},{2,-0.38},{12.86,-0.38}},

@@ -6804,6 +6804,8 @@ Act")}),Diagram(coordinateSystem(
       // Set-points
       Real FT101SP(nominal = 5.7166667);
       Real dFT101SP(min = -1, max = 0);
+      Real FT401SP(nominal = 3.2666667);
+      Real dFT401SP(min = -1, max = 0);
 
       Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
         Placement(transformation(extent={{-141,135},{-131,145}})));
@@ -6930,11 +6932,20 @@ Act")}),Diagram(coordinateSystem(
         Umin=-0.4,
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{50,-120},{60,-110}})));
-      DistrictHeatingNetwork.Actuators.SplitRange splitRange annotation (Placement(transformation(extent={{70,-125},{90,-105}})));
+      DistrictHeatingNetwork.Actuators.SplitRange sR_FT101 annotation (Placement(transformation(extent={{70,-125},{90,-105}})));
       FMUExport.Interfaces.ControlSignalBus processVariableBus annotation (
         Placement(visible = true, transformation(origin={-170,-2},   extent={{50,40},{-50,-40}},      rotation = -90), iconTransformation(origin = {-91, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
       Modelica.Blocks.Sources.RealExpression dFT101SP_var(y=dFT101SP)
                                                                      annotation (Placement(transformation(extent={{30,-115},{40,-105}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT401(
+        Kp=0.69355,
+        Ti=0.26795,
+        Umax=0,
+        Umin=-0.4,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-155},{60,-145}})));
+      DistrictHeatingNetwork.Actuators.SplitRange sR_FT401 annotation (Placement(transformation(extent={{70,-160},{90,-140}})));
+      Modelica.Blocks.Sources.RealExpression dFT401SP_var(y=dFT401SP) annotation (Placement(transformation(extent={{30,-145},{40,-135}})));
     equation
       // S900
       dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -7017,8 +7028,10 @@ Act")}),Diagram(coordinateSystem(
       booldToutRR01 = true;
 
       //Set-points
-      FT101SP = 1.5;
+      FT101SP = 1.6;
       dFT101SP = (FT101SP - 5.7166667)/5.7166667;
+      FT401SP = 1.33;
+      dFT401SP = (FT401SP - 3.2666667)/3.2666667;
 
       connect(domegaP901_var.y, switch_domegaP901.u1) annotation (Line(points={{-130.5,160},{-127,160},{-127,154},{-123,154}}, color={0,0,127}));
       connect(bool_domegaP901.y, switch_domegaP901.u2) annotation (Line(points={{-130.5,150},{-123,150}}, color={255,0,255}));
@@ -7205,11 +7218,6 @@ Act")}),Diagram(coordinateSystem(
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(switch_domegaP401.y, controlSignalBus.domegaP401) annotation (Line(points={{-111.5,-100},{-110,-100},{-110,-90},{-70,-90},{-70,-74},{20,-74},{20,-50},{130,-50},{130,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(switch_dthetaFCV401.y, controlSignalBus.dthetaFCV401) annotation (Line(points={{-112.5,-133},{-111,-133},{-111,-132},{-110,-132},{-110,-120},{-69,-120},{-69,-75},{21,-75},{21,-51},{131,-51},{131,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
           index=1,
@@ -7231,7 +7239,7 @@ Act")}),Diagram(coordinateSystem(
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(PI_FT101.controlAction, splitRange.U) annotation (Line(points={{60.5,-115},{72,-115}}, color={0,0,127}));
+      connect(PI_FT101.controlAction, sR_FT101.U) annotation (Line(points={{60.5,-115},{72,-115}}, color={0,0,127}));
       connect(dFT101SP_var.y, PI_FT101.REF) annotation (Line(points={{40.5,-110},{46,-110},{46,-113},{51,-113}},
                                                                                              color={0,0,127}));
       connect(processVariableBus.dFT101, PI_FT101.FeedBack) annotation (Line(
@@ -7242,8 +7250,22 @@ Act")}),Diagram(coordinateSystem(
           index=-1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
-      connect(splitRange.Yout1, controlSignalBus.domegaP101)
-        annotation (Line(points={{88,-111},{146,-111},{146,0},{160,0}}, color={0,0,127}), Text(
+      connect(sR_FT101.Yout1, controlSignalBus.domegaP101) annotation (Line(points={{88,-111},{146,-111},{146,0},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(PI_FT401.controlAction, sR_FT401.U) annotation (Line(points={{60.5,-150},{72,-150}}, color={0,0,127}));
+      connect(dFT401SP_var.y, PI_FT401.REF) annotation (Line(points={{40.5,-140},{45,-140},{45,-148},{51,-148}}, color={0,0,127}));
+      connect(processVariableBus.dFT401, PI_FT401.FeedBack) annotation (Line(
+          points={{-170,-2},{-162,-2},{-162,1},{-153,1},{-153,-197},{21,-197},{21,-152},{51,-152}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(sR_FT401.Yout1, controlSignalBus.domegaP401) annotation (Line(points={{88,-146},{148,-146},{148,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},
@@ -7547,7 +7569,9 @@ System")}),
         thetaFCV101Offset(fixInput=false, fixOffset=true),
         thetaFCV401Offset(fixInput=false, fixOffset=true),
         FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
-        omegaP101Offset(fixInput=false, fixOffset=true))                      annotation (
+        omegaP101Offset(fixInput=false, fixOffset=true),
+        FT401Offset(fixOffset = true, y_Offset_fixed = 3.2666667),
+        omegaP401Offset(fixInput=false, fixOffset=true))                          annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
         //omegaP901Offset(fixInput=false, fixOffset=true),
         //omegaP401Offset(fixInput=false, fixOffset=true),

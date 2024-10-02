@@ -2,7 +2,11 @@ within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemGBEBCHP_InitForward
   extends CentralisedSystemGBEB_InitForward(sourceGas(computeEnergyVariables=true),
     FCVC02Dynamics(k=1),
-    FCVC01Dynamics(k=0));
+    FCVC01Dynamics(k=0),
+    TCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    TCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    TCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    TCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage));
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;

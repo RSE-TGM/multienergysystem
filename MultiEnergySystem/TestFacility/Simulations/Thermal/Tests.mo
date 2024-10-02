@@ -6994,13 +6994,21 @@ Act")}),Diagram(coordinateSystem(
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-225},{60,-215}})));
       Modelica.Blocks.Sources.RealExpression dFT721SP_var(y=dFT721SP) annotation (Placement(transformation(extent={{30,-219},{40,-209}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT701(
-        Kp=-1.073,
-        Ti=0.1849,
+        Kp=-0.2743,
+        Ti=0.7859,
         Umax=0,
         Umin=-1,
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-256},{60,-246}})));
       Modelica.Blocks.Sources.RealExpression dTT701SP_var(y=dTT701SP) annotation (Placement(transformation(extent={{30,-251},{40,-241}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT711(
+        Kp=-0.6127,
+        Ti=0.7859,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-270},{60,-260}})));
+      Modelica.Blocks.Sources.RealExpression dTT711SP_var(y=dTT711SP) annotation (Placement(transformation(extent={{30,-265},{40,-255}})));
     equation
       // S900
       dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -7190,12 +7198,6 @@ Act")}),Diagram(coordinateSystem(
       connect(dToutCHP501_var.y, switch_dToutCHP501.u1) annotation (Line(points={{-40.5,-141},{-37,-141},{-37,-146},{-34,-146}}, color={0,0,127}));
       connect(dTout_CHP501_act.numberPort, switch_dToutCHP501.y) annotation (Line(points={{-16.5,-150},{-22.5,-150}}, color={0,0,127}));
       connect(dToutCHP501.y, switch_dToutCHP501.u3) annotation (Line(points={{-40.5,-160},{-37,-160},{-37,-154},{-34,-154}}, color={0,0,127}));
-      connect(switch_dthetaTCV711.y, controlSignalBus.dthetaTCV711)
-        annotation (Line(points={{67.5,121},{70,121},{70,110},{139,110},{139,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(switch_dthetaTCV721.y, controlSignalBus.dthetaTCV721)
         annotation (Line(points={{67.5,88},{69,88},{69,80},{138,80},{138,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
@@ -7385,6 +7387,22 @@ Act")}),Diagram(coordinateSystem(
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
+      connect(dTT711SP_var.y, PI_TT711.REF) annotation (Line(points={{40.5,-260},{45,-260},{45,-263},{51,-263}}, color={0,0,127}));
+      connect(PI_TT711.controlAction, controlSignalBus.dthetaTCV711)
+        annotation (Line(points={{60.5,-265},{160,-265},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(processVariableBus.dTT711, PI_TT711.FeedBack)
+        annotation (Line(
+          points={{-170,-2},{-170,-267},{51,-267}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                   {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={

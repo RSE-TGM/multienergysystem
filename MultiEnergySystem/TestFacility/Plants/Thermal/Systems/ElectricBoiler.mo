@@ -118,7 +118,7 @@ model ElectricBoiler "System 400"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,-50})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_PT401_EB101(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_PT401_EB401(
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_PT401_EB401,
@@ -207,7 +207,7 @@ equation
       points={{20,0},{20,-9.4}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S400_PT401_EB101.inlet, FT.outlet) annotation (Line(
+  connect(PL_S400_PT401_EB401.inlet, FT.outlet) annotation (Line(
       points={{-20,-40},{-20,-28.6},{-20.2,-28.6},{-20.2,-15.2}},
       color={140,56,54},
       thickness=0.5));
@@ -227,7 +227,7 @@ equation
       points={{-20.4,26},{-20.4,110},{-20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S400_PT401_EB101.outlet, EB.inlet) annotation (Line(
+  connect(PL_S400_PT401_EB401.outlet, EB.inlet) annotation (Line(
       points={{-20,-60},{-20,-68},{-6.6,-68},{-6.6,-76.4}},
       color={140,56,54},
       thickness=0.5));
@@ -235,7 +235,7 @@ equation
       points={{20,-60},{20,-68},{6.6,-68},{6.6,-76.4}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S400_PT401_EB101.wall, MultiPort) annotation (Line(points={{-24.1,-50},{-46,-50},{-46,-70},{-110,-70}}, color={255,238,44}));
+  connect(PL_S400_PT401_EB401.wall, MultiPort) annotation (Line(points={{-24.1,-50},{-46,-50},{-46,-70},{-110,-70}}, color={255,238,44}));
   connect(PL_S400_EB401_P401.wall, MultiPort) annotation (Line(points={{15.9,-50},{4,-50},{4,-64},{-36,-64},{-36,-70},{-110,-70}}, color={255,238,44}));
   connect(PL_S400_P401_FCV401.wall, MultiPort) annotation (Line(points={{15.9,10},{4,10},{4,-64},{-36,-64},{-36,-70},{-110,-70}}, color={255,238,44}));
   connect(omega, P401.in_omega) annotation (Line(points={{-110,70},{-82,70},{-82,-23.8},{14,-23.8}}, color={0,0,127}));

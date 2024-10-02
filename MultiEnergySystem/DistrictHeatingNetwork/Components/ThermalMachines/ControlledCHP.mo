@@ -42,7 +42,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
   DistrictHeatingNetwork.Types.Power Pel_actual;
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference gas fluid";
-  Boolean TlimitOnOff(start = false);
+  //Boolean TlimitOnOff(start = false);
 
 
   // Inputs
@@ -125,8 +125,8 @@ initial equation
   end if;
 
 
-algorithm
-  TlimitOnOff :=if Tin >= 70 + 273.15 then false else true;
+//algorithm
+  //TlimitOnOff :=if Tin >= 70 + 273.15 then false else true;
 
 equation
   connect(realExpression.y, hysteresis.u)

@@ -6816,6 +6816,11 @@ Act")}),Diagram(coordinateSystem(
       Real dFT711SP(min = -1, max = 0);
       Real FT721SP(nominal = 2);
       Real dFT721SP(min = -1, max = 0);
+      Real TT701SP(nominal = Tout_gen_nom);
+      Real dTT701SP(min = -1, max = 0);
+      Real TT711SP(nominal = Tout_gen_nom);
+      Real dTT711SP(min = -1, max = 0);
+
 
       Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
         Placement(transformation(extent={{-141,135},{-131,145}})));
@@ -6988,6 +6993,14 @@ Act")}),Diagram(coordinateSystem(
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-225},{60,-215}})));
       Modelica.Blocks.Sources.RealExpression dFT721SP_var(y=dFT721SP) annotation (Placement(transformation(extent={{30,-219},{40,-209}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT701(
+        Kp=-1.073,
+        Ti=0.1849,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-256},{60,-246}})));
+      Modelica.Blocks.Sources.RealExpression dTT701SP_var(y=dTT701SP) annotation (Placement(transformation(extent={{30,-251},{40,-241}})));
     equation
       // S900
       dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -7082,6 +7095,10 @@ Act")}),Diagram(coordinateSystem(
       dFT711SP = (FT711SP - 2)/2;
       FT721SP = 1.25;
       dFT721SP = (FT721SP - 2)/2;
+      TT701SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
+      dTT701SP = (TT701SP - (60 + 273.15))/(100 + 273.15);
+      TT711SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
+      dTT711SP = (TT711SP - (60 + 273.15))/(100 + 273.15);
 
       connect(domegaP901_var.y, switch_domegaP901.u1) annotation (Line(points={{-130.5,160},{-127,160},{-127,154},{-123,154}}, color={0,0,127}));
       connect(bool_domegaP901.y, switch_domegaP901.u2) annotation (Line(points={{-130.5,150},{-123,150}}, color={255,0,255}));
@@ -7173,12 +7190,6 @@ Act")}),Diagram(coordinateSystem(
       connect(dToutCHP501_var.y, switch_dToutCHP501.u1) annotation (Line(points={{-40.5,-141},{-37,-141},{-37,-146},{-34,-146}}, color={0,0,127}));
       connect(dTout_CHP501_act.numberPort, switch_dToutCHP501.y) annotation (Line(points={{-16.5,-150},{-22.5,-150}}, color={0,0,127}));
       connect(dToutCHP501.y, switch_dToutCHP501.u3) annotation (Line(points={{-40.5,-160},{-37,-160},{-37,-154},{-34,-154}}, color={0,0,127}));
-      connect(switch_dthetaTCV701.y, controlSignalBus.dthetaTCV701)
-        annotation (Line(points={{67.5,155},{70,155},{70,141},{140,141},{140,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(switch_dthetaTCV711.y, controlSignalBus.dthetaTCV711)
         annotation (Line(points={{67.5,121},{70,121},{70,110},{139,110},{139,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
@@ -7358,6 +7369,22 @@ Act")}),Diagram(coordinateSystem(
           index=-1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
+      connect(dTT701SP_var.y, PI_TT701.REF) annotation (Line(points={{40.5,-246},{45,-246},{45,-249},{51,-249}}, color={0,0,127}));
+      connect(processVariableBus.dTT701, PI_TT701.FeedBack)
+        annotation (Line(
+          points={{-170,-2},{-170,-253},{51,-253}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_TT701.controlAction, controlSignalBus.dthetaTCV701)
+        annotation (Line(points={{60.5,-251},{160,-251},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                   {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={
@@ -7667,12 +7694,14 @@ System")}),
         FT711Offset(fixOffset = true, y_Offset_fixed = 2, y_norm = 2),
         thetaFCV711Offset(fixInput=false, fixOffset=true),
         FT721Offset(fixOffset = true, y_Offset_fixed = 2, y_norm = 2),
-        thetaFCV721Offset(fixInput=false, fixOffset=true))                                  annotation (
+        thetaFCV721Offset(fixInput=false, fixOffset=true),
+        TT701Offset(fixOffset = true, y_Offset_fixed = 60 + 273.15, y_norm = 100 + 273.15),
+        thetaTCV701Offset(fixInput=false, fixOffset=true),
+        TT711Offset(fixOffset = true, y_Offset_fixed = 60 + 273.15, y_norm = 100 + 273.15),
+        thetaTCV711Offset(fixInput=false, fixOffset=true),
+        S500(EX501(wall(Tstart1=333.15, TstartN=343.15))))                                  annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
-        //omegaP901Offset(fixInput=false, fixOffset=true),
-        //omegaP401Offset(fixInput=false, fixOffset=true),
-        //omegaP501Offset(fixInput=false, fixOffset=true),
-        //omegaP101Offset(fixInput=false, fixOffset=true),
+
       parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_nom= DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h*980/3600;
 
     equation

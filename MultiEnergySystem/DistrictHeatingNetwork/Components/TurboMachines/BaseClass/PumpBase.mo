@@ -22,7 +22,7 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(tab = "Initialisation"));
   parameter Modelica.Units.SI.Pressure pout_start "Start value of the outlet pressure" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start = 1e5 "Specific Enthalpy Start Value" annotation (
+  parameter DistrictHeatingNetwork.Types.SpecificEnthalpy hin_start = fluidIn.h_start "Specific Enthalpy Start Value" annotation (
     Dialog(tab = "Initialisation"));
   parameter Modelica.Units.SI.MassFlowRate m_flow_start = m_flow_nom "Mass Flow Rate Start Value" annotation (
     Dialog(tab = "Initialisation"));
@@ -58,7 +58,7 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(group = "Pump Characteristics"));
   parameter Real correctionfactor = 1;
 
-Medium fluidIn(T_start = Tin_start, p_start = pin_start);
+  Medium fluidIn(T_start = Tin_start, p_start = pin_start);
   Medium fluidOut(T_start = Tout_start, p_start = pout_start);
 
   //Final parameters

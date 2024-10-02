@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemGBEBCHP_InitForward
   extends CentralisedSystemGBEB_InitForward(sourceGas(computeEnergyVariables=true),
-    FCVC02Dynamics(k=1),
+    FCVC02Dynamics(k=1*0),
     FCVC01Dynamics(k=0),
     TCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
     TCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
@@ -121,14 +121,14 @@ model CentralisedSystemGBEBCHP_InitForward
         origin={-490,-270},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  H2GasFacility.Sources.SourcePressure sourceGas1(
+  H2GasFacility.Sources.SourcePressure sourceGasCHP(
     redeclare model Medium = Gas,
     X0=X_gas,
     R=1e-3,
     computeEnergyVariables=true) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-13,-13},{13,13}},
         rotation=90,
-        origin={-568,-376})));
+        origin={-571,-373})));
 equation
   connect(S5_PL_CHP_EX501_hot1.outlet, suddenAreaChange2.outlet) annotation (Line(
       points={{-552,-197},{-552,-186}},
@@ -185,8 +185,8 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(sourceGas1.outlet, S500.inletFuel) annotation (Line(
-      points={{-568,-366},{-568,-348.44},{-571,-348.44},{-571,-330.88}},
+  connect(sourceGasCHP.outlet, S500.inletFuel) annotation (Line(
+      points={{-571,-360},{-571,-330.88}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));

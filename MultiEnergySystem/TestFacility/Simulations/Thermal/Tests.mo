@@ -7114,7 +7114,7 @@ Act")}),Diagram(coordinateSystem(
       dFT101SP = (FT101SP - 5.7166667)/5.7166667;
       FT401SP = 1.33;
       dFT401SP = (FT401SP - 3.2666667)/3.2666667;
-      FT501SP = 2.3;
+      FT501SP = 2.1;
       dFT501SP = (FT501SP - FT501_nom)/FT501_nom;
       FT701SP = 1.4;
       dFT701SP = (FT701SP - 2)/2;

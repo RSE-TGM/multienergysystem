@@ -60,7 +60,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
 
 
   Modelica.Blocks.Logical.Hysteresis hysteresis(
-    uLow=63 + 273.15,
+    uLow=65.5 + 273.15,
     uHigh=70 + 273.15,
     pre_y_start=true) annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=Tin)

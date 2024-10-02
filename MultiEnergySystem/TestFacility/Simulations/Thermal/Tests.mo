@@ -6820,7 +6820,10 @@ Act")}),Diagram(coordinateSystem(
       Real dTT701SP(min = -1, max = 0);
       Real TT711SP(nominal = Tout_gen_nom);
       Real dTT711SP(min = -1, max = 0);
-
+      Real TT721SP(nominal = Tout_gen_nom);
+      Real dTT721SP(min = -1, max = 0);
+      Real TT731SP(nominal = Tout_gen_nom);
+      Real dTT731SP(min = -1, max = 0);
 
       Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
         Placement(transformation(extent={{-141,135},{-131,145}})));
@@ -7009,6 +7012,22 @@ Act")}),Diagram(coordinateSystem(
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-270},{60,-260}})));
       Modelica.Blocks.Sources.RealExpression dTT711SP_var(y=dTT711SP) annotation (Placement(transformation(extent={{30,-265},{40,-255}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT721(
+        Kp=-0.6127,
+        Ti=0.7859,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-285},{60,-275}})));
+      Modelica.Blocks.Sources.RealExpression dTT721SP_var(y=dTT721SP) annotation (Placement(transformation(extent={{30,-280},{40,-270}})));
+      DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT731(
+        Kp=-0.8127,
+        Ti=0.7859,
+        Umax=0,
+        Umin=-1,
+        y_start=0,
+        firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-300},{60,-290}})));
+      Modelica.Blocks.Sources.RealExpression dTT731SP_var(y=dTT731SP) annotation (Placement(transformation(extent={{30,-295},{40,-285}})));
     equation
       // S900
       dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -7107,6 +7126,10 @@ Act")}),Diagram(coordinateSystem(
       dTT701SP = (TT701SP - (60 + 273.15))/(100 + 273.15);
       TT711SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
       dTT711SP = (TT711SP - (60 + 273.15))/(100 + 273.15);
+      TT721SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
+      dTT721SP = (TT721SP - (60 + 273.15))/(100 + 273.15);
+      TT731SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
+      dTT731SP = (TT731SP - (60 + 273.15))/(100 + 273.15);
 
       connect(domegaP901_var.y, switch_domegaP901.u1) annotation (Line(points={{-130.5,160},{-127,160},{-127,154},{-123,154}}, color={0,0,127}));
       connect(bool_domegaP901.y, switch_domegaP901.u2) annotation (Line(points={{-130.5,150},{-123,150}}, color={255,0,255}));
@@ -7198,18 +7221,6 @@ Act")}),Diagram(coordinateSystem(
       connect(dToutCHP501_var.y, switch_dToutCHP501.u1) annotation (Line(points={{-40.5,-141},{-37,-141},{-37,-146},{-34,-146}}, color={0,0,127}));
       connect(dTout_CHP501_act.numberPort, switch_dToutCHP501.y) annotation (Line(points={{-16.5,-150},{-22.5,-150}}, color={0,0,127}));
       connect(dToutCHP501.y, switch_dToutCHP501.u3) annotation (Line(points={{-40.5,-160},{-37,-160},{-37,-154},{-34,-154}}, color={0,0,127}));
-      connect(switch_dthetaTCV721.y, controlSignalBus.dthetaTCV721)
-        annotation (Line(points={{67.5,88},{69,88},{69,80},{138,80},{138,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
-      connect(switch_dthetaTCV731.y, controlSignalBus.dthetaTCV731)
-        annotation (Line(points={{67.5,56},{70,56},{70,40},{137,40},{137,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(switch_dthetaFCVR01.y, controlSignalBus.dthetaFCVR01)
         annotation (Line(points={{67.5,23},{70,23},{70,10},{136,10},{136,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
@@ -7403,6 +7414,38 @@ Act")}),Diagram(coordinateSystem(
           index=-1,
           extent={{-6,3},{-6,3}},
           horizontalAlignment=TextAlignment.Right));
+      connect(dTT721SP_var.y, PI_TT721.REF) annotation (Line(points={{40.5,-275},{45,-275},{45,-278},{51,-278}}, color={0,0,127}));
+      connect(processVariableBus.dTT721, PI_TT721.FeedBack)
+        annotation (Line(
+          points={{-170,-2},{-170,-282},{51,-282}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_TT721.controlAction, controlSignalBus.dthetaTCV721)
+        annotation (Line(points={{60.5,-280},{160,-280},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(dTT731SP_var.y, PI_TT731.REF) annotation (Line(points={{40.5,-290},{45,-290},{45,-293},{51,-293}}, color={0,0,127}));
+      connect(processVariableBus.dTT731, PI_TT731.FeedBack)
+        annotation (Line(
+          points={{-170,-2},{-170,-297},{51,-297}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(PI_TT731.controlAction, controlSignalBus.dthetaTCV731)
+        annotation (Line(points={{60.5,-295},{160,-295},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                   {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={
@@ -7717,6 +7760,10 @@ System")}),
         thetaTCV701Offset(fixInput=false, fixOffset=true),
         TT711Offset(fixOffset = true, y_Offset_fixed = 60 + 273.15, y_norm = 100 + 273.15),
         thetaTCV711Offset(fixInput=false, fixOffset=true),
+        TT721Offset(fixOffset = true, y_Offset_fixed = 60 + 273.15, y_norm = 100 + 273.15),
+        thetaTCV721Offset(fixInput=false, fixOffset=true),
+        TT731Offset(fixOffset = true, y_Offset_fixed = 60 + 273.15, y_norm = 100 + 273.15),
+        thetaTCV731Offset(fixInput=false, fixOffset=true),
         S500(EX501(wall(Tstart1=333.15, TstartN=343.15))))                                  annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
 

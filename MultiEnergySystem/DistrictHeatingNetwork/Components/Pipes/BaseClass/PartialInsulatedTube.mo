@@ -18,6 +18,7 @@ partial model PartialInsulatedTube
     Dialog(tab = "Data", group = "Insulation"));
 
   //Metal Parameter
+  parameter Boolean set_m_flow_start = false;
   parameter Boolean thermalInertia = true "if true then account for metal thermal inertia" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
   parameter Types.SpecificHeatCapacity cm = 445 "Metal wall specific heat capacity" annotation (
@@ -30,7 +31,7 @@ partial model PartialInsulatedTube
   parameter Types.Temperature T_ext = 25 + 273.15 "External temperature" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.MassFlowRate m_flow_start = 1 "Start value for mass flow rate" annotation (
-    Dialog(group = "Initialisation"));
+    Dialog(enable = set_m_flow_start, group = "Initialisation"));
   parameter Types.Pressure pin_start = 2e5 "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Pressure pout_start = 1.8e5 "Pressure start value of outgoing fluid" annotation (

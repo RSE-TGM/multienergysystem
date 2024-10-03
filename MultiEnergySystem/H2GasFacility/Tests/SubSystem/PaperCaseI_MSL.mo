@@ -412,15 +412,13 @@ model PaperCaseI_MSL
         extent={{-3,3},{3,-3}},
         rotation=90,
         origin={-10,-26})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal10(redeclare package
-                                                                                Medium = Medium)
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal10(redeclare package Medium = Medium)
                                                                                                annotation (Placement(
         transformation(
         extent={{-3,3},{3,-3}},
         rotation=180,
         origin={-49,0})));
-  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal11(redeclare package
-                                                                                Medium = Medium)
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal11(redeclare package Medium = Medium)
                                                                                                annotation (Placement(
         transformation(
         extent={{3,3},{-3,-3}},

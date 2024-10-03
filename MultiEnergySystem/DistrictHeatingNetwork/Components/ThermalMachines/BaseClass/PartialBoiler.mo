@@ -51,7 +51,7 @@ partial model PartialBoiler
   SI.SpecificEnthalpy hout "Outlet specific enthalpy cold fluid";
   SI.Power Pheat "Total power";
   SI.Mass M "Total mass of water";
-  SI.Time tr "Residence time inside the boiler";
+  //SI.Time tr "Residence time inside the boiler";
   SI.Density rho "Outlet density of fluid";
   SI.SpecificHeatCapacity cp "Outlet specific heat capacity of the fluid";
   SI.Power Q_amb "heat loss to ambient";
@@ -64,7 +64,7 @@ partial model PartialBoiler
     Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={30,80},     extent = {{-20, -20}, {20, 20}}, rotation = 0)));
 equation
   assert(Pmaxnom >= Pheat, "Actual heat power is higher than Maximum heat power", AssertionLevel.warning);
-  assert(10e5 >= inlet.p, "Actual pressure is higher than Maximum pressure", AssertionLevel.warning);
+  assert(50e5 >= inlet.p, "Actual pressure is higher than Maximum pressure", AssertionLevel.warning);
 
   // Balance equations
   //V*(fluidOut.drho_dT*der(Tout)) = inlet.m_flow + outlet.m_flow;
@@ -92,7 +92,7 @@ equation
   pout = outlet.p;
   hin = inStream(inlet.h_out);
   hout = outlet.h_out;
-  tr = M/m_flow;
+  //tr = M/m_flow;
 initial equation
   if initOpt == Choices.Init.Options.steadyState then
     //der(M) = 0;

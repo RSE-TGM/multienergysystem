@@ -43,25 +43,39 @@ model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (P
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.TimeDelayPlugFlow timeDelayPlugFlow(D = D, L = L, m_flow_nominal = m_flow_nominal, m_flow_start = m_flow_start) annotation (
     Placement(transformation(origin = {-14, 26}, extent = {{-10, -10}, {10, 10}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorageConstantMass metalInertiaEquivalent(D = 2, T_ext = T_ext, T_start = T_start_m, H = h_equivalent) annotation (
-    Placement(transformation(origin = {67, -13}, extent = {{-9, -9}, {9, 9}}, rotation = -90)));
+    Placement(transformation(origin={68,-32},    extent={{-10,-14},{10,14}},  rotation = -90)));
 equation
   connect(massFlowSensor.m_flow, timeDelayPlugFlow.m_flow) annotation (
-    Line(points = {{-30, 10}, {-28, 10}, {-28, 30}, {-22, 30}}, color = {0, 0, 127}));
-  connect(inletHeatLosses.inlet, massFlowSensor.inlet) annotation (
-    Line(points = {{-60, 0}, {-44, 0}}, color = {140, 56, 54}));
-  connect(massFlowSensor.outlet, plugFlowCore.inlet) annotation (
-    Line(points = {{-32, 0}, {-10, 0}}, color = {140, 56, 54}));
-  connect(plugFlowCore.outlet, outletHeatLosses.inlet) annotation (
-    Line(points = {{10, 0}, {30, 0}}, color = {140, 56, 54}));
-  connect(outletHeatLosses.outlet, metalInertiaEquivalent.inlet) annotation (
-    Line(points = {{50, 0}, {60, 0}, {60, -4}}, color = {140, 56, 54}));
+    Line(points={{-31,10},{-28,10},{-28,30.4},{-22.2,30.4}},    color = {0, 0, 127}));
   connect(timeDelayPlugFlow.tau, outletHeatLosses.tau) annotation (
-    Line(points = {{-4, 30}, {32, 30}, {32, 6}}, color = {0, 0, 127}));
+    Line(points={{-4.7,30.3},{32,30.3},{32,6}},  color = {0, 0, 127}));
   connect(timeDelayPlugFlow.tau_rev, inletHeatLosses.tau) annotation (
-    Line(points = {{-4, 22}, {10, 22}, {10, 36}, {-62, 36}, {-62, 6}}, color = {0, 0, 127}));
-  connect(outlet, metalInertiaEquivalent.outlet);
-  connect(inletHeatLosses.outlet, inlet);
+    Line(points={{-4.5,22.5},{10,22.5},{10,36},{-62,36},{-62,6}},      color = {0, 0, 127}));
 
+  connect(inletHeatLosses.outlet, inlet) annotation (Line(
+      points={{-80,7.21645e-16},{-90,7.21645e-16},{-90,0},{-100,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(outletHeatLosses.outlet, metalInertiaEquivalent.inlet) annotation (Line(
+      points={{50,0},{58,0},{58,-22}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(metalInertiaEquivalent.outlet, outlet) annotation (Line(
+      points={{78,-22},{78,0},{100,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(outletHeatLosses.inlet, plugFlowCore.outlet) annotation (Line(
+      points={{30,0},{10,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(plugFlowCore.inlet, massFlowSensor.outlet) annotation (Line(
+      points={{-10,0},{-32,0}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(massFlowSensor.inlet, inletHeatLosses.inlet) annotation (Line(
+      points={{-44,0},{-52,0},{-52,-1.72085e-15},{-60,-1.72085e-15}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})),
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}})));

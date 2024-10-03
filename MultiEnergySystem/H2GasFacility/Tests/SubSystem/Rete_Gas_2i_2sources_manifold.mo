@@ -20,6 +20,7 @@ model Rete_Gas_2i_2sources_manifold
     break connect(s18.outlet, s31.inlet),
     break connect(s22.inlet, s21.inlet),
     break connect(s20.outlet, s21.inlet));
+    extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
     redeclare model Medium = Medium,

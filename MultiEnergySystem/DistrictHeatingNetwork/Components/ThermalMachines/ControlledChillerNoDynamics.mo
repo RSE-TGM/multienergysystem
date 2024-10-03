@@ -80,33 +80,26 @@ model ControlledChillerNoDynamics
   Modelica.Blocks.Logical.TriggeredTrapezoid TT1(
     amplitude=100e3,
     rising=10,
-    falling=0)  annotation (Placement(transformation(extent={{-2,-36},{18,-14}})));
-  Modelica.Blocks.Sources.BooleanExpression C1(y=compressor1_on) annotation (Placement(transformation(extent={{-36,-34},{-16,-14}})));
+    falling=0)  annotation (Placement(transformation(extent={{-10,6},{10,26}})));
+  Modelica.Blocks.Sources.BooleanExpression C1(y=compressor1_on) annotation (Placement(transformation(extent={{-44,6},
+            {-24,26}})));
   Modelica.Blocks.Logical.TriggeredTrapezoid TT2(
     amplitude=100e3,
     rising=10,
-    falling=0)  annotation (Placement(transformation(extent={{-2,-66},{18,-44}})));
-  Modelica.Blocks.Sources.BooleanExpression C2(y=compressor2_on) annotation (Placement(transformation(extent={{-36,-64},{-16,-44}})));
-  Modelica.Blocks.Logical.OnOffController onOffController(bandwidth=3, pre_y_start=true)
-                                                                              annotation (
-    Placement(visible = true, transformation(origin={-6,20},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Logical.TriggeredTrapezoid TT(
-    amplitude=150e3,
-    rising=15,
-    falling=15) annotation (Placement(visible=true, transformation(
-        origin={24,20},
-        extent={{-10,-10},{10,10}},
-        rotation=0)));
-  Modelica.Blocks.Sources.RealExpression Toutactual(y=Tout_cold) annotation (Placement(transformation(extent={{-48,4},{-28,24}})));
-  Modelica.Blocks.Sources.RealExpression Toutref(y=Tout_cold_set) annotation (Placement(transformation(extent={{-48,16},{-28,36}})));
-  Modelica.Blocks.Continuous.FirstOrder FO1(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{28,-36},{48,-16}})));
-  Modelica.Blocks.Continuous.FirstOrder FO2(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{28,-64},{48,-44}})));
+    falling=0)  annotation (Placement(transformation(extent={{-10,-24},{10,-4}})));
+  Modelica.Blocks.Sources.BooleanExpression C2(y=compressor2_on) annotation (Placement(transformation(extent={{-44,-24},
+            {-24,-4}})));
+  Modelica.Blocks.Continuous.FirstOrder FO1(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{20,6},{
+            40,26}})));
+  Modelica.Blocks.Continuous.FirstOrder FO2(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{20,-24},
+            {40,-4}})));
   Modelica.Blocks.Interfaces.BooleanInput cold_on annotation (Placement(
         transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-120,-10},{-100,10}})));
 protected
   Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set_internal;
 
 equation
+
 // Fluid Definition
 
   {fluidIn.p, fluidIn.h} = {pin_cold, hin_cold};
@@ -184,7 +177,8 @@ equation
   P_compressor1 = FO1.y;
   P_compressor2 = FO2.y;
   // Total cooling power
-  Pcold = if cold_on then P_compressor1 + P_compressor2 else 0;
+  //Pcold = if cold_on then P_compressor1 + P_compressor2 else 0;
+  Pcold = if cold_on then homotopy(min(Pcold_ref, 200e3),200e3) else 40e3;
   //Pcold = TT.y;
   //Pcold = 200e3;
 
@@ -204,24 +198,8 @@ initial equation
   end if;
 
 equation
-//   when sample(0, 0.1) then
-//     compressor1_on := if Tout_cold > Tout_cold_set + T_bandwidth then false else if Tout_cold < Tout_cold_set - T_bandwidth and Pcold_ref <= 100e3 then true else pre(compressor1_on);
-// Hysteresis control for compressor 2
-//     compressor2_on := if Tout_cold > Tout_cold_set + T_bandwidth then false else if Tout_cold < Tout_cold_set - T_bandwidth and Pcold_ref > 100e3 then true else pre(compressor2_on);
-// Ensure only one compressor is activated if the required power is less than 100 kW
-//     if Pcold_ref <= 100e3 then
-//       compressor2_on := false;
-//     end if;
-// Ensure both compressors are not activated at the same time unless necessary
-//     if Pcold_ref > 100e3 then
-//       compressor1_on := true;
-//       compressor2_on := true;
-//     end if;
-//   end when;
 
 
-
-    // Cooling phase logic
 algorithm
   if Tout_cold <= Tout_cold_set - T_bandwidth then
     cooling_phase :=false; // Enter heating phase
@@ -295,14 +273,10 @@ algorithm
   compressor2_on :=comp2_control;
 
 equation
-  connect(C1.y, TT1.u) annotation (Line(points={{-15,-24},{-9.5,-24},{-9.5,-25},{-4,-25}},
-                                                                                        color={255,0,255}));
-  connect(C2.y, TT2.u) annotation (Line(points={{-15,-54},{-9.5,-54},{-9.5,-55},{-4,-55}},    color={255,0,255}));
-  connect(Toutref.y, onOffController.reference) annotation (Line(points={{-27,26},{-18,26}}, color={0,0,127}));
-  connect(Toutactual.y, onOffController.u) annotation (Line(points={{-27,14},{-18,14}}, color={0,0,127}));
-  connect(onOffController.y, TT.u) annotation (Line(points={{5,20},{12,20}}, color={255,0,255}));
-  connect(TT1.y, FO1.u) annotation (Line(points={{19,-25},{20,-25},{20,-26},{26,-26}}, color={0,0,127}));
-  connect(TT2.y, FO2.u) annotation (Line(points={{19,-55},{22.5,-55},{22.5,-54},{26,-54}}, color={0,0,127}));
+  connect(C1.y, TT1.u) annotation (Line(points={{-23,16},{-12,16}},                     color={255,0,255}));
+  connect(C2.y, TT2.u) annotation (Line(points={{-23,-14},{-12,-14}},                         color={255,0,255}));
+  connect(TT1.y, FO1.u) annotation (Line(points={{11,16},{18,16}},                     color={0,0,127}));
+  connect(TT2.y, FO2.u) annotation (Line(points={{11,-14},{18,-14}},                       color={0,0,127}));
   annotation (
     Icon);
 end ControlledChillerNoDynamics;

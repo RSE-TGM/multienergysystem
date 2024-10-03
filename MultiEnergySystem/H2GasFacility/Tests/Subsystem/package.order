@@ -25,4 +25,15 @@ PaperCaseII_IV
 PaperCaseI_A_IG
 PaperCaseI_Demand_A_IG
 PaperCaseII_MSL
-Rete_Gas_2i
+Rete_Gas_2i_all_pipes
+Rete_Gas_2i_nosources
+Rete_Gas_2i_w2sources
+Rete_Gas_2i_top_net
+Rete_Gas_2i_MSL_2sources
+Rete_Gas_2i_MSL_nosources
+Rete_Gas_2i_nosources_ok
+Rete_Gas_2i_2sources_ok
+Rete_Gas_2i_3sources_ok
+Rete_Gas_2i_complete
+Rete_Gas_2i_2sources_pipe_orientation_zeroH
+Rete_Gas_2i_2sources_manifold

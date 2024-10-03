@@ -359,7 +359,11 @@ equation
 initial equation
   if initOpt == DistrictHeatingNetwork.Choices.Init.Options.steadyState then
     for i in 1:n loop
-      der(m_flowtilde[i]) = 0;
+       if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
+         // no mass flow derivative
+       else
+         der(m_flowtilde[i]) = 0;
+       end if;
       if quasiStatic then
         // nothing
         der(Ttilde[i]) = 0;
@@ -369,7 +373,7 @@ initial equation
       end if;
     end for;
     if not noInitialPressure then
-      //der(ptilde) = 0;
+      // der(ptilde) = 0;
       der(ptilde) = zeros(n);
     else
       //  No initial pressure

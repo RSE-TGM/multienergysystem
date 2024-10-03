@@ -13,7 +13,7 @@ partial model PartialValve
 
   parameter Types.PerUnit nomOpening = 1 "Nominal valve opening" annotation (
     Dialog(group = "Valve characteristics"));
-  parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter" annotation (
+  parameter Types.PerUnit minimumOpening = 0.0001 "Minimum opening area, avoid no flow condition, default 3mm diameter" annotation (
     Dialog(group = "Valve characteristics"));
   parameter Real Kv(unit = "m3/h") = 12 "Metri Flow Coefficient" annotation (
     Dialog(group = "Valve characteristics"));

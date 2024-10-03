@@ -7110,17 +7110,17 @@ Act")}),Diagram(coordinateSystem(
       booldToutRR01 = true;
 
       //Set-points
-      FT101SP = 1.6;
+      FT101SP = 1.7;
       dFT101SP = (FT101SP - 5.7166667)/5.7166667;
       FT401SP = 1.33;
       dFT401SP = (FT401SP - 3.2666667)/3.2666667;
       FT501SP = 2.1;
       dFT501SP = (FT501SP - FT501_nom)/FT501_nom;
-      FT701SP = 1.4;
+      FT701SP = 1.35;
       dFT701SP = (FT701SP - 2)/2;
-      FT711SP = 1.35;
+      FT711SP = 1.30;
       dFT711SP = (FT711SP - 2)/2;
-      FT721SP = 1.25;
+      FT721SP = 1.20;
       dFT721SP = (FT721SP - 2)/2;
       TT701SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
       dTT701SP = (TT701SP - (60 + 273.15))/(100 + 273.15);

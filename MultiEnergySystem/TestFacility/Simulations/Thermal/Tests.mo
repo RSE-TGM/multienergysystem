@@ -6947,7 +6947,7 @@ Act")}),Diagram(coordinateSystem(
         Kp=0.84502,
         Ti=0.26795,
         Umax=0,
-        Umin=-0.4,
+        Umin=-2,
         y_start=0,
         firstOrder(initType=Modelica.Blocks.Types.Init.InitialState))  annotation (Placement(transformation(extent={{50,-120},{60,-110}})));
       DistrictHeatingNetwork.Actuators.SplitRange sR_FT101 annotation (Placement(transformation(extent={{70,-125},{90,-105}})));
@@ -7263,12 +7263,6 @@ Act")}),Diagram(coordinateSystem(
           index=1,
           extent={{6,3},{6,3}},
           horizontalAlignment=TextAlignment.Left));
-      connect(switch_dthetaFCV101.y, controlSignalBus.dthetaFCV101)
-        annotation (Line(points={{-112.5,7},{-110,7},{-110,26},{24,26},{24,-36},{125,-36},{125,0},{160,0}}, color={0,0,127}), Text(
-          string="%second",
-          index=1,
-          extent={{6,3},{6,3}},
-          horizontalAlignment=TextAlignment.Left));
       connect(switch_dToutGB101.y, controlSignalBus.dToutGB101) annotation (Line(points={{-112.5,-26},{-110,-26},{-110,-10},{-77,-10},{-77,25},{23,25},{23,-37},{127,-37},{127,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
           index=1,
@@ -7442,6 +7436,12 @@ Act")}),Diagram(coordinateSystem(
           horizontalAlignment=TextAlignment.Right));
       connect(PI_TT731.controlAction, controlSignalBus.dthetaTCV731)
         annotation (Line(points={{60.5,-295},{160,-295},{160,0}}, color={0,0,127}), Text(
+          string="%second",
+          index=1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(sR_FT101.Yout2, controlSignalBus.dthetaFCV101)
+        annotation (Line(points={{88,-119},{147,-119},{147,0},{160,0}}, color={0,0,127}), Text(
           string="%second",
           index=1,
           extent={{6,3},{6,3}},

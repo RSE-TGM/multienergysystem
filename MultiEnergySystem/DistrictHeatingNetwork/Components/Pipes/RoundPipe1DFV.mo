@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model RoundPipe1DFV
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
-  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube(T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal, hin_start = fluid[1].h_start, m_flow_start = q_start*rho_start, pout_start = pin_start - dp_start);
+  extends DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube(T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal, final hin_start = fluid[1].h_start, m_flow_start = q_start*rho_start, pout_start = pin_start - dp_start, final pmax);
   import Modelica.Fluid.Utilities.regSquare;
   import Modelica.Fluid.Utilities.regStep;
 
@@ -22,9 +22,9 @@ model RoundPipe1DFV
 // Flow parameter
   parameter Types.Density rho_start = 985 "Density start/reference value" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real q_m3h_start(unit = "m3/h") = 3600*4/rho_start "volumetric flowrate start/Reference value" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation (
+  parameter Real q_m3h_start(unit = "m3/h") = 3600*m_flow_start/rho_start "volumetric flowrate start/Reference value" annotation (
+    Dialog(enable = not set_m_flow_start, group = "Initialisation"));
+  final parameter Types.Velocity u_start = m_flow_start / (rho_start * A) "Velocity start value" annotation (
     Dialog(group = "Initialisation"));
   parameter Boolean noInitialPressure = false "Remove initial equation for pressure, to be used in case of solver failure" annotation (
     Dialog(group = "Initialisation"));
@@ -72,7 +72,7 @@ model RoundPipe1DFV
   final parameter Types.Volume Vi = V / n "Volume of one finite element";
   final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
-outer System system "system object for global defaults";
+  outer System system "system object for global defaults";
 
   // Variables
   Types.MassFlowRate m_flow[n + 1](each start = m_flow_start, each nominal = m_flow_nom) "Mass flow rate in each section across the pipe";
@@ -147,11 +147,19 @@ equation
 
 
   // Momentum Balance
+//   if hctype == Choices.Pipe.HCtypes.Middle then
+//     pin - ptilde = (L/A)*der(inlet.m_flow)/2 + (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+//     ptilde - pout = (L/A)*der(m_flow[end])/2 + (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+//   else
+//     pin - pout = (L/A)*der(inlet.m_flow) + rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+//     ptilde = pout;
+//   end if;
+
   if hctype == Choices.Pipe.HCtypes.Middle then
-    pin - ptilde = (L/A)*der(inlet.m_flow)/2 + (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
-    ptilde - pout = (L/A)*der(m_flow[end])/2 + (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+    pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+    ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
   else
-    pin - pout = (L/A)*der(inlet.m_flow) + rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+    pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
     ptilde = pout;
   end if;
 
@@ -193,7 +201,7 @@ equation
 initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Ttilde) = zeros(n);
-    der(inlet.m_flow) = 0;
+    //der(inlet.m_flow) = 0;
     //der(ptilde) = 0;
     if not noInitialPressure then
       //der(ptilde) = 0;

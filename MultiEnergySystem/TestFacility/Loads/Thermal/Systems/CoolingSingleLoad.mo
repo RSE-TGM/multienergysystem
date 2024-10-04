@@ -2,8 +2,7 @@ within MultiEnergySystem.TestFacility.Loads.Thermal.Systems;
 model CoolingSingleLoad
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby
-    DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
+  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   parameter Integer np = 5 "Number of volumes in each pipe";
   parameter Integer nHX = 9 "Number of volumes in heat exchanger";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
@@ -230,9 +229,9 @@ model CoolingSingleLoad
     n=np,
     hctype=hctype,
     nPipes=1)      annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
+        extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={20,-90})));
+        origin={20,-100})));
 
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare model Medium = Medium, T_start=EX7X1_Tout_hot,
     p_start=EX7X1_pout_hot)
@@ -349,10 +348,7 @@ equation
       thickness=0.5));
   connect(FCV7X1.opening, theta) annotation (Line(points={{12,10},{0,10},{0,50},{-56,50},{-56,70},{-110,70}},
                                                                             color={0,0,127}));
-  connect(MultiPort, PL701_TT702_SourceIn.wall) annotation (Line(points={{-110,0},{-60,0},{-60,10},{-24.1,10}}, color={255,238,44}));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
-  connect(PL701_FCV701_FT701.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{15.9,34},{-60,34},{-60,10},{-24.1,10}}, color={255,238,44}));
-  connect(PL701_SourceOut_FCV701.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{15.9,-16},{-60,-16},{-60,10},{-24.1,10}}, color={255,238,44}));
   connect(PL701_TT702_SourceIn1.outlet, outcold) annotation (Line(
       points={{-20,-100},{-20,-115},{-49,-115}},
       color={140,56,54},
@@ -362,11 +358,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn2.outlet, TT7X3.inlet) annotation (Line(
-      points={{20,-80},{20,-75},{20.4,-75},{20.4,-72}},
+      points={{20,-90},{20.4,-90},{20.4,-72}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn2.inlet, incold) annotation (Line(
-      points={{20,-100},{20,-115},{49,-115}},
+      points={{20,-110},{20,-115},{49,-115}},
       color={140,56,54},
       thickness=0.5));
   connect(FT701.q_m3hr, FT7X1_FT) annotation (Line(points={{28.5,56},{68,56},{68,-10},{110,-10}}, color={0,0,127}));
@@ -385,8 +381,26 @@ equation
       points={{20,78},{20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn1.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{-24.1,-90},{-42,-90},{-42,-88},{-60,-88},{-60,10},{-24.1,10}}, color={255,238,44}));
-  connect(PL701_TT702_SourceIn2.wall, PL701_TT702_SourceIn.wall) annotation (Line(points={{24.1,-90},{32,-90},{32,-96},{-60,-96},{-60,10},{-24.1,10}}, color={255,238,44}));
+  connect(PL701_TT702_SourceIn1.wall, MultiPort) annotation (Line(
+      points={{-24.1,-90},{-60,-90},{-60,0},{-110,0}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL701_SourceOut_FCV701.wall, MultiPort) annotation (Line(
+      points={{15.9,-16},{-60,-16},{-60,0},{-110,0}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL701_FCV701_FT701.wall, MultiPort) annotation (Line(
+      points={{15.9,34},{-60,34},{-60,0},{-110,0}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL701_TT702_SourceIn.wall, MultiPort) annotation (Line(
+      points={{-24.1,10},{-60,10},{-60,0},{-110,0}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL701_TT702_SourceIn2.wall, MultiPort) annotation (Line(
+      points={{15.9,-100},{-60,-100},{-60,0},{-110,0}},
+      color={255,101,98},
+      thickness=0.5));
   annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(coordinateSystem(grid={2,2}),
                                                                               graphics={
                              Bitmap(

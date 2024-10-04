@@ -61,7 +61,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
 
   Modelica.Blocks.Logical.Hysteresis hysteresis(
     uLow=65.5 + 273.15,
-    uHigh=70 + 273.15,
+    uHigh=80 + 273.15,
     pre_y_start=true) annotation (Placement(transformation(extent={{-12,-10},{8,10}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=Tin)
     annotation (Placement(transformation(extent={{-40,-10},{-20,10}})));
@@ -81,7 +81,8 @@ equation
   // Power calculations
   Pth_ref = Pel_ref*eta_th_nom/eta_el_nom;
   //Pheat = if heat_on and TlimitOnOff then max(min(Pth_ref, Pth_nom),0) else 0;
-  Pheat = if heat_on and not hysteresis.y then max(min(Pth_ref, Pth_nom),0) else 0;
+  //Pheat = if heat_on and not hysteresis.y then max(min(Pth_ref, Pth_nom),0) else 0;
+  Pheat = if heat_on then max(min(Pth_ref, Pth_nom),0) else 0;
   Pheat = Pel_actual*eta_th_nom/eta_el_nom;
 
   // Fuel flow calculations

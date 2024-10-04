@@ -6333,7 +6333,7 @@ System")}),
       theta_FCV101SP = 1;
       booldthetaFCV101 = true;
       domega_P101_var = (omega_P101SP - omega_nom)/omega_nom;
-      omega_P101SP = 2*pi*35;
+      omega_P101SP = 2*pi*50;
       booldomegaP101 = true;
       dTout_GB101_var = (Tout_GB101SP - Tout_gen_nom)/Tout_gen_nom;
       Tout_GB101SP = 80 + 273.15;
@@ -6344,7 +6344,7 @@ System")}),
       theta_FCV401SP = 1;
       booldthetaFCV401 = true;
       domega_P401_var = (omega_P401SP - omega_nom)/omega_nom;
-      omega_P401SP = 2*pi*35;
+      omega_P401SP = 2*pi*50;
       booldomegaP401 = true;
       dTout_EB401_var = (Tout_EB401SP - Tout_gen_nom)/Tout_gen_nom;
       Tout_EB401SP = 80 + 273.15;
@@ -6352,7 +6352,7 @@ System")}),
 
       // S500
       domega_P501_var = (omega_P501SP - omega_nom)/omega_nom;
-      omega_P501SP = 2*pi*35;
+      omega_P501SP = 2*pi*45;
       booldomegaP501 = true;
       dTout_CHP501_var = (Tout_CHP501SP - Tout_gen_nom)/Tout_gen_nom;
       Tout_CHP501SP = 80 + 273.15;
@@ -6397,7 +6397,7 @@ System")}),
       theta_FCVR01SP = 1;
       booldthetaFCVR01 = true;
       dTout_RR01_var = (Tout_RR01SP - Tout_gen_nom)/Tout_gen_nom;
-      Tout_RR01SP = 20 + 273.15;
+      Tout_RR01SP = 40 + 273.15;
       booldToutRR01 = true;
 
       connect(domegaP901_var.y, switch_domegaP901.u1) annotation (Line(points={{-130.5,160},{-127,160},{-127,154},{-123,154}}, color={0,0,127}));
@@ -7113,6 +7113,7 @@ Act")}),Diagram(coordinateSystem(
       FT101SP = 1.7;
       dFT101SP = (FT101SP - 5.7166667)/5.7166667;
       FT401SP = 1.33;
+      //FT401SP = if time < 1e3 then 1.3 elseif time < 2e3 then -0.00053*time + 1.9 else 0.8;
       dFT401SP = (FT401SP - 3.2666667)/3.2666667;
       FT501SP = 2.1;
       dFT501SP = (FT501SP - FT501_nom)/FT501_nom;

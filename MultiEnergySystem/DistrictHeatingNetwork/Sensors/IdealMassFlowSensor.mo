@@ -7,7 +7,7 @@ model IdealMassFlowSensor
   parameter Types.Temperature T_start = 60 + 273.15;
   parameter Types.Pressure p_start = 2.5e5;
   Medium fluid(T_start = T_start, p_start = p_start);
-  Modelica.Blocks.Interfaces.RealOutput m_flow "Mass flowrate in kg/s" annotation (Placement(
+  Modelica.Blocks.Interfaces.RealOutput m_flow(unit = "kg/s") "Mass flowrate in kg/s" annotation (Placement(
       visible=true,
       transformation(
         origin={0,72},
@@ -17,7 +17,7 @@ model IdealMassFlowSensor
         origin={70,60},
         extent={{-10,-10},{10,10}},
         rotation= 0)));
-  Modelica.Blocks.Interfaces.RealOutput q_m3hr "Volumetric flowrate in m3/hr" annotation (Placement(
+  Modelica.Blocks.Interfaces.RealOutput q_m3hr(unit = "m3/h") "Volumetric flowrate in m3/hr" annotation (Placement(
       visible=true,
       transformation(
         origin={0,56},

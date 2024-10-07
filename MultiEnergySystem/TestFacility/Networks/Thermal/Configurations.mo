@@ -1110,8 +1110,6 @@ package Configurations
         openingChar=openingChar_FCV101,
         Pmaxnom=147.6e3*0.78) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
     equation
-      connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
-        Line(points={{-266,-196},{-266,5.25},{-326.5,5.25}},       color = {140, 56, 54}, thickness = 0.5));
       connect(PL_S100_rCD_cold.outlet, S100.inlet) annotation (Line(
           points={{-266,-216},{-266,-225.775},{-267.16,-225.775},{-267.16,-233.4}},
           color={140,56,54},
@@ -1124,8 +1122,12 @@ package Configurations
           points={{-250,-335.04},{-250,-362}},
           color={182,109,49},
           thickness=0.5));
-      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
-          points={{-232,-196},{-232,45},{-235.75,45},{-235.75,44.75},{-257.5,44.75}},
+      connect(PL_S100_rCD_cold.inlet, junction.inoutlet) annotation (Line(
+          points={{-266,-196},{-266,-4},{-265,-4}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.outlet, junction2_1.inoutlet) annotation (Line(
+          points={{-232,-196},{-230,-196},{-230,28},{-240,28},{-240,34}},
           color={140,56,54},
           thickness=0.5));
       annotation (

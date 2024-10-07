@@ -1,8 +1,8 @@
 within MultiEnergySystem.TestFacility.Facilities.Interfaces;
 partial model HeatGeneration "Partial model for heat generation plants"
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet supplyLine annotation (Placement(transformation(extent={{90,-50},{110,-30}}), iconTransformation(extent={{90,-50},{110,-30}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortOutlet returnLine annotation (Placement(transformation(extent={{90,30},{110,50}}), iconTransformation(extent={{90,30},{110,50}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet supplyHot annotation (Placement(transformation(extent={{90,-50},{110,-30}}), iconTransformation(extent={{90,-50},{110,-30}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet returnHot annotation (Placement(transformation(extent={{90,30},{110,50}}), iconTransformation(extent={{90,30},{110,50}})));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={Bitmap(
           extent={{-80,-80},{80,80}},
           imageSource=

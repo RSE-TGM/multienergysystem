@@ -4072,7 +4072,7 @@ Act")}),  Diagram(coordinateSystem(
         annotation (experiment(
             StopTime=5000,
             Tolerance=1e-06,
-            __Dymola_Algorithm="Lsodar"));
+            __Dymola_Algorithm="Dassl"));
       end SR_OneGen_CaseA;
 
       model SR_ThreeGen_CaseA "This test model considers the step response using as a base the generating plant with Gas Boiler, Electric Boiler & CHP as heat generators"

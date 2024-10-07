@@ -963,6 +963,186 @@ package Configurations "Different possible configurations of the heat generating
         Icon(coordinateSystem(grid = {0.5, 0.5})),
         experiment(StopTime = 500, __Dymola_Algorithm = "Dassl"));
     end CentralPlantBaseSimplified;
+
+    partial model HeatGenerationTFBase "Base Case considering system 900"
+      extends Facilities.Interfaces.HeatGeneration;
+      //Fluids
+      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      //Constants
+      constant Real pi = Modelica.Constants.pi;
+      //General parameters of pipesù
+      parameter Integer n = 3 "Number of volumes in each pipe";
+      parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "friction factor for pipes";
+      parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+      parameter DistrictHeatingNetwork.Types.Temperature T_start_cold = T_start;
+      parameter DistrictHeatingNetwork.Types.Temperature T_start_hot = T_start;
+      parameter DistrictHeatingNetwork.Types.Temperature T_start = 15 + 273.15;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_total = 2.5;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start_Users = m_flow_total/4;
+      parameter Real rL2L3cold_mflow_start(unit = "m3/h") = 1;
+      parameter Real rL3L4cold_mflow_start(unit = "m3/h") = 1;
+      parameter Real rL5L6cold_mflow_start(unit = "m3/h") = 1;
+      parameter Real rL6L7cold_mflow_start(unit = "m3/h") = 1;
+      parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
+      parameter DistrictHeatingNetwork.Types.Pressure dp_nom_UsersValve = 50000;
+      // Rack CD
+      parameter DistrictHeatingNetwork.Types.Length t_rCD = 2e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_rCD = 72e-3;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_rCD = p_VE901;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_rCD = 1.60e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_rCD_cold = 1.69e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_rCD_cold = 1.60e5;
+      // Cold Side Rack CD
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C1 = 10.8;
+      parameter DistrictHeatingNetwork.Types.Length h_rCD_C1 = -0.3 + 1.3;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C2 = 2.85;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C3 = 0.84;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C4 = 0.84;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C5 = 0.65;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C6 = 1.5;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C7 = 1.2;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_C8 = 1.0;
+      // Hot Side Rack CD
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H1 = 1;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H2 = 0.6;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H3 = 2;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H4 = 1.37;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H5 = 1.4;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H6 = 1.25;
+      parameter DistrictHeatingNetwork.Types.Length L_rCD_H7 = 15;
+      parameter DistrictHeatingNetwork.Types.Length h_rCD_H7 = 1.8 - 0.3 - 2.2;
+      // Cold Side L2-L3-L4-L5-L6-L7
+      parameter DistrictHeatingNetwork.Types.Length L_rL2L3_rL3L4_C = 4.5;
+      parameter DistrictHeatingNetwork.Types.Length L_rL3L4_FCVC01_C = 3;
+      parameter DistrictHeatingNetwork.Types.Length L_FCVC01_rL4L5_C = 1.5;
+      parameter DistrictHeatingNetwork.Types.Length L_rL4L5_rL5L6_C = 3;
+      parameter DistrictHeatingNetwork.Types.Length L_rL5L6_rL6L7_C = 3;
+      parameter DistrictHeatingNetwork.Types.Length L_rL6L7_FCVC02_C = 1.8;
+      parameter DistrictHeatingNetwork.Types.Length t_rL_C = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_rL_C = 51e-3;
+      // Hot side Rack L2-L3-L4-L5-L6-L7
+      parameter DistrictHeatingNetwork.Types.Length L_rL2L3_rL3L4_H = 4.5;
+      parameter DistrictHeatingNetwork.Types.Length L_rL3L4_FCVC01_H = 3;
+      parameter DistrictHeatingNetwork.Types.Length h_rL3L4_FCVC01_H = 2.5;
+      parameter DistrictHeatingNetwork.Types.Length L_FCVC01_rL4L5_H = 1.5;
+      parameter DistrictHeatingNetwork.Types.Length L_rL4L5_rL5L6_H = 3;
+      parameter DistrictHeatingNetwork.Types.Length L_rL5L6_rL6L7_H = 3;
+      parameter DistrictHeatingNetwork.Types.Length L_rL6L7_FCVC02_H = 1.8;
+      parameter DistrictHeatingNetwork.Types.Length h_rL6L7_FCVC02_H = 1.4;
+      parameter DistrictHeatingNetwork.Types.Length t_rL_H = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di_rL_H = 51e-3;
+      parameter DistrictHeatingNetwork.Types.Length t = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length Di = 51e-3;
+      parameter DistrictHeatingNetwork.Types.Length L_v = 1;
+      parameter DistrictHeatingNetwork.Types.Length L_RL2L3 = 4.53;
+      parameter DistrictHeatingNetwork.Types.Length L_RL3L4 = 3.02;
+      parameter DistrictHeatingNetwork.Types.Length L_RL4L5 = 2.5;
+      parameter DistrictHeatingNetwork.Types.Length L_RL5L6 = 2.5;
+      parameter DistrictHeatingNetwork.Types.Length L_RL6L7 = 3;
+      parameter Real q_m3h_rackCold(unit = "m3/h") = q_m3h_S9;
+      parameter Real q_m3h_rackHot(unit = "m3/h") = q_m3h_S9;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = 4.04;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start = 1.69e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start = 3e5;
+      // System S900
+      parameter DistrictHeatingNetwork.Types.Pressure p_VE901 = 2.2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S9 = p_VE901;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S9 = 2.7e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_P901 = 2.5e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_P901 = 3.5e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S9 = 17 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S9 = 17 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Length L_S9 = 10;
+      parameter DistrictHeatingNetwork.Types.Length L_S9_PL1 = 0.82;
+      //parameter DistrictHeatingNetwork.Types.Length L_S9_PL2=2.3;
+      parameter DistrictHeatingNetwork.Types.Length L_S9_PL2 = 0.5;
+      parameter DistrictHeatingNetwork.Types.Length h_S9_PL2 = 0.5;
+      parameter DistrictHeatingNetwork.Types.Length L_S9_PL3 = 1.5;
+      parameter DistrictHeatingNetwork.Types.Length L_S9_PL4 = 0.65;
+      parameter DistrictHeatingNetwork.Types.Length Di_S9 = 51e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S9 = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S9 = 4.04;
+      parameter Real q_m3h_S9(unit = "m3/h") = 14;
+      // Cooling System
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_Users = 3e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_Users = 2.5e5;
+      parameter Real q_m3h(unit = "m3/h") = 7*3600/1000;
+      // Valves Nominal Data
+      parameter Real Kv_FCVC01(unit = "m3/h") = 30.55;
+      parameter Real Kv_FCVC02(unit = "m3/h") = 30.55;
+      parameter Boolean FV933_state = true;
+      parameter Real FCV901theta[:, :] = [0, 1];
+      parameter Real FCVC01theta[:, :] = [0, 1];
+      parameter Real FCVC02theta[:, :] = [0, 1];
+      parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
+      //Pumps
+      parameter Real P901omega[:, :] = [0, 2*3.141592654*40];
+      parameter Real P901qm3h[:, :] = [0, 12];
+      parameter Real pumpcorrectionfactor = 1;
+      parameter Real b[3] = {23.6, 0.62, -0.0435} "Head Characteristic coefficients";
+      parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
+
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV933(redeclare model Medium = MediumCP, Kv = 33, dp_nom = 50000, Tin_start = T_start, pin_start = pin_start) annotation (
+        Placement(visible = true, transformation(origin={292,-107},   extent = {{-5, 5}, {5, -5}}, rotation = 180)));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S100_S400(redeclare model Medium = MediumCP, L = L_rCD_H1, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of gas boiler and the outlet of electric boiler" annotation (
+        Placement(transformation(extent = {{-10.25, 10.25}, {10.25, -10.25}}, rotation = 180, origin={242.25,-107.25})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S400_S300(redeclare model Medium = MediumCP, L = L_rCD_H2, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of the electric boiler and the outlet of heat pump HP301" annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin={162,-107})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S300_S500(redeclare model Medium = MediumCP, L = L_rCD_H3, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of heat pump HP301 and the outlet of hot side of CHP system" annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin={82,-107})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S500_SXXX(redeclare model Medium = MediumCP, L = L_rCD_H4, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of heat pump HP301 and the outlet of hot side of CHP system" annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin={0,-107})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_SXXX_SYYY(redeclare model Medium = MediumCP, L = L_rCD_H5, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of heat pump HP301 and the outlet of hot side of CHP system" annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin={-78,-107})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_SYYY_S200(redeclare model Medium = MediumCP, L = L_rCD_H6, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of future heat storage and the outlet of hot side of CHP system" annotation (
+        Placement(transformation(extent = {{-10, 10.25}, {10, -10.25}}, rotation = 180, origin={-158,-107.25})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(redeclare model Medium = MediumCP, L = L_rCD_H7, h = h_rCD_H7, t = t_rCD, pin_start = pin_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, q_m3h_start = q_m3h_S9, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of future heat storage and the outlet of hot side of CHP system" annotation (
+        Placement(transformation(extent = {{-10, 10.25}, {10, -10.25}}, rotation = 180, origin={-227,-107.25})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S400_S100(redeclare model Medium = MediumCP, L = L_rCD_C7, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S400 and S100 cold side" annotation (
+        Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin={172.75,-146.75})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S300_S400(redeclare model Medium = MediumCP, L = L_rCD_C6, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
+        Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin={90.75,-146.75})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S300_S300(redeclare model Medium = MediumCP, L = L_rCD_C5, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
+        Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin={50.75,-146.75})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S500_S300(redeclare model Medium = MediumCP, L = L_rCD_C4, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
+        Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin={-7.25,-146.75})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S500_S500(redeclare model Medium = MediumCP, L = L_rCD_C3, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
+        Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin={-47.25,-146.75})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S200_S500(redeclare model Medium = MediumCP, L = L_rCD_C2, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S200 and S500 cold side" annotation (
+        Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin={-147.25,-146.75})));
+      MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S900_S200(redeclare model Medium = MediumCP, L = L_rCD_C1, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S200 and S500 cold side" annotation (
+        Placement(transformation(extent={{10.75,10.75},{-10.75,-10.75}},      rotation = 180, origin={-217.25,-147.25})));
+      Systems.CirculationPump S900(
+        n=3,
+        pumpcorrectionfactor=pumpcorrectionfactor,
+        Kv=Kv,
+        openingChar=openingChar,
+        cf=cf,
+        b=b) "Pumping Circulation System"
+        annotation (Placement(transformation(extent={{-42,-46},{38,34}}, rotation=0)));
+      DistrictHeatingNetwork.Components.Fittings.Junction2 junction2_1 annotation (Placement(transformation(extent={{276,-114},{262,-100}})));
+    equation
+      connect(S900.outlethot, supplyHot) annotation (Line(
+          points={{13.6,40},{13.6,52},{60,52},{60,-40},{100,-40}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(S900.inletcold, returnHot) annotation (Line(
+          points={{-17.6,40},{-17.6,60},{66,60},{66,40},{100,40}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction2_1.inlet, FV933.outlet) annotation (Line(
+          points={{276,-107},{287,-107}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(junction2_1.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+          points={{262,-107},{260.25,-107},{260.25,-107.25},{252.5,-107.25}},
+          color={140,56,54},
+          thickness=0.5));
+      annotation (
+        Diagram(coordinateSystem(extent={{-400,-300},{400,300}}),      graphics={                                                                                                                                                                                                    Text(extent={{-104,
+                  161},{26,123}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "Rack C/D")}),
+        experiment(StopTime = 500, __Dymola_Algorithm = "Dassl"));
+    end HeatGenerationTFBase;
   end BaseClass;
 
   package Centralised

@@ -42,7 +42,7 @@ package Configurations
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
-      parameter Integer np = 5 "Number of volumes in each pipe";
+      parameter Integer np = 3 "Number of volumes in each pipe";
       inner DistrictHeatingNetwork.System system annotation (
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation

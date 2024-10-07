@@ -564,11 +564,6 @@ package Configurations "Different possible configurations of the heat generating
         h_outcold=0,
         t=t,
         Di=Di) annotation (Placement(transformation(extent={{506,178},{596,268}})));
-      DistrictHeatingNetwork.Components.Fittings.Junction junction annotation (Placement(transformation(extent={{-274,-4},{-256,14}})));
-      DistrictHeatingNetwork.Components.Fittings.Junction2 junction2_1 annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=0,
-            origin={-240,44})));
     equation
       connect(rackCD_Hot_S400_S300.outlet, rackCD_Hot_S300_S500.inlet) annotation (
         Line(points = {{-358, 45}, {-418, 45}}, color = {140, 56, 54}, thickness = 0.5));
@@ -601,6 +596,10 @@ package Configurations "Different possible configurations of the heat generating
         Line(points = {{672.4, 204.6}, {681, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
       connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (
         Line(points = {{200, 205}, {212, 205}, {212, 204.6}, {224, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
+      connect(FV933.outlet, rackCD_Hot_S100_S400.inlet) annotation (
+        Line(points = {{-223, 45}, {-237.75, 45}, {-237.75, 44.75}, {-257.5, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
+      connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (
+        Line(points = {{-326.5, 5.25}, {-200, 5.25}, {-200, 45}, {-213, 45}}, color = {140, 56, 54}, thickness = 0.5));
       connect(S900_rackL2L3_cold.outlet, S900.inletcold) annotation (Line(
           points={{-82,241},{-808.89,241},{-808.89,181.65}},
           color={140,56,54},
@@ -695,22 +694,6 @@ package Configurations "Different possible configurations of the heat generating
           thickness=0.5));
       connect(PTA19.inlet, FCVC02.outlet) annotation (Line(
           points={{684,247.4},{684,242},{690,242},{690,231}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(rackCD_Cold_S400_S100.outlet, junction.inlet) annotation (Line(
-          points={{-326.5,5.25},{-297.25,5.25},{-297.25,5},{-274,5}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(junction2_1.inlet, FV933.outlet) annotation (Line(
-          points={{-230,44},{-226.5,44},{-226.5,45},{-223,45}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(junction2_1.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
-          points={{-250,44},{-253.75,44},{-253.75,44.75},{-257.5,44.75}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(junction.outlet, FV933.inlet) annotation (Line(
-          points={{-256,5},{-232,5},{-232,4},{-200,4},{-200,45},{-213,45}},
           color={140,56,54},
           thickness=0.5));
       annotation (

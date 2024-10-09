@@ -27,7 +27,10 @@ model Rete_Gas_2i_nosources_ok
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(
+    H=-18,
     m_flow_start=0.4130,
+    pin_start=493000,
+    pout_start=491600,
     rho_nom=rho_nom,
     ff_nom=FrictionFactor,                                          redeclare
       model Medium = Medium,
@@ -56,7 +59,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=180,
         origin={-122,26})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(
-    H=42,
+    H=-42,
+    m_flow_start=0.26601,
+    pin_start=491600,
+    pout_start=482100,
     ff_nom=FrictionFactor,
     rho_nom=rho_nom,
     n=5,                                                        redeclare model
@@ -74,7 +80,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=270,
         origin={-198,-34})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(
-    H=42,
+    H=-32,
+    m_flow_start=0.26601,
+    pin_start=482100,
+    pout_start=468800,
     n=5,                                                        redeclare model
       Medium =                                                                              Medium,
       L=1663.921,
@@ -91,7 +100,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=270,
         origin={-200,-82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(
-    H=11,                                                       redeclare model
+    H=-11,
+    m_flow_start=0.26601,
+    pin_start=468800,
+    pout_start=467600,                                          redeclare model
       Medium =                                                                              Medium,
       L=154.637,
     X_start=X_start,                                                       Di=
@@ -107,7 +119,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=0,
         origin={-174,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(
-    H=1,                                                        redeclare model
+    H=-1,
+    m_flow_start=0.26601,
+    pin_start=467600,
+    pout_start=467100,                                          redeclare model
       Medium =                                                                              Medium,
       L=1.635,
     X_start=X_start,                                                     Di=
@@ -124,6 +139,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-142,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188,
     H=31,
+    m_flow_start=0.26601,
+    pin_start=467100,
+    pout_start=465600,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.603,
@@ -139,6 +157,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-104,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385,
     H=-11,
+    m_flow_start=0.26601,
+    pin_start=465600,
+    pout_start=463600,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.325,
@@ -153,7 +174,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=0,
         origin={-70,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227,
-    H=15,
+    H=-5,
+    m_flow_start=0.26601,
+    pin_start=463600,
+    pout_start=461800,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.603,
@@ -168,6 +192,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=0,
         origin={-18,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s16(L=19.065,
+    m_flow_start=0.26601,
+    pin_start=461800,
+    pout_start=461800,
     X_start=X_start,                                  redeclare model Medium =              Medium,Di=
         1.603,
         quasiStatic=quasiStatic,
@@ -181,7 +208,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=0,
         origin={18,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(L=880.651,
-    H=1,
+    H=-1,
+    m_flow_start=0.26601,
+    pin_start=461800,
+    pout_start=459100,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.603,
@@ -197,7 +227,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={68,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s19(
     L=540.807,
-    H=18,
+    H=-18,
+    m_flow_start=0.23194,
+    pin_start=459100,
+    pout_start=457200,
     redeclare model Medium =                                                                Medium,
     cm=880,
     rhom=2000,
@@ -215,7 +248,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=270,
         origin={146,-34})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(L=14.682,
-    H=-14,
+    H=14,
+    m_flow_start=0.23194,
+    pin_start=457200,
+    pout_start=457100,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                       Di=
         1.603,
@@ -231,6 +267,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={146,-64})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(L=13.074,
     m_flow_start=0.1123,
+    pin_start=457100,
+    pout_start=456900,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                       Di=
         0.831,
@@ -246,8 +284,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={172,-82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(L=95.937,
     m_flow_start=0.1196,
+    pin_start=457100,
+    pout_start=457100,
   redeclare model Medium =                                                                  Medium,
-    H=3,
+    H=-3,
     X_start=X_start,                                                       Di=
         1.603,
         quasiStatic=quasiStatic,
@@ -262,8 +302,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={146,-102})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(L=92.59,
     m_flow_start=0.1196,
+    pin_start=457100,
+    pout_start=457000,
   redeclare model Medium =                                                                  Medium,
-    H=-2,
+    H=2,
     X_start=X_start,                                                      Di=
         1.603,
         quasiStatic=quasiStatic,
@@ -278,6 +320,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={146,-146})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(L=181.028,
     m_flow_start=0.1196,
+    pin_start=457000,
+    pout_start=456700,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                        Di=
         1.325,
@@ -293,6 +337,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={190,-166})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28(L=84.565,
     m_flow_start=0.1196,
+    pin_start=456700,
+    pout_start=455000,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                       Di=
         0.831,
@@ -308,6 +354,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={234,-194})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s30(L=138.527,
     m_flow_start=0.1196,
+    pin_start=455000,
+    pout_start=454700,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                        Di=
         0.831,
@@ -323,6 +371,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={234,-232})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s31(L=256.081,
     m_flow_start=0.0341,
+    pin_start=459100,
+    pout_start=459100,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                        Di=
         0.1603,
@@ -339,6 +389,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s36_Stadio(L=
         1224.898,
     m_flow_start=0.0341,
+    pin_start=459100,
+    pout_start=459100,
         redeclare model Medium =                                                            Medium,
     X_start=X_start,
                   Di=0.0831,
@@ -355,6 +407,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={82,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds1(
     L=3081.109,
+    H=-71,
+    m_flow_start=0.14706,
+    pin_start=491600,
+    pout_start=488800,
     ff_nom=FrictionFactor,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
@@ -370,6 +426,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=90,
         origin={-198,46})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds2(L=92.5,
+    m_flow_start=0.14706,
+    pin_start=488800,
+    pout_start=488700,
     X_start=X_start,                                    redeclare model Medium =            Medium,Di=
         0.1472,
         quasiStatic=quasiStatic,
@@ -383,7 +442,10 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=0,
         origin={-180,66})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds3(L=677.303,
-    H=204,
+    H=-14,
+    m_flow_start=0.14706,
+    pin_start=488700,
+    pout_start=488100,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1603,
@@ -399,6 +461,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-146,66})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds4(L=433.985,
     H=-8,
+    m_flow_start=0.14706,
+    pin_start=488100,
+    pout_start=487000,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1325,
@@ -414,6 +479,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-124,82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds6(L=8027.812,
     H=59,
+    m_flow_start=0.14706,
+    pin_start=487000,
+    pout_start=467300,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
       Di=0.1325,
@@ -431,6 +499,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds7(L=2103.419,
     H=19,
     m_flow_start=0.0987,
+    pin_start=467300,
+    pout_start=464900,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
       Di=0.1325,
@@ -448,6 +518,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds8(L=13379.322,
     H=-107,
     m_flow_start=0.0987,
+    pin_start=464900,
+    pout_start=437100,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
       Di=0.1325,
@@ -464,6 +536,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={242,176})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds9(L=193.484,
     H=-8,
+    m_flow_start=0.04837,
+    pin_start=467300,
+    pout_start=467200,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1325,
@@ -480,6 +555,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds10(L=7.845,
     H=-4,
     m_flow_start=0.0213,
+    pin_start=467200,
+    pout_start=467200,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         0.1079,
@@ -496,6 +573,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-154,176})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds11(L=357.121,
     H=-12,
+    m_flow_start=0.02711,
+    pin_start=467200,
+    pout_start=467100,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
       Di=0.1079,
@@ -511,6 +591,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-121,201})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds12(L=787.51,
     H=40,
+    m_flow_start=0.02711,
+    pin_start=467100,
+    pout_start=466900,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1079,
@@ -526,6 +609,9 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={-8,202})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds13(L=190.14,
     H=1,
+    m_flow_start=0.02711,
+    pin_start=466900,
+    pout_start=466700,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.0831,
@@ -541,6 +627,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={24,202})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds14(L=36.829,
     m_flow_start=0.0194,
+    pin_start=466700,
+    pout_start=466700,
     X_start=X_start,                                         redeclare model
       Medium =                                                                              Medium,Di
       =0.0831,
@@ -557,6 +645,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds15(L=1015.74,
     H=72,
     m_flow_start=0.0078,
+    pin_start=466700,
+    pout_start=466600,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
       Di=0.0831,

@@ -3302,6 +3302,7 @@ package Tests
   package Control
     extends Modelica.Icons.Package;
     package OpenLoopActuators "Package containing models for open-loop analysis of the Test Facility Plant"
+      extends Modelica.Icons.Package;
       partial model OpenLoopActuatorBase
 
         constant Real pi = Modelica.Constants.pi;
@@ -4008,6 +4009,7 @@ Act")}),  Diagram(coordinateSystem(
     end OpenLoopActuators;
 
     package StepResponse "Package to evaluate step responses in the system"
+      extends Modelica.Icons.Package;
 
       model StepResponseBase
         extends Modelica.Icons.Example;
@@ -4176,6 +4178,10 @@ Act")}),  Diagram(coordinateSystem(
         theta_TCV731 = 0.5);
         parameter Real f_P501 = 30;
         parameter Real f_P501_delta = 0;
+        annotation (experiment(
+            StopTime=7000,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
       end SR_ThreeGen_CaseA;
     end StepResponse;
 

@@ -1,10 +1,145 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_ok
-  extends Rete_Gas_2i_nosources_ok              (constantFrictionFactor = true, FrictionFactor = 0.005,
-    s16(n=1),
-    s9(n=1));
+  extends Rete_Gas_2i_nosources_ok              (constantFrictionFactor = false, FrictionFactor = 0.003,
+    s16(
+      m_flow_start=0.26601,
+      pin_start=461800,
+      pout_start=461800,
+      n=3),
+    s9(
+      H=-1,
+      m_flow_start=0.26601,
+      pin_start=467600,
+      pout_start=467100,
+       n=1),
+    sds8(
+      pin_start=464900,
+      pout_start=437100,
+         n=135),
+    sds7(
+      pin_start=467300,
+      pout_start=464900,
+      n=21),
+    sds6(
+      m_flow_start=0.14706,
+      pin_start=487000,
+      pout_start=467300,
+         n=81),
+    sds1(
+      m_flow_start=0.14706,
+      pin_start=491600,
+      pout_start=488800,
+      n=31),
+    sds3(
+      m_flow_start=0.14706,
+      pin_start=488700,
+      pout_start=488100,
+         n=7),
+    sds4(
+      m_flow_start=0.14706,
+      pin_start=488100,
+      pout_start=487000,
+         n=5),
+    sds12(
+      m_flow_start=0.02711,
+      pin_start=467100,
+      pout_start=466900,
+          n=9),
+    sds15(
+      pin_start=466700,
+      pout_start=466600,
+          n=11),
+    s2(
+      H=-42,
+      m_flow_start=0.26601,
+      pin_start=491600,
+      pout_start=482100,
+      n=33),
+    s4(
+      H=-42,
+      m_flow_start=0.26601,
+      pin_start=482100,
+      pout_start=468800,
+       n=17),
+    s11(
+      H=-31,
+      m_flow_start=0.26601,
+      pin_start=467100,
+      pout_start=465600,
+        n=5),
+    s14(
+      H=-15,
+      m_flow_start=0.26601,
+      pin_start=463600,
+      pout_start=461800,
+        n=7),
+    s36_Stadio(
+      pin_start=459100,
+      pout_start=459100,
+               n=13),
+    s19(
+      H=-18,
+      m_flow_start=0.23194,
+      pin_start=459100,
+      pout_start=457200,
+        n=5),
+    s18(
+      H=-1,
+      m_flow_start=0.26601,
+      pin_start=461800,
+      pout_start=459100,
+        n=9),
+    sds13(
+      m_flow_start=0.02711,
+      pin_start=466900,
+      pout_start=466700),
+    sds11(
+      m_flow_start=0.02711,
+      pin_start=467200,
+      pout_start=467100),
+    sds9(
+      m_flow_start=0.04837,
+      pin_start=467300,
+      pout_start=467200),
+    sds2(
+      m_flow_start=0.14706,
+      pin_start=488800,
+      pout_start=488700),
+    s20(
+      H=14,
+      m_flow_start=0.23194,
+      pin_start=457200,
+      pout_start=457100),
+    s12(
+      H=11,
+      m_flow_start=0.26601,
+      pin_start=465600,
+      pout_start=463600),
+    s8(
+      H=-11,
+      m_flow_start=0.26601,
+      pin_start=468800,
+      pout_start=467600),
+    s1(pin_start=493000, pout_start=491600),
+    sds10(pin_start=467200, pout_start=467200),
+    sds14(pin_start=466700, pout_start=466700),
+    s31(pin_start=459100, pout_start=459100),
+    s21(pin_start=457100, pout_start=456900),
+    s22(
+      H=-3,
+      pin_start=457100,
+      pout_start=457100),
+    s24(
+      H=2,
+      pin_start=457100,
+      pout_start=457000),
+    s26(pin_start=457000, pout_start=456700),
+    s28(pin_start=456700, pout_start=455000),
+    s30(pin_start=455000, pout_start=454700));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
+    pin_start=467100,
+    pout_start=467100,
     redeclare model Medium = Medium,
     X_start=X_start,
     Di=0.0831,
@@ -19,7 +154,9 @@ model Rete_Gas_2i_2sources_ok
         origin={-188,218})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
     L=1077.595,
-    n=3,
+    pin_start=467100,
+    pout_start=467100,
+    n=11,
     redeclare model Medium = Medium,
     X_start=X_start,
     Di=0.0831,
@@ -59,6 +196,8 @@ model Rete_Gas_2i_2sources_ok
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-346,240},{-326,260}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
+    pin_start=482100,
+    pout_start=482100,
     redeclare model Medium = Medium,
     L=100.058,
     X_start=X_start,

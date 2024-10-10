@@ -300,10 +300,10 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=-90,
         origin={-16.5,84})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT501(
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT(
     redeclare model Medium = Medium,
     T_start=Tin_high_start,
-    p_start=pin_high_start)                                                                 "Flow sensor" annotation (Placement(transformation(
+    p_start=pin_high_start) "Flow sensor" annotation (Placement(transformation(
         extent={{2.5,-2.5},{-2.5,2.5}},
         rotation=90,
         origin={-43,73.5})));
@@ -481,7 +481,7 @@ equation
       points={{-17.5,60.35},{-17.5,66.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT501.outlet,PT501. inlet) annotation (Line(
+  connect(FT.outlet, PT501.inlet) annotation (Line(
       points={{-42,72},{-42,68.25}},
       color={140,56,54},
       thickness=0.5));
@@ -501,7 +501,7 @@ equation
       points={{-17.5,76.5},{-17.5,80.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT501.inlet, inlet) annotation (Line(
+  connect(FT.inlet, inlet) annotation (Line(
       points={{-42,75},{-41.75,75},{-41.75,94.5},{-20,94.5},{-20,110}},
       color={140,56,54},
       thickness=0.5));
@@ -513,8 +513,7 @@ equation
           -94.25},{58,-94.25},{58,-89.25},{58.15,-89.25},{58.15,-84.475}}, color={0,0,127}));
   connect(Pelset, CHP.in_Pel_ref) annotation (Line(points={{-110,-10},{-69.75,-10},{-69.75,
           -96.5},{63,-96.5},{63,-84.475}}, color={0,0,127}));
-  connect(FT501.m_flow, m_flow_) annotation (Line(points={{-44.5,71.75},{-45,71.75},{-45,69.75},
-          {110,69.75},{110,70}}, color={0,0,127}));
+  connect(FT.m_flow, m_flow_) annotation (Line(points={{-44.5,71.75},{-45,71.75},{-45,69.75},{110,69.75},{110,70}}, color={0,0,127}));
   connect(TT501.T, TTin) annotation (Line(points={{-46.5,62.5},{-48.75,62.5},{-48.75,62},{
           -49.25,62},{-49.25,61.75},{85,61.75},{85,50},{110,50}}, color={0,0,127}));
   connect(PT502.p, PTout) annotation (Line(points={{-13.25,84},{39.25,84},{39.25,84.25},{69.5,

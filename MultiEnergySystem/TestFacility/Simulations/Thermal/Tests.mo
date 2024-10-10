@@ -570,6 +570,11 @@ package Tests
         extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"));
         annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
       end S400_Seq_1704Test1;
+
+      model S400_Seq_0410Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0410_Test1.mat"));
+        annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_0410Test1;
     end S400;
 
     package S500 "Test package for system S500"
@@ -1111,6 +1116,11 @@ package Tests
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test1.mat"));
         annotation (experiment(StopTime=4140, __Dymola_Algorithm="Dassl"));
       end S900_Seq_2904Test2;
+
+      model S900_Seq_0410Test1 "Validation test using data from sequence 2904_Test2"
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0410_Test1.mat"));
+        annotation (experiment(StopTime=4140, __Dymola_Algorithm="Dassl"));
+      end S900_Seq_0410Test1;
       annotation (Documentation(info="<html>
 <p><span style=\"font-size: 12pt;\">This package includes all the tests used for validation of system S900 hot side. This includes the <b>pump</b> <b>P901</b>, valve <b>FCV901</b>, pipes connecting the inlet of pump P901 with the system S400 outlet pressure transmitter <b>PT402</b> and the pipe connecting the outlet of valve FCV901 and the pressure transmitter <b>PT902</b>.</span></p>
 <p><span style=\"font-size: 12pt;\">The cold side is neglected in this test, then not real data in its boundary conditions.</span></p>
@@ -4168,17 +4178,21 @@ Act")}),  Diagram(coordinateSystem(
           omegaP901Offset(fixInput=false, fixOffset=true),
           omegaP101Offset(fixInput=false, fixOffset=true),
           ToutRR01Offset(fixInput=false, fixOffset=true),
-          TTR02_nom = 100 + 273.15,
+            TTR02_nom=373.15,
           thetaFCV401Offset(fixInput=false, fixOffset=true),
           omegaP401Offset(fixInput=false, fixOffset=true),
           omegaP501Offset(fixInput=false, fixOffset=true),
-            S500(PL_S500_P501_PT501(h=2.05))),
-        theta_TCV701 = 0.5,
-        theta_TCV711 = 0.5,
-        theta_TCV721 = 0.5,
-        theta_TCV731 = 0.5);
-        parameter Real f_P501 = 30;
-        parameter Real f_P501_delta = 0;
+            S500(PL_S500_P501_PT501(h=2.05)),
+            S900(h_FCV901_PT902=2),
+            PL_S500_rCD_hot(h=3),
+            PL_S400_rCD_hot(h=1)),
+        theta_TCV701 = 1,
+        theta_TCV711 = 1,
+        theta_TCV721 = 1,
+        theta_TCV731 = 1,
+        f_P101_delta = 3.2);
+        parameter Real f_P501 = 39;
+        parameter Real f_P501_delta = 1;
         annotation (experiment(
             StopTime=7000,
             Tolerance=1e-06,

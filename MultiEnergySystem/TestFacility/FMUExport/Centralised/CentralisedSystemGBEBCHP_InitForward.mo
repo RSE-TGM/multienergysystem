@@ -50,7 +50,7 @@ model CentralisedSystemGBEBCHP_InitForward
     Tin_high_start=Tin_User_start_S5,
     Tout_high_start=Tout_User_start_S5,
     Pel_SP=PeCHP) annotation (Placement(transformation(extent={{-614,-324},{-528,-238}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_hot1(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_hot(
     L=5,
     t=t_S5,
     pin_start=pin_User_start_S5 - 0.04e5,
@@ -59,11 +59,13 @@ model CentralisedSystemGBEBCHP_InitForward
     Di=Di_S5,
     q_m3h_start=q_m3h_S5_User,
     n=n,
-    hctype=hctype)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-552,-207})));
+    hctype=hctype) annotation (Placement(transformation(
+        extent={{-10,10},{10,-10}},
+        rotation=90,
+        origin={-552,-207})));
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange2(D_i=51e-3, D_o=Di_S5)    annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-552,-176})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_cold1(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_cold(
     L=5,
     t=t_S5,
     pin_start=pin_User_start_S5 - 0.02e5,
@@ -72,8 +74,10 @@ model CentralisedSystemGBEBCHP_InitForward
     Di=Di_S5,
     q_m3h_start=q_m3h_S5_User,
     n=n,
-    hctype=hctype)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-588,-207})));
+    hctype=hctype) annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-588,-207})));
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange3(D_i=51e-3, D_o=Di_S5)     annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-588,-176})));
   Modelica.Blocks.Sources.BooleanConstant CHP501Status
@@ -123,6 +127,7 @@ model CentralisedSystemGBEBCHP_InitForward
         rotation=0)));
   H2GasFacility.Sources.SourcePressure sourceGasCHP(
     redeclare model Medium = Gas,
+    T0=system.T_amb,
     X0=X_gas,
     R=1e-3,
     computeEnergyVariables=true) annotation (Placement(transformation(
@@ -130,17 +135,19 @@ model CentralisedSystemGBEBCHP_InitForward
         rotation=90,
         origin={-571,-373})));
 equation
-  connect(S5_PL_CHP_EX501_hot1.outlet, suddenAreaChange2.outlet) annotation (Line(
+  connect(PL_S500_rCD_hot.outlet, suddenAreaChange2.outlet) annotation (Line(
       points={{-552,-197},{-552,-186}},
       color={140,56,54},
       thickness=0.5));
-  connect(suddenAreaChange3.outlet,S5_PL_CHP_EX501_cold1. inlet) annotation (
-    Line(points={{-588,-186},{-588,-197}},    color = {140, 56, 54}, thickness = 0.5));
-  connect(S5_PL_CHP_EX501_cold1.outlet, S500.inlet) annotation (Line(
+  connect(suddenAreaChange3.outlet, PL_S500_rCD_cold.inlet) annotation (Line(
+      points={{-588,-186},{-588,-197}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S500_rCD_cold.outlet, S500.inlet) annotation (Line(
       points={{-588,-217},{-588,-224.275},{-587.77,-224.275},{-587.77,-231.55}},
       color={140,56,54},
       thickness=0.5));
-  connect(S5_PL_CHP_EX501_hot1.inlet, S500.outlet) annotation (Line(
+  connect(PL_S500_rCD_hot.inlet, S500.outlet) annotation (Line(
       points={{-552,-217},{-552,-224.275},{-553.37,-224.275},{-553.37,-231.55}},
       color={140,56,54},
       thickness=0.5));

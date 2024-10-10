@@ -26,7 +26,8 @@ model CirculationPump
   parameter DistrictHeatingNetwork.Types.Temperature T_hot_start = 80 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature T_cold_start = 60 + 273.15;
 
-  parameter Real b[3] = {24.122662, 0.669933, -0.039537} "Head Characteristic coefficients";
+  //parameter Real b[3] = {24.122662, 0.669933, -0.039537} "Head Characteristic coefficients";
+  parameter Real b[3] = {23.6, 0.62, -0.0435} "Head Characteristic coefficients";
 
 //   parameter DistrictHeatingNetwork.Types.Length L_S9_PL1 = 0.82;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL2 = 2.3;

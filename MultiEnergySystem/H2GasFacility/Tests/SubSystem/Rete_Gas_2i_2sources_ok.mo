@@ -22,10 +22,7 @@ model Rete_Gas_2i_2sources_ok
     s18(n=19),
     s12(n=7),
     s8(n=3),
-    s1(
-      pin_start=493000,
-      pout_start=491600,
-      n=9),
+    s1(pin_start=493000, pout_start=491600),
     s31(n=7));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,

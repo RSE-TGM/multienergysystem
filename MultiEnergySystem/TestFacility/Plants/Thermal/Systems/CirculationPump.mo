@@ -82,10 +82,10 @@ model CirculationPump
     use_in_omega=true)                                                   annotation (
     Placement(visible = true, transformation(                 extent={{-10,-10},{10,10}},      rotation=90,
         origin={20,-36})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT901(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT(
+    redeclare model Medium = Medium,
     T_start=T_hot_start,
-      p_start=pout_start_S9)
-    annotation (Placement(transformation(
+    p_start=pout_start_S9) annotation (Placement(transformation(
         extent={{-4,4},{4,-4}},
         rotation=90,
         origin={22,38})));
@@ -271,11 +271,11 @@ equation
       points={{15.9,-10},{-48,-10},{-48,-70},{-110,-70}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S900_FCV901_PT902.inlet, FT901.outlet) annotation (Line(
+  connect(PL_S900_FCV901_PT902.inlet, FT.outlet) annotation (Line(
       points={{20,50},{20,43.5},{20.4,43.5},{20.4,40.4}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT901.inlet, FCV901.outlet) annotation (Line(
+  connect(FT.inlet, FCV901.outlet) annotation (Line(
       points={{20.4,35.6},{20.4,23.5},{20,23.5},{20,20}},
       color={140,56,54},
       thickness=0.5));
@@ -283,7 +283,7 @@ equation
       points={{20.4,76.25},{20.4,73.125},{20,73.125},{20,70}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT901.m_flow, m_flow_) annotation (Line(points={{24.4,40.8},{24.4,52},{62,52},{62,70},{110,70}}, color={0,0,127}));
+  connect(FT.m_flow, m_flow_) annotation (Line(points={{24.4,40.8},{24.4,52},{62,52},{62,70},{110,70}}, color={0,0,127}));
   connect(TT901.T, TTin) annotation (Line(points={{-27.925,68.25},{-36,68.25},{-36,46},{110,46},{110,50}}, color={0,0,127}));
   connect(PT901.p, PTin) annotation (Line(points={{-28.5,30.5},{-36,30.5},{-36,24},{80,24},{80,10},{110,10}}, color={0,0,127}));
   connect(PL_S900_rCD_P901.inlet, rCD_S900.outlet) annotation (Line(

@@ -66,7 +66,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=482100,
     ff_nom=FrictionFactor,
     rho_nom=rho_nom,
-    n=5,                                                        redeclare model
+    n=33,                                                       redeclare model
       Medium =       Medium,
       L=3273.422,
     X_start=X_start,                                                        Di=
@@ -85,7 +85,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.26601,
     pin_start=482100,
     pout_start=468800,
-    n=5,                                                        redeclare model
+    n=17,                                                       redeclare model
       Medium =                                                                              Medium,
       L=1663.921,
     X_start=X_start,                                                        Di=
@@ -143,6 +143,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.26601,
     pin_start=467100,
     pout_start=465600,
+    n=11,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.603,
@@ -161,6 +162,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.26601,
     pin_start=465600,
     pout_start=463600,
+    n=7,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.325,
@@ -179,6 +181,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.26601,
     pin_start=463600,
     pout_start=461800,
+    n=15,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.603,
@@ -196,7 +199,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.26601,
     pin_start=461800,
     pout_start=461800,
-    X_start=X_start,                                  redeclare model Medium =              Medium,Di=
+    X_start=X_start,
+    n=7,                                              redeclare model Medium =              Medium,Di=
         1.603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
@@ -213,6 +217,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.26601,
     pin_start=461800,
     pout_start=459100,
+    n=19,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                        Di=
         1.603,
@@ -232,6 +237,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.23194,
     pin_start=459100,
     pout_start=457200,
+    n=11,
     redeclare model Medium =                                                                Medium,
     cm=880,
     rhom=2000,
@@ -361,6 +367,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.1196,
     pin_start=455000,
     pout_start=454700,
+    n=5,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                        Di=
         0.831,
@@ -379,6 +386,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.0341,
     pin_start=459100,
     pout_start=459100,
+    n=7,
   redeclare model Medium =                                                                  Medium,
     X_start=X_start,                                                        Di=
         0.1603,
@@ -408,7 +416,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     ff_nom=FrictionFactor,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=27)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={82,-110})));
@@ -428,7 +436,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=31)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-198,46})));
@@ -453,6 +461,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.14706,
     pin_start=488700,
     pout_start=488100,
+    n=7,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1603,
@@ -471,6 +480,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.14706,
     pin_start=488100,
     pout_start=487000,
+    n=5,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1325,
@@ -499,7 +509,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=81)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-122,120})));
@@ -518,7 +528,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=21)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={162,140})));
@@ -537,7 +547,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=135)           annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={242,176})));
@@ -601,6 +611,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     m_flow_start=0.02711,
     pin_start=467100,
     pout_start=466900,
+    n=9,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,                                                         Di
       =0.1079,
@@ -664,7 +675,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=11)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={46,242})));

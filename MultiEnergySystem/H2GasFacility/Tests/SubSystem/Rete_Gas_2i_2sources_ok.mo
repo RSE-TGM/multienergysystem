@@ -1,29 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_ok
   extends Rete_Gas_2i_nosources_ok              (constantFrictionFactor = false, FrictionFactor = 0.003,
-    s16(n=7),
-    s9(n=1),
-    sds8(n=135),
-    sds7(pin_start=467300,
-      n=21),
-    sds6(n=81),
-    sds1(
-      n=31),
-    sds3(n=7),
-    sds4(n=5),
-    sds12(n=9),
-    sds15(n=11),
-    s2(n=33),
-    s4(n=17),
-    s11(n=11),
-    s14(n=15),
-    s36_Stadio(n=27),
-    s19(n=11),
-    s18(n=19),
-    s12(n=7),
-    s8(n=3),
-    s1(pin_start=493000, pout_start=491600),
-    s31(n=7));
+    sds7(pin_start=467300),
+    s1(pin_start=493000, pout_start=491600));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
     H=-1,

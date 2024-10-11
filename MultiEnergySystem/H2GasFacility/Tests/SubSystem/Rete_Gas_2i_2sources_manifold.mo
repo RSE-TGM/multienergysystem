@@ -116,41 +116,46 @@ model Rete_Gas_2i_2sources_manifold
     Placement(visible = true, transformation(origin={-51,88},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{8,60},{28,80}})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O manifold2I1O
-    annotation (Placement(transformation(extent={{-214,0},{-194,20}})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O1 annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-94,136})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O2
-    annotation (Placement(transformation(extent={{-98,174},{-78,194}})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O3 annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={-132,226})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O4 annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={36,220})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O5 annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction3
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={-186,-60})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O6 annotation (Placement(transformation(
+        origin={-198,16})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction1
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={114,-16})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I1O
-    manifold2I1O7 annotation (Placement(transformation(
+        origin={-184,-60})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction2
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={180,-46})));
+        rotation=270,
+        origin={108,-26})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction4
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={132,-84})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction5
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={-98,138})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction6
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-128,184})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction7
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-120,230})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction8
+    annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={50,212})));
 equation
   connect(m_flow_H5.y,add1. u1) annotation (Line(points={{-394,268},{-358,268},{
           -358,256},{-348,256}},  color={0,0,127}));
@@ -177,102 +182,100 @@ equation
           {6,64}},      color={0,0,127}));
   connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{29,70},{36,70},
           {36,12},{-80,12},{-80,-31},{-90,-31}},                 color={0,0,127}));
-  connect(manifold2I1O.outlet, s1.outlet) annotation (Line(
-      points={{-196,10},{-196,12},{-192,12},{-192,26},{-182,26}},
+  connect(junction3.fluidPortInlet, s1.outlet) annotation (Line(
+      points={{-188,16},{-188,20},{-182,20},{-182,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O.inlet1, sds1.inlet) annotation (Line(
-      points={{-212,14},{-212,28},{-198,28},{-198,36}},
+  connect(junction3.fluidPortOutlet1, sds1.inlet) annotation (Line(
+      points={{-198,26},{-198,36}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O.inlet2, s2.inlet) annotation (Line(
-      points={{-212,6},{-212,-12},{-198,-12},{-198,-24}},
+  connect(junction3.fluidPortOutlet, s2.inlet) annotation (Line(
+      points={{-198,6},{-198,-24}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds6.outlet, manifold2I1O1.outlet) annotation (Line(
-      points={{-122,130},{-120,128},{-94,128}},
+  connect(junction1.fluidPortOutlet1, s4.inlet) annotation (Line(
+      points={{-194,-60},{-192,-60},{-192,-68},{-200,-68},{-200,-72}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O1.inlet2, sds9.inlet) annotation (Line(
-      points={{-98,144},{-112,144},{-112,152},{-122,152}},
+  connect(junction1.fluidPortInlet, s2.outlet) annotation (Line(
+      points={{-184,-50},{-184,-44},{-198,-44}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O1.inlet1, sds7.inlet) annotation (Line(
-      points={{-90,144},{140,144},{140,140},{152,140}},
+  connect(junction1.fluidPortOutlet, s3.inlet) annotation (Line(
+      points={{-174,-60},{-172,-58},{-156,-58}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds10.inlet, manifold2I1O2.inlet2) annotation (Line(
-      points={{-144,176},{-144,180},{-96,180}},
+  connect(junction2.fluidPortOutlet1, s31.inlet) annotation (Line(
+      points={{108,-36},{108,-68},{110,-68},{110,-74}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O2.outlet, sds9.outlet) annotation (Line(
-      points={{-80,184},{-72,184},{-72,172},{-122,172}},
+  connect(junction2.fluidPortInlet, s18.outlet) annotation (Line(
+      points={{98,-26},{88,-26},{88,-6},{78,-6}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds11.inlet, manifold2I1O2.inlet1) annotation (Line(
-      points={{-121,192},{-120,188},{-96,188}},
+  connect(junction2.fluidPortOutlet, s19.inlet) annotation (Line(
+      points={{108,-16},{108,-8},{146,-8},{146,-24}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O3.outlet, sds11.outlet) annotation (Line(
-      points={{-132,218},{-132,210},{-121,210}},
+  connect(junction4.fluidPortOutlet, s21.inlet) annotation (Line(
+      points={{142,-84},{144,-82},{162,-82}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds16.inlet, manifold2I1O3.inlet2) annotation (Line(
-      points={{-178,218},{-152,218},{-152,244},{-136,244},{-136,234}},
+  connect(junction4.fluidPortOutlet1, s22.inlet) annotation (Line(
+      points={{122,-84},{132,-84},{132,-92},{146,-92}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O3.inlet1, sds12.inlet) annotation (Line(
-      points={{-128,234},{-128,244},{-28,244},{-28,202},{-18,202}},
+  connect(junction4.fluidPortInlet, s20.outlet) annotation (Line(
+      points={{132,-74},{146,-74}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O4.outlet, sds13.outlet) annotation (Line(
-      points={{28,220},{28,208},{34,208},{34,202}},
+  connect(junction5.fluidPortInlet, sds6.outlet) annotation (Line(
+      points={{-108,138},{-108,140},{-116,140},{-116,130},{-122,130}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O4.inlet2, sds15.inlet) annotation (Line(
-      points={{44,224},{46,224},{46,232}},
+  connect(junction5.fluidPortOutlet, sds9.inlet) annotation (Line(
+      points={{-98,148},{-96,152},{-122,152}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O4.inlet1, sds14.inlet) annotation (Line(
-      points={{44,216},{60,216}},
+  connect(junction5.fluidPortOutlet1, sds7.inlet) annotation (Line(
+      points={{-98,128},{-100,128},{-100,120},{144,120},{144,140},{152,140}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O5.outlet, s2.outlet) annotation (Line(
-      points={{-186,-52},{-192,-52},{-192,-44},{-198,-44}},
+  connect(sds11.inlet, junction6.fluidPortOutlet1) annotation (Line(
+      points={{-121,192},{-120,192},{-120,184},{-118,184}},
       color={182,109,49},
       thickness=0.5));
-  connect(s4.inlet, manifold2I1O5.inlet1) annotation (Line(
-      points={{-200,-72},{-200,-68},{-190,-68}},
+  connect(junction6.fluidPortInlet, sds9.outlet) annotation (Line(
+      points={{-128,174},{-128,172},{-122,172}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O5.inlet2, s3.inlet) annotation (Line(
-      points={{-182,-68},{-184,-68},{-184,-80},{-164,-80},{-164,-58},{-156,-58}},
-
+  connect(junction6.fluidPortOutlet, sds10.inlet) annotation (Line(
+      points={{-138,184},{-144,184},{-144,176}},
       color={182,109,49},
       thickness=0.5));
-  connect(s18.outlet, manifold2I1O6.outlet) annotation (Line(
-      points={{78,-6},{92,-6},{92,-16},{106,-16}},
+  connect(sds11.outlet, junction7.fluidPortInlet) annotation (Line(
+      points={{-121,210},{-120,212},{-120,220}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O6.inlet1, s31.inlet) annotation (Line(
-      points={{122,-20},{122,-68},{110,-68},{110,-74}},
+  connect(junction7.fluidPortOutlet, sds16.inlet) annotation (Line(
+      points={{-130,230},{-168,230},{-168,218},{-178,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O6.inlet2, s19.inlet) annotation (Line(
-      points={{122,-12},{146,-12},{146,-24}},
+  connect(junction7.fluidPortOutlet1, sds12.inlet) annotation (Line(
+      points={{-110,230},{-28,230},{-28,202},{-18,202}},
       color={182,109,49},
       thickness=0.5));
-  connect(manifold2I1O7.outlet, s20.outlet) annotation (Line(
-      points={{180,-38},{180,-28},{158,-28},{158,-82},{146,-82},{146,-74}},
+  connect(junction8.fluidPortInlet, sds13.outlet) annotation (Line(
+      points={{40,212},{34,212},{34,202}},
       color={182,109,49},
       thickness=0.5));
-  connect(s22.inlet, manifold2I1O7.inlet2) annotation (Line(
-      points={{146,-92},{146,-88},{128,-88},{128,-120},{192,-120},{192,-64},{
-          184,-64},{184,-54}},
+  connect(junction8.fluidPortOutlet, sds15.inlet) annotation (Line(
+      points={{50,222},{46,222},{46,232}},
       color={182,109,49},
       thickness=0.5));
-  connect(s21.inlet, manifold2I1O7.inlet1) annotation (Line(
-      points={{162,-82},{160,-82},{160,-64},{176,-64},{176,-54}},
+  connect(junction8.fluidPortOutlet1, sds14.inlet) annotation (Line(
+      points={{50,202},{52,202},{52,208},{60,208},{60,216}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

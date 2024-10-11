@@ -7,7 +7,12 @@ model Rete_Gas_2i_complete
     break connect(s26.inlet, s28.outlet),
     break connect(s24.inlet, s26.outlet),
     m_flow_H2(height=0.1, offset=0.1),
-    m_flow_H1(height=0.1, offset=0.1));
+    m_flow_H1(height=0.1, offset=0.1),
+    break connect(s18.outlet, s31.inlet),
+    break connect(s19.inlet, s18.outlet),
+    break connect(s22.inlet, s21.inlet),
+    break connect(s20.outlet, s21.inlet),
+    break connect(s19.outlet, s20.inlet));
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds18(
@@ -377,14 +382,6 @@ equation
       points={{110,-152},{110,-166}},
       color={182,109,49},
       thickness=0.5));
-  connect(s33.outlet,s34_ViaSalerno. inlet) annotation (Line(
-      points={{110,-186},{110,-206}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s35_ViaAndretta.inlet,s34_ViaSalerno. inlet) annotation (Line(
-      points={{92,-196},{110,-196},{110,-206}},
-      color={182,109,49},
-      thickness=0.5));
   connect(idealUser5.inlet,s34_ViaSalerno. outlet) annotation (Line(
       points={{110,-240},{110,-226}},
       color={182,109,49},
@@ -409,44 +406,72 @@ equation
       points={{184,-214},{200,-214}},
       color={182,109,49},
       thickness=0.5));
-  connect(s5_ViaCartabubbo.inlet, s4.outlet) annotation (Line(
-      points={{-232,-108},{-200,-108},{-200,-92}},
+  connect(s25.inlet, s24.outlet) annotation (Line(
+      points={{146,-196},{146,-156}},
       color={182,109,49},
       thickness=0.5));
-  connect(s10.inlet, s9.outlet) annotation (Line(
-      points={{-122,-150},{-122,-110},{-132,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s13.inlet, s12.outlet) annotation (Line(
-      points={{-22,-192},{-24,-192},{-24,-110},{-60,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s15.inlet, s14.outlet) annotation (Line(
-      points={{2,-44},{2,-24},{0,-24},{0,-6},{-8,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s17.inlet, s16.outlet) annotation (Line(
-      points={{44,-38},{38,-38},{38,-6},{28,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s32.inlet, s31.outlet) annotation (Line(
-      points={{110,-132},{110,-94}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s23.inlet, s22.outlet) annotation (Line(
-      points={{214,-126},{146,-126},{146,-112}},
+  connect(s29.inlet, s30.inlet) annotation (Line(
+      points={{220,-214},{234,-214},{234,-222}},
       color={182,109,49},
       thickness=0.5));
   connect(s27.inlet, s26.outlet) annotation (Line(
       points={{292,-166},{200,-166}},
       color={182,109,49},
       thickness=0.5));
-  connect(s29.inlet, s28.outlet) annotation (Line(
-      points={{220,-214},{220,-212},{234,-212},{234,-204}},
+  connect(s35_ViaAndretta.inlet, s33.outlet) annotation (Line(
+      points={{92,-196},{110,-196},{110,-186}},
       color={182,109,49},
       thickness=0.5));
-  connect(s25.inlet, s24.outlet) annotation (Line(
-      points={{146,-196},{146,-156}},
+  connect(s34_ViaSalerno.inlet, s33.outlet) annotation (Line(
+      points={{110,-206},{110,-186}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s23.inlet, s24.inlet) annotation (Line(
+      points={{214,-126},{180,-126},{180,-124},{146,-124},{146,-136}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s17.inlet, s18.inlet) annotation (Line(
+      points={{44,-38},{44,-6},{58,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s15.inlet, s16.inlet) annotation (Line(
+      points={{2,-44},{2,-6},{8,-6}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s13.inlet, s12.outlet) annotation (Line(
+      points={{-22,-192},{-22,-110},{-60,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s10.inlet, s11.inlet) annotation (Line(
+      points={{-122,-150},{-122,-110},{-114,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s5_ViaCartabubbo.inlet, s8.inlet) annotation (Line(
+      points={{-232,-108},{-200,-108},{-200,-110},{-184,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s32.inlet, s31.outlet) annotation (Line(
+      points={{110,-132},{110,-94}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s18.outlet, s19.inlet) annotation (Line(
+      points={{78,-6},{146,-6},{146,-24}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s31.inlet, s19.inlet) annotation (Line(
+      points={{110,-74},{110,-6},{146,-6},{146,-24}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s22.inlet, s20.outlet) annotation (Line(
+      points={{146,-92},{146,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s21.inlet, s20.outlet) annotation (Line(
+      points={{162,-82},{146,-82},{146,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s20.inlet, s19.outlet) annotation (Line(
+      points={{146,-54},{146,-44}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(

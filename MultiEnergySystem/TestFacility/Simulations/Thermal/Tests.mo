@@ -4502,6 +4502,13 @@ Act")}),  Diagram(coordinateSystem(
           Umin=-1,
           y_start=0,
           firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-285},{60,-275}})));
+        DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT731(
+          Kp=-0.8127,
+          Ti=0.7859,
+          Umax=0,
+          Umin=-1,
+          y_start=0,
+          firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-300},{60,-290}})));
       equation
         // S900
         dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -4608,8 +4615,10 @@ Act")}),  Diagram(coordinateSystem(
         dTT721SP = (TT721SP - (100 + 273.15))/(100 + 273.15);
       //   TT721SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
       //   dTT721SP = (TT721SP - (60 + 273.15))/(100 + 273.15);
-        TT731SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
-        dTT731SP = (TT731SP - (60 + 273.15))/(100 + 273.15);
+        TT731SP = 70 + 273.15;
+        dTT731SP = (TT731SP - (100 + 273.15))/(100 + 273.15);
+        //TT731SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
+        //dTT731SP = (TT731SP - (60 + 273.15))/(100 + 273.15);
 
 
         if useRealExpression then
@@ -4856,12 +4865,6 @@ Act")}),  Diagram(coordinateSystem(
             index=1,
             extent={{6,3},{6,3}},
             horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaTCV731.y, controlSignalBus.dthetaTCV731)
-          annotation (Line(points={{67.5,56},{70,56},{70,51},{101,51},{101,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(switch_dthetaFCV401.y, controlSignalBus.dthetaFCV401) annotation (Line(points={{-112.5,-133},{-111,-133},{-111,-132},{-109,-132},{-109,-130},{-69,-130},{-69,-75},{21,-75},{21,-51},{131,-51},{131,0},{160,0}}, color={0,0,127}), Text(
             string="%second",
             index=1,
@@ -4907,7 +4910,7 @@ Act")}),  Diagram(coordinateSystem(
         connect(dTT721SP_var.y, PI_TT721.REF) annotation (Line(points={{40.5,-275},{45,-275},{45,-278},{51,-278}}, color={0,0,127}));
         connect(processVariableBus.dTT721, PI_TT721.FeedBack)
           annotation (Line(
-            points={{-170,-2},{-170,-281},{51,-281},{51,-282}},
+            points={{-170,-2},{-170,-282},{51,-282}},
             color={255,204,51},
             thickness=0.5), Text(
             string="%first",
@@ -4916,6 +4919,22 @@ Act")}),  Diagram(coordinateSystem(
             horizontalAlignment=TextAlignment.Right));
         connect(PI_TT721.controlAction, controlSignalBus.dthetaTCV721)
           annotation (Line(points={{60.5,-280},{160,-280},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(dTT731SP_var.y, PI_TT731.REF) annotation (Line(points={{40.5,-290},{45,-290},{45,-293},{51,-293}}, color={0,0,127}));
+        connect(processVariableBus.dTT731, PI_TT731.FeedBack)
+          annotation (Line(
+            points={{-170,-2},{-169,-2},{-169,-297},{51,-297}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(PI_TT731.controlAction, controlSignalBus.dthetaTCV731)
+          annotation (Line(points={{60.5,-295},{160,-295},{160,0}}, color={0,0,127}), Text(
             string="%second",
             index=1,
             extent={{6,3},{6,3}},
@@ -5847,6 +5866,7 @@ System")}),
           thetaTCV711Offset(fixInput=false, fixOffset=true),
           TT721Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
           thetaTCV721Offset(fixInput=false, fixOffset=true),
+          TT731Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
           thetaTCV731Offset(fixInput=false, fixOffset=true),
           omegaP901Offset(fixInput=false, fixOffset=true),
           omegaP101Offset(fixInput=false, fixOffset=true),

@@ -4495,6 +4495,13 @@ Act")}),  Diagram(coordinateSystem(
           Umin=-1,
           y_start=0,
           firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-270},{60,-260}})));
+        DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT721(
+          Kp=-0.6127,
+          Ti=0.7859,
+          Umax=0,
+          Umin=-1,
+          y_start=0,
+          firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{50,-285},{60,-275}})));
       equation
         // S900
         dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -4597,8 +4604,10 @@ Act")}),  Diagram(coordinateSystem(
         //dTT711SP = (TT711SP - (60 + 273.15))/(100 + 273.15);
         TT711SP = 70 + 273.15;
         dTT711SP = (TT711SP - (100 + 273.15))/(100 + 273.15);
-        TT721SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
-        dTT721SP = (TT721SP - (60 + 273.15))/(100 + 273.15);
+        TT721SP = 70 + 273.15;
+        dTT721SP = (TT721SP - (100 + 273.15))/(100 + 273.15);
+      //   TT721SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
+      //   dTT721SP = (TT721SP - (60 + 273.15))/(100 + 273.15);
         TT731SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
         dTT731SP = (TT731SP - (60 + 273.15))/(100 + 273.15);
 
@@ -4853,12 +4862,6 @@ Act")}),  Diagram(coordinateSystem(
             index=1,
             extent={{6,3},{6,3}},
             horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaTCV721.y, controlSignalBus.dthetaTCV721)
-          annotation (Line(points={{67.5,88},{69,88},{69,83},{102,83},{102,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(switch_dthetaFCV401.y, controlSignalBus.dthetaFCV401) annotation (Line(points={{-112.5,-133},{-111,-133},{-111,-132},{-109,-132},{-109,-130},{-69,-130},{-69,-75},{21,-75},{21,-51},{131,-51},{131,0},{160,0}}, color={0,0,127}), Text(
             string="%second",
             index=1,
@@ -4897,6 +4900,22 @@ Act")}),  Diagram(coordinateSystem(
             horizontalAlignment=TextAlignment.Right));
         connect(PI_TT711.controlAction, controlSignalBus.dthetaTCV711)
           annotation (Line(points={{60.5,-265},{160,-265},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(dTT721SP_var.y, PI_TT721.REF) annotation (Line(points={{40.5,-275},{45,-275},{45,-278},{51,-278}}, color={0,0,127}));
+        connect(processVariableBus.dTT721, PI_TT721.FeedBack)
+          annotation (Line(
+            points={{-170,-2},{-170,-281},{51,-281},{51,-282}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-3,6},{-3,6}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(PI_TT721.controlAction, controlSignalBus.dthetaTCV721)
+          annotation (Line(points={{60.5,-280},{160,-280},{160,0}}, color={0,0,127}), Text(
             string="%second",
             index=1,
             extent={{6,3},{6,3}},
@@ -5816,8 +5835,7 @@ System")}),
           dTout_RR01 = [0, (Tout_RR01-15)/(100+273.15); 1e6, (Tout_RR01-15)/(100+273.15)],
           domega_P401 = [0, (f_P401-50)/50; 1e3, (f_P401-50)/50; 1e3, (f_P401-50+f_P401_delta)/50; 1e6, (f_P401-50+f_P401_delta)/50],
           dtheta_FCV401 = [0, 0; 1e6, 0],
-          domega_P501 = [0, (f_P501-50)/50; 1e3, (f_P501-50)/50; 1e3, (f_P501-50+f_P501_delta)/50; 1e6, (f_P501-50+f_P501_delta)/50],
-          PI_TT701(y_start=-0.3))                                                                                                      annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
+          domega_P501 = [0, (f_P501-50)/50; 1e3, (f_P501-50)/50; 1e3, (f_P501-50+f_P501_delta)/50; 1e6, (f_P501-50+f_P501_delta)/50])                                                                                                      annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
         replaceable FMUExport.Centralised.CentralisedSystemGBEBCHP_InitForward centralisedSystemI_B_InitForward(
           TT701Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
           thetaTCV701Offset(fixInput=true, fixOffset=false),
@@ -5827,6 +5845,7 @@ System")}),
           thetaFCV101Offset(fixInput=false, fixOffset=true),
           TT711Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
           thetaTCV711Offset(fixInput=false, fixOffset=true),
+          TT721Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
           thetaTCV721Offset(fixInput=false, fixOffset=true),
           thetaTCV731Offset(fixInput=false, fixOffset=true),
           omegaP901Offset(fixInput=false, fixOffset=true),
@@ -5884,7 +5903,7 @@ System")}),
           Icon(coordinateSystem(preserveAspectRatio = false)),
           Diagram(coordinateSystem(preserveAspectRatio = false)),
           experiment(
-            StopTime=1000,
+            StopTime=1500,
             Tolerance=1e-06,
             __Dymola_Algorithm="Dassl"));
       end PlantControlBase;

@@ -116,42 +116,42 @@ model Rete_Gas_2i_2sources_manifold
     Placement(visible = true, transformation(origin={-51,88},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{8,60},{28,80}})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction3
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction3
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-198,16})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction1
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction1
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-184,-60})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction2
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction2
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={108,-26})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction4
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction4
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={132,-84})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction5
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction5
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-98,138})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction6
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction6
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-128,184})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction7
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction7
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-120,230})));
-  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction3 junction8
+  MultiEnergySystem.H2GasFacility.Components.Manifold.Junction junction8
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
@@ -223,7 +223,7 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(junction4.fluidPortOutlet1, s22.inlet) annotation (Line(
-      points={{122,-84},{132,-84},{132,-92},{146,-92}},
+      points={{122,-84},{122,-92},{146,-92}},
       color={182,109,49},
       thickness=0.5));
   connect(junction4.fluidPortInlet, s20.outlet) annotation (Line(

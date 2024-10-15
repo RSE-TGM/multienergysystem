@@ -27,10 +27,17 @@ model Rete_Gas_2i_2sources_pipe_orientation_zeroH
     sds12(H=0, n=9),
     sds13(H=0),
     sds15(H=0, n=11),
-    s28(n=3),
-    s1(n=9),
-    sds1(n=31),
-    s36_Stadio(n=13));
+    s28(H=0,
+        n=3),
+    s1(H=0,
+       n=9),
+    sds1(H=0,
+         n=31),
+    s36_Stadio(H=0,
+               n=13),
+    s21(H=0),
+    s30(H=0),
+    s26(H=0));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     L=194.511,
     redeclare model Medium = Medium,

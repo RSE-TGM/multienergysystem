@@ -119,5 +119,9 @@ equation
   connect(in_X0, in_X0_internal);
   annotation (
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
-    Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
+    Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
+    Documentation(info="<html>
+<p>This component defines the source mass flow for gas flows and maintains a fixed outlet mass flow.</p>
+<p>When the hydraulic resistance G is set to zero, the flow source operates ideally. However, if G is greater than zero, the outlet mass flow decreases proportionally to the outgoing pressure.</p>
+</html>"));
 end SourceMassFlow;

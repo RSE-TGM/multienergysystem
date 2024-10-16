@@ -4358,6 +4358,9 @@ Act")}),  Diagram(coordinateSystem(
         Real PtEX731SP(nominal = 100E3);
         Real dPtEX731SP(min = -1, max = 0);
 
+        input Boolean booldPtdEX731;
+        parameter Real dPt_EX731[:, :] = [0, 0; 1E6, 0];
+
         Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
           Placement(transformation(extent={{-141,135},{-131,145}})));
         Modelica.Blocks.Sources.TimeTable dthetaFCV901(table = dtheta_FCV901) annotation (
@@ -4578,7 +4581,10 @@ Act")}),  Diagram(coordinateSystem(
               extent={{-10,-10},{10,10}},
               rotation=0)));
         Modelica.Blocks.Continuous.Integrator I_EX731Pt(k=0.08, initType=Modelica.Blocks.Types.Init.InitialState) annotation (Placement(transformation(extent={{70,-502},{90,-482}})));
-        Modelica.Blocks.Sources.RealExpression dEX731SP_var(y=dPtEX731SP) annotation (Placement(transformation(extent={{22,-497},{32,-487}})));
+        Modelica.Blocks.Sources.RealExpression dEX731Pt_var(y=dPtEX731SP) annotation (Placement(transformation(extent={{2,-486},{12,-476}})));
+        Modelica.Blocks.Logical.Switch switch_dPtEX731   annotation (Placement(transformation(extent={{21,-495},{31,-485}})));
+        Modelica.Blocks.Sources.BooleanExpression bool_PtEX731(y=booldPtdEX731)    annotation (Placement(transformation(extent={{2,-495},{12,-485}})));
+        Modelica.Blocks.Sources.TimeTable dPtEX731(table=dPt_EX731)    annotation (Placement(transformation(extent={{2,-506},{12,-496}})));
       equation
         // S900
         dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -4680,7 +4686,8 @@ Act")}),  Diagram(coordinateSystem(
         dTT701SP = (TT701SP - (100 + 273.15))/(100 + 273.15);
         //TT711SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
         //dTT711SP = (TT711SP - (60 + 273.15))/(100 + 273.15);
-        TT711SP = 70 + 273.15;
+        //TT711SP = 70 + 273.15;
+        TT711SP = if time < 6e3 then 70 + 273.15 else 65 + 273.15;
         dTT711SP = (TT711SP - (100 + 273.15))/(100 + 273.15);
         TT721SP = 70 + 273.15;
         dTT721SP = (TT721SP - (100 + 273.15))/(100 + 273.15);
@@ -5079,9 +5086,8 @@ Act")}),  Diagram(coordinateSystem(
             horizontalAlignment=TextAlignment.Right));
         connect(I_EX731Pt.y, lim_EX731Pt.u) annotation (Line(points={{91,-492},{98,-492}}, color={0,0,127}));
         connect(FB_EX731Pt.y, I_EX731Pt.u) annotation (Line(points={{59,-492},{68,-492}}, color={0,0,127}));
-        connect(FB_EX731Pt.u1, dEX731SP_var.y) annotation (Line(points={{42,-492},{32.5,-492}}, color={0,0,127}));
         connect(processVariableBus.dEX731Pt, FB_EX731Pt.u2) annotation (Line(
-            points={{-170,-2},{-171,-2},{-171,-509},{50,-509},{50,-500}},
+            points={{-170,-2},{-171,-2},{-171,-516},{50,-516},{50,-500}},
             color={255,204,51},
             thickness=0.5), Text(
             string="%first",
@@ -5150,7 +5156,11 @@ System")}),
                 textString="RR00"),        Text(
                 extent={{-55,-79},{5,-99}},
                 textColor={0,0,0},
-                textString="S500")}));
+                textString="S500"),                                  Rectangle(
+                extent={{13,-367},{134,-520}},
+                fillColor={255,200,160},
+                fillPattern=FillPattern.Solid,
+                pattern=LinePattern.None)}));
       end ControllerBase;
 
       model FPC_ThreeGen_CaseA

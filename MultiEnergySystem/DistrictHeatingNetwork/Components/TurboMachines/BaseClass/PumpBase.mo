@@ -69,7 +69,7 @@ partial model PumpBase "Base model to develop water pump models"
   //Variables
   Types.MassFlowRate m_flow(min = 0) "Mass flow rate";
   Types.VolumeFlowRate q(start = qnom) "Volume flow rate";
-  Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/hr";
+  Real q_m3h(unit = "m3/h", start = m_flow_start*3600/1000) "Volumetric flow rate in m3/hr";
   Types.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
   Types.Length head(nominal = headmax) "Pump head";
   Types.Pressure pin(start = pin_start) "Pressure of entering fluid";

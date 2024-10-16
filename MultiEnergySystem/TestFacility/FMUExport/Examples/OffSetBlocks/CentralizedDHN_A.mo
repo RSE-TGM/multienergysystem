@@ -45,8 +45,8 @@ model CentralizedDHN_A
         origin={-56,-10},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Step omegaP901(height=0, offset=2*3.14159*50) annotation (Placement(transformation(extent={{-76,38},{-56,58}})));
-  Modelica.Blocks.Sources.Step thetaFCV901(height=0, offset=1) annotation (Placement(transformation(extent={{-76,12},{-56,32}})));
+  Modelica.Blocks.Sources.Step omegaP901(height=0, offset=2*3.14159*50) annotation (Placement(transformation(extent={{-76,40},{-56,60}})));
+  Modelica.Blocks.Sources.Step thetaFCV901(height=0, offset=1) annotation (Placement(transformation(extent={{-76,10},{-56,30}})));
   Modelica.Blocks.Sources.Step thetaFCV401(height=0, offset=1) annotation (Placement(transformation(extent={{-92,-40},{-72,-20}})));
   Modelica.Blocks.Sources.Step ToutEB401(height=0, offset=80 + 273.15) annotation (Placement(transformation(extent={{-92,-68},{-72,-48}})));
   Modelica.Blocks.Sources.Step thetaFCV701(height=0, offset=1) annotation (Placement(transformation(extent={{44,20},{64,40}})));
@@ -84,22 +84,28 @@ equation
   connect(EB401Status.y, electricBoiler.status) annotation (Line(points={{-45,-90},{-42,-90},{-42,-29},{-37,-29}}, color={255,0,255}));
   connect(electricBoiler.m_flow_, FT401Offset.y) annotation (Line(points={{-15,-23},{-10,-23},{-10,-10},{-4,-10}},  color={0,0,127}));
   connect(omegaP401Offset.u, electricBoiler.omega) annotation (Line(points={{-47,-10},{-42,-10},{-42,-23},{-37,-23}}, color={0,0,127}));
-  connect(omegaP901.y, circulationPump.omega) annotation (Line(points={{-55,48},{-44,48},{-44,37},{-37,37}}, color={0,0,127}));
-  connect(thetaFCV901.y, circulationPump.theta) annotation (Line(points={{-55,22},{-42,22},{-42,35},{-37,35}}, color={0,0,127}));
+  connect(omegaP901.y, circulationPump.omega) annotation (Line(points={{-55,50},{-44,50},{-44,37},{-37,37}}, color={0,0,127}));
+  connect(thetaFCV901.y, circulationPump.theta) annotation (Line(points={{-55,20},{-42,20},{-42,35},{-37,35}}, color={0,0,127}));
   connect(thetaFCV401.y, electricBoiler.theta) annotation (Line(points={{-71,-30},{-56,-30},{-56,-25},{-37,-25}},  color={0,0,127}));
   connect(ToutEB401.y, electricBoiler.Toutset) annotation (Line(points={{-71,-58},{-46,-58},{-46,-27},{-37,-27}},  color={0,0,127}));
   connect(thetaFCV701.y, coolingSingleLoad.theta) annotation (Line(points={{65,30},{74,30},{74,37},{83,37}}, color={0,0,127}));
-  connect(omegaP401Offset.deltaUnorm, controlSignalBus.domegaP401)
-    annotation (Line(points={{-64,-10},{-112,-10},{-112,-3},{-159,-3}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(FT401Offset.deltaYnorm, processVariableBus.dFT401)
-    annotation (Line(points={{13,-10},{28,-10},{28,-34},{152,-34},{152,-3}},  color={0,0,127}), Text(
+  connect(FT401Offset.deltaYnorm, processVariableBus.dout1)
+    annotation (Line(points={{13,-10},{40,-10},{40,-42},{132,-42},{132,-12},{152,-12},{152,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{140,140}})));
+  connect(controlSignalBus.din1, omegaP401Offset.deltaUnorm)
+    annotation (Line(
+      points={{-159,-3},{-72,-3},{-72,-10},{-64,-10}},
+      color={255,204,51},
+      thickness=0.5), Text(
+      string="%first",
+      index=-1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  annotation (                                                   Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-140,-140},{140,140}})), experiment(
+      StopTime=5000,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end CentralizedDHN_A;

@@ -4355,6 +4355,8 @@ Act")}),  Diagram(coordinateSystem(
         Real dPtEX711SP(min = -1, max = 0);
         Real PtEX721SP(nominal = 100E3);
         Real dPtEX721SP(min = -1, max = 0);
+        Real PtEX731SP(nominal = 100E3);
+        Real dPtEX731SP(min = -1, max = 0);
 
         Modelica.Blocks.Sources.TimeTable domegaP901(table = domega_P901) annotation (
           Placement(transformation(extent={{-141,135},{-131,145}})));
@@ -4567,6 +4569,16 @@ Act")}),  Diagram(coordinateSystem(
               origin={50,-426},
               extent={{-10,-10},{10,10}},
               rotation=0)));
+        Modelica.Blocks.Math.Feedback FB_EX731Pt annotation (Placement(visible=true, transformation(
+              origin={50,-492},
+              extent={{-10,-10},{10,10}},
+              rotation=0)));
+        Modelica.Blocks.Nonlinear.Limiter lim_EX731Pt(uMax=0, uMin=-1) annotation (Placement(visible=true, transformation(
+              origin={110,-492},
+              extent={{-10,-10},{10,10}},
+              rotation=0)));
+        Modelica.Blocks.Continuous.Integrator I_EX731Pt(k=0.08, initType=Modelica.Blocks.Types.Init.InitialState) annotation (Placement(transformation(extent={{70,-502},{90,-482}})));
+        Modelica.Blocks.Sources.RealExpression dEX731SP_var(y=dPtEX731SP) annotation (Placement(transformation(extent={{22,-497},{32,-487}})));
       equation
         // S900
         dtheta_FCV901_var = (theta_FCV901SP - theta_nom)/theta_nom;
@@ -4663,7 +4675,8 @@ Act")}),  Diagram(coordinateSystem(
         FT721SP = 1.20;
         dFT721SP = (FT721SP - 2)/2;
         //TT701SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
-        TT701SP = 70 + 273.15;
+        TT701SP = if time < 6e3 then 70 + 273.15 else 65 + 273.15;
+        //TT701SP = 70 + 273.15;
         dTT701SP = (TT701SP - (100 + 273.15))/(100 + 273.15);
         //TT711SP = if time < 1e3 then 45 + 273.15 elseif time < 2e3 then time*0.02 + 25 + 273.15 else 65 + 273.15;
         //dTT711SP = (TT711SP - (60 + 273.15))/(100 + 273.15);
@@ -4684,6 +4697,9 @@ Act")}),  Diagram(coordinateSystem(
         dPtEX711SP =  (PtEX711SP - 100e3)/100e3;
         PtEX721SP = 35e3;
         dPtEX721SP =  (PtEX721SP - 100e3)/100e3;
+        PtEX731SP = 25e3;
+        dPtEX731SP =  (PtEX731SP - 100e3)/100e3;
+
 
         if useRealExpression then
           // S100
@@ -4845,12 +4861,6 @@ Act")}),  Diagram(coordinateSystem(
             horizontalAlignment=TextAlignment.Left));
         connect(switch_dToutRR01.y, controlSignalBus.dToutRR01)
           annotation (Line(points={{67.5,-10},{70,-10},{70,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaFCV731.y, controlSignalBus.dthetaFCV731)
-          annotation (Line(points={{-21.5,56},{-19,56},{-19,50},{17,50},{17,-44},{142,-44},{142,0},{160,0}}, color={0,0,127}), Text(
             string="%second",
             index=1,
             extent={{6,3},{6,3}},
@@ -5067,6 +5077,22 @@ Act")}),  Diagram(coordinateSystem(
             index=-1,
             extent={{-3,-6},{-3,-6}},
             horizontalAlignment=TextAlignment.Right));
+        connect(I_EX731Pt.y, lim_EX731Pt.u) annotation (Line(points={{91,-492},{98,-492}}, color={0,0,127}));
+        connect(FB_EX731Pt.y, I_EX731Pt.u) annotation (Line(points={{59,-492},{68,-492}}, color={0,0,127}));
+        connect(FB_EX731Pt.u1, dEX731SP_var.y) annotation (Line(points={{42,-492},{32.5,-492}}, color={0,0,127}));
+        connect(processVariableBus.dEX731Pt, FB_EX731Pt.u2) annotation (Line(
+            points={{-170,-2},{-171,-2},{-171,-509},{50,-509},{50,-500}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-3,-6},{-3,-6}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(lim_EX731Pt.y, controlSignalBus.dthetaFCV731) annotation (Line(points={{121,-492},{160,-492},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
         annotation (
           Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                     {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={
@@ -5985,7 +6011,8 @@ System")}),
           domega_P501 = [0, (f_P501-50)/50; 1e3, (f_P501-50)/50; 1e3, (f_P501-50+f_P501_delta)/50; 1e6, (f_P501-50+f_P501_delta)/50],
           I_EX701Pt(k=Ki_EX701Pt),
           I_EX711Pt(k=Ki_EX711Pt),
-          I_EX721Pt(k=Ki_EX721Pt))                                                                                                                                                                                                         annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
+          I_EX721Pt(k=Ki_EX721Pt),
+          I_EX731Pt(k=Ki_EX731Pt))                                                                                                                                                                                                         annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
         replaceable FMUExport.Centralised.CentralisedSystemGBEBCHP_InitForward centralisedSystemI_B_InitForward(
           TT701Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
           TT711Offset(fixOffset=true, y_Offset_fixed = 100 + 273.15, y_norm = 100 + 273.15),
@@ -5994,6 +6021,7 @@ System")}),
           EX701PtOffset(fixOffset=true, y_Offset_fixed = 100e3, y_norm = 100e3),
           EX711PtOffset(fixOffset=true, y_Offset_fixed = 100e3, y_norm = 100e3),
           EX721PtOffset(fixOffset=true, y_Offset_fixed = 100e3, y_norm = 100e3),
+          EX731PtOffset(fixOffset=true, y_Offset_fixed = 100e3, y_norm = 100e3),
           thetaFCV701Offset(fixInput=false, fixOffset=true),
           thetaFCV711Offset(fixInput=false, fixOffset=true),
           thetaFCV721Offset(fixInput=false, fixOffset=true),
@@ -6048,9 +6076,10 @@ System")}),
         parameter Real theta_TCV721_delta = 0;
         parameter Real theta_TCV731 = 1;
         parameter Real theta_TCV731_delta = 0;
-        parameter Real Ki_EX701Pt = 0.1;
-        parameter Real Ki_EX711Pt = 0.1;
-        parameter Real Ki_EX721Pt = 0.1;
+        parameter Real Ki_EX701Pt = 0.08;
+        parameter Real Ki_EX711Pt = 0.08;
+        parameter Real Ki_EX721Pt = 0.08;
+        parameter Real Ki_EX731Pt = 0.08;
       equation
         connect(thermalPlantController.controlSignalBus, centralisedSystemI_B_InitForward.controlSignalBus) annotation (
           Line(points={{-7.32,0},{2,0},{2,-0.38},{12.86,-0.38}},

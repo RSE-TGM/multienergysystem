@@ -45,7 +45,7 @@ connect(firstOrder.u, controlAction) annotation (Line(points={{42,-10},{70,-10},
           {70,34},{100,34}},
                            color={0,0,127}));
   annotation (
-      Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-104}}),    Text(extent={{-100,100},{100,-104}},
+      Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-100}}),    Text(extent={{-100,100},{100,-100}},
           textColor={0,0,0},
           textString="PI
 AW")}),

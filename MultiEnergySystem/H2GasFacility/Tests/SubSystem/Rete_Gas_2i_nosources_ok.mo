@@ -69,8 +69,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     n=33,                                                       redeclare model
       Medium =       Medium,
       L=3273.422,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -88,8 +88,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     n=17,                                                       redeclare model
       Medium =                                                                              Medium,
       L=1663.921,
-    X_start=X_start,                                                        Di=
-        1.325,
+    X_start=X_start,
+    Di=0.1325,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -107,8 +107,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=467600,                                          redeclare model
       Medium =                                                                              Medium,
       L=154.637,
-    X_start=X_start,                                                       Di=
-        1.325,
+    X_start=X_start,
+    Di=0.1325,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -126,8 +126,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=467100,                                          redeclare model
       Medium =                                                                              Medium,
       L=1.635,
-    X_start=X_start,                                                     Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -145,8 +145,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=465600,
     n=11,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -164,8 +164,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=463600,
     n=7,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.325,
+    X_start=X_start,
+    Di=0.1325,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -183,8 +183,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=461800,
     n=15,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -200,8 +200,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pin_start=461800,
     pout_start=461800,
     X_start=X_start,
-    n=7,                                              redeclare model Medium =              Medium,Di=
-        1.603,
+    n=7,                                              redeclare model Medium =              Medium,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -219,8 +219,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=459100,
     n=19,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -243,7 +243,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     rhom=2000,
     lambdam=0.25,
     X_start=X_start,
-    Di=1.472,
+    Di=0.1472,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -260,8 +260,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pin_start=457200,
     pout_start=457100,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                       Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -278,8 +278,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pin_start=457100,
     pout_start=456900,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                       Di=
-        0.831,
+    X_start=X_start,
+    Di=0.0831,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -296,8 +296,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=457100,
   redeclare model Medium =                                                                  Medium,
     H=-3,
-    X_start=X_start,                                                       Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -314,8 +314,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=457000,
   redeclare model Medium =                                                                  Medium,
     H=2,
-    X_start=X_start,                                                      Di=
-        1.603,
+    X_start=X_start,
+    Di=0.1603,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -332,8 +332,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pin_start=457000,
     pout_start=456700,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                        Di=
-        1.325,
+    X_start=X_start,
+    Di=0.1325,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -350,8 +350,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pin_start=456700,
     pout_start=455000,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                       Di=
-        0.831,
+    X_start=X_start,
+    Di=0.0831,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -369,8 +369,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
     pout_start=454700,
     n=5,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                        Di=
-        0.831,
+    X_start=X_start,
+    Di=0.0831,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,

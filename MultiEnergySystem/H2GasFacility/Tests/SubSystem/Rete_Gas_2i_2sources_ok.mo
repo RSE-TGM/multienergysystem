@@ -69,7 +69,7 @@ model Rete_Gas_2i_2sources_ok
     redeclare model Medium = Medium,
     L=100.058,
     X_start=X_start,
-    Di=1.325,
+    Di=0.1325,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -125,10 +125,6 @@ equation
       points={{-290,220},{-288,218},{-256,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(s3.outlet,Immissione_1. outlet) annotation (Line(
-      points={{-136,-58},{-136,-60},{-116,-60},{-116,-26},{-106,-26}},
-      color={182,109,49},
-      thickness=0.5));
   connect(m_flow_H3.y,add. u1) annotation (Line(points={{-40,88},{-4,88},{-4,76},
           {6,76}},      color={0,0,127}));
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-40,52},{-4,52},{-4,64},
@@ -137,6 +133,10 @@ equation
           {36,12},{-80,12},{-80,-31},{-90,-31}},                 color={0,0,127}));
   connect(s3.inlet, s2.outlet) annotation (Line(
       points={{-156,-58},{-156,-60},{-198,-60},{-198,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s3.outlet, Immissione_1.outlet) annotation (Line(
+      points={{-136,-58},{-136,-60},{-116,-60},{-116,-26},{-106,-26}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

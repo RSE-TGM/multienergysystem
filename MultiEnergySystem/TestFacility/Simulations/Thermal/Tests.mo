@@ -7246,7 +7246,7 @@ System")}),
                 lineColor={0,0,0}),        Text(
                 extent={{-126,-524},{34,-544}},
                 textColor={0,0,0},
-                textString="Load-Flow Control")}));
+                textString="Power Control")}));
       end ControllerBaseII;
     end Controllers;
 

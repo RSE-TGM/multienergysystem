@@ -7327,6 +7327,10 @@ System")}),
         controller.booldPtEX711 = true;
         controller.booldPtEX721 = true;
         controller.booldPtEX731 = true;
+        annotation (experiment(
+            StopTime=10000,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
       end CentralizedControlPlant_I;
 
       partial model PlantControlBaseII

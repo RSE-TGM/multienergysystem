@@ -43,7 +43,7 @@ equation
   annotation (
       Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-100}}),    Text(extent={{-100,100},{100,-100}},
           textColor={0,0,0},
-          textString="PI
+          textString="I
 AW")}),
       Diagram(coordinateSystem(extent={{-120,-120},{120,120}})));
 end AWIContinuous;

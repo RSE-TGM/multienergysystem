@@ -7995,58 +7995,6 @@ System")}),
         connect(dToutCHP501_var.y, switch_dToutCHP501.u1) annotation (Line(points={{-40.5,-141},{-37,-141},{-37,-146},{-34,-146}}, color={0,0,127}));
         connect(dTout_CHP501_act.numberPort, switch_dToutCHP501.y) annotation (Line(points={{-16.5,-150},{-22.5,-150}}, color={0,0,127}));
         connect(dToutCHP501.y, switch_dToutCHP501.u3) annotation (Line(points={{-40.5,-160},{-37,-160},{-37,-154},{-34,-154}}, color={0,0,127}));
-        connect(switch_dthetaFCVR01.y, controlSignalBus.dthetaFCVR01)
-          annotation (Line(points={{67.5,23},{70,23},{70,10},{136,10},{136,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dToutRR01.y, controlSignalBus.dToutRR01)
-          annotation (Line(points={{67.5,-10},{70,-10},{70,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaFCVC01.y, controlSignalBus.dthetaFCVC01)
-          annotation (Line(points={{-21.5,-16},{-19,-16},{-19,-30},{16,-30},{16,-45},{143,-45},{143,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaFCVC02.y, controlSignalBus.dthetaFCVC02)
-          annotation (Line(points={{-21.5,-50},{-19,-50},{-19,-40},{15,-40},{15,-46},{144,-46},{144,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_domegaP901.y, controlSignalBus.domegaP901)
-          annotation (Line(points={{-111.5,150},{-110,150},{-110,160},{-77,160},{-77,197},{149,197},{149,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaFCV901.y, controlSignalBus.dthetaFCV901)
-          annotation (Line(points={{-112.5,117},{-111,117},{-111,140},{-76,140},{-76,196},{148,196},{148,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dToutGB101.y, controlSignalBus.dToutGB101) annotation (Line(points={{-112.5,-26},{-110,-26},{-110,-10},{-77,-10},{-77,25},{23,25},{23,-37},{127,-37},{127,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dToutEB401.y, controlSignalBus.dToutEB401) annotation (Line(points={{-112.5,-166},{-111,-166},{-111,-150},{-68,-150},{-68,-76},{22,-76},{22,-52},{132,-52},{132,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dToutCHP501.y, controlSignalBus.dToutCHP501)
-          annotation (Line(points={{-22.5,-150},{-21,-150},{-21,-140},{24,-140},{24,-54},{134,-54},{134,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(processVariableBus.dTT701, PI_TT701.FeedBack)
           annotation (Line(
             points={{-170,-2},{-170,-123},{-169,-123},{-169,-272},{-68,-272}},
@@ -8055,32 +8003,6 @@ System")}),
             string="%first",
             index=-1,
             extent={{-6,3},{-6,3}},
-            horizontalAlignment=TextAlignment.Right));
-        connect(switch_dthetaFCV401.y, controlSignalBus.dthetaFCV401) annotation (Line(points={{-112.5,-133},{-111,-133},{-111,-132},{-109,-132},{-109,-130},{-69,-130},{-69,-75},{21,-75},{21,-51},{131,-51},{131,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_domegaP401.y, controlSignalBus.domegaP401) annotation (Line(points={{-111.5,-100},{-108,-100},{-108,-95},{-70,-95},{-70,-74},{20,-74},{20,-50},{130,-50},{130,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_domegaP501.y, controlSignalBus.domegaP501)
-          annotation (Line(points={{-21.5,-115},{-20,-115},{-20,-109},{23,-109},{23,-53},{133,-53},{133,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_dthetaFCV101.y, controlSignalBus.dthetaFCV101) annotation (Line(points={{-112.5,7},{-109,7},{-109,12},{-78,12},{-78,26},{24,26},{24,-36},{126,-36},{126,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
-        connect(switch_domegaP101.y, controlSignalBus.domegaP101) annotation (Line(points={{-111.5,40},{-111.5,33},{-77,33},{-77,27},{25,27},{25,-35},{125,-35},{125,0},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{-3,-6},{-3,-6}},
             horizontalAlignment=TextAlignment.Right));
         connect(processVariableBus.dTT711, PI_TT711.FeedBack)
           annotation (Line(
@@ -8091,13 +8013,6 @@ System")}),
             index=-1,
             extent={{-6,3},{-6,3}},
             horizontalAlignment=TextAlignment.Right));
-        connect(PI_TT711.controlAction, controlSignalBus.dthetaTCV711)
-          annotation (Line(points={{-49,-302},{160,-302},{160,-70},{106,-70},{106,0},{160,0}},
-                                                                    color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(processVariableBus.dTT721, PI_TT721.FeedBack)
           annotation (Line(
             points={{-170,-2},{-170,-336},{-68,-336}},
@@ -8122,13 +8037,6 @@ System")}),
             index=-1,
             extent={{-6,3},{-6,3}},
             horizontalAlignment=TextAlignment.Right));
-        connect(PI_TT731.controlAction, controlSignalBus.dthetaTCV731)
-          annotation (Line(points={{-49,-361},{160,-361},{160,-90},{108,-90},{108,0},{160,0}},
-                                                                    color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(dPtEX731.y, switch_dPtEX731.u3) annotation (Line(points={{-104.5,-542},{-101,-542},{-101,-536},{-97,-536}},
                                                                                                                      color={0,0,127}));
         connect(dPtEX731_var.y, switch_dPtEX731.u1) annotation (Line(points={{-104.5,-525},{-101,-525},{-101,-528},{-97,-528}},
@@ -8331,7 +8239,7 @@ System")}),
                 extent={{-133,-380},{42,-400}},
                 textColor={0,0,0},
                 textString="Power Control"),                         Rectangle(
-                extent={{-133,-220},{2,-375}},
+                extent={{-133,-220},{41,-374}},
                 fillColor={213,255,170},
                 fillPattern=FillPattern.Solid,
                 lineColor={0,0,0}),        Text(

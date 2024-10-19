@@ -8174,6 +8174,18 @@ System")}),
         connect(switch_dPtEX721.y, I_EX721Pt1.REF) annotation (Line(points={{-84.5,-492},{-80,-492},{-80,-503},{-67,-503}}, color={0,0,127}));
         connect(switch_dPtEX731.y, I_EX731Pt1.REF) annotation (Line(points={{-85.5,-532},{-80,-532},{-80,-542},{-67,-542}}, color={0,0,127}));
         connect(dPtEX721_var.y, switch_dPtEX721.u1) annotation (Line(points={{-104.5,-485},{-100,-485},{-100,-488},{-96,-488}}, color={0,0,127}));
+        connect(PI_TT711.controlAction, controlSignalBus.dthetaTCV711)
+          annotation (Line(points={{-49,-302},{55,-302},{55,-303},{160,-303},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(PI_TT731.controlAction, controlSignalBus.dthetaTCV731)
+          annotation (Line(points={{-49,-361},{55,-361},{55,-362},{160,-362},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
         annotation (
           Icon(coordinateSystem(preserveAspectRatio = false), graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent={{-70,100},
                     {70,-100}},                                                                                                                                                                                                        textColor={0,0,0},     textStyle={

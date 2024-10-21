@@ -16,13 +16,13 @@ model Rete_Gas_2i_3sources_ok
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H4(
     duration=60,
-    height=0.09125,
+    height=0.09889,
     offset=0,
     startTime=61200)                                                                                        annotation (
     Placement(visible = true, transformation(origin={299,254},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H6(
     duration=360,
-    height=-0.09125,
+    height=-0.09889,
     offset=0,
     startTime=75600)                                                                                        annotation (
     Placement(visible = true, transformation(origin={293,298},     extent = {{-10, -10}, {10, 10}}, rotation=0)));

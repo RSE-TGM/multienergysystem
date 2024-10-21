@@ -15,13 +15,13 @@ model Rete_Gas_2i_3sources_nV
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H4(
     duration=60,
-    height=0.09125,
+    height=0.09889,
     offset=0,
     startTime=61200)                                                                                        annotation (
     Placement(visible = true, transformation(origin={317,222},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H6(
     duration=360,
-    height=-0.09125,
+    height=-0.09889,
     offset=0,
     startTime=75600)                                                                                        annotation (
     Placement(visible = true, transformation(origin={311,266},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
@@ -84,5 +84,9 @@ equation
       points={{346,158},{264,158},{264,204},{242,204},{242,186}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(
+      StopTime=90000,
+      Interval=1,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_3sources_nV;

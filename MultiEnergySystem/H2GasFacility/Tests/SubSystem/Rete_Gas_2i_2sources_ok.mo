@@ -51,13 +51,13 @@ model Rete_Gas_2i_2sources_ok
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
     duration=60,
-    height=0.09125,
+    height=0.09889,
     offset=0,
     startTime=32400)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-399,224},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
     duration=360,
-    height=-0.09125,
+    height=-0.09889,
     offset=0,
     startTime=46800)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-405,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
@@ -93,13 +93,13 @@ model Rete_Gas_2i_2sources_ok
         rotation=180)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     duration=60,
-    height=0.09125,
+    height=0.09889,
     offset=0,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-51,52},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
     duration=60,
-    height=-0.09125,
+    height=-0.09889,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-51,88},      extent = {{-10, -10}, {10, 10}}, rotation=0)));

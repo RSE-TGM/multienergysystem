@@ -17,7 +17,7 @@ model Rete_Gas_2i_MSL_2sources
     p_b_start=491600,
     T_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4,
+    m_flow_start=0.413,
     nNodes=3) annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
@@ -33,11 +33,11 @@ model Rete_Gas_2i_MSL_2sources
         origin={-49,-23})));
   inner Modelica.Fluid.System system(
     T_ambient=288.15,
-    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
-    massDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    massDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
     momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
-    m_flow_start=0.03,
-    use_eps_Re=true)
+    m_flow_start=0.413,
+    use_eps_Re=false)
     annotation (Placement(transformation(extent={{-148,130},{-128,150}})));
   Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal1(redeclare package
       Medium =                                                                          Medium) annotation (Placement(
@@ -856,7 +856,6 @@ equation
             150,150}})),
     experiment(
       StopTime=90000,
-      Interval=2,
-      Tolerance=0.001,
+      Interval=1,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_MSL_2sources;

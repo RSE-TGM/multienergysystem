@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_pipe_orientation_zeroH
-  extends Rete_Gas_2i_nosources_ok              (constantFrictionFactor = false, FrictionFactor = 0.005,
+  extends Rete_Gas_2i_nosources_ok(              constantFrictionFactor = false, FrictionFactor = 0.005,
     s16(n=1),
     s9(H=0,
        n=1),

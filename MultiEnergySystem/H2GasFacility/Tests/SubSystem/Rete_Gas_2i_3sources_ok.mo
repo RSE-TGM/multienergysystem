@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_3sources_ok
-  extends Rete_Gas_2i_2sources_ok              (break connect(GRM_7.inlet, sds8.outlet));
+  extends Rete_Gas_2i_2sources_ok(              break connect(GRM_7.inlet, sds8.outlet));
   // extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_3(
     redeclare model Medium = Medium,

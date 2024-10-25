@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_ok
-  extends Rete_Gas_2i_nosources_ok              (constantFrictionFactor = false, FrictionFactor = 0.003,
+  extends Rete_Gas_2i_nosources_ok(              constantFrictionFactor = false, FrictionFactor = 0.003,
     sds7(pin_start=467300),
     s1(pin_start=493000, pout_start=491600));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(

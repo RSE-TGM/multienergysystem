@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_manifold
-  extends Rete_Gas_2i_nosources_ok              (constantFrictionFactor = false, FrictionFactor = 0.005,
+  extends Rete_Gas_2i_nosources_ok(              constantFrictionFactor = false, FrictionFactor = 0.005,
     sds7(n=10),
     sds8(n=20),
     sds15(n=10),

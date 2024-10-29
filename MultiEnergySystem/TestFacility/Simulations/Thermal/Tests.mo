@@ -7435,10 +7435,10 @@ System")}),
         // Set-points
         //Real FT101SP(nominal = 5.7166667);
         //Real dFT101SP(min = -1, max = 0);
-        Real FT401SP(nominal = 3.2666667);
-        Real dFT401SP(min = -1, max = 0);
-        Real FT501SP(nominal = FT501_nom);
-        Real dFT501SP(min = -1, max = 0);
+       // Real FT401SP(nominal = 3.2666667);
+        //Real dFT401SP(min = -1, max = 0);
+      //   Real FT501SP(nominal = FT501_nom);
+      //   Real dFT501SP(min = -1, max = 0);
         Real FT701SP(nominal = 2);
         Real dFT701SP(min = -1, max = 0);
         Real FT711SP(nominal = 2);
@@ -7608,8 +7608,6 @@ System")}),
                                                                                                              annotation (Placement(transformation(extent={{-15,-160},{5,-140}})));
         FMUExport.Interfaces.ControlSignalBus processVariableBus annotation (
           Placement(visible = true, transformation(origin={-170,-2},   extent={{50,40},{-50,-40}},      rotation = -90), iconTransformation(origin = {-91, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
-        Modelica.Blocks.Sources.RealExpression dFT401SP_var(y=dFT401SP) annotation (Placement(transformation(extent={{30,-145},{40,-135}})));
-        Modelica.Blocks.Sources.RealExpression dFT501SP_var(y=dFT501SP) annotation (Placement(transformation(extent={{30,-173},{40,-163}})));
         DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT701(
           Kp=Kp_TT701,
           Ti=Ti_TT701,
@@ -7803,11 +7801,11 @@ System")}),
         //Set-points
         //FT101SP = 1.7;
         //dFT101SP = (FT101SP - 5.7166667)/5.7166667;
-        FT401SP = 1.33;
+        //FT401SP = 1.33;
         //FT401SP = if time < 1e3 then 1.3 elseif time < 2e3 then -0.00053*time + 1.9 else 0.8;
-        dFT401SP = (FT401SP - 3.2666667)/3.2666667;
-        FT501SP = 2.1;
-        dFT501SP = (FT501SP - FT501_nom)/FT501_nom;
+        //dFT401SP = (FT401SP - 3.2666667)/3.2666667;
+      //   FT501SP = 2.1;
+      //   dFT501SP = (FT501SP - FT501_nom)/FT501_nom;
         FT701SP = 0.7;
         dFT701SP = (FT701SP - 2)/2;
         FT711SP = 0.6;
@@ -8272,16 +8270,12 @@ System")}),
         Real dFT901SP(min = -1, max = 0);
         InputMassFlow FT101SP(nominal = 4);
         Real dFT101SP(min = -1, max = 0);
+        InputMassFlow FT401SP(nominal = 1.5);
+        Real dFT401SP(min = -1, max = 0);
+        InputMassFlow FT501SP(nominal = 1.5);
+        Real dFT501SP(min = -1, max = 0);
 
 
-        DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT901(
-          Kp=0.5454,
-          Ti=0.2467,
-          Umax=0,
-          Umin=-0.4,
-          y_start=-0.4,
-          firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{-29,-622},{-9,-602}})));
-        Modelica.Blocks.Sources.RealExpression dFT901_var1(y=dFT901SP) annotation (Placement(transformation(extent={{-57,-604},{-47,-594}})));
         DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(
           Kp=0.8708,
           Ti=0.2669,
@@ -8290,22 +8284,24 @@ System")}),
           y_start=-0.4,
           firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{-29,-658},{-9,-638}})));
         Modelica.Blocks.Sources.RealExpression dFT101_var1(y=dFT101SP) annotation (Placement(transformation(extent={{-57,-642},{-47,-632}})));
+        DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT401(
+          Kp=0.6723,
+          Ti=0.2656,
+          Umax=0,
+          Umin=-0.4,
+          y_start=-0.4,
+          firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{-29,-694},{-9,-674}})));
+        Modelica.Blocks.Sources.RealExpression dFT401SP_var(y=dFT401SP) annotation (Placement(transformation(extent={{-57,-677},{-47,-667}})));
+        DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT501(
+          Kp=0.45445,
+          Ti=0.26617,
+          Umax=0,
+          Umin=-0.4,
+          y_start=-0.4,
+          firstOrder(initType=Modelica.Blocks.Types.Init.InitialState)) annotation (Placement(transformation(extent={{-29,-730},{-9,-710}})));
+        Modelica.Blocks.Sources.RealExpression dFT501SP_var1(y=dFT501SP)
+                                                                        annotation (Placement(transformation(extent={{-57,-711},{-47,-701}})));
       equation
-        connect(processVariableBus.dFT901,PI_FT901. FeedBack)
-          annotation (Line(
-            points={{-170,-2},{-170,-616},{-27,-616}},
-            color={255,204,51},
-            thickness=0.5), Text(
-            string="%first",
-            index=-1,
-            extent={{-6,3},{-6,3}},
-            horizontalAlignment=TextAlignment.Right));
-        connect(dFT901_var1.y,PI_FT901. REF) annotation (Line(points={{-46.5,-599},{-36,-599},{-36,-608},{-27,-608}}, color={0,0,127}));
-        connect(PI_FT901.controlAction, controlSignalBus.domegaP901) annotation (Line(points={{-8,-612},{160,-612},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(switch_dthetaFCV901.y, controlSignalBus.dthetaFCV901)
           annotation (Line(points={{-112.5,117},{-112.5,132},{-76,132},{-76,200},{160,200},{160,0}}, color={0,0,127}), Text(
             string="%second",
@@ -8324,12 +8320,6 @@ System")}),
             index=1,
             extent={{6,3},{6,3}},
             horizontalAlignment=TextAlignment.Left));
-        connect(switch_domegaP401.y, controlSignalBus.domegaP401)
-          annotation (Line(points={{-111.5,-100},{-110,-100},{-110,-88},{-78,-88},{-78,-74},{160,-74},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{6,3},{6,3}},
-            horizontalAlignment=TextAlignment.Left));
         connect(switch_dthetaFCV401.y, controlSignalBus.dthetaFCV401)
           annotation (Line(points={{-112.5,-133},{-112.5,-116},{-76,-116},{-76,-76},{160,-76},{160,0}}, color={0,0,127}), Text(
             string="%second",
@@ -8342,12 +8332,6 @@ System")}),
             index=1,
             extent={{6,3},{6,3}},
             horizontalAlignment=TextAlignment.Left));
-        connect(switch_domegaP501.y, controlSignalBus.domegaP501)
-          annotation (Line(points={{-21.5,-115},{-21.5,-100},{160,-100},{160,0}}, color={0,0,127}), Text(
-            string="%second",
-            index=1,
-            extent={{-3,6},{-3,6}},
-            horizontalAlignment=TextAlignment.Right));
         connect(switch_dToutCHP501.y, controlSignalBus.dToutCHP501)
           annotation (Line(points={{-22.5,-150},{-20,-150},{-20,-144},{12,-144},{12,0},{160,0}}, color={0,0,127}), Text(
             string="%second",
@@ -8382,6 +8366,8 @@ System")}),
         //dPT731SP =  (PT731SP - 3e5)/3e5;
         dFT901SP = (FT901SP - 5.5)/5.5;
         dFT101SP = (FT101SP - 4)/4;
+        dFT401SP = (FT401SP - 1.5)/1.5;
+        dFT501SP = (FT501SP - 1.5)/1.5;
 
         connect(processVariableBus.dFT101, PI_FT101.FeedBack)
           annotation (Line(
@@ -8398,7 +8384,43 @@ System")}),
             index=1,
             extent={{6,3},{6,3}},
             horizontalAlignment=TextAlignment.Left));
+        connect(switch_domegaP901.y, controlSignalBus.domegaP901)
+          annotation (Line(points={{-111.5,150},{-110,150},{-110,162},{-78,162},{-78,200},{160,200},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
+        connect(PI_FT401.controlAction, controlSignalBus.domegaP401) annotation (Line(points={{-8,-684},{160,-684},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
         connect(dFT101_var1.y, PI_FT101.REF) annotation (Line(points={{-46.5,-637},{-38,-637},{-38,-644},{-27,-644}}, color={0,0,127}));
+        connect(dFT401SP_var.y, PI_FT401.REF) annotation (Line(points={{-46.5,-672},{-38,-672},{-38,-680},{-27,-680}}, color={0,0,127}));
+        connect(processVariableBus.dFT401, PI_FT401.FeedBack)
+          annotation (Line(
+            points={{-170,-2},{-170,-688},{-27,-688}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(dFT501SP_var1.y, PI_FT501.REF) annotation (Line(points={{-46.5,-706},{-38,-706},{-38,-716},{-27,-716}}, color={0,0,127}));
+        connect(processVariableBus.dFT501, PI_FT501.FeedBack)
+          annotation (Line(
+            points={{-170,-2},{-172,-2},{-172,-724},{-27,-724}},
+            color={255,204,51},
+            thickness=0.5), Text(
+            string="%first",
+            index=-1,
+            extent={{-6,3},{-6,3}},
+            horizontalAlignment=TextAlignment.Right));
+        connect(PI_FT501.controlAction, controlSignalBus.domegaP501) annotation (Line(points={{-8,-720},{160,-720},{160,0}}, color={0,0,127}), Text(
+            string="%second",
+            index=1,
+            extent={{6,3},{6,3}},
+            horizontalAlignment=TextAlignment.Left));
       end FlowsController;
     end Controllers;
 
@@ -8924,14 +8946,18 @@ System")}),
             fixOffset=true,
             y_Offset_fixed=100e3,
             y_norm=100e3),
-          FT901Offset(
-            fixOffset=true,
-            y_Offset_fixed=5.5,
-            y_norm=5.5),
           FT101Offset(
             fixOffset=true,
             y_Offset_fixed=4,
             y_norm=4),
+          FT401Offset(
+            fixOffset=true,
+            y_Offset_fixed=1.5,
+            y_norm=1.5),
+          FT501Offset(
+            fixOffset=true,
+            y_Offset_fixed=1.5,
+            y_norm=1.5),
           thetaFCV701Offset(fixInput=false, fixOffset=true),
           thetaFCV711Offset(fixInput=false, fixOffset=true),
           thetaFCV721Offset(fixInput=false, fixOffset=true),
@@ -8945,15 +8971,19 @@ System")}),
           thetaTCV731Offset(fixInput=false, fixOffset=true),
           omegaP901Offset(fixInput=false, fixOffset=true),
           omegaP101Offset(fixInput=false, fixOffset=true),
+          omegaP401Offset(fixInput=false, fixOffset=true),
+          omegaP501Offset(fixInput=false, fixOffset=true),
           ToutRR01Offset(fixInput=false, fixOffset=true),
           TTR02_nom=373.15,
           thetaFCV401Offset(fixInput=false, fixOffset=true),
-          omegaP401Offset(fixInput=false, fixOffset=true),
-          omegaP501Offset(fixInput=false, fixOffset=true),
           S500(PL_S500_P501_PT501(h=2.05)),
           S900(h_FCV901_PT902=2.5),
           PL_S500_rCD_hot(h=3),
           PL_S400_rCD_hot(h=1.2)) annotation (Placement(transformation(origin={-1,0}, extent={{11,-38},{55,38}})));
+      //     FT101Offset(
+      //       fixOffset=true,
+      //       y_Offset_fixed=4,
+      //       y_norm=4),
           //thetaTCV701Offset(fixInput=false, fixOffset=true),
 
           //thetaTCV701Offset(fixInput=false, fixOffset=true),
@@ -9028,6 +9058,8 @@ System")}),
 
         controller.FT901SP = 3;
         controller.FT101SP = 1.35;
+        controller.FT401SP = 0.6;
+        controller.FT501SP = 0.4;
       end CentralizedControlPlant_IV;
     end ControlledPlants;
 

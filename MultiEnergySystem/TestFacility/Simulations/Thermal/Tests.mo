@@ -7794,7 +7794,7 @@ System")}),
         theta_TCV731SP = 1;
         //booldthetaTCV731 = true;
         dtheta_FCVR01_var = (theta_FCVR01SP - theta_nom)/theta_nom;
-        theta_FCVR01SP = 1;
+        theta_FCVR01SP = if time < 8e3 then 1 else 0.5;
         //booldthetaFCVR01 = true;
         dTout_RR01_var = (Tout_RR01SP - Tout_gen_nom)/Tout_gen_nom;
         Tout_RR01SP = 40 + 273.15;
@@ -8885,9 +8885,9 @@ System")}),
           dtheta_TCV711=[0,(theta_TCV711 - 1)/1; 1e3,(theta_TCV711 - 1)/1; 1e3,(theta_TCV711 - 1 + theta_TCV711_delta)/1; 1e6,(theta_TCV711 - 1 + theta_TCV711_delta)/1],
           dtheta_TCV721=[0,(theta_TCV721 - 1)/1; 1e3,(theta_TCV721 - 1)/1; 1e3,(theta_TCV721 - 1 + theta_TCV721_delta)/1; 1e6,(theta_TCV721 - 1 + theta_TCV721_delta)/1],
           dtheta_TCV731=[0,(theta_TCV731 - 1)/1; 1e3,(theta_TCV731 - 1)/1; 1e3,(theta_TCV731 - 1 + theta_TCV731_delta)/1; 1e6,(theta_TCV731 - 1 + theta_TCV731_delta)/1],
-          dtheta_FCVR01=[0,0; 1e6,0],
+          dtheta_FCVR01=[0,0; 8e3, 0; 9e3, -0.6; 1e6,-0.6],
           dTout_RR01=[0,(Tout_RR01 - 15)/(100 + 273.15); 1e6,(Tout_RR01 - 15)/(100 + 273.15)],
-          domega_P401=[0,(f_P401 - 50)/50; 1e3,(f_P401 - 50)/50; 1e3,(f_P401 - 50 + f_P401_delta)/50; 1e6,(f_P401 - 50 + f_P401_delta)/50],
+          domega_P401=[0,(f_P401 - 50)/50; 1e4,(f_P401 - 50)/50; 1e4,(f_P401 - 50 + f_P401_delta)/50; 1e6,(f_P401 - 50 + f_P401_delta)/50],
           dtheta_FCV401=[0,0; 1e6,0],
           domega_P501=[0,(f_P501 - 50)/50; 1e3,(f_P501 - 50)/50; 1e3,(f_P501 - 50 + f_P501_delta)/50; 1e6,(f_P501 - 50 + f_P501_delta)/50])
                                    annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
@@ -9019,7 +9019,7 @@ System")}),
 
         controller.PtEX701SP = if time < 5e3 then 40e3 else 37.5e3;
         controller.PtEX711SP = 35e3;
-        controller.PtEX721SP = if time < 5e3 then 35e3 else 30e3;
+        controller.PtEX721SP = if time < 5e3 then 35e3 else 40e3;
         controller.PtEX731SP = if time < 5e3 then 25e3 else 30e3;
         controller.booldPtEX701 = true;
         controller.booldPtEX711 = true;

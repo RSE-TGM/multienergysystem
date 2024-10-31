@@ -1129,18 +1129,6 @@ package Configurations
           points={{-232,-196},{-232,45},{-235.75,45},{-235.75,44.75},{-257.5,44.75}},
           color={140,56,54},
           thickness=0.5));
-      connect(sourceVoltage.outlet, S100.inletPower) annotation (Line(
-          points={{-690,-452},{-592,-452},{-592,-448},{-328,-448},{-328,-306},{-298.4,-306}},
-          color={56,93,138},
-          thickness=1));
-      connect(S900.inletPower, sourceVoltage.outlet) annotation (Line(
-          points={{-845.1,102.6},{-874,102.6},{-874,-420},{-690,-420},{-690,-452}},
-          color={56,93,138},
-          thickness=1));
-      connect(PR01.inletPower, sourceVoltage.outlet) annotation (Line(
-          points={{694.9,-213},{640,-213},{640,-478},{-690,-478},{-690,-452}},
-          color={56,93,138},
-          thickness=1));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)));

@@ -294,10 +294,6 @@ equation
       points={{20,-86},{20,-100},{24,-100}},
       color={140,56,54},
       thickness=0.5));
-  connect(P901.inletPower, inletPower) annotation (Line(
-      points={{13,-36},{-36,-36},{-36,-34},{-86,-34},{-86,-50},{-110,-50}},
-      color={56,93,138},
-      thickness=1));
   annotation (Icon(coordinateSystem(grid={1,1}), graphics={
         Bitmap(
           extent={{-49.5,-61},{49.5,61}},

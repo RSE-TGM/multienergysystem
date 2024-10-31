@@ -185,6 +185,7 @@ model ElectricBoiler "System 400"
         rotation=90,
         origin={-23,-11})));
   Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}})));
+  ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-120,-60},{-100,-40}}), iconTransformation(extent={{-120,-60},{-100,-40}})));
 equation
   Pe = P401.W;
   connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(
@@ -248,11 +249,7 @@ equation
   connect(PT401.p, PTin) annotation (Line(points={{-10.2,12},{6,12},{6,-2},{98,-2},{98,10},{110,10}}, color={0,0,127}));
   connect(FT.m_flow, m_flow_) annotation (Line(points={{-27.2,-15.9},{-27.2,-36},{64,-36},{64,70},{110,70}}, color={0,0,127}));
   connect(EB.inletPower, inletPower) annotation (Line(
-      points={{15.4,-94},{20,-94},{20,-128},{-96,-128},{-96,-50},{-110,-50}},
-      color={56,93,138},
-      thickness=1));
-  connect(P401.inletPower, inletPower) annotation (Line(
-      points={{11.6,-19},{-96,-19},{-96,-50},{-110,-50}},
+      points={{15.4,-94},{26,-94},{26,-68},{18,-68},{18,-64},{6,-64},{6,-62},{-96,-62},{-96,-50},{-110,-50}},
       color={56,93,138},
       thickness=1));
   annotation (                                                   Diagram(coordinateSystem(

@@ -92,7 +92,6 @@ partial model PumpBase "Base model to develop water pump models"
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{36, 58}, {76, 98}}, rotation = 0), iconTransformation(origin={24,-78},   extent = {{36, 58}, {76, 98}}, rotation = 0)));
 
-  ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-10,60},{10,80}}), iconTransformation(extent={{-10,60},{10,80}})));
 equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
@@ -139,7 +138,7 @@ equation
   Pm = W/etamech;
   Pe = Pm/etaelec;
   //inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";
-  inletPower.P = Pe;
+  //inletPower.P = Pe;
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));

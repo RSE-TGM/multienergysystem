@@ -52,6 +52,7 @@ partial model SystemInterfaceBaseII
         origin={-39,-115},
         extent={{-15,-15},{15,15}},
         rotation=0)));
+  ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-120,-60},{-100,-40}}), iconTransformation(extent={{-120,-50},{-100,-30}})));
 equation
   connect(inlethot, inlethot) annotation (Line(
       points={{24,-100},{24,-100}},

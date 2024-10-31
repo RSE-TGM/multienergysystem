@@ -235,9 +235,9 @@ equation
       points={{20,-60},{20,-68},{6.6,-68},{6.6,-76.4}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S400_PT401_EB401.wall, MultiPort) annotation (Line(points={{-24.1,-50},{-46,-50},{-46,-70},{-110,-70}}, color={255,238,44}));
-  connect(PL_S400_EB401_P401.wall, MultiPort) annotation (Line(points={{15.9,-50},{4,-50},{4,-64},{-36,-64},{-36,-70},{-110,-70}}, color={255,238,44}));
-  connect(PL_S400_P401_FCV401.wall, MultiPort) annotation (Line(points={{15.9,10},{4,10},{4,-64},{-36,-64},{-36,-70},{-110,-70}}, color={255,238,44}));
+  connect(PL_S400_PT401_EB401.wall, MultiPort) annotation (Line(points={{-24.1,-50},{-46,-50},{-46,-80},{-110,-80}}, color={255,238,44}));
+  connect(PL_S400_EB401_P401.wall, MultiPort) annotation (Line(points={{15.9,-50},{4,-50},{4,-64},{-36,-64},{-36,-80},{-110,-80}}, color={255,238,44}));
+  connect(PL_S400_P401_FCV401.wall, MultiPort) annotation (Line(points={{15.9,10},{4,10},{4,-64},{-36,-64},{-36,-80},{-110,-80}}, color={255,238,44}));
   connect(omega, P401.in_omega) annotation (Line(points={{-110,70},{-82,70},{-82,-23.8},{14,-23.8}}, color={0,0,127}));
   connect(theta, FCV401.opening) annotation (Line(points={{-110,50},{-62,50},{-62,40},{13.6,40}}, color={0,0,127}));
   connect(Toutset, EB.Tout_ref) annotation (Line(points={{-110,30},{-60,30},{-60,-94},{-15.4,-94}}, color={0,0,127}));
@@ -247,6 +247,14 @@ equation
   connect(PT402.p, PTout) annotation (Line(points={{29.8,62},{36,62},{36,-10},{110,-10}}, color={0,0,127}));
   connect(PT401.p, PTin) annotation (Line(points={{-10.2,12},{6,12},{6,-2},{98,-2},{98,10},{110,10}}, color={0,0,127}));
   connect(FT.m_flow, m_flow_) annotation (Line(points={{-27.2,-15.9},{-27.2,-36},{64,-36},{64,70},{110,70}}, color={0,0,127}));
+  connect(EB.inletPower, inletPower) annotation (Line(
+      points={{15.4,-94},{20,-94},{20,-128},{-96,-128},{-96,-50},{-110,-50}},
+      color={56,93,138},
+      thickness=1));
+  connect(P401.inletPower, inletPower) annotation (Line(
+      points={{11.6,-19},{-96,-19},{-96,-50},{-110,-50}},
+      color={56,93,138},
+      thickness=1));
   annotation (                                                   Diagram(coordinateSystem(
                                      extent={{-100,-120},{100,120}})), Icon(coordinateSystem(grid={
             1,1}),                                                          graphics={Bitmap(

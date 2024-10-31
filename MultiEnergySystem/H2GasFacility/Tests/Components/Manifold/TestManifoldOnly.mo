@@ -9,8 +9,8 @@ model TestManifoldOnly
     H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable MultiEnergySystem.H2GasFacility.Components.Manifold.GManifold2I1O manifold(redeclare model
             MediumIn1 =                                                                                              MediumIn1, redeclare model
-            MediumIn2 =                                                                                                                                     MediumIn2, redeclare
-      model MediumOut =                                                                                                                                                                            MediumOut, Tin_start1(displayUnit = "K") = 293, Tin_start2(displayUnit = "K") = 298, Tout_start(displayUnit = "K") = 295, V = 0.15708, Xin_start1 = {0.15, 0.25, 0.6}, Xin_start2 = {0.2, 0.2, 0.6}, Xout_start = {0.15, 0.25, 0.6}, noInitialPressure = false, p_start(displayUnit = "Pa") = 499999.9999999999) annotation (
+            MediumIn2 =                                                                                                                                     MediumIn2, redeclare model
+            MediumOut =                                                                                                                                                                            MediumOut, Tin_start1(displayUnit = "K") = 293, Tin_start2(displayUnit = "K") = 298, Tout_start(displayUnit = "K") = 295, V = 0.15708, Xin_start1 = {0.15, 0.25, 0.6}, Xin_start2 = {0.2, 0.2, 0.6}, Xout_start = {0.15, 0.25, 0.6}, noInitialPressure = false, p_start(displayUnit = "Pa") = 499999.9999999999) annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{30, -30}, {-30, 30}}, rotation = 90)));
 
   parameter Types.Area A_v = 9.979654e-3;

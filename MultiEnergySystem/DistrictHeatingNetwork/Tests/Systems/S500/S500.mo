@@ -466,8 +466,8 @@ equation
       points={{-44.25,-70},{-44,-70},{-44,-75.25},{-34.5,-75.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S500_FV501_CHPWP.outlet, variableDifferentialPressurePump.inlet) annotation
-    (Line(
+  connect(PL_S500_FV501_CHPWP.outlet, variableDifferentialPressurePump.inlet) annotation (
+     Line(
       points={{-24.5,-75.25},{-3.75,-75.25}},
       color={140,56,54},
       thickness=0.5));

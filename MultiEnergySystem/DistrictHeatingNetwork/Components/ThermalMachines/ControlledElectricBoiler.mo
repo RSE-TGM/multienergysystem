@@ -18,6 +18,7 @@ model ControlledElectricBoiler
           extent={{-80,-10},{-60,10}}),  iconTransformation(extent={{-80,-10},{-60,10}})));
   Modelica.Blocks.Interfaces.BooleanInput heat_on annotation (Placement(
         transformation(extent={{110,-10},{70,30}}), iconTransformation(extent={{-80,-60},{-60,-40}})));
+  ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{60,-10},{80,10}}), iconTransformation(extent={{60,-10},{80,10}})));
 equation
   fluidOut_ref.p = pin;
   fluidOut_ref.T = Tout_ref;
@@ -28,6 +29,8 @@ equation
   //ploss = max((0.093553176181407 + m_flow*(-0.060909664942311 + 0.107018894700363*m_flow))*1e5,0) "Momentum Balance";
   ploss = max((-0.001696730452948 + m_flow*(0.038724546018764 + 0.083107463331985*m_flow))*1e5,0);
   Pheat = if heat_on then max(min(Pheat_ref, Pmaxres*nR),0) else 0;
+
+  inletPower.P = Pheat;
 annotation (
     Icon(graphics={  Polygon( lineColor = {255, 170, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1, points = {{14, 30}, {-4, 30}, {-16, -4}, {-2, 0}, {-14, -30}, {16, 12}, {4, 8}, {4, 8}, {14, 30}})}));
 end ControlledElectricBoiler;

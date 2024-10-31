@@ -80,8 +80,21 @@ model TestPumpP101
     m_flow_set_30Hz(height=9.3*1000/3600, offset=3.2*1000/3600),
     omega_30Hz(offset=Pump.P101.omeganom*3/5),
     omega_40Hz(offset=Pump.P101.omeganom*4/5));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-90,70},{-70,90}})));
 equation
 
+  connect(sourceVoltage.outlet, pump_50Hz.inletPower) annotation (Line(
+      points={{-70,80},{-22,80},{-22,62.6}},
+      color={56,93,138},
+      thickness=1));
+  connect(pump_40Hz.inletPower, sourceVoltage.outlet) annotation (Line(
+      points={{-22,2.6},{-22,30},{-70,30},{-70,80}},
+      color={56,93,138},
+      thickness=1));
+  connect(pump_30Hz.inletPower, sourceVoltage.outlet) annotation (Line(
+      points={{-22,-57.4},{-22,-34},{-70,-34},{-70,80}},
+      color={56,93,138},
+      thickness=1));
 annotation (
     experiment(StartTime = 0, StopTime = 80, Tolerance = 1e-6, Interval = 0.16));
 end TestPumpP101;

@@ -42,8 +42,8 @@ model Rete_Gas_2i_top_net
         origin={-172,26})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure REMI(redeclare model
       Medium = Medium,
-    p0=493000,         X0
-      =X_start,
+    p0=493000,         X0=
+       X_start,
     computeTransport=false)
                 "REMI - Sciacca Presa 2. Dati Taratura: 
 Pressione = 4.93 bar;
@@ -82,8 +82,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds3(L=677.303,
     H=204,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1603,
+    X_start=X_start,                                                         Di=
+       0.1603,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -96,8 +96,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds4(L=433.985,
     H=-8,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1325,
+    X_start=X_start,                                                         Di=
+       0.1325,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -155,8 +155,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds9(L=193.484,
     H=-8,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1325,
+    X_start=X_start,                                                         Di=
+       0.1325,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -198,8 +198,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds12(L=787.51,
     H=40,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1079,
+    X_start=X_start,                                                         Di=
+       0.1079,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -213,8 +213,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds13(L=190.14,
     H=1,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.0831,
+    X_start=X_start,                                                         Di=
+       0.0831,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -226,8 +226,8 @@ Portata = 2088 Stm3/h;"                                       annotation (
         origin={24,202})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds14(L=36.829,
     X_start=X_start,                                         redeclare model
-      Medium =                                                                              Medium,Di
-      =0.0831,
+      Medium =                                                                              Medium,Di=
+       0.0831,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -252,28 +252,28 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={46,242})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(redeclare
-      model Medium =                                                                        Medium,
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(redeclare model
+            Medium =                                                                        Medium,
     p0=463200,
     m_flow0=0.021261,
     X0=X_start)
     "Viale Berlinguer"
     annotation (Placement(transformation(extent={{-246,154},{-202,198}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(redeclare
-      model Medium =                                                                        Medium,
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(redeclare model
+            Medium =                                                                        Medium,
     p0=437100,
     m_flow0=0.098685,
     X0=X_start)
     "Contessa Entellina Ingresso paese SP.12 "
     annotation (Placement(transformation(extent={{222,216},{262,256}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(redeclare
-      model Medium =                                                                        Medium,
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(redeclare model
+            Medium =                                                                        Medium,
     p0=461900,
     m_flow0=0.019358,
     X0=X_start)                                                                                     "Via Marx"
     annotation (Placement(transformation(extent={{96,200},{130,234}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(redeclare
-      model Medium =                                                                        Medium,
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(redeclare model
+            Medium =                                                                        Medium,
     p0=460300,
     m_flow0=0.007765,
     X0=X_start)

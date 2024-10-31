@@ -177,6 +177,7 @@ model S400 "Main components of System 400 - Electric Boiler"
     k=1,
     T=2,
     initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{52,-20},{32,0}})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{90,-112},{110,-92}})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
       points={{14,-14.6},{14,-32}},
@@ -233,6 +234,14 @@ equation
   connect(P401_omega.y, firstOrder1.u) annotation (Line(points={{59,-10},{54,-10}}, color={0,0,127}));
   connect(firstOrder1.y, P401.in_omega) annotation (Line(points={{31,-10},{25.5,-10},{25.5,-9.8},{20,-9.8}}, color={0,0,127}));
   connect(EB401_ToutSP.y, EB401.Tout_ref) annotation (Line(points={{-63,-106},{-46.35,-106},{-46.35,-107},{-29.7,-107}}, color={0,0,127}));
+  connect(EB401.inletPower, sourceVoltage.outlet) annotation (Line(
+      points={{27.7,-107},{56,-107},{56,-130},{110,-130},{110,-102}},
+      color={56,93,138},
+      thickness=1));
+  connect(P401.inletPower, sourceVoltage.outlet) annotation (Line(
+      points={{22.4,-5},{26,-5},{26,-64},{110,-64},{110,-102}},
+      color={56,93,138},
+      thickness=1));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

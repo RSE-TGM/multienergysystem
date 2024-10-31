@@ -196,5 +196,9 @@ equation
       points={{-571,-360},{-571,-330.88}},
       color={182,109,49},
       thickness=0.5));
+  connect(S500.inletPower, sourceVoltage.outlet) annotation (Line(
+      points={{-618.3,-302.5},{-638,-302.5},{-638,-452},{-690,-452}},
+      color={56,93,138},
+      thickness=1));
   annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemGBEBCHP_InitForward;

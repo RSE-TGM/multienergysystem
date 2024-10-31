@@ -22,7 +22,7 @@ model CentralisedSystemGBEBCHP_InitForward
   parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 70 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15;
   parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
@@ -192,13 +192,9 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(sourceGasCHP.outlet, S500.inletFuel) annotation (Line(
-      points={{-571,-360},{-571,-330.88}},
+  connect(sourceGas.outlet, S500.inletFuel) annotation (Line(
+      points={{-250,-362},{-506,-362},{-506,-330.88},{-571,-330.88}},
       color={182,109,49},
       thickness=0.5));
-  connect(S500.inletPower, sourceVoltage.outlet) annotation (Line(
-      points={{-618.3,-302.5},{-638,-302.5},{-638,-452},{-690,-452}},
-      color={56,93,138},
-      thickness=1));
   annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
 end CentralisedSystemGBEBCHP_InitForward;

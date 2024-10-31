@@ -15,7 +15,7 @@ model ControlledGasBoiler
 
   // Variables
   //Boolean heat_on(fixed = true, start = true);
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(nominal = 1e-3) "mass flowrate of the fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
   DistrictHeatingNetwork.Types.Power Pheat_ref(nominal = Pnom) "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";

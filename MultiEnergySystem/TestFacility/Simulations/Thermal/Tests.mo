@@ -9058,8 +9058,8 @@ System")}),
 
         controller.FT901SP = 3;
         controller.FT101SP = 1.35;
-        controller.FT401SP = 0.6;
-        controller.FT501SP = 0.4;
+        controller.FT401SP = 0.4;
+        controller.FT501SP = 0.2;
       end CentralizedControlPlant_IV;
     end ControlledPlants;
 

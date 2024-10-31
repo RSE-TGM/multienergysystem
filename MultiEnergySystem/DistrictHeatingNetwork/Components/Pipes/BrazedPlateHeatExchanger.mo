@@ -165,7 +165,7 @@ equation
   dT2 = Tout_hot - Tin_cold;
   dT1 = Tin_hot - Tout_cold;
   if noEvent(dT2>0 or dT2<0 or dT1>0 or dT1<0) then
-    LMTD = (dT1 - dT2)/log(abs(dT1/dT2));
+    LMTD = homotopy((dT1 - dT2)/log(abs(dT1/dT2)), (dT1-dT2) / log(abs((Tin_start_hot - Tout_start_cold)/(Tout_start_hot - Tin_start_cold))));
     gamma_real = Pt/(hotside.Stot*LMTD);
   else
     LMTD = 0;

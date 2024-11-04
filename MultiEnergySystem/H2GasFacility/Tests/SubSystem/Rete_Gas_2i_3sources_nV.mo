@@ -86,7 +86,7 @@ equation
       thickness=0.5));
   annotation (experiment(
       StopTime=90000,
-      Interval=1,
-      Tolerance=1e-06,
+      Interval=0.01,
+      Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_3sources_nV;

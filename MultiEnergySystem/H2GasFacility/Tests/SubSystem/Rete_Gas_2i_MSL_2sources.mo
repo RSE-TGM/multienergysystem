@@ -10,7 +10,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s1(
     redeclare package Medium = Medium,
     length=842.777,
-    diameter=2.091,
+    diameter=0.2091,
     roughness=1e-08,
     height_ab=-18,
     p_a_start=493000,
@@ -36,7 +36,6 @@ model Rete_Gas_2i_MSL_2sources
     energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
     massDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
     momentumDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
-    m_flow_start=0.413,
     use_eps_Re=false)
     annotation (Placement(transformation(extent={{-148,130},{-128,150}})));
   Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal1(redeclare package
@@ -89,7 +88,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe sds3(
     redeclare package Medium = Medium,
     length=677.303,
-    diameter=01603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-14,
     p_a_start=488700,
@@ -355,7 +354,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s2(
     redeclare package Medium = Medium,
     length=3273.422,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-42,
     p_a_start=491600,
@@ -370,7 +369,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s3(
     redeclare package Medium = Medium,
     length=100.058,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     p_a_start=482100,
     p_b_start=482100,
@@ -384,7 +383,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s4(
     redeclare package Medium = Medium,
     length=1663.921,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=-32,
     p_a_start=482100,
@@ -399,7 +398,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s8(
     redeclare package Medium = Medium,
     length=154.637,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=-11,
     p_a_start=468800,
@@ -414,7 +413,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s9(
     redeclare package Medium = Medium,
     length=1.635,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-1,
     p_a_start=467600,
@@ -429,7 +428,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s11(
     redeclare package Medium = Medium,
     length=503.188,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=31,
     p_a_start=467100,
@@ -444,7 +443,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s12(
     redeclare package Medium = Medium,
     length=238.385,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=-11,
     p_a_start=465600,
@@ -459,7 +458,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s14(
     redeclare package Medium = Medium,
     length=589.227,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-5,
     p_a_start=463600,
@@ -474,7 +473,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s16(
     redeclare package Medium = Medium,
     length=19.065,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     p_a_start=461800,
     p_b_start=461800,
@@ -488,7 +487,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s18(
     redeclare package Medium = Medium,
     length=880.651,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-1,
     p_a_start=461800,
@@ -533,7 +532,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s19(
     redeclare package Medium = Medium,
     length=540.807,
-    diameter=1.472,
+    diameter=0.1472,
     roughness=1e-08,
     height_ab=-18,
     p_a_start=459100,
@@ -548,7 +547,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s20(
     redeclare package Medium = Medium,
     length=14.682,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=14,
     p_a_start=457200,
@@ -563,7 +562,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s21(
     redeclare package Medium = Medium,
     length=13.074,
-    diameter=0.831,
+    diameter=0.0831,
     roughness=1e-08,
     height_ab=-10,
     p_a_start=457100,
@@ -578,7 +577,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s22(
     redeclare package Medium = Medium,
     length=95.937,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-3,
     p_a_start=457100,
@@ -593,7 +592,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s24(
     redeclare package Medium = Medium,
     length=92.59,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=2,
     p_a_start=457100,
@@ -608,7 +607,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s26(
     redeclare package Medium = Medium,
     length=181.028,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=-2,
     p_a_start=457000,
@@ -623,7 +622,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s28(
     redeclare package Medium = Medium,
     length=84.565,
-    diameter=0.831,
+    diameter=0.0831,
     roughness=1e-08,
     height_ab=-2,
     p_a_start=456700,
@@ -638,7 +637,7 @@ model Rete_Gas_2i_MSL_2sources
   Modelica.Fluid.Pipes.DynamicPipe s30(
     redeclare package Medium = Medium,
     length=138.527,
-    diameter=0.831,
+    diameter=0.0831,
     roughness=1e-08,
     height_ab=-3,
     p_a_start=455000,
@@ -716,7 +715,7 @@ model Rete_Gas_2i_MSL_2sources
     Placement(visible = true, transformation(origin={-181.5,102},  extent={{-4.5,-4},
             {4.5,4}},                                                                               rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
-    duration=360,
+    duration=60,
     height=-0.09889,
     offset=0,
     startTime=46800)                                                                                        annotation (
@@ -724,11 +723,33 @@ model Rete_Gas_2i_MSL_2sources
             {5.5,5}},                                                                               rotation=0)));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-154,108},{-144,118}})));
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal6(redeclare package
+      Medium = Medium)                                                                          annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=270,
+        origin={-95,-56})));
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal7(redeclare package
+      Medium = Medium)                                                                          annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=270,
+        origin={73,-10})));
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal8(redeclare package
+      Medium = Medium)                                                                          annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=270,
+        origin={95,-56})));
+  Modelica.Fluid.Fittings.TeeJunctionIdeal teeJunctionIdeal5(redeclare package
+      Medium = Medium)                                                                          annotation (Placement(
+        transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=270,
+        origin={-103,-26})));
 equation
   connect(s1.port_a, SourceP1.ports[1])
     annotation (Line(points={{-65,-23},{-55,-23}}, color={0,127,255}));
-  connect(s1.port_b, sds1.port_a) annotation (Line(points={{-77,-23},{-95,-23},
-          {-95,-20}}, color={0,127,255}));
   connect(sds1.port_b, sds2.port_a)
     annotation (Line(points={{-95,-8},{-95,0},{-91,0}}, color={0,127,255}));
   connect(sds2.port_b, sds3.port_a)
@@ -777,12 +798,6 @@ equation
     annotation (Line(points={{19,119},{19,121}}, color={0,127,255}));
   connect(teeJunctionIdeal4.port_2, sds14.port_a) annotation (Line(points={{24,
           114},{30,114},{30,113},{35,113}}, color={0,127,255}));
-  connect(s2.port_a, sds1.port_a)
-    annotation (Line(points={{-95,-33},{-95,-20}}, color={0,127,255}));
-  connect(s2.port_b, s3.port_a) annotation (Line(points={{-95,-45},{-96,-45},{
-          -96,-55},{-83,-55}}, color={0,127,255}));
-  connect(s4.port_a, s3.port_a) annotation (Line(points={{-95,-67},{-96,-54},{
-          -96,-55},{-83,-55}}, color={0,127,255}));
   connect(s4.port_b, s8.port_a) annotation (Line(points={{-95,-79},{-93,-79},{
           -93,-89}}, color={0,127,255}));
   connect(s8.port_b, s9.port_a)
@@ -797,18 +812,10 @@ equation
     annotation (Line(points={{15,-11},{27,-11}}, color={0,127,255}));
   connect(s16.port_b, s18.port_a)
     annotation (Line(points={{39,-11},{47,-11}}, color={0,127,255}));
-  connect(s18.port_b, s31.port_a)
-    annotation (Line(points={{59,-11},{71,-11},{71,-17}}, color={0,127,255}));
   connect(s31.port_b, s36.port_a)
     annotation (Line(points={{71,-29},{71,-49},{65,-49}}, color={0,127,255}));
-  connect(s19.port_a, s18.port_b)
-    annotation (Line(points={{95,-15},{95,-11},{59,-11}}, color={0,127,255}));
   connect(s19.port_b, s20.port_a)
     annotation (Line(points={{95,-27},{95,-33}}, color={0,127,255}));
-  connect(s20.port_b, s21.port_a) annotation (Line(points={{95,-45},{96,-45},{
-          96,-51},{111,-51}}, color={0,127,255}));
-  connect(s20.port_b, s22.port_a)
-    annotation (Line(points={{95,-45},{95,-65}}, color={0,127,255}));
   connect(s22.port_b, s24.port_a) annotation (Line(points={{95,-77},{96,-78},{
           95,-78},{95,-81}}, color={0,127,255}));
   connect(s24.port_b, s26.port_a) annotation (Line(points={{95,-93},{96,-93},{
@@ -840,6 +847,30 @@ equation
                                   color={0,0,127}));
   connect(add1.y, Immissione_2.m_flow_in) annotation (Line(points={{-143.5,113},
           {-143.5,116},{-131,116}}, color={0,0,127}));
+  connect(teeJunctionIdeal6.port_2, s4.port_a)
+    annotation (Line(points={{-95,-61},{-95,-67}}, color={0,127,255}));
+  connect(teeJunctionIdeal6.port_1, s2.port_b)
+    annotation (Line(points={{-95,-51},{-95,-45}}, color={0,127,255}));
+  connect(teeJunctionIdeal6.port_3, s3.port_a) annotation (Line(points={{-90,
+          -56},{-90,-55},{-83,-55}}, color={0,127,255}));
+  connect(teeJunctionIdeal7.port_1, s18.port_b) annotation (Line(points={{73,-5},
+          {74,-5},{74,0},{64,0},{64,-11},{59,-11}}, color={0,127,255}));
+  connect(teeJunctionIdeal7.port_2, s31.port_a)
+    annotation (Line(points={{73,-15},{74,-17},{71,-17}}, color={0,127,255}));
+  connect(teeJunctionIdeal7.port_3, s19.port_a)
+    annotation (Line(points={{78,-10},{95,-10},{95,-15}}, color={0,127,255}));
+  connect(teeJunctionIdeal8.port_2, s22.port_a) annotation (Line(points={{95,
+          -61},{96,-62},{95,-62},{95,-65}}, color={0,127,255}));
+  connect(teeJunctionIdeal8.port_3, s21.port_a) annotation (Line(points={{100,
+          -56},{106,-56},{106,-51},{111,-51}}, color={0,127,255}));
+  connect(teeJunctionIdeal8.port_1, s20.port_b) annotation (Line(points={{95,
+          -51},{95,-47.5},{95,-47.5},{95,-45}}, color={0,127,255}));
+  connect(teeJunctionIdeal5.port_1, sds1.port_a) annotation (Line(points={{-103,
+          -21},{-102,-20},{-95,-20}}, color={0,127,255}));
+  connect(teeJunctionIdeal5.port_3, s1.port_b) annotation (Line(points={{-98,
+          -26},{-82,-26},{-82,-23},{-77,-23}}, color={0,127,255}));
+  connect(teeJunctionIdeal5.port_2, s2.port_a) annotation (Line(points={{-103,
+          -31},{-102,-33},{-95,-33}}, color={0,127,255}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false, extent={{-150,-150},{150,
             150}}),                                   graphics={

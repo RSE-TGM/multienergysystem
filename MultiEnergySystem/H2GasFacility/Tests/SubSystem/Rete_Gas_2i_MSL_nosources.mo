@@ -10,7 +10,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s1(
     redeclare package Medium = Medium,
     length=842.777,
-    diameter=2.091,
+    diameter=0.2091,
     roughness=1e-08,
     p_a_start=493000,
     p_b_start=450000,
@@ -298,7 +298,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s2(
     redeclare package Medium = Medium,
     length=3273.422,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=42,
     p_a_start=490000,
@@ -313,7 +313,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s4(
     redeclare package Medium = Medium,
     length=1663.921,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=-42,
     p_a_start=490000,
@@ -328,7 +328,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s8(
     redeclare package Medium = Medium,
     length=154.637,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=-11,
     p_a_start=490000,
@@ -343,7 +343,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s9(
     redeclare package Medium = Medium,
     length=1.635,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-1,
     p_a_start=490000,
@@ -358,7 +358,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s11(
     redeclare package Medium = Medium,
     length=503.188,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-31,
     p_a_start=490000,
@@ -373,7 +373,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s12(
     redeclare package Medium = Medium,
     length=238.385,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     height_ab=11,
     p_a_start=490000,
@@ -388,7 +388,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s14(
     redeclare package Medium = Medium,
     length=589.227,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-15,
     p_a_start=490000,
@@ -403,7 +403,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s16(
     redeclare package Medium = Medium,
     length=19.065,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     p_a_start=490000,
     p_b_start=450000,
@@ -417,7 +417,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s18(
     redeclare package Medium = Medium,
     length=880.651,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-1,
     p_a_start=490000,
@@ -460,7 +460,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s19(
     redeclare package Medium = Medium,
     length=540.807,
-    diameter=1.472,
+    diameter=0.1472,
     roughness=1e-08,
     height_ab=-18,
     p_a_start=490000,
@@ -475,7 +475,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s20(
     redeclare package Medium = Medium,
     length=14.682,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=14,
     p_a_start=490000,
@@ -490,7 +490,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s21(
     redeclare package Medium = Medium,
     length=13.074,
-    diameter=0.831,
+    diameter=0.0831,
     roughness=1e-08,
     p_a_start=490000,
     p_b_start=450000,
@@ -504,7 +504,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s22(
     redeclare package Medium = Medium,
     length=95.937,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=-3,
     p_a_start=490000,
@@ -519,7 +519,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s24(
     redeclare package Medium = Medium,
     length=92.59,
-    diameter=1.603,
+    diameter=0.1603,
     roughness=1e-08,
     height_ab=2,
     p_a_start=490000,
@@ -534,7 +534,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s26(
     redeclare package Medium = Medium,
     length=181.028,
-    diameter=1.325,
+    diameter=0.1325,
     roughness=1e-08,
     p_a_start=490000,
     p_b_start=450000,
@@ -548,7 +548,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s28(
     redeclare package Medium = Medium,
     length=84.565,
-    diameter=0.831,
+    diameter=0.0831,
     roughness=1e-08,
     p_a_start=490000,
     p_b_start=450000,
@@ -562,7 +562,7 @@ model Rete_Gas_2i_MSL_nosources
   Modelica.Fluid.Pipes.DynamicPipe s30(
     redeclare package Medium = Medium,
     length=138.527,
-    diameter=0.831,
+    diameter=0.0831,
     roughness=1e-08,
     p_a_start=490000,
     p_b_start=450000,

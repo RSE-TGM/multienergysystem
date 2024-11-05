@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_nV
-  extends Rete_Gas_2i_2sources_ok(
+  extends Rete_Gas_2i_2sources   (
     sds7(n=nV),
     s1(n=nV),
     sds8(n=nV),

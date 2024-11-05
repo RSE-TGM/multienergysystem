@@ -10,7 +10,7 @@ model Rete_Gas_2i_nosources
       MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = true;
-  parameter Boolean constantFrictionFactor = false;
+  parameter Boolean constantFrictionFactor = true;
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
@@ -27,13 +27,18 @@ model Rete_Gas_2i_nosources
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(
-    rho_nom=rho_nom,
-    ff_nom=FrictionFactor,                                          redeclare
-      model
-      Medium =       Medium,
-      L=842.777,
-    X_start=X_start,                                                       Di=
-        2.091,
+    H=Data.PipelineData_2i.s1.h,
+    m_flow_start=Data.PipelineData_2i.s1.m_flow_start,
+    pin_start=Data.PipelineData_2i.s1.pin_start,
+    pout_start=Data.PipelineData_2i.s1.pout_start,
+    pin_nom=Data.PipelineData_2i.s1.pin_start,
+    rho_nom=Data.PipelineData_2i.s1.rho_nom,
+    ff_nom=FrictionFactor,
+    n=9,                                                            redeclare
+      model Medium = Medium,
+    L=Data.PipelineData_2i.s1.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s1.Di,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -56,14 +61,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
         rotation=180,
         origin={-122,26})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s2(
-    H=-42,
+    H=Data.PipelineData_2i.s2.h,
+    t=Data.PipelineData_2i.s2.t,
+    m_flow_start=Data.PipelineData_2i.s2.m_flow_start,
+    pin_start=Data.PipelineData_2i.s2.pin_start,
+    pout_start=Data.PipelineData_2i.s2.pout_start,
     ff_nom=FrictionFactor,
     rho_nom=rho_nom,
-    n=5,                                                        redeclare model
+    n=33,                                                       redeclare model
       Medium =       Medium,
-      L=3273.422,
-    X_start=X_start,                                                        Di=
-        1.603,
+    L=Data.PipelineData_2i.s2.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s2.Di,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -71,15 +80,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum)
                annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={-198,-34})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s4(
-    H=-42,
-    n=5,                                                        redeclare model
+    H=Data.PipelineData_2i.s4.h,
+    m_flow_start=Data.PipelineData_2i.s4.m_flow_start,
+    pin_start=Data.PipelineData_2i.s4.pin_start,
+    pout_start=Data.PipelineData_2i.s4.pout_start,
+    n=17,                                                       redeclare model
       Medium =                                                                              Medium,
-      L=1663.921,
-    X_start=X_start,                                                        Di=
-        1.325,
+    L=Data.PipelineData_2i.s4.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s2.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -88,14 +100,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={-200,-82})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s8(
-    H=-11,                                                      redeclare model
+    H=Data.PipelineData_2i.s8.h,
+    m_flow_start=Data.PipelineData_2i.s8.m_flow_start,
+    pin_start=Data.PipelineData_2i.s8.pin_start,
+    pout_start=Data.PipelineData_2i.s8.pout_start,              redeclare model
       Medium =                                                                              Medium,
-      L=154.637,
-    X_start=X_start,                                                       Di=
-        1.325,
+    L=Data.PipelineData_2i.s8.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s8.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -104,14 +119,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-174,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s9(
-    H=-1,                                                       redeclare model
+    H=Data.PipelineData_2i.s9.h,
+    m_flow_start=Data.PipelineData_2i.s9.m_flow_start,
+    pin_start=Data.PipelineData_2i.s9.pin_start,
+    pout_start=Data.PipelineData_2i.s9.pout_start,              redeclare model
       Medium =                                                                              Medium,
-      L=1.635,
-    X_start=X_start,                                                     Di=
-        1.603,
+    L=Data.PipelineData_2i.s9.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s9.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -120,13 +138,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-142,-110})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(L=503.188,
-    H=-31,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s11(
+    L=Data.PipelineData_2i.s11.L,
+    H=Data.PipelineData_2i.s11.h,
+    m_flow_start=Data.PipelineData_2i.s11.m_flow_start,
+    pin_start=Data.PipelineData_2i.s11.pin_start,
+    pout_start=Data.PipelineData_2i.s11.pout_start,
+    n=11,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s11.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -135,13 +158,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-104,-110})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(L=238.385,
-    H=11,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s12(
+    L=Data.PipelineData_2i.s12.L,
+    H=Data.PipelineData_2i.s12.h,
+    m_flow_start=Data.PipelineData_2i.s12.m_flow_start,
+    pin_start=Data.PipelineData_2i.s12.pin_start,
+    pout_start=Data.PipelineData_2i.s12.pout_start,
+    n=7,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.325,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s12.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -150,13 +178,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-70,-110})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(L=589.227,
-    H=-15,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s14(
+    L=Data.PipelineData_2i.s14.L,
+    H=Data.PipelineData_2i.s14.h,
+    m_flow_start=Data.PipelineData_2i.s14.m_flow_start,
+    pin_start=Data.PipelineData_2i.s14.pin_start,
+    pout_start=Data.PipelineData_2i.s14.pout_start,
+    n=15,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s14.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -165,11 +198,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-18,-6})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s16(L=19.065,
-    X_start=X_start,                                  redeclare model Medium =              Medium,Di=
-        1.603,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s16(
+    L=Data.PipelineData_2i.s16.L,
+    H=Data.PipelineData_2i.s16.h,
+    m_flow_start=Data.PipelineData_2i.s16.m_flow_start,
+    pin_start=Data.PipelineData_2i.s16.pin_start,
+    pout_start=Data.PipelineData_2i.s16.pout_start,
+    X_start=X_start,
+    n=7,                                              redeclare model Medium =              Medium,
+    Di=Data.PipelineData_2i.s16.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -178,13 +217,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={18,-6})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(L=880.651,
-    H=-1,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s18(
+    L=Data.PipelineData_2i.s16.L,
+    H=Data.PipelineData_2i.s16.h,
+    m_flow_start=Data.PipelineData_2i.s18.m_flow_start,
+    pin_start=Data.PipelineData_2i.s16.pin_start,
+    pout_start=Data.PipelineData_2i.s16.pout_start,
+    n=19,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        1.603,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s16.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -193,17 +237,21 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={68,-6})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s19(
-    L=540.807,
-    H=-18,
+    L=Data.PipelineData_2i.s19.L,
+    H=Data.PipelineData_2i.s19.h,
+    m_flow_start=Data.PipelineData_2i.s19.m_flow_start,
+    pin_start=Data.PipelineData_2i.s19.pin_start,
+    pout_start=Data.PipelineData_2i.s19.pout_start,
+    n=11,
     redeclare model Medium =                                                                Medium,
     cm=880,
     rhom=2000,
     lambdam=0.25,
     X_start=X_start,
-    Di=1.472,
+    Di=Data.PipelineData_2i.s19.Di,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -212,13 +260,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) "Polyester" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={146,-34})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(L=14.682,
-    H=14,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(
+    L=Data.PipelineData_2i.s20.L,
+    H=Data.PipelineData_2i.s20.h,
+    m_flow_start=Data.PipelineData_2i.s20.m_flow_start,
+    pin_start=Data.PipelineData_2i.s20.pin_start,
+    pout_start=Data.PipelineData_2i.s20.pout_start,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                       Di=
-        1.603,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s20.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -227,12 +279,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={146,-64})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(L=13.074,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(
+    L=Data.PipelineData_2i.s21.L,
+    H=Data.PipelineData_2i.s21.h,
+    m_flow_start=Data.PipelineData_2i.s21.m_flow_start,
+    pin_start=Data.PipelineData_2i.s21.pin_start,
+    pout_start=Data.PipelineData_2i.s21.pout_start,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                       Di=
-        0.831,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s21.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -241,13 +298,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={172,-82})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(L=95.937,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22(
+    L=Data.PipelineData_2i.s22.L,
+    m_flow_start=Data.PipelineData_2i.s22.m_flow_start,
+    pin_start=Data.PipelineData_2i.s22.pin_start,
+    pout_start=Data.PipelineData_2i.s22.pout_start,
   redeclare model Medium =                                                                  Medium,
-    H=-3,
-    X_start=X_start,                                                       Di=
-        1.603,
+    H=Data.PipelineData_2i.s22.h,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s22.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -256,13 +317,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={146,-102})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(L=92.59,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s24(
+    L=Data.PipelineData_2i.s24.L,
+    m_flow_start=Data.PipelineData_2i.s24.m_flow_start,
+    pin_start=Data.PipelineData_2i.s24.pin_start,
+    pout_start=Data.PipelineData_2i.s24.pout_start,
   redeclare model Medium =                                                                  Medium,
-    H=2,
-    X_start=X_start,                                                      Di=
-        1.603,
+    H=Data.PipelineData_2i.s24.h,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s24.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -271,12 +336,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={146,-146})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(L=181.028,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(
+    L=Data.PipelineData_2i.s26.L,
+    H=Data.PipelineData_2i.s26.h,
+    m_flow_start=Data.PipelineData_2i.s26.m_flow_start,
+    pin_start=Data.PipelineData_2i.s26.pin_start,
+    pout_start=Data.PipelineData_2i.s26.pout_start,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                        Di=
-        1.325,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s26.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -285,12 +355,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) "Viale Siena" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={190,-166})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28(L=84.565,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28(
+    L=Data.PipelineData_2i.s28.L,
+    H=Data.PipelineData_2i.s28.h,
+    m_flow_start=Data.PipelineData_2i.s28.m_flow_start,
+    pin_start=Data.PipelineData_2i.s28.pin_start,
+    pout_start=Data.PipelineData_2i.s28.pout_start,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                       Di=
-        0.831,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s28.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -299,12 +374,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={234,-194})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s30(L=138.527,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s30(
+    L=Data.PipelineData_2i.s30.L,
+    H=Data.PipelineData_2i.s30.h,
+    m_flow_start=Data.PipelineData_2i.s30.m_flow_start,
+    pin_start=Data.PipelineData_2i.s30.pin_start,
+    pout_start=Data.PipelineData_2i.s30.pout_start,
+    n=5,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                        Di=
-        0.831,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s30.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -313,12 +394,18 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={234,-232})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s31(L=256.081,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s31(
+    L=Data.PipelineData_2i.s31.L,
+    H=Data.PipelineData_2i.s31.h,
+    m_flow_start=Data.PipelineData_2i.s31.m_flow_start,
+    pin_start=Data.PipelineData_2i.s31.pin_start,
+    pout_start=Data.PipelineData_2i.s31.pout_start,
+    n=7,
   redeclare model Medium =                                                                  Medium,
-    X_start=X_start,                                                        Di=
-        0.1603,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s31.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -327,13 +414,17 @@ Portata = 2088 Stm3/h;"                                       annotation (
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=90,
+        rotation=270,
         origin={110,-84})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s36_Stadio(L=
-        1224.898,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s36_Stadio(
+    L=Data.PipelineData_2i.s36.L,
+    H=Data.PipelineData_2i.s36.h,
+    m_flow_start=Data.PipelineData_2i.s36.m_flow_start,
+    pin_start=Data.PipelineData_2i.s36.pin_start,
+    pout_start=Data.PipelineData_2i.s36.pout_start,
         redeclare model Medium =                                                            Medium,
     X_start=X_start,
-                  Di=0.0831,
+    Di=Data.PipelineData_2i.s36.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -341,29 +432,38 @@ Portata = 2088 Stm3/h;"                                       annotation (
     ff_nom=FrictionFactor,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=27)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={82,-110})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds1(
-    L=3081.109,
+    L=Data.PipelineData_2i.sds1.L,
+    H=Data.PipelineData_2i.sds1.h,
+    m_flow_start=Data.PipelineData_2i.sds1.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds1.pin_start,
+    pout_start=Data.PipelineData_2i.sds1.pout_start,
     ff_nom=FrictionFactor,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
-      Di=0.1603,
+    Di=Data.PipelineData_2i.sds1.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=31)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-198,46})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds2(L=92.5,
-    X_start=X_start,                                    redeclare model Medium =            Medium,Di=
-        0.1472,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds2(
+    L=Data.PipelineData_2i.sds2.L,
+    H=Data.PipelineData_2i.sds2.h,
+    m_flow_start=Data.PipelineData_2i.sds2.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds2.pin_start,
+    pout_start=Data.PipelineData_2i.sds2.pout_start,
+    X_start=X_start,                                    redeclare model Medium =            Medium,
+    Di=Data.PipelineData_2i.sds2.Di,
         quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     ff_nom=FrictionFactor,
@@ -374,11 +474,16 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-180,66})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds3(L=677.303,
-    H=204,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds3(
+    L=Data.PipelineData_2i.sds3.L,
+    H=Data.PipelineData_2i.sds3.h,
+    m_flow_start=Data.PipelineData_2i.sds3.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds3.pin_start,
+    pout_start=Data.PipelineData_2i.sds3.pout_start,
+    n=7,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1603,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds3.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -389,11 +494,16 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-146,66})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds4(L=433.985,
-    H=-8,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds4(
+    L=Data.PipelineData_2i.sds4.L,
+    H=Data.PipelineData_2i.sds4.h,
+    m_flow_start=Data.PipelineData_2i.sds4.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds4.pin_start,
+    pout_start=Data.PipelineData_2i.sds4.pout_start,
+    n=5,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1325,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds4.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -404,11 +514,15 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-124,82})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds6(L=8027.812,
-    H=59,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds6(
+    L=Data.PipelineData_2i.sds6.L,
+    H=Data.PipelineData_2i.sds6.h,
+    m_flow_start=Data.PipelineData_2i.sds6.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds6.pin_start,
+    pout_start=Data.PipelineData_2i.sds6.pout_start,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
-      Di=0.1325,
+    Di=Data.PipelineData_2i.sds6.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -416,15 +530,19 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=10)            annotation (Placement(transformation(
+    n=81)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-122,120})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds7(L=2103.419,
-    H=19,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds7(
+    L=Data.PipelineData_2i.sds7.L,
+    H=Data.PipelineData_2i.sds7.h,
+    m_flow_start=Data.PipelineData_2i.sds7.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds7.pin_start,
+    pout_start=Data.PipelineData_2i.sds7.pout_start,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
-      Di=0.1325,
+    Di=Data.PipelineData_2i.sds7.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -432,15 +550,19 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=21)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={162,140})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds8(L=13379.322,
-    H=-107,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds8(
+    L=Data.PipelineData_2i.sds8.L,
+    H=Data.PipelineData_2i.sds8.h,
+    m_flow_start=Data.PipelineData_2i.sds8.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds8.pin_start,
+    pout_start=Data.PipelineData_2i.sds8.pout_start,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
-      Di=0.1325,
+    Di=Data.PipelineData_2i.sds8.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -448,15 +570,19 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=135)           annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={242,176})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds9(L=193.484,
-    H=-8,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds9(
+    L=Data.PipelineData_2i.sds9.L,
+    H=Data.PipelineData_2i.sds9.h,
+    m_flow_start=Data.PipelineData_2i.sds9.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds9.pin_start,
+    pout_start=Data.PipelineData_2i.sds9.pout_start,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1325,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds9.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -467,11 +593,15 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={-122,162})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds10(L=7.845,
-    H=-4,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds10(
+    L=Data.PipelineData_2i.sds10.L,
+    H=Data.PipelineData_2i.sds10.h,
+    m_flow_start=Data.PipelineData_2i.sds10.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds10.pin_start,
+    pout_start=Data.PipelineData_2i.sds10.pout_start,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                        Di=
-        0.1079,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds10.Di,
     quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -483,11 +613,15 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-154,176})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds11(L=357.121,
-    H=-12,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds11(
+    L=Data.PipelineData_2i.sds11.L,
+    H=Data.PipelineData_2i.sds11.h,
+    m_flow_start=Data.PipelineData_2i.sds11.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds11.pin_start,
+    pout_start=Data.PipelineData_2i.sds11.pout_start,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
-      Di=0.1079,
+    Di=Data.PipelineData_2i.sds11.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -498,27 +632,35 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-9,-9},{9,9}},
         rotation=90,
         origin={-121,201})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds12(L=787.51,
-    H=40,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds12(
+    L=Data.PipelineData_2i.sds12.L,
+    H=Data.PipelineData_2i.sds12.h,
+    m_flow_start=Data.PipelineData_2i.sds12.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds12.pin_start,
+    pout_start=Data.PipelineData_2i.sds12.pout_start,
+    n=9,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.1079,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds12.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
     hctype=hctype,
     momentum=momentum,
-    rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-8,202})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds13(L=190.14,
-    H=1,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds13(
+    L=Data.PipelineData_2i.sds13.L,
+    H=Data.PipelineData_2i.sds13.h,
+    m_flow_start=Data.PipelineData_2i.sds13.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds13.pin_start,
+    pout_start=Data.PipelineData_2i.sds13.pout_start,
     redeclare model Medium =                                                                Medium,
-    X_start=X_start,                                                         Di
-      =0.0831,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds13.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -529,10 +671,15 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={24,202})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds14(L=36.829,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds14(
+    L=Data.PipelineData_2i.sds14.L,
+    H=Data.PipelineData_2i.sds14.h,
+    m_flow_start=Data.PipelineData_2i.sds14.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds14.pin_start,
+    pout_start=Data.PipelineData_2i.sds14.pout_start,
     X_start=X_start,                                         redeclare model
-      Medium =                                                                              Medium,Di
-      =0.0831,
+      Medium =                                                                              Medium,
+    Di=Data.PipelineData_2i.sds14.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -543,11 +690,15 @@ Portata = 2088 Stm3/h;"                                       annotation (
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={70,216})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds15(L=1015.74,
-    H=72,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds15(
+    L=Data.PipelineData_2i.sds15.L,
+    H=Data.PipelineData_2i.sds15.h,
+    m_flow_start=Data.PipelineData_2i.sds15.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds15.pin_start,
+    pout_start=Data.PipelineData_2i.sds15.pout_start,
     redeclare model Medium =                                                                Medium,
     X_start=X_start,
-      Di=0.0831,
+    Di=Data.PipelineData_2i.sds15.Di,
       quasiStatic=quasiStatic,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -555,7 +706,7 @@ Portata = 2088 Stm3/h;"                                       annotation (
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom,
-    n=5)             annotation (Placement(transformation(
+    n=11)            annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={46,242})));
@@ -685,92 +836,93 @@ equation
       points={{49,283},{46,283},{46,252}},
       color={182,109,49},
       thickness=0.5));
-  connect(s2.outlet, s1.outlet) annotation (Line(
-      points={{-198,-24},{-200,-24},{-200,26},{-182,26}},
+  connect(s2.inlet, s1.outlet) annotation (Line(
+      points={{-198,-24},{-198,26},{-182,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(s4.outlet, s2.inlet) annotation (Line(
+  connect(s4.inlet, s2.outlet) annotation (Line(
       points={{-200,-72},{-198,-72},{-198,-44}},
       color={182,109,49},
       thickness=0.5));
-  connect(s4.inlet, s8.outlet) annotation (Line(
+  connect(s4.outlet, s8.inlet) annotation (Line(
       points={{-200,-92},{-200,-110},{-184,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(s8.inlet, s9.outlet) annotation (Line(
+  connect(s8.outlet, s9.inlet) annotation (Line(
       points={{-164,-110},{-152,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(s9.inlet, s11.outlet) annotation (Line(
+  connect(s9.outlet, s11.inlet) annotation (Line(
       points={{-132,-110},{-114,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(s11.inlet, s12.outlet) annotation (Line(
+  connect(s11.outlet, s12.inlet) annotation (Line(
       points={{-94,-110},{-80,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(s12.inlet, s14.outlet) annotation (Line(
-      points={{-60,-110},{-46,-110},{-46,-6},{-28,-6}},
+  connect(s12.outlet, s14.inlet) annotation (Line(
+      points={{-60,-110},{-50,-110},{-50,-6},{-28,-6}},
       color={182,109,49},
       thickness=0.5));
-  connect(s14.inlet, s16.outlet) annotation (Line(
+  connect(s14.outlet, s16.inlet) annotation (Line(
       points={{-8,-6},{8,-6}},
       color={182,109,49},
       thickness=0.5));
-  connect(s16.inlet, s18.outlet) annotation (Line(
+  connect(s16.outlet, s18.inlet) annotation (Line(
       points={{28,-6},{58,-6}},
       color={182,109,49},
       thickness=0.5));
-  connect(s18.inlet, s31.outlet) annotation (Line(
-      points={{78,-6},{94,-6},{94,-4},{110,-4},{110,-74}},
+  connect(s18.outlet, s31.inlet) annotation (Line(
+      points={{78,-6},{110,-6},{110,-74},{110,-74}},
       color={182,109,49},
       thickness=0.5));
-  connect(s19.outlet, s18.inlet) annotation (Line(
+  connect(s19.inlet, s18.outlet) annotation (Line(
       points={{146,-24},{146,-6},{78,-6}},
       color={182,109,49},
       thickness=0.5));
-  connect(s20.outlet, s19.inlet) annotation (Line(
-      points={{146,-54},{146,-44}},
+  connect(s36_Stadio.inlet, s31.outlet) annotation (Line(
+      points={{92,-110},{92,-112},{110,-112},{110,-94}},
       color={182,109,49},
       thickness=0.5));
-  connect(s20.inlet, s21.outlet) annotation (Line(
-      points={{146,-74},{152,-74},{152,-82},{162,-82}},
+  connect(s36_Stadio.outlet, GRM_3.inlet) annotation (Line(
+      points={{72,-110},{36,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(s21.inlet, GRM_1.inlet) annotation (Line(
+  connect(s19.outlet, s20.inlet) annotation (Line(
+      points={{146,-44},{146,-54}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s20.outlet, s21.inlet) annotation (Line(
+      points={{146,-74},{146,-82},{162,-82}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s21.outlet, GRM_1.inlet) annotation (Line(
       points={{182,-82},{222,-82}},
       color={182,109,49},
       thickness=0.5));
-  connect(s20.inlet, s22.outlet) annotation (Line(
-      points={{146,-74},{146,-92}},
+  connect(s22.inlet, s21.inlet) annotation (Line(
+      points={{146,-92},{146,-82},{162,-82}},
       color={182,109,49},
       thickness=0.5));
-  connect(s22.inlet, s24.outlet) annotation (Line(
+  connect(s22.outlet, s24.inlet) annotation (Line(
       points={{146,-112},{146,-136}},
       color={182,109,49},
       thickness=0.5));
-  connect(s24.inlet, s26.outlet) annotation (Line(
-      points={{146,-156},{146,-166},{180,-166}},
+  connect(s24.outlet, s26.inlet) annotation (Line(
+      points={{146,-156},{148,-156},{148,-166},{180,-166}},
       color={182,109,49},
       thickness=0.5));
-  connect(s26.inlet, s28.outlet) annotation (Line(
-      points={{200,-166},{234,-166},{234,-184}},
+  connect(s26.outlet, s28.inlet) annotation (Line(
+      points={{200,-166},{220,-166},{220,-170},{234,-170},{234,-184},{234,-184}},
       color={182,109,49},
       thickness=0.5));
-  connect(s28.inlet, s30.outlet) annotation (Line(
+
+  connect(s28.outlet, s30.inlet) annotation (Line(
       points={{234,-204},{234,-222}},
       color={182,109,49},
       thickness=0.5));
-  connect(s30.inlet, GRM_2.inlet) annotation (Line(
-      points={{234,-242},{234,-270}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
-      points={{36,-110},{36,-136},{64,-136},{64,-110},{72,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s36_Stadio.inlet, s31.inlet) annotation (Line(
-      points={{92,-110},{92,-112},{110,-112},{110,-94}},
+  connect(s30.outlet, GRM_2.inlet) annotation (Line(
+      points={{234,-242},{234,-242},{234,-270}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
@@ -778,6 +930,6 @@ equation
             300}})),
     experiment(
       StopTime=5400,
-      Tolerance=1e-06,
+      Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_nosources;

@@ -7,6 +7,7 @@ model Rete_Gas_2i_MSL_2sources
 
    parameter Types.MassFraction X_start[1]= Medium.X_default;
    parameter Integer nV = 5;
+   parameter Modelica.Fluid.Types.ModelStructure modelStruct = Modelica.Fluid.Types.ModelStructure.av_vb;
 
   Modelica.Fluid.Pipes.DynamicPipe s1(
     redeclare package Medium = Medium,
@@ -19,7 +20,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s1.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
@@ -67,7 +69,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds1.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -85,7 +88,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds2.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -101,7 +105,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds3.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -117,7 +122,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds4.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -133,7 +139,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds6.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -149,7 +156,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds7.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -165,7 +173,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds8.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -181,7 +190,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds9.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -197,7 +207,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds10.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
@@ -213,7 +224,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds11.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -229,7 +241,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds12.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -245,7 +258,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds13.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -261,7 +275,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds15.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
@@ -277,7 +292,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds14.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -293,7 +309,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds16.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
@@ -309,7 +326,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.sds17.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
@@ -383,7 +401,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s2.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -399,7 +418,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s3.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -415,7 +435,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s4.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -431,7 +452,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s8.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -447,7 +469,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s9.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -463,7 +486,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s11.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -479,7 +503,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s12.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -495,7 +520,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s14.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -511,7 +537,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s16.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -527,7 +554,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s18.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -543,7 +571,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=0.0341,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -559,7 +588,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=0.0341,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=180,
@@ -575,7 +605,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s19.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -591,7 +622,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s20.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -607,7 +639,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s21.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -623,7 +656,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s22.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -639,7 +673,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s24.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -655,7 +690,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s26.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=0,
@@ -671,7 +707,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s28.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,
@@ -687,7 +724,8 @@ model Rete_Gas_2i_MSL_2sources
     T_start=288.15,
     X_start=X_start,
     m_flow_start=Data.PipelineData_2i.s30.m_flow_start,
-    nNodes=nV)
+    nNodes=nV,
+    modelStructure=modelStruct)
               annotation (Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=270,

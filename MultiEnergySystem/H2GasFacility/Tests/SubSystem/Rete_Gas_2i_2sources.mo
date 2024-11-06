@@ -58,7 +58,7 @@ model Rete_Gas_2i_2sources
     startTime=32400)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-399,224},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
-    duration=360,
+    duration=60,
     height=-0.09889,
     offset=0,
     startTime=46800)                                                                                        annotation (

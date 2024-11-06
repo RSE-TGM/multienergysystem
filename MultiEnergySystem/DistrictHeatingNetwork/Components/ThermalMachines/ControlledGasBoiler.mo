@@ -19,7 +19,7 @@ model ControlledGasBoiler
   //Boolean heat_on(fixed = true, start = true);
   DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
   //DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_act(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
-  //DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
   DistrictHeatingNetwork.Types.Power Pheat_ref(nominal = Pnom) "Reference value for computed Heat Power required";
   //DistrictHeatingNetwork.Types.Power Pheat_actual(nominal = Pnom) "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
@@ -52,11 +52,12 @@ equation
   hout_ref = fluidOut_ref.h;
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
 
-  Pheat = delay(if heat_on then max(min(Pheat_ref, Pmaxnom),0) else 0, tdelay);
-  //Pheat = if heat_on then max(min(Pheat_ref, Pmaxnom),0) else 0;
+  //Pheat = delay(if heat_on then max(min(Pheat_ref, Pmaxnom),0) else 0, tdelay);
+  Pheat = if heat_on then max(min(Pheat_ref, Pmaxnom),0) else 0;
   //Pheat = min(Pheat_ref, Pmaxnom);
   Pheat = m_flow_fuel*fuel.HHV_mix/etanom;
-  m_flow_fuel = inletfuel.m_flow;
+  m_flow_fuel_actual = delay(m_flow_fuel, tdelay);
+  m_flow_fuel_actual = inletfuel.m_flow;
 
 
   // Fuel gas definition

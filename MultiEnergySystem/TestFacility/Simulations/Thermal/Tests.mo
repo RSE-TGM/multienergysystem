@@ -14,12 +14,16 @@ package Tests
         parameter Integer n = 3;
         parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
         parameter Real pumpcorrectionfactor = 1;
+        parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.93;
+        parameter Modelica.Units.SI.Time tdelay = 200 "Rising time of heater from 0 to full power";
         parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
-        parameter DistrictHeatingNetwork.Types.Temperature Tout_SP[:,:] = [0, 76 + 273.15; 1e6, 76 + 273.15];
+        parameter DistrictHeatingNetwork.Types.Temperature Tout_SP[:,:] = [0, 76 + 273.15; 5e3, 76 + 273.15; 5e3, 76 + 273.15; 1e6, 76 + 273.15];
+        parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.85;
+
 
         // Gas composition
-        parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
-
+        //parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
+        parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
         // Temperatures and pressures
         parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = PTi[1, 1];
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = PTo[1, 1];
@@ -73,13 +77,15 @@ package Tests
           Tin_start_S1=Tin_start_S1,
           Tout_start_S1=Tout_start_S1,
           cf=cf,
+          eta_combustion=eta_combustion,
+          tdelay=tdelay,
           h_FT101_GB101=h_FT101_GB101,
           h_GB101_P101=h_GB101_P101,
           L_P101_FCV101=L_P101_FCV101,
           h_P101_FCV101=h_P101_FCV101,
           Kv=Kv,
           openingChar=openingChar,
-          Pmaxnom=147.6e3*0.78,
+          Pmaxnom=Pmaxnom,
           GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState))
                                                                   annotation (Placement(transformation(extent={{-30,-28},{26,28}})));
         DistrictHeatingNetwork.Sources.SourcePressure
@@ -154,6 +160,10 @@ package Tests
               rotation=90,
               origin={-2,-60})));
         Modelica.Blocks.Sources.TimeTable m_flowgas_ref(table=[ts,m_flow_Gas]) annotation (Placement(transformation(extent={{40,-46},{52,-34}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex val_m_flow_fuel annotation (Placement(transformation(extent={{66,-56},{78,-44}})));
+        Modelica.Blocks.Sources.RealExpression m_flow_gas_sim(y=gasBoiler.inletFuel.m_flow) annotation (Placement(transformation(extent={{34,-70},{54,-50}})));
+        Modelica.Blocks.Math.Max max1 annotation (Placement(transformation(extent={{30,-94},{50,-74}})));
+        Modelica.Blocks.Sources.RealExpression realExpression(y=1e-6) annotation (Placement(transformation(extent={{-10,-102},{10,-82}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -181,14 +191,12 @@ package Tests
         connect(GB101_ToutSP.y, gasBoiler.Toutset) annotation (Line(points={{-55.4,-6},{-48,-6},{-48,8.4},{-32.8,8.4}}, color={0,0,127}));
         connect(GB101_Status.y, gasBoiler.status) annotation (Line(points={{-55.4,-24},{-44,-24},{-44,2.8},{-32.8,2.8}}, color={255,0,255}));
         connect(gasBoiler.m_flow_, val_m_flow.u_sim) annotation (Line(points={{28.8,19.6},{52,19.6},{52,29},{64.8,29}}, color={0,0,127}));
-        connect(m_flow_ref.y, val_m_flow.u_meas) annotation (Line(points={{56.6,56},{60,56},{60,35},{64.8,35}}, color={0,0,127}));
         connect(Tout_ref.y, valT.u_meas) annotation (Line(points={{54.6,-12},{60,-12},{60,3},{64.8,3}}, color={0,0,127}));
         connect(gasBoiler.TTout, valT.u_sim) annotation (Line(points={{28.8,8.4},{52,8.4},{52,9},{64.8,9}}, color={0,0,127}));
         connect(P101_omega.y, lowPassomega.u) annotation (Line(points={{-75.4,32},{-69.2,32}}, color={0,0,127}));
         connect(lowPassomega.y, gasBoiler.omega) annotation (Line(points={{-55.4,32},{-48,32},{-48,19.6},{-32.8,19.6}}, color={0,0,127}));
         connect(FCV101_theta.y, lowPasstheta.u) annotation (Line(points={{-75.4,14},{-69.2,14}}, color={0,0,127}));
         connect(lowPasstheta.y, gasBoiler.theta) annotation (Line(points={{-55.4,14},{-32.8,14}}, color={0,0,127}));
-        connect(sinkMassFlow.in_m_flow, val_m_flow.u_meas) annotation (Line(points={{15,56},{30,56},{30,40},{60,40},{60,35},{64.8,35}}, color={0,0,127}));
         connect(val_pout.u_meas, sink.in_p0) annotation (Line(points={{72.8,61},{68,61},{68,72},{78,72},{78,82},{76,84},{72.4,84}}, color={0,0,127}));
         connect(gasBoiler.PTout, val_pout.u_sim) annotation (Line(points={{28.8,-2.8},{38,-2.8},{38,44},{68,44},{68,55},{72.8,55}}, color={0,0,127}));
         connect(gasBoiler.outlet, sinkMassFlow.inlet) annotation (Line(
@@ -199,6 +207,12 @@ package Tests
             points={{-2,-50},{-2,-41.24},{-2,-41.24},{-2,-32.48}},
             color={182,109,49},
             thickness=0.5));
+        connect(m_flowgas_ref.y, val_m_flow_fuel.u_meas) annotation (Line(points={{52.6,-40},{60,-40},{60,-47},{64.8,-47}}, color={0,0,127}));
+        connect(m_flow_gas_sim.y, max1.u1) annotation (Line(points={{55,-60},{58,-60},{58,-64},{22,-64},{22,-78},{28,-78}}, color={0,0,127}));
+        connect(max1.y, val_m_flow_fuel.u_sim) annotation (Line(points={{51,-84},{64.8,-84},{64.8,-53}}, color={0,0,127}));
+        connect(realExpression.y, max1.u2) annotation (Line(points={{11,-92},{11,-90},{28,-90}}, color={0,0,127}));
+        connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (Line(points={{56.6,56},{58,56},{58,58},{60,58},{60,72},{20,72},{20,56},{15,56}}, color={0,0,127}));
+        connect(val_m_flow.u_meas, val_m_flow.u_sim) annotation (Line(points={{64.8,35},{54,35},{54,29},{64.8,29}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=4000,
             Tolerance=1e-06,
@@ -227,7 +241,7 @@ package Tests
       end S100_Seq_0412Test3;
 
       model S100_Seq_1701Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test1.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test1.mat"), gasBoiler(GB(tau_comb=100, m_flow_fuel_max=0.00185)));
         annotation (experiment(StopTime=2700, __Dymola_Algorithm="Dassl"));
       end S100_Seq_1701Test1;
 
@@ -249,18 +263,18 @@ package Tests
       end S100_Seq_2601Test1;
 
       model S100_Seq_2901Test1
-        extends TestBase(Kv = 33, MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2901_Test1/Temperatures.mat"));
-        annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2901_Test1.mat"), gasBoiler(GB(tau_comb=100)));
+        annotation (experiment(StopTime=12000, __Dymola_Algorithm="Dassl"), Diagram(graphics={Polygon(points={{52,58},{52,58}}, lineColor={28,108,200})}));
       end S100_Seq_2901Test1;
 
       model S100_Seq_3001Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test1.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test1.mat"), Pmaxnom=147.6e3*0.87, Tout_SP = [0, 76+273.15; 1e6, 76+273.15]);
         annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
       end S100_Seq_3001Test1;
 
       model S100_Seq_3001Test2
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test2.mat"),
-        gasBoiler(Pmaxnom=147.6e3*0.78), GB101_ToutSP(table=[0, 76 + 273.15; 3400, 76 + 273.15; 1e6, 76 + 273.15]));
+        gasBoiler(Pmaxnom=147.6e3*0.81), GB101_ToutSP(table=[0, 76 + 273.15; 3400, 76 + 273.15; 1e6, 76 + 273.15]));
         annotation (experiment(StopTime=3900, __Dymola_Algorithm="Dassl"));
       end S100_Seq_3001Test2;
 
@@ -316,10 +330,85 @@ package Tests
 
       model S100_Seq_2904Test2
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2904_Test2.mat"),
-        gasBoiler(Pmaxnom=147.6e3*0.85, GB(tdelay=60)),
+        gasBoiler(Pmaxnom=147.6e3*0.85, GB(tdelay=10)),
                                          GB101_ToutSP(table=[0, 76.8 + 273.15; 3400, 76.8 + 273.15; 1e6, 76.8 + 273.15]));
         annotation (experiment(StopTime=4140, __Dymola_Algorithm="Dassl"));
       end S100_Seq_2904Test2;
+
+      model S100_Seq_241002Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241002_Test1.mat"),
+        Pmaxnom = 147.6e3*0.92,
+        eta_combustion = 0.90,
+        tdelay = 5,
+        GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
+        GB101_Status(table={1350}, startValue=false),
+        realExpression(y=1e-5));
+        //Tout_start_S1 = 29.71 + 273.15);
+        annotation (experiment(
+            StartTime=0,
+            StopTime=12600,
+            __Dymola_Algorithm="Dassl"));
+            //StartTime=1550,
+      end S100_Seq_241002Test1;
+
+      model S100_Seq_241004Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241004_Test1.mat"),
+        Pmaxnom = 147.6e3*0.92,
+        eta_combustion = 0.90,
+        tdelay = 5,
+        GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
+        realExpression(y=1e-5),
+          GB101_Status(table={8130,8530}));
+        annotation (experiment(
+            StartTime=0,
+            StopTime=10500,
+            __Dymola_Algorithm="Dassl"));
+      end S100_Seq_241004Test1;
+
+      model S100_Seq_241009Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241009_Test1.mat"),
+        Pmaxnom = 147.6e3*0.92,
+        eta_combustion = 0.90,
+        tdelay = 180,
+        GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
+        realExpression(y=1e-5));
+        annotation (experiment(
+            StartTime=0,
+            StopTime=13000,
+            __Dymola_Algorithm="Dassl"));
+      end S100_Seq_241009Test1;
+
+      model S100_Seq_241014Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241014_Test1.mat"),
+        Pmaxnom = 147.6e3*0.92,
+        eta_combustion = 0.84,
+        tdelay = 5,
+        GB101_ToutSP(table=[0, 75.3 + 273.15; 4500, 75.3 + 273.15; 4500, 70 + 273.15; 6640, 70 + 273.15; 6640, 80 + 273.15; 1e6, 80 + 273.15]),
+        realExpression(y=1e-5),
+          GB101_Status(table={1947}, startValue=false));
+        annotation (experiment(StopTime=18000, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_241014Test1;
+
+      model S100_Seq_241017Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241017_Test1.mat"),
+        Pmaxnom = 147.6e3*0.92,
+        eta_combustion = 0.90,
+        tdelay = 180,
+        GB101_ToutSP(table=[0, 70.5 + 273.15; 6000-150, 70.5 + 273.15; 6000-150, 76.9 + 273.15; 1e6, 76.9 + 273.15]),
+        realExpression(y=1e-5));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex
+                              valT1
+                                   annotation (Placement(transformation(extent={{-60,-72},{-48,-60}})));
+        Modelica.Blocks.Sources.RealExpression deltaT_real(y=Tout_ref.y - TT101_profile.y) annotation (Placement(transformation(extent={{-92,-66},{-72,-46}})));
+        Modelica.Blocks.Sources.RealExpression deltaT_sim(y=gasBoiler.TTout - TT101_profile.y) annotation (Placement(transformation(extent={{-92,-86},{-72,-66}})));
+      equation
+        connect(deltaT_real.y, valT1.u_meas) annotation (Line(points={{-71,-56},{-66,-56},{-66,-63},{-61.2,-63}}, color={0,0,127}));
+        connect(deltaT_sim.y, valT1.u_sim) annotation (Line(points={{-71,-76},{-66,-76},{-66,-69},{-61.2,-69}}, color={0,0,127}));
+        annotation (experiment(
+            StartTime=0,
+            StopTime=13000,
+            __Dymola_Algorithm="Dassl"));
+      end S100_Seq_241017Test1;
     end S100;
 
     package S200

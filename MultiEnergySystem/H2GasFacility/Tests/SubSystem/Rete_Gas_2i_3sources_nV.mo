@@ -25,7 +25,7 @@ model Rete_Gas_2i_3sources_nV
     startTime=61200)                                                                                        annotation (
     Placement(visible = true, transformation(origin={317,222},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H6(
-    duration=360,
+    duration=60,
     height=-0.09889,
     offset=0,
     startTime=75600)                                                                                        annotation (
@@ -91,7 +91,7 @@ equation
       thickness=0.5));
   annotation (experiment(
       StopTime=90000,
-      Interval=0.01,
+      Interval=1,
       Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_3sources_nV;

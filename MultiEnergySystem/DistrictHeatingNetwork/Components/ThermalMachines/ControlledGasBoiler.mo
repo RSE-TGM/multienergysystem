@@ -46,7 +46,8 @@ equation
   //ploss = (0.410603*m_flow - 0.359991)*1e5;
   //ploss = (0.5287*m_flow-0.4458)*1e5;
   //ploss = max((-0.0521 + m_flow*(0.0649 + 0.1285*m_flow))*1e5,0);
-  ploss = max((0.005482696604412 + m_flow*(0.004710088236134 + 0.141767086689464*m_flow))*1e5,0);
+  //ploss = max((0.005482696604412 + m_flow*(0.004710088236134 + 0.141767086689464*m_flow))*1e5,0);
+  ploss = m_flow.*(0.0159 +  0.0427*m_flow)*1e5;
   fluidOut_ref.p = pout;
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;

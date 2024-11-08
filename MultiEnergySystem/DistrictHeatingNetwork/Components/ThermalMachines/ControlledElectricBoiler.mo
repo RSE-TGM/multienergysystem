@@ -27,7 +27,8 @@ equation
   //990*9.81*h = inlet.p - outlet.p "Momentum Balance";
   inlet.p - outlet.p = ploss;
   //ploss = max((0.093553176181407 + m_flow*(-0.060909664942311 + 0.107018894700363*m_flow))*1e5,0) "Momentum Balance";
-  ploss = max((-0.001696730452948 + m_flow*(0.038724546018764 + 0.083107463331985*m_flow))*1e5,0);
+  //ploss = max((-0.001696730452948 + m_flow*(0.038724546018764 + 0.083107463331985*m_flow))*1e5,0);
+  ploss = 990*9.81*h*0 + (m_flow*(0.199135 + 0.290023*m_flow))*1e5;
   Pheat = if heat_on then max(min(Pheat_ref, Pmaxres*nR),0) else 0;
 
   inletPower.P = Pheat;

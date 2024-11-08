@@ -338,11 +338,12 @@ package Tests
       model S100_Seq_241002Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241002_Test1.mat"),
         Pmaxnom = 147.6e3*0.92,
-        eta_combustion = 0.90,
+        eta_combustion = 0.84,
         tdelay = 5,
-        GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
+        GB101_ToutSP(table=[0, 80 + 273.15; 3400, 80 + 273.15; 1e6, 80 + 273.15]),
         GB101_Status(table={1350}, startValue=false),
         realExpression(y=1e-5));
+        //GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
         //Tout_start_S1 = 29.71 + 273.15);
         annotation (experiment(
             StartTime=0,
@@ -354,9 +355,9 @@ package Tests
       model S100_Seq_241004Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241004_Test1.mat"),
         Pmaxnom = 147.6e3*0.92,
-        eta_combustion = 0.90,
-        tdelay = 5,
-        GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
+        eta_combustion = 0.84,
+        tdelay = 0,
+        GB101_ToutSP(table=[0, 80 + 273.15; 3400, 80 + 273.15; 1e6, 80 + 273.15]),
         realExpression(y=1e-5),
           GB101_Status(table={8130,8530}));
         annotation (experiment(
@@ -368,10 +369,12 @@ package Tests
       model S100_Seq_241009Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241009_Test1.mat"),
         Pmaxnom = 147.6e3*0.92,
-        eta_combustion = 0.90,
-        tdelay = 180,
-        GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
+        eta_combustion = 0.83,
+        tdelay = 0,
+        GB101_ToutSP(table=[0, 80 + 273.15; 3400, 80 + 273.15; 1e6, 80 + 273.15]),
         realExpression(y=1e-5));
+      //   eta_combustion = 0.90,
+      //   tdelay = 180,
         annotation (experiment(
             StartTime=0,
             StopTime=13000,
@@ -392,9 +395,9 @@ package Tests
       model S100_Seq_241017Test1
         extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241017_Test1.mat"),
         Pmaxnom = 147.6e3*0.92,
-        eta_combustion = 0.90,
-        tdelay = 180,
-        GB101_ToutSP(table=[0, 70.5 + 273.15; 6000-150, 70.5 + 273.15; 6000-150, 76.9 + 273.15; 1e6, 76.9 + 273.15]),
+        eta_combustion = 0.86,
+        tdelay = 0,
+        GB101_ToutSP(table=[0, 70 + 273.15; 5920, 70 + 273.15; 5920, 80 + 273.15; 1e6, 80 + 273.15]),
         realExpression(y=1e-5));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex
                               valT1
@@ -409,6 +412,19 @@ package Tests
             StopTime=13000,
             __Dymola_Algorithm="Dassl"));
       end S100_Seq_241017Test1;
+
+      model S100_Seq_241031Test1
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241031_Test1.mat"),
+        Pmaxnom = 147.6e3*0.92,
+        eta_combustion = 0.84,
+        tdelay = 0,
+        GB101_ToutSP(table=[0, 80 + 273.15; 3400, 80 + 273.15; 1e6, 80 + 273.15]),
+        realExpression(y=1e-5),
+        Tout_start_S1 = 79.9+ 273.15);
+      //   eta_combustion = 0.90,
+      //   tdelay = 180,
+        annotation (experiment(StopTime=8450, __Dymola_Algorithm="Dassl"));
+      end S100_Seq_241031Test1;
     end S100;
 
     package S200

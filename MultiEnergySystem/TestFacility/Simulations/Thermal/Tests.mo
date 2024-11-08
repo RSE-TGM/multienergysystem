@@ -258,7 +258,7 @@ package Tests
       end S100_Seq_1701Test3;
 
       model S100_Seq_2601Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/2601_Test1/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/2601_Test1.mat"));
         annotation (experiment(StopTime=4500, __Dymola_Algorithm="Dassl"));
       end S100_Seq_2601Test1;
 
@@ -268,7 +268,7 @@ package Tests
       end S100_Seq_2901Test1;
 
       model S100_Seq_3001Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test1.mat"), Pmaxnom=147.6e3*0.87, Tout_SP = [0, 76+273.15; 1e6, 76+273.15]);
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/240130_Test1.mat"), Pmaxnom=147.6e3*0.87, Tout_SP = [0, 76+273.15; 1e6, 76+273.15]);
         annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
       end S100_Seq_3001Test1;
 
@@ -460,7 +460,7 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
         parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
         parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
-        parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -0.8;
+        parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -0.8*1;
         parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
         parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
 
@@ -570,6 +570,7 @@ package Tests
               rotation=90,
               origin={16,84})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_pout annotation (Placement(transformation(extent={{70,44},{82,56}})));
+        ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-98,-80},{-66,-48}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -585,6 +586,7 @@ package Tests
         final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1,1];
         final parameter DistrictHeatingNetwork.Types.Pressure pin_start = PTi[1,1];
         final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = m_flow_approx[1,1];
+
       equation
         connect(PT402_profile.y, sinkP.in_p0) annotation (Line(points={{81.4,76},{81.4,74},{72.4,74}},                  color={0,0,127}));
         connect(source.outlet, electricBoiler.inlet) annotation (Line(
@@ -606,9 +608,12 @@ package Tests
         connect(electricBoiler.PTout, val_pout.u_sim) annotation (Line(points={{32.9,-5.9},{48,-5.9},{48,47},{68.8,47}}, color={0,0,127}));
         connect(val_pout.u_meas, sinkP.in_p0) annotation (Line(points={{68.8,53},{62,53},{62,60},{78,60},{78,74},{72.4,74}}, color={0,0,127}));
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (Line(points={{40.6,40},{44,40},{44,78},{21,78}}, color={0,0,127}));
-        connect(electricBoiler.outlet, sinkP.inlet)
-          annotation (Line(
-            points={{12.89,30.35},{12.89,54},{12,54},{12,62},{64,62},{64,68}},
+        connect(sourceVoltage.outlet, electricBoiler.inletPower) annotation (Line(
+            points={{-66,-64},{-40,-64},{-40,-17.5},{-30.9,-17.5}},
+            color={56,93,138},
+            thickness=1));
+        connect(electricBoiler.outlet, sinkMassFlow.inlet) annotation (Line(
+            points={{12.89,30.35},{12.89,62},{16,62},{16,74}},
             color={140,56,54},
             thickness=0.5));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
@@ -622,7 +627,7 @@ package Tests
       end S400_Seq_0412Test2;
 
       model S400_Seq_0412Test3
-        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat"));
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat"));
         annotation (experiment(StopTime=9000, __Dymola_Algorithm="Dassl"));
       end S400_Seq_0412Test3;
 
@@ -637,12 +642,12 @@ package Tests
       end S400_Seq_2601Test1;
 
       model S400_Seq_3001Test1
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test1/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/240130_Test1.mat"));
         annotation (experiment(StopTime=1500, __Dymola_Algorithm="Dassl"));
       end S400_Seq_3001Test1;
 
       model S400_Seq_3001Test2
-        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3001_Test2/Temperatures.mat"));
+        extends TestBase(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3001_Test2.mat"));
         annotation (experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
       end S400_Seq_3001Test2;
 
@@ -672,7 +677,7 @@ package Tests
       end S400_Seq_1004Test1;
 
       model S400_Seq_1704Test1
-        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Aprile 2024/1704_Test1/Temperatures.mat"));
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1704_Test1.mat"));
         annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
       end S400_Seq_1704Test1;
 
@@ -680,6 +685,41 @@ package Tests
         extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0410_Test1.mat"));
         annotation (experiment(StopTime=3500, __Dymola_Algorithm="Dassl"));
       end S400_Seq_0410Test1;
+
+      model S400_Seq_241002Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241002_Test1.mat"), EB401_Status1(table={1350}, startValue=false));
+        annotation (experiment(StopTime=12600, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241002Test1;
+
+      model S400_Seq_241004Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241004_Test1.mat"));
+        annotation (experiment(StopTime=10500, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241004Test1;
+
+      model S400_Seq_241009Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241009_Test1.mat"));
+        annotation (experiment(StopTime=13000, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241009Test1;
+
+      model S400_Seq_241014Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241014_Test1.mat"));
+        annotation (experiment(StopTime=13000, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241014Test1;
+
+      model S400_Seq_241017Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241017_Test1.mat"));
+        annotation (experiment(StopTime=13000, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241017Test1;
+
+      model S400_Seq_241031Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241031_Test1.mat"));
+        annotation (experiment(StopTime=8450, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241031Test1;
+
+      model S400_Seq_241106Test1
+        extends TestBase(MeasuredData= Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241106_Test1.mat"));
+        annotation (experiment(StopTime=16000, __Dymola_Algorithm="Dassl"));
+      end S400_Seq_241106Test1;
     end S400;
 
     package S500 "Test package for system S500"

@@ -40,6 +40,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
   DistrictHeatingNetwork.Types.Temperature Tout_ref;
   DistrictHeatingNetwork.Types.Power Pel_ref;
   DistrictHeatingNetwork.Types.Power Pel_actual;
+  DistrictHeatingNetwork.Types.Power Pcomb "Fuel Combustion Power";
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference gas fluid";
   //Boolean TlimitOnOff(start = false);
@@ -83,12 +84,19 @@ equation
   Pth_ref = Pel_ref*eta_th_nom/eta_el_nom;
   //Pheat = if heat_on and TlimitOnOff then max(min(Pth_ref, Pth_nom),0) else 0;
   //Pheat = if heat_on and not hysteresis.y then max(min(Pth_ref, Pth_nom),0) else 0;
-  Pheat = if heat_on then max(min(Pth_ref, Pth_nom),0) else 0;
-  Pheat = Pel_actual*eta_th_nom/eta_el_nom;
+  //Pheat = if heat_on then max(min(Pth_ref, Pth_nom),0) else 0;
+  Pel_actual = Pel_ref;
+  //Pheat = Pel_actual*eta_th_nom/eta_el_nom;
+  //Pel_actual/1e3 = (Pcomb/1e3)*(0.257352 + (Pcomb/1e3)*0.000662);
+  //Pheat/1e3 = (Pcomb/1e3)*(0.4307310963 + (0.0008644*Pcomb/1e3));
+
+  Pcomb/1e3 = (Pel_ref/1e3)*(4.2128526419 -0.0325555400*(Pel_ref/1e3));
+  Pheat/1e3 = (Pel_ref/1e3)*(1.7454278351 -0.0035017000*(Pel_ref/1e3));
 
   // Fuel flow calculations
   //Pth_ref = m_flow_fuel*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
-  Pth_ref = m_flow_fuel_ref*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
+  Pcomb = m_flow_fuel_ref*fuel.HHV_mix*etanom;
+  //Pth_ref = m_flow_fuel_ref*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";
   inletfuel.Xi = fuel.Xi_start "Dummy equation considering not fuel flow reversal";
   fuel.h = inStream(inletfuel.h_out);
@@ -129,10 +137,6 @@ initial equation
   else
     Pel_out = Pnom;
   end if;
-
-
-//algorithm
-  //TlimitOnOff :=if Tin >= 70 + 273.15 then false else true;
 
 equation
   connect(realExpression.y, hysteresis.u)

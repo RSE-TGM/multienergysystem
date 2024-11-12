@@ -43,7 +43,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = Tout_low_start "CHP Starting Inlet temperature";
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = Tin_low_start "CHP Starting Outlet temperature";
   parameter DistrictHeatingNetwork.Types.Pressure p_low_ref = 1.2e5 "Reference pressure CHP side";
-  parameter DistrictHeatingNetwork.Types.Pressure dp_low_ref = 0.5e5 "Reference pressure CHP side";
+  parameter DistrictHeatingNetwork.Types.Pressure dp_low_ref = 0.9e5 "Reference pressure CHP side";
   parameter DistrictHeatingNetwork.Types.Pressure pout_low_start = p_low_ref "Reference pressure side";
   parameter DistrictHeatingNetwork.Types.Pressure pin_high_start = 1.8e5 "Reference pressure rack side";
   parameter DistrictHeatingNetwork.Types.Pressure pout_high_start = 2e5 "Reference pressure rack side";

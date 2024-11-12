@@ -781,8 +781,10 @@ package Tests
         parameter String matrixPTo = "PT502" "Matrix name in file";
         parameter String matrixTTi = "TT501" "Matrix name in file";
         parameter String matrixTTo = "TT502" "Matrix name in file";
-        parameter String matrixTTo_CHP = "T2_CHP";
-        parameter String matrixTTi_CHP = "T3_CHP";
+        parameter String matrixTTo_CHP = "TT504";
+        parameter String matrixTTi_CHP = "TT503";
+        //parameter String matrixTTo_CHP = "T2_CHP";
+        //parameter String matrixTTi_CHP = "T3_CHP";
         parameter String matrixtheta = "theta_FCV101";
         parameter String matrixfreq = "f_P501";
         parameter String matrixFT = "FT501";
@@ -857,7 +859,7 @@ package Tests
           CHP(
             initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
             h=1,
-              control_Pel=false))
+            startSSConditions=false))
           annotation (Placement(transformation(extent={{-26,-26},{26,26}})));
         Modelica.Blocks.Sources.Ramp PCHP_m_flow(
           height=0,
@@ -882,8 +884,10 @@ package Tests
         final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
         final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
         final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
-        final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
-        final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+      //   final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+      //   final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+        final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]);
+        final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]);
         final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
         final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
@@ -905,6 +909,9 @@ package Tests
           annotation (Placement(transformation(extent={{60,-60},{80,-40}})));
         Modelica.Blocks.Sources.TimeTable TToutCHP_ref(table=[ts,TTo_CHP])
           annotation (Placement(transformation(extent={{40,-50},{50,-40}})));
+        ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-88,-100},{-68,-80}})));
+        Modelica.Blocks.Math.Max max1 annotation (Placement(transformation(extent={{-34,-80},{-14,-60}})));
+        Modelica.Blocks.Sources.RealExpression realExpression(y=1e-3) annotation (Placement(transformation(extent={{-78,-86},{-58,-66}})));
       protected
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
         final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;
@@ -941,7 +948,6 @@ package Tests
                 -38,-40},{-38,-2.6},{-28.6,-2.6}}, color={0,0,127}));
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow)
           annotation (Line(points={{33.4,54},{19,54}}, color={0,0,127}));
-        connect(m_flow_ref_CHP.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-55.4,-60},{-34,-60},{-34,-7.8},{-28.6,-7.8}}, color={0,0,127}));
         connect(combinedHeatPower.TTout, val_TT502.u_sim)
           annotation (Line(points={{28.6,7.8},{42,7.8},{42,7},{58,7}}, color={0,0,127}));
         connect(TT502_ref.y, val_TT502.u_meas)
@@ -955,6 +961,13 @@ package Tests
         connect(val_TTout_CHP.u_sim, combinedHeatPower.TTout_CHP) annotation (Line(points=
                {{58,-55},{48,-55},{48,-56},{32,-56},{32,-18.2325},{28.665,-18.2325}},
               color={0,0,127}));
+        connect(sourceVoltage.outlet, combinedHeatPower.outletPower) annotation (Line(
+            points={{-68,-90},{-54,-90},{-54,-88},{-46,-88},{-46,-15.08},{-28.6,-15.08}},
+            color={56,93,138},
+            thickness=1));
+        connect(m_flow_ref_CHP.y, max1.u1) annotation (Line(points={{-55.4,-60},{-44,-60},{-44,-64},{-36,-64}}, color={0,0,127}));
+        connect(max1.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-13,-70},{-10,-70},{-10,-38},{-34,-38},{-34,-7.8},{-28.6,-7.8}}, color={0,0,127}));
+        connect(realExpression.y, max1.u2) annotation (Line(points={{-57,-76},{-36,-76}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=8000,
             Tolerance=1e-06,

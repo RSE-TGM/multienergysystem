@@ -14,7 +14,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
     Dialog(group = "External inputs", enable = not control_Pel));
 
   // Parameters
-  parameter Boolean startSSConditions = true;
+  //parameter Boolean startSSConditions = true;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Combustion Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
@@ -81,30 +81,42 @@ equation
   0 =inlet.m_flow*(-hout_ref + hin) + Pth_ref;
 
   // Power calculations
-  Pth_ref = Pel_ref*eta_th_nom/eta_el_nom;
+  //Pth_ref = Pel_ref*eta_th_nom/eta_el_nom;
   //Pheat = if heat_on and TlimitOnOff then max(min(Pth_ref, Pth_nom),0) else 0;
   //Pheat = if heat_on and not hysteresis.y then max(min(Pth_ref, Pth_nom),0) else 0;
   //Pheat = if heat_on then max(min(Pth_ref, Pth_nom),0) else 0;
-  Pel_actual = Pel_ref;
   //Pheat = Pel_actual*eta_th_nom/eta_el_nom;
   //Pel_actual/1e3 = (Pcomb/1e3)*(0.257352 + (Pcomb/1e3)*0.000662);
   //Pheat/1e3 = (Pcomb/1e3)*(0.4307310963 + (0.0008644*Pcomb/1e3));
 
-  Pcomb/1e3 = (Pel_ref/1e3)*(4.2128526419 -0.0325555400*(Pel_ref/1e3));
-  Pheat/1e3 = (Pel_ref/1e3)*(1.7454278351 -0.0035017000*(Pel_ref/1e3));
+
+  if control_Pel then
+    //Pth_ref/1e3 = (Pel_ref/1e3)*(1.7454278351 -0.0035017000*(Pel_ref/1e3));
+    Pth_ref/1e3 = (Pel_ref/1e3)*(1.6740654190 -0.0019175939*(Pel_ref/1e3));
+  else
+    Pel_ref/1e3 = (Pth_ref/1e3)*(0.5861505894 + 0.0005489859*(Pth_ref/1e3));
+  end if;
+
+  Pel_actual = if heat_on then max(min(Pel_ref, Pel_nom),0) else 0;
+  //Pheat = (Pel_actual)*(1.7454278351 -0.0035017000*(Pel_actual/1e3));
+  Pheat = (Pel_actual)*(1.6740654190 -0.0019175939*(Pel_actual/1e3));
 
   // Fuel flow calculations
   //Pth_ref = m_flow_fuel*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
-  Pcomb = m_flow_fuel_ref*fuel.HHV_mix*etanom;
   //Pth_ref = m_flow_fuel_ref*fuel.HHV_mix*etanom;  // Computation of m_flow_fuel
+  Pcomb = Pel_actual*(4.2128526419 -0.0325555400*(Pel_actual/1e3));
+  Pcomb = m_flow_fuel_ref*fuel.HHV_mix*etanom;
+  m_flow_fuel_actual = inletfuel.m_flow;
+  m_flow_fuel_actual = min(m_flow_fuel_nom, m_flow_fuel_ref);
+  // Fuel connector
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";
   inletfuel.Xi = fuel.Xi_start "Dummy equation considering not fuel flow reversal";
+  // Fuel model
   fuel.h = inStream(inletfuel.h_out);
   fuel.Xi = inStream(inletfuel.Xi);
   fuel.p = 1.013e5;
   //m_flow_fuel = inletfuel.m_flow;
-  m_flow_fuel_actual = inletfuel.m_flow;
-  m_flow_fuel_actual = min(m_flow_fuel_nom, m_flow_fuel_ref);
+
 
   // First-order response for electric power
   tau_el * der(Pel_out) + Pel_out = Pel_actual;
@@ -131,11 +143,20 @@ equation
   connect(in_Pel_ref, in_Pel_ref_int);
 
 
+
+
 initial equation
-  if startSSConditions then
+//   if startSSConditions then
+//     der() = 0;
+//   else
+//     Pel_out = Pel_nom;
+//   end if;
+  if initOpt == Choices.Init.Options.steadyState then
     der(Pel_out) = 0;
+  elseif initOpt == Choices.Init.Options.fixedState then
+    Pel_out = Pel_nom;
   else
-    Pel_out = Pnom;
+//No initial equations
   end if;
 
 equation

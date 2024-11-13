@@ -746,6 +746,8 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = TTi_CHP[1, 1];
         parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = TTo_CHP[1, 1];
 
+        parameter DistrictHeatingNetwork.Types.Length h = 0.5;
+
         // Pipe Data
         //parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
         //parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
@@ -781,10 +783,8 @@ package Tests
         parameter String matrixPTo = "PT502" "Matrix name in file";
         parameter String matrixTTi = "TT501" "Matrix name in file";
         parameter String matrixTTo = "TT502" "Matrix name in file";
-        parameter String matrixTTo_CHP = "TT504";
-        parameter String matrixTTi_CHP = "TT503";
-        //parameter String matrixTTo_CHP = "T2_CHP";
-        //parameter String matrixTTi_CHP = "T3_CHP";
+        parameter String matrixTTo_CHP = "T2_CHP";
+        parameter String matrixTTi_CHP = "T3_CHP";
         parameter String matrixtheta = "theta_FCV101";
         parameter String matrixfreq = "f_P501";
         parameter String matrixFT = "FT501";
@@ -854,13 +854,13 @@ package Tests
           Tout_low_start=Tin_start_CHP,
           Tin_high_start=Tin_start_S5,
           Tout_high_start=Tout_start_S5,
+          Tin_start_CHP=Tin_start_CHP,
+          Tout_start_CHP=Tout_start_CHP,
           PL_S500_FT501_EX501(L=80),
           EX501(n=5),
           CHP(
-            initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
-            h=1,
-            startSSConditions=false))
-          annotation (Placement(transformation(extent={{-26,-26},{26,26}})));
+            initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState, h=h))
+          annotation (Placement(transformation(extent={{-24,-26},{28,26}})));
         Modelica.Blocks.Sources.Ramp PCHP_m_flow(
           height=0,
           duration=0,
@@ -884,10 +884,8 @@ package Tests
         final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
         final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
         final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
-      //   final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
-      //   final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
-        final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]);
-        final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]);
+        final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+        final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
         final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
         final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
@@ -925,54 +923,68 @@ package Tests
         connect(P501_omega.y, lowPassomega.u) annotation (Line(points={{-75.4,32},{-69.2,32}}, color={0,0,127}));
         connect(FCV101_theta.y, lowPasstheta.u) annotation (Line(points={{-75.4,14},{-69.2,14}}, color={0,0,127}));
         connect(sourceGas.outlet, combinedHeatPower.inletFuel) annotation (Line(
-            points={{0,-52},{0,-30.16}},
+            points={{0,-52},{0,-30.16},{2,-30.16}},
             color={182,109,49},
             thickness=0.5));
         connect(source.outlet, combinedHeatPower.inlet) annotation (Line(
-            points={{-14,50},{-14,38},{-10.14,38},{-10.14,29.9}},
+            points={{-14,50},{-14,38},{-8.14,38},{-8.14,29.9}},
             color={140,56,54},
             thickness=0.5));
         connect(sinkMassFlow.inlet, combinedHeatPower.outlet) annotation (Line(
-            points={{14,50},{14,38},{10.66,38},{10.66,29.9}},
+            points={{14,50},{14,38},{12.66,38},{12.66,29.9}},
             color={140,56,54},
             thickness=0.5));
-        connect(lowPassomega.y, combinedHeatPower.omega) annotation (Line(points={{-55.4,
-                32},{-44,32},{-44,18.2},{-28.6,18.2}}, color={0,0,127}));
+        connect(lowPassomega.y, combinedHeatPower.omega) annotation (Line(points={{-55.4,32},{-44,32},{-44,18.2},{-26.6,18.2}},
+                                                       color={0,0,127}));
         connect(lowPasstheta.y, combinedHeatPower.theta)
-          annotation (Line(points={{-55.4,14},{-54,13},{-28.6,13}}, color={0,0,127}));
-        connect(GB501_Status.y, combinedHeatPower.status) annotation (Line(points={{-55.4,
-                -24},{-42,-24},{-42,2.6},{-28.6,2.6}}, color={255,0,255}));
-        connect(ToutSP.y, combinedHeatPower.Toutset) annotation (Line(points={{-75.4,-6},
-                {-72,-6},{-72,4},{-44,4},{-44,7.8},{-28.6,7.8}}, color={0,0,127}));
-        connect(PelSP.y, combinedHeatPower.Pelset) annotation (Line(points={{-55.4,-40},{
-                -38,-40},{-38,-2.6},{-28.6,-2.6}}, color={0,0,127}));
+          annotation (Line(points={{-55.4,14},{-54,13},{-26.6,13}}, color={0,0,127}));
+        connect(GB501_Status.y, combinedHeatPower.status) annotation (Line(points={{-55.4,-24},{-42,-24},{-42,2.6},{-26.6,2.6}},
+                                                       color={255,0,255}));
+        connect(ToutSP.y, combinedHeatPower.Toutset) annotation (Line(points={{-75.4,-6},{-72,-6},{-72,4},{-44,4},{-44,7.8},{-26.6,7.8}},
+                                                                 color={0,0,127}));
+        connect(PelSP.y, combinedHeatPower.Pelset) annotation (Line(points={{-55.4,-40},{-38,-40},{-38,-2.6},{-26.6,-2.6}},
+                                                   color={0,0,127}));
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow)
           annotation (Line(points={{33.4,54},{19,54}}, color={0,0,127}));
         connect(combinedHeatPower.TTout, val_TT502.u_sim)
-          annotation (Line(points={{28.6,7.8},{42,7.8},{42,7},{58,7}}, color={0,0,127}));
+          annotation (Line(points={{30.6,7.8},{42,7.8},{42,7},{58,7}}, color={0,0,127}));
         connect(TT502_ref.y, val_TT502.u_meas)
           annotation (Line(points={{50.5,17},{58,17}}, color={0,0,127}));
         connect(TTinCHP_ref.y, val_TTin_CHP.u_meas)
           annotation (Line(points={{50.5,-15},{58,-15}}, color={0,0,127}));
-        connect(combinedHeatPower.TTin_CHP, val_TTin_CHP.u_sim) annotation (Line(points={
-                {28.665,-13.0325},{34,-13.0325},{34,-25},{58,-25}}, color={0,0,127}));
+        connect(combinedHeatPower.TTin_CHP, val_TTin_CHP.u_sim) annotation (Line(points={{30.665,-13.0325},{34,-13.0325},{34,-25},{58,-25}},
+                                                                    color={0,0,127}));
         connect(TToutCHP_ref.y, val_TTout_CHP.u_meas)
           annotation (Line(points={{50.5,-45},{58,-45}}, color={0,0,127}));
-        connect(val_TTout_CHP.u_sim, combinedHeatPower.TTout_CHP) annotation (Line(points=
-               {{58,-55},{48,-55},{48,-56},{32,-56},{32,-18.2325},{28.665,-18.2325}},
+        connect(val_TTout_CHP.u_sim, combinedHeatPower.TTout_CHP) annotation (Line(points={{58,-55},{48,-55},{48,-56},{32,-56},{32,-18.2325},{30.665,-18.2325}},
               color={0,0,127}));
         connect(sourceVoltage.outlet, combinedHeatPower.outletPower) annotation (Line(
-            points={{-68,-90},{-54,-90},{-54,-88},{-46,-88},{-46,-15.08},{-28.6,-15.08}},
+            points={{-68,-90},{-54,-90},{-54,-88},{-46,-88},{-46,-15.08},{-26.6,-15.08}},
             color={56,93,138},
             thickness=1));
         connect(m_flow_ref_CHP.y, max1.u1) annotation (Line(points={{-55.4,-60},{-44,-60},{-44,-64},{-36,-64}}, color={0,0,127}));
-        connect(max1.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-13,-70},{-10,-70},{-10,-38},{-34,-38},{-34,-7.8},{-28.6,-7.8}}, color={0,0,127}));
+        connect(max1.y, combinedHeatPower.m_flow_CHP) annotation (Line(points={{-13,-70},{-10,-70},{-10,-38},{-34,-38},{-34,-7.8},{-26.6,-7.8}}, color={0,0,127}));
         connect(realExpression.y, max1.u2) annotation (Line(points={{-57,-76},{-36,-76}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=8000,
             Tolerance=1e-06,
             __Dymola_Algorithm="Dassl"));
       end TestBase;
+
+      model S500_Seq_241009Test1
+        extends TestBase(
+          MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241009_Test1.mat"),
+          Tin_start_S5 = 59.94 + 273.15,
+          Tout_start_S5 = 62.03 + 273.15,
+          Tin_start_CHP = 61.64 + 273.15,
+          Tout_start_CHP = 63.35 + 273.15,
+          PelSP(offset=25e3),
+          combinedHeatPower(EX501(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
+        annotation (experiment(
+            StartTime=5000,
+            StopTime=12000,
+            __Dymola_Algorithm="Dassl"));
+      end S500_Seq_241009Test1;
     end S500;
 
     package S900 "Validation tests of pumping system"

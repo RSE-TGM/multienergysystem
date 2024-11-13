@@ -35,6 +35,7 @@ model Rete_Gas_2i_3sources_nV
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo1(
     L=100,
     H=0,
+    redeclare model Gas = Medium,
     redeclare model Medium = Medium,
     X_start=X_start,
     Di=0.1325,
@@ -52,6 +53,7 @@ model Rete_Gas_2i_3sources_nV
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo2(
     L=100,
     H=0,
+    redeclare model Gas = Medium,
     redeclare model Medium = Medium,
     X_start=X_start,
     Di=0.1325,
@@ -92,6 +94,5 @@ equation
   annotation (experiment(
       StopTime=90000,
       Interval=1,
-      Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_3sources_nV;

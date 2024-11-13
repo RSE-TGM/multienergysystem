@@ -743,6 +743,8 @@ package Tests
         parameter DistrictHeatingNetwork.Types.Pressure pout_start_S5 = PTo[1, 1];
         parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S5 = TTi[1, 1];
         parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S5 = TTo[1, 1];
+      //   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = TTi_CHP[1, 1];
+      //   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = TTo_CHP[1, 1];
         parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = TTi_CHP[1, 1];
         parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = TTo_CHP[1, 1];
 
@@ -985,6 +987,16 @@ package Tests
             StopTime=12000,
             __Dymola_Algorithm="Dassl"));
       end S500_Seq_241009Test1;
+
+      model S500_Seq_241017Test1
+        extends TestBase(
+          MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241017_Test1.mat"),
+          PelSP(offset=29e3),
+          Tin_start_CHP = 64.46 + 273.15,
+          Tout_start_CHP = 70.94 + 273.15,
+          combinedHeatPower(EX501(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)));
+        annotation (experiment(StopTime=5000, __Dymola_Algorithm="Dassl"));
+      end S500_Seq_241017Test1;
     end S500;
 
     package S900 "Validation tests of pumping system"

@@ -12,6 +12,7 @@ extends Modelica.Icons.Example;
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
+    rho_in_nom=40.17625,
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-12,-6},{8,14}})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourcePressure(

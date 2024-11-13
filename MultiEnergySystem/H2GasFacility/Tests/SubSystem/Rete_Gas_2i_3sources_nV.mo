@@ -5,7 +5,9 @@ model Rete_Gas_2i_3sources_nV
     m_flow_H2(offset=0.00001),
     m_flow_H1(offset=0.00001),
     s30(pin_start(displayUnit="bar")),
-    GRM_2(p0(displayUnit="bar")));
+    GRM_2(p0(displayUnit="bar")),
+    Immissione_2(p0=464600),
+    Immissione_1(p0=482900));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_3(
     redeclare model Medium = Medium,
     p0=437100,

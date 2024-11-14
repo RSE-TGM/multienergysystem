@@ -913,6 +913,10 @@ package Tests
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_dTT502 "Validation of outlet temperature dTT502" annotation (Placement(transformation(extent={{72,80},{92,100}})));
         Modelica.Blocks.Sources.RealExpression realExpression1(y=TT502_ref.y - TT501_profile.y) annotation (Placement(transformation(extent={{40,86},{60,106}})));
         Modelica.Blocks.Sources.RealExpression realExpression2(y=S500.TTout - TT501_profile.y) annotation (Placement(transformation(extent={{40,74},{60,94}})));
+        Modelica.Blocks.Sources.TimeTable PT502_profile(table=[ts,PTo])
+          annotation (Placement(transformation(extent={{90,52},{78,64}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex val_pout annotation (Placement(transformation(extent={{80,30},{92,42}})));
+        Modelica.Blocks.Sources.RealExpression realExpression3(y=S500.PTout) annotation (Placement(transformation(extent={{48,24},{68,44}})));
       protected
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
         final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;
@@ -962,6 +966,8 @@ package Tests
         connect(realExpression.y, max1.u2) annotation (Line(points={{-57,-76},{-36,-76}}, color={0,0,127}));
         connect(realExpression1.y, val_dTT502.u_meas) annotation (Line(points={{61,96},{65.5,96},{65.5,95},{70,95}}, color={0,0,127}));
         connect(realExpression2.y, val_dTT502.u_sim) annotation (Line(points={{61,84},{61,85},{70,85}}, color={0,0,127}));
+        connect(val_pout.u_meas, PT502_profile.y) annotation (Line(points={{78.8,39},{72,39},{72,58},{77.4,58}}, color={0,0,127}));
+        connect(realExpression3.y, val_pout.u_sim) annotation (Line(points={{69,34},{73.9,34},{73.9,33},{78.8,33}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=8000,
             Tolerance=1e-06,
@@ -992,7 +998,8 @@ package Tests
           Tout_start_S5=68.84 + 273.15,
           Tin_start_CHP=65.62 + 273.15,
           Tout_start_CHP=72.3 + 273.15,
-          m_flow_ref_CHP(table=[0,1.46; 1e6,1.46]));
+          m_flow_ref_CHP(table=[0,1.46; 1e6,1.46]),
+          m_flow_ref(table=[0,0.9566; 4e3,0.9566; 1e6,0.9566]));
         annotation (experiment(
             StartTime=4000,
             StopTime=10000,

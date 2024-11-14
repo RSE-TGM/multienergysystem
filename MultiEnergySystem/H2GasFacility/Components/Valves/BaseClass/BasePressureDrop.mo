@@ -13,7 +13,7 @@ partial model BasePressureDrop
     "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false
     "Used to decide if it is necessary to calculate entropy";
-  parameter Types.Pressure dp_nom = 0.1e5
+  parameter Types.Pressure dp_nom = 60e5 - 4.93e5
     "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(group = "Initialization"));
   parameter Types.Pressure pin_start = 1e5

@@ -16,12 +16,11 @@ partial model PartialValve
     "opening characteristic";
   parameter Types.MassFlowRate m_flow_nom = 0.4128
     "Peak mass flow rate at full opening"; // A_v*dp_nom*dp_nom*1,
-  parameter Types.Area A_v = m_flow_nom/sqrt(rho_in_nom*dp_nom_val)
+  parameter Types.Area A_v = m_flow_nom/sqrt(rho_in_nom*dp_nom)
     "Opening area of the valve";
   parameter Types.Density rho_in_nom = 0.657
     "Nominal inlet methane density";
-  parameter Types.Pressure dp_nom_val = 60e5-4.93e5
-    "Nominal delta pressure";
+
   Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0)
     "Valve Displacement" annotation (
     Placement(visible = true, transformation(origin = {0, 90}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
@@ -32,6 +31,7 @@ partial model PartialValve
     "Mass flow rate through the valve";
 
 equation
+
 
 // Mass balance
   inlet.m_flow + outlet.m_flow = 0;

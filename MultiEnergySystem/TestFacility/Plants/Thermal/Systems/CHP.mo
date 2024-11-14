@@ -92,6 +92,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
         rotation=90,
         origin={63,-67.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHPHP_CHP(
+    t=t_S5,
     Di=Di_CHP,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
@@ -389,7 +390,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
         DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_hot)/2,
     rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_cold,
     rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_hot,
-    thermalInertia=true,
+    thermalInertia=false,
     u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_cold,
     u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_hot,
     UA_ext=750,

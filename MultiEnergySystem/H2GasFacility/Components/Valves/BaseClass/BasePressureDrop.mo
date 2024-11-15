@@ -16,16 +16,16 @@ partial model BasePressureDrop
   parameter Types.Pressure dp_nom = 60e5 - 4.93e5
     "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(group = "Initialization"));
-  parameter Types.Pressure pin_start = 1e5
+  parameter Types.Pressure pin_start = 60e5
     "Inlet nominal and start pressure" annotation (
     Dialog(group = "Initialization"));
   final parameter Types.Pressure pout_start = pin_start - dp_nom
     "Outlet nominal and start pressure" annotation (
     Dialog(group = "Initialization"));
-  parameter Types.Temperature Tin_start = 25 + 273.15
+  parameter Types.Temperature Tin_start = 15 + 273.15
     "Inlet nominal and start temperature" annotation (
     Dialog(group = "Initialization"));
-  parameter Types.Temperature Tout_start = 20 + 273.15
+  parameter Types.Temperature Tout_start = 15 + 273.15
     "Outlet nominal and start temperature" annotation (
     Dialog(group = "Initialization"));
   parameter Types.MassFraction X_start[fluidIn.nX]

@@ -14,10 +14,10 @@ model Rete_Gas_2i_nosources
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
-  parameter Integer nX = 7 "Number of components in the gas fluid";
+  parameter Integer nX = 1 "Number of components in the gas fluid";
   //parameter Types.MassFraction X_start[nX] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter Types.MassFraction X_start[1] = {1};
-  parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+  //parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.712;
 
@@ -1121,7 +1121,7 @@ equation
         coordinateSystem(preserveAspectRatio=false, extent={{-300,-300},{300,
             300}})),
     experiment(
-      StopTime=5400,
+      StopTime=100,
       Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_nosources;

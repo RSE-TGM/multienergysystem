@@ -14,7 +14,7 @@ partial model PartialValve
     "Pressure recovery coefficient";
   parameter Types.valveOpeningChar openingChar = Types.valveOpeningChar.Linear
     "opening characteristic";
-  parameter Types.MassFlowRate m_flow_nom = 0.4128
+  parameter Types.MassFlowRate m_flow_nom = 0.4130
     "Peak mass flow rate at full opening"; // A_v*dp_nom*dp_nom*1,
   parameter Types.Area A_v = m_flow_nom/sqrt(rho_in_nom*dp_nom)
     "Opening area of the valve";

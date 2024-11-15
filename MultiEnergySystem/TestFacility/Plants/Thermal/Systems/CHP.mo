@@ -90,7 +90,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     eta_el_nom=eta_el_nom,
     eta_th_nom=eta_th_nom) annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
         rotation=90,
-        origin={63,-67.5})));
+        origin={58.25,-67.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHPHP_CHP(
     t=t_S5,
     Di=Di_CHP,
@@ -219,7 +219,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     height=0,
     duration=0,
     offset=dp_low_ref)
-                    annotation (Placement(transformation(extent={{-11.75,-89},{-6.75,-84}})));
+                    annotation (Placement(transformation(extent={{-11.25,-91.5},{-6.25,-86.5}})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor                   TT504(
       redeclare model Medium = Medium, T_start=Tin_low_start) "Temperature Sensor"
     annotation (Placement(transformation(
@@ -272,7 +272,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     hctype=hctype)
     "Pipeline connecting EX501 and P501 inlet"
     annotation (Placement(transformation(
-        extent={{5,5},{-5,-5}},
+        extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-17.75,42})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_P501_PT501(
@@ -288,7 +288,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     n=n,
     hctype=hctype) "Pipeline connecting P501 outlet and sensors" annotation (Placement(
         transformation(
-        extent={{5,5},{-5,-5}},
+        extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-17.5,71.5})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT501 "Pressure sensor"
@@ -341,8 +341,7 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
         rotation=90,
         origin={-16.5,80.5})));
   Modelica.Blocks.Interfaces.RealOutput Pel_out "Outlet Electric Power" annotation (
-      Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{
-            100,-40},{120,-20}})));
+      Placement(transformation(extent={{100,-80},{120,-60}}), iconTransformation(extent={{100,-80},{120,-60}})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501(
     redeclare model Medium = Medium,
     hctype_hot=hctype,
@@ -402,25 +401,23 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     annotation (Placement(transformation(extent={{-120,-40},{-100,-20}}),
         iconTransformation(extent={{-120,-40},{-100,-20}})));
   Modelica.Blocks.Interfaces.RealOutput TTin_CHP "Inlet temperature of CHP" annotation (
-      Placement(transformation(extent={{100.25,-58.5},{118.25,-40.5}}),
-        iconTransformation(extent={{100.5,-60.25},{120,-40}})));
+      Placement(transformation(extent={{100,-40},{120,-20}}),
+        iconTransformation(extent={{100,-40},{120,-20}})));
   Modelica.Blocks.Interfaces.RealOutput TTout_CHP "Outlet temperature of CHP" annotation (
-     Placement(transformation(extent={{99.75,-76},{117.75,-58}}),iconTransformation(
-          extent={{100.5,-80.25},{120,-60}})));
+     Placement(transformation(extent={{100,-60},{120,-40}}),     iconTransformation(
+          extent={{100,-60},{120,-40}})));
   ElectricNetwork.Interfaces.ElectricPortOutlet outletPower annotation (Placement(transformation(extent={{-120,-68},{-100,-48}}), iconTransformation(extent={{-120,-68},{-100,-48}})));
 equation
 
   fuel.Xi = inStream(inletFuel.Xi);
   fuel.p = inletFuel.p;
   fuel.h = inStream(inletFuel.h_out);
-  TTin_CHP = CHP.Tin;
-  TTout_CHP = CHP.Tout;
   connect(PL_S500_CHP_FV502.inlet,CHP. outlet) annotation (Line(
-      points={{29.25,-60.75},{35.75,-60.75},{35.75,-60.225},{43.6,-60.225}},
+      points={{29.25,-60.75},{35.75,-60.75},{35.75,-60.225},{38.85,-60.225}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_CHPHP_CHP.outlet,CHP. inlet) annotation (Line(
-      points={{29.75,-74.75},{36.05,-74.75},{36.05,-74.775},{43.6,-74.775}},
+      points={{29.75,-74.75},{36.05,-74.75},{36.05,-74.775},{38.85,-74.775}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_ReducerOut_FV501.inlet, ReducerCold.inlet) annotation (Line(
@@ -451,8 +448,8 @@ equation
       points={{-42.75,-18.25},{-42.75,-12}},
       color={140,56,54},
       thickness=0.5));
-  connect(PCHP_m_flow1.y,variableDifferentialPressurePump. Dp) annotation (Line(points={{-6.5,
-          -86.5},{-5,-86.5},{-5,-87},{-2.315,-87},{-2.315,-77.3}},     color={0,0,127}));
+  connect(PCHP_m_flow1.y,variableDifferentialPressurePump. Dp) annotation (Line(points={{-6,-89},{0.75,-89},{0.75,-82.75},{-2.25,-82.75},{-2.25,-77.3},{-2.315,-77.3}},
+                                                                       color={0,0,127}));
   connect(PL_S500_ReducerOut_FV501.outlet, CHPCWP_.inlet) annotation (Line(
       points={{-42.75,-53.25},{-42.75,-61},{-42.5,-61}},
       color={140,56,54},
@@ -504,42 +501,31 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT.inlet, inlet) annotation (Line(
-      points={{-42,75},{-41.75,75},{-41.75,94.5},{-20,94.5},{-20,110}},
+      points={{-42,75},{-41.75,75},{-41.75,89.5},{-20.25,89.5},{-20.25,101.25},{-20,101.25},{-20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(omega, P501.in_omega) annotation (Line(points={{-110,70},{-67.75,70},{-67.75,53.45},
-          {-20.375,53.45}}, color={0,0,127}));
-  connect(status, CHP.heat_on) annotation (Line(points={{-110,10},{-98,10},{-98,9.25},{-77,
-          9.25},{-77,-98.25},{75.125,-98.25},{75.125,-84.475}}, color={255,0,255}));
-  connect(Toutset, CHP.in_Tout_ref) annotation (Line(points={{-110,30},{-66.25,30},{-66.25,
-          -94.25},{58,-94.25},{58,-89.25},{58.15,-89.25},{58.15,-84.475}}, color={0,0,127}));
-  connect(Pelset, CHP.in_Pel_ref) annotation (Line(points={{-110,-10},{-69.75,-10},{-69.75,
-          -96.5},{63,-96.5},{63,-84.475}}, color={0,0,127}));
-  connect(FT.m_flow, m_flow_) annotation (Line(points={{-44.5,71.75},{-45,71.75},{-45,69.75},{110,69.75},{110,70}}, color={0,0,127}));
-  connect(TT501.T, TTin) annotation (Line(points={{-46.5,62.5},{-48.75,62.5},{-48.75,62},{
-          -49.25,62},{-49.25,61.75},{85,61.75},{85,50},{110,50}}, color={0,0,127}));
-  connect(PT502.p, PTout) annotation (Line(points={{-13.25,84},{39.25,84},{39.25,84.25},{69.5,
-          84.25},{69.5,-10},{110,-10}}, color={0,0,127}));
-  connect(PT501.p, PTin) annotation (Line(points={{-46.25,68.25},{-51.5,68.25},{-51.5,64.75},
-          {73.25,64.75},{73.25,10},{110,10}}, color={0,0,127}));
-  connect(TT502.T, TTout) annotation (Line(points={{-13.25,80.5},{76.75,80.5},{76.75,30},{
-          110,30}}, color={0,0,127}));
-  connect(CHP.Pel_out, Pel_out)
-    annotation (Line(points={{75.125,-51.495},{75.125,-30},{110,-30}}, color={0,0,127}));
+  connect(status, CHP.heat_on) annotation (Line(points={{-110,10},{-95.25,10},{-95.25,-96.5},{70.375,-96.5},{70.375,-84.475}},
+                                                                color={255,0,255}));
+  connect(Toutset, CHP.in_Tout_ref) annotation (Line(points={{-110,30},{-91.75,30},{-91.75,-94},{53.5,-94},{53.5,-89.25},{53.4,-89.25},{53.4,-84.475}},
+                                                                           color={0,0,127}));
+  connect(Pelset, CHP.in_Pel_ref) annotation (Line(points={{-110,-10},{-93.25,-10},{-93.25,-95},{58.25,-95},{58.25,-84.475}},
+                                           color={0,0,127}));
+  connect(TT501.T, TTin) annotation (Line(points={{-46.5,62.5},{-47.75,62.5},{-47.75,96},{96.25,96},{96.25,49.75},{102.5,49.75},{102.5,50},{110,50}},
+                                                                  color={0,0,127}));
   connect(inletFuel, CHP.inletfuel) annotation (Line(
-      points={{71.25,110},{71.25,90.5},{63,90.5},{63,-50.525}},
+      points={{71.25,110},{71.25,83.5},{58.25,83.5},{58.25,-50.525}},
       color={182,109,49},
       thickness=0.5));
   connect(PL_S500_P501_PT501.outlet, outlet) annotation (Line(
-      points={{-17.5,76.5},{-17.5,90},{20,90},{20,110}},
+      points={{-17.5,76.5},{-17.5,87.25},{19.75,87.25},{19.75,98.75},{20,98.75},{20,110}},
       color={140,56,54},
       thickness=0.5));
   connect(EX501.outcold, PL_S500_EX501_P501.inlet) annotation (Line(
-      points={{-14.7125,18.0625},{-14.7125,31.75},{-17.75,31.75},{-17.75,37}},
+      points={{-14.7125,18.0625},{-14.7125,23.5},{-14.75,23.5},{-14.75,29},{-17.75,29},{-17.75,37}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_FT501_EX501.outlet, EX501.incold) annotation (Line(
-      points={{-42,37},{-42.25,37},{-42.25,33.75},{-44,33.75},{-44,18.0625},{-42.5375,18.0625}},
+      points={{-42,37},{-41.75,37},{-41.75,28.75},{-44,28.75},{-44,18.0625},{-42.5375,18.0625}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_ReducerHot_EX501.outlet, EX501.inhot) annotation (Line(
@@ -551,60 +537,61 @@ equation
       points={{-42.5375,6.1875},{-42.5375,-5},{-42.75,-5},{-42.75,-18.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(MultiPort, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-110,-80},{-88,-80},{-88,-48.25},{-44.8,-48.25}},
+  connect(FT.m_flow, m_flow_) annotation (Line(points={{-44.5,71.75},{-44.5,70},{-48.75,70},{-48.75,97.5},{97.5,97.5},{97.5,70},{110,70}}, color={0,0,127}));
+  connect(TT502.T, TTout) annotation (Line(points={{-13.25,80.5},{-11.75,80.5},{-11.75,95},{95,95},{95,30},{110,30}},     color={0,0,127}));
+  connect(PT501.p, PTin) annotation (Line(points={{-46.25,68.25},{-46.75,68.25},{-46.75,93.5},{93.75,93.5},{93.75,10},{110,10}},
+                                                                                                                           color={0,0,127}));
+  connect(PT502.p, PTout) annotation (Line(points={{-13.25,84},{-11.5,84},{-11.5,83.5},{-9.5,83.5},{-9.5,92.5},{92.5,92.5},{92.5,-10},{110,-10}},   color={0,0,127}));
+  connect(PL_S500_P501_PT501.wall, PL_S500_EX501_P501.wall) annotation (Line(
+      points={{-15.45,71.5},{-11.25,71.5},{-11.25,42},{-15.7,42}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_EX501_ReducerOut.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-44.8,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,-48.5},{-88,-48.25},{-44.8,
-          -48.25}},
+  connect(PL_S500_ReducerHot_EX501.wall, PL_S500_FV502_ReducerHot.wall) annotation (Line(
+      points={{-13.2,-23.25},{-9.75,-23.25},{-9.75,-48.25},{-13.2,-48.25}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_FV502_ReducerHot.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-13.2,-48.25},{-9,-48.25},{-9,-56.5},{-88,-56.5},{-88,-48.25},{-44.8,-48.25}},
+  connect(PL_S500_CHP_FV502.wall, PL_S500_FV502_ReducerHot.wall) annotation (Line(
+      points={{24.25,-58.7},{24.25,-55.75},{-9.75,-55.75},{-9.75,-48.25},{-13.2,-48.25}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_FV501_CHPWP.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-29,-76.8},{-29,-81.25},{-87.5,-81.25},{-87.5,-70.5},{-88.25,-70.5},{-88.25,
-          -70},{-88,-70},{-88,-48.25},{-44.8,-48.25}},
+  connect(MultiPort, PL_S500_FV501_CHPWP.wall) annotation (Line(
+      points={{-110,-80},{-28.5,-80},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_CHPHP_CHP.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{24.75,-76.8},{24.75,-81.5},{-29.25,-81.5},{-29.25,-81.25},{-87.5,-81.25},{-87.5,
-          -70.5},{-88.25,-70.5},{-88.25,-70},{-88,-70},{-88,-48.25},{-44.8,-48.25}},
+  connect(PL_S500_CHPHP_CHP.wall, PL_S500_FV501_CHPWP.wall) annotation (Line(
+      points={{24.75,-76.8},{24.75,-80.25},{-28.5,-80.25},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_CHP_FV502.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{24.25,-58.7},{24.25,-56.5},{-88,-56.5},{-88,-48.25},{-44.8,-48.25}},
+  connect(PL_S500_ReducerOut_FV501.wall, PL_S500_FV501_CHPWP.wall) annotation (Line(
+      points={{-44.8,-48.25},{-55,-48.25},{-55,-80},{-28.5,-80},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_ReducerHot_EX501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-13.2,-23.25},{-9,-23.25},{-9,-56.5},{-88,-56.5},{-88,-48.25},{-44.8,-48.25}},
+  connect(PL_S500_EX501_ReducerOut.wall, PL_S500_FV501_CHPWP.wall) annotation (Line(
+      points={{-44.8,-23.25},{-55.5,-23.25},{-55.5,-80},{-28.5,-80},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_FT501_EX501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-44.05,42},{-87.25,42},{-87.25,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,
-          -48.5},{-88,-48.25},{-44.8,-48.25}},
+  connect(PL_S500_FT501_EX501.wall, PL_S500_FV501_CHPWP.wall)
+    annotation (Line(
+      points={{-44.05,42},{-55.75,42},{-55.75,-23},{-47,-23},{-47,-23.25},{-55.25,-23.25},{-55.25,-80.25},{-28.5,-80.25},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_P501_PT501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-19.55,71.5},{-87.5,71.5},{-87.5,41.75},{-86.75,41.75},{-86.75,42},{-87.25,
-          42},{-87.25,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,-48.5},{-88,-48.25},{-44.8,
-          -48.25}},
+  connect(PL_S500_FV502_ReducerHot.wall, PL_S500_FV501_CHPWP.wall) annotation (Line(
+      points={{-13.2,-48.25},{-9.75,-48.25},{-9.75,-56},{-55.25,-56},{-55.25,-80},{-28.5,-80},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S500_EX501_P501.wall, PL_S500_ReducerOut_FV501.wall) annotation (Line(
-      points={{-19.8,42},{-30.5,42},{-30.5,71.5},{-87.5,71.5},{-87.5,41.75},{-86.75,41.75},
-          {-86.75,42},{-87.25,42},{-87.25,-23.25},{-87.75,-23.25},{-87.75,-48.5},{-88,-48.5},
-          {-88,-48.25},{-44.8,-48.25}},
+  connect(PL_S500_EX501_P501.wall, PL_S500_FV501_CHPWP.wall) annotation (Line(
+      points={{-15.7,42},{-11.25,42},{-11.25,35.5},{-11.5,35.5},{-11.5,33.25},{-55.75,33.25},{-55.75,-23},{-47,-23},{-47,-23.25},{-55.5,-23.25},{-55.5,-80.25},{-28.5,-80.25},{-28.5,-76.8},{-29,-76.8}},
       color={255,101,98},
       thickness=0.5));
-  connect(CHPCWP_.m_flow, m_flow_CHP) annotation (Line(points={{-45.05,-61.935},{-94.75,-61.935},
-          {-94.75,-30},{-110,-30}}, color={0,0,127}));
-  connect(CHP.outletPower, outletPower) annotation (Line(
-      points={{70.275,-50.525},{70.275,-41.25},{-91.75,-41.25},{-91.75,-58},{-110,-58}},
+  connect(m_flow_CHP, CHPCWP_.m_flow) annotation (Line(points={{-110,-30},{-99.75,-30},{-99.75,-30.25},{-90.25,-30.25},{-90.25,-92.75},{-49.75,-92.75},{-49.75,-61.935},{-45.05,-61.935}}, color={0,0,127}));
+  connect(omega, P501.in_omega) annotation (Line(points={{-110,70},{-97.5,70},{-97.5,98.75},{-22.75,98.75},{-22.75,53.45},{-20.375,53.45}}, color={0,0,127}));
+  connect(outletPower, CHP.outletPower) annotation (Line(
+      points={{-110,-58},{-97.5,-58},{-97.5,-98.5},{86.75,-98.5},{86.75,-45},{65.525,-45},{65.525,-50.525}},
       color={56,93,138},
       thickness=1));
+  connect(TT504.T, TTout_CHP) annotation (Line(points={{-10.75,-11.75},{-9,-11.75},{-9,-11.5},{-7.25,-11.5},{-7.25,89.75},{90,89.75},{90,-50},{110,-50}}, color={0,0,127}));
+  connect(TT503.T, TTin_CHP) annotation (Line(points={{-47,-12},{-48.25,-12},{-48.25,-12.25},{-49.5,-12.25},{-49.5,91.25},{91.25,91.25},{91.25,-30},{110,-30}}, color={0,0,127}));
+  connect(CHP.Pel_out, Pel_out) annotation (Line(points={{70.375,-51.495},{70.375,-49},{88.75,-49},{88.75,-70},{110,-70}}, color={0,0,127}));
   annotation (Icon(                                             graphics={            Bitmap(
           extent={{8,-30},{58,30}},
           imageSource="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",

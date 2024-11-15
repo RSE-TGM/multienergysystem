@@ -20,6 +20,9 @@ model GasBoiler "System 100"
   parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 1 "Combustion efficiency";
+  parameter Modelica.Units.SI.Time tdelay = 10 "Rising time of heater from 0 to full power";
+
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
   final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
 
@@ -98,6 +101,7 @@ model GasBoiler "System 100"
         origin={20,62})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB(
     redeclare model Medium = Medium,
+    etanom=eta_combustion,
     redeclare model Gas = Gas,
     h=h,
     D=D,
@@ -108,8 +112,10 @@ model GasBoiler "System 100"
     Tout_start=Tout_start_S1,
     Pnimnom=Pminnom,
     Pnom=Pnom,
-    HH=55.5e6) annotation (Placement(visible=true, transformation(
-        origin={0,-84},
+    HH=55.5e6,
+    tdelay=tdelay)
+               annotation (Placement(visible=true, transformation(
+        origin={0,-97},
         extent={{-36,-36},{36,36}},
         rotation=0)));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
@@ -127,7 +133,7 @@ model GasBoiler "System 100"
     u_nom=u_nom,
     hctype=hctype,
     cf=cf)         annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
+        extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,-24})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(
@@ -145,7 +151,7 @@ model GasBoiler "System 100"
     u_nom=u_nom,
     hctype=hctype,
     cf=cf)         annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
+        extent={{10,10},{-10,-10}},
         rotation=90,
         origin={-20,-24})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(
@@ -163,16 +169,16 @@ model GasBoiler "System 100"
     u_nom=u_nom,
     hctype=hctype,
     cf=cf)         annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
+        extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,34})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT(
     redeclare model Medium = Medium,
     T_start=Tin_start_S1,
     p_start=pin_start_S1)  annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{-10,10},{10,-10}},
         rotation=-90,
-        origin={-16,44})));
+        origin={-24,44})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT101(
     redeclare model Medium = Medium,
     T_start=Tin_start_S1,
@@ -216,14 +222,6 @@ equation
       points={{20,-4.6},{20,-14}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S100_FT101_GB101.outlet, GB.inlet) annotation (Line(
-      points={{-20,-34},{-20,-42},{-10.8,-42},{-10.8,-55.2}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S100_GB101_P101.inlet, GB.outlet) annotation (Line(
-      points={{20,-34},{20,-42},{10.8,-42},{10.8,-55.2}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S100_P101_FCV101.inlet,P101. outlet) annotation (Line(
       points={{20,24},{20,14.6}},
       color={140,56,54},
@@ -233,7 +231,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT.outlet, PL_S100_FT101_GB101.inlet) annotation (Line(
-      points={{-20,38},{-20,12},{-20,12},{-20,-14}},
+      points={{-20,38},{-20,-14}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV101.outlet, PT102.inlet) annotation (Line(
@@ -252,10 +250,7 @@ equation
       points={{-20,50},{-20,63},{-19.6,63},{-19.6,76}},
       color={140,56,54},
       thickness=0.5));
-  connect(MultiPort, PL_S100_FT101_GB101.wall) annotation (Line(points={{-110,-80},{-66,-80},{-66,-24},{-24.1,-24}}, color={255,238,44}));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,-80},{-110,-80}}, color={255,238,44}));
-  connect(PL_S100_GB101_P101.wall, PL_S100_FT101_GB101.wall) annotation (Line(points={{24.1,-24},{30,-24},{30,-10},{-66,-10},{-66,-24},{-24.1,-24}}, color={255,238,44}));
-  connect(PL_S100_P101_FCV101.wall, PL_S100_FT101_GB101.wall) annotation (Line(points={{24.1,34},{34,34},{34,20},{-66,20},{-66,-24},{-24.1,-24}}, color={255,238,44}));
   connect(TT101.inlet, inlet) annotation (Line(
       points={{-19.6,76},{-20,76},{-20,110}},
       color={140,56,54},
@@ -264,18 +259,40 @@ equation
       points={{19.6,92},{19.6,101},{20,101},{20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(theta, FCV101.opening) annotation (Line(points={{-110,50},{-82,50},{-82,52},{-56,52},{-56,56},{4,56},{4,62},{12,62}}, color={0,0,127}));
-  connect(omega, P101.in_omega) annotation (Line(points={{-110,70},{-48,70},{-48,0.2},{14,0.2}}, color={0,0,127}));
-  connect(Toutset, GB.Tout_ref) annotation (Line(points={{-110,30},{-56,30},{-56,-84},{-25.2,-84}}, color={0,0,127}));
-  connect(status, GB.heat_on) annotation (Line(points={{-110,10},{-82,10},{-82,-102},{-25.2,-102}}, color={255,0,255}));
-  connect(FT.m_flow, m_flow_) annotation (Line(points={{-10,37},{-10,30},{8,30},{8,48},{78,48},{78,70},{110,70}}, color={0,0,127}));
-  connect(TT102.T, TTout) annotation (Line(points={{29.8,92},{46,92},{46,30},{110,30}}, color={0,0,127}));
-  connect(TT101.T, TTin) annotation (Line(points={{-29.8,76},{-38,76},{-38,68},{70,68},{70,50},{110,50}}, color={0,0,127}));
-  connect(PT101.p, PTin) annotation (Line(points={{-29.8,64},{-34,64},{-34,10},{110,10}}, color={0,0,127}));
-  connect(PT102.p, PTout) annotation (Line(points={{29.8,82},{38,82},{38,-10},{110,-10}}, color={0,0,127}));
-  connect(inletFuel, GB.inletfuel) annotation (Line(
-      points={{54,-122},{54,-84},{21.6,-84}},
+  connect(Toutset, GB.Tout_ref) annotation (Line(points={{-110,30},{-95.5,30},{-95.5,-137.5},{-31.5,-137.5},{-31.5,-97},{-25.2,-97}},
+                                                                                                    color={0,0,127}));
+  connect(status, GB.heat_on) annotation (Line(points={{-110,10},{-97.5,10},{-97.5,-139},{-30,-139},{-30,-115},{-25.2,-115}},
+                                                                                                    color={255,0,255}));
+  connect(FT.m_flow, m_flow_) annotation (Line(points={{-30,37},{-30,32},{-40,32},{-40,136},{96,136},{96,70},{110,70}}, color={0,0,127}));
+  connect(TT101.T, TTin) annotation (Line(points={{-29.8,76},{-34,76},{-34,134.5},{94,134.5},{94,50},{110,50}}, color={0,0,127}));
+  connect(TT102.T, TTout) annotation (Line(points={{29.8,92},{32,92},{32,133},{92,133},{92,30},{110,30}}, color={0,0,127}));
+  connect(PT101.p, PTin) annotation (Line(points={{-29.8,64},{-32,64},{-32,131.5},{90,131.5},{90,10},{110,10}}, color={0,0,127}));
+  connect(PT102.p, PTout) annotation (Line(points={{29.8,82},{34,82},{34,129.5},{88,129.5},{88,-10},{110,-10}}, color={0,0,127}));
+  connect(GB.inletfuel, inletFuel) annotation (Line(
+      points={{21.6,-97},{30,-97},{30,-125},{54,-125},{54,-122}},
       color={182,109,49},
+      thickness=0.5));
+  connect(omega, P101.in_omega) annotation (Line(points={{-110,70},{-103.5,70},{-103.5,70.5},{-95,70.5},{-95,137},{7,137},{7,0},{10.5,0},{10.5,0.2},{14,0.2}}, color={0,0,127}));
+  connect(theta, FCV101.opening) annotation (Line(points={{-110,50},{-97.5,50},{-97.5,138},{8,138},{8,62},{12,62}}, color={0,0,127}));
+  connect(GB.inlet, PL_S100_FT101_GB101.outlet) annotation (Line(
+      points={{-10.8,-68.2},{-10.8,-55},{-20,-55},{-20,-34}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(GB.outlet, PL_S100_GB101_P101.inlet) annotation (Line(
+      points={{10.8,-68.2},{10.8,-55},{20,-55},{20,-34}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S100_P101_FCV101.wall, PL_S100_GB101_P101.wall) annotation (Line(
+      points={{15.9,34},{8,34},{8,34.5},{0,34.5},{0,-24},{15.9,-24}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL_S100_FT101_GB101.wall, PL_S100_GB101_P101.wall) annotation (Line(
+      points={{-15.9,-24},{15.9,-24}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(MultiPort, PL_S100_GB101_P101.wall) annotation (Line(
+      points={{-110,-80},{-29.5,-80},{-29.5,-45},{0,-45},{0,-24},{15.9,-24}},
+      color={255,101,98},
       thickness=0.5));
   annotation (Icon(                                             graphics={Bitmap(
           extent={{-40,-40},{40,40}},
@@ -285,5 +302,5 @@ equation
                + "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",
           fileName="modelica://MultiEnergySystem/../../../../../Users/muro/Downloads/flame-png-4870.png")}),
                                                                  Diagram(coordinateSystem(
-                                     extent={{-100,-140},{100,140}})));
+                                     extent={{-100,-140},{100,140}}, grid={0.5,0.5})));
 end GasBoiler;

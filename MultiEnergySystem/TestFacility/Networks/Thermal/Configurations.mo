@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.TestFacility.Networks.Thermal;
+within MultiEnergySystem.TestFacility.Networks.Thermal;
 package Configurations
   extends Modelica.Icons.VariantsPackage;
 
@@ -82,41 +82,25 @@ package Configurations
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false), graphics={
             Line(
-              points={{86,-88},{86,-116}},
+              points={{90,-88},{90,-116}},
               color={162,29,33},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
-            Text(
-              extent={{42,-90},{82,-110}},
-              textColor={0,0,0},
-              textString="80°C"),
             Line(
               points={{246,-88},{246,-116}},
               color={162,29,33},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
-            Text(
-              extent={{202,-90},{242,-110}},
-              textColor={0,0,0},
-              textString="80°C"),
             Line(
               points={{386,-86},{386,-114}},
               color={162,29,33},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
-            Text(
-              extent={{342,-88},{382,-108}},
-              textColor={0,0,0},
-              textString="80°C"),
             Line(
               points={{546,-86},{546,-114}},
               color={162,29,33},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
-            Text(
-              extent={{502,-88},{542,-108}},
-              textColor={0,0,0},
-              textString="80°C"),
             Line(
               points={{154,-114},{154,-86}},
               color={162,29,33},
@@ -128,15 +112,147 @@ package Configurations
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
             Line(
-              points={{458,-114},{458,-86}},
+              points={{454,-114},{454,-86}},
               color={162,29,33},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
             Line(
-              points={{624,-116},{624,-88}},
+              points={{616,-116},{616,-88}},
               color={162,29,33},
               arrow={Arrow.None,Arrow.Filled},
-              thickness=1)}));
+              thickness=1),
+            Line(
+              points={{146,-342},{146,-314}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{308,-336},{308,-308}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{452,-334},{452,-306}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{610,-336},{610,-308}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{86,-350},{86,-378}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{250,-350},{250,-378}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{388,-350},{388,-378}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{548,-350},{548,-378}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{588,-262},{588,-244},{570,-244},{570,-262}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{428,-262},{428,-244},{410,-244},{410,-262}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{286,-262},{286,-244},{268,-244},{268,-262}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{126,-258},{126,-240},{108,-240},{108,-258}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{408,-176},{408,-194},{426,-194},{426,-176}},
+              color={162,29,33},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{570,-176},{570,-194},{588,-194},{588,-176}},
+              color={162,29,33},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{270,-178},{270,-196},{288,-196},{288,-178}},
+              color={162,29,33},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{110,-174},{110,-192},{128,-192},{128,-174}},
+              color={162,29,33},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{840,-304},{840,-276}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{686,-274},{686,-302}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{0,-14},{0,14}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1,
+              origin={766,-372},
+              rotation=-90),
+            Line(
+              points={{802,-188},{802,-170},{734,-170},{734,-188}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{0,-14},{0,14}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1,
+              origin={584,-394},
+              rotation=-90),
+            Line(
+              points={{0,-14},{0,14}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1,
+              origin={428,-396},
+              rotation=-90),
+            Line(
+              points={{0,-14},{0,14}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1,
+              origin={282,-394},
+              rotation=-90)}));
     end CentralisedNetworkBaseII;
 
     partial model CentralizedNetworkBaseLoadSimplified
@@ -1280,5 +1396,71 @@ package Configurations
           color={56,93,138},
           thickness=1));
     end CentralisedSystem_GBEB;
+
+    model CentralisedSystems_GBEBCHP
+      extends CentralisedSystem_GBEB;
+      Plants.Thermal.Systems.CHP S500(
+        n=n,
+        Tin_low_start=Tin_Source_start_S5,
+        Tout_low_start=Tout_Source_start_S5,
+        Tin_high_start=Tin_User_start_S5,
+        Tout_high_start=Tout_User_start_S5,
+        Pel_SP=PeCHP) annotation (Placement(transformation(extent={{-568,-330},{-482,-244}})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_hot(
+        L=5,
+        t=t_S5,
+        pin_start=pin_User_start_S5 - 0.04e5,
+        Tin_start=Tout_User_start_S5,
+        Tout_start=Tout_User_start_S5,
+        Di=Di_S5,
+        q_m3h_start=q_m3h_S5_User,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={-506,-213})));
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange2(D_i=51e-3, D_o=Di_S5)    annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-506,-182})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_cold(
+        L=5,
+        t=t_S5,
+        pin_start=pin_User_start_S5 - 0.02e5,
+        Tin_start=Tin_User_start_S5,
+        Tout_start=Tin_User_start_S5,
+        Di=Di_S5,
+        q_m3h_start=q_m3h_S5_User,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=90,
+            origin={-542,-213})));
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange3(D_i=51e-3, D_o=Di_S5)     annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-542,-182})));
+    equation
+      connect(PL_S500_rCD_hot.outlet,suddenAreaChange2. outlet) annotation (Line(
+          points={{-506,-203},{-506,-192}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange3.outlet,PL_S500_rCD_cold. inlet) annotation (Line(
+          points={{-542,-192},{-542,-203}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S500_rCD_cold.outlet,S500. inlet) annotation (Line(
+          points={{-542,-223},{-542,-230.275},{-541.77,-230.275},{-541.77,-237.55}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S500_rCD_hot.inlet,S500. outlet) annotation (Line(
+          points={{-506,-223},{-506,-230.275},{-507.37,-230.275},{-507.37,-237.55}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange3.inlet, rackCD_Cold_S300_S300.inlet) annotation (Line(
+          points={{-542,-172},{-542,-26},{-502,-26},{-502,5.25},{-470,5.25}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange2.inlet, rackCD_Hot_S500_SXXX.inlet) annotation (Line(
+          points={{-506,-172},{-508,-172},{-508,-46},{-488,-46},{-488,45},{-500,45}},
+          color={140,56,54},
+          thickness=0.5));
+    end CentralisedSystems_GBEBCHP;
   end Centralised;
 end Configurations;

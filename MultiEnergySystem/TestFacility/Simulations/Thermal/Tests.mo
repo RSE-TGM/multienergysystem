@@ -7439,7 +7439,7 @@ System")}),
 Control
 System")}),
           Diagram(coordinateSystem(
-              extent={{-160,-200},{160,200}}, grid={1,1}), graphics={Rectangle(
+              extent={{-160,-600},{160,200}}),             graphics={Rectangle(
                 extent={{-60,-80},{10,-170}},
                 fillColor={255,200,160},
                 fillPattern=FillPattern.Solid,
@@ -8415,7 +8415,7 @@ System")}),
 Control
 System")}),
           Diagram(coordinateSystem(
-              extent={{-160,-200},{160,200}}, grid={1,1}), graphics={Rectangle(
+              extent={{-170,-600},{160,200}}),             graphics={Rectangle(
                 extent={{-60,-80},{10,-170}},
                 fillColor={255,200,160},
                 fillPattern=FillPattern.Solid,

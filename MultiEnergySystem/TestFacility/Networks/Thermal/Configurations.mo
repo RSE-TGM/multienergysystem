@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.Networks.Thermal;
+﻿within MultiEnergySystem.TestFacility.Networks.Thermal;
 package Configurations
   extends Modelica.Icons.VariantsPackage;
 
@@ -80,7 +80,63 @@ package Configurations
           thickness=0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
-        Diagram(coordinateSystem(preserveAspectRatio = false)));
+        Diagram(coordinateSystem(preserveAspectRatio = false), graphics={
+            Line(
+              points={{86,-88},{86,-116}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Text(
+              extent={{42,-90},{82,-110}},
+              textColor={0,0,0},
+              textString="80°C"),
+            Line(
+              points={{246,-88},{246,-116}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Text(
+              extent={{202,-90},{242,-110}},
+              textColor={0,0,0},
+              textString="80°C"),
+            Line(
+              points={{386,-86},{386,-114}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Text(
+              extent={{342,-88},{382,-108}},
+              textColor={0,0,0},
+              textString="80°C"),
+            Line(
+              points={{546,-86},{546,-114}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Text(
+              extent={{502,-88},{542,-108}},
+              textColor={0,0,0},
+              textString="80°C"),
+            Line(
+              points={{154,-114},{154,-86}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{314,-116},{314,-88}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{458,-114},{458,-86}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{624,-116},{624,-88}},
+              color={162,29,33},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1)}));
     end CentralisedNetworkBaseII;
 
     partial model CentralizedNetworkBaseLoadSimplified

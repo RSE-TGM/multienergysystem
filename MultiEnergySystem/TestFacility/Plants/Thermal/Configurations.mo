@@ -697,15 +697,7 @@ package Configurations "Different possible configurations of the heat generating
           color={140,56,54},
           thickness=0.5));
       annotation (
-        Diagram(coordinateSystem(extent = {{-900, -500}, {900, 320}}), graphics={  Text(extent={{-82,187},{-22,149}},     textColor = {28, 108, 200}, textString = "RackL2L3_hot"), Text(extent={{-8,309},{52,269}},      textColor = {28, 108, 200}, textString = "RackL2L3_cold"), Text(extent = {{-590, 105}, {-460, 67}}, textColor = {28, 108, 200}, textString = "Rack C/D"), Text(extent={{-162,
-                  181},{-102,143}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_hot"), Text(extent={{116,123},
-                  {176,85}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL4L5_hot"), Text(extent = {{442, 217}, {502, 179}}, textColor = {28, 108, 200}, textString = "RackL5L6_hot"),                                                                                                                                                                                                      Text(extent={{100,153},
-                  {160,113}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL4L5_cold"), Text(extent = {{470, 291}, {530, 251}}, textColor = {28, 108, 200}, textString = "RackL5L6_cold"),
-                                                                                                                                                                                                        Text(extent={{-118,
-                  311},{-58,271}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_cold"),                                                                                            Text(extent={{512,299},
-                  {592,280}},                                                                                                                                                                                                        textColor={28,108,
-                  200},
-              textString="RackL6L7")}),
+        Diagram(coordinateSystem(extent = {{-900, -500}, {900, 320}}), graphics={                                                                                                                                                                                                    Text(extent = {{-590, 105}, {-460, 67}}, textColor = {28, 108, 200}, textString = "Rack C/D")}),
         Icon(coordinateSystem(grid = {0.5, 0.5})),
         experiment(StopTime = 500, __Dymola_Algorithm = "Dassl"));
     end CentralPlantBaseII;

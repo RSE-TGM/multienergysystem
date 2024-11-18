@@ -24,6 +24,10 @@ equation
       points={{-64.4,-9.6},{-80,-9.6},{-80,-40},{-110,-40}},
       color={56,93,138},
       thickness=1));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  connect(heatGeneration.inletGas, inletGas) annotation (Line(
+      points={{-38,-26.4},{-38,-40},{84,-40},{84,0},{110,0}},
+      color={182,109,49},
+      thickness=0.5));
+  annotation (Icon(graphics={
                      Rectangle(lineColor = {140, 56, 54}, fillColor={242,220,219},   fillPattern=FillPattern.Solid,                lineThickness = 1, extent={{-100,100},{100,-100}},      radius=20)}));
 end ThermalFacility;

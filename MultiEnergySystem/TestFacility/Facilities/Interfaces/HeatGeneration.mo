@@ -4,58 +4,59 @@ partial model HeatGeneration "Partial model for heat generation plants"
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet supplyHot annotation (Placement(transformation(extent={{100,-50},{120,-30}}),iconTransformation(extent={{100,-50},{120,-30}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet returnHot annotation (Placement(transformation(extent={{100,30},{120,50}}),iconTransformation(extent={{100,30},{120,50}})));
   H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=3) "Connector for one component of the thermal facility" annotation (Placement(transformation(extent={{-10,-120},{10,-100}}), iconTransformation(extent={{-10,-120},{10,-100}})));
-  Plants.Thermal.Systems.GasBoiler gasBoiler annotation (Placement(transformation(extent={{-70,-59.5},{-50,-39.5}})));
-  Plants.Thermal.Systems.CHP cHP annotation (Placement(transformation(extent={{18.5,-59.5},{38.5,-39.5}})));
-  Plants.Thermal.Systems.ElectricBoiler electricBoiler annotation (Placement(transformation(extent={{-26.5,-60},{-6.5,-40}})));
-  Plants.Thermal.Systems.CirculationPump circulationPump annotation (Placement(transformation(extent={{-20,0},{0,20}})));
+  Plants.Thermal.Systems.GasBoiler S100 annotation (Placement(transformation(extent={{-70,-59.5},{-50,-39.5}})));
+  Plants.Thermal.Systems.CHP S500 annotation (Placement(transformation(extent={{18.5,-59.5},{38.5,-39.5}})));
+  Plants.Thermal.Systems.ElectricBoiler S400 annotation (Placement(transformation(extent={{-26.5,-60},{-6.5,-40}})));
+  Plants.Thermal.Systems.CirculationPump S900 annotation (Placement(transformation(extent={{-20,0},{0,20}})));
   ElectricNetwork.Interfaces.ElectricPortInlet electricPortInlet annotation (Placement(transformation(extent={{-120,30},{-100,50}}), iconTransformation(extent={{-120,30},{-100,50}})));
   ElectricNetwork.Interfaces.ElectricPortOutlet electricPortOutlet annotation (Placement(transformation(extent={{-120,-50},{-100,-30}}), iconTransformation(extent={{-120,-50},{-100,-30}})));
+  FMUExport.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,80},{20,120}}), iconTransformation(extent={{-20,80},{20,120}})));
 equation
-  connect(circulationPump.outlethot, supplyHot) annotation (Line(
+  connect(S900.outlethot, supplyHot) annotation (Line(
       points={{-6.1,21.5},{-6.1,32},{80,32},{80,-40},{110,-40}},
       color={140,56,54},
       thickness=0.5));
-  connect(circulationPump.inletcold, returnHot) annotation (Line(
+  connect(S900.inletcold, returnHot) annotation (Line(
       points={{-13.9,21.5},{-13.9,40},{110,40}},
       color={140,56,54},
       thickness=0.5));
-  connect(gasBoiler.inlet, circulationPump.outletcold) annotation (Line(
+  connect(S100.inlet, S900.outletcold) annotation (Line(
       points={{-63.9,-38},{-64,-38},{-64,-20},{-13.9,-20},{-13.9,-1.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(electricBoiler.inlet, circulationPump.outletcold) annotation (Line(
+  connect(S400.inlet, S900.outletcold) annotation (Line(
       points={{-20.4,-38.5},{-20.4,-20},{-13.9,-20},{-13.9,-1.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(cHP.inlet, circulationPump.outletcold) annotation (Line(
+  connect(S500.inlet, S900.outletcold) annotation (Line(
       points={{24.6,-38},{26,-38},{26,-20},{-13.9,-20},{-13.9,-1.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(circulationPump.inlethot, gasBoiler.outlet) annotation (Line(
+  connect(S900.inlethot, S100.outlet) annotation (Line(
       points={{-6.1,-1.5},{-6.1,-26},{-55.9,-26},{-55.9,-38}},
       color={140,56,54},
       thickness=0.5));
-  connect(circulationPump.inlethot, electricBoiler.outlet) annotation (Line(
+  connect(S900.inlethot, S400.outlet) annotation (Line(
       points={{-6.1,-1.5},{-6.1,-26},{-12.4,-26},{-12.4,-38.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(circulationPump.inlethot, cHP.outlet) annotation (Line(
+  connect(S900.inlethot, S500.outlet) annotation (Line(
       points={{-6.1,-1.5},{-6.1,-26},{32.6,-26},{32.6,-38}},
       color={140,56,54},
       thickness=0.5));
-  connect(gasBoiler.inletFuel, inletGas) annotation (Line(
+  connect(S100.inletFuel, inletGas) annotation (Line(
       points={{-60,-61.1},{-60,-88},{0,-88},{0,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(cHP.inletFuel, inletGas) annotation (Line(
+  connect(S500.inletFuel, inletGas) annotation (Line(
       points={{28.5,-61.1},{28.5,-88},{0,-88},{0,-110}},
       color={182,109,49},
       thickness=0.5));
-  connect(electricPortInlet, electricBoiler.inletPower) annotation (Line(
+  connect(electricPortInlet, S400.inletPower) annotation (Line(
       points={{-110,40},{-38,40},{-38,-55},{-27.5,-55}},
       color={56,93,138},
       thickness=1));
-  connect(electricPortOutlet, cHP.outletPower) annotation (Line(
+  connect(electricPortOutlet, S500.outletPower) annotation (Line(
       points={{-110,-40},{-82,-40},{-82,-76},{12,-76},{12,-55.3},{17.5,-55.3}},
       color={56,93,138},
       thickness=1));

@@ -8326,7 +8326,7 @@ System")}),
             horizontalAlignment=TextAlignment.Right));
         connect(processVariableBus.dFT711, PI_FT711.FeedBack)
           annotation (Line(
-            points={{-170,-2},{-128,-2},{-128,-58},{-170,-58},{-170,-422},{-169,-422},{-169,-480},{-40,-480},{-40,-472},{-30,-472}},
+            points={{-170,-2},{-170,-422},{-169,-422},{-169,-480},{-40,-480},{-40,-472},{-30,-472}},
             color={255,204,51},
             thickness=0.5), Text(
             string="%first",
@@ -8334,7 +8334,7 @@ System")}),
             extent={{-6,3},{-6,3}},
             horizontalAlignment=TextAlignment.Right));
         connect(processVariableBus.dFT701, PI_FT701.FeedBack) annotation (Line(
-            points={{-170,-2},{-128,-2},{-128,-80},{-169,-80},{-169,-440},{-40,-440},{-40,-433},{-30,-433}},
+            points={{-170,-2},{-170,-78},{-169,-78},{-169,-440},{-40,-440},{-40,-433},{-30,-433}},
             color={255,204,51},
             thickness=0.5), Text(
             string="%first",
@@ -8476,7 +8476,7 @@ System")}),
                 fillColor={213,255,170},
                 fillPattern=FillPattern.Solid,
                 lineColor={0,0,0}),        Text(
-                extent={{-133,-220},{2,-240}},
+                extent={{-115,-220},{20,-240}},
                 textColor={0,0,0},
                 textString="Treturn Control")}));
       end ControllerBaseIII;

@@ -1,9 +1,30 @@
 within MultiEnergySystem.TestFacility.Facilities.Interfaces;
 partial model HeatConsumption "Partial model for heat generation plants"
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  DistrictHeatingNetwork.Interfaces.FluidPortOutlet returnLine annotation (Placement(transformation(extent={{90,-50},{110,-30}}), iconTransformation(extent={{90,-50},{110,-30}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet supplyLine annotation (Placement(transformation(extent={{90,30},{110,50}}), iconTransformation(extent={{90,30},{110,50}})));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet returnHot annotation (Placement(transformation(extent={{100,30},{120,50}}), iconTransformation(extent={{100,30},{120,50}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet inletHot annotation (Placement(transformation(extent={{100,-50},{120,-30}}), iconTransformation(extent={{100,-50},{120,-30}})));
+  Loads.Thermal.Systems.CoolingSingleLoad coolingSingleLoad annotation (Placement(transformation(extent={{-70,-20},{-50,0}})));
+  Loads.Thermal.Systems.CoolingSingleLoad coolingSingleLoad1 annotation (Placement(transformation(extent={{-38,-20},{-18,0}})));
+  Loads.Thermal.Systems.CoolingSingleLoad coolingSingleLoad2 annotation (Placement(transformation(extent={{-4,-20},{16,0}})));
+  Loads.Thermal.Systems.CoolingSingleLoad coolingSingleLoad3 annotation (Placement(transformation(extent={{34,-20},{54,0}})));
+equation
+  connect(inletHot, coolingSingleLoad3.inhot) annotation (Line(
+      points={{110,-40},{80,-40},{80,14},{39.2,14},{39.2,1.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(coolingSingleLoad2.inhot, coolingSingleLoad3.inhot) annotation (Line(
+      points={{1.2,1.5},{1.2,14},{39.2,14},{39.2,1.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(coolingSingleLoad1.inhot, coolingSingleLoad3.inhot) annotation (Line(
+      points={{-32.8,1.5},{-32.8,14},{39.2,14},{39.2,1.5}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(coolingSingleLoad.inhot, coolingSingleLoad3.inhot) annotation (Line(
+      points={{-64.8,1.5},{-64.8,14},{39.2,14},{39.2,1.5}},
+      color={140,56,54},
+      thickness=0.5));
+  annotation (Icon(                                             graphics={
                              Bitmap(
           extent={{-80,-80},{80,80}},
           imageSource=

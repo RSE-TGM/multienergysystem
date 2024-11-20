@@ -14,11 +14,11 @@ partial model PartialValve
     "Pressure recovery coefficient";
   parameter Types.valveOpeningChar openingChar = Types.valveOpeningChar.Linear
     "opening characteristic";
-  parameter Types.MassFlowRate m_flow_nom = 0.4130
+  parameter Types.MassFlowRate m_flow_nom = 0.38144106
     "Peak mass flow rate at full opening"; // A_v*dp_nom*dp_nom*1,
   parameter Types.Area A_v = m_flow_nom/sqrt(rho_in_nom*dp_nom)
     "Opening area of the valve";
-  parameter Types.Density rho_in_nom = 0.657
+  parameter Types.Density rho_in_nom = 40.17625
     "Nominal inlet methane density";
 
   Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0)
@@ -29,6 +29,8 @@ partial model PartialValve
 
   Types.MassFlowRate m_flow(start = m_flow_nom)
     "Mass flow rate through the valve";
+  Types.Pressure dp(start = dp_nom)
+    "Pressure loss in the valve";
 
 equation
 
@@ -45,20 +47,20 @@ equation
   inStream(outlet.Xi) = inlet.Xi;
 
   if openingChar == Types.valveOpeningChar.Linear then
-// Momentum balance
+  // Momentum balance
     if PressureDropLinear then
       m_flow = (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*K_v*(inlet.p - outlet.p);
     else
       m_flow = homotopy((BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.linear(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
     end if;
   elseif openingChar == Types.valveOpeningChar.Quadratic then
-// Momentum balance
+  // Momentum balance
     m_flow = homotopy((BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)*A_v*sqrt(rhoin)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.quadratic(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
 
    //m_flow = opening * A_v * sqrt(rhoin) * regRoot(inlet.p - outlet.p);
 
-// Definition of fluids
+  // Definition of fluids
   fluidIn.p = inlet.p;
   fluidIn.h = inStream(inlet.h_out);
   fluidIn.Xi = inStream(inlet.Xi);
@@ -74,6 +76,7 @@ equation
   pout = outlet.p;
   Tin = fluidIn.T;
   Tout = fluidOut.T;
+  dp = inlet.p - outlet.p;
 
 
   annotation (

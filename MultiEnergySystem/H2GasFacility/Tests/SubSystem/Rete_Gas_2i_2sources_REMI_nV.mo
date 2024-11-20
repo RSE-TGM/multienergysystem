@@ -2,10 +2,9 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model Rete_Gas_2i_2sources_REMI_nV
   extends Rete_Gas_2i_2sources_nV(
     break REMI,
-    m_flow_H2(offset=0.001),
-    m_flow_H1(offset=0.001),
-    Immissione_1(m_flow0=0.001),
-    Immissione_2(m_flow0=0.001));
+    m_flow_H1(height=0, offset=0),
+    m_flow_H2(offset=0.0001),
+    m_flow_H5(height=0, offset=0));
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
     valveLinearOpening(
     redeclare model Medium = Medium,
@@ -13,7 +12,7 @@ model Rete_Gas_2i_2sources_REMI_nV
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    rho_in_nom=40.17625,
+    m_flow_nom=0.41055,
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,
@@ -31,7 +30,7 @@ model Rete_Gas_2i_2sources_REMI_nV
     duration=0,
     offset=1,
     startTime=200)                                                                                 annotation (
-    Placement(visible = true, transformation(origin={-152,0},    extent={{-6,-6},
+    Placement(visible = true, transformation(origin={-146,-4},   extent={{-6,-6},
             {6,6}},                                                                               rotation=0)));
 equation
   connect(sourcePressure.outlet,valveLinearOpening. inlet) annotation (Line(
@@ -43,5 +42,6 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(opening1.y, valveLinearOpening.opening)
-    annotation (Line(points={{-145.4,0},{-134,0},{-134,18}}, color={0,0,127}));
+    annotation (Line(points={{-139.4,-4},{-134,-4},{-134,18}},
+                                                             color={0,0,127}));
 end Rete_Gas_2i_2sources_REMI_nV;

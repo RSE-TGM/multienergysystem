@@ -10,6 +10,7 @@ model Rete_Gas_2i_nosources_REMI
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
+    m_flow_nom=0.41267,
     rho_in_nom=40.17625,
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
@@ -28,7 +29,7 @@ model Rete_Gas_2i_nosources_REMI
     duration=0,
     offset=1,
     startTime=200)                                                                                 annotation (
-    Placement(visible = true, transformation(origin={-154,0},    extent={{-6,-6},
+    Placement(visible = true, transformation(origin={-116,-8},   extent={{-6,-6},
             {6,6}},                                                                               rotation=0)));
 equation
   connect(sourcePressure.outlet,valveLinearOpening. inlet) annotation (Line(
@@ -36,7 +37,7 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(opening1.y,valveLinearOpening. opening)
-    annotation (Line(points={{-147.4,0},{-138,0},{-138,18}},
+    annotation (Line(points={{-109.4,-8},{-98,-8},{-98,8},{-138,8},{-138,18}},
                                                         color={0,0,127}));
   connect(s1.inlet, valveLinearOpening.outlet) annotation (Line(
       points={{-162,26},{-148,26}},

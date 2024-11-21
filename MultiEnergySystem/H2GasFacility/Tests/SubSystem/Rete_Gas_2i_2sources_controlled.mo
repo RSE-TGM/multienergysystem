@@ -14,7 +14,7 @@ model Rete_Gas_2i_2sources_controlled
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_nom=0.41055,
+    m_flow_nom=0.41245 + 0*0.41055,
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,
@@ -38,7 +38,7 @@ model Rete_Gas_2i_2sources_controlled
         rotation=180,
         origin={-144,26})));
   Controllers.Valve_controller valve_controller
-    annotation (Placement(transformation(extent={{-140,-8},{-120,12}})));
+    annotation (Placement(transformation(extent={{-140,-10},{-120,10}})));
 equation
   connect(sourcePressure.outlet,valveLinearOpening. inlet) annotation (Line(
       points={{-90,26},{-104,26}},
@@ -54,8 +54,8 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(valve_controller.P_meas, idealPressureSensor.p_meas) annotation (Line(
-        points={{-140.8,2},{-148,2},{-148,10},{-147.8,10},{-147.8,18.6}}, color
+        points={{-140.8,0},{-150,0},{-150,18},{-147.8,18},{-147.8,18.6}}, color
         ={0,0,127}));
   connect(valve_controller.ACT_x, valveLinearOpening.opening)
-    annotation (Line(points={{-118.6,2},{-114,2},{-114,18}}, color={0,0,127}));
+    annotation (Line(points={{-118.6,0},{-114,0},{-114,18}}, color={0,0,127}));
 end Rete_Gas_2i_2sources_controlled;

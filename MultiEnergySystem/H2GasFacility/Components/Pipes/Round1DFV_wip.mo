@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.H2GasFacility.Components.Pipes;
+within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV_wip
   "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(

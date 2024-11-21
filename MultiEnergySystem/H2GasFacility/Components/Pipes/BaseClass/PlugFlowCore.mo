@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
+within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 model PlugFlowCore
   extends MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(Di=Di);
   import Modelica.Fluid.Utilities.regSquare;

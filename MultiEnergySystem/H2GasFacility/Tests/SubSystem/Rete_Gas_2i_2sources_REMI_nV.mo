@@ -12,7 +12,7 @@ model Rete_Gas_2i_2sources_REMI_nV
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_nom=0.41055,
+    m_flow_nom=0.41245,
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,

@@ -3,10 +3,9 @@ model Rete_Gas_2i_2sources_controlled
   "The valve is controlled in order to not overcome the maximum pressure of the net."
   extends Rete_Gas_2i_2sources_nV(
     break REMI,
-    m_flow_H1(height=0, offset=0),
     m_flow_H2(offset=0.001),
-    m_flow_H5(height=0, offset=0),
-    Immissione_1(m_flow0=0.0001));
+    Immissione_1(m_flow0=0.0001),
+    m_flow_H1(offset=0.00001));
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
     valveLinearOpening(
     redeclare model Medium = Medium,

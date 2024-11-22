@@ -10,3 +10,7 @@ RackCD
 RackType2
 ConnectorTypeI
 RackTypeI
+GasBoilerFlowControlled
+ElectricBoilerFlowControlled
+CHPFlowControlled
+CirculationPumpPressureControlled

@@ -4,8 +4,8 @@ package Controllers
   extends Modelica.Icons.Package;
   model Valve_controller
     "Proportional controller for the REMI station valve"
-    parameter Real P_rng = 0.065e5 "Tunable parameter to get the right valve opening";
-    parameter Real P_max = 5.0e5 "Maximum pressure of the network";
+    parameter Real P_rng = (6-4.93)*10^5 "Tunable parameter to get the right valve opening";
+    parameter Real P_max = 6.0e5 "Maximum pressure of the network";
     Real ACT_comp(start=1) "Computed valve actuation";
 
     Modelica.Blocks.Interfaces.RealInput P_meas

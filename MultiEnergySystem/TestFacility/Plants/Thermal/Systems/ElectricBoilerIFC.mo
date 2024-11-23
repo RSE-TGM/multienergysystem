@@ -1,0 +1,272 @@
+within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
+model ElectricBoilerIFC "System 400 with Ideal Flow Controlled"
+  extends TestFacility.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
+  extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
+
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+      constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
+
+  constant Real pi = Modelica.Constants.pi;
+  parameter Integer n = 3 "Number of volumes in each pipe";
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
+      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter Real pumpcorrectionfactor = 1;
+
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 70 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S4 = 80 + 273.15;
+
+  parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
+  parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
+  parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
+  parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
+  parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
+  parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -1*0;
+  parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
+  parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
+
+  parameter Real q_m3h_S4 = 5;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4;
+
+  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Data.ValveData.FCV401.openingChar "opening characteristic";
+
+  parameter Real nR = 5 "Number of resistors";
+  parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
+  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 50e3;
+  parameter DistrictHeatingNetwork.Types.Power Pminnom = 0;
+  parameter DistrictHeatingNetwork.Types.Length h = 1.25;
+  parameter DistrictHeatingNetwork.Types.Length D = 0.4;
+
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB(
+    redeclare model Medium = Medium,
+    Tout_start=Tout_start_S4,
+    D=D,
+    Pmaxnom=Pmaxnom,
+    Pnimnom=Pminnom,
+    Pnom=Pmaxnom,
+    Tin_start=Tin_start_S4,
+    etanom=0.98,
+    h=h,
+    m_flow_nom=m_flow_nom,
+    pin_start=pin_start_S4,
+    pout_start=pout_start_S4,
+    nR=nR,
+    Pmaxres=Pmaxres)   annotation (Placement(visible=true, transformation(
+        origin={0,-107.5},
+        extent={{-22,-22},{22,22}},
+        rotation=0)));
+  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
+    P401(
+    redeclare model Medium = Medium,
+    Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start,
+    Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start,
+    a=DistrictHeatingNetwork.Data.PumpData.P401.a,
+    b=DistrictHeatingNetwork.Data.PumpData.P401.b,
+    m_flow_start=m_flow_S4,
+    dpnom=DistrictHeatingNetwork.Data.PumpData.P401.dpnom,
+    etaelec=DistrictHeatingNetwork.Data.PumpData.P401.etaelec,
+    etamech=DistrictHeatingNetwork.Data.PumpData.P401.etamech,
+    etanom=DistrictHeatingNetwork.Data.PumpData.P401.etanom,
+    hin_start=DistrictHeatingNetwork.Data.PumpData.P401.hin_start,
+    m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom,
+    omeganom=DistrictHeatingNetwork.Data.PumpData.P401.omeganom,
+    pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start,
+    pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start,
+    headnom=DistrictHeatingNetwork.Data.PumpData.P401.headnom,
+    qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h,
+    rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom,
+    headmax=DistrictHeatingNetwork.Data.PumpData.P401.headnommax,
+    headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
+    qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h,
+    qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h,
+    correctionfactor=pumpcorrectionfactor)                      annotation (Placement(transformation(
+        extent={{-12,-12},{12,12}},
+        rotation=90,
+        origin={20,-19})));
+  DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
+    FCV401(
+    redeclare model Medium = Medium,
+    Kv=Kv,
+    openingChar=openingChar,
+    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom,
+    Tin_start(displayUnit="K") = Tout_start_S4,
+    pin_start=pout_start_S4,
+    q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(
+        extent={{-8,8},{8,-8}},
+        rotation=90,
+        origin={20,40})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_EB401_P401(
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    L=L_EB401_P401,
+    h=h_EB401_P401,
+    t=t_S4,
+    pin_start=pout_start_S4,
+    Tin_start=Tout_start_S4,
+    Tout_start=Tout_start_S4,
+    Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
+    n=n,
+    hctype=hctype)        "Pipe connecting outlet of electric boiler and pump P401"
+              annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20,-50})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_PT401_EB401(
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    L=L_PT401_EB401,
+    h=h_PT401_EB401,
+    t=t_S4,
+    pin_start=pin_start_S4,
+    Tin_start=Tin_start_S4,
+    Tout_start=Tin_start_S4,
+    Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
+    n=n,
+    hctype=hctype)        "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
+    annotation (Placement(transformation(
+        extent={{10,10},{-10,-10}},
+        rotation=90,
+        origin={-20,-50})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_P401_FCV401(
+    redeclare model Medium = Medium,
+    redeclare model HeatTransferModel = HeatTransferModel,
+    L=L_P401_FCV401,
+    h=h_P401_FCV401,
+    t=t_S4,
+    pin_start=pout_start_S4,
+    Tin_start=Tout_start_S4,
+    Tout_start=Tout_start_S4,
+    Di=Di_S4,
+    q_m3h_start=q_m3h_S4,
+    n=n,
+    hctype=hctype)        annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20,10})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
+    TT402(redeclare model Medium = Medium,T_start=Tout_start_S4, p_start=pout_start_S4)
+    "Temperature sensor at the outlet of valve FCV401"       annotation (
+      Placement(transformation(
+        extent={{-6,-6},{6,6}},
+        rotation=-90,
+        origin={22,76})));
+  DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
+    PT402 "Pressure sensor at the outlet of valve FCV401" annotation (Placement(
+        transformation(
+        extent={{6,6},{-6,-6}},
+        rotation=90,
+        origin={22,62})));
+  DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor
+    PT401 "Pressure sensor at the inlet of gas boiler" annotation (Placement(
+        transformation(
+        extent={{-6,6},{6,-6}},
+        rotation=90,
+        origin={-18,70})));
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
+    TT401(redeclare model Medium = Medium,T_start=Tin_start_S4, p_start=pin_start_S4)
+    "Temperature sensor at the inlet of electrib boiler"     annotation (
+      Placement(transformation(
+        extent={{-6,6},{6,-6}},
+        rotation=90,
+        origin={-18,84})));
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT(
+    redeclare model Medium = Medium,
+    T_start=Tin_start_S4,
+    p_start=pin_start_S4) annotation (Placement(transformation(
+        extent={{7,-7},{-7,7}},
+        rotation=90,
+        origin={-23,53})));
+  Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}})));
+  ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-120,-60},{-100,-40}}), iconTransformation(extent={{-120,-60},{-100,-40}})));
+  Modelica.Blocks.Sources.RealExpression thetaFixed(y=1) annotation (Placement(transformation(extent={{52,30},{32,50}})));
+equation
+  Pe = P401.W;
+  connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(
+      points={{20,-28.6},{20,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT402.inlet,PT402. inlet) annotation (Line(
+      points={{19.6,76},{20,76},{20,70},{19.6,70},{19.6,62}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT401.inlet,TT401. inlet) annotation (Line(
+      points={{-20.4,70},{-20.4,84}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV401.inlet,PL_S400_P401_FCV401. outlet) annotation (Line(
+      points={{20,32},{20,20}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S400_P401_FCV401.inlet,P401. outlet) annotation (Line(
+      points={{20,0},{20,-9.4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT402.inlet,FCV401. outlet) annotation (Line(
+      points={{19.6,62},{20,62},{20,48}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT402.inlet, outlet) annotation (Line(
+      points={{19.6,76},{20,76},{20,110}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT401.inlet, inlet) annotation (Line(
+      points={{-20.4,84},{-20.4,110},{-20,110}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(Toutset, EB.Tout_ref) annotation (Line(points={{-110,30},{-90.5,30},{-90.5,-133.5},{-21.5,-133.5},{-21.5,-107.5},{-15.4,-107.5}},
+                                                                                                    color={0,0,127}));
+  connect(status, EB.heat_on) annotation (Line(points={{-110,10},{-93.5,10},{-93.5,-136},{-19.5,-136},{-19.5,-118.5},{-15.4,-118.5}},
+                                                                                                    color={255,0,255}));
+  connect(inletPower, EB.inletPower) annotation (Line(
+      points={{-110,-50},{-96,-50},{-96,-138.5},{22,-138.5},{22,-107.5},{15.4,-107.5}},
+      color={56,93,138},
+      thickness=1));
+  connect(m_flow_, FT.m_flow) annotation (Line(points={{110,70},{97,70},{97,134.5},{-35,134.5},{-35,43.5},{-27,43.5},{-27,44.5},{-27.2,44.5},{-27.2,48.1}}, color={0,0,127}));
+  connect(TTin, TT401.T) annotation (Line(points={{110,50},{95.5,50},{95.5,133},{-8,133},{-8,84},{-10.2,84}}, color={0,0,127}));
+  connect(TTout, TT402.T) annotation (Line(points={{110,30},{93.5,30},{93.5,132},{32,132},{32,76},{29.8,76}}, color={0,0,127}));
+  connect(PTin, PT401.p) annotation (Line(points={{110,10},{92,10},{92,131},{-6,131},{-6,70},{-10.2,70}}, color={0,0,127}));
+  connect(PTout, PT402.p) annotation (Line(points={{110,-10},{90.5,-10},{90.5,130},{34,130},{34,62},{29.8,62}}, color={0,0,127}));
+  connect(PT401.inlet, FT.inlet) annotation (Line(
+      points={{-20.4,70},{-20.4,76},{-20,76},{-20,57.2},{-20.2,57.2}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FT.outlet, PL_S400_PT401_EB401.inlet) annotation (Line(
+      points={{-20.2,48.8},{-20.2,27},{-20,27},{-20,-40}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EB.inlet, PL_S400_PT401_EB401.outlet) annotation (Line(
+      points={{-6.6,-89.9},{-6.6,-72.5},{-20,-72.5},{-20,-60}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(EB.outlet, PL_S400_EB401_P401.inlet) annotation (Line(
+      points={{6.6,-89.9},{6.6,-73},{20,-73},{20,-60}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S400_PT401_EB401.wall, PL_S400_EB401_P401.wall) annotation (Line(
+      points={{-15.9,-50},{15.9,-50}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(PL_S400_P401_FCV401.wall, PL_S400_EB401_P401.wall) annotation (Line(
+      points={{15.9,10},{0,10},{0,-50},{15.9,-50}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(MultiPort, PL_S400_EB401_P401.wall) annotation (Line(
+      points={{-110,-70},{0,-70},{0,-50},{15.9,-50}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(m_flow_set, P401.in_m_flow) annotation (Line(points={{-110,50},{-103,50},{-103,49},{-95.5,49},{-95.5,128.5},{9,128.5},{9,-23.8},{14.48,-23.8}}, color={0,0,127}));
+  connect(thetaFixed.y, FCV401.opening) annotation (Line(points={{31,40},{26.4,40}}, color={0,0,127}));
+  annotation (                                                   Diagram(coordinateSystem(
+                                     extent={{-100,-140},{100,140}}, grid={0.5,0.5})),
+                                                                       Icon(coordinateSystem(grid={
+            1,1}),                                                          graphics={Bitmap(
+          extent={{-42,-50},{45,52}},
+          imageSource="iVBORw0KGgoAAAANSUhEUgAAAJ4AAAE/CAMAAACAbIq2AAABAlBMVEX/////7AD/zAD/zgD/ywD/yAD/7gD/0AD/xwD/xAD/1AD/0gD/wgD/wAD//vT/1gD/vAD/3AD/4AD/ugD/4QD/113/5QD/tgD/sgD///v/+tD//vj/7jz/rwD//OH/8Wv/84X/+9r/8Fr/9qf//e///Oj/70r/9Zz/97L/9JD/+Lz/+cX/8bP/+Lv/8GP/8nX/7S7/9In/9qD/6S//6Vf/8nv/+9P/63r/4Sn/7Zf/4FP/2ij/43X/9qz/7jb/5ZP/1k3/6rH/56L/7sL/3oH/2W//ySj/0mH/4Zv/zEr/24r/6bv/1nn/7sz/xjb/z2z/yVj/3qb/wUP/79X/uSz/yncQEM68AAAKi0lEQVR4nM2da1cbRxKGNQgkBGgkkIwGaUWIw4RkV+wmMSzmkgVFwcZgbGOc//9XIjEzPX2parw+Ur/1fvInn+e81dRFU9NTqcxRO9/P83+bu37fRRN4FQ3QBD71IzSBVy9F46XRj2gEn46j79AIHg2iaA/N4NFBFB2gGTyKougnNAOvwynev9AQvH6Z4smtaf0pXbSPpmD1cnuKt4Om4JTO6OQWjeMZ3i9oCk6DJ/PE1rSDJzyxNW37Ce9XNAajwwzvNzQHo1cZntCa1t/O8ITWtJcZndCalubmCa1pxwWeyJo22C7w0CSkDgo6mTVNmfcSTULpUOH9B41C6VVBF/2MRiHUV+ZFP6BZCB2VeIdoFlezlFzg9dEwro5Lukjej3sDzTyBNe1Ax0PDuNLp5OEd6nj/Q9M4eqXjiatp/a6OJ66mHRlHT1pNSw3zxNW0k20D759oHlMDk05aTTu18ITVtIxuu1bgxWggQ6Ou5R4ayFSWkruRTLw8JZex/QeayNCRHVtRNS3tdq3YHqORdJ10M5V4kmpavJXRlUcv+h3NpOk0N688eqJqWteJbfRfNFOpkRvbKEVDlXrtxlZQTevn5m1pdIKKxlGO161JxEsLOv3oyalpJ1u59KP3bzRVoUFBZxw9MTXttKAzjp6YJYwtKrZiatqIjK2YB1avydhKqWn9MrYGnpCadkTHVshiYbrJ4KHBMp0wsZWBNyjNM9KKkCWMUy62MpYwtkqZsd1Dk800UuZtWkdPRE1TKXlr04ytiCWM/iYXWxE17YyNrYQljHSzlJlWRNS0Ew3PohOwhBFrdPbRE1A0Tj2xFbCEsemJLb6mjXyxxde013psbTz4YmHfF1v8YuGZjmebB69pekre7Dp46Jqmp2QnrcBrmp6SiaOHXsLQU7KbVuBFwzDPSStovNEzsQXXtNcGnmse9oFVv+VPK+AlDCMlE2kFW9PS1jOxxdY0IyVTaQW6WBib5hFpBbqEcWrgtVw47BLGpinCPGRNG5nmEWkFWjTODe/I2ALxzJRMxxa4WHjWMkSlFWBN2zXpWkTJQNa0CwuPPHqwJYzYoiOPHm6x8NSOLYkHq2kWHR1bWE0bfVVsYTXt3MIj0wpsCaO/9jVpBVY0rJTcatHmgfBS2zwmtqAlDDslM2kFVNNi2zwmrYCWME5tPCatgGqa7R3diUagJYzR18YWs1h47uAx5kGWMPrrFtwak1YwNe3MNm+NSSuQmpba5rXWODpE0bhwTh6XVhB48fqaLTa2gJp26eCtc94hFgsd79bYtAKoaSM3tmxaASxhnDt060wnGgFq2sQ1j49t+AdWZy4en1aC17S0TsSWxwu9hHHhmsenleCLhbFrnu/ohS4abkpeW+c6UQDeOiFPbH/ciRcn90frUd2l47uVBcv95fCcMM+TVhYrh25CmFf3pJWFys34Z9TRA9G5yzu7VUGxddfaLgTF1h1QY8q8OgSOanMvCfPWfSVjgSIGQOrvos53oosUsfc0rtZdVflOdIGifpU7J+jqmLRCPIOdUObVIWmFmhCuKLoqIq1Qy567pHmQtEJ14BckHSKtUIsn8RIZW18nuiCRj68vydhWg8MxPxjSJw/QiZI/pZMpuV7dqs1ffjp6245MyYvQc5mK3EOdLFdtZf9Z8Y+56ZkqtEead+XQfaOeNe+ZVEDS7brmLUp+OvoXm+tgdP72jN45icOZ5/WO+cnhMhiev/9hfitcCkW35PWOee1jHMq8JX+DwbwQVQ3l3rLXPObRJpGSFyO/edxD/6vlJVZzxVv21jPm0WG6wtN9q2jzvO0P98bMtce8ucprHvcuWbwA82jVfeZx27uXwczzNQPsDmAouiVfM8A+dR2vLM9PXvN8zQD77Ob6xRy15AP00AV6qrnkcdbTDARafN5d5elWeO9CrZr84TnHnnoWagnrxTeZF+w9rW8zL9QbjPf80Vvh69leILrKJeveime4DUVXueLxePOC7WQP2Niu8PUs3NsKEx6PbwaC0VX+XF1htMzSBdwyecPRrbLNQMALA/YbHN4Ka17AqzTGbGzZZiDkUuw1i8d5F3RdnD15bD0LuXS6yx29Vc68oHct/MHEdpUbbsPeQvKCwWtw9Szse5+cedxwG/btsXvm6K0y5gXe171prJLimoHAW39XNF2DaQYC78MOGPOYZiD0K7MTGq/BNAOhX1L4k3GPpgv++s4bEq9BNwPBb/jY36BjS//VBr/7ZkybRzcDe6HpKtc0Hm1ecLoKHVq6GQj/Nm+60SC0IeU99zGJRzcD4ekqb2nzKDzEhVqkeWQ9Q1w1d0/hbZDNAOISxhsKj6xnkNcp31HmUfUM8qLxTpM6epR5kFfwJ0RsSfMwt/TdUkePoAPdX/mGMI9qBjA3BsVtAo84eKB7R+7cv4wN4pdu1Cck3rtHr0k0A6hLe4nQEs0A6jrr1I1t020GYBcIjpsbtohmAHYN2VuHruk2A7gvSrnmuc0A7m7Ix7ZjnvvLAO7W1BvHPbee7cHoKu9svKbbDODodpzYbjh0wLsN7228ptMMIG/9vHVi66Q85B3vHyy8ptMMIK9ijttNU23bO+gl5Xc2nvNLN/STNO8tvLbdDGC/xL5hmWc3A9irhFPbPLsZwH5Bb2zh2c0A+H73tyZe22oG0F8+sOjsega+P/2xY+JZzQD6U9g31tEz6eAfH3xn4LWtZgD9uZedTrtUs23VM/iHkO51vHbbbAbwn1O5Neg6pnn4r4h/MPDMZgD/LeLYiG3HaAbwoa3cGXjmGpeAb0i91/E6RjOwh2abqqmbZw63aLSp9nu6eUYzgLwVv9BYj63RDGC/F5Hro4bXMZoB/NfBpjKSnk6H/ojPkx61o9fRmwH8561metBjq5sn42Omn0q8jt4MYCdHJd08zTvs5Kh0Xx69jt4MCPn2+m2vU6inNQPoL4MV+qDoOlozgJ4cC8W0eeDJUWlS4mnNAHpyVHqv8HplMwCfHJXayjxtuEVPjkr7pXllMwCfHJXuFF7ZDAgYLwp9LPB6ZTOAnxyVyqSn6PCTo9JjUphXNgNoJk0PKrbqr1bA5Kj0KcfrqWYA85kDRso8Vc/QRLruk14m1QxImByVbnK6pDBPxOSo9DnHa0gMbWWQxzYpmgERk6PSJMcr6hngnnmfbvPYFs2AjMlR6UtGV9QzIZNjof0stkneDAiZHJXu8qNXEzU5Kn3M6PJmAPLZGZ/yPwxZk6NSmsU2bwakTI5KD4lWz8RMjkqfZnhJ9thbzuSopJsnZnJUekzKZkDO5Kh0k6hmQNDkqPR5ipdkzYCk8SLXznBm3lMzAP2cNKNZH590pIa2cpsUzQDiM2DP6kvSS56aAVGTY6F4mCTJUzOAJiF1N8MTNzkq/TWlmzUDsiZHpV6SDGfmiXjm6Cidxnb2y4CsyVHpYWretBkQNjkqfUqS2WNvYZOj0jAZdmvSJkelx+GsGZA2OSrdDIfTZkDa5Kj0eVbPxE2OhXaGw1ZN3OSodD9MavImR6Xb4XqN+nSDEH0Z1kJfo/J/KB5Wa/ImR6W7ocTJUemvhsjxotBwW9AzR0dpW+LkqPSwhSbw6p3M8aLQBRrAq11QD/o3G6lkrUFvFrcAAAAASUVORK5CYII=",
+          fileName="modelica://MultiEnergySystem/../../../../../Users/muro/Downloads/light2.png")}));
+end ElectricBoilerIFC;

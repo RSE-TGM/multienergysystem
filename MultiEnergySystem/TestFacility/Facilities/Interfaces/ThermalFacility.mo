@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.Facilities.Interfaces;
 partial model ThermalFacility
-  parameter Integer nXi_in1 = 6;
-  parameter Integer nXi_in2 = 6;
+  parameter Integer nXi_in1 = 3;
+  parameter Integer nXi_in2 = 3;
   H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=nXi_in1) "Connector for one component of the thermal facility" annotation (Placement(transformation(extent={{100,-10},{120,10}}), iconTransformation(extent={{100,-10},{120,10}})));
   replaceable HeatGeneration heatGeneration annotation (Placement(transformation(extent={{-62,-24},{-14,24}})));
   replaceable HeatConsumption heatConsumption annotation (Placement(transformation(extent={{66,-24},{18,24}})));

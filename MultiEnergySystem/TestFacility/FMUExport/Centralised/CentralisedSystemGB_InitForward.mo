@@ -3,24 +3,24 @@ model CentralisedSystemGB_InitForward
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends Networks.Thermal.Configurations.Centralised.CentralisedSystem_GB(
-    Kvalve = 40,
+    S701(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
+    Kvalve=40,
     redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid,
     redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid,
-    T_start_hot = 80 +273.15,
-    T_start_cold = 70 + 273.15,
-    EX701_Tin_hot = T_start_hot,
-    EX701_Tout_hot = T_start_cold,
-    EX701_Tin_cold = 15 + 273.15,
-    EX711_Tin_cold = 15 + 273.15,
-    EX721_Tin_cold = 15 + 273.15,
-    EX731_Tin_cold = 15 + 273.15,
-    EX701_Tout_cold = 25 + 273.15,
-    EX711_Tout_cold = 25 + 273.15,
-    EX721_Tout_cold = 25 + 273.15,
-    EX731_Tout_cold = 25 + 273.15,
+    T_start_hot=80 + 273.15,
+    T_start_cold=70 + 273.15,
+    EX701_Tin_hot=T_start_hot,
+    EX701_Tout_hot=T_start_cold,
+    EX701_Tin_cold=15 + 273.15,
+    EX711_Tin_cold=15 + 273.15,
+    EX721_Tin_cold=15 + 273.15,
+    EX731_Tin_cold=15 + 273.15,
+    EX701_Tout_cold=25 + 273.15,
+    EX711_Tout_cold=25 + 273.15,
+    EX721_Tout_cold=25 + 273.15,
+    EX731_Tout_cold=25 + 273.15,
     sourceGas(computeTransport=false, computeEnergyVariables=false),
     VER901(p0=220000, R=1e-3),
-    EX701(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX711(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX721(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX731(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
@@ -826,7 +826,7 @@ model CentralisedSystemGB_InitForward
         extent={{6,-6},{-6,6}},
         rotation=0)));
 equation
-  Pt1 = EX701.Pt;
+  Pt1 =S701.Pt;
   Pt2 = EX711.Pt;
   Pt3 = EX721.Pt;
   Pt4 = EX731.Pt;

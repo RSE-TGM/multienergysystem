@@ -53,7 +53,10 @@ model CoolingSingleLoad
   parameter DistrictHeatingNetwork.Types.Temperature EX7X1_Tin_cold=7 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature EX7X1_Tout_cold=14 + 273.15;
 
-
+  parameter DistrictHeatingNetwork.Types.Temperature T1_wall_start = 70 + 273.15 "Temperature start value at the inlet of the wall" annotation (
+    Dialog(group = "Wall"));
+  parameter DistrictHeatingNetwork.Types.Temperature TN_wall_start = 50 + 273.15 "Temperature start value at the outlet of the wall" annotation (
+    Dialog(group = "Wall"));
 
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;

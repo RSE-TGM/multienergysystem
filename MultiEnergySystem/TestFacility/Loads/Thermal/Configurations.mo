@@ -4012,20 +4012,6 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,-10},{10,10}},
             rotation=-90,
             origin={258,-290})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_rackUsersIn_TT703(
-        L=L_rUsersIn_TT703,
-        h=h_rUsersIn_TT703,
-        t=t_Users,
-        pin_start=pin_start_Users,
-        Tin_start=Tout_start_Cool,
-        Tout_start=Tout_start_Cool,
-        Di=Di_Users,
-        q_m3h_start=q_Users,
-        hctype=hctype,
-        n=n) annotation (Placement(transformation(
-            extent={{10,-10},{-10,10}},
-            rotation=-90,
-            origin={138,-322})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_rackUsersIn_TT723(
         L=L_rUsersIn_TT723,
         h=h_rUsersIn_TT723,
@@ -4144,20 +4130,6 @@ package Configurations "Different possible configurations for the loads"
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={98,-320})));
-      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TT704_TCV701(
-        L=L_TT704_TCV701,
-        h=h_TT704_TCV701,
-        t=t_Users,
-        pin_start=pin_start_Users,
-        Tin_start=Tin_start_Cool,
-        Tout_start=Tin_start_Cool,
-        Di=Di_Users,
-        q_m3h_start=q_Users,
-        hctype=hctype,
-        n=n) annotation (Placement(transformation(
-            extent={{-10,-10},{10,10}},
-            rotation=-90,
-            origin={98,-290})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_rackUsersIn_TT733(
         L=L_rUsersIn_TT733,
         h=h_rUsersIn_TT733,
@@ -4587,7 +4559,7 @@ package Configurations "Different possible configurations for the loads"
         annotation (Placement(transformation(extent={{-6,6},{6,-6}},
             rotation=0,
             origin={258,-400})));
-      Systems.CoolingSingleLoad EX701(
+      Systems.CoolingSingleLoad S701(
         np=n,
         nHX=nHX,
         Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
@@ -4802,10 +4774,6 @@ package Configurations "Different possible configurations for the loads"
           points={{437.4,-268},{437.4,-247.625},{439.3,-247.625},{439.3,-227.25}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_TT704_TCV701.outlet,TCV701. inlet) annotation (Line(
-          points={{98,-300},{98,-310}},
-          color={140,56,54},
-          thickness=0.5));
       connect(EX731.incold,PL_rackUsersIn_TT733. outlet) annotation (Line(
           points={{297.3,-226.25},{297.3,-283.625},{296,-283.625},{296,-310}},
           color={140,56,54},
@@ -4905,10 +4873,6 @@ package Configurations "Different possible configurations for the loads"
           thickness=0.5));
       connect(suddenAreaChange.outlet, PL_UsersIn_EX721.inlet) annotation (Line(
           points={{648,-360},{632,-360}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(PL_EX711_EX701_cold.outlet, PL_rackUsersIn_TT703.inlet) annotation (Line(
-          points={{190,-360},{138,-360},{138,-332}},
           color={140,56,54},
           thickness=0.5));
       connect(junction.inoutlet, PL_rackUsersIn_TT733.inlet) annotation (Line(
@@ -5011,20 +4975,20 @@ package Configurations "Different possible configurations for the loads"
           points={{252,-400},{178,-400}},
           color={140,56,54},
           thickness=0.5));
-      connect(PL_rackUsersIn_TT703.outlet, EX701.incold) annotation (Line(
-          points={{138,-312},{138,-282},{137.6,-282},{137.6,-252}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(PL_TT704_TCV701.inlet, EX701.outcold) annotation (Line(
-          points={{98,-280},{98,-252}},
-          color={140,56,54},
-          thickness=0.5));
-      connect(EX701.inhot, PL701_rackL2L3_TT702.outlet) annotation (Line(
+      connect(S701.inhot, PL701_rackL2L3_TT702.outlet) annotation (Line(
           points={{98.8,-160},{98.8,-114},{98,-114},{98,-68}},
           color={140,56,54},
           thickness=0.5));
-      connect(EX701.outhot, PL701_FT701_rackL2L3.inlet) annotation (Line(
+      connect(S701.outhot, PL701_FT701_rackL2L3.inlet) annotation (Line(
           points={{138.4,-160},{138.4,-114},{138,-114},{138,-68}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_EX711_EX701_cold.outlet, S701.incold) annotation (Line(
+          points={{190,-360},{137.6,-360},{137.6,-252}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(TCV701.inlet, S701.outcold) annotation (Line(
+          points={{98,-310},{98,-252}},
           color={140,56,54},
           thickness=0.5));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

@@ -1721,7 +1721,7 @@ package Tests
           thickness=0.5));
       connect(sinkCold_p.inlet, EX7X1.outcold)
         annotation (Line(
-          points={{-14.5,-39},{-14.5,-30},{-14,-30},{-14,-23.525},{-14.015,-23.525}},
+          points={{-14.5,-39},{-14.5,-30},{-14,-30},{-14,-23.525},{-14.25,-23.525}},
           color={140,56,54},
           thickness=0.5));
       connect(dT_cold_sim.y, dT_cold_indexes.u_sim) annotation (Line(points={{70.5,-30},{75,-30},{75,-22.5},{79,-22.5}}, color={0,0,127}));
@@ -1736,7 +1736,7 @@ package Tests
           points={{-14,50},{-14,30.525},{-13.78,30.525}},
           color={140,56,54},
           thickness=0.5));
-      connect(theta.y, EX7X1.theta) annotation (Line(points={{-37.5,20},{-32.925,20},{-32.925,19.95},{-28.35,19.95}}, color={0,0,127}));
+      connect(theta.y, EX7X1.theta) annotation (Line(points={{-37.5,20},{-32.925,20},{-32.925,17.6},{-28.35,17.6}},   color={0,0,127}));
       connect(inhot_T.y, sourceHot_mflow.in_T) annotation (Line(points={{-29.5,60},{-19,60}}, color={0,0,127}));
       connect(hot_m_flow.y, sourceHot_mflow.in_m_flow) annotation (Line(points={{-29.5,75},{-25,75},{-25,66},{-19,66}}, color={0,0,127}));
       connect(EX7X1.TT7X1_TT, dT_hot_sim.u2) annotation (Line(points={{23.35,19.95},{55,19.95},{55,18},{59,18}}, color={0,0,127}));
@@ -14487,10 +14487,6 @@ System")}),
       replaceable FullPlantController thermalPlantController                               annotation (Placement(transformation(origin={5,0}, extent={{-55,-38},{-11,38}})));
       replaceable FMUExport.Centralised.CentralisedSystemGBEB_InitForward centralisedSystemI_B_InitForward(
         m_flowcool_nom = 0.35,
-        dTT701Offset(fixOffset = true, y_Offset_fixed = 20),
-        dTT711Offset(fixOffset = true, y_Offset_fixed = 20),
-        dTT721Offset(fixOffset = true, y_Offset_fixed = 20),
-        dTT731Offset(fixOffset = true, y_Offset_fixed = 20),
         FT901Offset(fixOffset = true, y_Offset_fixed = 7.6222224),
         FT101Offset(fixOffset = true, y_Offset_fixed = 5.7166667),
         EX701PtOffset(fixOffset = true, y_Offset_fixed = 50e3),
@@ -14504,6 +14500,10 @@ System")}),
         thetaFCV401Offset(fixInput=false, fixOffset=true),
         omegaP401Offset(fixInput=false, fixOffset=true))   annotation (
         Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
+    //     dTT701Offset(fixOffset = true, y_Offset_fixed = 20),
+    //     dTT711Offset(fixOffset = true, y_Offset_fixed = 20),
+    //     dTT721Offset(fixOffset = true, y_Offset_fixed = 20),
+    //     dTT731Offset(fixOffset = true, y_Offset_fixed = 20),
         //PT102Offset(fixOffset = true, y_Offset_fixed = 0.0e5),
         //dPTA2Offset(fixOffset = true, y_Offset_fixed = 1.5e5),
         //TT701Offset(fixOffset = true, y_Offset_fixed = 65 + 273.15),

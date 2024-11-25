@@ -38,7 +38,7 @@ package Configurations
 
     partial model CentralisedNetworkBaseII
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBaseII(redeclare model MediumCP = WaterHot, cf = cfp, n = np);
-      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
+      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
@@ -180,12 +180,6 @@ package Configurations
               arrow={Arrow.None,Arrow.Filled},
               smooth=Smooth.Bezier),
             Line(
-              points={{126,-258},{126,-240},{108,-240},{108,-258}},
-              color={28,108,200},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
               points={{408,-176},{408,-194},{426,-194},{426,-176}},
               color={162,29,33},
               thickness=1,
@@ -199,12 +193,6 @@ package Configurations
               smooth=Smooth.Bezier),
             Line(
               points={{270,-178},{270,-196},{288,-196},{288,-178}},
-              color={162,29,33},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
-              points={{110,-174},{110,-192},{128,-192},{128,-174}},
               color={162,29,33},
               thickness=1,
               arrow={Arrow.None,Arrow.Filled},

@@ -365,8 +365,6 @@ model CHP "Combined Heat and Power System Model from RSE's test facility"
     gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_hot,
     h_cold=DistrictHeatingNetwork.Data.BPHEData.E501.h_cold,
     h_hot=DistrictHeatingNetwork.Data.BPHEData.E501.h_hot,
-    hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_cold,
-    hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_hot,
     k_cold=DistrictHeatingNetwork.Data.BPHEData.E501.k_cold,
     k_hot=DistrictHeatingNetwork.Data.BPHEData.E501.k_hot,
     kc_cold=1,

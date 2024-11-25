@@ -174,12 +174,6 @@ package Configurations
               arrow={Arrow.None,Arrow.Filled},
               smooth=Smooth.Bezier),
             Line(
-              points={{286,-262},{286,-244},{268,-244},{268,-262}},
-              color={28,108,200},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
               points={{408,-176},{408,-194},{426,-194},{426,-176}},
               color={162,29,33},
               thickness=1,
@@ -187,12 +181,6 @@ package Configurations
               smooth=Smooth.Bezier),
             Line(
               points={{570,-176},{570,-194},{588,-194},{588,-176}},
-              color={162,29,33},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
-              points={{270,-178},{270,-196},{288,-196},{288,-178}},
               color={162,29,33},
               thickness=1,
               arrow={Arrow.None,Arrow.Filled},

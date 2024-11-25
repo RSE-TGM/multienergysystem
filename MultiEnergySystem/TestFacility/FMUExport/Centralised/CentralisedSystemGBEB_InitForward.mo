@@ -20,7 +20,10 @@ model CentralisedSystemGBEB_InitForward
     EX731_Tout_cold = 24 + 273.15,
     sourceGas(computeTransport=false, computeEnergyVariables=false),
     VER901(p0=220000, R=1e-3),
-    EX701(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
+    EX701(
+      T1_wall_start(displayUnit="K") = 70 + 273.15,
+      TN_wall_start(displayUnit="K") = 50 + 273.15,
+          wall(Tstart1(displayUnit="K"), TstartN(displayUnit="K"))),
     EX711(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX721(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX731(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),

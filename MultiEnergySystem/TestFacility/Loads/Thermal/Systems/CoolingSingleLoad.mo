@@ -27,7 +27,6 @@ model CoolingSingleLoad
   parameter Real q_m3h_start_valve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
 
-
   // Sudden Area Change parameters
   parameter DistrictHeatingNetwork.Types.Length D_i = 0.1 "Input diameter" annotation (
     Dialog(tab = "Sudden Area Change", group = "Characteristics"));
@@ -40,6 +39,7 @@ model CoolingSingleLoad
 
   // EX7X1
   parameter Real EX7X1_q_m3h_hot(unit = "m3/h") = 2.5;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX7X1_hot = EX7X1_q_m3h_hot*980/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX7X1_pin_hot=2.5e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX7X1_pout_hot=2.4e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV701_pout=2e5;
@@ -47,11 +47,13 @@ model CoolingSingleLoad
   parameter DistrictHeatingNetwork.Types.Temperature EX7X1_Tout_hot=65 + 273.15;
 
   parameter Real EX7X1_q_m3h_cold(unit = "m3/h") = 1.5;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX7X1_cold = EX7X1_q_m3h_cold*1000/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX7X1_cold = EX7X1_q_m3h_cold*995/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX7X1_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX7X1_pout_cold=2e5;
   parameter DistrictHeatingNetwork.Types.Temperature EX7X1_Tin_cold=7 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature EX7X1_Tout_cold=14 + 273.15;
+
+
 
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
@@ -94,7 +96,7 @@ model CoolingSingleLoad
     rho_start=rho_start_valve,
     q_m3h_start=q_m3h_start_valve)
                                  "Flow Control Valve - Hot side" annotation (Placement(transformation(
-        extent={{10,10},{-10,-10}},
+        extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={20,10})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX7X1(
@@ -121,24 +123,22 @@ model CoolingSingleLoad
     gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
     h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
     h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-    hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_cold,
-    hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.hin_start_hot,
     k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
     k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
     kc_cold=1,
     kc_hot=1,
     lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
     lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
-    m_flow_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_cold,
-    m_flow_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.m_flow_start_hot,
+    m_flow_start_cold=m_flow_EX7X1_cold,
+    m_flow_start_hot=m_flow_EX7X1_hot,
     n=nHX,
     nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
     nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
     nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
-    pin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_cold,
-    pin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pin_start_hot,
-    pout_start_cold=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_cold,
-    pout_start_hot=DistrictHeatingNetwork.Data.BPHEData.E701.pout_start_hot,
+    pin_start_cold=EX7X1_pin_cold,
+    pin_start_hot=EX7X1_pin_hot,
+    pout_start_cold=EX7X1_pout_cold,
+    pout_start_hot=EX7X1_pout_hot,
     rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)
         /2,
     rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)
@@ -153,6 +153,8 @@ model CoolingSingleLoad
         rotation=-90,
         origin={1,-47.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = Medium,
     L=L_FCV701_FT701,
     h=h_FCV701_FT701,
@@ -161,7 +163,6 @@ model CoolingSingleLoad
     Tin_start=EX7X1_Tout_hot,
     Tout_start=EX7X1_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX7X1_q_m3h_hot,
     n=np,
     hctype=hctype,
     nPipes=1)      annotation (Placement(transformation(
@@ -169,6 +170,8 @@ model CoolingSingleLoad
         rotation=90,
         origin={20,34})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_SourceOut_FCV701(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = Medium,
     L=L_HX701_SourceOut_FCV701,
     h=h_HX701_SourceOut_FCV701,
@@ -185,6 +188,8 @@ model CoolingSingleLoad
         rotation=90,
         origin={20,-16})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = Medium,
     L=L_HX701_TT702_SourceIn,
     h=h_HX701_TT702_SourceIn,
@@ -193,7 +198,6 @@ model CoolingSingleLoad
     Tin_start=EX7X1_Tin_hot,
     Tout_start=EX7X1_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX7X1_q_m3h_hot,
     n=np,
     hctype=hctype,
     nPipes=1)      annotation (Placement(transformation(
@@ -201,6 +205,8 @@ model CoolingSingleLoad
         rotation=-90,
         origin={-20,10})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn1(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX7X1_cold,
     redeclare model Medium = Medium,
     L=L_TT7X4_TCV7X1,
     h=h_TT7X4_TCV7X1,
@@ -209,7 +215,6 @@ model CoolingSingleLoad
     Tin_start=EX7X1_Tin_hot,
     Tout_start=EX7X1_Tin_hot,
     Di=Di_Users,
-    q_m3h_start=EX7X1_q_m3h_cold,
     n=np,
     hctype=hctype,
     nPipes=1)      annotation (Placement(transformation(
@@ -217,6 +222,8 @@ model CoolingSingleLoad
         rotation=-90,
         origin={-20,-90})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn2(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX7X1_cold,
     redeclare model Medium = Medium,
     L=L_rUsersIn_TT7X3,
     h=h_rUsersIn_TT7X3,
@@ -225,13 +232,12 @@ model CoolingSingleLoad
     Tin_start=EX7X1_Tin_hot,
     Tout_start=EX7X1_Tin_hot,
     Di=Di_Users,
-    q_m3h_start=EX7X1_q_m3h_cold,
     n=np,
     hctype=hctype,
     nPipes=1)      annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={20,-100})));
+        origin={20,-96})));
 
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare model Medium = Medium, T_start=EX7X1_Tout_hot,
     p_start=EX7X1_pout_hot)
@@ -246,19 +252,22 @@ model CoolingSingleLoad
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-22,66})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare model Medium = Medium, T_start=Tin_start_cold, p_start(
-        displayUnit="Pa") = 2e5) "Temperature sensor at the outlet of EX7X1 - cold side"   annotation (
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare model Medium = Medium,
+    T_start=EX7X1_Tout_cold,
+    p_start(displayUnit="Pa") = EX7X1_pout_cold)
+                                 "Temperature sensor at the outlet of EX7X1 - cold side"   annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-22,-73})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare model Medium = Medium,
-    T_start=Tin_start_cold,                                                                                                     p_start(
-        displayUnit="Pa") = 2e5) "Temperature sensor at the inlet of EX7X1 - cold side" annotation (
+    T_start=EX7X1_Tin_cold,
+    p_start(displayUnit="Pa") = EX7X1_pin_cold)
+                                 "Temperature sensor at the inlet of EX7X1 - cold side" annotation (
       Placement(transformation(
-        extent={{-6,-6},{6,6}},
+        extent={{-6,6},{6,-6}},
         rotation=90,
-        origin={18,-72})));
+        origin={22,-72})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT701(T_start=EX7X1_Tout_hot, p_start=EX7X1_pout_hot)
                                                                                                         "Flow sensor at the outlet outlet of EX701 - hot side" annotation (
       Placement(transformation(
@@ -279,26 +288,28 @@ model CoolingSingleLoad
                                                                  annotation (Placement(transformation(extent={{-120,-10},{-100,10}}), iconTransformation(extent={{-120,-10},{-100,10}})));
   Modelica.Blocks.Interfaces.RealInput theta "Opening valve" annotation (
     Placement(visible = true,
-              transformation(extent={{-120,60},{-100,80}}),
-              iconTransformation(extent={{-120,60},{-100,80}})));
+              transformation(extent={{60,0},{40,20}}),
+              iconTransformation(origin={-110,60},   extent = {{-10, -10}, {10, 10}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet connector at hot side"   annotation (
-    Placement(visible = true,
-              transformation(origin={-20,110}, extent = {{-10, -10}, {10, 10}}, rotation = 0),
+    Placement(visible = true, transformation(origin={-20,129}, extent = {{-10, -10}, {10, 10}}, rotation = 0),
               iconTransformation(origin={-48,115}, extent={{-15,-15},{15,15}}, rotation = 0)));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot "Outlet connector at hot side"  annotation (
-    Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={51,115},    extent={{-15,-15},{15,15}},      rotation = 0)));
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet connector at cold side" annotation (Placement(transformation(extent={{34,-130},{64,-100}}), iconTransformation(
-          extent={{34,-130},{64,-100}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet connector at cold side" annotation (Placement(transformation(extent={{-64,-130},{-34,-100}}),
-        iconTransformation(extent={{-64,-130},{-34,-100}})));
+    Placement(visible = true, transformation(origin={20,129},  extent = {{-10, -10}, {10, 10}}, rotation = 0),
+              iconTransformation(origin={51,115},    extent={{-15,-15},{15,15}},      rotation = 0)));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet incold "Inlet connector at cold side" annotation (
+    Placement(visible = true, transformation(origin={20,-130},extent={{-10, -10}, {10, 10}}, rotation = 0),
+              iconTransformation(origin={49,-115}, extent={{-15,-15},{15,15}}, rotation = 0)));
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet connector at cold side" annotation (
+    Placement(visible = true, transformation(extent={{-30,-140},{-10,-120}}, rotation = 0),
+              iconTransformation(origin={-50,-115}, extent={{-15,-15},{15,15}}, rotation = 0)));
 
-  Modelica.Blocks.Interfaces.RealOutput FT7X1_FT annotation (Placement(transformation(extent={{100,-20},{120,0}}), iconTransformation(extent={{100,-20},{120,0}})));
-  Modelica.Blocks.Interfaces.RealOutput TT7X1_TT annotation (Placement(transformation(extent={{100,60},{120,80}}), iconTransformation(extent={{100,60},{120,80}})));
-  Modelica.Blocks.Interfaces.RealOutput TT7X3_TT annotation (Placement(transformation(extent={{100,-90},{120,-70}}), iconTransformation(extent={{100,20},{120,40}})));
-  Modelica.Blocks.Interfaces.RealOutput TT7X4_TT annotation (Placement(transformation(extent={{100,-50},{120,-30}}), iconTransformation(extent={{100,0},{120,20}})));
-  Modelica.Blocks.Interfaces.RealOutput TT7X2_TT annotation (Placement(transformation(extent={{100,26},{120,46}}), iconTransformation(extent={{100,40},{120,60}})));
-  Modelica.Blocks.Interfaces.RealOutput PT7X2_PT annotation (Placement(transformation(extent={{100,102},{120,122}}), iconTransformation(extent={{100,-60},{120,-40}})));
-  Modelica.Blocks.Interfaces.RealOutput PT7X1_PT annotation (Placement(transformation(extent={{100,84},{120,104}}), iconTransformation(extent={{100,-40},{120,-20}})));
+  Modelica.Blocks.Interfaces.RealOutput FT7X1_FT annotation (Placement(transformation(extent={{100,35},{120,55}}), iconTransformation(extent={{100,-20},{120,0}})));
+  Modelica.Blocks.Interfaces.RealOutput TT7X1_TT annotation (Placement(transformation(extent={{100,50},{120,70}}), iconTransformation(extent={{100,60},{120,80}})));
+  Modelica.Blocks.Interfaces.RealOutput TT7X3_TT annotation (Placement(transformation(extent={{100,-85},{120,-65}}), iconTransformation(extent={{100,20},{120,40}})));
+  Modelica.Blocks.Interfaces.RealOutput TT7X4_TT annotation (Placement(transformation(extent={{100,-105},{120,-85}}),iconTransformation(extent={{100,0},{120,20}})));
+  Modelica.Blocks.Interfaces.RealOutput TT7X2_TT annotation (Placement(transformation(extent={{100,95},{120,115}}),iconTransformation(extent={{100,40},{120,60}})));
+  Modelica.Blocks.Interfaces.RealOutput PT7X2_PT annotation (Placement(transformation(extent={{100,80},{120,100}}),  iconTransformation(extent={{100,-60},{120,-40}})));
+  Modelica.Blocks.Interfaces.RealOutput PT7X1_PT annotation (Placement(transformation(extent={{100,65},{120,85}}),  iconTransformation(extent={{100,-40},{120,-20}})));
 equation
 
 
@@ -343,14 +354,12 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TT7X3.inlet,EX7X1. incold) annotation (Line(
-      points={{20.4,-72},{20.4,-58.125},{21.3,-58.125},{21.3,-56.25}},
+      points={{19.6,-72},{19.6,-58.125},{21.3,-58.125},{21.3,-56.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV7X1.opening, theta) annotation (Line(points={{12,10},{0,10},{0,50},{-56,50},{-56,70},{-110,70}},
-                                                                            color={0,0,127}));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
   connect(PL701_TT702_SourceIn1.outlet, outcold) annotation (Line(
-      points={{-20,-100},{-20,-115},{-49,-115}},
+      points={{-20,-100},{-20,-130}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn1.inlet, TT7X4.inlet) annotation (Line(
@@ -358,51 +367,52 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn2.outlet, TT7X3.inlet) annotation (Line(
-      points={{20,-90},{20.4,-90},{20.4,-72}},
+      points={{20,-86},{19.6,-86},{19.6,-72}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn2.inlet, incold) annotation (Line(
-      points={{20,-110},{20,-115},{49,-115}},
+      points={{20,-106},{20,-130}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT701.q_m3hr, FT7X1_FT) annotation (Line(points={{28.5,56},{68,56},{68,-10},{110,-10}}, color={0,0,127}));
-  connect(TT7X1.T, TT7X1_TT) annotation (Line(points={{28.5,68},{60,68},{60,70},{110,70}}, color={0,0,127}));
-  connect(TT7X3_TT, TT7X3_TT) annotation (Line(points={{110,-80},{110,-80}}, color={0,0,127}));
-  connect(TT7X2.T, TT7X2_TT) annotation (Line(points={{-28.5,66},{-40,66},{-40,82},{82,82},{82,36},{110,36},{110,36}}, color={0,0,127}));
-  connect(PT7X1.p, PT7X1_PT) annotation (Line(points={{28.5,78},{42,78},{42,76},{52,76},{52,94},{110,94}}, color={0,0,127}));
-  connect(PT7X2.p, PT7X2_PT) annotation (Line(points={{-28.5,74},{-34,74},{-34,86},{48,86},{48,112},{110,112}}, color={0,0,127}));
-  connect(TT7X3.T, TT7X3_TT) annotation (Line(points={{10.2,-72},{4,-72},{4,-80},{110,-80}}, color={0,0,127}));
-  connect(TT7X4.T, TT7X4_TT) annotation (Line(points={{-29.8,-73},{-40,-73},{-40,-68},{88,-68},{88,-40},{110,-40}}, color={0,0,127}));
+  connect(TT7X3_TT, TT7X3_TT) annotation (Line(points={{110,-75},{110,-75}}, color={0,0,127}));
   connect(PT7X2.inlet, inhot) annotation (Line(
-      points={{-20,74},{-20,110}},
+      points={{-20,74},{-20,129}},
       color={140,56,54},
       thickness=0.5));
   connect(PT7X1.inlet, outhot) annotation (Line(
-      points={{20,78},{20,110}},
+      points={{20,78},{20,129}},
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn1.wall, MultiPort) annotation (Line(
-      points={{-24.1,-90},{-60,-90},{-60,0},{-110,0}},
+      points={{-24.1,-90},{-40,-90},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
   connect(PL701_SourceOut_FCV701.wall, MultiPort) annotation (Line(
-      points={{15.9,-16},{-60,-16},{-60,0},{-110,0}},
-      color={255,101,98},
-      thickness=0.5));
-  connect(PL701_FCV701_FT701.wall, MultiPort) annotation (Line(
-      points={{15.9,34},{-60,34},{-60,0},{-110,0}},
+      points={{15.9,-16},{-40,-16},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
   connect(PL701_TT702_SourceIn.wall, MultiPort) annotation (Line(
-      points={{-24.1,10},{-60,10},{-60,0},{-110,0}},
+      points={{-24.1,10},{-40,10},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
   connect(PL701_TT702_SourceIn2.wall, MultiPort) annotation (Line(
-      points={{15.9,-100},{-60,-100},{-60,0},{-110,0}},
+      points={{15.9,-96},{-40,-96},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
-  annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}})), Icon(coordinateSystem(grid={2,2}),
-                                                                              graphics={
+  connect(PT7X2.p, PT7X2_PT) annotation (Line(points={{-28.5,74},{-30.5,74},{-30.5,114.5},{94.5,114.5},{94.5,90},{110,90}}, color={0,0,127}));
+  connect(PT7X1.p, PT7X1_PT) annotation (Line(points={{28.5,78},{30,78},{30,113},{93.5,113},{93.5,75},{110,75}}, color={0,0,127}));
+  connect(TT7X1.T, TT7X1_TT) annotation (Line(points={{28.5,68},{31.5,68},{31.5,111.5},{92.5,111.5},{92.5,60},{110,60}}, color={0,0,127}));
+  connect(TT7X2.T, TT7X2_TT) annotation (Line(points={{-28.5,66},{-31.5,66},{-31.5,116},{95.5,116},{95.5,105},{110,105}}, color={0,0,127}));
+  connect(theta, FCV7X1.opening) annotation (Line(points={{50,10},{28,10}}, color={0,0,127}));
+  connect(TT7X4.T, TT7X4_TT) annotation (Line(points={{-29.8,-73},{-33,-73},{-33,-116},{97,-116},{97,-95},{110,-95}}, color={0,0,127}));
+  connect(TT7X3.T, TT7X3_TT) annotation (Line(points={{29.8,-72},{30,-72},{30,-115},{96,-115},{96,-75},{110,-75}}, color={0,0,127}));
+  connect(PL701_FCV701_FT701.wall, MultiPort) annotation (Line(
+      points={{15.9,34},{3,34},{3,-16},{-40,-16},{-40,0},{-110,0}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(FT701.m_flow, FT7X1_FT) annotation (Line(points={{25,59.5},{25,63},{33,63},{33,110},{91,110},{91,45},{110,45}}, color={0,0,127}));
+  annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}}, grid={1,1})),
+                                                                         Icon(graphics={
                              Bitmap(
           extent={{-50,-40},{50,60}},
           imageSource=

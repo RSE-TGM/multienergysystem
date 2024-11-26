@@ -61,6 +61,11 @@ model CoolingSingleLoad
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
 
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_hot = 4314.9346 "nominal heat transfer coefficient";
+  parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_nom_cold = 11200.497 "nominal heat transfer coefficient";
+  parameter DistrictHeatingNetwork.Types.PerUnit alpha_hot = 0 "Exponent in the flow-dependency law";
+  parameter DistrictHeatingNetwork.Types.PerUnit alpha_cold = 0 "Exponent in the flow-dependency law";
+
   // Lengths of pipelines Cold Side
 
 //   parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
@@ -106,11 +111,13 @@ model CoolingSingleLoad
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     hctype_hot=hctype,
+    alpha_hot=alpha_hot,
     Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
     Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
     L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
     L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
     hctype_cold=hctype,
+    alpha_cold=alpha_cold,
     MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
     Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
     Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
@@ -122,8 +129,8 @@ model CoolingSingleLoad
     cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
     t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
     t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
-    gamma_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_cold,
-    gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.gamma_nom_hot,
+    gamma_nom_cold=gamma_nom_cold,
+    gamma_nom_hot=gamma_nom_hot,
     h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
     h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
     k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,

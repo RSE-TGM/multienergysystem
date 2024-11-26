@@ -115,15 +115,15 @@ model CentralisedSystemGBEBCHP_InitForward
     fixOutput=fixFT501,
     y_fixed=FT501_des,
     y_norm=FT501_nom) annotation (Placement(visible=true, transformation(
-        origin={-490,-230},
-        extent={{-10,-10},{10,10}},
+        origin={-505,-251},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset TT502Offset(
     fixOutput=fixTT502,
     y_fixed=TT502_des,
     y_norm=TT502_nom) annotation (Placement(visible=true, transformation(
-        origin={-490,-270},
-        extent={{-10,-10},{10,10}},
+        origin={-505,-268},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   H2GasFacility.Sources.SourcePressure sourceGasCHP(
     redeclare model Medium = Gas,
@@ -166,8 +166,9 @@ equation
   connect(PelSP.y, S500.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));
   connect(ToutCHP501Offset.u, S500.Toutset) annotation (Line(points={{-697,-256},{-646,-256},{-646,-268.1},{-618.3,-268.1}}, color={0,0,127}));
   connect(FCV501theta.y, S500.theta) annotation (Line(points={{-659,-236},{-642,-236},{-642,-259.5},{-618.3,-259.5}}, color={0,0,127}));
-  connect(S500.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-510,-250.9},{-510,-230},{-498,-230}}, color={0,0,127}));
-  connect(S500.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-510.85,-268.1},{-510.85,-270},{-498,-270}}, color={0,0,127}));
+  connect(S500.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-516.35,-250.9},{-516.35,-251},{-509,-251}},
+                                                                                                                        color={0,0,127}));
+  connect(S500.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-523.7,-268},{-509,-268}},                   color={0,0,127}));
   connect(omegaP501Offset.deltaUnorm, controlSignalBus.domegaP501)
     annotation (Line(points={{-714,-210},{-786,-210},{-786,-212},{-897,-212},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
@@ -181,13 +182,15 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(FT501Offset.deltaYnorm, processVariableBus.dFT501)
-    annotation (Line(points={{-481,-230},{-438,-230},{-438,-186},{-98,-186},{-98,-3},{896,-3}}, color={0,0,127}), Text(
+    annotation (Line(points={{-500.5,-251},{-496,-251},{-496,-151},{-468,-151},{-468,-3},{896,-3}},
+                                                                                                color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(TT502Offset.deltaYnorm, processVariableBus.dTT502)
-    annotation (Line(points={{-481,-270},{-426,-270},{-426,-202},{-82,-202},{-82,-3},{896,-3}}, color={0,0,127}), Text(
+    annotation (Line(points={{-500.5,-268},{-480,-268},{-480,-158},{-462,-158},{-462,-3},{896,-3}},
+                                                                                                color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

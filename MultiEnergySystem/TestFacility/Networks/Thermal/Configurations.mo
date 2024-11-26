@@ -1245,7 +1245,7 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(S400.inletPower, sourceVoltage.outlet) annotation (Line(
-          points={{-384.4,-148},{-406,-148},{-406,-454}},
+          points={{-384.4,-148},{-400,-148},{-400,-454}},
           color={56,93,138},
           thickness=1));
     end CentralisedSystem_GBEB;

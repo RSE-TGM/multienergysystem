@@ -352,8 +352,8 @@ model CentralisedSystemGBEB_InitForward
     fixInput=fixthetaFCV711,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={416,-102},
-        extent={{6,-6},{-6,6}},
+        origin={351,-182},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaFCV721Offset(
     fixInput=fixthetaFCV721,
@@ -800,7 +800,7 @@ model CentralisedSystemGBEB_InitForward
   Modelica.Blocks.Continuous.FirstOrder FCV711Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{390,-112},{370,-92}})));
+    y_start=1) annotation (Placement(transformation(extent={{360,-187},{370,-177}})));
   Modelica.Blocks.Continuous.FirstOrder FCV721Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
@@ -854,7 +854,7 @@ model CentralisedSystemGBEB_InitForward
         extent={{-5,-5},{5,5}},
         rotation=0)));
 equation
-  Pt1 =S701.EX7X1.Pt;
+  Pt1 = S701.EX7X1.Pt;
   Pt2 = S711.EX7X1.Pt;
   Pt3 = S721.EX7X1.Pt;
   Pt4 = S731.EX7X1.Pt;
@@ -926,7 +926,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaFCV711, thetaFCV711Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{510,-3},{510,-102},{420.8,-102}},
+      points={{-897,-3},{-832,-3},{-832,-4},{-464,-4},{-464,-1},{-2,-1},{-2,-3},{25,-3},{25,-5},{344,-5},{344,-182},{347,-182}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -1338,7 +1338,6 @@ equation
                                                                                                 color={0,0,127}));
   connect(omegaP401Offset.u, P401Dynamics.u) annotation (Line(points={{-420.5,-90},{-416,-90}},
                                                                                               color={0,0,127}));
-  connect(thetaFCV711Offset.u, FCV711Dynamics.u) annotation (Line(points={{410.6,-102},{392,-102}}, color={0,0,127}));
   connect(thetaTCV701Offset.u, TCV701Dynamics.u) annotation (Line(points={{49.5,-320},{54,-320}}, color={0,0,127}));
   connect(TCV701Dynamics.y, TCV701.opening) annotation (Line(points={{65.5,-320},{72,-320}},
                                                                                            color={0,0,127}));
@@ -1392,7 +1391,6 @@ equation
   connect(S711.FT7X1_FT, FT711Offset.y) annotation (Line(points={{464,-210},{476,-210},{476,-222},{481.2,-222}}, color={0,0,127}));
   connect(S711.PT7X1_PT, PT711Offset.y) annotation (Line(points={{464,-218},{474,-218},{474,-238},{481.2,-238}}, color={0,0,127}));
   connect(S711.PT7X2_PT, PT712Offset.y) annotation (Line(points={{464,-226},{472,-226},{472,-254},{481.2,-254}}, color={0,0,127}));
-  connect(FCV711Dynamics.y, S711.theta) annotation (Line(points={{369,-102},{360,-102},{360,-182},{376,-182}}, color={0,0,127}));
   connect(S721.TT7X2_TT, TT722Offset.y) annotation (Line(points={{624,-186},{636,-186},{636,-170},{641.2,-170}}, color={0,0,127}));
   connect(S721.TT7X1_TT, TT721Offset.y) annotation (Line(points={{624,-178},{634,-178},{634,-154},{641.2,-154}}, color={0,0,127}));
   connect(S721.TT7X4_TT, TT724Offset.y) annotation (Line(points={{624,-202},{636,-202},{636,-206},{641.2,-206}}, color={0,0,127}));
@@ -1427,6 +1425,8 @@ equation
   connect(S100.m_flow_, FT101Offset.y) annotation (Line(points={{-201.6,-253.2},{-194,-253.2},{-194,-245},{-189,-245}}, color={0,0,127}));
   connect(ToutGB101Offset.u, S100.Toutset) annotation (Line(points={{-330.5,-280},{-310,-280},{-310,-270.8},{-298.4,-270.8}}, color={0,0,127}));
   connect(P101Dynamics.y, S100.omega) annotation (Line(points={{-314.5,-250},{-308,-250},{-308,-253.2},{-298.4,-253.2}}, color={0,0,127}));
+  connect(FCV711Dynamics.y, S711.theta) annotation (Line(points={{370.5,-182},{376,-182}}, color={0,0,127}));
+  connect(thetaFCV711Offset.u, FCV711Dynamics.u) annotation (Line(points={{355.5,-182},{359,-182}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-70,100},{70,-100}},

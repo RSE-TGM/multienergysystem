@@ -303,15 +303,15 @@ model CentralisedSystemGBEB_InitForward
     fixInput=fixomegaP101,
     u_norm=omegaP101_nom,
     u_start=omegaP101_nom) annotation (Placement(visible=true, transformation(
-        origin={-390,-240},
-        extent={{-10,-10},{10,10}},
+        origin={-335,-250},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaFCV101Offset(
     fixInput=fixthetaFCV101,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={-390,-270},
-        extent={{-10,-10},{10,10}},
+        origin={-335,-265},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset omegaP401Offset(
     fixInput=fixomegaP401,
@@ -373,29 +373,29 @@ model CentralisedSystemGBEB_InitForward
     fixInput=fixthetaTCV701,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={16,-320},
-        extent={{-6,-6},{6,6}},
+        origin={45,-320},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaTCV711Offset(
     fixInput=fixthetaTCV711,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={340,-320},
-        extent={{-6,-6},{6,6}},
+        origin={365,-320},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaTCV721Offset(
     fixInput=fixthetaTCV721,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={506,-320},
-        extent={{-6,-6},{6,6}},
+        origin={525,-320},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaTCV731Offset(
     fixInput=fixthetaTCV731,
     u_norm=theta_nom,
     u_start=theta_nom) annotation (Placement(visible=true, transformation(
-        origin={192,-320},
-        extent={{-6,-6},{6,6}},
+        origin={205,-320},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset thetaFCVR01Offset(
     fixInput=fixthetaFCVR01,
@@ -422,8 +422,8 @@ model CentralisedSystemGBEB_InitForward
     fixInput=fixToutGB101,
     u_norm=ToutGB101_nom,
     u_start=TT102_des) annotation (Placement(visible=true, transformation(
-        origin={-390,-296},
-        extent={{-10,-10},{10,10}},
+        origin={-335,-280},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.InputOffset ToutEB401Offset(
     fixInput=fixToutEB401,
@@ -443,15 +443,15 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixFT101,
     y_fixed=FT101_des,
     y_norm=FT101_nom) annotation (Placement(visible=true, transformation(
-        origin={-142,-250},
-        extent={{-10,-10},{10,10}},
+        origin={-185,-245},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset PT102Offset(
     fixOutput=fixPT102,
-    y_fixed=dPTS100_des,
+    y_fixed=PT102_des,
     y_norm=PT102_nom) annotation (Placement(visible=true, transformation(
-        origin={-142,-310},
-        extent={{-10,-10},{10,10}},
+        origin={-185,-290},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset FT401Offset(
     fixOutput=fixFT401,
@@ -506,8 +506,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixTT734,
     y_fixed=TT734_des,
     y_norm=TT734_des) annotation (Placement(visible=true, transformation(
-        origin={324,-206},
-        extent={{-6,-6},{6,6}},
+        origin={323,-210},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset EX701PtOffset(
     fixOutput=fixEX701Pt,
@@ -562,8 +562,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixTT731,
     y_fixed=TT731_des,
     y_norm=TT731_des) annotation (Placement(visible=true, transformation(
-        origin={324,-154},
-        extent={{-6,-6},{6,6}},
+        origin={323,-165},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset FT701Offset(
     fixOutput=fixFT701,
@@ -590,8 +590,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixFT731,
     y_fixed=m_flowhot_des,
     y_norm=m_flowhot_des) annotation (Placement(visible=true, transformation(
-        origin={324,-222},
-        extent={{-6,-6},{6,6}},
+        origin={323,-225},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset FTA12Offset(
     fixOutput=fixFTA12,
@@ -604,8 +604,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixTT102,
     y_fixed=TT102_des,
     y_norm=TT102_des) annotation (Placement(visible=true, transformation(
-        origin={-142,-280},
-        extent={{-10,-10},{10,10}},
+        origin={-185,-270},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset TT402Offset(
     fixOutput=fixTT402,
@@ -653,8 +653,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixPT732,
     y_fixed=PT732_des,
     y_norm=PT732_nom) annotation (Placement(visible=true, transformation(
-        origin={324,-254},
-        extent={{-6,-6},{6,6}},
+        origin={323,-255},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset PT701Offset(
     fixOutput=fixPT701,
@@ -681,8 +681,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixPT731,
     y_fixed=PT731_des,
     y_norm=PT731_nom) annotation (Placement(visible=true, transformation(
-        origin={324,-238},
-        extent={{-6,-6},{6,6}},
+        origin={323,-240},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset dPTA1Offset(
     fixOutput=fixdPTA1,
@@ -722,7 +722,7 @@ model CentralisedSystemGBEB_InitForward
   Modelica.Blocks.Continuous.FirstOrder FCV101Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{-360,-280},{-340,-260}})));
+    y_start=1) annotation (Placement(transformation(extent={{-325,-270},{-315,-260}})));
   Modelica.Blocks.Continuous.FirstOrder FCV901Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
@@ -737,7 +737,6 @@ model CentralisedSystemGBEB_InitForward
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
     y_start=0) annotation (Placement(transformation(extent={{732,226},{712,246}})));
-  Modelica.Blocks.Math.Add diffPTS100(k1=-1) annotation (Placement(transformation(extent={{-180,-320},{-160,-300}})));
   Modelica.Blocks.Sources.RealExpression EX701Power(y=Pt1) annotation (Placement(transformation(extent={{702,-426},{722,-406}})));
   Modelica.Blocks.Sources.RealExpression EX711Power(y=Pt2) annotation (Placement(transformation(extent={{702,-446},{722,-426}})));
   Modelica.Blocks.Sources.RealExpression EX721Power(y=Pt3) annotation (Placement(transformation(extent={{702,-466},{722,-446}})));
@@ -748,7 +747,7 @@ model CentralisedSystemGBEB_InitForward
   Modelica.Blocks.Math.Add diffPT1(k1=-1) annotation (Placement(transformation(extent={{258,284},{278,304}})));
   Modelica.Blocks.Math.Add diffPT2(k1=-1) annotation (Placement(transformation(extent={{764,250},{784,270}})));
   Modelica.Blocks.Math.Add diffPTRR01(k1=-1) annotation (Placement(transformation(extent={{910,-336},{922,-348}})));
-  Modelica.Blocks.Sources.BooleanConstant GB101Status annotation (Placement(transformation(extent={{-400,-336},{-380,-316}})));
+  Modelica.Blocks.Sources.BooleanConstant GB101Status annotation (Placement(transformation(extent={{-340,-300},{-330,-290}})));
   Modelica.Blocks.Sources.BooleanConstant EB401Status annotation (Placement(transformation(extent={{-409,-140},{-399,-130}})));
   Modelica.Blocks.Sources.BooleanConstant FV401_OnOff(k=FV401_state) annotation (Placement(transformation(extent={{-386,-26},{-366,-6}})));
   Modelica.Blocks.Sources.BooleanConstant FV402_OnOff(k=true) annotation (Placement(transformation(extent={{-286,-26},{-306,-6}})));
@@ -783,7 +782,7 @@ model CentralisedSystemGBEB_InitForward
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
     y_start=2*Modelica.Constants.pi*30)
-               annotation (Placement(transformation(extent={{-360,-250},{-340,-230}})));
+               annotation (Placement(transformation(extent={{-325,-255},{-315,-245}})));
   Modelica.Blocks.Continuous.FirstOrder P401Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
@@ -813,19 +812,19 @@ model CentralisedSystemGBEB_InitForward
   Modelica.Blocks.Continuous.FirstOrder TCV701Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{38,-330},{58,-310}})));
+    y_start=1) annotation (Placement(transformation(extent={{55,-325},{65,-315}})));
   Modelica.Blocks.Continuous.FirstOrder TCV711Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{358,-330},{378,-310}})));
+    y_start=1) annotation (Placement(transformation(extent={{375,-325},{385,-315}})));
   Modelica.Blocks.Continuous.FirstOrder TCV721Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{520,-330},{540,-310}})));
+    y_start=1) annotation (Placement(transformation(extent={{535,-325},{545,-315}})));
   Modelica.Blocks.Continuous.FirstOrder TCV731Dynamics(
     T=1,
     initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=1) annotation (Placement(transformation(extent={{204,-330},{224,-310}})));
+    y_start=1) annotation (Placement(transformation(extent={{215,-325},{225,-315}})));
   OffSetBlocks.OutputOffset TT702Offset(
     fixOutput=fixTT702,
     y_fixed=TT702_des,
@@ -851,8 +850,8 @@ model CentralisedSystemGBEB_InitForward
     fixOutput=fixTT732,
     y_fixed=TT732_des,
     y_norm=TT732_nom) annotation (Placement(visible=true, transformation(
-        origin={324,-170},
-        extent={{-6,-6},{6,6}},
+        origin={323,-180},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
 equation
   Pt1 =S701.EX7X1.Pt;
@@ -865,7 +864,7 @@ equation
   connect(FV401_OnOff.y, FV401.u) annotation (Line(points={{-365,-16},{-357.2,-16}},
                  color={255,0,255}));
   connect(controlSignalBus.domegaP101, omegaP101Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-737,-3},{-737,-200},{-785,-200},{-785,-208},{-841,-208},{-841,-200},{-897,-200},{-897,-240},{-398,-240}},
+      points={{-897,-3},{-726,-3},{-726,-205},{-774,-205},{-774,-213},{-830,-213},{-830,-205},{-886,-205},{-886,-250},{-339,-250}},
       thickness=0.5,
       pattern=LinePattern.None),
                       Text(
@@ -874,7 +873,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaFCV101, thetaFCV101Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-530,-3},{-530,-4},{-676,-4},{-676,-80},{-548,-80},{-548,-270},{-398,-270}},
+      points={{-897,-3},{-530,-3},{-530,-4},{-676,-4},{-676,-80},{-548,-80},{-548,-265},{-339,-265}},
       thickness=0.5,
       pattern=LinePattern.None),
                       Text(
@@ -883,7 +882,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.domegaP401, omegaP401Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-944,-3},{-944,-62},{-504,-62},{-504,-90},{-429,-90}},
+      points={{-897,-3},{-896,-3},{-896,-59},{-504,-59},{-504,-90},{-429,-90}},
       thickness=0.5,
       pattern=LinePattern.None),
                       Text(
@@ -892,7 +891,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaFCV401, thetaFCV401Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-1039,-3},{-1039,-72},{-559,-72},{-559,-105},{-429,-105}},
+      points={{-897,-3},{-889,-3},{-889,-106},{-559,-106},{-559,-105},{-429,-105}},
       thickness=0.5,
       pattern=LinePattern.None),
                       Text(
@@ -951,7 +950,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaTCV701, thetaTCV701Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-50,-3},{-50,-320},{11.2,-320}},
+      points={{-897,-3},{-852,-3},{-852,-514},{20,-514},{20,-320},{41,-320}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -959,7 +958,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dthetaTCV711, thetaTCV711Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-64,-3},{-64,-430},{300,-430},{300,-320},{335.2,-320}},
+      points={{-897,-3},{-877,-3},{-877,-32},{-876,-32},{-876,-33},{-877,-33},{-877,-2},{-876,-2},{-876,-525},{350,-525},{350,-320},{361,-320}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -967,7 +966,7 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(controlSignalBus.dthetaTCV721, thetaTCV721Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-648,-3},{-648,-444},{488,-444},{488,-320},{501.2,-320}},
+      points={{-897,-3},{-879,-3},{-879,-58},{-880,-58},{-880,-120},{-885,-120},{-885,-128},{-888,-128},{-888,-341},{-881,-341},{-881,-531},{510,-531},{510,-320},{521,-320}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -975,7 +974,7 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(controlSignalBus.dthetaTCV731, thetaTCV731Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-74,-3},{-74,-426},{150,-426},{150,-320},{187.2,-320}},
+      points={{-897,-3},{-863,-3},{-863,-59},{-864,-59},{-864,-97},{-863,-97},{-863,-189},{-861,-189},{-861,-520},{191,-520},{191,-320},{201,-320}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -991,7 +990,7 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(controlSignalBus.dthetaFCVC01, thetaFCVC01Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-940,-3},{-940,300},{132,300}},
+      points={{-897,-3},{-895,-3},{-895,297},{-382,297},{-382,300},{132,300}},
       color={255,204,51},
       thickness=0.5), Text(
       string="%first",
@@ -1007,7 +1006,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(controlSignalBus.dToutGB101, ToutGB101Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-1038,-3},{-1038,-296},{-398,-296}},
+      points={{-897,-3},{-892,-3},{-892,-277},{-616,-277},{-616,-280},{-339,-280}},
       thickness=0.5,
       pattern=LinePattern.None),
                       Text(
@@ -1016,7 +1015,7 @@ equation
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
   connect(controlSignalBus.dToutEB401, ToutEB401Offset.deltaUnorm) annotation (Line(
-      points={{-897,-3},{-1026,-3},{-1026,-62},{-586,-62},{-586,-120},{-429,-120}},
+      points={{-897,-3},{-886,-3},{-886,-89},{-586,-89},{-586,-120},{-429,-120}},
       thickness=0.5,
       pattern=LinePattern.None),
                       Text(
@@ -1035,14 +1034,15 @@ equation
   connect(FTA12.m_flow, FTA12Offset.y) annotation (Line(points={{672.8,200.6},{672.8,194},{709.2,194}},         color={0,0,127}));
   connect(FV933_OnOff.y, FV933.u) annotation (Line(points={{-202,61},{-208,61},{-208,62},{-218,62},{
           -218,46.6}}, color={255,0,255}));
-  connect(PT102Offset.deltaYnorm, processVariableBus.dPT102) annotation (Line(points={{-133,-310},{-84,-310},{-84,-3},{896,-3}},
+  connect(PT102Offset.deltaYnorm, processVariableBus.dPT102) annotation (Line(points={{-180.5,-290},{-84,-290},{-84,-3},{896,-3}},
                                                                                                                                pattern=LinePattern.None),
                                                                           Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(FT101Offset.deltaYnorm, processVariableBus.dFT101) annotation (Line(points={{-133,-250},{-46,-250},{-46,-396},{1180,-396},{1180,-3},{896,-3}}, pattern=LinePattern.None),
+  connect(FT101Offset.deltaYnorm, processVariableBus.dFT101) annotation (Line(points={{-180.5,-245},{-46,-245},{-46,-396},{1180,-396},{1180,-3},{896,-3}},
+                                                                                                                                                         pattern=LinePattern.None),
                                                                              Text(
       string="%second",
       index=1,
@@ -1090,7 +1090,7 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(TT734Offset.deltaYnorm, processVariableBus.dTT734) annotation (Line(points={{329.4,-206},{336,-206},{336,-3},{896,-3}},
+  connect(TT734Offset.deltaYnorm, processVariableBus.dTT734) annotation (Line(points={{327.5,-210},{336,-210},{336,-3},{896,-3}},
                                                           color={0,0,127}), Text(
       string="%second",
       index=1,
@@ -1138,7 +1138,7 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(TT731Offset.deltaYnorm, processVariableBus.dTT731) annotation (Line(points={{329.4,-154},{332,-154},{332,-3},{896,-3}},
+  connect(TT731Offset.deltaYnorm, processVariableBus.dTT731) annotation (Line(points={{327.5,-165},{332,-165},{332,-3},{896,-3}},
                                    color={0,0,127}), Text(
       string="%second",
       index=1,
@@ -1162,7 +1162,7 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(FT731Offset.deltaYnorm, processVariableBus.dFT731) annotation (Line(points={{329.4,-222},{338,-222},{338,-3},{896,-3}},
+  connect(FT731Offset.deltaYnorm, processVariableBus.dFT731) annotation (Line(points={{327.5,-225},{338,-225},{338,-3},{896,-3}},
                                     color={0,0,127}), Text(
       string="%second",
       index=1,
@@ -1174,7 +1174,8 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(TT102Offset.deltaYnorm, processVariableBus.dTT102) annotation (Line(points={{-133,-280},{-84,-280},{-84,-2},{896,-2},{896,-3}}, pattern=LinePattern.None),
+  connect(TT102Offset.deltaYnorm, processVariableBus.dTT102) annotation (Line(points={{-180.5,-270},{-84,-270},{-84,-2},{896,-2},{896,-3}},
+                                                                                                                                          pattern=LinePattern.None),
       Text(
       string="%second",
       index=1,
@@ -1217,7 +1218,7 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(PT732Offset.deltaYnorm, processVariableBus.dPT732) annotation (Line(points={{329.4,-254},{342,-254},{342,-3},{896,-3}},                                                                                                                           color={0,0,127}), Text(
+  connect(PT732Offset.deltaYnorm, processVariableBus.dPT732) annotation (Line(points={{327.5,-255},{342,-255},{342,-3},{896,-3}},                                                                                                                           color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
@@ -1240,7 +1241,7 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(PT731Offset.deltaYnorm, processVariableBus.dPT731) annotation (Line(points={{329.4,-238},{340,-238},{340,-3},{896,-3}},                                                                                                                            color={0,0,127}), Text(
+  connect(PT731Offset.deltaYnorm, processVariableBus.dPT731) annotation (Line(points={{327.5,-240},{340,-240},{340,-3},{896,-3}},                                                                                                                            color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -1280,8 +1281,6 @@ equation
   connect(FCVC02Dynamics.y, FCVC02.opening) annotation (Line(points={{711,236},{711,221},{682,221}}, color={0,0,127}));
   connect(FCVC02Dynamics.u, thetaFCVC02Offset.u) annotation (Line(points={{734,236},{752.6,236}},
                                                                                                 color={0,0,127}));
-  connect(diffPTS100.y, PT102Offset.y) annotation (Line(points={{-159,-310},{-150,-310}},
-                                                                                        color={0,0,127}));
   connect(EX701Power.y, EX701PtOffset.y) annotation (Line(points={{723,-416},{739.2,-416}}, color={0,0,127}));
   connect(EX711Power.y, EX711PtOffset.y) annotation (Line(points={{723,-436},{739.2,-436}}, color={0,0,127}));
   connect(EX721Power.y, EX721PtOffset.y) annotation (Line(points={{723,-456},{739.2,-456}}, color={0,0,127}));
@@ -1312,17 +1311,13 @@ equation
                                                                                                                      color={0,0,127}));
   connect(S400.TTout, TT402Offset.y) annotation (Line(points={{-287.6,-112.8},{-283.3,-112.8},{-283.3,-113},{-279,-113}},
                                                                                                                       color={0,0,127}));
-  connect(thetaFCV101Offset.u, FCV101Dynamics.u) annotation (Line(points={{-381,-270},{-362,-270}},
+  connect(thetaFCV101Offset.u, FCV101Dynamics.u) annotation (Line(points={{-330.5,-265},{-326,-265}},
                                                                                                   color={0,0,127}));
-  connect(FCV101Dynamics.y, S100.theta) annotation (Line(points={{-339,-270},{-339,-262},{-298.4,-262}},
+  connect(FCV101Dynamics.y, S100.theta) annotation (Line(points={{-314.5,-265},{-308.95,-265},{-308.95,-262},{-298.4,-262}},
                                                                                            color={0,0,127}));
-  connect(ToutGB101Offset.u, S100.Toutset) annotation (Line(points={{-381,-296},{-320,-296},{-320,-270.8},{-298.4,-270.8}},          color={0,0,127}));
-  connect(GB101Status.y, S100.status) annotation (Line(points={{-379,-326},{-379,-320},{-312,-320},{-312,-279.6},{-298.4,-279.6}},           color={255,0,255}));
-  connect(S100.m_flow_, FT101Offset.y) annotation (Line(points={{-201.6,-253.2},{-184.8,-253.2},{-184.8,-250},{-150,-250}},
-                                                                                                                    color={0,0,127}));
-  connect(S100.TTout, TT102Offset.y) annotation (Line(points={{-201.6,-270.8},{-162,-270.8},{-162,-280},{-150,-280}}, color={0,0,127}));
-  connect(S100.PTin, diffPTS100.u1) annotation (Line(points={{-201.6,-279.6},{-186,-279.6},{-186,-304},{-182,-304}},             color={0,0,127}));
-  connect(S100.PTout, diffPTS100.u2) annotation (Line(points={{-201.6,-288.4},{-190,-288.4},{-190,-316},{-182,-316}}, color={0,0,127}));
+  connect(GB101Status.y, S100.status) annotation (Line(points={{-329.5,-295},{-307,-295},{-307,-279.6},{-298.4,-279.6}},                     color={255,0,255}));
+  connect(S100.TTout, TT102Offset.y) annotation (Line(points={{-201.6,-270.8},{-195.3,-270.8},{-195.3,-270},{-189,-270}},
+                                                                                                                      color={0,0,127}));
   connect(FCVC01Dynamics.u, thetaFCVC01Offset.u) annotation (Line(points={{168,300},{149,300}}, color={0,0,127}));
   connect(FCVC01Dynamics.y, FCVC01.opening) annotation (Line(points={{191,300},{200,300},{200,223},{245,223}}, color={0,0,127}));
   connect(GBPower.y, GB101PtOffset.y) annotation (Line(points={{723,-498},{739.2,-498}}, color={0,0,127}));
@@ -1339,19 +1334,22 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(P101Dynamics.y, S100.omega) annotation (Line(points={{-339,-240},{-320,-240},{-320,-253.2},{-298.4,-253.2}}, color={0,0,127}));
-  connect(omegaP101Offset.u, P101Dynamics.u) annotation (Line(points={{-381,-240},{-362,-240}}, color={0,0,127}));
+  connect(omegaP101Offset.u, P101Dynamics.u) annotation (Line(points={{-330.5,-250},{-329,-250},{-329,-249},{-328,-249},{-328,-250},{-326,-250}},
+                                                                                                color={0,0,127}));
   connect(omegaP401Offset.u, P401Dynamics.u) annotation (Line(points={{-420.5,-90},{-416,-90}},
                                                                                               color={0,0,127}));
   connect(thetaFCV711Offset.u, FCV711Dynamics.u) annotation (Line(points={{410.6,-102},{392,-102}}, color={0,0,127}));
-  connect(thetaTCV701Offset.u, TCV701Dynamics.u) annotation (Line(points={{21.4,-320},{36,-320}}, color={0,0,127}));
-  connect(TCV701Dynamics.y, TCV701.opening) annotation (Line(points={{59,-320},{72,-320}}, color={0,0,127}));
-  connect(thetaTCV711Offset.u, TCV711Dynamics.u) annotation (Line(points={{345.4,-320},{356,-320}}, color={0,0,127}));
-  connect(TCV711Dynamics.y, TCV711.opening) annotation (Line(points={{379,-320},{392,-320}}, color={0,0,127}));
-  connect(thetaTCV721Offset.u, TCV721Dynamics.u) annotation (Line(points={{511.4,-320},{518,-320}}, color={0,0,127}));
-  connect(TCV721Dynamics.y, TCV721.opening) annotation (Line(points={{541,-320},{552,-320}},   color={0,0,127}));
-  connect(thetaTCV731Offset.u, TCV731Dynamics.u) annotation (Line(points={{197.4,-320},{202,-320}}, color={0,0,127}));
-  connect(TCV731Dynamics.y, TCV731.opening) annotation (Line(points={{225,-320},{232,-320}}, color={0,0,127}));
+  connect(thetaTCV701Offset.u, TCV701Dynamics.u) annotation (Line(points={{49.5,-320},{54,-320}}, color={0,0,127}));
+  connect(TCV701Dynamics.y, TCV701.opening) annotation (Line(points={{65.5,-320},{72,-320}},
+                                                                                           color={0,0,127}));
+  connect(thetaTCV711Offset.u, TCV711Dynamics.u) annotation (Line(points={{369.5,-320},{374,-320}}, color={0,0,127}));
+  connect(TCV711Dynamics.y, TCV711.opening) annotation (Line(points={{385.5,-320},{392,-320}},
+                                                                                             color={0,0,127}));
+  connect(thetaTCV721Offset.u, TCV721Dynamics.u) annotation (Line(points={{529.5,-320},{534,-320}}, color={0,0,127}));
+  connect(TCV721Dynamics.y, TCV721.opening) annotation (Line(points={{545.5,-320},{552,-320}}, color={0,0,127}));
+  connect(thetaTCV731Offset.u, TCV731Dynamics.u) annotation (Line(points={{209.5,-320},{214,-320}}, color={0,0,127}));
+  connect(TCV731Dynamics.y, TCV731.opening) annotation (Line(points={{225.5,-320},{232,-320}},
+                                                                                             color={0,0,127}));
   connect(TT702Offset.deltaYnorm, processVariableBus.dTT702)  annotation (Line(points={{164.5,-180},{170,-180},{170,6},{516,6},{516,-3},{896,-3}},
                                                                       color={0,0,127}), Text(
       string="%second",
@@ -1368,7 +1366,7 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(TT732Offset.deltaYnorm, processVariableBus.dTT732)  annotation (Line(points={{329.4,-170},{334,-170},{334,-8},{896,-8},{896,-3}}, color={0,0,127}), Text(
+  connect(TT732Offset.deltaYnorm, processVariableBus.dTT732)  annotation (Line(points={{327.5,-180},{334,-180},{334,-8},{896,-8},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
@@ -1382,12 +1380,12 @@ equation
   connect(S701.PT7X2_PT, PT702Offset.y) annotation (Line(points={{144,-226},{150,-226},{150,-255},{156,-255}},   color={0,0,127}));
   connect(FCV731Dynamics.y, S731.theta) annotation (Line(points={{209.5,-182},{216,-182}},
                                                                                          color={0,0,127}));
-  connect(S731.TT7X2_TT, TT732Offset.y) annotation (Line(points={{304,-186},{316,-186},{316,-170},{319.2,-170}}, color={0,0,127}));
-  connect(S731.TT7X1_TT, TT731Offset.y) annotation (Line(points={{304,-178},{314,-178},{314,-154},{319.2,-154}}, color={0,0,127}));
-  connect(S731.FT7X1_FT, FT731Offset.y) annotation (Line(points={{304,-210},{316,-210},{316,-222},{319.2,-222}}, color={0,0,127}));
-  connect(S731.TT7X4_TT, TT734Offset.y) annotation (Line(points={{304,-202},{312,-202},{312,-206},{319.2,-206}}, color={0,0,127}));
-  connect(S731.PT7X1_PT, PT731Offset.y) annotation (Line(points={{304,-218},{314,-218},{314,-238},{319.2,-238}}, color={0,0,127}));
-  connect(S731.PT7X2_PT, PT732Offset.y) annotation (Line(points={{304,-226},{312,-226},{312,-254},{319.2,-254}}, color={0,0,127}));
+  connect(S731.TT7X2_TT, TT732Offset.y) annotation (Line(points={{304,-186},{316,-186},{316,-180},{319,-180}},   color={0,0,127}));
+  connect(S731.TT7X1_TT, TT731Offset.y) annotation (Line(points={{304,-178},{310,-178},{310,-165},{319,-165}},   color={0,0,127}));
+  connect(S731.FT7X1_FT, FT731Offset.y) annotation (Line(points={{304,-210},{316,-210},{316,-225},{319,-225}},   color={0,0,127}));
+  connect(S731.TT7X4_TT, TT734Offset.y) annotation (Line(points={{304,-202},{312,-202},{312,-210},{319,-210}},   color={0,0,127}));
+  connect(S731.PT7X1_PT, PT731Offset.y) annotation (Line(points={{304,-218},{314,-218},{314,-240},{319,-240}},   color={0,0,127}));
+  connect(S731.PT7X2_PT, PT732Offset.y) annotation (Line(points={{304,-226},{310,-226},{310,-255},{319,-255}},   color={0,0,127}));
   connect(S711.TT7X1_TT, TT711Offset.y) annotation (Line(points={{464,-178},{474,-178},{474,-154},{481.2,-154}}, color={0,0,127}));
   connect(S711.TT7X2_TT, TT712Offset.y) annotation (Line(points={{464,-186},{478,-186},{478,-170},{481.2,-170}}, color={0,0,127}));
   connect(S711.TT7X4_TT, TT714Offset.y) annotation (Line(points={{464,-202},{474,-202},{474,-206},{481.2,-206}}, color={0,0,127}));
@@ -1425,6 +1423,10 @@ equation
   connect(FCV901Dynamics.y, S900.theta) annotation (Line(points={{-859.5,145},{-856,145},{-856,148.5},{-845.1,148.5}}, color={0,0,127}));
   connect(EB401Status.y, S400.status) annotation (Line(points={{-398.5,-135},{-396,-135},{-396,-136},{-394,-136},{-394,-121.6},{-384.4,-121.6}}, color={255,0,255}));
   connect(ToutEB401Offset.u, S400.Toutset) annotation (Line(points={{-420.5,-120},{-400,-120},{-400,-113},{-392,-113},{-392,-112.8},{-384.4,-112.8}}, color={0,0,127}));
+  connect(S100.PTout, PT102Offset.y) annotation (Line(points={{-201.6,-288.4},{-195.3,-288.4},{-195.3,-290},{-189,-290}}, color={0,0,127}));
+  connect(S100.m_flow_, FT101Offset.y) annotation (Line(points={{-201.6,-253.2},{-194,-253.2},{-194,-245},{-189,-245}}, color={0,0,127}));
+  connect(ToutGB101Offset.u, S100.Toutset) annotation (Line(points={{-330.5,-280},{-310,-280},{-310,-270.8},{-298.4,-270.8}}, color={0,0,127}));
+  connect(P101Dynamics.y, S100.omega) annotation (Line(points={{-314.5,-250},{-308,-250},{-308,-253.2},{-298.4,-253.2}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-70,100},{70,-100}},

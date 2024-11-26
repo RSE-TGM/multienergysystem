@@ -1132,7 +1132,9 @@ package Configurations
         Kv=Kv_FCV101,
         openingChar=openingChar_FCV101,
         Pmaxnom=147.6e3*0.78) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
-      ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-722,-468},{-690,-436}})));
+      ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
+            rotation=90,
+            origin={-400,-470})));
     equation
       connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
         Line(points={{-266,-196},{-266,5.25},{-326.5,5.25}},       color = {140, 56, 54}, thickness = 0.5));
@@ -1243,7 +1245,7 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(S400.inletPower, sourceVoltage.outlet) annotation (Line(
-          points={{-384.4,-148},{-450,-148},{-450,-452},{-690,-452}},
+          points={{-384.4,-148},{-406,-148},{-406,-454}},
           color={56,93,138},
           thickness=1));
     end CentralisedSystem_GBEB;

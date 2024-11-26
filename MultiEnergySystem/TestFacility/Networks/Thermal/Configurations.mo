@@ -63,11 +63,11 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
-          points={{304.5,171.7},{304.5,134},{558,134},{558,-46}},
+          points={{304.5,171.7},{304.5,134},{560,134},{560,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL721_FT721_rackL4L5.outlet, rackL4L5.inletComp) annotation (Line(
-          points={{598,-46},{596,-46},{596,154},{349.95,154},{349.95,172.15}},
+          points={{600,-46},{596,-46},{596,154},{349.95,154},{349.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       connect(PL731_rackL6L7_TT732.inlet, rackL6L7.outletComp) annotation (Line(
@@ -82,28 +82,6 @@ package Configurations
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false), graphics={
             Line(
-              points={{610,-336},{610,-308}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{548,-350},{548,-378}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{588,-262},{588,-244},{570,-244},{570,-262}},
-              color={28,108,200},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
-              points={{570,-176},{570,-194},{588,-194},{588,-176}},
-              color={162,29,33},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
               points={{840,-304},{840,-276}},
               color={28,108,200},
               arrow={Arrow.None,Arrow.Filled},
@@ -113,13 +91,6 @@ package Configurations
               color={28,108,200},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
-            Line(
-              points={{0,-14},{0,14}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1,
-              origin={766,-372},
-              rotation=-90),
             Line(
               points={{802,-188},{802,-170},{734,-170},{734,-188}},
               color={28,108,200},

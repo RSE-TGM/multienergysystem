@@ -5,6 +5,7 @@ model CentralisedSystemGB_InitForward
   extends Networks.Thermal.Configurations.Centralised.CentralisedSystem_GB(
     S701(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     S711(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
+    S721(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     S731(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     Kvalve=40,
     redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid,
@@ -23,9 +24,7 @@ model CentralisedSystemGB_InitForward
     EX731_Tout_cold=25 + 273.15,
     sourceGas(computeTransport=false, computeEnergyVariables=false),
     VER901(p0=220000, R=1e-3),
-    EX721(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
-    rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
-    FCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage));
+    rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5));
 
 //Boolean Parameters
   //Initialization type
@@ -1352,13 +1351,13 @@ equation
   connect(thetaFCV731Offset.u, FCV731Dynamics.u) annotation (Line(points={{344.6,-150},{338,-150}}, color={0,0,127}));
   connect(FCV731Dynamics.y, FCV731.opening) annotation (Line(points={{315,-150},{306,-150}}, color={0,0,127}));
   connect(thetaTCV701Offset.u, TCV701Dynamics.u) annotation (Line(points={{21.4,-320},{58,-320}}, color={0,0,127}));
-  connect(TCV701Dynamics.y, TCV701.opening) annotation (Line(points={{81,-320},{90,-320}}, color={0,0,127}));
+  connect(TCV701Dynamics.y, TCV701.opening) annotation (Line(points={{81,-320},{72,-320}}, color={0,0,127}));
   connect(thetaTCV711Offset.u, TCV711Dynamics.u) annotation (Line(points={{345.4,-320},{356,-320}}, color={0,0,127}));
-  connect(TCV711Dynamics.y, TCV711.opening) annotation (Line(points={{379,-320},{390,-320}}, color={0,0,127}));
+  connect(TCV711Dynamics.y, TCV711.opening) annotation (Line(points={{379,-320},{392,-320}}, color={0,0,127}));
   connect(thetaTCV721Offset.u, TCV721Dynamics.u) annotation (Line(points={{511.4,-320},{518,-320}}, color={0,0,127}));
   connect(TCV721Dynamics.y, TCV721.opening) annotation (Line(points={{541,-320},{549.1,-320}}, color={0,0,127}));
   connect(thetaTCV731Offset.u, TCV731Dynamics.u) annotation (Line(points={{215.4,-320},{220,-320}}, color={0,0,127}));
-  connect(TCV731Dynamics.y, TCV731.opening) annotation (Line(points={{243,-320},{250,-320}}, color={0,0,127}));
+  connect(TCV731Dynamics.y, TCV731.opening) annotation (Line(points={{243,-320},{232,-320}}, color={0,0,127}));
   connect(TT702Offset.y, diffTT701.u2) annotation (Line(points={{72.8,-140},{84,-140},{84,-120},{80,-120},{80,-123.6},{73.2,-123.6}}, color={0,0,127}));
   connect(TT712Offset.y, diffTT711_.u2) annotation (Line(points={{384.8,-146},{388,-146},{388,-124},{390,-124},{390,-123.6},{381.2,-123.6}}, color={0,0,127}));
   connect(TT722Offset.y, diffTT721.u2) annotation (Line(points={{540.8,-156},{544,-156},{544,-120},{526,-120},{526,-123.6},{491.2,-123.6}}, color={0,0,127}));

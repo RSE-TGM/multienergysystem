@@ -47,11 +47,11 @@ package Configurations
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
       connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
-          points={{46.5,171.7},{46.5,100},{400,100},{400,-46}},
+          points={{86.5,171.7},{86.5,100},{400,100},{400,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL711_FT711_rackL3L4.outlet, rackL3L4.inletComp) annotation (Line(
-          points={{440,-46},{440,110},{94,110},{94,160},{91.95,160},{91.95,172.15}},
+          points={{440,-46},{440,112},{132,112},{132,160},{131.95,160},{131.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       connect(PL701_rackL2L3_TT702.inlet, S900_rackL3L4_hot.outlet) annotation (Line(
@@ -63,11 +63,11 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
-          points={{304.5,171.7},{304.5,134},{560,134},{560,-46}},
+          points={{324.5,171.7},{324.5,134},{560,134},{560,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL721_FT721_rackL4L5.outlet, rackL4L5.inletComp) annotation (Line(
-          points={{600,-46},{596,-46},{596,154},{349.95,154},{349.95,172.15}},
+          points={{600,-46},{600,156},{369.95,156},{369.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       connect(PL731_rackL6L7_TT732.inlet, rackL6L7.outletComp) annotation (Line(

@@ -47,19 +47,19 @@ package Configurations
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
       connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
-          points={{46.5,171.7},{46.5,100},{398,100},{398,-46}},
+          points={{46.5,171.7},{46.5,100},{400,100},{400,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL711_FT711_rackL3L4.outlet, rackL3L4.inletComp) annotation (Line(
-          points={{438,-46},{438,110},{94,110},{94,160},{91.95,160},{91.95,172.15}},
+          points={{440,-46},{440,110},{94,110},{94,160},{91.95,160},{91.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       connect(PL701_rackL2L3_TT702.inlet, S900_rackL3L4_hot.outlet) annotation (Line(
-          points={{98,-48},{98,72},{-24,72},{-24,205},{-40,205}},
+          points={{80,-48},{80,72},{-24,72},{-24,205},{-40,205}},
           color={140,56,54},
           thickness=0.5));
       connect(PL701_FT701_rackL2L3.outlet, S900_rackL2L3_cold.inlet) annotation (Line(
-          points={{138,-48},{138,82},{-4,82},{-4,241},{-60,241}},
+          points={{120,-48},{120,82},{-4,82},{-4,241},{-60,241}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
@@ -71,88 +71,18 @@ package Configurations
           color={140,56,54},
           thickness=0.5));
       connect(PL731_rackL6L7_TT732.inlet, rackL6L7.outletComp) annotation (Line(
-          points={{258,-50},{260,-50},{260,58},{528.5,58},{528.5,171.7}},
+          points={{240,-50},{240,60},{528.5,60},{528.5,171.7}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL6L7.inletComp, PL731_FT731_rackL6L7.outlet) annotation (Line(
-          points={{573.95,172.15},{573.95,92},{574,92},{574,20},{298,20},{298,-50}},
+          points={{573.95,172.15},{573.95,92},{574,92},{574,20},{280,20},{280,-50}},
           color={140,56,54},
           thickness=0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false), graphics={
             Line(
-              points={{90,-88},{90,-116}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{246,-88},{246,-116}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{386,-86},{386,-114}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{546,-86},{546,-114}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{154,-114},{154,-86}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{314,-116},{314,-88}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{454,-114},{454,-86}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{616,-116},{616,-88}},
-              color={162,29,33},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{146,-342},{146,-314}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{308,-336},{308,-308}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{452,-334},{452,-306}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
               points={{610,-336},{610,-308}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{86,-350},{86,-378}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{250,-350},{250,-378}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1),
-            Line(
-              points={{388,-350},{388,-378}},
               color={28,108,200},
               arrow={Arrow.None,Arrow.Filled},
               thickness=1),
@@ -164,18 +94,6 @@ package Configurations
             Line(
               points={{588,-262},{588,-244},{570,-244},{570,-262}},
               color={28,108,200},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
-              points={{428,-262},{428,-244},{410,-244},{410,-262}},
-              color={28,108,200},
-              thickness=1,
-              arrow={Arrow.None,Arrow.Filled},
-              smooth=Smooth.Bezier),
-            Line(
-              points={{408,-176},{408,-194},{426,-194},{426,-176}},
-              color={162,29,33},
               thickness=1,
               arrow={Arrow.None,Arrow.Filled},
               smooth=Smooth.Bezier),
@@ -214,20 +132,6 @@ package Configurations
               arrow={Arrow.None,Arrow.Filled},
               thickness=1,
               origin={584,-394},
-              rotation=-90),
-            Line(
-              points={{0,-14},{0,14}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1,
-              origin={428,-396},
-              rotation=-90),
-            Line(
-              points={{0,-14},{0,14}},
-              color={28,108,200},
-              arrow={Arrow.None,Arrow.Filled},
-              thickness=1,
-              origin={282,-394},
               rotation=-90)}));
     end CentralisedNetworkBaseII;
 
@@ -1373,7 +1277,7 @@ package Configurations
           thickness=1));
     end CentralisedSystem_GBEB;
 
-    model CentralisedSystems_GBEBCHP
+    model CentralisedSystem_GBEBCHP
       extends CentralisedSystem_GBEB;
       Plants.Thermal.Systems.CHP S500(
         n=n,
@@ -1437,6 +1341,6 @@ package Configurations
           points={{-506,-172},{-508,-172},{-508,-46},{-488,-46},{-488,45},{-500,45}},
           color={140,56,54},
           thickness=0.5));
-    end CentralisedSystems_GBEBCHP;
+    end CentralisedSystem_GBEBCHP;
   end Centralised;
 end Configurations;

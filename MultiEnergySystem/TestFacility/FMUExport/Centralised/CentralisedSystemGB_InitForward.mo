@@ -4,6 +4,8 @@ model CentralisedSystemGB_InitForward
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends Networks.Thermal.Configurations.Centralised.CentralisedSystem_GB(
     S701(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
+    S711(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
+    S731(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     Kvalve=40,
     redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid,
     redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid,
@@ -21,11 +23,8 @@ model CentralisedSystemGB_InitForward
     EX731_Tout_cold=25 + 273.15,
     sourceGas(computeTransport=false, computeEnergyVariables=false),
     VER901(p0=220000, R=1e-3),
-    EX711(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     EX721(wall(Tstart1(displayUnit="K") = 70 + 273.15, TstartN(displayUnit="K") = 50 + 273.15)),
     rackL6L7_FCVC02_cold(h=-h_rL6L7_FCVC02_H*0.5),
-    FCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
-    FCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
     FCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage));
 
 //Boolean Parameters

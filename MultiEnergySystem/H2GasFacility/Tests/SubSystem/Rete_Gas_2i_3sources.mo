@@ -31,7 +31,7 @@ model Rete_Gas_2i_3sources
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo2(
     L=100,
     H=0,
-    redeclare model Medium = Medium,
+    redeclare model Gas = Medium,
     X_start=X_start,
     Di=0.1325,
     quasiStatic=quasiStatic,
@@ -47,7 +47,7 @@ model Rete_Gas_2i_3sources
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo1(
     L=100,
     H=0,
-    redeclare model Medium = Medium,
+    redeclare model Gas = Medium,
     X_start=X_start,
     Di=0.1325,
     quasiStatic=quasiStatic,

@@ -42,7 +42,7 @@ equation
   drho_dp = rho/p;
   drho_dT = -rho/T;
   drho_dX = -rho^2*dv_dX;
-  drho_dXi = -rho*MM_mix*(ones(nXi)./MM[1:nXi] + ones(nXi)/MM[nX]);
+  drho_dXi = -rho*MM_mix*(ones(nXi)./MM[1:nXi] - ones(nXi)/MM[nX]);
   drho_dXi = -rho^2*dv_dXi;
 
   // Specific enthalpy derivatives

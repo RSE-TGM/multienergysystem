@@ -1,7 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_CH4H2;
-model Rete_Gas_2i_2sources_nV
-  extends Rete_Gas_2i_CH4H2.Rete_Gas_2i_2sources
-                                 (
+model Rete2i_nosources_nV
+  extends Rete2i_nosources     (
     sds7(n=nV),
     s1(n=nV),
     sds8(n=nV),
@@ -19,8 +18,6 @@ model Rete_Gas_2i_2sources_nV
     s36_Stadio(n=nV),
     s19(n=nV),
     sds1(n=nV),
-    sds17(n=nV),
-    sds16(n=nV),
     sds13(n=nV),
     sds14(n=nV),
     sds10(n=nV),
@@ -28,7 +25,6 @@ model Rete_Gas_2i_2sources_nV
     sds9(n=nV),
     sds4(n=nV),
     sds2(n=nV),
-    s3(n=nV),
     s8(n=nV),
     s9(n=nV),
     s12(n=nV),
@@ -39,8 +35,5 @@ model Rete_Gas_2i_2sources_nV
     s26(n=nV),
     s28(n=nV),
     s30(n=nV));
-  parameter Integer nV = 5;
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)),
-    experiment(StopTime=54000, __Dymola_Algorithm="Dassl"));
-end Rete_Gas_2i_2sources_nV;
+    parameter Integer nV = 3;
+end Rete2i_nosources_nV;

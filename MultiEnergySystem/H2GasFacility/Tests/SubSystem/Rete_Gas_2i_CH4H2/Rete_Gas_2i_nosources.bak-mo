@@ -3,11 +3,11 @@ model Rete_Gas_2i_nosources
   "Simplified version of Rete Gas 2i with only backbone and no sources"
   extends Modelica.Icons.Example;
   //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
-  // replaceable model Medium =
-  //    MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
-  //  MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  //replaceable model Medium =
+  //    MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = true;
   parameter Boolean constantFrictionFactor = true;
@@ -15,7 +15,7 @@ model Rete_Gas_2i_nosources
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Integer nX = 1 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[1] = {1};
+  parameter Types.MassFraction X_start[2] = {0.95, 0.05};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.657;
 

@@ -36,6 +36,7 @@ partial model PartialValve
     Dialog(group = "Initialisation"));
   parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate" annotation (
     Dialog(group = "Initialisation"));
+  parameter Real N = 50;
 
   // Final parameters
   final parameter Types.MassFlowRate m_flow_start = q_start*rho_start;
@@ -80,7 +81,7 @@ equation
   elseif openingChar == Components.Types.valveOpeningChar.SquareRoot then
     m_flow = homotopy((BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.squareRoot(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   elseif openingChar == Components.Types.valveOpeningChar.EqualPercentage then
-    m_flow = homotopy((BaseClass.ValveCharacteristics.equalPercentage(opening) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.equalPercentage(opening) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
+    m_flow = homotopy((BaseClass.ValveCharacteristics.equalPercentage(opening, N) + minimumOpening)*Av*regRoot(fluidIn.rho)*regRoot(inlet.p - outlet.p), (BaseClass.ValveCharacteristics.equalPercentage(opening, N) + minimumOpening)/nomOpening*m_flow_nom/dp_nom*(inlet.p - outlet.p));
   end if;
 
   // Definition of fluids

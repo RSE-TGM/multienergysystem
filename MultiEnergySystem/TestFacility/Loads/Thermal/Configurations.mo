@@ -3313,7 +3313,7 @@ package Configurations "Different possible configurations for the loads"
       parameter Real q_Cool(unit = "m3/h") = 32;
       parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
       parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
-      parameter Real Kvalve(unit = "m3/h") = 90;
+      parameter Real Kvalve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCVR01.Kv; //90;
       parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
       parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
       parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
@@ -3798,10 +3798,12 @@ package Configurations "Different possible configurations for the loads"
             origin={597,-400})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVR01(
         Kv=Kvalve,
+        openingChar=DistrictHeatingNetwork.Data.ValveData.FCVR01.openingChar,
         dp_nom(displayUnit="Pa") = 1.09928e5,
         rho_nom(displayUnit="kg/m3") = 1000,
         Tin_start(displayUnit="K") = Tout_start_Cool,
-        pin_start(displayUnit="Pa") = 2.77476e5) annotation (Placement(
+        pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCVR01.pin_start,
+        N=10)                                    annotation (Placement(
             transformation(
             extent={{-10,-10},{10,10}},
             rotation=0,
@@ -4002,6 +4004,7 @@ package Configurations "Different possible configurations for the loads"
         DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
         RR01(
         use_in_Tout_cold_set=true,
+        Tin_cold_start=Tin_start_Cool,
         Tout_cold_nom(displayUnit="K") = Tout_start_Cool,
         dp_cold_start=dp_RR01,
         m_flow_cold_start=m_flow_Cool,

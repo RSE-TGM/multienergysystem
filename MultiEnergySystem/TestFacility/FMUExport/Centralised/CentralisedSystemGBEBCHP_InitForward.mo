@@ -203,5 +203,5 @@ equation
       points={{-618.3,-305.94},{-630,-305.94},{-630,-454},{-400,-454}},
       color={56,93,138},
       thickness=1));
-  annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"), Diagram(coordinateSystem(extent={{-900,-540},{900,320}}, grid={1,1})));
+  annotation (experiment(StopTime=2000, __Dymola_Algorithm="Dassl"),  Diagram(coordinateSystem(extent={{-900,-540},{900,320}}, grid={1,1})));
 end CentralisedSystemGBEBCHP_InitForward;

@@ -153,4 +153,14 @@ package ValveData
     Tin_start = 80 + 273.15,
     pin_start = 3e5,
     openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+  constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve FCVR01(
+    Name = "FCVR01",
+    Tin_nom = 30 + 273.15,
+    q_nom_m3h = 4.15,
+    dp_nom = 0.1e5,
+    rho_nom = 995,
+    Kv = 16.5,
+    Tin_start = 30 + 273.15,
+    pin_start = 2e5,
+    openingChar = MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
 end ValveData;

@@ -4405,19 +4405,22 @@ Act")}),  Diagram(coordinateSystem(
           thetaFCV401Offset(fixInput=false, fixOffset=true),
           omegaP401Offset(fixInput=false, fixOffset=true),
           omegaP501Offset(fixInput=false, fixOffset=true),
-            S500(PL_S500_P501_PT501(h=2.05)),
-            S900(h_FCV901_PT902=2.5),
-            PL_S500_rCD_hot(h=3),
-            PL_S400_rCD_hot(h=1.2)),
+            S500(PL_S500_P501_PT501(h=2.05*0)),
+            S900(h_FCV901_PT902=2.5*0.1),
+            PL_S500_rCD_hot(h=3*0),
+            PL_S400_rCD_hot(h=1.2*0)),
         theta_TCV701 = 1,
         theta_TCV711 = 1,
         theta_TCV721 = 1,
         theta_TCV731 = 1,
-        f_P101_delta = 3.2);
-        parameter Real f_P501 = 39;
-        parameter Real f_P501_delta = 1;
+        f_P901 = 30,
+        f_P101 = 30,
+        f_P401 = 30,
+        f_P101_delta = 0);
+        parameter Real f_P501 = 30;
+        parameter Real f_P501_delta = 0;
         annotation (experiment(
-            StopTime=7000,
+            StopTime=1000,
             Tolerance=1e-06,
             __Dymola_Algorithm="Dassl"));
       end SR_ThreeGen_CaseA;
@@ -9762,10 +9765,10 @@ System")}),
           thetaFCV401Offset(fixInput=false, fixOffset=true),
           omegaP401Offset(fixInput=false, fixOffset=true),
           omegaP501Offset(fixInput=false, fixOffset=true),
-          S500(PL_S500_P501_PT501(h=2.05)),
-          S900(h_FCV901_PT902=2.5),
-          PL_S500_rCD_hot(h=3),
-          PL_S400_rCD_hot(h=1.2)) annotation (Placement(transformation(origin={-1,0}, extent={{11,-38},{55,38}})));
+          S500(PL_S500_P501_PT501(h=2.05*0)),
+          S900(h_FCV901_PT902=2.5*0.1),
+          PL_S500_rCD_hot(h=3*0),
+          PL_S400_rCD_hot(h=1.2*0)) annotation (Placement(transformation(origin={-1,0}, extent={{11,-38},{55,38}})));
           //thetaTCV701Offset(fixInput=false, fixOffset=true),
 
           //thetaTCV701Offset(fixInput=false, fixOffset=true),
@@ -9776,7 +9779,7 @@ System")}),
         parameter Real f_P101_delta = 0;
         parameter Real f_P401 = 30;
         parameter Real f_P401_delta = 0;
-        parameter Real f_P501 = 39;
+        parameter Real f_P501 = 30;
         parameter Real f_P501_delta = 0;
         parameter Real f_P901 = 30;
         parameter Real f_P901_delta = 0;
@@ -9820,19 +9823,25 @@ System")}),
       model CentralizedControlPlant_II
         extends PlantControlBaseII;
       equation
-        controller.TT701SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
-        controller.TT711SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
-        controller.TT721SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
-        controller.TT731SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
+        controller.TT701SP = if time < 2e3 then 65 + 273.15 else 65 + 273.15;
+        controller.TT711SP = if time < 2e3 then 65 + 273.15 else 65 + 273.15;
+        controller.TT721SP = if time < 2e3 then 65 + 273.15 else 65 + 273.15;
+        controller.TT731SP = if time < 2e3 then 65 + 273.15 else 65 + 273.15;
         controller.booldTT701 = true;
         controller.booldTT711 = true;
         controller.booldTT721 = true;
         controller.booldTT731 = true;
 
-        controller.PtEX701SP = if time < 5e3 then 40e3 else 37.5e3;
-        controller.PtEX711SP = 35e3;
-        controller.PtEX721SP = if time < 5e3 then 35e3 else 30e3;
-        controller.PtEX731SP = if time < 5e3 then 25e3 else 30e3;
+      //   controller.PtEX701SP = if time < 5e3 then 35e3 else 37.5e3;
+      //   controller.PtEX711SP = 35e3;
+      //   controller.PtEX721SP = if time < 5e3 then 35e3 else 30e3;
+      //   controller.PtEX731SP = if time < 5e3 then 35e3 else 30e3;
+
+        controller.PtEX701SP = if time < 5e3 then 35e3 else 30e3;
+        controller.PtEX711SP = 30e3;
+        controller.PtEX721SP = if time < 5e3 then 30e3 else 30e3;
+        controller.PtEX731SP = if time < 5e3 then 30e3 else 30e3;
+
         controller.booldPtEX701 = true;
         controller.booldPtEX711 = true;
         controller.booldPtEX721 = true;

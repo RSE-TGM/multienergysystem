@@ -1,12 +1,21 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemGBEBCHP_InitForward
-  extends CentralisedSystemGBEB_InitForward(sourceGas(computeEnergyVariables=true),
+  extends CentralisedSystemGBEB_InitForward(
+    h_FTR03_PTR01 = 0.25*0,
+    h_PTR01_FTR01 = -1.9*0,
+    h_FTR01_RR01 = -0.72*0,
+    sourceGas(computeEnergyVariables=true),
     FCVC02Dynamics(k=1*0),
     FCVC01Dynamics(k=0),
     TCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
     TCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
     TCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
-    TCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage));
+    TCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    PR01(b=b_PR01),
+    S701(TN_wall_start=25 + 273.15),
+    S731(TN_wall_start=25 + 273.15),
+    S711(TN_wall_start=25 + 273.15),
+    S721(TN_wall_start=25 + 273.15));
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
@@ -42,7 +51,7 @@ model CentralisedSystemGBEBCHP_InitForward
 
   parameter DistrictHeatingNetwork.Types.Temperature TT502_des = 80 + 273.15 "Desired temperature at the outlet of S500";
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h*980/3600;
-
+  parameter Real b_PR01[3] = DistrictHeatingNetwork.Data.PumpData.PR01.b;
   Plants.Thermal.Systems.CHP S500(
     n=n,
     Tin_low_start=Tin_Source_start_S5,

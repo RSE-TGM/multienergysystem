@@ -1073,6 +1073,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 70 + 273.15;
       parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
 
+
       parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
       parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
       parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
@@ -1092,6 +1093,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2;
       parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2*0;
 
+
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = m_flow_total;
       parameter Real q_m3h_S1 = 9;
       parameter Real P101omega[:, :] = [0, 2*pi*50; 100, 2*pi*50; 100, 2*pi*50; 200, 2*pi*50];
@@ -1099,6 +1101,7 @@ package Configurations
       parameter Real FCV101theta[:, :] = [0, 1];
       parameter Real GB101_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
       parameter Real Kv_FCV101(unit = "m3/h") = 33 "Metri Flow Coefficient";
+      parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.84;
       parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV101 = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(redeclare model Medium = WaterHot,L = L_S1_rCD_hot, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
@@ -1124,6 +1127,7 @@ package Configurations
         Tin_start_S1=Tin_start_S1,
         Tout_start_S1=Tout_start_S1,
         cf=cfp,
+        eta_combustion=eta_combustion,
         h_FT101_GB101=h_FT101_GB101,
         h_GB101_P101=h_GB101_P101,
         L_P101_FCV101=L_P101_FCV101,
@@ -1131,7 +1135,7 @@ package Configurations
         q_m3h_S1=q_m3h_S1,
         Kv=Kv_FCV101,
         openingChar=openingChar_FCV101,
-        Pmaxnom=147.6e3*0.78) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
+        Pmaxnom=147.6e3*0.92) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
       ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
             rotation=90,
             origin={-400,-470})));

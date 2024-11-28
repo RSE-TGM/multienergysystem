@@ -3367,13 +3367,13 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Length h_FCV731_FT731=0;
 
       parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
+      parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-0.7; //-1;
       parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1;
+      parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1.4; //-1;
       parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 + 1 + 1;
-      parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1;
+      parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1.6; //-1;
       parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 + 0.25 + 0.3 + 3 + 0.4 + 0.5;
-      parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-0.25 - 0.5;
+      parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-2.4; //-0.25 - 0.5;
 
       // Lengths of pipelines HOT SIDE
       parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=1.5 + 1.0 + 0.4;
@@ -3400,9 +3400,9 @@ package Configurations "Different possible configurations for the loads"
 
       // Lengths of pipelines source side
       parameter DistrictHeatingNetwork.Types.Length L_VER901_FCVR01=1;
-      parameter DistrictHeatingNetwork.Types.Length h_VER901_FCVR01=-0.8;
+      parameter DistrictHeatingNetwork.Types.Length h_VER901_FCVR01=-0.8*0;
       parameter DistrictHeatingNetwork.Types.Length L_FCVR01_FTR03=2.95;
-      parameter DistrictHeatingNetwork.Types.Length h_FCVR01_FTR03=2.35;
+      parameter DistrictHeatingNetwork.Types.Length h_FCVR01_FTR03=2.35*0;
       parameter DistrictHeatingNetwork.Types.Length L_FTR03_PTR01=1.05;
       parameter DistrictHeatingNetwork.Types.Length h_FTR03_PTR01=0.25;
       parameter DistrictHeatingNetwork.Types.Length L_PTR01_FTR01=1.90;
@@ -3412,7 +3412,7 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Length L_RR01_PR01=1.275;
       parameter DistrictHeatingNetwork.Types.Length h_RR01_PR01=0;
       parameter DistrictHeatingNetwork.Types.Length L_PR01_PTR02=2.8;
-      parameter DistrictHeatingNetwork.Types.Length h_PR01_PTR02=1;
+      parameter DistrictHeatingNetwork.Types.Length h_PR01_PTR02=1*0;
       parameter DistrictHeatingNetwork.Types.Length L_TTR02_VER901=0.43;
       parameter DistrictHeatingNetwork.Types.Length h_TTR02_VER901=0;
 
@@ -3435,7 +3435,7 @@ package Configurations "Different possible configurations for the loads"
       parameter DistrictHeatingNetwork.Types.Length h_EX701_EX731_hot=0;
 
       parameter DistrictHeatingNetwork.Types.Length L_TT704_TCV701=0.85;
-      parameter DistrictHeatingNetwork.Types.Length h_TT704_TCV701=0.85; //0.65;
+      parameter DistrictHeatingNetwork.Types.Length h_TT704_TCV701=0.30; //0.85; //0.65;
       parameter DistrictHeatingNetwork.Types.Length L_TT714_TCV711=0.80;
       parameter DistrictHeatingNetwork.Types.Length h_TT714_TCV711=0.80; //0.65;
       parameter DistrictHeatingNetwork.Types.Length L_TT724_TCV721=1.25;//0.65;

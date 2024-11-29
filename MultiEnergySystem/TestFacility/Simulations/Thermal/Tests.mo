@@ -10090,10 +10090,10 @@ System")}),
           ToutRR01Offset(fixInput=false, fixOffset=true),
           TTR02_nom=373.15,
           thetaFCV401Offset(fixInput=false, fixOffset=true),
-          S500(PL_S500_P501_PT501(h=2.05)),
-          S900(h_FCV901_PT902=2.5),
-          PL_S500_rCD_hot(h=3),
-          PL_S400_rCD_hot(h=1.2)) annotation (Placement(transformation(origin={-1,0}, extent={{11,-38},{55,38}})));
+          S500(PL_S500_P501_PT501(h=2.05*0)),
+          S900(h_FCV901_PT902=2.5*0.1),
+          PL_S500_rCD_hot(h=3*0),
+          PL_S400_rCD_hot(h=1.2*0)) annotation (Placement(transformation(origin={-1,0}, extent={{11,-38},{55,38}})));
       //     FT101Offset(
       //       fixOffset=true,
       //       y_Offset_fixed=4,
@@ -10108,7 +10108,7 @@ System")}),
         parameter Real f_P101_delta = 0;
         parameter Real f_P401 = 30;
         parameter Real f_P401_delta = 0;
-        parameter Real f_P501 = 39;
+        parameter Real f_P501 = 30;
         parameter Real f_P501_delta = 0;
         parameter Real f_P901 = 30;
         parameter Real f_P901_delta = 0;
@@ -10152,19 +10152,19 @@ System")}),
       model CentralizedControlPlant_IV
         extends PlantControlBaseIV;
       equation
-        controller.TT701SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
-        controller.TT711SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
-        controller.TT721SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
-        controller.TT731SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;
+        controller.TT701SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
+        controller.TT711SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
+        controller.TT721SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
+        controller.TT731SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
         controller.booldTT701 = true;
         controller.booldTT711 = true;
         controller.booldTT721 = true;
         controller.booldTT731 = true;
 
-        controller.PtEX701SP = if time < 5e3 then 40e3 else 37.5e3;
-        controller.PtEX711SP = 35e3;
-        controller.PtEX721SP = if time < 5e3 then 35e3 else 40e3;
-        controller.PtEX731SP = if time < 5e3 then 25e3 else 30e3;
+        controller.PtEX701SP = 30e3;
+        controller.PtEX711SP = 30e3;
+        controller.PtEX721SP = 30e3;
+        controller.PtEX731SP = 30e3;
         controller.booldPtEX701 = true;
         controller.booldPtEX711 = true;
         controller.booldPtEX721 = true;
@@ -10173,7 +10173,7 @@ System")}),
         controller.FT901SP = 3;
         controller.FT101SP = 1.35;
         controller.FT401SP = 0.4;
-        controller.FT501SP = 0.2;
+        controller.FT501SP = if time < 2e3 then 0.2 else 0.6;
       end CentralizedControlPlant_IV;
     end ControlledPlants;
 

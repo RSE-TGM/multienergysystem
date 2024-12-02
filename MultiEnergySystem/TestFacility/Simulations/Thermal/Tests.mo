@@ -4198,7 +4198,7 @@ Act")}),  Diagram(coordinateSystem(
         domega_P501_var = (omega_P501SP - omega_nom)/omega_nom;
         dTout_CHP501_var = (Tout_CHP501SP - Tout_gen_nom)/Tout_gen_nom;
 
-        omega_P501SP = 2*pi*45;
+        omega_P501SP = 2*pi*50;
         Tout_CHP501SP = 80 + 273.15;
 
         if useRealExpression then
@@ -4420,10 +4420,14 @@ Act")}),  Diagram(coordinateSystem(
         parameter Real f_P501 = 30;
         parameter Real f_P501_delta = 0;
         annotation (experiment(
-            StopTime=1000,
+            StopTime=100,
             Tolerance=1e-06,
             __Dymola_Algorithm="Dassl"));
       end SR_ThreeGen_CaseA;
+
+      model SR_ThreeGen_CaseA_LoadAnalysis
+        extends SR_ThreeGen_CaseA( theta_TCV731_delta = -0.01);
+      end SR_ThreeGen_CaseA_LoadAnalysis;
     end StepResponse;
 
     package Controllers
@@ -10152,10 +10156,10 @@ System")}),
       model CentralizedControlPlant_IV
         extends PlantControlBaseIV;
       equation
-        controller.TT701SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
-        controller.TT711SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
-        controller.TT721SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
-        controller.TT731SP = if time < 2e3 then 68 + 273.15 else 68 + 273.15;
+        controller.TT701SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
+        controller.TT711SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
+        controller.TT721SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
+        controller.TT731SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
         controller.booldTT701 = true;
         controller.booldTT711 = true;
         controller.booldTT721 = true;
@@ -10171,9 +10175,9 @@ System")}),
         controller.booldPtEX731 = true;
 
         controller.FT901SP = 3;
-        controller.FT101SP = 1.35;
+        controller.FT101SP = 1.3;
         controller.FT401SP = 0.4;
-        controller.FT501SP = if time < 2e3 then 0.2 else 0.6;
+        controller.FT501SP = 0.25;
       end CentralizedControlPlant_IV;
     end ControlledPlants;
 

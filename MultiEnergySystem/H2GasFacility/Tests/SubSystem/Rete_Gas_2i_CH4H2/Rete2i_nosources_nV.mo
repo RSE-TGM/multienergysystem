@@ -1,6 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_CH4H2;
 model Rete2i_nosources_nV
-  extends Rete2i_nosources     (
+  extends Rete2i_nosources     (quasiStatic = true, constantFrictionFactor = true,
+    FrictionFactor = 0.009, computeInertialTerm = false,
+    X_start = {0.95, 0.05},
     sds7(n=nV),
     s1(n=nV),
     sds8(n=nV),

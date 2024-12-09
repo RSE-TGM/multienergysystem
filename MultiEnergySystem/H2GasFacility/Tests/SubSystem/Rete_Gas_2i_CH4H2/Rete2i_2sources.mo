@@ -138,8 +138,8 @@ equation
           {6,76}},      color={0,0,127}));
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-40,52},{-4,52},{-4,64},
           {6,64}},      color={0,0,127}));
-  connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{29,70},{36,70},
-          {36,12},{-80,12},{-80,-31},{-90,-31}},                 color={0,0,127}));
+  connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{29,70},{60,
+          70},{60,12},{-56,12},{-56,-31},{-90,-31}},             color={0,0,127}));
   connect(s3.outlet, s2.outlet) annotation (Line(
       points={{-156,-58},{-156,-60},{-198,-60},{-198,-44}},
       color={182,109,49},

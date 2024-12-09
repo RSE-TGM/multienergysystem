@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 partial model PaperCaseI "Distribution network example from [1]"
   extends Modelica.Icons.Example;
-  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG4_H2;
+  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG6_H2;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model MediumUsers =

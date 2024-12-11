@@ -1,4 +1,4 @@
-<img src="" alt="RSE Logo" width="250px">
+<img src="https://github.com/RSE-TGM/multienergysystem/blob/hydrogen/cropped-logo_rse_2022.png" alt="RSE Logo" width="250px">
 
 # MultiEnergySystem - MES
 Modelica Library for modelling, simulation &amp; control of District Heating Systems and Natural Gas Systems.

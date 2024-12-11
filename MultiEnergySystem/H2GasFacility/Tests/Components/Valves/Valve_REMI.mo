@@ -2,8 +2,10 @@ within MultiEnergySystem.H2GasFacility.Tests.Components.Valves;
 model Valve_REMI "Valve test to validate the REMI System"
 extends Modelica.Icons.Example;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
-  parameter Types.MassFraction X_start[1] = {1};
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2 constrainedby
+    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  // MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
+  parameter Types.MassFraction X_start[2] = {0.95, 0.05};
   parameter Boolean useEnergyDemand = false;
   parameter Boolean quasiStatic = true;
   parameter Boolean constantFrictionFactor = true;
@@ -11,8 +13,6 @@ extends Modelica.Icons.Example;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Integer nX = 7 "Number of components in the gas fluid";
-  //parameter Types.MassFraction X_start[nX] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
-  parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.657;
 
@@ -53,7 +53,7 @@ extends Modelica.Icons.Example;
   inner System system(T_amb=288.15)
     annotation (Placement(transformation(extent={{-90,76},{-70,96}})));
   Modelica.Blocks.Sources.Ramp opening1(
-    height=-1*0,
+    height=-1,
     duration=300,
     offset=1,
     startTime=200)                                                                                 annotation (

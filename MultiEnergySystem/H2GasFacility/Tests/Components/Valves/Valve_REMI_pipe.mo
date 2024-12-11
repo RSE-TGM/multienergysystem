@@ -58,11 +58,33 @@ extends Modelica.Icons.Example;
     offset=1,
     startTime=200)                                                                                 annotation (
     Placement(visible = true, transformation(origin={34,-44},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV round1DFV
-    annotation (Placement(transformation(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(
+    n=5,
+    H=Data.PipelineData_2i.s1.h,
+    cm=Data.PipelineData_2i.s1.cm,
+    rhom=Data.PipelineData_2i.s1.rhom,
+    lambdam=Data.PipelineData_2i.s1.lambdam,
+    m_flow_start=Data.PipelineData_2i.s1.m_flow_start,
+    pin_start=Data.PipelineData_2i.s1.pin_start,
+    pout_start=Data.PipelineData_2i.s1.pout_start,
+    redeclare model Gas = Medium,
+    pin_nom=Data.PipelineData_2i.s1.pin_start,
+    rho_nom=Data.PipelineData_2i.s1.rho_nom,
+    ff_nom=FrictionFactor,
+    kappa=Data.PipelineData_2i.s1.kappa,
+    k=Data.PipelineData_2i.s1.k,
+    L=Data.PipelineData_2i.s1.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s1.Di,
+    quasiStatic=quasiStatic,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum)
+               annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-40,4})));
+        origin={-42,4})));
 equation
   connect(sourcePressure.outlet, valveLinearOpening.inlet) annotation (Line(
       points={{64,4},{8,4}},
@@ -71,12 +93,12 @@ equation
   connect(opening1.y, valveLinearOpening.opening)
     annotation (Line(points={{45,-44},{50,-44},{50,-14},{-2,-14},{-2,-4}},
                                                         color={0,0,127}));
-  connect(sinkPressure.inlet, round1DFV.outlet) annotation (Line(
-      points={{-68,4},{-50,4}},
+  connect(s1.inlet, valveLinearOpening.outlet) annotation (Line(
+      points={{-32,4},{-12,4}},
       color={182,109,49},
       thickness=0.5));
-  connect(round1DFV.inlet, valveLinearOpening.outlet) annotation (Line(
-      points={{-30,4},{-12,4}},
+  connect(s1.outlet, sinkPressure.inlet) annotation (Line(
+      points={{-52,4},{-68,4}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

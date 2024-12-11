@@ -188,6 +188,8 @@ equation
       Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000) "Reynold's number";
       // Haaland formula for friction factor
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
+      // Chen formula: --> Solver not able to solve it
+      // sqrtReg(ff[i]) = min(1/(-2*log10(kappa/(3.7*Di)-((5/Re[i])*log10((k/Di)^1.1/2.8+5.8/Re[i]^0.8981)))), 1/(-2*log10(kappa/(3.7*Di)-((5/4000)*log10((k/Di)^1.1/2.8+5.8/4000^0.8981)))));
     else
       Re[i]=0;
       ff[i]=ff_nom;

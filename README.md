@@ -47,6 +47,6 @@ M. A. Muro Alvarado, C. Anderis, R. Lazzari, L. Nigro and A. La Bella, "Developm
 
 ### Contributors
 
-**MultiEnergySystem** was mainly developed by Marcelo Andre Muro Alvarado ([@marcelo-muro](https://github.com/marcelo-muro)) and Guido Sassaroli ([@guidosassaroli](https://github.com/guidosassaroli)) at ([Ricerca sul Sistema Energetico - RSE S.p.A.](https://www.rse-web.it/en/)), with the technical support of several colleagues of our research department. We hope this library proves to be a valuable resource for your multi-energy system studies and applications.
+**MultiEnergySystem** was mainly developed by Marcelo Andre Muro Alvarado ([@marcelo-muro](https://github.com/marcelo-muro)) and Guido Sassaroli ([@guidosassaroli](https://github.com/guidosassaroli)) at [Ricerca sul Sistema Energetico - RSE S.p.A.](https://www.rse-web.it/en/), with the technical support of several colleagues of our research department. We hope this library proves to be a valuable resource for your multi-energy system studies and applications.
 
 

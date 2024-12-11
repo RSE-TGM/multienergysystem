@@ -1,3 +1,5 @@
+<img src="" alt="RSE Logo" width="250px">
+
 # MultiEnergySystem - MES
 Modelica Library for modelling, simulation &amp; control of District Heating Systems and Natural Gas Systems.
 
@@ -12,6 +14,14 @@ Modelica Library for modelling, simulation &amp; control of District Heating Sys
 - **Modeling of real gases**: It includes two equations for modeling real gases: Papay and Peng-Robinson.
 - **Multi-Energy System integration**
 - **Experimental Facility for MES analysis**
+
+## Clone repository
+
+* To clone the repository for the first time run:  
+  ``git clone --recurse-submodules https://github.com/RSE-TGM/multienergysystem.git``
+* If you have already cloned the repository, run:  
+  ``git submodule update --init --recursive``
+* The default branch of MES Library is the ``main`` branch. This means that after cloning the repository, you always checked out the ``main`` branch.
 
 
 ## License

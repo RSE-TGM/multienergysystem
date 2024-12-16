@@ -57,12 +57,13 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(group = "Initialisation"));
   parameter Modelica.Units.SI.Pressure pout_start_hot "Pressure start value of outgoing fluid hot side" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start_hot "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
+//   parameter Modelica.Units.SI.SpecificEnthalpy hin_start_hot "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
+//     Dialog(group = "Initialisation"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_hot "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tin_start_hot "Temperature start value of fluid at the start of the heat exchanger" annotation (
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_hot "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.Temperature Tout_start_hot "Temperature start value of fluid at the end of the heat exchanger" annotation (
-    Dialog(group = "Initialisation"));
+
   // Cold side
   parameter Modelica.Units.SI.Length L_cold "Length of the tube hot side" annotation (
     Dialog(tab = "Cold Side", group = "Pipe"));
@@ -110,21 +111,28 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(group = "Initialisation"));
   parameter Modelica.Units.SI.Pressure pout_start_cold "Pressure start value of outgoing fluid" annotation (
     Dialog(group = "Initialisation"));
-  parameter Modelica.Units.SI.SpecificEnthalpy hin_start_cold "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
-    Dialog(group = "Initialisation"));
+//   parameter Modelica.Units.SI.SpecificEnthalpy hin_start_cold "Specific enthalpy start value at the inlet of the heat exchanger" annotation (
+//     Dialog(group = "Initialisation"));
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_cold "Temperature start value of fluid at the start of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_cold "Temperature start value of fluid at the end of the heat exchanger" annotation (
     Dialog(group = "Initialisation"));
   // Wall
-  parameter Boolean WallRes = false "Wall thermal resistance accounted for";
-  parameter SI.Mass MWall "Total mass of the wall in heat exchanger";
+  parameter Boolean WallRes = false "Wall thermal resistance accounted for" annotation (
+    Dialog(group = "Wall"));
+  parameter SI.Mass MWall "Total mass of the wall in heat exchanger" annotation (
+    Dialog(group = "Wall"));
   parameter Modelica.Units.SI.ThermalConductance UA_ext = 1500 "Equivalent thermal conductance of outer half-wall" annotation (
     Dialog(enable = WallRes));
   parameter Modelica.Units.SI.ThermalConductance UA_int = 0.1 "Equivalent thermal conductance of inner half-wall" annotation (
     Dialog(enable = WallRes));
-  parameter SI.TemperatureDifference LMTD_nom = DistrictHeatingNetwork.Data.BPHEData.E701.LMTD;
+  parameter SI.TemperatureDifference LMTD_nom = DistrictHeatingNetwork.Data.BPHEData.E701.LMTD annotation (
+    Dialog(group = "Wall"));
   final parameter SI.SpecificHeatCapacity cpWall = cpm_hot "Specific heat capacity of the wall";
+  parameter DistrictHeatingNetwork.Types.Temperature T1_wall_start = 70 + 273.15 "Temperature start value of fluid at the end of the heat exchanger" annotation (
+    Dialog(group = "Wall"));
+  parameter DistrictHeatingNetwork.Types.Temperature TN_wall_start = 50 + 273.15 "Temperature start value of fluid at the end of the heat exchanger" annotation (
+    Dialog(group = "Wall"));
 
 
   Types.Temperature Tin_hot;
@@ -135,10 +143,10 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   Types.Pressure pout_hot;
   Types.Pressure pin_cold;
   Types.Pressure pout_cold;
-  SI.TemperatureDifference LMTD(start = LMTD_nom);
+  //SI.TemperatureDifference LMTD(start = LMTD_nom);
   Types.Power Pt;
   Real dT2(start = Tout_start_hot - Tin_start_cold), dT1(start = Tin_start_hot - Tout_start_cold);
-  Types.CoefficientOfHeatTransfer gamma_real;
+  //Types.CoefficientOfHeatTransfer gamma_real;
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet of the hot fluid" annotation (
     Placement(transformation(origin = {70, 70}, extent = {{-10, -10}, {10, 10}}), iconTransformation(extent = {{10, 50}, {50, 90}})));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot "Outlet of the hot fluid" annotation (
@@ -156,7 +164,10 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
         HeatTransferModel,                                                                                                                redeclare model Medium = Medium, Di = Di_cold, L = L_cold, q_m3h_start = m_flow_start_cold*3600/995, initOpt = initOpt, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cm = cpm_cold, tIns = tIns_cold, t = t_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdam = lambdam_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold,
     alpha=alpha_cold)                                                                                                                                                                                                         annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, WallRes = WallRes, UA_ext = UA_ext, UA_int = UA_int, Tstart1 = (Tin_start_hot + Tin_start_cold)/2, TstartN = (Tin_start_hot - Tin_start_cold)/2 + 273.15, Tstartbar = 318.15, cm = cpWall, initOpt = initOpt) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.Wall.MetalWallFV wall(M = MWall, Nw = n, WallRes = WallRes, UA_ext = UA_ext, UA_int = UA_int,
+    Tstart1=T1_wall_start,
+    TstartN=TN_wall_start,
+    Tstartbar=318.15,                                                                                                                                                                                                        cm = cpWall, initOpt = initOpt) annotation (
     Placement(transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Thermal.HeatExchangerTopologyFV topology(redeclare model HeatExchangerTopology =
         DistrictHeatingNetwork.Components.Thermal.HeatExchangerTopologies.CounterCurrentFlow,                                                                            Nw = n) annotation (
@@ -164,13 +175,13 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
 equation
   dT2 = Tout_hot - Tin_cold;
   dT1 = Tin_hot - Tout_cold;
-  if noEvent(dT2>0 or dT2<0 or dT1>0 or dT1<0) then
-    LMTD = homotopy((dT1 - dT2)/log(abs(dT1/dT2)), (dT1-dT2) / log(abs((Tin_start_hot - Tout_start_cold)/(Tout_start_hot - Tin_start_cold))));
-    gamma_real = Pt/(hotside.Stot*LMTD);
-  else
-    LMTD = 0;
-    gamma_real = 0;
-  end if;
+//   if noEvent(dT2>0 or dT2<0 or dT1>0 or dT1<0) then
+//     LMTD = homotopy((dT1 - dT2)/log(abs(dT1/dT2)), (dT1-dT2) / log(abs((Tin_start_hot - Tout_start_cold)/(Tout_start_hot - Tin_start_cold))));
+//     gamma_real = Pt/(hotside.Stot*LMTD);
+//   else
+//     LMTD = 0;
+//     gamma_real = 0;
+//   end if;
 
   Tin_hot = hotside.T[1];
   Tout_hot = hotside.T[hotside.n + 1];
@@ -184,12 +195,6 @@ equation
   Pt = inhot.m_flow*(hotside.fluid[1].h - hotside.fluid[n + 1].h);
   //gamma_real = Pt/(hotside.Stot*LMTD);
 
-  connect(coldside.wall, topology.side2) annotation (
-    Line(points={{-65.9,0},{-23.1,0}},  color = {255, 238, 44}));
-  connect(wall.ext, topology.side1) annotation (
-    Line(points={{16.9,0},{-17,0}},    color = {255, 238, 44}));
-  connect(hotside.wall, wall.int) annotation (
-    Line(points={{65.9,0},{23,0}},    color = {255, 238, 44}));
   connect(coldside.outlet, outcold) annotation (Line(
       points={{-70,10},{-70,70}},
       color={140,56,54},
@@ -205,6 +210,18 @@ equation
   connect(hotside.inlet, inhot) annotation (Line(
       points={{70,10},{70,70}},
       color={140,56,54},
+      thickness=0.5));
+  connect(coldside.wall, topology.side2) annotation (Line(
+      points={{-65.9,-8.88178e-16},{-44.5,-8.88178e-16},{-44.5,4.21885e-15},{-23.1,4.21885e-15}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(topology.side1, wall.ext) annotation (Line(
+      points={{-17,3.10862e-15},{-0.05,3.10862e-15},{-0.05,6.66134e-16},{16.9,6.66134e-16}},
+      color={255,101,98},
+      thickness=0.5));
+  connect(wall.int, hotside.wall) annotation (Line(
+      points={{23,-6.66134e-16},{44.45,-6.66134e-16},{44.45,0},{65.9,0}},
+      color={255,101,98},
       thickness=0.5));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-60, -100}, {60, 100}}), graphics={  Rectangle(lineColor = {140, 56, 54}, fillColor = {192, 80, 77}, fillPattern = FillPattern.Forward, lineThickness = 0.5, extent = {{-60, 100}, {60, -100}}, radius = 20), Text(textColor = {28, 108, 200}, extent = {{-60, -100}, {60, -140}}, textString = "%name"), Line(origin = {-66.58, -69.45}, points = {{8, 0}, {16, 0}}, color = {94, 82, 255}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {-58.73, 70.36}, points = {{8, 0}, {0, 0}}, color = {57, 0, 172}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 5), Line(origin = {43.2, -68.29}, points = {{8, 0}, {16, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {51.29, 69.9}, points = {{8, 0}, {0, 0}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 6), Line(origin = {30.22, -8.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {255, 49, 52}, pattern = LinePattern.Dash, arrow = {Arrow.Filled, Arrow.None}, arrowSize = 20), Line(origin = {-29.78, -12.08}, rotation = 90, points = {{-39.92, 0.22}, {-19.92, 0.22}, {-9.92, 20.22}, {10.08, -19.78}, {30.08, 20.22}, {40.08, 0.22}, {60.08, 0.22}}, color = {76, 0, 227}, pattern = LinePattern.Dash, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 20)}),

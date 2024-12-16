@@ -4390,6 +4390,10 @@ Act")}),  Diagram(coordinateSystem(
           dtheta_FCV401 = [0, 0; 1e6, 0],
           domega_P501 = [0, (f_P501-50)/50; 1e3, (f_P501-50)/50; 1e3, (f_P501-50+f_P501_delta)/50; 1e6, (f_P501-50+f_P501_delta)/50]),
         redeclare replaceable FMUExport.Centralised.CentralisedSystemGBEBCHP_InitForward plant(
+          h_FT701_rackL2L3 = -0.85,
+          h_FT711_rackL3L4 = -1,
+          h_FT721_rackL4L5 = -1,
+          h_FT731_rackL6L7 = -1.25,
           thetaFCVC01Offset(fixInput=false, fixOffset=true),
           thetaFCVC02Offset(fixInput=false, fixOffset=true),
           thetaFCV901Offset(fixInput=false, fixOffset=true),
@@ -4426,7 +4430,11 @@ Act")}),  Diagram(coordinateSystem(
       end SR_ThreeGen_CaseA;
 
       model SR_ThreeGen_CaseA_LoadAnalysis
-        extends SR_ThreeGen_CaseA( theta_TCV731_delta = -0.01);
+        extends SR_ThreeGen_CaseA(theta_TCV731_delta = -0.01);
+        annotation (experiment(
+            StopTime=8000,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"));
       end SR_ThreeGen_CaseA_LoadAnalysis;
     end StepResponse;
 

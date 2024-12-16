@@ -1,6 +1,10 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemGBEBCHP_InitForward
   extends CentralisedSystemGBEB_InitForward(
+    h_FT701_rackL2L3 = -0.85,
+    h_FT711_rackL3L4 = -1,
+    h_FT721_rackL4L5 = -1,
+    h_FT731_rackL6L7 = -1.25,
     h_FTR03_PTR01 = 0.25*0,
     h_PTR01_FTR01 = -1.9*0,
     h_FTR01_RR01 = -0.72*0,

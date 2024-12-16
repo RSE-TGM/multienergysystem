@@ -40,7 +40,7 @@ model ControlledCHP "Model of an ideal controlled CHP"
   DistrictHeatingNetwork.Types.Temperature Tout_ref;
   DistrictHeatingNetwork.Types.Power Pel_ref;
   DistrictHeatingNetwork.Types.Power Pel_actual;
-  DistrictHeatingNetwork.Types.Power Pcomb "Fuel Combustion Power";
+  DistrictHeatingNetwork.Types.Power Pcomb(start = Pel_nom*(4.2128526419 - 0.0325555400*(Pel_nom/1e3))) "Fuel Combustion Power";
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference gas fluid";
   //Boolean TlimitOnOff(start = false);
@@ -154,7 +154,8 @@ initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Pel_out) = 0;
   elseif initOpt == Choices.Init.Options.fixedState then
-    Pel_out = Pel_nom;
+    der(Pel_out) = 0;
+   // Pel_out = Pel_nom;
   else
 //No initial equations
   end if;

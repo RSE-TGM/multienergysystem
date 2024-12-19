@@ -425,6 +425,177 @@ package Tests
       //   tdelay = 180,
         annotation (experiment(StopTime=8450, __Dymola_Algorithm="Dassl"));
       end S100_Seq_241031Test1;
+
+      model TestBaseForPlot
+        extends Modelica.Icons.Example;
+        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+        replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+
+        parameter Integer n = 3;
+        parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+        parameter Real pumpcorrectionfactor = 1;
+        parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.93;
+        parameter Modelica.Units.SI.Time tdelay = 200 "Rising time of heater from 0 to full power";
+        parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
+        parameter DistrictHeatingNetwork.Types.Temperature Tout_SP[:,:] = [0, 76 + 273.15; 5e3, 76 + 273.15; 5e3, 76 + 273.15; 1e6, 76 + 273.15];
+        parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.85;
+
+        // Gas composition
+        //parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
+        parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
+        // Temperatures and pressures
+        parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = PTi[1, 1];
+        parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = PTo[1, 1];
+        parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = TTi[1, 1];
+        parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = TTo[1, 1];
+
+        // Pipe Data
+        //parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
+        //parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+        //parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
+        parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+        //parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
+        parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0; //0.7 + 0.95;
+        parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2;
+        parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2*0;
+
+      //   parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold = 0.66+0.25+0.54+0.5+1.3+1+3+4+0.5+0.2+0.3 "12.25";
+      //   parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
+      //   parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot = 1 + 3 + 3.2 + 1.1 + 1.2 + 0.5 + 0.25 + 0.6;
+      //   parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6;
+
+        parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
+        parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
+
+        parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
+
+        parameter Real q_m3h_S1(unit = "m3/h") = 9.25;
+        final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1/3600*985;
+
+        parameter DistrictHeatingNetwork.Types.Density rhohotref = 985 "Reference hot water density";
+        parameter DistrictHeatingNetwork.Types.Density rhocoldref = 999 "Reference cold water density";
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat") "File name of matrix" annotation (
+          Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+
+        parameter String matrixPTi = "PT101" "Matrix name in file";
+        parameter String matrixPTo = "PT102" "Matrix name in file";
+        parameter String matrixTTi = "TT101" "Matrix name in file";
+        parameter String matrixTTo = "TT102" "Matrix name in file";
+        parameter String matrixtheta = "theta_FCV101" "Matrix name in file";
+        parameter String matrixfreq = "f_P101";
+        parameter String matrixFT = "FT101" "Matrix name in file";
+        parameter String matrixmflowGas = "FT801" "Matrix name in file";
+        parameter String timenoscale = "time" "Matrix name in file";
+        parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
+
+        Plants.Thermal.Systems.GasBoiler gasBoiler(
+          pumpcorrectionfactor=pumpcorrectionfactor,
+                                                   hctype=hctype,
+          pin_start_S1=pin_start_S1,
+          pout_start_S1=pout_start_S1,
+          Tin_start_S1=Tin_start_S1,
+          Tout_start_S1=Tout_start_S1,
+          cf=cf,
+          eta_combustion=eta_combustion,
+          tdelay=tdelay,
+          h_FT101_GB101=h_FT101_GB101,
+          h_GB101_P101=h_GB101_P101,
+          L_P101_FCV101=L_P101_FCV101,
+          h_P101_FCV101=h_P101_FCV101,
+          Kv=Kv,
+          openingChar=openingChar,
+          Pmaxnom=Pmaxnom,
+          GB(initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState))
+                                                                  annotation (Placement(transformation(extent={{-28,-28},{28,28}})));
+        DistrictHeatingNetwork.Sources.SourcePressure
+                               source(
+          use_in_p0=true,
+          use_in_T0=true,
+          p0=pin_start_S1,
+          T0=Tin_start_S1,
+          R=1e-3)
+          annotation (Placement(transformation(extent={{-9,9},{9,-9}},
+              rotation=-90,
+              origin={-11,53.5})));
+        Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=Tout_SP)
+          annotation (Placement(transformation(extent={{-58,-2},{-48,8}})));
+        Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
+          "Input to decide whether or nor the gas boiler is working"
+          annotation (Placement(transformation(extent={{-58,-18},{-48,-8}})));
+        Modelica.Blocks.Sources.TimeTable TT101_profile(table=[ts,TTi])
+          annotation (Placement(transformation(extent={{-35,42.5},{-25,52.5}})));
+        Modelica.Blocks.Sources.TimeTable PT101_profile(table=[ts,PTi])
+          annotation (Placement(transformation(extent={{-35,58},{-25,68}})));
+        Modelica.Blocks.Sources.TimeTable FCV101_theta(table=[ts,thetav])
+          annotation (Placement(transformation(extent={{-58,14.5},{-48,24.5}})));
+        Modelica.Blocks.Sources.TimeTable P101_omega(table=[ts,omega])
+          annotation (Placement(transformation(extent={{-58,30},{-48,40}})));
+        Modelica.Blocks.Sources.TimeTable FT101_profile(table=[ts,m_flow_approx]) annotation (Placement(transformation(extent={{32.5,43},{22.5,53}})));
+        inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
+
+        DistrictHeatingNetwork.Sources.SinkMassFlow sinkMassFlow(
+          redeclare model Medium = Medium,
+          use_in_m_flow=true,
+          pin_start=pout_start_S1,
+          p0=pout_start_S1,
+          T0=Tout_start_S1,
+          m_flow0=m_flow_approx[1, 1],
+          G=1e-8)                      annotation (Placement(transformation(
+              extent={{-9,9},{9,-9}},
+              rotation=90,
+              origin={11.5,53.5})));
+        H2GasFacility.Sources.SourcePressure sourceGas(
+          redeclare model Medium = Gas,
+          X0=X_gas,
+          R=1e-3,
+          computeEnergyVariables=true) annotation (Placement(transformation(
+              extent={{-10,-10},{10,10}},
+              rotation=90,
+              origin={0,-56.5})));
+      protected
+        final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
+        final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
+        final parameter Real PTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTi, dim[1], dim[2]);
+        final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
+        final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
+        final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
+        final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
+        final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
+        final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
+        final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
+        final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
+        final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
+        final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1,1];
+        final parameter DistrictHeatingNetwork.Types.Pressure pin_start = PTi[1,1];
+        final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = m_flow_approx[1,1];
+      equation
+        connect(source.outlet, gasBoiler.inlet) annotation (Line(
+            points={{-11,44.5},{-11,34.6},{-10.92,34.6},{-10.92,32.2}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(TT101_profile.y, source.in_T0) annotation (Line(points={{-24.5,47.5},{-21,47.5},{-21,49.9},{-18.56,49.9}},
+                                                                                                                  color={0,0,127}));
+        connect(PT101_profile.y, source.in_p0) annotation (Line(points={{-24.5,63},{-23,63},{-23,57.1},{-18.56,57.1}},
+                                                                                                                  color={0,0,127}));
+        connect(GB101_Status.y, gasBoiler.status) annotation (Line(points={{-47.5,-13},{-40,-13},{-40,2.8},{-30.8,2.8}}, color={255,0,255}));
+        connect(gasBoiler.outlet, sinkMassFlow.inlet) annotation (Line(
+            points={{11.48,32.2},{11.48,35.1},{11.5,35.1},{11.5,44.5}},
+            color={140,56,54},
+            thickness=0.5));
+        connect(FT101_profile.y, sinkMassFlow.in_m_flow) annotation (Line(points={{22,48},{19.5,48},{19.5,48.1},{16,48.1}}, color={0,0,127}));
+        connect(sourceGas.outlet, gasBoiler.inletFuel) annotation (Line(
+            points={{0,-46.5},{0,-32.48}},
+            color={182,109,49},
+            thickness=0.5));
+        connect(FCV101_theta.y, gasBoiler.theta) annotation (Line(points={{-47.5,19.5},{-42.5,19.5},{-42.5,14},{-30.8,14}}, color={0,0,127}));
+        connect(GB101_ToutSP.y, gasBoiler.Toutset) annotation (Line(points={{-47.5,3},{-42.5,3},{-42.5,8.4},{-30.8,8.4}}, color={0,0,127}));
+        connect(P101_omega.y, gasBoiler.omega) annotation (Line(points={{-47.5,35},{-40,35},{-40,19.6},{-30.8,19.6}}, color={0,0,127}));
+        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
+            StopTime=4000,
+            Tolerance=1e-06,
+            __Dymola_Algorithm="Dassl"),
+          Diagram(coordinateSystem(grid={0.5,0.5})));
+      end TestBaseForPlot;
     end S100;
 
     package S200

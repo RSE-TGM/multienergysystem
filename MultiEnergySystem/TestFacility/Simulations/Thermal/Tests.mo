@@ -163,7 +163,7 @@ package Tests
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_m_flow_fuel annotation (Placement(transformation(extent={{66,-56},{78,-44}})));
         Modelica.Blocks.Sources.RealExpression m_flow_gas_sim(y=gasBoiler.inletFuel.m_flow) annotation (Placement(transformation(extent={{34,-70},{54,-50}})));
         Modelica.Blocks.Math.Max max1 annotation (Placement(transformation(extent={{30,-94},{50,-74}})));
-        Modelica.Blocks.Sources.RealExpression realExpression(y=1e-6) annotation (Placement(transformation(extent={{-10,-102},{10,-82}})));
+        Modelica.Blocks.Sources.RealExpression realExpression(y=1e-6) annotation (Placement(transformation(extent={{0,-100},{20,-80}})));
       protected
         final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -210,7 +210,7 @@ package Tests
         connect(m_flowgas_ref.y, val_m_flow_fuel.u_meas) annotation (Line(points={{52.6,-40},{60,-40},{60,-47},{64.8,-47}}, color={0,0,127}));
         connect(m_flow_gas_sim.y, max1.u1) annotation (Line(points={{55,-60},{58,-60},{58,-64},{22,-64},{22,-78},{28,-78}}, color={0,0,127}));
         connect(max1.y, val_m_flow_fuel.u_sim) annotation (Line(points={{51,-84},{64.8,-84},{64.8,-53}}, color={0,0,127}));
-        connect(realExpression.y, max1.u2) annotation (Line(points={{11,-92},{11,-90},{28,-90}}, color={0,0,127}));
+        connect(realExpression.y, max1.u2) annotation (Line(points={{21,-90},{28,-90}},          color={0,0,127}));
         connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (Line(points={{56.6,56},{58,56},{58,58},{60,58},{60,72},{20,72},{20,56},{15,56}}, color={0,0,127}));
         connect(val_m_flow.u_meas, val_m_flow.u_sim) annotation (Line(points={{64.8,35},{54,35},{54,29},{64.8,29}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
@@ -962,7 +962,7 @@ package Tests
         parameter String matrixfreq = "f_P501";
         parameter String matrixFT = "FT501";
         parameter String matrixFTCHP = "M1_CHP";
-        //parameter String matrixmflowGas = "FT801";
+        parameter String matrixmflowGas = "Q_CHP";
         parameter String timenoscale = "time" "Matrix name in file";
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
 
@@ -978,8 +978,7 @@ package Tests
               origin={-14,60})));
         Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=Tout_SP)
           annotation (Placement(transformation(extent={{-68,-12},{-56,0}})));
-        Modelica.Blocks.Sources.BooleanTable GB501_Status(table={1e6}, startValue=true)
-          "Input to decide whether or nor the gas boiler is working"
+        Modelica.Blocks.Sources.BooleanTable GB501_Status(table={1e6}, startValue=true) "Input to decide whether or nor the gas boiler is working"
           annotation (Placement(transformation(extent={{-68,-30},{-56,-18}})));
         Modelica.Blocks.Sources.TimeTable TT501_profile(table=[ts,TTi])
           annotation (Placement(transformation(extent={{-46,48},{-34,60}})));
@@ -1060,7 +1059,7 @@ package Tests
         final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
         final parameter Real FTCHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFTCHP, dim[1], dim[2]);
-        //final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
+        final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])*0.668*0.88/3600;
       public
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_TT502 "Validation of outlet temperature TT502"
           annotation (Placement(transformation(extent={{60,2},{80,22}})));
@@ -1077,6 +1076,12 @@ package Tests
           annotation (Placement(transformation(extent={{90,52},{78,64}})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_pout annotation (Placement(transformation(extent={{80,30},{92,42}})));
         Modelica.Blocks.Sources.RealExpression realExpression3(y=S500.PTout) annotation (Placement(transformation(extent={{48,24},{68,44}})));
+        Modelica.Blocks.Sources.TimeTable m_flowgas_ref(table=[ts,m_flow_Gas]) annotation (Placement(transformation(extent={{56,-38},{68,-26}})));
+        DistrictHeatingNetwork.Utilities.ASHRAEIndex val_m_flow_fuel annotation (Placement(transformation(extent={{82,-48},{94,-36}})));
+        Modelica.Blocks.Sources.RealExpression m_flow_gas_sim(y=S500.inletFuel.m_flow)      annotation (Placement(transformation(extent={{50,-62},{70,-42}})));
+        Modelica.Blocks.Math.Max max2 annotation (Placement(transformation(extent={{46,-86},{66,-66}})));
+        Modelica.Blocks.Sources.RealExpression realExpression4(y=1e-6)
+                                                                      annotation (Placement(transformation(extent={{16,-92},{36,-72}})));
       protected
         final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
         final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;
@@ -1122,6 +1127,10 @@ package Tests
         connect(realExpression2.y, val_dTT502.u_sim) annotation (Line(points={{61,84},{61,85},{70,85}}, color={0,0,127}));
         connect(val_pout.u_meas, PT502_profile.y) annotation (Line(points={{78.8,39},{72,39},{72,58},{77.4,58}}, color={0,0,127}));
         connect(realExpression3.y, val_pout.u_sim) annotation (Line(points={{69,34},{73.9,34},{73.9,33},{78.8,33}}, color={0,0,127}));
+        connect(m_flowgas_ref.y,val_m_flow_fuel. u_meas) annotation (Line(points={{68.6,-32},{76,-32},{76,-39},{80.8,-39}}, color={0,0,127}));
+        connect(m_flow_gas_sim.y,max2. u1) annotation (Line(points={{71,-52},{74,-52},{74,-56},{38,-56},{38,-70},{44,-70}}, color={0,0,127}));
+        connect(realExpression4.y, max2.u2) annotation (Line(points={{37,-82},{44,-82}}, color={0,0,127}));
+        connect(max2.y, val_m_flow_fuel.u_sim) annotation (Line(points={{67,-76},{76,-76},{76,-45},{80.8,-45}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=8000,
             Tolerance=1e-06,
@@ -1291,19 +1300,14 @@ package Tests
           annotation (Placement(transformation(extent={{-9,9},{9,-9}},
               rotation=-90,
               origin={-10,53})));
-        Modelica.Blocks.Sources.TimeTable GB101_ToutSP(table=Tout_SP)
-          annotation (Placement(transformation(extent={{-55,8},{-45,18}})));
-        Modelica.Blocks.Sources.BooleanTable GB501_Status(table={1e6}, startValue=true)
-          "Input to decide whether or nor the gas boiler is working"
-          annotation (Placement(transformation(extent={{-55,-7.5},{-45,2.5}})));
+        Modelica.Blocks.Sources.TimeTable CHP501_ToutSP(table=Tout_SP) annotation (Placement(transformation(extent={{-55,8},{-45,18}})));
+        Modelica.Blocks.Sources.BooleanTable CHP501_Status(table={1e6}, startValue=true) "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(extent={{-55,-7.5},{-45,2.5}})));
         Modelica.Blocks.Sources.TimeTable TT501_profile(table=[ts,TTi])
           annotation (Placement(transformation(extent={{-35,47.5},{-25,57.5}})));
         Modelica.Blocks.Sources.TimeTable PT501_profile(table=[ts,PTi])
           annotation (Placement(transformation(extent={{-35,63},{-25,73}})));
-        Modelica.Blocks.Sources.TimeTable FCV101_theta(table=[ts,thetav])
-          annotation (Placement(transformation(extent={{-55,22.5},{-45,32.5}})));
         Modelica.Blocks.Sources.TimeTable P501_omega(table=[ts,omega])
-          annotation (Placement(transformation(extent={{-55,37.5},{-45,47.5}})));
+          annotation (Placement(transformation(extent={{-55,25},{-45,35}})));
         Modelica.Blocks.Sources.TimeTable FT501_profile(table=[ts,m_flow_approx]) annotation (Placement(transformation(extent={{30,43},{20,53}})));
         inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{-100,80},{-80,100}})));
 
@@ -1389,10 +1393,9 @@ package Tests
             thickness=1));
         connect(FT501_profile.y, sinkMassFlow.in_m_flow) annotation (Line(points={{19.5,48},{15.125,48}}, color={0,0,127}));
         connect(PT501_profile.y, source.in_p0) annotation (Line(points={{-24.5,68},{-22.5,68},{-22.5,56.6},{-17.56,56.6}}, color={0,0,127}));
-        connect(GB101_ToutSP.y, S500.Toutset) annotation (Line(points={{-44.5,13},{-40,13},{-40,7.8},{-28.6,7.8}}, color={0,0,127}));
-        connect(GB501_Status.y, S500.status) annotation (Line(points={{-44.5,-2.5},{-40,-2.5},{-40,2.6},{-28.6,2.6}}, color={255,0,255}));
-        connect(FCV101_theta.y, S500.theta) annotation (Line(points={{-44.5,27.5},{-37.5,27.5},{-37.5,13},{-28.6,13}}, color={0,0,127}));
-        connect(P501_omega.y, S500.omega) annotation (Line(points={{-44.5,42.5},{-35,42.5},{-35,18.2},{-28.6,18.2}}, color={0,0,127}));
+        connect(CHP501_ToutSP.y, S500.Toutset) annotation (Line(points={{-44.5,13},{-40,13},{-40,7.8},{-28.6,7.8}}, color={0,0,127}));
+        connect(CHP501_Status.y, S500.status) annotation (Line(points={{-44.5,-2.5},{-40,-2.5},{-40,2.6},{-28.6,2.6}}, color={255,0,255}));
+        connect(P501_omega.y, S500.omega) annotation (Line(points={{-44.5,30},{-35,30},{-35,18.2},{-28.6,18.2}}, color={0,0,127}));
         connect(m_flow_ref_CHP.y, S500.m_flow_CHP) annotation (Line(points={{-44.5,-32.5},{-35,-32.5},{-35,-7.8},{-28.6,-7.8}}, color={0,0,127}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false)), experiment(
             StopTime=8000,

@@ -343,8 +343,6 @@ model HP601System
     gamma_nom_hot=BPHE.E601.gamma_nom_hot,
     h_cold=BPHE.E601.h_cold,
     h_hot=BPHE.E601.h_hot,
-    hin_start_cold=BPHE.E601.hin_start_cold,
-    hin_start_hot=BPHE.E601.hin_start_hot,
     k_cold=BPHE.E601.k_cold,
     k_hot=BPHE.E601.k_hot,
     kc_cold=1,

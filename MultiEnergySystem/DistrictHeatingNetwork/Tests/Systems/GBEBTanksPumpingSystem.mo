@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GBEBTanksPumpingSystem
+partial model GBEBTanksPumpingSystem
   extends GBEBPumpingSystem(P901omega = [0, 2*3.141592654*48; 100, 2*3.141592654*48],
                             P101omega = [0, 2*3.141592654*35; 100, 2*3.141592654*35],
                             P401omega = [0, 2*3.141592654*35; 100, 2*3.141592654*35]);

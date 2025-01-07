@@ -1,7 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model GasBoilerSystemTestII "Test of System 100 with real data"
   extends Modelica.Icons.Example;
-
+  // Fluid Gas
+  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Integer n = 3;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
 
@@ -62,7 +63,7 @@ model GasBoilerSystemTestII "Test of System 100 with real data"
   parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1],dim[2])*1e5 "Matrix data";
   final parameter Real thetaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV101,dim[1],dim[2]) "Matrix data";
   final parameter Real omegaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixf_P101,dim[1],dim[2])*2*Modelica.Constants.pi "Matrix data";
-
+  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={150,150},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
@@ -220,6 +221,14 @@ model GasBoilerSystemTestII "Test of System 100 with real data"
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
     "Input to decide whether or nor the gas boiler is working"
     annotation (Placement(transformation(extent={{-80,-148},{-60,-128}})));
+  H2GasFacility.Sources.SourcePressure sourceGas(
+    redeclare model Medium = Gas,
+    X0=X_gas,
+    R=1e-3,
+    computeEnergyVariables=true) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={76,-110})));
 equation
   connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (Line(
       points={{20,-14.6},{20,-26}},
@@ -275,7 +284,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(GB101_ToutSP.y, GB101.Tout_ref)
-    annotation (Line(points={{-59,-106},{-36.8,-106}}, color={0,0,127}));
+    annotation (Line(points={{-59,-106},{-32.2,-106}}, color={0,0,127}));
   connect(source.outlet, TT101.inlet) annotation (Line(
       points={{-30,126},{-19.6,126},{-19.6,58}},
       color={140,56,54},
@@ -286,8 +295,12 @@ equation
       thickness=0.5));
   connect(PT102_profile.y, sink.in_p0)
     annotation (Line(points={{39,100},{32,100},{32,119.6}}, color={0,0,127}));
-  connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-133.6},
-          {-36.8,-133.6}}, color={255,0,255}));
+  connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-129},{-32.2,-129}},
+                           color={255,0,255}));
+  connect(sourceGas.outlet, GB101.inletfuel) annotation (Line(
+      points={{66,-110},{50,-110},{50,-106},{27.6,-106}},
+      color={182,109,49},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

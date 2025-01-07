@@ -402,8 +402,6 @@ model HeatPumpsEBSystem
     gamma_nom_hot=BPHE.E601.gamma_nom_hot,
     h_cold=BPHE.E601.h_cold,
     h_hot=BPHE.E601.h_hot,
-    hin_start_cold=BPHE.E601.hin_start_cold,
-    hin_start_hot=BPHE.E601.hin_start_hot,
     k_cold=BPHE.E601.k_cold,
     k_hot=BPHE.E601.k_hot,
     kc_cold=1,
@@ -427,7 +425,7 @@ model HeatPumpsEBSystem
     thermalInertia=false,
     u_nom_cold=BPHE.E601.u_nom_cold,
     u_nom_hot=BPHE.E601.u_nom_hot)                                                                                                                                                                                                         annotation (
-    Placement(visible = true, transformation(origin={198,-137.5},
+    Placement(visible = true, transformation(origin={198,-135.5},
                                                                 extent={{8.5,14},
             {-8.5,-14}},                                                                         rotation=90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
@@ -1004,15 +1002,15 @@ equation
     annotation (Line(points={{221.95,66},{213,66}},
                                                   color={0,0,127}));
   connect(S6_PL_S600_S600_C.outlet, E601.incold) annotation (Line(
-      points={{188,-117},{188,-128.75},{188.2,-128.75},{188.2,-133.25}},
+      points={{188,-117},{188,-128.75},{188.2,-128.75},{188.2,-131.25}},
       color={140,56,54},
       thickness=0.5));
   connect(S6_PL_S600_S600_H.inlet, E601.outcold) annotation (Line(
-      points={{208,-117},{208,-128.75},{207.8,-128.75},{207.8,-133.25}},
+      points={{208,-117},{208,-128.75},{207.8,-128.75},{207.8,-131.25}},
       color={140,56,54},
       thickness=0.5));
   connect(S6_PL_S600_S600_C2.outlet, E601.inhot) annotation (Line(
-      points={{208,-180},{208,-141.75},{207.8,-141.75}},
+      points={{208,-180},{208,-139.75},{207.8,-139.75}},
       color={140,56,54},
       thickness=0.5));
   connect(S6_PL_S600_S600_C1.inlet, TCV601.inlet) annotation (Line(
@@ -1020,7 +1018,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(TCV601.outlet, E601.outhot) annotation (Line(
-      points={{188,-160},{188,-150.875},{188.2,-150.875},{188.2,-141.75}},
+      points={{188,-160},{188,-150.875},{188.2,-150.875},{188.2,-139.75}},
       color={140,56,54},
       thickness=0.5));
 

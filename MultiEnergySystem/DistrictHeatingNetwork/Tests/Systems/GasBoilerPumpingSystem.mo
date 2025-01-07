@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GasBoilerPumpingSystem
+partial model GasBoilerPumpingSystem
   "Test model using the gas boiler and without cooling system"
   extends BaseHeatingSystem(FV933_state=false);
 

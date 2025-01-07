@@ -53,8 +53,6 @@ model ControlledChillerNoDynamicsSP
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={0,60})));
-protected
-  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_internal;
 
 equation
 // Fluid Definition

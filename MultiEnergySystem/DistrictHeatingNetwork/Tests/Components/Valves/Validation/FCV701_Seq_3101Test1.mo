@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Valves.Validation;
 model FCV701_Seq_3101Test1
   extends Valves.Validation.TestBase(
-  MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/3101_Test1/Temperatures.mat"));
+  MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/3101_Test1.mat"));
 equation
 
 annotation (

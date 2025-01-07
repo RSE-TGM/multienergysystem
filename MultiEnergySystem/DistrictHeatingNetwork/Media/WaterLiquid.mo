@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media;
 model WaterLiquid
-  extends BaseClasses.PartialSubstance(
+  extends Media.BaseClasses.PartialSubstance(
     mu_start = 0.00113,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,
     rho_coeff = {-0.0034821889243192,1.8159726369743,764.95410451574},

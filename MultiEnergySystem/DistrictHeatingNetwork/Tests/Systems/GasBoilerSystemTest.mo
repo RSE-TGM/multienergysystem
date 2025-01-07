@@ -1,7 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model GasBoilerSystemTest "Test of System 100 with real data"
   extends Modelica.Icons.Example;
-
+  // Fluid Gas
+  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   // Constants
   constant Real pi = Modelica.Constants.pi;
   // Temperatures and pressures
@@ -51,34 +52,35 @@ model GasBoilerSystemTest "Test of System 100 with real data"
   parameter Types.MassFlowRate mflowS1[:,:] = [0, 4; 100, 4];
   parameter Types.Temperature TinS1[:,:] = [0, 60 + 273.15; 100, 60 + 273.15];
   parameter Types.Pressure pinS1[:,:] = [0, 1.8e5; 100, 1.8e5];
+  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
 
 //  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/DiscoD/Muro/Lavoro/Simulations/ModelicaSimulations/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Pressures = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Flows = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Actuators = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
-//  parameter String matrixFT101 = "FT101" "Matrix name in file";
-//  parameter String matrixPT101 = "PT101" "Matrix name in file";
-//  parameter String matrixPT102 = "PT102" "Matrix name in file";
-//  parameter String matrixTT101 = "TT101" "Matrix name in file";
-//  parameter String matrixTT102 = "TT102" "Matrix name in file";
-//  parameter String matrixthetaFCV101 = "theta_FCV101" "Matrix name in file";
-//  parameter String matrixf_P101 = "f_P101" "Matrix name in file";
+  parameter String matrixFT101 = "FT101" "Matrix name in file";
+  parameter String matrixPT101 = "PT101" "Matrix name in file";
+  parameter String matrixPT102 = "PT102" "Matrix name in file";
+  parameter String matrixTT101 = "TT101" "Matrix name in file";
+  parameter String matrixTT102 = "TT102" "Matrix name in file";
+  parameter String matrixthetaFCV101 = "theta_FCV101" "Matrix name in file";
+  parameter String matrixf_P101 = "f_P101" "Matrix name in file";
 
-//  parameter String timenoscale = "time" "Matrix name in file";
+  parameter String timenoscale = "time" "Matrix name in file";
 
-//  final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT101) "Dimension of matrix";
-//  final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
-//  final parameter Real TT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT101,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-//  final parameter Real TT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT102,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
-//  parameter Real FT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2])*985/3600 "Matrix data";
-//  parameter Real q_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2]) "Matrix data";
-//  parameter Real PT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT101,dim[1]+1,dim[2])*1e5 "Matrix data";
-//  parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1]+1,dim[2])*1e5 "Matrix data";
-//  final parameter Real thetaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV101,dim[1],dim[2]) "Matrix data";
-//  final parameter Real omegaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixf_P101,dim[1],dim[2])*2*Modelica.Constants.pi "Matrix data";
+  final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(Temperatures,matrixTT101) "Dimension of matrix";
+  final parameter Real t[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,timenoscale,dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT101,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+  final parameter Real TT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Temperatures,matrixTT102,dim[1],dim[2]) + 273.15*ones(dim[1],dim[2]) "Matrix data";
+  parameter Real FT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2])*985/3600 "Matrix data";
+  parameter Real q_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Flows,matrixFT101,dim[1]+1,dim[2]) "Matrix data";
+  parameter Real PT_101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT101,dim[1]+1,dim[2])*1e5 "Matrix data";
+  parameter Real PT_102[:,:] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT102,dim[1]+1,dim[2])*1e5 "Matrix data";
+  final parameter Real thetaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV101,dim[1],dim[2]) "Matrix data";
+  final parameter Real omegaFCV101[:,:] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixf_P101,dim[1],dim[2])*2*Modelica.Constants.pi "Matrix data";
 
 
 
@@ -241,6 +243,14 @@ model GasBoilerSystemTest "Test of System 100 with real data"
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
     "Input to decide whether or nor the gas boiler is working"
     annotation (Placement(transformation(extent={{-80,-148},{-60,-128}})));
+  H2GasFacility.Sources.SourcePressure sourceGas(
+    redeclare model Medium = Gas,
+    X0=X_gas,
+    R=1e-3,
+    computeEnergyVariables=true) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={62,-106})));
 equation
   connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (Line(
       points={{20,-14.6},{20,-26}},
@@ -309,6 +319,10 @@ equation
       thickness=0.5));
   connect(GB101_Status.y, GB101.heat_on) annotation (Line(points={{-59,-138},{-52,-138},{-52,-129},{-32.2,-129}},
                            color={255,0,255}));
+  connect(sourceGas.outlet, GB101.inletfuel) annotation (Line(
+      points={{52,-106},{27.6,-106}},
+      color={182,109,49},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

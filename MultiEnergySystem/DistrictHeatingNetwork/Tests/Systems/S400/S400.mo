@@ -238,10 +238,6 @@ equation
       points={{27.7,-107},{56,-107},{56,-130},{110,-130},{110,-102}},
       color={56,93,138},
       thickness=1));
-  connect(P401.inletPower, sourceVoltage.outlet) annotation (Line(
-      points={{22.4,-5},{26,-5},{26,-64},{110,-64},{110,-102}},
-      color={56,93,138},
-      thickness=1));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

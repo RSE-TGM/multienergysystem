@@ -31,6 +31,7 @@ model ControlledElectricBoilerTest
   Modelica.Blocks.Sources.BooleanTable EB401_Status(table={1e6}, startValue=true)
     "Input to decide whether or nor the CHP is working"
     annotation (Placement(transformation(extent={{-32,-70},{-12,-50}})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{98,-38},{66,-6}})));
 equation
   connect(sinkM.inlet, eBoiler.outlet) annotation (
     Line(points={{32,48},{43.8,48},{43.8,-1.2}},
@@ -49,6 +50,10 @@ equation
     annotation (Line(points={{-11,-22},{17.8,-22}}, color={0,0,127}));
   connect(EB401_Status.y, eBoiler.heat_on)
     annotation (Line(points={{-11,-60},{0,-60},{0,-35},{17.8,-35}},     color={255,0,255}));
+  connect(sourceVoltage.outlet, eBoiler.inletPower) annotation (Line(
+      points={{66,-22},{54.2,-22}},
+      color={56,93,138},
+      thickness=1));
   annotation (
     experiment(StartTime = 0, StopTime = 3000, Tolerance = 1e-06, Interval = 6),
     Documentation(info = "<html><head></head><body>Test model for the component:

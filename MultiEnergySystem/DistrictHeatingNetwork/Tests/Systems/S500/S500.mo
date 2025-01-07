@@ -112,8 +112,6 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
     gamma_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_hot,
     h_cold=DistrictHeatingNetwork.Data.BPHEData.E501.h_cold,
     h_hot=DistrictHeatingNetwork.Data.BPHEData.E501.h_hot,
-    hin_start_cold=DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_cold,
-    hin_start_hot=DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_hot,
     k_cold=DistrictHeatingNetwork.Data.BPHEData.E501.k_cold,
     k_hot=DistrictHeatingNetwork.Data.BPHEData.E501.k_hot,
     kc_cold=1,
@@ -353,6 +351,7 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
         extent={{-2.5,-2.5},{2.5,2.5}},
         rotation=90,
         origin={-45.25,-12.5})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{59,-24.25},{79,-4.25}})));
 equation
   connect(PL_S500_CHP_FV502.inlet, CHP.outlet) annotation (Line(
       points={{28.75,-61.25},{35.25,-61.25},{35.25,-60.725},{43.1,-60.725}},
@@ -480,6 +479,10 @@ equation
       points={{-21.75,-88.625},{-17.5,-88.625},{-17.5,-75.25},{-3.75,-75.25}},
       color={140,56,54},
       thickness=0.5));
+  connect(sourceVoltage.outlet, CHP.outletPower) annotation (Line(
+      points={{79,-14.25},{90.75,-14.25},{90.75,-37.75},{69.775,-37.75},{69.775,-51.025}},
+      color={56,93,138},
+      thickness=1));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false, grid={0.25,0.25})),
     experiment(
       StopTime=4500,

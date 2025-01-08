@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.TestFacility.Simulations.Thermal;
+within MultiEnergySystem.TestFacility.Simulations.Thermal;
 package Tests
   extends Modelica.Icons.ExamplesPackage;
   package Systems
@@ -426,15 +426,6 @@ package Tests
         annotation (experiment(StopTime=8450, __Dymola_Algorithm="Dassl"));
       end S100_Seq_241031Test1;
     end S100;
-
-    package S200
-      extends Modelica.Icons.ExamplesPackage;
-      model TestBase
-        extends Modelica.Icons.Example;
-        Plants.Thermal.Systems.TES tES annotation (Placement(transformation(extent={{-30,-32},{32,30}})));
-        annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)));
-      end TestBase;
-    end S200;
 
     package S400 "Set of validation tests of electric boiler system"
       extends Modelica.Icons.ExamplesPackage;

@@ -39,11 +39,10 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.DerSpecificVolumeByTemperature dv_dT if computeDerivatives "Temperature derivative of specific volume at constant pressure";
   Types.SpecificVolume dv_dX[nX] if computeDerivatives "Mass fraction derivative of specific volume, per each component";
   Types.SpecificEntropy s "Specific Entropy" annotation (
-    HideResult = not ComputeEntropy);
-  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeEntropy);
+  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity";
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeTransport);
   Types.Density rho "Density";
 
 protected

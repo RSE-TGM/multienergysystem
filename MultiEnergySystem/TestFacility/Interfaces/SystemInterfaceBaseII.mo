@@ -52,10 +52,5 @@ partial model SystemInterfaceBaseII
         origin={-39,-115},
         extent={{-15,-15},{15,15}},
         rotation=0)));
-equation
-  connect(inlethot, inlethot) annotation (Line(
-      points={{24,-100},{24,-100}},
-      color={140,56,54},
-      thickness=0.5));
   annotation (                                                   Diagram(coordinateSystem(preserveAspectRatio=false)));
 end SystemInterfaceBaseII;

@@ -7,7 +7,7 @@ model ReadRealMatrixFromFile
 //     annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 //   parameter String file = Modelica.Utilities.Files.loadResource("C:\DiscoD\Muro\Lavoro\Temperatures.mat") "File name of matrix"
 //     annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix"
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat") "File name of matrix"
     annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
   parameter String matrixTT701 = "TT701" "Matrix name in file";
   parameter String matrixTT702 = "TT702" "Matrix name in file";

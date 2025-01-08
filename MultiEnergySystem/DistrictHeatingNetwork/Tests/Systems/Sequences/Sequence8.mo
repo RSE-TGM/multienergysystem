@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence8
+partial model Sequence8
   extends Sequence7(
     P901omega = [0, 2*3.141592654*45;  60, 2*3.141592654*45],
     ToutcoolSP = [0, 17; 50, 17; 60, 17; 100, 17],
@@ -181,8 +181,6 @@ model Sequence8
     gamma_nom_hot=BPHE.E601.gamma_nom_hot,
     h_cold=BPHE.E601.h_cold,
     h_hot=BPHE.E601.h_hot,
-    hin_start_cold=BPHE.E601.hin_start_cold,
-    hin_start_hot=BPHE.E601.hin_start_hot,
     k_cold=BPHE.E601.k_cold,
     k_hot=BPHE.E601.k_hot,
     kc_cold=1,
@@ -1007,10 +1005,10 @@ equation
   connect(FV606_OnOff.y, FV606.u)
     annotation (Line(points={{-148,-319},{-148,-311.2}}, color={255,0,255}));
 
-  connect(FV605_OnOff.y, FV605_Status.activePort) annotation (Line(points={{-148,-277},{-148.25,
-          -277},{-148.25,-277.387}},                color={255,0,255}));
-  connect(FV606_OnOff.y, FV606_Status.activePort) annotation (Line(points={{-148,-319},{-164.125,
-          -319},{-164.125,-319.113},{-148.25,-319.113}},                 color={
+  connect(FV605_OnOff.y, FV605_Status.activePort) annotation (Line(points={{-148,-277},{
+          -148.25,-277},{-148.25,-277.387}},        color={255,0,255}));
+  connect(FV606_OnOff.y, FV606_Status.activePort) annotation (Line(points={{-148,-319},{
+          -164.125,-319},{-164.125,-319.113},{-148.25,-319.113}},        color={
           255,0,255}));
   connect(FV605.outlet, PL_S400_rCD_cold.outlet) annotation (Line(
       points={{-158,-288},{-220,-288},{-220,-190},{-352,-190},{-352,-80},{-362,

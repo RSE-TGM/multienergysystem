@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GasBoilerCompleteSystem
+partial model GasBoilerCompleteSystem
   "Case in which the gas boiler is the only source of heat"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
@@ -251,8 +251,6 @@ model GasBoilerCompleteSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -300,8 +298,6 @@ model GasBoilerCompleteSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -349,8 +345,6 @@ model GasBoilerCompleteSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -398,8 +392,6 @@ model GasBoilerCompleteSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,

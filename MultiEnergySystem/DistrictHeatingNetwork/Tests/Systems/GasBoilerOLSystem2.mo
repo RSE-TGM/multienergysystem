@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GasBoilerOLSystem2
+partial model GasBoilerOLSystem2
   "Case in which the gas boiler is the only source of heat"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence6
+partial model Sequence6
   extends Sequence5(
     redeclare MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamicsSP RR01,
     T_start_hot = 80+273.15,

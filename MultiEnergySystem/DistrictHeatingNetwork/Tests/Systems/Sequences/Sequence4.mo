@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence4
+partial model Sequence4
   extends Sequence3;
   Sources.SinkPressure sinkCold2(p0=EX721_pout_cold, T0=EX721_Tout_cold)
     annotation (Placement(transformation(

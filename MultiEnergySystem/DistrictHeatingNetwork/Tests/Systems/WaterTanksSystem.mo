@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model WaterTanksSystem "System of two tanks"
+partial model WaterTanksSystem "System of two tanks"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;

@@ -478,6 +478,7 @@ model HXCoolingSystem
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
     Di=Di_Users,
+    q_m3h_start=q_Users,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -843,6 +844,8 @@ model HXCoolingSystem
     L=L_TTR02_VER901,
     h=h_TTR02_VER901,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -869,9 +872,7 @@ model HXCoolingSystem
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{110,-34},{130,-14}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
-    RR01(
-    Tout_cold_set=Tout_start_Cool,
-    dp_cold_start=20000,
+    RR01(dp_cold_start=20000,
     m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{170,30},{241,101}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
@@ -1493,6 +1494,8 @@ model HXCoolingSystem
         origin={-221,185})));
   inner System system
     annotation (Placement(transformation(extent={{320,196},{340,216}})));
+  Modelica.Blocks.Sources.BooleanExpression booleanExpression(y=true)
+    annotation (Placement(transformation(extent={{125,55},{145,75}})));
 equation
   connect(PL_TCV721_rackUsersOut.outlet,PL_EX721_EX711_hot. outlet) annotation (
      Line(
@@ -2002,6 +2005,8 @@ equation
       points={{48,136},{48,168},{-221,168},{-221,175}},
       color={140,56,54},
       thickness=0.5));
+  connect(booleanExpression.y, RR01.cold_on)
+    annotation (Line(points={{146,65},{148,65.5},{166.45,65.5}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-340,-220},{340,220}})),
       experiment(

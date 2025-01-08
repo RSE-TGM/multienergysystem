@@ -45,7 +45,7 @@ model ControlledChillerNoDynamicsSP
     Placement(visible = true, transformation(origin = {-76, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation (
     Placement(visible = true, transformation(origin = {-76, -56}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput Tout_SP annotation (Placement(
+  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set annotation (Placement(
         transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
@@ -75,7 +75,8 @@ equation
 // Ideal Controlled variables
   //Tout_cold_min = min(Tout_cold_set, Tin_cold);
   //Tout_cold_min = min(Tout_SP+273.15, Tin_cold);
-  Tout_cold_min = min(max(Tout_SP+273.15, Tin_cold - (200e3/(m_flow_cold*4185))), Tin_cold);
+  Tout_cold_min =min(max(in_Tout_cold_set + 273.15, Tin_cold - (200e3/(m_flow_cold*4185))),
+    Tin_cold);
   Tout_cold = Tout_cold_min "Fixed hot side outlet temperature";
 // Balance equation
   incold.m_flow + outcold.m_flow = 0 "Mass Balance cold side";

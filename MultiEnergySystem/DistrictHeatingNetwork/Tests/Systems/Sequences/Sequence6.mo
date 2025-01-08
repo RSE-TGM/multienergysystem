@@ -32,8 +32,8 @@ partial model Sequence6
     "Temperature in Celsius degrees"
     annotation (Placement(transformation(extent={{708,30},{728,50}})));
 equation
-  connect(Tout_cool_SP.y, RR01.Tout_SP) annotation (Line(points={{729,40},{769.5,
-          40},{769.5,-17.2}}, color={0,0,127}));
+  connect(Tout_cool_SP.y, RR01.in_Tout_cold_set)
+    annotation (Line(points={{729,40},{769.5,40},{769.5,-17.2}}, color={0,0,127}));
   annotation (experiment(
       StopTime=2500,
       Tolerance=1e-06,

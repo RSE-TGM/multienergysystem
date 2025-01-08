@@ -240,6 +240,7 @@ model CoolingSystem
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
     Di=Di_Users,
+    q_m3h_start=q_Users,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -608,6 +609,7 @@ model CoolingSystem
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
     Di=Di_RR,
+    q_m3h_start=q_Cool,
     hctype=hctype,
     n=n) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -642,8 +644,7 @@ model CoolingSystem
         rotation=90,
         origin={-220,131})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
-    RR01(Tout_cold_set=Tout_start_Cool,
-    dp_cold_start=50000,                m_flow_cold_start=m_flow_Cool)
+    RR01(dp_cold_start=50000,           m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{170,134},{241,205}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
     L=L_EX701_EX731_cold,
@@ -794,6 +795,8 @@ model CoolingSystem
   Modelica.Blocks.Interaction.Show.RealValue FTR01_7(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{130,20},{89,55}})));
+  Modelica.Blocks.Sources.BooleanExpression booleanExpression(y=true)
+    annotation (Placement(transformation(extent={{116,158},{136,178}})));
 equation
   connect(PL_TCV721_rackUsersOut.outlet, PL_EX721_EX711_hot.outlet) annotation (
      Line(
@@ -1110,6 +1113,8 @@ equation
           273.862,25},{273.862,25.5},{277.925,25.5}}, color={0,0,127}));
   connect(FTR01_7.numberPort, PTR02.p) annotation (Line(points={{133.075,37.5},
           {139.2,37.5},{139.2,10}}, color={0,0,127}));
+  connect(booleanExpression.y, RR01.cold_on) annotation (Line(points={{137,168},{158,168},
+          {158,169.5},{166.45,169.5}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(

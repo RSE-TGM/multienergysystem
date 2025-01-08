@@ -70,6 +70,8 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_EB401_P401(
     L=L_S4_PL3,
     t=t_S4,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
@@ -80,6 +82,7 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
+    set_m_flow_start=true,
     m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
     pout_start=pin_start_S4,
@@ -92,6 +95,7 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(
     L=L_S4_PL3,
     t=t_S4,
+    set_m_flow_start=true,
     m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
     pout_start=pout_start_S4,
@@ -137,6 +141,7 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
+    set_m_flow_start=true,
     m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
     pout_start=pin_start_S4,

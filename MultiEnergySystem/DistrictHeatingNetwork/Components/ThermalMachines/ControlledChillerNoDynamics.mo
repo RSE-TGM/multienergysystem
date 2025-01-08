@@ -70,7 +70,8 @@ model ControlledChillerNoDynamics
     Placement(visible = true, transformation(origin = {-76, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation (
     Placement(visible = true, transformation(origin = {-76, -56}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set if use_in_Tout_cold_set "Externally supplied pressure" annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set if use_in_Tout_cold_set
+    "Externally supplied temperature"                                                                          annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={10,70}), iconTransformation(

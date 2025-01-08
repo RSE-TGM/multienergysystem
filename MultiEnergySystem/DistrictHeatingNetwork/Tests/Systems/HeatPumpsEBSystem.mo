@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model HeatPumpsEBSystem
   "S300 s400 & S600 interacting together for centralized configuration"
 
@@ -128,6 +128,8 @@ model HeatPumpsEBSystem
   parameter Types.Length t_S4 = 1.5e-3;
 
   parameter Types.MassFlowRate m_flow_S4 = 1.2;
+
+  parameter Real EB401_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledHeatPumpNoDynamics
     HP601(
@@ -941,6 +943,12 @@ model HeatPumpsEBSystem
     annotation (Placement(transformation(extent={{80,-60},{100,-40}})));
   Modelica.Blocks.Sources.BooleanConstant FV606_OnOff(k=true)
     annotation (Placement(transformation(extent={{110,-130},{130,-110}})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{82,-192},
+            {102,-172}})));
+  Modelica.Blocks.Sources.TimeTable EB401ToutSP(table=EB401_ToutSP)
+    annotation (Placement(transformation(extent={{-72,-226},{-52,-206}})));
+  Modelica.Blocks.Sources.BooleanTable EB401_Status(table={1e6}, startValue=true) "Input to decide whether or nor the electric boiler is working"
+    annotation (Placement(transformation(extent={{-70,-258},{-50,-238}})));
 equation
   connect(PT601.inlet,TT601. inlet) annotation (Line(
       points={{187.7,115.5},{187.7,106.5}},
@@ -1281,6 +1289,14 @@ equation
           110,-70.8}}, color={255,0,255}));
   connect(FV606_OnOff.y, FV606.u) annotation (Line(points={{131,-120},{140,-120},
           {140,-93.2}}, color={255,0,255}));
+  connect(sourceVoltage.outlet, EB401.inletPower) annotation (Line(
+      points={{102,-182},{116,-182},{116,-148},{70.4,-148}},
+      color={56,93,138},
+      thickness=1));
+  connect(EB401ToutSP.y, EB401.Tout_ref) annotation (Line(points={{-51,-216},{-32,-216},{-32,
+          -148},{-2.4,-148}}, color={0,0,127}));
+  connect(EB401_Status.y, EB401.heat_on) annotation (Line(points={{-49,-248},{-36,-248},{-36,
+          -250},{-18,-250},{-18,-174},{-2.4,-174}}, color={255,0,255}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(
         extent={{-260,-260},{260,260}}),

@@ -758,7 +758,7 @@ partial model Sequence5
         origin={706,-98})));
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{666,-138},{686,-118}})));
-  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamicsSP
     RR01(dp_cold_start=50000,
     m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{734,-74},{805,-3}})));

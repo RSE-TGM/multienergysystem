@@ -32,6 +32,10 @@ partial model IdealMixture
 //  Types.SpecificEnthalpy dh_id_dYi[nXi];
 //  Types.SpecificEnthalpy dh_dYi[nXi];
 //  Types.SpecificEnergy du_dYi[nXi];
+initial equation
+  assert(abs(sum(X) - 1) < 1e-6, "Mass fractions must sum to 1 within a tolerance of 1e-6.");
+  assert(min(MM) > 0, "Molar masses must be positive.");
+
 equation
 
   // Specific volume and density derivates

@@ -84,8 +84,8 @@ equation
 //  X[1:nXi] = Xi;
 //  X[nX] = 1 - sum(Xi);
 
-  assert(sum(X) > 0, "error1");
-  assert(sum(MM) > 0, "error2");
+  assert(abs(sum(X) - 1) < 1e-6, "Mass fractions must sum to 1.");
+  assert(sum(MM) > 0, "Sum of molar masses must be positive. Check component data.");
 
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
   MM_mix = MM*Y "molar mass of the fluid";
@@ -93,7 +93,7 @@ equation
   pr = p./p_c;
   T_c_mix = X*T_c + eps;
   p_c_mix = X*p_c + eps;
-  Tr_mix = T/T_c_mix;
+  Tr_mix = T/T_c_mix; //It could fail for extreme cases where T_c or p_c values are near-zero --> Add a epsT?
   pr_mix = p/p_c_mix;
   Tr0 = T0./T_c;
 

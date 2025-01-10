@@ -45,6 +45,12 @@ partial model PartialMixture "Interface for real mixture gas models"
     HideResult = not computeTransport);
   Types.Density rho "Density";
 
+initial equation
+  // Check the validity of inputs during initialization
+  assert(p >= 0, "Pressure must be non-negative.");
+  assert(T > 0, "Temperature must be positive.");
+  assert(abs(sum(X) - 1) < 1e-6, "Mass fractions must sum to 1.");
+
 protected
   function cp_T
     input Types.Temperature T;

@@ -73,7 +73,8 @@ equation
 
   if nX > 1 then
     X[1:nXi] = Xi;
-    X[nX] = 1 - sum(Xi);
+    // X[nX] = 1 - sum(Xi);
+    X[nX] = max(0, 1 - sum(Xi)); //This is a more robust solution that prevent X[nX] being slightly negative due to floating-point inaccuracies.
   else
     X[1] = 1;
   end if;
@@ -81,7 +82,7 @@ equation
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
   MM_mix = MM*Y "molar mass of the fluid";
 
-  Z = 1;
+  Z = 1; //Ideal Gas
   p*v_mol = Z*R*T;
   rho = 1/v;
   v_mol = v*MM_mix;

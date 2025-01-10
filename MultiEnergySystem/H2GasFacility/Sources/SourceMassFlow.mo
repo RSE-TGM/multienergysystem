@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Sources;
 model SourceMassFlow
   extends DistrictHeatingNetwork.Icons.Gas.SourceW;
+  // Replaceable Medium model
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR                        constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
@@ -53,7 +54,7 @@ model SourceMassFlow
           extent={{-20,-20},{20,20}},
           rotation=0)));
 
-  // Fluid model
+  // Fluid model initialization
   Medium fluid(
     p_start = p0,
     T_start = T0,
@@ -76,7 +77,7 @@ protected
   Modelica.Blocks.Interfaces.RealInput in_X0_internal[fluid.nX];
 
 equation
-
+  // Mass flow rate is calculated based on external input or parameter value, with a pressure-dependent component if G > 0
   outlet.m_flow = -in_m_flow0_internal + (outlet.p - p0)*G "Mass Conservation";
 
   if use_in_m_flow0 == false then
@@ -85,16 +86,19 @@ equation
 
   m_flow = in_m_flow0_internal;
 
+  // Use external temperature input if enabled; otherwise, default to T0
   T = in_T0_internal;
   if use_in_T0 == false then
     in_T0_internal = T0 "Temperature set by parameter";
   end if;
 
+  // Use external mass fraction input if enabled; otherwise, default to X0
   X = in_X0_internal;
   if use_in_X0 == false then
     in_X0_internal = X0 "Mass fraction set by parameter";
   end if;
 
+  // Enthalpy calculations use either fixed or outlet pressure
   if computeEnthalpyWithFixedPressure then
     p = p0;
   else
@@ -110,6 +114,7 @@ equation
   outlet.h_out = fluid.h;
   outlet.Xi = fluid.Xi;
 
+  // Compute specific enthalpy and energy transfer
   h = outlet.h_out;
   E = m_flow*fluid.LHV_mix;
 
@@ -121,7 +126,18 @@ equation
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})),
     Documentation(info="<html>
-<p>This component defines the source mass flow for gas flows and maintains a fixed outlet mass flow.</p>
-<p>When the hydraulic resistance G is set to zero, the flow source operates ideally. However, if G is greater than zero, the outlet mass flow decreases proportionally to the outgoing pressure.</p>
+<p>The <span style=\"font-family: Courier New;\">SourceMassFlow</span> model defines a mass flow source for gas flows. It operates as an ideal source with constant mass flow when G=0 or includes a pressure-dependent flow variation when G&gt;0.</p>
+<h4>Modeling Options</h4>
+<ul>
+<li><b>External Inputs:</b> Enable external mass flow, temperature, or mass fraction inputs with <span style=\"font-family: Courier New;\">use_in_m_flow0</span>, <span style=\"font-family: Courier New;\">use_in_T0</span>, or <span style=\"font-family: Courier New;\">use_in_X0</span>. Otherwise, nominal values (<span style=\"font-family: Courier New;\">m_flow0</span>, <span style=\"font-family: Courier New;\">T0</span>, <span style=\"font-family: Courier New;\">X0</span>) are used.</li>
+<li><b>Additional Calculations:</b> Optional flags compute transport properties, entropy, or energy variables.</li>
+</ul>
+<h4>Connections</h4>
+<ul>
+<li><b>Output:</b> Provides outlet mass flow, temperature, mass fraction, and specific enthalpy.</li>
+<li><b>Inputs:</b> Conditional connectors for external inputs when enabled.</li>
+</ul>
+<h4>Usage</h4>
+<p>Adapt G and input settings for energy systems and fluid networks requiring flexible mass flow control.</p>
 </html>"));
 end SourceMassFlow;

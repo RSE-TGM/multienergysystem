@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Sources;
 model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
+  // Replaceable Medium model
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                                                                              "Medium model" annotation (
@@ -33,6 +34,7 @@ model SinkPressure "Pressure sink for water/steam flows"
   Types.Temperature T(start = T0) "Actual temperature";
   Types.MassFraction X[fluid.nX] "Actual mass fraction";
   Types.MassFlowRate m_flow "Actual mass flow rate";
+  // Fluid model initialization
   Medium fluid(
     T_start = T0,
     p_start = p0,
@@ -53,14 +55,18 @@ protected
   Modelica.Blocks.Interfaces.RealInput in_T0_internal;
   Modelica.Blocks.Interfaces.RealInput in_X0_internal[fluid.nX];
 equation
-// Connector Balance
+  // Connector Balance: Assign inlet properties
   inlet.h_out = fluid.h;
   inlet.Xi = fluid.Xi;
+
+  // Inlet pressure depends on hydraulic resistance and flow rate
   if R > 0 then
     inlet.p = p + inlet.m_flow*R;
   else
     inlet.p = p;
   end if;
+
+  // Assign internal variables based on parameters or external inputs
   p = in_p0_internal;
   if not use_in_p0 then
     in_p0_internal = p0 "Pressure set by parameter";
@@ -73,20 +79,31 @@ equation
   if not use_in_X0 then
     in_X0_internal = X0 "Mass fraction set by parameter";
   end if;
-// Fluid definition
+  // Fluid properties definition
   fluid.p = p;
   fluid.T = T;
   fluid.Xi = X[1:fluid.nXi];
-// Variables Definition
+  // Variables Definition
   m_flow = inlet.m_flow;
-// Connect protected connectors to public conditional connectors
+  // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);
   connect(in_T0, in_T0_internal);
   connect(in_X0, in_X0_internal);
   annotation (
     Diagram(graphics),
-    Documentation(info = "<html><head></head><body><p><b>Modelling options</b></p>
-<p>If <tt>R</tt> is set to zero, the pressure sink is ideal; otherwise, the inlet pressure increases proportionally to the incoming flowrate.</p>
-<p>The pressure, temperature and mass fraction vector can be supplied from external inputs by setting to true the corresponding <code>use_in_XX</code> parameter and connecting an external signal to the input connector.</p>
-</body></html>", revisions = "<html><head></head><body></body></html>"));
+    Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">SinkPressure</span> model represents a pressure sink for gas flows. It can act as an ideal sink (R=0) or a non-ideal sink with flow-dependent pressure rise (R&gt;0).</p>
+<h4>Modeling Options</h4>
+<ul>
+<li><b>External Inputs:</b> Pressure, temperature, and mass fraction can be supplied externally by enabling <span style=\"font-family: Courier New;\">use_in_p0</span>, <span style=\"font-family: Courier New;\">use_in_T0</span>, or <span style=\"font-family: Courier New;\">use_in_X0</span>. Otherwise, nominal values (<span style=\"font-family: Courier New;\">p0</span>, <span style=\"font-family: Courier New;\">T0</span>, <span style=\"font-family: Courier New;\">X0</span>) are used.</li>
+<li><b>Additional Calculations:</b> Optional flags enable the calculation of transport properties, specific entropy, and energy variables like HHV and Wobbe Index.</li>
+</ul>
+<h4>Connections</h4>
+<ul>
+<li><b>Input</b>: Receives inlet pressure, temperature, and mass fraction.</li>
+<li><b>Output (Conditional)</b>: Internal connectors for pressure, temperature, and mass fraction when external inputs are enabled.</li>
+</ul>
+<h4>Usage</h4>
+<p>This model is suitable for fluid networks requiring flexibility in sink properties. Adjust R and input settings to match your application.</p>
+</html>",        revisions = "<html><head></head><body></body></html>"));
 end SinkPressure;

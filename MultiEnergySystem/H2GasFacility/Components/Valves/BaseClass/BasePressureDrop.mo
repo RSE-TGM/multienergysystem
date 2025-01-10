@@ -56,4 +56,9 @@ partial model BasePressureDrop
 
 equation
 
+  annotation (Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">BasePressureDrop</span> is a partial Modelica model that provides a foundation for simulating pressure drops in fluid systems. It is designed to handle fluid flow between two ports with configurable parameters for the fluid medium, pressure, and temperature.</p>
+<h4>Use Case</h4>
+<p>This model is a base class for components such as valves, pipes, or flow restrictors where a pressure drop occurs. It can be extended with specific equations to define the pressure drop dynamics and other fluid properties.</p>
+</html>"));
 end BasePressureDrop;

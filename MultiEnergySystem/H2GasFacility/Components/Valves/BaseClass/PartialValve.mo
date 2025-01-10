@@ -25,7 +25,7 @@ partial model PartialValve
     "Valve Displacement" annotation (
     Placement(visible = true, transformation(origin = {0, 90}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
   parameter Boolean PressureDropLinear = false;
-  parameter Real K_v = 1e-3;
+  parameter Real K_v = 1e-3 "Flow Coefficient";
 
   Types.MassFlowRate m_flow(start = m_flow_nom)
     "Mass flow rate through the valve";
@@ -80,5 +80,9 @@ equation
 
 
   annotation (
-    Icon);
+    Icon, Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">PartialValve</span> model simulates the behavior of a valve with configurable opening characteristics (linear or quadratic) and pressure drop.</p>
+<h4>Use Case</h4>
+<p>This partial model serves as a foundation for simulating valve behavior in fluid systems, where flow characteristics depend on the valve&apos;s position and pressure differential.</p>
+</html>"));
 end PartialValve;

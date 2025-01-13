@@ -103,14 +103,5 @@ equation
 <p>If <code>use_T</code> is false, the specific enthalpy is prescribed, otherwise the temperature is prescribed.</p>
 <p>The pressure, specific enthalpy and temperature can be supplied from external inputs by setting to true the corresponding <code>use_in_XX</code> parameter and connecting an external signal to the input connector.</p>
 </HTML>",
-        revisions="<html>
-<ul>
-<li><i>09 Oct 2017</i>
-    by <a href=\"mailto:francesco.casella@polimi.it\">Francesco Casella</a>:<br>
-    Restructured and added temperature input.</li>
-<li><i>1 Oct 2003</i>
-    by <a href=\"mailto:francesco.casella@polimi.it\">Francesco Casella</a>:<br>
-       First release.</li>
-</ul>
-</html>"));
+        revisions=""), __Dymola_UserMetaData(MetaData(category="User Meta Data")));
 end SourcePressure;

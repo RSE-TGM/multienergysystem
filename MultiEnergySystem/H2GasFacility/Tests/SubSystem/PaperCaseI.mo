@@ -1,66 +1,72 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 partial model PaperCaseI "Distribution network example from [1]"
   extends Modelica.Icons.Example;
-  //replaceable model Medium = H2GasFacility.Media.IdealGases.NG6_H2;
+  //Medium used for the gas facility, based on real gas properties
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Network medium.";
   replaceable model MediumUsers =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "User medium.";
    replaceable model Hydrogen =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND(posDom = 7) constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
-  parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = true;
-  parameter Boolean constantFrictionFactor = true;
-  parameter Boolean computeInertialTerm = false;
-  parameter Integer n = 3 "Number of volumes in each pipeline";
-  parameter Integer nX = 7 "Number of components in the gas fluid";
+      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND(posDom = 7) constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Hydrogen medium.";
+
+  // General parameters for system behavior and configuration
+  parameter Boolean useEnergyDemand = false "Flag to determine if energy demand is used.";
+  parameter Boolean quasiStatic = true "Enable quasi-static assumptions for calculations.";
+  parameter Boolean constantFrictionFactor = true "Assume constant friction factor in calculations.";
+  parameter Boolean computeInertialTerm = false "Whether to include inertial effects in calculations.";
+
+  // Pipeline configuration parameters
+  parameter Integer n = 3 "Number of volumes in each pipeline.";
+  parameter Integer nX = 7 "Number of components in the gas fluid.";
+
+  // Initial mass fractions of the gas components
   parameter Types.MassFraction X_start[nX] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
-  parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
-  parameter Types.Pressure p_nom = 1.5e5;
+  parameter Types.MassFlowRate m_flow_H2_ref = 0.005 "Reference hydrogen mass flow rate.";
+  parameter Types.Pressure p_nom = 1.5e5 "Nominal pressure for the system.";
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   //parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.00119840; 15*3600, 0.00169773; 16*3600, 0.00109853; 17*3600, 0; 24*3600, 0];
-  parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.0008655; 15*3600, 0.0003956; 16*3600, 0.0003956; 17*3600, 0; 24*3600, 0];
-  parameter Types.Length kappa = 0.045e-3;
+  parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.0008655; 15*3600, 0.0003956; 16*3600, 0.0003956; 17*3600, 0; 24*3600, 0] "Hydrogen production profile over a day.";
+  parameter Types.Length kappa = 0.045e-3 "Thermal conductivity of the pipeline.";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
 
-// Maximum mass flowrate demand for each user
-  parameter Types.MassFlowRate m_flow_max_user4 = 0.044645108;
-  parameter Types.MassFlowRate m_flow_max_user5 = 0.03493965;
-  parameter Types.MassFlowRate m_flow_max_user10 = 0.040762925;
-  parameter Types.MassFlowRate m_flow_max_user11 = 0.009705458;
-  parameter Types.MassFlowRate m_flow_max_user12 = 0.014558188;
-  parameter Types.MassFlowRate m_flow_max_user13 = 0.006793821;
-  parameter Types.MassFlowRate m_flow_max_user14 = 0.008734913;
-  parameter Types.MassFlowRate m_flow_max_user15 = 0.017469825;
-  parameter Types.MassFlowRate m_flow_max_user16 = 0.012723856;
-  parameter Types.MassFlowRate m_flow_max_user17 = 0.010676004;
+  // Maximum mass flowrate demand for each user
+  parameter Types.MassFlowRate m_flow_max_user4 = 0.044645108 "User 4 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user5 = 0.03493965 "User 5 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user10 = 0.040762925 "User 10 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user11 = 0.009705458 "User 11 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user12 = 0.014558188 "User 12 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user13 = 0.006793821 "User 13 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user14 = 0.008734913 "User 14 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user15 = 0.017469825 "User 15 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user16 = 0.012723856 "User 16 max flow rate.";
+  parameter Types.MassFlowRate m_flow_max_user17 = 0.010676004 "User 17 max flow rate.";
 
-// Maximum energy demand for each user
-  parameter Real W_max_user4 = 0.044645108*3.84E+07/0.696977;
-  parameter Real W_max_user5 = 0.03493965*3.84E+07/0.696977;
-  parameter Real W_max_user10 = 0.040762925*3.84E+07/0.696977;
-  parameter Real W_max_user11 = 0.009705458*3.84E+07/0.696977;
-  parameter Real W_max_user12 = 0.014558188*3.84E+07/0.696977;
-  parameter Real W_max_user13 = 0.006793821*3.84E+07/0.696977;
-  parameter Real W_max_user14 = 0.008734913*3.84E+07/0.696977;
-  parameter Real W_max_user15 = 0.017469825*3.84E+07/0.696977;
-  parameter Real W_max_user16 = 0.012723856*3.84E+07/0.696977;
-  parameter Real W_max_user17 = 0.010676004*3.84E+07/0.696977;
+  // Maximum energy demand for each user
+  parameter Real W_max_user4 = 0.044645108*3.84E+07/0.696977 "User 4 max energy demand.";
+  parameter Real W_max_user5 = 0.03493965*3.84E+07/0.696977 "User 5 max energy demand.";
+  parameter Real W_max_user10 = 0.040762925*3.84E+07/0.696977 "User 10 max energy demand.";
+  parameter Real W_max_user11 = 0.009705458*3.84E+07/0.696977 "User 11 max energy demand.";
+  parameter Real W_max_user12 = 0.014558188*3.84E+07/0.696977 "User 12 max energy demand.";
+  parameter Real W_max_user13 = 0.006793821*3.84E+07/0.696977 "User 13 max energy demand.";
+  parameter Real W_max_user14 = 0.008734913*3.84E+07/0.696977 "User 14 max energy demand.";
+  parameter Real W_max_user15 = 0.017469825*3.84E+07/0.696977 "User 15 max energy demand.";
+  parameter Real W_max_user16 = 0.012723856*3.84E+07/0.696977 "User 16 max energy demand.";
+  parameter Real W_max_user17 = 0.010676004*3.84E+07/0.696977 "User 17 max energy demand.";
 
 // total demand (mass flowrate or energy) profile in one day
-  parameter Real industrialDemand4[5, 2] = industrialDemand_mfr(m_flow_max_user4);
-  parameter Real industrialDemand5[5, 2] = industrialDemand_mfr(m_flow_max_user5);
-  parameter Real industrialDemand10[5, 2] = industrialDemand_mfr(m_flow_max_user10);
-  parameter Real residentialDemand11[14, 2] = residentialDemand_mfr(m_flow_max_user11) "Table for demand";
-  parameter Real residentialDemand12[14, 2] = residentialDemand_mfr(m_flow_max_user12);
-  parameter Real residentialDemand13[14, 2] = residentialDemand_mfr(m_flow_max_user13);
-  parameter Real residentialDemand14[14, 2] = residentialDemand_mfr(m_flow_max_user14);
-  parameter Real residentialDemand15[14, 2] = residentialDemand_mfr(m_flow_max_user15);
-  parameter Real residentialDemand16[14, 2] = residentialDemand_mfr(m_flow_max_user16);
-  parameter Real residentialDemand17[14, 2] = residentialDemand_mfr(m_flow_max_user17);
+  parameter Real industrialDemand4[5, 2] = industrialDemand_mfr(m_flow_max_user4) "Industrial demand 4.";
+  parameter Real industrialDemand5[5, 2] = industrialDemand_mfr(m_flow_max_user5) "Industrial demand 5.";
+  parameter Real industrialDemand10[5, 2] = industrialDemand_mfr(m_flow_max_user10) "Industrial demand 10.";
+  parameter Real residentialDemand11[14, 2] = residentialDemand_mfr(m_flow_max_user11) "Residential demand 11.";
+  parameter Real residentialDemand12[14, 2] = residentialDemand_mfr(m_flow_max_user12) "Residential demand 12.";
+  parameter Real residentialDemand13[14, 2] = residentialDemand_mfr(m_flow_max_user13) "Residential demand 13.";
+  parameter Real residentialDemand14[14, 2] = residentialDemand_mfr(m_flow_max_user14) "Residential demand 14.";
+  parameter Real residentialDemand15[14, 2] = residentialDemand_mfr(m_flow_max_user15) "Residential demand 15.";
+  parameter Real residentialDemand16[14, 2] = residentialDemand_mfr(m_flow_max_user16) "Residential demand 16.";
+  parameter Real residentialDemand17[14, 2] = residentialDemand_mfr(m_flow_max_user17) "Residential demand 17.";
 
-  Types.MassFlowRate total_m_flow_demand "Total mass flowrate demand";
+  Types.MassFlowRate total_m_flow_demand "Total mass flowrate demand.";
 
   inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin={170,130},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -444,6 +450,6 @@ equation
     experiment(StartTime = 0, StopTime = 22000, Tolerance = 1e-06, Interval = 44),
     Documentation(info="<html>
 <p>The following test model takes the information of the study case in paper <a href=\"https://www.sciencedirect.com/science/article/pii/S0360319921018541\">[1]</a>. This case corresponds to a <b>medium pressure</b> distribution network with 0.5 bar as working pressure.</p>
-<p><img src=\"modelica://MultiEnergySystem/../../../Lavoro/3. ReteGas/Figures/MediumPressureNaturalGasGridLayout_Cheli.PNG\"/></p>
+<p>This partial model is taken as reference structure and it is extended in the next examples.</p>
 </html>"));
 end PaperCaseI;

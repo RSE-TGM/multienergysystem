@@ -37,7 +37,7 @@ partial model PartialInsulatedTube
     "Metal wall specific heat capacity" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
   parameter Types.Density rhom = 8000
-    "Metal density [g/cm^3], for steel = 8" annotation (
+    "Metal density [kg/m^3], for steel = 8000" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
   parameter Types.ThermalConductivity lambdam = 45
     "Metal thermal conductivity; steel = 45" annotation (
@@ -90,5 +90,9 @@ equation
     Icon(graphics={Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Text(
           extent={{-100,-60},{100,-120}},
           textColor={28,108,200},
-          textString="%name")}));
+          textString="%name")}), Documentation(info="<html>
+<p>This partial model represents a horizontally oriented insulated tube designed for gas transport in energy systems. It defines the physical properties of the tube, including dimensions, insulation characteristics, and material properties, and provides parameters for initializing flow and thermal conditions.</p>
+<h4>Usage:</h4>
+<p>Extend this model to define specific behaviors, such as heat transfer through the insulation or pressure drop along the tube, depending on the application.</p>
+</html>"));
 end PartialInsulatedTube;

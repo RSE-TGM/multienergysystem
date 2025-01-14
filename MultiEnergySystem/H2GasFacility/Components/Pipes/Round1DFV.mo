@@ -70,8 +70,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Heat Transfer Model"));
   parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
-//   parameter Types.MassFraction X_start[nX] "Start value for the mass fraction"
-//     annotation (Dialog(group="Initialisation"));
+  //parameter Types.MassFraction X_start[nX] "Start value for the mass fraction"
+  //  annotation (Dialog(group="Initialisation"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
 
@@ -99,7 +99,6 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.MassFlowRate m_flowtilde[n](each stateSelect = StateSelect.prefer, each start = m_flow_start);
   Types.MassFraction Xtilde[n, nX](start = fill(X_start, n), nominal = 0.1*fill(ones(nX),n));
   //Types.MassFlowRate m_flowtilde[n](each start = m_flow_start);
-
 
   // Inlet/Outlet Variables
   Types.Temperature Tin "Inlet temperature";
@@ -395,9 +394,16 @@ initial equation
   end if;
 
   annotation (Documentation(info="<html>
-<p>Finite Volume model fo a Pipe. </p>
-<p>The dynamic model includes the following equations: Mass balance, 
-Balance, Momentu Balance, and Mass composition Balance.</p>
-<p><span style=\"font-size: 10pt;\">The Friction factor is computed using the explicit Haaland Formula. </span></p>
+<p>The <span style=\"font-family: Courier New;\">Round1DFV</span> model simulates one-dimensional fluid flow in a rigid round pipe using a <b>Finite Volume (FV)</b> representation. This approach discretizes the pipe into several finite volumes to solve mass, momentum, and energy conservation equations accurately, while allowing flexibility for various flow conditions and media properties.</p>
+<h4>Equations</h4>
+<p>The model is governed by:</p>
+<ol>
+<li><b>Mass Balance</b>: Accounts for the conservation of mass across finite volumes.</li>
+<li><b>Momentum Balance</b>: Incorporates friction and pressure losses with optional inertial effects.</li>
+<li><b>Energy Balance</b>: Includes heat transfer between the pipe walls and the fluid.</li>
+<li><b>Mass composition Balance</b>: Accounts for fluid composition.</li>
+</ol>
+<h4>Examples</h4>
+<p>Pressure source and mass flow sink: <a href=\"MultiEnergySystem.H2GasFacility.Tests.Components.Pipes.TestSinglePipe_A\">MultiEnergySystem.H2GasFacility.Tests.Components.Pipes.TestSinglePipe_A</a></p>
 </html>"));
 end Round1DFV;

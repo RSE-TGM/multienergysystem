@@ -71,5 +71,21 @@ initial equation
                      Rectangle(origin={74,-120},    fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, extent = {{-4, 20}, {4, -20}}),                                                                                                                                                                                                        Polygon(origin={5,-126},    fillColor = {140, 140, 140}, fillPattern = FillPattern.Solid, points = {{-13, -14}, {-13, 22}, {3, 22}, {3, -14}, {3, -14}, {-13, -14}}),
                                                                                                                                                                                                       Text(origin={2,-158},    extent = {{-100, 20}, {100, -20}}, textString = "%name",
           textColor={244,125,35})}),                             Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+        coordinateSystem(preserveAspectRatio=false)),
+    Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">LumpedStorageConstantMass</span> model represents a thermally insulated storage tank for fluid with constant mass and no mass dynamics. It is designed to simulate heat transfer, energy balance, and fluid behavior within the tank. The model assumes ideal mixing and includes insulation effects.</p>
+<h4>Use Case</h4>
+<p>The model is ideal for:</p>
+<ul>
+<li>Simulating thermally insulated storage tanks in gas systems.</li>
+<li>Evaluating heat loss and temperature dynamics in a constant-mass system.</li>
+<li>Analyzing flow and energy behavior under steady or transient conditions.</li>
+</ul>
+<h4>Assumptions</h4>
+<ul>
+<li>Perfect mixing of the fluid within the tank.</li>
+<li>Constant mass in the system with no accumulation.</li>
+<li>Hydrostatic pressure effects are modeled.</li>
+</ul>
+</html>"));
 end LumpedStorageConstantMass;

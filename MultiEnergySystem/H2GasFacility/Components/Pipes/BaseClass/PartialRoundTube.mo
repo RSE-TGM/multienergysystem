@@ -23,7 +23,7 @@ initial equation
   annotation (Documentation(info="<html>
 <h4>Documentation:</h4>
 <p>This partial model represents a cylindrical insulated tube for fluid transport. It extends the <span style=\"font-family: Courier New;\">PartialInsulatedTube</span> model by adding geometry-specific calculations for a round tube, such as cross-sectional area, perimeter, and thermal conductances.</p>
-<p></span><b><span style=\"font-size: 15.6pt;\">Usage:</b></p>
+<h4>Usage:</h4>
 <p>Extend this model to implement specific behaviors such as heat transfer dynamics, pressure drop calculations, or fluid-structure interactions.</p>
 </html>"));
 end PartialRoundTube;

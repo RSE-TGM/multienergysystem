@@ -45,4 +45,10 @@ equation
   connect(opening1.y, valveLinearOpening.opening)
     annotation (Line(points={{-139.4,-4},{-134,-4},{-134,18}},
                                                              color={0,0,127}));
+  annotation (experiment(
+      StopTime=54000,
+      Tolerance=0.0001,
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+<p><span style=\"font-family: Aptos Narrow; background-color: #ffffff;\">Not significant, REMI is wrong. </span></p>
+</html>"));
 end Rete_Gas_2i_2sources_REMI_nV;

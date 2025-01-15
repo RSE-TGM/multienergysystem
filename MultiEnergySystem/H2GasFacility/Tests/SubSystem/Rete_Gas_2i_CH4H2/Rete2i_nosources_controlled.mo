@@ -52,4 +52,8 @@ equation
       points={{-162,26},{-148,26}},
       color={182,109,49},
       thickness=0.5));
+  annotation (experiment(
+      StopTime=0,
+      Tolerance=0.001,
+      __Dymola_Algorithm="Dassl"));
 end Rete2i_nosources_controlled;

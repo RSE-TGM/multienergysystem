@@ -95,7 +95,8 @@ equation
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(
-      StopTime=90000,
+      StopTime=86400,
       Interval=1,
+      Tolerance=0.0001,
       __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_3sources_nV;

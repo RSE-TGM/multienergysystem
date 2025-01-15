@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_CH4;
 model Rete_Gas_2i_nosources
-  "Simplified version of Rete Gas 2i with only backbone and no sources"
+  "Base network with no sources"
   extends Modelica.Icons.Example;
   //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   // replaceable model Medium =

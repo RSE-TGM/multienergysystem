@@ -14,7 +14,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Integer nX = 1 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[1] = {1};
+  parameter Types.MassFraction X_start[nX] = {1};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.657;
 

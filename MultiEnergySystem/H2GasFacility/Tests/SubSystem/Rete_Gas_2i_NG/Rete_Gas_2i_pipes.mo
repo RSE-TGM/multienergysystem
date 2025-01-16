@@ -1059,5 +1059,8 @@ equation
     experiment(
       StopTime=100,
       Tolerance=1e-05,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p>Structure of the network with only pipes and connections. </p>
+</html>"));
 end Rete_Gas_2i_pipes;

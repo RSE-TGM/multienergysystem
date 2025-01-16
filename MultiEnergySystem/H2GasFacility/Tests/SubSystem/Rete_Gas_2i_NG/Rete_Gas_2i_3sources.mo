@@ -60,5 +60,8 @@ equation
       points={{402,152},{264,152},{264,186},{242,186}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"),
+      Documentation(info="<html>
+<p>The third injection source is introduced. This is the complete model. </p>
+</html>"));
 end Rete_Gas_2i_3sources;

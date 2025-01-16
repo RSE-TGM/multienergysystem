@@ -129,5 +129,7 @@ equation
   annotation (experiment(
       StopTime=100,
       Tolerance=0.0001,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+<p>The pipes model is extended and users and REMI station are included in the model. </p>
+</html>"));
 end Rete_Gas_2i_pipes_users;

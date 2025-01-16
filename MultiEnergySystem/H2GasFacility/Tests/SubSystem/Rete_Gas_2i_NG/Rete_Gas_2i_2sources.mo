@@ -160,5 +160,8 @@ equation
       points={{-268,220},{-266,218},{-234,218}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=54000, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=54000, __Dymola_Algorithm="Dassl"),
+      Documentation(info="<html>
+<p>The 2 injedction sources are introduced in the model.</p>
+</html>"));
 end Rete_Gas_2i_2sources;

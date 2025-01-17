@@ -2,29 +2,14 @@ within MultiEnergySystem.H2GasFacility.Sensors;
 model IdealPressureSensor "Ideal pressure sensor"
   extends MultiEnergySystem.H2GasFacility.Sensors.BaseClass.PartialIdealFlowSensor;
 
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
-
   parameter Types.Temperature T_start = 15 + 273.15;
   parameter Types.Pressure p_start = 4.93e5;
 
   parameter Types.MassFlowRate m_flow_start "Start value for mass flow rate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Types.Pressure pin_start "Pressure start value of outgoing fluid" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Pressure pout_start "Pressure start value of outgoing fluid" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.SpecificEnthalpy hin_start "Specific enthalpy start value at the inlet of the volume" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tin_start "Temperature start value of fluid at the start of the volume" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tout_start "Temperature start value of fluid at the end of the volume" annotation (
-    Dialog(group = "Initialisation"));
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = {1} "Mass fraction start value of fluid" annotation (
-    Dialog(group = "Initialisation"));
 
   Modelica.Blocks.Interfaces.RealOutput p_meas "Measured pressure"
-    annotation (Placement(transformation(extent={{28,64},{48,84}}),
-        iconTransformation(extent={{28,64},{48,84}})));
+    annotation (Placement(transformation(extent={{28,64},{48,84}}), iconTransformation(extent={{28,64},{48,84}})));
 equation
   // Fluid definition
   fluidIn.p = inlet.p;
@@ -38,9 +23,9 @@ equation
   // Mass composition balance
   inStream(inlet.Xi) = outlet.Xi;
   inStream(outlet.Xi) = inlet.Xi;
-  // momentum balance (no pressure losses)
+  // Momentum balance (no pressure losses)
   0 = inlet.p - outlet.p;
-  // mass flow balance
+  // Mass flow balance
   0 = inlet.m_flow + outlet.m_flow;
   // Enthalpy balance
   inStream(inlet.h_out) = outlet.h_out;

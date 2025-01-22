@@ -922,18 +922,18 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     redeclare model Medium = Medium,
     p_start=Data.PipelineData_2i.sds11.pin_start,
     X_start=X_start,
-    T_start=288.15) annotation (Placement(transformation(
+    T_start=288.15)                  annotation (Placement(transformation(
         extent={{-4,-4},{4,4}},
         rotation=90,
-        origin={-122,182})));
+        origin={-120,184})));
   MultiEnergySystem.H2GasFacility.Components.Manifold.HomotopyInitializer homotopyInitializer1(
     redeclare model Medium = Medium,
     p_start=Data.PipelineData_2i.s2.pin_start,
     X_start=X_start,
-    T_start=288.15) annotation (Placement(transformation(
-        extent={{4,4},{-4,-4}},
+    T_start=288.15)                  annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
         rotation=90,
-        origin={-198,10})));
+        origin={-200,0})));
 equation
   connect(sds2.inlet, sds1.outlet) annotation (Line(
       points={{-190,66},{-198,66},{-198,56}},
@@ -949,10 +949,6 @@ equation
       thickness=0.5));
   connect(sds6.inlet, sds4.outlet) annotation (Line(
       points={{-122,110},{-122,104},{-124,104},{-124,92}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds7.outlet, sds8.inlet) annotation (Line(
-      points={{172,140},{242,140},{242,166}},
       color={182,109,49},
       thickness=0.5));
   connect(sds11.outlet, sds12.inlet) annotation (Line(
@@ -1049,22 +1045,6 @@ equation
       points={{152,140},{-122,140},{-122,130}},
       color={182,109,49},
       thickness=0.5));
-  connect(homotopyInitializer.inlet, sds9.outlet) annotation (Line(
-      points={{-122,178},{-122,172}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(homotopyInitializer.outlet, sds11.inlet) annotation (Line(
-      points={{-122,186},{-122,189},{-121,189},{-121,192}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(homotopyInitializer1.outlet, s2.inlet) annotation (Line(
-      points={{-198,6},{-198,-24}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(homotopyInitializer1.inlet, sds1.inlet) annotation (Line(
-      points={{-198,14},{-198,36}},
-      color={182,109,49},
-      thickness=0.5));
   connect(s1.outlet, sds1.inlet) annotation (Line(
       points={{-182,26},{-198,26},{-198,36}},
       color={182,109,49},
@@ -1073,12 +1053,32 @@ equation
       points={{146,-24},{146,-6},{110,-6},{110,-74}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds10.inlet, sds9.outlet) annotation (Line(
-      points={{-144,180},{-132,180},{-132,176},{-122,176},{-122,172}},
-      color={182,109,49},
-      thickness=0.5));
   connect(s18.outlet, s31.inlet) annotation (Line(
       points={{78,-6},{110,-6},{110,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds9.outlet, homotopyInitializer.inlet) annotation (Line(
+      points={{-122,172},{-122,176},{-120,176},{-120,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds10.inlet, homotopyInitializer.inlet) annotation (Line(
+      points={{-144,180},{-132,180},{-132,176},{-120,176},{-120,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(homotopyInitializer.outlet, sds11.inlet) annotation (Line(
+      points={{-120,188},{-120,190},{-121,190},{-121,192}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(homotopyInitializer1.inlet, sds1.inlet) annotation (Line(
+      points={{-200,4},{-200,28},{-198,28},{-198,36}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(homotopyInitializer1.outlet, s2.inlet) annotation (Line(
+      points={{-200,-4},{-200,-16},{-198,-16},{-198,-24}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds7.outlet, sds8.inlet) annotation (Line(
+      points={{172,140},{242,140},{242,166}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
+﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_pipes_users
   extends Rete_Gas_2i_pipes;
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(

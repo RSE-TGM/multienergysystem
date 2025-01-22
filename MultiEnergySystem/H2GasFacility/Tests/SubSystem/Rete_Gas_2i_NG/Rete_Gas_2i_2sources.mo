@@ -160,7 +160,10 @@ equation
       points={{-176,218},{-214,218}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=54000, __Dymola_Algorithm="Dassl"),
+  annotation (experiment(
+      StopTime=54000,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"),
       Documentation(info="<html>
 <p>The 2 injedction sources are introduced in the model.</p>
 </html>"));

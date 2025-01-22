@@ -64,7 +64,8 @@ partial model PartialInsulatedTube
   parameter Types.Temperature Tout_start = 15 + 273.15
     "Temperature start value of fluid at the end of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X
+  //parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X
+  parameter H2GasFacility.Types.MassFraction X_start[:] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X
     "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
 

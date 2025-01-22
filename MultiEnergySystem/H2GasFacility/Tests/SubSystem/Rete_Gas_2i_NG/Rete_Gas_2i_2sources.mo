@@ -2,7 +2,7 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_2sources
   extends Rete_Gas_2i_pipes_users;
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    offset=0.001,
+    offset=0.001*0,
     duration=60,
     height=0.09889,
     startTime=3600)                                                                                         annotation (
@@ -112,7 +112,7 @@ model Rete_Gas_2i_2sources
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
-    offset=0.00001,
+    offset=0.00001*0,
     duration=60,
     height=0.09889,
     startTime=32400)                                                                                        annotation (

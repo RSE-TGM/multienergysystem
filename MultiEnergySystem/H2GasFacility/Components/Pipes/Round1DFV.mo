@@ -42,7 +42,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Choices"));
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure "Momentum equation according to the operating pressure" annotation (
     Dialog(group = "Choices"));
-  parameter Types.Pressure pin_nom = pin_start "Nominal pressure of the pipeline system" annotation (
+  parameter Types.Pressure pin_nom = 1e5 "Nominal pressure of the pipeline system" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.Density rho_nom = 0.68 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));

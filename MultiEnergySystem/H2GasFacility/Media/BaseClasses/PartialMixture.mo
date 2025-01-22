@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
+﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
 

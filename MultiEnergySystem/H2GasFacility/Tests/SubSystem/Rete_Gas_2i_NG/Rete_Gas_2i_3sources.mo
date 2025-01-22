@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_3sources
-  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
-  extends Rete_Gas_2i_2sources;
+  //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  extends Rete_Gas_2i_2sources(FrictionFactor = 0.02);
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_3(
     redeclare model Medium = Medium,
     p0=Data.PipelineData_2i.sds8.pout_start,

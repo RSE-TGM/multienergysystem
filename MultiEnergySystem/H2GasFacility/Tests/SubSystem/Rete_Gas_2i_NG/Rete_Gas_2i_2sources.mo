@@ -36,7 +36,7 @@ model Rete_Gas_2i_2sources
     hctype=hctype,
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
+        extent={{10,-10},{-10,10}},
         rotation=0,
         origin={-146,-56})));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
@@ -133,14 +133,6 @@ equation
   connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{51,68},{60,
           68},{60,12},{-52,12},{-52,-4},{-80,-4},{-80,-29},{-90,-29}},
                                                                  color={0,0,127}));
-  connect(s3.inlet, s2.outlet) annotation (Line(
-      points={{-156,-56},{-198,-56},{-198,-44}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s3.outlet,Immissione_1. outlet) annotation (Line(
-      points={{-136,-56},{-136,-58},{-116,-58},{-116,-24},{-106,-24}},
-      color={182,109,49},
-      thickness=0.5));
   connect(m_flow_H5.y,add1. u1) annotation (Line(points={{-372,268},{-336,268},
           {-336,256},{-326,256}}, color={0,0,127}));
   connect(m_flow_H1.y,add1. u2) annotation (Line(points={{-366,224},{-338,224},
@@ -148,16 +140,24 @@ equation
   connect(add1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-303,250},
           {-278,250},{-278,238},{-282,238},{-282,225},{-284,225}},
                                              color={0,0,127}));
-  connect(sds16.inlet, sds11.outlet) annotation (Line(
-      points={{-156,218},{-152,216},{-121,216},{-121,210}},
+  connect(s3.outlet, s2.outlet) annotation (Line(
+      points={{-156,-56},{-198,-56},{-198,-44}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds17.inlet,sds16. outlet) annotation (Line(
-      points={{-214,218},{-176,218}},
+  connect(s3.inlet, Immissione_1.outlet) annotation (Line(
+      points={{-136,-56},{-124,-56},{-124,-54},{-120,-54},{-120,-24},{-106,-24}},
       color={182,109,49},
       thickness=0.5));
-  connect(Immissione_2.outlet,sds17. outlet) annotation (Line(
-      points={{-268,220},{-266,218},{-234,218}},
+  connect(sds17.outlet, Immissione_2.outlet) annotation (Line(
+      points={{-234,218},{-251,218},{-251,220},{-268,220}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds16.inlet, sds12.inlet) annotation (Line(
+      points={{-156,218},{-32,218},{-32,202},{-18,202}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds16.outlet, sds17.inlet) annotation (Line(
+      points={{-176,218},{-214,218}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=54000, __Dymola_Algorithm="Dassl"),

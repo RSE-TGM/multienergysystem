@@ -67,4 +67,8 @@ equation
           {34,56}},     color={0,0,127}));
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-12,32},{24,32},{24,44},
           {34,44}},     color={0,0,127}));
+  annotation (experiment(
+      StopTime=28000,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
 end Rete_Gas_2i_1sources;

@@ -3,7 +3,8 @@ model TestProgressive
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Modelica.Icons.Example;
 
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4
     constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
 
   // Parameters

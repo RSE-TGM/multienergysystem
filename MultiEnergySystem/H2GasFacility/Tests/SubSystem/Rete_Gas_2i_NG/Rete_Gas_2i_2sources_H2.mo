@@ -6,12 +6,12 @@ model Rete_Gas_2i_2sources_H2
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,
     X_start={1, 0},
-    constantFrictionFactor=false,
+    constantFrictionFactor = false,
     massFractionDynamicBalance = true,
     raccordo2(L=10,
               m_flow_start=0.098),
-    m_flow_H2(offset=0.001),
-    m_flow_H1(offset=0.001));
+    m_flow_H2(offset=0.0001),
+    m_flow_H1(offset=0.0001));
   annotation (Documentation(info="<html>
 <p>The 2 injection sources model is extended redeclaring the medium with CH4+H2 fluid. </p>
 </html>"), experiment(

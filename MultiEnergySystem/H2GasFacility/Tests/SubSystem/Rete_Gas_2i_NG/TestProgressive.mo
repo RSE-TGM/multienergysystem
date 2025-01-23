@@ -22,8 +22,8 @@ model TestProgressive
   parameter Types.Pressure p_nom = 4.93e5;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   parameter Types.Length kappa = 0.045e-3;
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
-  //parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle;
+  //parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle;
   parameter Integer nV = 3;
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(
@@ -120,7 +120,8 @@ equation
   connect(valve_controller.ACT_x, valveLinearOpening.opening) annotation (Line(points={{25.4,-26},{30,-26},{30,-8}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
     experiment(
-      StopTime=1000,
+      StartTime=-50,
+      StopTime=100,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end TestProgressive;

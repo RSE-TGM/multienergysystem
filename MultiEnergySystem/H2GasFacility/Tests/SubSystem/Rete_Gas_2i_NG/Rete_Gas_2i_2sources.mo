@@ -1,56 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_2sources
-  extends Rete_Gas_2i_pipes_users;
-  Modelica.Blocks.Sources.Ramp m_flow_H2(
-    offset=0.001*0,
-    duration=60,
-    height=0.09889,
-    startTime=3600)                                                                                         annotation (
-    Placement(visible = true, transformation(origin={-29,50},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
-  Modelica.Blocks.Sources.Ramp m_flow_H3(
-    duration=60,
-    height=-0.09889,
-    offset=0,
-    startTime=18000)                                                                                        annotation (
-    Placement(visible = true, transformation(origin={-29,86},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
-  Modelica.Blocks.Math.Add add
-    annotation (Placement(transformation(extent={{30,58},{50,78}})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
-    n=nV,
-    H=Data.PipelineData_2i.s3.h,
-    cm=Data.PipelineData_2i.s3.cm,
-    rhom=Data.PipelineData_2i.s3.rhom,
-    lambdam=Data.PipelineData_2i.s3.lambdam,
-    m_flow_start=Data.PipelineData_2i.s3.m_flow_start,
-    pin_start=Data.PipelineData_2i.s3.pin_start,
-    pout_start=Data.PipelineData_2i.s3.pout_start,
-    kappa=Data.PipelineData_2i.s3.kappa,
-    k=Data.PipelineData_2i.s3.k,
-    redeclare model Gas = Medium,
-    L=Data.PipelineData_2i.s3.L,
-    X_start=X_start,
-    Di=Data.PipelineData_2i.s3.Di,
-    quasiStatic=quasiStatic,
-    constantFrictionFactor=constantFrictionFactor,
-    computeInertialTerm=computeInertialTerm,
-    hctype=hctype,
-    momentum=momentum,
-    rho_nom=rho_nom) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=0,
-        origin={-146,-56})));
-  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
-    m_flow0=0.0001,
-    redeclare model Medium = Medium,
-    p0=480000,
-    G=1e-8,
-    T0=288.15,
-    X0=X_start,
-    computeEnthalpyWithFixedPressure=true,
-    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
-        origin={-96,-24},
-        extent={{-10,-10},{10,10}},
-        rotation=180)));
+  extends Rete_Gas_2i_1sources;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     n=nV,
     L=Data.PipelineData_2i.sds16.L,
@@ -73,7 +23,7 @@ model Rete_Gas_2i_2sources
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-166,218})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
     n=nV,
@@ -97,7 +47,7 @@ model Rete_Gas_2i_2sources
     momentum=momentum,
     rho_nom=rho_nom) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=180,
+        rotation=0,
         origin={-224,218})));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
     redeclare model Medium = Medium,
@@ -126,13 +76,6 @@ model Rete_Gas_2i_2sources
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-324,240},{-304,260}})));
 equation
-  connect(m_flow_H3.y,add. u1) annotation (Line(points={{-18,86},{18,86},{18,74},
-          {28,74}},     color={0,0,127}));
-  connect(m_flow_H2.y,add. u2) annotation (Line(points={{-18,50},{18,50},{18,62},
-          {28,62}},     color={0,0,127}));
-  connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{51,68},{60,
-          68},{60,12},{-52,12},{-52,-4},{-80,-4},{-80,-29},{-90,-29}},
-                                                                 color={0,0,127}));
   connect(m_flow_H5.y,add1. u1) annotation (Line(points={{-372,268},{-336,268},
           {-336,256},{-326,256}}, color={0,0,127}));
   connect(m_flow_H1.y,add1. u2) annotation (Line(points={{-366,224},{-338,224},
@@ -140,24 +83,16 @@ equation
   connect(add1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-303,250},
           {-278,250},{-278,238},{-282,238},{-282,225},{-284,225}},
                                              color={0,0,127}));
-  connect(s3.outlet, s2.outlet) annotation (Line(
-      points={{-156,-56},{-198,-56},{-198,-44}},
+  connect(Immissione_2.outlet, sds17.inlet) annotation (Line(
+      points={{-268,220},{-264,218},{-234,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(s3.inlet, Immissione_1.outlet) annotation (Line(
-      points={{-136,-56},{-124,-56},{-124,-54},{-120,-54},{-120,-24},{-106,-24}},
+  connect(sds17.outlet, sds16.inlet) annotation (Line(
+      points={{-214,218},{-176,218}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds17.outlet, Immissione_2.outlet) annotation (Line(
-      points={{-234,218},{-251,218},{-251,220},{-268,220}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds16.inlet, sds12.inlet) annotation (Line(
-      points={{-156,218},{-32,218},{-32,202},{-18,202}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds16.outlet, sds17.inlet) annotation (Line(
-      points={{-176,218},{-214,218}},
+  connect(sds16.outlet, sds11.outlet) annotation (Line(
+      points={{-156,218},{-121,218},{-121,210}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(

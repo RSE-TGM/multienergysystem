@@ -308,8 +308,8 @@ equation
 
     // Momentum Balance - Hydraulic Capacitance Position
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
-      p[i] - ptilde[i] = rho[i]*g_n*H/(2*n) + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-      ptilde[i] - p[i+1] = rho[i+1]*g_n*H/(2*n) + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+      p[i] - ptilde[i] + der(m_flowtilde[i]) / 2 = rho[i]*g_n*H/(2*n) + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+      ptilde[i] - p[i+1] + der(m_flowtilde[i]) / 2 = rho[i+1]*g_n*H/(2*n) + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
       -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i]*g_n*H/n + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       //p[i] - p[i+1] = rho[i]*g_n*H + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
@@ -363,6 +363,7 @@ initial equation
     for i in 1:n loop
        if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
          // no mass flow derivative
+         der(m_flowtilde[i]) = 0;
        else
          der(m_flowtilde[i]) = 0;
        end if;

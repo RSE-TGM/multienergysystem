@@ -16,7 +16,7 @@ model Rete_Gas_2i_1sources "immissione 1"
     L=Data.PipelineData_2i.s3.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s3.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,

@@ -38,7 +38,7 @@ model Rete_Gas_2i_3sources
     redeclare model Medium = Medium,
     X_start=X_start,
     Di=0.1325,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,

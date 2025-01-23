@@ -7,7 +7,7 @@ model Rete_Gas_2i_3sources_H2
     nX=2,
     X_start=X_start_2,
     constantFrictionFactor=false,
-    quasiStatic=true,
+    massFractionDynamicBalance = false,
     raccordo2(m_flow_start=0.098));
   parameter Types.MassFraction X_start_2[2] = {0.995, 0.005};
   annotation (Documentation(info="<html>

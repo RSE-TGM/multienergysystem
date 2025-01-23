@@ -31,7 +31,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Choices"));
   parameter Boolean noInitialPressure = false "Used to remove initial equation for pressure, to be used in case of solver failure" annotation (
     Dialog(group = "Choices"));
-  parameter Boolean quasiStatic = false "Used to remove composition dynamic equation" annotation (
+  parameter Boolean massFractionDynamicBalance = true "Used to remove composition dynamic equation" annotation (
     Dialog(group = "Choices"));
   parameter Boolean constantFrictionFactor = false "Used to set a constant value for the friction factor" annotation (
     Dialog(group = "Choices"));
@@ -90,7 +90,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default); /*start = fill(X_start[1:nXi], n), nominal = 0.1*fill(ones(nXi),n)) "Mass Composition state";*/
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = if massFractionDynamicBalance then StateSelect.prefer else StateSelect.default); /*start = fill(X_start[1:nXi], n), nominal = 0.1*fill(ones(nXi),n)) "Mass Composition state";*/
 
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) "Pressure state the pipe";
   Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = p_start[2:end], each nominal = pin_nom) "Press. state";
@@ -244,7 +244,7 @@ equation
 
   M = Vi*rhotilde; // Total mass in the i-th volume
 
-  dvdttilde = if quasiStatic then
+  dvdttilde = if not massFractionDynamicBalance then
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)
               else
@@ -252,7 +252,7 @@ equation
                 dv_dT.*der(Ttilde)+
                 {dv_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
                 //{dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
-  dudttilde = if quasiStatic then
+  dudttilde = if not massFractionDynamicBalance then
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)
               else
@@ -290,7 +290,7 @@ equation
 
   for i in 1:n loop
     // Composition mass balance
-    if quasiStatic then
+    if not massFractionDynamicBalance then
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
     else
       //M[i]/m_flow[i]*der(Xitilde[i,:]) = (Xi[i,:] - Xi[i+1,:]);
@@ -366,7 +366,7 @@ initial equation
        else
          der(m_flowtilde[i]) = 0;
        end if;
-      if quasiStatic then
+      if not massFractionDynamicBalance then
         // nothing
         der(Ttilde[i]) = 0;
       else

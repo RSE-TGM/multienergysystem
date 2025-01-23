@@ -9,7 +9,7 @@ model TestProgressive
 
   // Parameters
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = false;
+  parameter Boolean massFractionDynamicBalance = true;
   parameter Boolean constantFrictionFactor = false;
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
@@ -44,7 +44,7 @@ model TestProgressive
     L=Data.PipelineData_2i.s1.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s1.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,

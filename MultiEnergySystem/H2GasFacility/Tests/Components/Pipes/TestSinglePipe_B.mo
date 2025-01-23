@@ -4,7 +4,7 @@ model TestSinglePipe_B "Base test model of a single pipe (Flow1DFV) with a press
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay                        constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = true;
+  parameter Boolean massFractionDynamicBalance = false;
   parameter Boolean constantFrictionFactor = true;
   parameter Boolean computeInertialTerm = false;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
@@ -18,7 +18,7 @@ model TestSinglePipe_B "Base test model of a single pipe (Flow1DFV) with a press
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   // Components
   replaceable MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     hctype=hctype,                                                                                                       redeclare model
                                                                                                                              Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, momentum = momentum, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom) annotation (

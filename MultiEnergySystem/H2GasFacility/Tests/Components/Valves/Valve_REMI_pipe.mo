@@ -7,7 +7,7 @@ extends Modelica.Icons.Example;
   // MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
   parameter Types.MassFraction X_start[2] = {0.95, 0.05};
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = true;
+  parameter Boolean massFractionDynamicBalance = false;
   parameter Boolean constantFrictionFactor = true;
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
@@ -76,7 +76,7 @@ extends Modelica.Icons.Example;
     L=Data.PipelineData_2i.s1.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s1.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,

@@ -5,7 +5,7 @@ model PaperCaseI_B "Same as PaperCaseI with injection of pure hydrogen in node 7
     sourceH2_A(computeEnthalpyWithFixedPressure = false, use_in_m_flow0 = true, G = 0),
     m_flow_H2(duration = 0),
     n = 3,
-    quasiStatic = false,
+    massFractionDynamicBalance = true,
     system(allowFlowReversal=false));
 equation
   connect(sourceH2_A.outlet, pipe17.inlet) annotation (

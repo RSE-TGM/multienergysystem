@@ -71,13 +71,14 @@ initial equation
 
 equation
 
-  if nX > 1 then
-    X[1:nXi] = Xi;
-    // X[nX] = 1 - sum(Xi);
-    X[nX] = max(0, 1 - sum(Xi)); //This is a more robust solution that prevent X[nX] being slightly negative due to floating-point inaccuracies.
-  else
-    X[1] = 1;
-  end if;
+//   if nX > 1 then
+//     X[1:nXi] = Xi;
+//     // X[nX] = 1 - sum(Xi);
+//     X[nX] = max(0, 1 - sum(Xi)); //This is a more robust solution that prevent X[nX] being slightly negative due to floating-point inaccuracies.
+//   else
+//     X[1] = 1;
+//   end if;
+  X = Xi;
 
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
   MM_mix = MM*Y "molar mass of the fluid";

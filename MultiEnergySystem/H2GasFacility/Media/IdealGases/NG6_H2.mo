@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
 model NG6_H2 "Mixture fluid model of natural gas with 4 components and hydrogen using Papay compressiblity factor equation"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
     computeTransport = true,
     nXi = 6,

@@ -3,5 +3,8 @@ model RG2i_1sources_CH4H2_C "Test using a fluid for the network with 100% CH4 an
   extends RG2i_1sources_CH4H2_B(X_start = {1, 0}, Immissione_1(X0={0,1}), massFractionDynamicBalance = true,
     m_flow_H2(height=0.03, offset=1e-3),
     m_flow_H3(height=-0.03));
-  annotation (experiment(StopTime=56000, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(
+      StopTime=56000,
+      __Dymola_NumberOfIntervals=5600,
+      __Dymola_Algorithm="Dassl"));
 end RG2i_1sources_CH4H2_C;

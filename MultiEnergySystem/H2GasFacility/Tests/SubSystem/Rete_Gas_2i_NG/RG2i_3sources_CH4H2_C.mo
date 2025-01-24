@@ -6,8 +6,8 @@ model RG2i_3sources_CH4H2_C "Test using a fluid for the network with 100% CH4 an
     massFractionDynamicBalance = true,
     m_flow_H2(height=0.03, offset=1e-3),
     m_flow_H3(height=-0.03),
-    m_flow_H1(height=0.01*0, duration=540),
-    m_flow_H5(height=-0.01*0),
+    m_flow_H1(height=0.01, duration=540),
+    m_flow_H5(height=-0.01),
     Immissione_1(X0={0,1}), Immissione_2(X0={0,1}),Immissione_3(X0={0,1}),
     m_flow_H4(height=0.05),
     m_flow_H6(height=-0.05));

@@ -205,10 +205,11 @@ equation
   if allowFlowReversal then
     Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1], m_flow_start*dp_small);
     //Ttilde = (T[2:end] + T[1:end-1])/2;
-    //Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    Xtilde = regStep(inlet.m_flow, X[2:end,:], X[1:end-1,:], m_flow_start*dp_small);
     //Xitilde = (Xi[2:end,:] + Xi[1:end-1,:])/2;
-    Xitilde = Xi[2:end,:];
-    Xtilde = X[2:end,:];
+    //Xitilde = Xi[2:end,:];
+    //Xtilde = X[2:end,:];
     rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_start*dp_small);
     //rhotilde = (rho[2:end] + rho[1:end-1])/2;
     utilde = regStep(inlet.m_flow, fluid[2:end].u, fluid[1:end-1].u, m_flow_start*dp_small);
@@ -294,7 +295,8 @@ equation
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
     else
       //M[i]/m_flow[i]*der(Xitilde[i,:]) = (Xi[i,:] - Xi[i+1,:]);
-      M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
+      M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
+      //M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
 
     // Momentum Balance - Hydraulic Capacitance Position

@@ -1,16 +1,14 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
-model Rete_Gas_2i_pipes_users_H2
+model Rete_Gas_2i_pipes_users_CH4H2 "Test using a fluid with components CH4 (100%) and H2 (0%) and NO immissions"
   //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Rete_Gas_2i_NG.Rete_Gas_2i_pipes_users(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
         nX = 2,
-        X_start = X_start_2,
-    constantFrictionFactor = true,
-    massFractionDynamicBalance = true,
-    raccordo2(m_flow_start=0.098));
-  parameter Types.MassFraction X_start_2[2] = {0.995, 0.005};
+        X_start= {1, 0},
+    constantFrictionFactor = false,
+    massFractionDynamicBalance = false);
   annotation(Documentation(info="<html>
 <p>The base model is extended redeclaring the medium with CH4+H2 fluid.</p>
 </html>"), experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
-end Rete_Gas_2i_pipes_users_H2;
+end Rete_Gas_2i_pipes_users_CH4H2;

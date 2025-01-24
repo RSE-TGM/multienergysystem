@@ -1,6 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_2sources_CH4H2 "Test using a fluid with components CH4 (100%) and H2 (0%) and two immissions"
-  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Rete_Gas_2i_2sources(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,

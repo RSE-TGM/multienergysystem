@@ -5,8 +5,8 @@ model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a press
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean massFractionDynamicBalance = false;
-  parameter Boolean constantFrictionFactor = true;
+  parameter Boolean massFractionDynamicBalance = true;
+  parameter Boolean constantFrictionFactor = false;
   parameter Boolean computeInertialTerm = false;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
   parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";

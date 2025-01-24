@@ -2,6 +2,7 @@ within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
     redeclare model Medium = Gas,
+    X_start = {1,0},
     fluidIn(X_start = X_start, computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     fluidOut(X_start = X_start, computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
@@ -13,7 +14,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.squareReg;
   import Modelica.Fluid.Utilities.regStep;
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4
+  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4H2
       constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
@@ -98,7 +99,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Density rhotilde[n](each start = rho_nom);
   Types.SpecificEnergy utilde[n];
   Types.MassFlowRate m_flowtilde[n](each stateSelect = StateSelect.prefer, each start = m_flow_start);
-  Types.MassFraction Xtilde[n, nX];//(start = fill(X_start, n), nominal = 1*fill(ones(nX),n));
+  //Types.MassFraction Xtilde[n, nX];//(start = fill(X_start, n), nominal = 1*fill(ones(nX),n));
   //Types.MassFlowRate m_flowtilde[n](each start = m_flow_start);
 
   // Inlet/Outlet Variables
@@ -206,7 +207,7 @@ equation
     Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1], m_flow_start*dp_small);
     //Ttilde = (T[2:end] + T[1:end-1])/2;
     Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
-    Xtilde = regStep(inlet.m_flow, X[2:end,:], X[1:end-1,:], m_flow_start*dp_small);
+    //Xtilde = regStep(inlet.m_flow, X[2:end,:], X[1:end-1,:], m_flow_start*dp_small);
     //Xitilde = (Xi[2:end,:] + Xi[1:end-1,:])/2;
     //Xitilde = Xi[2:end,:];
     //Xtilde = X[2:end,:];
@@ -251,16 +252,16 @@ equation
               else
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)+
-                {dv_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
-                //{dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                {dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                //{dv_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
   dudttilde = if not massFractionDynamicBalance then
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)
               else
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)+
-                {du_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
-                //{du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                {du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                //{du_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";

@@ -836,7 +836,7 @@ package Tests
         final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
         final parameter Real FTCHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFTCHP, dim[1], dim[2]);
         //final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
-      public
+
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_TT502 "Validation of outlet temperature TT502"
           annotation (Placement(transformation(extent={{60,2},{80,22}})));
         Modelica.Blocks.Sources.TimeTable TT502_ref(table=[ts,TTo])
@@ -844,7 +844,6 @@ package Tests
         ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-88,-100},{-68,-80}})));
         Modelica.Blocks.Math.Max max1 annotation (Placement(transformation(extent={{-34,-80},{-14,-60}})));
         Modelica.Blocks.Sources.RealExpression realExpression(y=1e-3) annotation (Placement(transformation(extent={{-78,-86},{-58,-66}})));
-      public
         DistrictHeatingNetwork.Utilities.ASHRAEIndex val_dTT502 "Validation of outlet temperature dTT502" annotation (Placement(transformation(extent={{72,80},{92,100}})));
         Modelica.Blocks.Sources.RealExpression realExpression1(y=TT502_ref.y - TT501_profile.y) annotation (Placement(transformation(extent={{40,86},{60,106}})));
         Modelica.Blocks.Sources.RealExpression realExpression2(y=S500.TTout - TT501_profile.y) annotation (Placement(transformation(extent={{40,74},{60,94}})));
@@ -9885,16 +9884,16 @@ System")}),
         controller.TT701SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
         controller.TT711SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
         controller.TT721SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
-        controller.TT731SP = if time < 6e3 then 67 + 273.15 else 70 + 273.15;
+        controller.TT731SP = if time < 6e3 then 67 + 273.15 else if time < 10.4e3 then 60 + 273.15 else 65 + 273.15;
         controller.booldTT701 = true;
         controller.booldTT711 = true;
         controller.booldTT721 = true;
         controller.booldTT731 = true;
-
+// 1650s
         controller.PtEX701SP = 30e3;
         controller.PtEX711SP = 30e3;
         controller.PtEX721SP = 30e3;
-        controller.PtEX731SP = 30e3;
+        controller.PtEX731SP = if time < 14e3 then 30e3 else if time < 17e3 then 28e3 else if time < 17e3+1650 then 25e3 else 20e3;
         controller.booldPtEX701 = true;
         controller.booldPtEX711 = true;
         controller.booldPtEX721 = true;
@@ -9904,7 +9903,9 @@ System")}),
         controller.FT101SP = 1.3;
         controller.FT401SP = 0.4;
         controller.FT501SP = 0.25;
-      end CentralizedControlPlant_IV;
+      annotation(
+          experiment(StartTime = 0, StopTime = 20000, Tolerance = 1e-06, Interval = 2));
+end CentralizedControlPlant_IV;
     end ControlledPlants;
 
     model ThermalPlantController

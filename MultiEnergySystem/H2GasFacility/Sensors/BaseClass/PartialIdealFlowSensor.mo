@@ -34,6 +34,6 @@ partial model PartialIdealFlowSensor "Partial component of a generic sensor for 
 
 equation
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+  annotation (                                                   Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end PartialIdealFlowSensor;

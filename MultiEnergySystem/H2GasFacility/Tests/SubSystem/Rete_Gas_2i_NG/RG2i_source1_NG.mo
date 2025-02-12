@@ -9,7 +9,8 @@ model RG2i_source1_NG
     constantFrictionFactor = false,
     massFractionDynamicBalance = true,
     Immissione_1(X0=X_inj),
-    m_flow_H2(height=105/3600, duration=300,
+    m_flow_H2(
+      height=105/3600,         duration=300,
       offset=0.001),
     m_flow_H3(height=-105/3600, duration=300));
     //MultiEnergySystem.H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,

@@ -8,7 +8,9 @@ model RG2i_source2_NG_H2
     X_inj = {0, 0, 0, 0, 0, 0, 1},
     constantFrictionFactor = false,
     massFractionDynamicBalance = true,
-    m_flow_H1(offset=0));
+    m_flow_H1(offset=0.0001),
+    valveLinearOpening(A_v=1.2*0.41245/(sqrt(40.17625*(60 - 4.93)*1e5))));
+
     // X_start= {0.9, 0.04, 0.04, 0.005, 0.005, 0.01, 0.0},
 
     //parameter Types.MassFraction X_inj[nX] = {0, 0, 0, 0, 0, 0, 1};

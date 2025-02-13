@@ -6,10 +6,13 @@ model RG2i_source1_NG_H2
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
     nX=7,
     X_inj = {0, 0, 0, 0, 0, 0, 1},
-    X_start = MultiEnergySystem.H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
     constantFrictionFactor = false,
     massFractionDynamicBalance = true,
     Immissione_1(X0=X_inj));
+
+    //X_start = MultiEnergySystem.H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
+    //X_inj = {0, 0, 0, 0, 0, 0, 1},
+    //X_start = MultiEnergySystem.H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
 
     //X_start = X_algeria,
     // X_start= {0.9, 0.04, 0.04, 0.005, 0.005, 0.01, 0.0},

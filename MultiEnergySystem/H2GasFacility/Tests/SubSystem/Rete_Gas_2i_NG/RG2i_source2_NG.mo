@@ -12,7 +12,7 @@ model RG2i_source2_NG
     m_flow_H1(
       height=105/3600,
       duration=300,
-      offset=0.0001,
+      offset=0*0.0001,
       startTime=3600),
     m_flow_H5(
       height=-105/3600,

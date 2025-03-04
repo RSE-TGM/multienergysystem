@@ -163,7 +163,7 @@ package Sequences
           Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
       end Seq_0412_Test2;
 
-      partial model Seq_0412_Test2_indexes
+      model Seq_0412_Test2_indexes
         extends Seq_0412_Test2(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"));
 
         parameter String matrixFT101 = "FT101" "Matrix name in file";
@@ -198,8 +198,8 @@ package Sequences
         Modelica.Blocks.Math.Feedback substractdTS900 annotation (Placement(transformation(extent={{-832,194},{-848,178}})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex dTS400Analysis1
                                                                    annotation (Placement(transformation(extent={{-856,180},{-876,200}})));
-      protected
         //final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixFT401) "dimension of matrix";
+      protected
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
         final parameter Real FT101real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT101, dim[1], dim[2]);
         final parameter Real FT401real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT401, dim[1], dim[2]);

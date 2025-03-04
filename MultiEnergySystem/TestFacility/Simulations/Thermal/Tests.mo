@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.Simulations.Thermal;
+﻿within MultiEnergySystem.TestFacility.Simulations.Thermal;
 package Tests
   extends Modelica.Icons.ExamplesPackage;
   package Systems
@@ -2863,6 +2863,9 @@ package Tests
           k=1,
           T=1,
           initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{-206,-152},{-226,-132}})));
+        ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
+              rotation=90,
+              origin={-346,-406})));
       equation
         connect(P401.inlet, PL3_S401.outlet) annotation (
           Line(points = {{-322, -184.6}, {-322, -226}}, color = {140, 56, 54}, thickness = 0.5));
@@ -2917,6 +2920,10 @@ package Tests
             points={{-322,-100},{-322,-93},{-322.4,-93},{-322.4,-86}},
             color={140,56,54},
             thickness=0.5));
+        connect(sourceVoltage.outlet, EB401.inletPower) annotation (Line(
+            points={{-346,-390},{-348,-390},{-348,-366},{-318.2,-366},{-318.2,-302}},
+            color={56,93,138},
+            thickness=1));
         annotation (
           Icon(coordinateSystem(preserveAspectRatio = false)),
           Diagram(coordinateSystem(preserveAspectRatio = false)),
@@ -9889,7 +9896,7 @@ System")}),
         controller.booldTT711 = true;
         controller.booldTT721 = true;
         controller.booldTT731 = true;
-// 1650s
+        // 1650s
         controller.PtEX701SP = 30e3;
         controller.PtEX711SP = 30e3;
         controller.PtEX721SP = 30e3;
@@ -9903,9 +9910,9 @@ System")}),
         controller.FT101SP = 1.3;
         controller.FT401SP = 0.4;
         controller.FT501SP = 0.25;
-      annotation(
+      annotation (
           experiment(StartTime = 0, StopTime = 20000, Tolerance = 1e-06, Interval = 2));
-end CentralizedControlPlant_IV;
+      end CentralizedControlPlant_IV;
     end ControlledPlants;
 
     model ThermalPlantController

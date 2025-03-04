@@ -367,11 +367,19 @@ model CoolingSingleLoadPowerControl "Load model including a thermal power contro
       visible=true,
       transformation(extent={{-70,-104},{-60,-94}}),
       iconTransformation(origin={-110,-60}, extent={{-10,-10},{10,10}})));
-  DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT7X1(Kp=Kp_TT7X1, Ti=Ti_TT7X1)
+  DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT7X1(
+    Kp=Kp_TT7X1/10,
+    Ti=Ti_TT7X1,
+    Umax=1,
+    Umin=0)
     annotation (Placement(transformation(extent={{-57,-113.5},{-37,-93.5}})));
-  DistrictHeatingNetwork.Controllers.AWPIContinuous PI_EX7X1Pt
+  DistrictHeatingNetwork.Controllers.AWPIContinuous PI_EX7X1Pt(
+    Kp=Kp_PtEX7X1,
+    Ti=Ti_PtEX7X1,
+    Umax=1,
+    Umin=0)
     annotation (Placement(transformation(extent={{55,47.5},{35,27.5}})));
-  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt
+  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=5)
     annotation (Placement(transformation(extent={{81,47.5},{61,27.5}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=EX7X1.Pt)
     annotation (Placement(transformation(extent={{61,48},{81,68}})));

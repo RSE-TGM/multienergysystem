@@ -70,6 +70,8 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_EB401_P401(
     L=L_S4_PL3,
     t=t_S4,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
     Tin_start=Tout_start_S4,
     Tout_start=Tout_start_S4,
@@ -80,6 +82,7 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL2_S401(
     L=L_S4_PL2,
     t=t_S4,
+    set_m_flow_start=true,
     m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
     pout_start=pin_start_S4,
@@ -92,6 +95,7 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S401(
     L=L_S4_PL3,
     t=t_S4,
+    set_m_flow_start=true,
     m_flow_start=m_flow_S4,
     pin_start=pout_start_S4,
     pout_start=pout_start_S4,
@@ -137,6 +141,7 @@ model ElectricBoilerSystem
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL1_S401(
     L=L_S4_PL1,
     t=t_S4,
+    set_m_flow_start=true,
     m_flow_start=m_flow_S4,
     pin_start=pin_start_S4,
     pout_start=pin_start_S4,
@@ -169,6 +174,9 @@ model ElectricBoilerSystem
     annotation (Placement(transformation(extent={{62,20},{42,40}})));
   Modelica.Blocks.Sources.TimeTable EB401_ToutSP(table=[0,80 + 273.15; 100,80 + 273.15])
     annotation (Placement(transformation(extent={{-90,-150},{-70,-130}})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{80,-140},{100,-120}})));
+  Modelica.Blocks.Sources.BooleanTable EB401_Status(table={1e6}, startValue=true) "Input to decide whether or nor the electric boiler is working"
+    annotation (Placement(transformation(extent={{-132,-190},{-112,-170}})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
       points={{20,-16.6},{20,-36}},
@@ -228,7 +236,12 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EB401_ToutSP.y, EB401.Tout_ref)
-    annotation (Line(points={{-69,-140},{-41.6,-140}}, color={0,0,127}));
+    annotation (Line(points={{-69,-140},{-36.4,-140}}, color={0,0,127}));
+  connect(EB401.inletPower, sourceVoltage.outlet) annotation (Line(
+      points={{36.4,-140},{58,-140},{58,-158},{110,-158},{110,-130},{100,-130}},
+      color={56,93,138},
+      thickness=1));
+  connect(EB401_Status.y, EB401.heat_on) annotation (Line(points={{-111,-180},{-72,-180},{-72,-168},{-36.4,-168},{-36.4,-166}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-200},{160,200}})),             Icon(
         coordinateSystem(grid={0.5,0.5})),

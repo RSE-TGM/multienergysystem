@@ -48,7 +48,7 @@ equation
   connect(ramp.y, sourceP1.in_X0) annotation (Line(points={{-1,92},{-11.6,92}},                 color={0,0,127}));
   connect(ramp1.y, sourceP18.in_X0) annotation (Line(points={{-113,30},{-128,30},{-128,8.4}}, color={0,0,127}));
   connect(gasBoiler.inletFuel, pipe14.inlet) annotation (Line(
-      points={{132,72.08},{132,60},{40,60},{40,-40},{50,-40}},
+      points={{132,72.08},{132,60},{40,60},{40,-40},{45,-40}},
       color={182,109,49},
       thickness=0.5));
   connect(source.outlet, gasBoiler.inlet) annotation (Line(

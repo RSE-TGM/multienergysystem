@@ -10,7 +10,7 @@ model S900_Test "Test with real data"
 
   parameter Types.Density rhohotref = 985 "Reference hot water density";
   parameter Types.Density rhocoldref = 999 "Reference cold water density";
-  parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
+  parameter String MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat") "File name of matrix" annotation (
     Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
 
   parameter String matrixPTi = "PT202" "Matrix name in file";

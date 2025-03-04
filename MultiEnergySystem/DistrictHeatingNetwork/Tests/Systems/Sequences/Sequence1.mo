@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence1
+partial model Sequence1
   extends GBEBPumpingSystem(
     m_flow_S9 = 4,
     m_flow_S1 = 2.35,

@@ -23,15 +23,15 @@ model ControlledChillerNoDynamics
 
   outer DistrictHeatingNetwork.System system "system object for global defaults";
 
-  Boolean compressor1_on(start = false); // Compressor 1 ON/OFF state
-  Boolean compressor2_on(start = false); // Compressor 2 ON/OFF state
-  Real P_compressor1; // Power of compressor 1 (W)
-  Real P_compressor2; // Power of compressor 2 (W)
+  //Boolean compressor1_on(start = false); // Compressor 1 ON/OFF state
+  //Boolean compressor2_on(start = false); // Compressor 2 ON/OFF state
+  //Real P_compressor1; // Power of compressor 1 (W)
+  //Real P_compressor2; // Power of compressor 2 (W)
 
 // Internal control signals
-  Boolean comp1_control(start=true);
-  Boolean comp2_control(start=false);
-  Boolean cooling_phase(start=true); // Indicates cooling phase
+  //Boolean comp1_control(start=true);
+  //Boolean comp2_control(start=false);
+  //Boolean cooling_phase(start=true); // Indicates cooling phase
 
   DistrictHeatingNetwork.Types.Pressure pin_cold "Cold side inlet pressure";
   DistrictHeatingNetwork.Types.Pressure pout_cold "Cold side outlet pressure";
@@ -70,7 +70,8 @@ model ControlledChillerNoDynamics
     Placement(visible = true, transformation(origin = {-76, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold annotation (
     Placement(visible = true, transformation(origin = {-76, -56}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-60, -60}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
-  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set if use_in_Tout_cold_set "Externally supplied pressure" annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput in_Tout_cold_set if use_in_Tout_cold_set
+    "Externally supplied temperature"                                                                          annotation (Placement(transformation(
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={10,70}), iconTransformation(
@@ -81,13 +82,13 @@ model ControlledChillerNoDynamics
     amplitude=100e3,
     rising=10,
     falling=0)  annotation (Placement(transformation(extent={{-10,6},{10,26}})));
-  Modelica.Blocks.Sources.BooleanExpression C1(y=compressor1_on) annotation (Placement(transformation(extent={{-44,6},
+  Modelica.Blocks.Sources.BooleanExpression C1(y=true)           annotation (Placement(transformation(extent={{-44,6},
             {-24,26}})));
   Modelica.Blocks.Logical.TriggeredTrapezoid TT2(
     amplitude=100e3,
     rising=10,
     falling=0)  annotation (Placement(transformation(extent={{-10,-24},{10,-4}})));
-  Modelica.Blocks.Sources.BooleanExpression C2(y=compressor2_on) annotation (Placement(transformation(extent={{-44,-24},
+  Modelica.Blocks.Sources.BooleanExpression C2(y=true)           annotation (Placement(transformation(extent={{-44,-24},
             {-24,-4}})));
   Modelica.Blocks.Continuous.FirstOrder FO1(T=60, initType=Modelica.Blocks.Types.Init.SteadyState) annotation (Placement(transformation(extent={{20,6},{
             40,26}})));
@@ -174,8 +175,8 @@ equation
   //P_compressor2 = if compressor2_on then -100e3 else 0;
   //P_compressor1 = if compressor1_on then FO1.y else 0;
   //P_compressor2 = if compressor2_on then FO2.y else 0;
-  P_compressor1 = FO1.y;
-  P_compressor2 = FO2.y;
+  //P_compressor1 = FO1.y;
+  //P_compressor2 = FO2.y;
   // Total cooling power
   //Pcold = if cold_on then P_compressor1 + P_compressor2 else 0;
   Pcold = if cold_on then homotopy(min(Pcold_ref, 200e3),200e3) else 40e3;
@@ -197,17 +198,16 @@ initial equation
 //No initial equations
   end if;
 
+
 equation
-
-
-algorithm
+  /*
   if Tout_cold <= Tout_cold_set - T_bandwidth then
     cooling_phase :=false; // Enter heating phase
   elseif Tout_cold >= Tout_cold_set + T_bandwidth then
     cooling_phase :=true; // Enter cooling phase
   end if;
   //  cooling_phase := onOffController.y;
-
+*/
 //   when Tout_cold == Tout_cold_set then
 //     if Pcold_ref < 100e3 then
 //       comp1_control :=false;
@@ -217,7 +217,9 @@ algorithm
 //       comp2_control :=false;
 //     end if;
 //   end when;
-  // Hysteresis control logic for compressor 1
+
+
+/*  // Hysteresis control logic for compressor 1
   if cooling_phase then
     // In cooling phase, turn on compressors based on required cooling power
     if Pcold_ref < 10e3 then
@@ -234,6 +236,7 @@ algorithm
     // In heating phase, turn off compressors based on temperature
     comp1_control :=false;
     comp2_control :=false;
+       
 //     if Tout_cold > Tout_cold_set + T_bandwidth then
 //       comp1_control :=false;
 //       comp2_control :=false;
@@ -242,7 +245,7 @@ algorithm
 //       comp2_control :=false;
 //     end if;
   end if;
-
+ */
 
 //   if cooling_phase then
 //     // In cooling phase, control compressors based on temperature thresholds
@@ -269,9 +272,11 @@ algorithm
 //   end if;
 
     // Actual compressor ON/OFF state
-  compressor1_on :=comp1_control;
-  compressor2_on :=comp2_control;
+  //compressor1_on :=comp1_control;
+  //compressor2_on :=comp2_control;
 
+
+algorithm
 equation
   connect(C1.y, TT1.u) annotation (Line(points={{-23,16},{-12,16}},                     color={255,0,255}));
   connect(C2.y, TT2.u) annotation (Line(points={{-23,-14},{-12,-14}},                         color={255,0,255}));

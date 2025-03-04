@@ -302,6 +302,7 @@ model CoolingSystemOpenLoop
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
     Di=Di_RR,
+    q_m3h_start=q_Cool,
     hctype=hctype,
     n=n,
     cf=cf)
@@ -360,6 +361,8 @@ model CoolingSystemOpenLoop
         origin={76,-120})));
   Sources.SourcePressure sourcePressure(p0=100000, T0=303.15)
     annotation (Placement(transformation(extent={{24,-154},{44,-134}})));
+  Modelica.Blocks.Sources.BooleanExpression booleanExpression(y=true)
+    annotation (Placement(transformation(extent={{-85,109},{-65,129}})));
 equation
   connect(RR00_PL_VER901_FCVR01.outlet, FCVR01.inlet) annotation (Line(
       points={{-25,-91},{-15,-91}},
@@ -451,6 +454,8 @@ equation
       points={{-86,-42},{-86,-63},{-69,-63},{-69,-91},{-45,-91}},
       color={140,56,54},
       thickness=0.5));
+  connect(booleanExpression.y, RR01.cold_on) annotation (Line(points={{-64,119},{-46,119},
+          {-46,118.5},{-38.55,118.5}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-300,-220},{300,220}}, grid={1,1})),
       experiment(

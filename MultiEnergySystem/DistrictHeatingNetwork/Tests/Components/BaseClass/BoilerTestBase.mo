@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.BaseClass;
-model BoilerTestBase
+partial model BoilerTestBase
   extends Modelica.Icons.Example;
   replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler
     Boiler(trise=60)

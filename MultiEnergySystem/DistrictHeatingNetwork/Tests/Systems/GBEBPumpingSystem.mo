@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GBEBPumpingSystem
+partial model GBEBPumpingSystem
   extends GasBoilerPumpingSystem(FCVC01theta = [0, 0;600, 0;600, 1; 800, 1], FCVC02theta = [0, 1; 700, 1; 700, 0; 800, 0]);
   Modelica.Blocks.Interaction.Show.RealValue TT402_(use_numberPort=true,
       significantDigits=4)

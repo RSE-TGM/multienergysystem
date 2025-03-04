@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model BaseTestSystem
+partial model BaseTestSystem
   extends GBEBPumpingSystem(
     T_start_hot = 80 + 273.15,
     T_start_cold = 60 + 273.15,
@@ -28,7 +28,7 @@ model BaseTestSystem
 
 
   parameter Types.Temperature T_start_UserOut = 15.6 + 273.15;
-  //parameter Types.MassFlowRate m_flow_Users_total = 3.75;
+  parameter Types.MassFlowRate m_flow_Users_total = 3.75;
   final parameter Types.MassFlowRate m_flow_Users = m_flow_Users_total/4;
 
   //parameter Real q_m3h(unit = "m3/h") = 8*3600/1000;
@@ -213,8 +213,6 @@ model BaseTestSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -262,8 +260,6 @@ model BaseTestSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -311,8 +307,6 @@ model BaseTestSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -360,8 +354,6 @@ model BaseTestSystem
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -886,9 +878,7 @@ model BaseTestSystem
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{570,-124},{590,-104}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
-    RR01(
-    Tout_cold_set=Tout_start_Cool,
-    dp_cold_start=20000,
+    RR01(dp_cold_start=20000,
     m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{630,-60},{701,11}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
@@ -1021,7 +1011,7 @@ model BaseTestSystem
     annotation (Placement(transformation(extent={{738,-126},{779,-91}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_1(use_numberPort=true,
       significantDigits=4)
-    annotation (Placement(transformation(extent={{730,-251},{771,-216}})));
+    annotation (Placement(transformation(extent={{744,-247},{785,-212}})));
   Modelica.Blocks.Interaction.Show.RealValue FTR01_3(use_numberPort=true,
       significantDigits=4)
     annotation (Placement(transformation(extent={{242,-165},{213,-141}})));
@@ -1768,8 +1758,6 @@ equation
   connect(FTR01.q_m3hr,FTR01_. numberPort) annotation (Line(points={{728.5,-109},
           {731.712,-109},{731.712,-108.5},{734.925,-108.5}},
                                                        color={0,0,127}));
-  connect(FTR03.q_m3hr, PT901_.numberPort) annotation (Line(points={{710,-225.5},
-          {710,-240},{718,-240},{718,162.5},{-836.4,162.5}},    color={0,0,127}));
   connect(TT704.T,FTR01_3. numberPort)
     annotation (Line(points={{246.2,-153},{244.175,-153}},
                                                          color={0,0,127}));
@@ -1779,8 +1767,6 @@ equation
   connect(FTR01_5.numberPort,TT724. T)
     annotation (Line(points={{422.175,-156},{426.2,-156}},
                                                     color={0,0,127}));
-  connect(TT734.T, TT902_.numberPort) annotation (Line(points={{156.35,-153.5},{
-          156.35,190},{-741.525,190}},   color={0,0,127}));
   connect(PL701_FCV701_FT701.inlet,FCV701. outlet) annotation (Line(
       points={{294,-38},{294,-48}},
       color={140,56,54},
@@ -2010,4 +1996,7 @@ equation
       points={{206,46},{206,66},{662,66},{662,265},{650,265}},
       color={140,56,54},
       thickness=0.5));
+  connect(FTR03.q_m3hr, FTR01_1.numberPort) annotation (Line(points={{710,-225.5},{710,
+          -222},{712,-222},{712,-220},{726,-220},{726,-229.5},{740.925,-229.5}}, color={0,
+          0,127}));
 end BaseTestSystem;

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence9
+partial model Sequence9
   extends Sequence8;
 
   // General Pipeline Data
@@ -45,8 +45,6 @@ model Sequence9
     h_hot=BPHE.E501.h_hot,
     hctype_cold=hctype,
     hctype_hot=hctype,
-    hin_start_cold=BPHE.E501.hin_start_cold,
-    hin_start_hot=BPHE.E501.hin_start_hot,
     k_cold=BPHE.E501.k_cold,
     k_hot=BPHE.E501.k_hot,
     kc_cold=1,

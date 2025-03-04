@@ -1,12 +1,25 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemGBEBCHP_InitForward
-  extends CentralisedSystemGBEB_InitForward(sourceGas(computeEnergyVariables=true),
+  extends CentralisedSystemGBEB_InitForward(
+    h_FT701_rackL2L3 = -0.85,
+    h_FT711_rackL3L4 = -1,
+    h_FT721_rackL4L5 = -1,
+    h_FT731_rackL6L7 = -1.25,
+    h_FTR03_PTR01 = 0.25*0,
+    h_PTR01_FTR01 = -1.9*0,
+    h_FTR01_RR01 = -0.72*0,
+    sourceGas(computeEnergyVariables=true),
     FCVC02Dynamics(k=1*0),
     FCVC01Dynamics(k=0),
     TCV701(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
     TCV731(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
     TCV711(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
-    TCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage));
+    TCV721(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage),
+    PR01(b=b_PR01),
+    S701(TN_wall_start=25 + 273.15),
+    S731(TN_wall_start=25 + 273.15),
+    S711(TN_wall_start=25 + 273.15),
+    S721(TN_wall_start=25 + 273.15));
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
@@ -22,7 +35,7 @@ model CentralisedSystemGBEBCHP_InitForward
   parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 70 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15;
   parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
@@ -42,7 +55,7 @@ model CentralisedSystemGBEBCHP_InitForward
 
   parameter DistrictHeatingNetwork.Types.Temperature TT502_des = 80 + 273.15 "Desired temperature at the outlet of S500";
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h*980/3600;
-
+  parameter Real b_PR01[3] = DistrictHeatingNetwork.Data.PumpData.PR01.b;
   Plants.Thermal.Systems.CHP S500(
     n=n,
     Tin_low_start=Tin_Source_start_S5,
@@ -115,15 +128,15 @@ model CentralisedSystemGBEBCHP_InitForward
     fixOutput=fixFT501,
     y_fixed=FT501_des,
     y_norm=FT501_nom) annotation (Placement(visible=true, transformation(
-        origin={-490,-230},
-        extent={{-10,-10},{10,10}},
+        origin={-505,-251},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   OffSetBlocks.OutputOffset TT502Offset(
     fixOutput=fixTT502,
     y_fixed=TT502_des,
     y_norm=TT502_nom) annotation (Placement(visible=true, transformation(
-        origin={-490,-270},
-        extent={{-10,-10},{10,10}},
+        origin={-505,-268},
+        extent={{-5,-5},{5,5}},
         rotation=0)));
   H2GasFacility.Sources.SourcePressure sourceGasCHP(
     redeclare model Medium = Gas,
@@ -166,8 +179,9 @@ equation
   connect(PelSP.y, S500.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));
   connect(ToutCHP501Offset.u, S500.Toutset) annotation (Line(points={{-697,-256},{-646,-256},{-646,-268.1},{-618.3,-268.1}}, color={0,0,127}));
   connect(FCV501theta.y, S500.theta) annotation (Line(points={{-659,-236},{-642,-236},{-642,-259.5},{-618.3,-259.5}}, color={0,0,127}));
-  connect(S500.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-510,-250.9},{-510,-230},{-498,-230}}, color={0,0,127}));
-  connect(S500.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-510.85,-268.1},{-510.85,-270},{-498,-270}}, color={0,0,127}));
+  connect(S500.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-516.35,-250.9},{-516.35,-251},{-509,-251}},
+                                                                                                                        color={0,0,127}));
+  connect(S500.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-523.7,-268},{-509,-268}},                   color={0,0,127}));
   connect(omegaP501Offset.deltaUnorm, controlSignalBus.domegaP501)
     annotation (Line(points={{-714,-210},{-786,-210},{-786,-212},{-897,-212},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
@@ -181,20 +195,26 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(FT501Offset.deltaYnorm, processVariableBus.dFT501)
-    annotation (Line(points={{-481,-230},{-438,-230},{-438,-186},{-98,-186},{-98,-3},{896,-3}}, color={0,0,127}), Text(
+    annotation (Line(points={{-500.5,-251},{-496,-251},{-496,-151},{-468,-151},{-468,-3},{896,-3}},
+                                                                                                color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(TT502Offset.deltaYnorm, processVariableBus.dTT502)
-    annotation (Line(points={{-481,-270},{-426,-270},{-426,-202},{-82,-202},{-82,-3},{896,-3}}, color={0,0,127}), Text(
+    annotation (Line(points={{-500.5,-268},{-480,-268},{-480,-158},{-462,-158},{-462,-3},{896,-3}},
+                                                                                                color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(sourceGasCHP.outlet, S500.inletFuel) annotation (Line(
-      points={{-571,-360},{-571,-330.88}},
+  connect(sourceGas.outlet, S500.inletFuel) annotation (Line(
+      points={{-250,-362},{-506,-362},{-506,-330.88},{-571,-330.88}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"));
+  connect(S500.outletPower, sourceVoltage.outlet) annotation (Line(
+      points={{-618.3,-305.94},{-630,-305.94},{-630,-454},{-400,-454}},
+      color={56,93,138},
+      thickness=1));
+  annotation (experiment(StopTime=2000, __Dymola_Algorithm="Dassl"),  Diagram(coordinateSystem(extent={{-900,-540},{900,320}}, grid={1,1})));
 end CentralisedSystemGBEBCHP_InitForward;

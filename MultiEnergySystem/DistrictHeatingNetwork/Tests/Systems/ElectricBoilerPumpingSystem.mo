@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model ElectricBoilerPumpingSystem
+partial model ElectricBoilerPumpingSystem
   extends BaseHeatingSystem;
   parameter Types.Pressure pin_start_S4 = 1.695e5;
   parameter Types.Pressure pout_start_S4 = 1.6e5;

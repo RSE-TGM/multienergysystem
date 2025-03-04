@@ -11,8 +11,7 @@ partial model SystemInterfaceBaseI
   Modelica.Blocks.Interfaces.RealOutput PTin "Inlet pressure" annotation (Placement(transformation(extent={{100,0},{120,20}}), iconTransformation(extent={{100,0},{120,20}})));
   Modelica.Blocks.Interfaces.RealOutput PTout "Outlet pressure" annotation (Placement(transformation(extent={{100,-20},{120,0}}), iconTransformation(extent={{100,-20},{120,0}})));
   DistrictHeatingNetwork.Interfaces.MultiHeatPort MultiPort "Thermal connector"
-                                                                   annotation (Placement(transformation(extent={{-120,-80},{-100,-60}}), iconTransformation(extent={{-120,-80},{-100,
-            -60}})));
+                                                                   annotation (Placement(transformation(extent={{-120,-90},{-100,-70}}), iconTransformation(extent={{-120,-90},{-100,-70}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet "Inlet connector for fluid"
                                                          annotation (
     Placement(visible = true, transformation(origin={-20,110},extent={{-10,-10},{10,10}},

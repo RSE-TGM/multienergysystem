@@ -1,6 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's distric heating network"
   extends Modelica.Icons.Example;
+  // Fluid Gas
+  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   // Constants
   constant Real pi = Modelica.Constants.pi;
   // Temperatures and pressures
@@ -41,6 +43,8 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
   parameter Real P101omega[:, :] = [0, 2*pi*50; 100, 2*pi*50; 200, 2*pi*30; 300, 2*pi*30];
   parameter Real FCV101theta[:, :] = [0, 1];
   parameter Types.Temperature GB101ToutSP[:, :] = [0, 80 + 273.15; 0, 80 + 273.15];
+  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
+
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin = {150, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P101(Tin_start(displayUnit = "K") = Pump.P101.Tin_start, Tout_start(displayUnit = "K") = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, m_flow_start = m_flow_S1, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start(displayUnit = "Pa") = Pump.P101.pin_start, pout_start(displayUnit = "Pa") = Pump.P101.pout_start, qnom_inm3h = Pump.P101.qnom_inm3h, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom, headmax = Pump.P101.headnommax, headmin = Pump.P101.headnommin, qnom_inm3h_min = Pump.P101.qnommin_inm3h, qnom_inm3h_max = Pump.P101.qnommax_inm3h, use_in_omega = true) annotation (
@@ -85,6 +89,14 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
     Placement(transformation(origin = {-42, -80}, extent = {{-58, -32}, {-38, -12}})));
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e9}, startValue = true) annotation (
     Placement(transformation(origin = {-90, -132}, extent = {{-10, -10}, {10, 10}})));
+  H2GasFacility.Sources.SourcePressure sourceGas(
+    redeclare model Medium = Gas,
+    X0=X_gas,
+    R=1e-3,
+    computeEnergyVariables=true) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={68,-104})));
 equation
   connect(P101.inlet, PL_S100_GB101_P101.outlet) annotation (
     Line(points = {{18, -16.6}, {18, -30}}, color = {140, 56, 54}));
@@ -126,6 +138,10 @@ equation
   connect(GB101_Status.y, GB101.heat_on) annotation (
     Line(points={{-79,-132},{-56,-132},{-56,-127},{-32.2,-127}},
                                               color = {255, 0, 255}));
+  connect(GB101.inletfuel, sourceGas.outlet) annotation (Line(
+      points={{27.6,-104},{58,-104}},
+      color={182,109,49},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent = {{-160, -160}, {160, 160}})),
     Icon(coordinateSystem(grid = {0.5, 0.5})),

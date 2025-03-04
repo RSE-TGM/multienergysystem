@@ -22,26 +22,26 @@ partial model PartialSubstance "Base model for liquid pure substances"
   InputTemperature T(start = T_start) "Temperature";
   Types.Density rho(start = rho_start) "Density";
   Real drho_dT(unit = "kg/(m3.K)") annotation (
-    HideResult = not CompressibilityEffect);
+    HideResult = not compressibilityEffect);
   Types.SpecificVolume v "Specific volume";
   Types.MolarVolume v_mol "Molar volume";
   Types.SpecificEnergy u "Specific Internal Energy of the fluid";
   Types.SpecificEnthalpy h(start = h_start) "Specific Enthalpy of the fluid";
   Types.SpecificEntropy s "Specific Entropy" annotation (
-    HideResult = not ComputeEntropy);
+    HideResult = not computeEntropy);
   Types.SpecificHeatCapacity cp(start = cp_start) "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cv "Specific heat capacity of the fluid";
   Types.DerSpecEnergyByTemperature du_dT "Temperature derivative of the Specific Internal Energy";
   Types.DerSpecEnergyByPressure du_dp "Pressure derivative of the Specific Internal Energy" annotation (
-    HideResult = not CompressibilityEffect);
+    HideResult = not compressibilityEffect);
   Types.DerSpecificVolumeByTemperature dv_dT "Temperature derivative of specific volume at constant pressure" annotation (
-    HideResult = not CompressibilityEffect);
+    HideResult = not compressibilityEffect);
   Types.DerSpecificVolumeByPressure dv_dp "Pressure derivative of specific volume at constant Temperature" annotation (
-    HideResult = not CompressibilityEffect);
+    HideResult = not compressibilityEffect);
   Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeTransport);
   Types.ThermalConductivity kappa "Thermal Conductivity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeTransport);
 
 protected
   function cp_T

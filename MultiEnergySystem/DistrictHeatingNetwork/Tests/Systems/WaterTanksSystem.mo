@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model WaterTanksSystem "System of two tanks"
+partial model WaterTanksSystem "System of two tanks"
 
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_HX2 = 11534.5;
   parameter Modelica.Units.SI.CoefficientOfHeatTransfer gamma_E301avg = 5841.12;
@@ -225,8 +225,6 @@ model WaterTanksSystem "System of two tanks"
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -300,8 +298,6 @@ model WaterTanksSystem "System of two tanks"
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -362,8 +358,6 @@ model WaterTanksSystem "System of two tanks"
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -389,7 +383,7 @@ model WaterTanksSystem "System of two tanks"
     u_nom_hot=BPHE.E701.u_nom_hot)                                                                                                                                                                                                         annotation (Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
-        origin={216,-47.5})));
+        origin={217,-47.5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger
     EX731(
     Di_cold=BPHE.E701.Di_cold,
@@ -411,8 +405,6 @@ model WaterTanksSystem "System of two tanks"
     gamma_nom_hot=BPHE.E701.gamma_nom_hot,
     h_cold=BPHE.E701.h_cold,
     h_hot=BPHE.E701.h_hot,
-    hin_start_cold=BPHE.E701.hin_start_cold,
-    hin_start_hot=BPHE.E701.hin_start_hot,
     k_cold=BPHE.E701.k_cold,
     k_hot=BPHE.E701.k_hot,
     kc_cold=1,
@@ -983,7 +975,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCV721.inlet,EX721. outhot) annotation (Line(
-      points={{236,-18},{236,-28.875},{236.3,-28.875},{236.3,-38.75}},
+      points={{236,-18},{236,-28.875},{237.3,-28.875},{237.3,-38.75}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV731.inlet,EX731. outhot) annotation (Line(
@@ -1031,7 +1023,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV26.outlet,EX721. inhot) annotation (Line(
-      points={{196,42},{196,-38.75},{195.7,-38.75}},
+      points={{196,42},{196,-38.75},{196.7,-38.75}},
       color={140,56,54},
       thickness=0.5));
   connect(roundPipe1DFV35.outlet,EX731. inhot) annotation (Line(
@@ -1146,7 +1138,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EX721.incold,roundPipe1DFV22. outlet) annotation (Line(
-      points={{236.3,-56.25},{236.3,-84.125},{236,-84.125},{236,-96}},
+      points={{237.3,-56.25},{237.3,-84.125},{236,-84.125},{236,-96}},
       color={140,56,54},
       thickness=0.5));
   connect(EX731.incold,roundPipe1DFV23. outlet) annotation (Line(
@@ -1198,7 +1190,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EX721.outcold,TCV721. inlet) annotation (Line(
-      points={{195.7,-56.25},{196,-56.25},{196,-88}},
+      points={{196.7,-56.25},{196,-56.25},{196,-88}},
       color={140,56,54},
       thickness=0.5));
   connect(TCV721.outlet,roundPipe1DFV8. inlet) annotation (Line(

@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence7
+partial model Sequence7
   extends Sequence6(q_m3h_S1 = 9, q_m3h_S4 = 2, q_m3h_S9 = 17, ToutcoolSP = [0, 15; 50, 15; 60, 20; 100, 20]);
   parameter Boolean FV201_state = true;
   parameter Boolean FV202_state = true;
@@ -55,7 +55,7 @@ model Sequence7
               MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage
     D201(
     H=4,
-    n=3,
+    n=4,
     D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,
@@ -91,7 +91,7 @@ model Sequence7
               MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage
                                                                                         D202(
     H=4,
-    n=3,
+    n=4,
     D=1.7,
     T_start(displayUnit="K") = 60 + 273.15,
     pin_start=pin_start_S2_tank,

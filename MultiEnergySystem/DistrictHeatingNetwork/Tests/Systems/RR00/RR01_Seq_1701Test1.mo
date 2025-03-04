@@ -6,9 +6,7 @@ model RR01_Seq_1701Test1
       initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,
       T_bandwidth=2,
       TT1(rising=20),
-      TT2(rising=20),
-      onOffController(bandwidth=5),
-      TT(amplitude=-100e3)));
+      TT2(rising=20)));
   annotation (experiment(
       StopTime=2700,
       Tolerance=1e-06,

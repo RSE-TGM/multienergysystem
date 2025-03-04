@@ -84,8 +84,8 @@ partial model PumpBase "Base model to develop water pump models"
   Modelica.Units.SI.Power W "Power Consumption";
   Modelica.Units.SI.Power Qloss = 0 "Heat loss (single pump)";
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
-//   Modelica.Units.SI.Power Pm "mechanical power";
-//   Modelica.Units.SI.Power Pe "electrical power";
+  Modelica.Units.SI.Power Pm "mechanical power";
+  Modelica.Units.SI.Power Pe "electrical power";
   Modelica.Units.SI.Frequency f "frequency";
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-100, 0}, {-60, 40}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{-100, 0}, {-60, 40}}, rotation = 0)));
@@ -135,9 +135,10 @@ equation
 
   // Energy Balance
   0 = outlet.m_flow*hout + inlet.m_flow*hin + W - Qloss "Energy balance";
-//   Pm = W/etamech;
-//   Pe = Pm/etaelec;
+  Pm = W/etamech;
+  Pe = Pm/etaelec;
   //inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";
+  //inletPower.P = Pe;
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));

@@ -25,10 +25,10 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
   parameter Boolean FV401_state = true;
   parameter Boolean FV402_state = true;
 
-  parameter String Temperatures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test3/Temperatures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Pressures = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test3/Pressures.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Flows = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test3/Flow.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
-  parameter String Actuators = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Gennaio 2024/1701_Test3/Actuators.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Temperatures = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Pressures = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Flows = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
+  parameter String Actuators = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/1701_Test3.mat") "File name of matrix"  annotation(Dialog(loadSelector(filter="MATLAB MAT files (*.mat)", caption="Open MATLAB MAT file")));
 
   parameter String matrixFT401 = "FT401" "Matrix name in file";
   parameter String matrixPT401 = "PT401" "Matrix name in file";
@@ -213,6 +213,10 @@ model ElectricBoilerSystemTest "Main components of System 400 - Electric Boiler"
     annotation (Placement(transformation(extent={{60,-16},{40,4}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table=[t,thetaFCV401])
     annotation (Placement(transformation(extent={{60,20},{40,40}})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{112,
+            -124},{132,-104}})));
+  Modelica.Blocks.Sources.BooleanTable EB401_Status(table={1e6}, startValue=true) "Input to decide whether or nor the electric boiler is working"
+    annotation (Placement(transformation(extent={{-78,-148},{-58,-128}})));
 equation
   connect(P401.inlet, PL_S400_EB401_P401.outlet) annotation (Line(
       points={{20,-10.6},{20,-20}},
@@ -256,7 +260,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EB401ToutSP.y, EB401.Tout_ref)
-    annotation (Line(points={{-59,-106},{-35.2,-106}}, color={0,0,127}));
+    annotation (Line(points={{-59,-106},{-30.8,-106}}, color={0,0,127}));
   connect(PL2_S401.inlet, FT401.outlet) annotation (Line(
       points={{-20,-20},{-20,-21.6},{-20.2,-21.6},{-20.2,-13.2}},
       color={140,56,54},
@@ -279,6 +283,12 @@ equation
     annotation (Line(points={{39,-6},{32.5,-6},{32.5,-5.8},{26,-5.8}},     color={0,0,127}));
   connect(FCV401_theta.y, FCV401.opening)
     annotation (Line(points={{39,30},{28,30}}, color={0,0,127}));
+  connect(EB401.inletPower,sourceVoltage. outlet) annotation (Line(
+      points={{30.8,-106},{90,-106},{90,-142},{142,-142},{142,-114},{132,-114}},
+      color={56,93,138},
+      thickness=1));
+  connect(EB401_Status.y, EB401.heat_on) annotation (Line(points={{-57,-138},{-46,-138},{
+          -46,-128},{-30.8,-128}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-160,-160},{160,160}})),
     experiment(

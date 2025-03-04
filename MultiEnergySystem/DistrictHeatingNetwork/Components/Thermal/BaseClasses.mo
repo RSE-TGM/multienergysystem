@@ -55,24 +55,23 @@ package BaseClasses
     //Transport variables input
     input Modelica.Units.SI.DynamicViscosity mu[n]
       "Dynamic viscosity of the fluid" annotation (
-      HideResult = not ComputeTransport);
+      HideResult = not computeTransport);
     input Modelica.Units.SI.ThermalConductivity k[n]
       "Themal conductivity of the fluid" annotation (
-      HideResult = not ComputeTransport);
+      HideResult = not computeTransport);
     input Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[n]
-      "Specific heat capacity at constant pressure of the fluid" annotation (
-      HideResult = not ComputeTransport);
+      "Specific heat capacity at constant pressure of the fluid";
 
     //Dimensionless Numbers
     Modelica.Units.SI.PerUnit Re[n]
       "Reynolds Number" annotation (
-      HideResult = not ComputeTransport);
+      HideResult = not computeTransport);
     Modelica.Units.SI.PerUnit Pr[n]
       "Prandtl Number" annotation (
-      HideResult = not ComputeTransport);
+      HideResult = not computeTransport);
     Modelica.Units.SI.PerUnit Nu[n]
       "Nusselt Number" annotation (
-      HideResult = not ComputeTransport);
+      HideResult = not computeTransport);
 
     // Main variables to be compute
     Modelica.Units.SI.HeatFlowRate Q_flow[n]

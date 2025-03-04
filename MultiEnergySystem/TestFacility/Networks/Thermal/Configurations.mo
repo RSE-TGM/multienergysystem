@@ -38,7 +38,7 @@ package Configurations
 
     partial model CentralisedNetworkBaseII
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBaseII(redeclare model MediumCP = WaterHot, cf = cfp, n = np);
-      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
+      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
@@ -47,40 +47,63 @@ package Configurations
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
       connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
-          points={{46.5,171.7},{46.5,100},{398,100},{398,-46}},
+          points={{86.5,171.7},{86.5,100},{400,100},{400,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL711_FT711_rackL3L4.outlet, rackL3L4.inletComp) annotation (Line(
-          points={{438,-46},{438,110},{94,110},{94,160},{91.95,160},{91.95,172.15}},
+          points={{440,-46},{440,112},{132,112},{132,160},{131.95,160},{131.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       connect(PL701_rackL2L3_TT702.inlet, S900_rackL3L4_hot.outlet) annotation (Line(
-          points={{98,-48},{98,72},{-24,72},{-24,205},{-40,205}},
+          points={{80,-48},{80,72},{-24,72},{-24,205},{-40,205}},
           color={140,56,54},
           thickness=0.5));
       connect(PL701_FT701_rackL2L3.outlet, S900_rackL2L3_cold.inlet) annotation (Line(
-          points={{138,-48},{138,82},{-4,82},{-4,241},{-60,241}},
+          points={{120,-48},{120,82},{-4,82},{-4,241},{-60,241}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
-          points={{304.5,171.7},{304.5,134},{558,134},{558,-46}},
+          points={{324.5,171.7},{324.5,134},{560,134},{560,-46}},
           color={140,56,54},
           thickness=0.5));
       connect(PL721_FT721_rackL4L5.outlet, rackL4L5.inletComp) annotation (Line(
-          points={{598,-46},{596,-46},{596,154},{349.95,154},{349.95,172.15}},
+          points={{600,-46},{600,156},{369.95,156},{369.95,172.15}},
           color={140,56,54},
           thickness=0.5));
       connect(PL731_rackL6L7_TT732.inlet, rackL6L7.outletComp) annotation (Line(
-          points={{258,-50},{260,-50},{260,58},{528.5,58},{528.5,171.7}},
+          points={{240,-50},{240,60},{528.5,60},{528.5,171.7}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL6L7.inletComp, PL731_FT731_rackL6L7.outlet) annotation (Line(
-          points={{573.95,172.15},{573.95,92},{574,92},{574,20},{298,20},{298,-50}},
+          points={{573.95,172.15},{573.95,92},{574,92},{574,20},{280,20},{280,-50}},
           color={140,56,54},
           thickness=0.5));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio = false)),
-        Diagram(coordinateSystem(preserveAspectRatio = false)));
+        Diagram(coordinateSystem(preserveAspectRatio = false), graphics={
+            Line(
+              points={{840,-304},{840,-276}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{686,-274},{686,-302}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{802,-188},{802,-170},{734,-170},{734,-188}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{0,-14},{0,14}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1,
+              origin={584,-394},
+              rotation=-90)}));
     end CentralisedNetworkBaseII;
 
     partial model CentralizedNetworkBaseLoadSimplified
@@ -460,11 +483,13 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length h_S2_S201_FT201 = 0;
       parameter DistrictHeatingNetwork.Types.Length L_S2_D201_FT201 = 2;
       parameter DistrictHeatingNetwork.Types.Length h_S2_D201_FT201 = 0;
-      DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(H = 4, n = 3, D = 1.7, T_start(displayUnit = "K") = 60 + 273.15, pin_start = pin_start_S2_tank, m_flow_start = m_flow_S2/2) annotation (
+      DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(H = 4,
+        n=4,                                                                         D = 1.7, T_start(displayUnit = "K") = 60 + 273.15, pin_start = pin_start_S2_tank, m_flow_start = m_flow_S2/2) annotation (
         Placement(transformation(extent = {{-770, -474}, {-826, -362}})));
-      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P201(pout_start(displayUnit = "Pa") = 3e5, Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P201.Tin_start, Tout_start = DistrictHeatingNetwork.Data.PumpData.P201.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P201.a, b = DistrictHeatingNetwork.Data.PumpData.P201.b, m_flow_start = m_flow_S2, dpnom = DistrictHeatingNetwork.Data.PumpData.P201.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P201.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P201.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P201.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P201.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P201.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P201.omeganom, pin_start(displayUnit = "Pa") = 1.8400803e5, headnom = DistrictHeatingNetwork.Data.PumpData.P201.headnom, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P201.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P201.rhonom, headmax = DistrictHeatingNetwork.Data.PumpData.P201.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P201.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h, use_q_m3hr = true) annotation (
+      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P201(pout_start(displayUnit = "Pa") = 3e5, Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P201.Tin_start, Tout_start = DistrictHeatingNetwork.Data.PumpData.P201.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P201.a, b = DistrictHeatingNetwork.Data.PumpData.P201.b, m_flow_start = m_flow_S2, dpnom = DistrictHeatingNetwork.Data.PumpData.P201.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P201.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P201.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P201.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P201.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P201.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P201.omeganom, pin_start(displayUnit = "Pa") = 1.8400803e5, headnom = DistrictHeatingNetwork.Data.PumpData.P201.headnom, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P201.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P201.rhonom, headmax = DistrictHeatingNetwork.Data.PumpData.P201.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P201.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P201.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P201.qnommax_inm3h)                    annotation (
         Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = -90, origin = {-802, -206})));
-      DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(H = 4, n = 3, D = 1.7, T_start(displayUnit = "K") = 60 + 273.15, pin_start = pin_start_S2_tank, m_flow_start = m_flow_S2/2) annotation (
+      DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(H = 4,
+        n=4,                                                                         D = 1.7, T_start(displayUnit = "K") = 60 + 273.15, pin_start = pin_start_S2_tank, m_flow_start = m_flow_S2/2) annotation (
         Placement(transformation(extent = {{-708, -474}, {-652, -362}})));
       DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT201(T_start = Tin_start_S2, p_start = pin_start_S2) "Temperature sensor at the inlet of pump 201" annotation (
         Placement(transformation(extent = {{-4.75, -4.75}, {4.75, 4.75}}, rotation = 90, origin = {-803.75, -64.75})));
@@ -608,9 +633,9 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
       parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
       parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15;
-      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E501(Di_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Di_cold, Di_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Di_hot, L_cold = DistrictHeatingNetwork.Data.BPHEData.E501.L_cold, L_hot = DistrictHeatingNetwork.Data.BPHEData.E501.L_hot, MWall = DistrictHeatingNetwork.Data.BPHEData.E501.MWall, Stot_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Stot_cold, Stot_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Stot_hot, Tin_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Tin_start_cold, Tin_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Tin_start_hot, Tout_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Tout_start_cold, Tout_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Tout_start_hot, cpm_cold = DistrictHeatingNetwork.Data.BPHEData.E501.cpm_cold, cpm_hot = DistrictHeatingNetwork.Data.BPHEData.E501.cpm_hot, t_cold = DistrictHeatingNetwork.Data.BPHEData.E501.t_cold, t_hot = DistrictHeatingNetwork.Data.BPHEData.E501.t_hot, gamma_nom_cold = DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_cold, gamma_nom_hot = DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_hot, h_cold = DistrictHeatingNetwork.Data.BPHEData.E501.h_cold, h_hot = DistrictHeatingNetwork.Data.BPHEData.E501.h_hot, hctype_cold = hctype, hctype_hot = hctype, hin_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_cold, hin_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.hin_start_hot, k_cold = DistrictHeatingNetwork.Data.BPHEData.E501.k_cold, k_hot = DistrictHeatingNetwork.Data.BPHEData.E501.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_cold, lambdam_hot = DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_hot, m_flow_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_cold, m_flow_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_hot, n = 5, nPipes_cold = DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_cold, nPipes_hot = DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_hot, nPlates = DistrictHeatingNetwork.Data.BPHEData.E501.nPlates, pin_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.pin_start_cold, pin_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.pin_start_hot, pout_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.pout_start_cold, pout_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.pout_start_hot, rho_nom_cold = (DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_cold)/2, rho_nom_hot = (DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_cold, rhom_hot(displayUnit = "g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_hot, thermalInertia = false, u_nom_cold = DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_cold, u_nom_hot = DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_hot) annotation (
+      DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger E501(Di_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Di_cold, Di_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Di_hot, L_cold = DistrictHeatingNetwork.Data.BPHEData.E501.L_cold, L_hot = DistrictHeatingNetwork.Data.BPHEData.E501.L_hot, MWall = DistrictHeatingNetwork.Data.BPHEData.E501.MWall, Stot_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Stot_cold, Stot_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Stot_hot, Tin_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Tin_start_cold, Tin_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Tin_start_hot, Tout_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.Tout_start_cold, Tout_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.Tout_start_hot, cpm_cold = DistrictHeatingNetwork.Data.BPHEData.E501.cpm_cold, cpm_hot = DistrictHeatingNetwork.Data.BPHEData.E501.cpm_hot, t_cold = DistrictHeatingNetwork.Data.BPHEData.E501.t_cold, t_hot = DistrictHeatingNetwork.Data.BPHEData.E501.t_hot, gamma_nom_cold = DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_cold, gamma_nom_hot = DistrictHeatingNetwork.Data.BPHEData.E501.gamma_nom_hot, h_cold = DistrictHeatingNetwork.Data.BPHEData.E501.h_cold, h_hot = DistrictHeatingNetwork.Data.BPHEData.E501.h_hot, hctype_cold = hctype, hctype_hot = hctype,                                                                                                                                                     k_cold = DistrictHeatingNetwork.Data.BPHEData.E501.k_cold, k_hot = DistrictHeatingNetwork.Data.BPHEData.E501.k_hot, kc_cold = 1, kc_hot = 1, lambdam_cold = DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_cold, lambdam_hot = DistrictHeatingNetwork.Data.BPHEData.E501.lambdam_hot, m_flow_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_cold, m_flow_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.m_flow_start_hot, n = 5, nPipes_cold = DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_cold, nPipes_hot = DistrictHeatingNetwork.Data.BPHEData.E501.nPipes_hot, nPlates = DistrictHeatingNetwork.Data.BPHEData.E501.nPlates, pin_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.pin_start_cold, pin_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.pin_start_hot, pout_start_cold = DistrictHeatingNetwork.Data.BPHEData.E501.pout_start_cold, pout_start_hot = DistrictHeatingNetwork.Data.BPHEData.E501.pout_start_hot, rho_nom_cold = (DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_cold)/2, rho_nom_hot = (DistrictHeatingNetwork.Data.BPHEData.E501.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E501.rhoout_nom_hot)/2, rhom_cold(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_cold, rhom_hot(displayUnit = "g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E501.rhom_hot, thermalInertia = false, u_nom_cold = DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_cold, u_nom_hot = DistrictHeatingNetwork.Data.BPHEData.E501.u_nom_hot) annotation (
         Placement(visible = true, transformation(origin = {-608, -197}, extent = {{-17, -28.0002}, {17, 28.0001}}, rotation = -90)));
-      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P501(Tin_start(displayUnit = "K") = Tout_User_start_S5, Tout_start(displayUnit = "K") = Tout_User_start_S5, a = DistrictHeatingNetwork.Data.PumpData.P501.a, b = DistrictHeatingNetwork.Data.PumpData.P501.b, m_flow_start = m_flow_User_S5, dpnom = DistrictHeatingNetwork.Data.PumpData.P501.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P501.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P501.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P501.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P501.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P501.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P501.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P501.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P501.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P501.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P501.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h, use_q_m3hr = true) annotation (
+      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P501(Tin_start(displayUnit = "K") = Tout_User_start_S5, Tout_start(displayUnit = "K") = Tout_User_start_S5, a = DistrictHeatingNetwork.Data.PumpData.P501.a, b = DistrictHeatingNetwork.Data.PumpData.P501.b, m_flow_start = m_flow_User_S5, dpnom = DistrictHeatingNetwork.Data.PumpData.P501.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P501.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P501.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P501.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P501.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P501.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P501.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P501.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P501.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P501.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P501.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P501.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P501.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h)                    annotation (
         Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-588, -153})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_cold(L = 5, t = t_S5, pin_start = pin_User_start_S5 - 0.02e5, Tin_start = Tin_User_start_S5, Tout_start = Tin_User_start_S5, Di = Di_S5, q_m3h_start = q_m3h_S5_Source, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-628, -251})));
@@ -622,11 +647,11 @@ package Configurations
         Placement(transformation(extent = {{-7, -7}, {7, 7}}, rotation = -90, origin = {-585, -227})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_hot1(L = 5, t = t_S5, pin_start = pin_User_start_S5 - 0.04e5, Tin_start = Tout_User_start_S5, Tout_start = Tout_User_start_S5, Di = Di_S5, q_m3h_start = q_m3h_S5_User, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-588, -69})));
-      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange(D_i = 51e-3, D_o = Di_S5) annotation (
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange3(D_i = 51e-3, D_o = Di_S5) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin = {-588, -38})));
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S5_PL_CHP_EX501_cold1(L = 5, t = t_S5, pin_start = pin_User_start_S5 - 0.02e5, Tin_start = Tin_User_start_S5, Tout_start = Tin_User_start_S5, Di = Di_S5, q_m3h_start = q_m3h_S5_User, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-628, -69})));
-      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange1(D_i = 51e-3, D_o = Di_S5) annotation (
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange4(D_i = 51e-3, D_o = Di_S5) annotation (
         Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin = {-628, -38})));
       DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT502 annotation (
         Placement(transformation(extent = {{-5.5, 5.5}, {5.5, -5.5}}, rotation = 90, origin = {-585.5, -87.5})));
@@ -651,9 +676,9 @@ package Configurations
         Line(points = {{-588, -241}, {-588, -233.25}, {-587.8, -233.25}, {-587.8, -227}}, color = {140, 56, 54}, thickness = 0.5));
       connect(TT504.inlet, E501.inhot) annotation (
         Line(points={{-587.8,-227},{-587.8,-226.25},{-588.4,-226.25},{-588.4,-205.5}},          color = {140, 56, 54}, thickness = 0.5));
-      connect(S5_PL_CHP_EX501_hot1.outlet, suddenAreaChange.outlet) annotation (
+      connect(S5_PL_CHP_EX501_hot1.outlet, suddenAreaChange3.outlet) annotation (
         Line(points = {{-588, -59}, {-588, -48}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(suddenAreaChange1.outlet, S5_PL_CHP_EX501_cold1.inlet) annotation (
+      connect(suddenAreaChange4.outlet, S5_PL_CHP_EX501_cold1.inlet) annotation (
         Line(points = {{-628, -48}, {-628, -59}}, color = {140, 56, 54}, thickness = 0.5));
       connect(S5_PL_CHP_EX501_hot1.inlet, PT502.inlet) annotation (
         Line(points = {{-588, -79}, {-588, -84.25}, {-587.7, -84.25}, {-587.7, -87.5}}, color = {140, 56, 54}, thickness = 0.5));
@@ -673,9 +698,9 @@ package Configurations
         Line(points = {{-628.3, -107.5}, {-628.3, -113.25}, {-628, -113.25}, {-628, -119}}, color = {140, 56, 54}, thickness = 0.5));
       connect(P501.inlet, E501.outcold) annotation (
         Line(points={{-588,-162.6},{-588,-167.55},{-588.4,-167.55},{-588.4,-188.5}},          color = {140, 56, 54}, thickness = 0.5));
-      connect(suddenAreaChange1.inlet, rackCD_Cold_S300_S300.inlet) annotation (
+      connect(suddenAreaChange4.inlet, rackCD_Cold_S300_S300.inlet) annotation (
         Line(points = {{-628, -28}, {-628, -12}, {-498, -12}, {-498, 5.25}, {-470, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
-      connect(suddenAreaChange.inlet, rackCD_Hot_S500_SXXX.inlet) annotation (
+      connect(suddenAreaChange3.inlet, rackCD_Hot_S500_SXXX.inlet) annotation (
         Line(points = {{-588, -28}, {-588, -20}, {-492, -20}, {-492, 45}, {-500, 45}}, color = {140, 56, 54}, thickness = 0.5));
       connect(S5_PL_CHP_EX501_hot.inlet, CHP.outlet) annotation (
         Line(points = {{-588, -261}, {-588, -286}, {-578, -286}, {-578, -315}, {-586, -315}}, color = {140, 56, 54}, thickness = 0.5));
@@ -1050,6 +1075,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 70 + 273.15;
       parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
 
+
       parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
       parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
       parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
@@ -1069,6 +1095,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2;
       parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2*0;
 
+
       parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = m_flow_total;
       parameter Real q_m3h_S1 = 9;
       parameter Real P101omega[:, :] = [0, 2*pi*50; 100, 2*pi*50; 100, 2*pi*50; 200, 2*pi*50];
@@ -1076,6 +1103,7 @@ package Configurations
       parameter Real FCV101theta[:, :] = [0, 1];
       parameter Real GB101_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
       parameter Real Kv_FCV101(unit = "m3/h") = 33 "Metri Flow Coefficient";
+      parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.84;
       parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV101 = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(redeclare model Medium = WaterHot,L = L_S1_rCD_hot, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
@@ -1101,6 +1129,7 @@ package Configurations
         Tin_start_S1=Tin_start_S1,
         Tout_start_S1=Tout_start_S1,
         cf=cfp,
+        eta_combustion=eta_combustion,
         h_FT101_GB101=h_FT101_GB101,
         h_GB101_P101=h_GB101_P101,
         L_P101_FCV101=L_P101_FCV101,
@@ -1108,7 +1137,10 @@ package Configurations
         q_m3h_S1=q_m3h_S1,
         Kv=Kv_FCV101,
         openingChar=openingChar_FCV101,
-        Pmaxnom=147.6e3*0.78) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
+        Pmaxnom=147.6e3*0.92) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
+      ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
+            rotation=90,
+            origin={-400,-470})));
     equation
       connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
         Line(points={{-266,-196},{-266,5.25},{-326.5,5.25}},       color = {140, 56, 54}, thickness = 0.5));
@@ -1218,6 +1250,76 @@ package Configurations
           points={{-318,-60},{-318,-66.7},{-317.96,-66.7},{-317.96,-75.4}},
           color={140,56,54},
           thickness=0.5));
+      connect(S400.inletPower, sourceVoltage.outlet) annotation (Line(
+          points={{-384.4,-148},{-400,-148},{-400,-454}},
+          color={56,93,138},
+          thickness=1));
     end CentralisedSystem_GBEB;
+
+    model CentralisedSystem_GBEBCHP
+      extends CentralisedSystem_GBEB;
+      Plants.Thermal.Systems.CHP S500(
+        n=n,
+        Tin_low_start=Tin_Source_start_S5,
+        Tout_low_start=Tout_Source_start_S5,
+        Tin_high_start=Tin_User_start_S5,
+        Tout_high_start=Tout_User_start_S5,
+        Pel_SP=PeCHP) annotation (Placement(transformation(extent={{-568,-330},{-482,-244}})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_hot(
+        L=5,
+        t=t_S5,
+        pin_start=pin_User_start_S5 - 0.04e5,
+        Tin_start=Tout_User_start_S5,
+        Tout_start=Tout_User_start_S5,
+        Di=Di_S5,
+        q_m3h_start=q_m3h_S5_User,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={-506,-213})));
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange2(D_i=51e-3, D_o=Di_S5)    annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-506,-182})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_cold(
+        L=5,
+        t=t_S5,
+        pin_start=pin_User_start_S5 - 0.02e5,
+        Tin_start=Tin_User_start_S5,
+        Tout_start=Tin_User_start_S5,
+        Di=Di_S5,
+        q_m3h_start=q_m3h_S5_User,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=90,
+            origin={-542,-213})));
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange3(D_i=51e-3, D_o=Di_S5)     annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-542,-182})));
+    equation
+      connect(PL_S500_rCD_hot.outlet,suddenAreaChange2. outlet) annotation (Line(
+          points={{-506,-203},{-506,-192}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange3.outlet,PL_S500_rCD_cold. inlet) annotation (Line(
+          points={{-542,-192},{-542,-203}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S500_rCD_cold.outlet,S500. inlet) annotation (Line(
+          points={{-542,-223},{-542,-230.275},{-541.77,-230.275},{-541.77,-237.55}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S500_rCD_hot.inlet,S500. outlet) annotation (Line(
+          points={{-506,-223},{-506,-230.275},{-507.37,-230.275},{-507.37,-237.55}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange3.inlet, rackCD_Cold_S300_S300.inlet) annotation (Line(
+          points={{-542,-172},{-542,-26},{-502,-26},{-502,5.25},{-470,5.25}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange2.inlet, rackCD_Hot_S500_SXXX.inlet) annotation (Line(
+          points={{-506,-172},{-508,-172},{-508,-46},{-488,-46},{-488,45},{-500,45}},
+          color={140,56,54},
+          thickness=0.5));
+    end CentralisedSystem_GBEBCHP;
   end Centralised;
 end Configurations;

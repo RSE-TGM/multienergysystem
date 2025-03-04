@@ -1,5 +1,5 @@
 ﻿within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model BaseHeatingSystem
+partial model BaseHeatingSystem
   "Case in which there isn't any source of heat"
   extends Modelica.Icons.Example;
 
@@ -847,7 +847,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(Wall_S9.MultiPort, PL2_S901.wall)
-    annotation (Line(points={{-838,101},{-812.3,101}},
+    annotation (Line(points={{-838,101},{-812.1,101}},
                                                      color={255,238,44}));
   connect(rackCD_Hot_S400_S300.outlet, rackCD_Hot_S300_S500.inlet) annotation (
       Line(

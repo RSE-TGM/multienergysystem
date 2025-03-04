@@ -137,6 +137,7 @@ model WaterTankSystem "System of two tanks"
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2/2,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -149,6 +150,7 @@ model WaterTankSystem "System of two tanks"
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2,
     n=n,
     hctype=hctype)
               annotation (Placement(transformation(
@@ -162,6 +164,7 @@ model WaterTankSystem "System of two tanks"
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2/2,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -272,6 +275,7 @@ model WaterTankSystem "System of two tanks"
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2/2,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},

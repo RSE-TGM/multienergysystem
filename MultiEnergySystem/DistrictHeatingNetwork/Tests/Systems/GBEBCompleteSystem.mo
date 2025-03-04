@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
-model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
+partial model GBEBCompleteSystem "Same as GBEB but adding the cooling system (users)"
   extends GasBoilerPumpingSystem(FCVC01theta = [0, 0;600, 0;600, 1; 800, 1], FCVC02theta = [0, 1; 700, 1; 700, 0; 800, 0]);
 
   parameter Types.Pressure pin_start_S4 = 1.695e5;

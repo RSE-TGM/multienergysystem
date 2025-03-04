@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.TestFacility.Plants.Thermal;
+within MultiEnergySystem.TestFacility.Plants.Thermal;
 package Configurations "Different possible configurations of the heat generating part of the network"
   extends Modelica.Icons.VariantsPackage;
 
@@ -473,7 +473,7 @@ package Configurations "Different possible configurations of the heat generating
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_hot(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_H, t = t_rL_H, pin_start = pin_start_Users - 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {190, 205})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_hot(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
-        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {410, 205})));
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={430,205})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_hot(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_H, h = h_rL6L7_FCVC02_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {650, 205})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL2L3_cold(redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pout_start_Users - 0.03e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
@@ -481,7 +481,7 @@ package Configurations "Different possible configurations of the heat generating
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_cold(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_C, t = t_rL_C, pin_start = pout_start_Users - 0.01e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={210,241})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_cold(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_C, t = t_rL_C, pin_start = pout_start_Users, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
-        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={440,241})));
+        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={450,241})));
       MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_cold(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_C, t = t_rL_C, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={656,241})));
       MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTA12(redeclare model Medium = MediumCP, T_start = T_start_hot) "Flow sensor at the inlet of valve FCVC02" annotation (
@@ -521,7 +521,7 @@ package Configurations "Different possible configurations of the heat generating
         h_incold=0,
         h_outcold=0,
         t=t,
-        Di=Di) annotation (Placement(transformation(extent={{24,178},{114,268}})));
+        Di=Di) annotation (Placement(transformation(extent={{64,178},{154,268}})));
       DistrictHeatingNetwork.Components.Fittings.Junction junctionHotFCVC01 annotation (Placement(transformation(extent={{244,210},{254,200}})));
       DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdFCVC01 annotation (Placement(transformation(extent={{254,236},{244,246}})));
       Systems.ConnectorTypeI rackL4L5(
@@ -543,7 +543,7 @@ package Configurations "Different possible configurations of the heat generating
         h_incold=0,
         h_outcold=0,
         t=t,
-        Di=Di) annotation (Placement(transformation(extent={{282,178},{372,268}})));
+        Di=Di) annotation (Placement(transformation(extent={{302,178},{392,268}})));
       Systems.ConnectorTypeI rackL6L7(
         redeclare model Medium = MediumCP,
         hctype=hctype,
@@ -617,15 +617,15 @@ package Configurations "Different possible configurations of the heat generating
           color={140,56,54},
           thickness=0.5));
       connect(rackL3L4_FCVC01_hot.inlet, rackL3L4.outletHot) annotation (Line(
-          points={{180,205},{120.3,205}},
+          points={{180,205},{160.3,205}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL3L4.inletHot, S900_rackL3L4_hot.outlet) annotation (Line(
-          points={{17.7,205},{-40,205}},
+          points={{57.7,205},{-40,205}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL3L4.outletCold, S900_rackL2L3_cold.inlet) annotation (Line(
-          points={{17.7,241},{-60,241}},
+          points={{57.7,241},{-60,241}},
           color={140,56,54},
           thickness=0.5));
       connect(junctionHotFCVC01.inoutlet, FCVC01.inlet) annotation (Line(
@@ -645,15 +645,15 @@ package Configurations "Different possible configurations of the heat generating
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.inletHot, junctionHotFCVC01.outlet) annotation (Line(
-          points={{275.7,205},{254,205}},
+          points={{295.7,205},{254,205}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5_rackL5L6_hot.inlet, rackL4L5.outletHot) annotation (Line(
-          points={{400,205},{384,205},{384,205},{378.3,205}},
+          points={{420,205},{398.3,205}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5.outletCold, junctionColdFCVC01.inlet) annotation (Line(
-          points={{275.7,241},{254,241}},
+          points={{295.7,241},{254,241}},
           color={140,56,54},
           thickness=0.5));
       connect(junctionColdFCVC01.outlet, rackL3L4_FCVC01_cold.inlet) annotation (Line(
@@ -661,19 +661,19 @@ package Configurations "Different possible configurations of the heat generating
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5_rackL5L6_cold.outlet, rackL4L5.inletCold) annotation (Line(
-          points={{430,241},{378.3,241}},
+          points={{440,241},{398.3,241}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL3L4_FCVC01_cold.outlet, rackL3L4.inletCold) annotation (Line(
-          points={{200,241},{120.3,241}},
+          points={{200,241},{160.3,241}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5_rackL5L6_hot.outlet, rackL6L7.inletHot) annotation (Line(
-          points={{420,205},{499.7,205}},
+          points={{440,205},{499.7,205}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL4L5_rackL5L6_cold.inlet, rackL6L7.outletCold) annotation (Line(
-          points={{450,241},{499.7,241}},
+          points={{460,241},{499.7,241}},
           color={140,56,54},
           thickness=0.5));
       connect(rackL6L7_FCVC02_hot.inlet, rackL6L7.outletHot) annotation (Line(
@@ -697,15 +697,7 @@ package Configurations "Different possible configurations of the heat generating
           color={140,56,54},
           thickness=0.5));
       annotation (
-        Diagram(coordinateSystem(extent = {{-900, -500}, {900, 320}}), graphics={  Text(extent={{-82,187},{-22,149}},     textColor = {28, 108, 200}, textString = "RackL2L3_hot"), Text(extent={{-8,309},{52,269}},      textColor = {28, 108, 200}, textString = "RackL2L3_cold"), Text(extent = {{-590, 105}, {-460, 67}}, textColor = {28, 108, 200}, textString = "Rack C/D"), Text(extent={{-162,
-                  181},{-102,143}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_hot"), Text(extent={{116,123},
-                  {176,85}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL4L5_hot"), Text(extent = {{442, 217}, {502, 179}}, textColor = {28, 108, 200}, textString = "RackL5L6_hot"),                                                                                                                                                                                                      Text(extent={{100,153},
-                  {160,113}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL4L5_cold"), Text(extent = {{470, 291}, {530, 251}}, textColor = {28, 108, 200}, textString = "RackL5L6_cold"),
-                                                                                                                                                                                                        Text(extent={{-118,
-                  311},{-58,271}},                                                                                                                                                                                                        textColor = {28, 108, 200}, textString = "RackL3L4_cold"),                                                                                            Text(extent={{512,299},
-                  {592,280}},                                                                                                                                                                                                        textColor={28,108,
-                  200},
-              textString="RackL6L7")}),
+        Diagram(coordinateSystem(extent = {{-900, -500}, {900, 320}}), graphics={                                                                                                                                                                                                    Text(extent = {{-590, 105}, {-460, 67}}, textColor = {28, 108, 200}, textString = "Rack C/D")}),
         Icon(coordinateSystem(grid = {0.5, 0.5})),
         experiment(StopTime = 500, __Dymola_Algorithm = "Dassl"));
     end CentralPlantBaseII;
@@ -1170,7 +1162,7 @@ package Configurations "Different possible configurations of the heat generating
       parameter Real P101qm3h[:, :] = [0, 7.5; 100, 7.5];
       parameter Real FCV101theta[:, :] = [0, 1];
       parameter Real GB101_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
-      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P101.Tin_start, Tout_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P101.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P101.a, b = DistrictHeatingNetwork.Data.PumpData.P101.b, m_flow_start = m_flow_total, dpnom = DistrictHeatingNetwork.Data.PumpData.P101.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P101.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P101.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P101.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P101.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P101.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P101.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P101.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P101.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P101.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P101.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P101.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P101.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h, use_q_m3hr = true) annotation (
+      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P101.Tin_start, Tout_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P101.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P101.a, b = DistrictHeatingNetwork.Data.PumpData.P101.b, m_flow_start = m_flow_total, dpnom = DistrictHeatingNetwork.Data.PumpData.P101.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P101.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P101.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P101.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P101.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P101.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P101.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P101.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P101.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P101.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P101.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P101.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P101.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h)                    annotation (
         Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-230, -239})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV101(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV101.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV101.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S1, pin_start = pout_start_S1, q_m3h_start = DistrictHeatingNetwork.Data.PumpData.P101.qnom_inm3h) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-230, -204})));
@@ -1259,7 +1251,7 @@ package Configurations "Different possible configurations of the heat generating
       parameter Boolean FV402_state = true;
       DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB401(Tout_start = Tout_start_S4, D = 0.4, Pmaxnom = 50e3, Pnimnom = 10e3, Pnom = 50e3, Tin_start = Tin_start_S4, etanom = 0.98, h = 1.25, m_flow_nom = m_flow_S4, pin_start = pin_start_S4, pout_start = 160000, nR = 5) annotation (
         Placement(visible = true, transformation(origin = {-335, -365}, extent = {{-35, -35}, {35, 35}}, rotation = 0)));
-      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P401(Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start, Tout_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P401.a, b = DistrictHeatingNetwork.Data.PumpData.P401.b, m_flow_start = m_flow_S4, dpnom = DistrictHeatingNetwork.Data.PumpData.P401.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P401.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P401.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P401.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P401.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P401.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P401.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P401.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P401.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h, use_q_m3hr = true) annotation (
+      DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P401(Tin_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start, Tout_start(displayUnit = "K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start, a = DistrictHeatingNetwork.Data.PumpData.P401.a, b = DistrictHeatingNetwork.Data.PumpData.P401.b, m_flow_start = m_flow_S4, dpnom = DistrictHeatingNetwork.Data.PumpData.P401.dpnom, etaelec = DistrictHeatingNetwork.Data.PumpData.P401.etaelec, etamech = DistrictHeatingNetwork.Data.PumpData.P401.etamech, etanom = DistrictHeatingNetwork.Data.PumpData.P401.etanom, hin_start = DistrictHeatingNetwork.Data.PumpData.P401.hin_start, m_flow_nom = DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom, omeganom = DistrictHeatingNetwork.Data.PumpData.P401.omeganom, pin_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start, pout_start(displayUnit = "Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start, qnom_inm3h = DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h, rhonom(displayUnit = "kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom, headnom = DistrictHeatingNetwork.Data.PumpData.P401.headnom, headmax = DistrictHeatingNetwork.Data.PumpData.P401.headnommax, headmin = DistrictHeatingNetwork.Data.PumpData.P401.headnommin, qnom_inm3h_min = DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h, qnom_inm3h_max = DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h)                    annotation (
         Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-316, -235})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-316, -200})));

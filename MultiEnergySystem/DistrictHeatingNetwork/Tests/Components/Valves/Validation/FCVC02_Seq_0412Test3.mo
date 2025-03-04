@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Valves.Validati
 model FCVC02_Seq_0412Test3
   extends Valves.Validation.TestBase(
   redeclare model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity,
-  MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test3/Temperatures.mat"),
+  MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test3.mat"),
   matrixPTi = "PTA20",
   matrixPTo = "PTA19",
   matrixTTi = "TT732",

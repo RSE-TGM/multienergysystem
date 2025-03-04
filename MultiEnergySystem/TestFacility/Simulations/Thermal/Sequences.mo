@@ -139,7 +139,7 @@ package Sequences
         parameter DistrictHeatingNetwork.Types.Power GB101_Pmaxnom = 147.6e3*0.78;
         parameter Real freq = 0.00384 "frequency of the  sinusoidal cooling temperature behaviour";
 
-        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
+        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat") "File name of matrix" annotation (
           Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
         parameter String matrixTTo = "TT102" "Matrix name in file";
         parameter String timenoscale = "time" "Matrix name in file";
@@ -164,10 +164,7 @@ package Sequences
       end Seq_0412_Test2;
 
       model Seq_0412_Test2_indexes
-        extends Seq_0412_Test2;
-
-        parameter String MeasuredData = Modelica.Utilities.Files.loadResource("C:/Users/muro/OneDrive - RSE S.p.A/Modelli e Simulazione/RdS/Acquisizione dati - Test Facility/Test Dicembre 2023/0412_Test2/Temperatures.mat") "File name of matrix" annotation (
-          Dialog(loadSelector(filter = "MATLAB MAT files (*.mat)", caption = "Open MATLAB MAT file")));
+        extends Seq_0412_Test2(MeasuredData = Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/0412_Test2.mat"));
 
         parameter String matrixFT101 = "FT101" "Matrix name in file";
         parameter String matrixFT401 = "FT401" "Matrix name in file";
@@ -201,8 +198,8 @@ package Sequences
         Modelica.Blocks.Math.Feedback substractdTS900 annotation (Placement(transformation(extent={{-832,194},{-848,178}})));
         DistrictHeatingNetwork.Utilities.ASHRAEIndex dTS400Analysis1
                                                                    annotation (Placement(transformation(extent={{-856,180},{-876,200}})));
+        //final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixFT401) "dimension of matrix";
       protected
-        final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixFT401) "dimension of matrix";
         final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
         final parameter Real FT101real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT101, dim[1], dim[2]);
         final parameter Real FT401real[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT401, dim[1], dim[2]);

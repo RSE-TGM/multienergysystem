@@ -1,5 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.Sequences;
-model Sequence5
+partial model Sequence5
   extends Sequence3(GB101(Tout_ref=353.15), EB401(Tout_ref=353.15));
 
   //1. Cooling System
@@ -737,8 +737,7 @@ model Sequence5
     headmax=Pump.PR01.headnommax,
     headmin=Pump.PR01.headnommin,
     qnom_inm3h_min=Pump.PR01.qnommin_inm3h,
-    qnom_inm3h_max=Pump.PR01.qnommax_inm3h,
-    use_q_m3hr=true)                                             annotation (Placement(transformation(
+    qnom_inm3h_max=Pump.PR01.qnommax_inm3h)                      annotation (Placement(transformation(
         extent={{-13,13},{13,-13}},
         rotation=-90,
         origin={706,-133})));
@@ -759,10 +758,8 @@ model Sequence5
         origin={706,-98})));
   Modelica.Blocks.Sources.TimeTable PR01_omega(table=PR01omega)
     annotation (Placement(transformation(extent={{666,-138},{686,-118}})));
-  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
-    RR01(
-    Tout_cold_set=Tout_start_Cool,
-    dp_cold_start=50000,
+  replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamicsSP
+    RR01(dp_cold_start=50000,
     m_flow_cold_start=m_flow_Cool)
     annotation (Placement(transformation(extent={{734,-74},{805,-3}})));
   Modelica.Blocks.Interaction.Show.RealValue TT703_(use_numberPort=true,

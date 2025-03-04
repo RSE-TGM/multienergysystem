@@ -3,14 +3,12 @@ ElectricBoiler
 CirculationPump
 TES
 CHP
-ControlledGasBoiler
-ControlledElectricBoiler
-CoolingSingleLoad
-RackCD
-RackType2
 ConnectorTypeI
 RackTypeI
 GasBoilerFlowControlled
 ElectricBoilerFlowControlled
 CHPFlowControlled
 CirculationPumpPressureControlled
+GasBoilerIFC
+ElectricBoilerIFC
+CHPIFC

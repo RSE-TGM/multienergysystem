@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_source2 "immissione 2"
-  extends Paper_I.Rete_Gas_2i_pipes_users;
+  extends Rete_Gas_2i_pipes_users;
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     n=nV,
     L=Data.PipelineData_2i.sds16.L,

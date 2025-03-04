@@ -7,14 +7,16 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   //  MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
+      //MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = true;
+  parameter Boolean massFractionDynamicBalance = false;
   parameter Boolean constantFrictionFactor = false;
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
   parameter Integer nX = 1 "Number of components in the gas fluid";
   parameter Types.MassFraction X_start[nX] = {1};
+  //parameter Types.MassFraction X_start[nX] = {1, 0, 0, 0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.657;
 
@@ -22,6 +24,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   parameter Types.Length kappa = 0.045e-3;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
+  //parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle;
   parameter Integer nV = 3;
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s1(
@@ -42,7 +45,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     L=Data.PipelineData_2i.s1.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s1.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -69,7 +72,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     L=Data.PipelineData_2i.s2.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s2.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -93,7 +96,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     L=Data.PipelineData_2i.s4.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s4.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -119,7 +122,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     L=Data.PipelineData_2i.s8.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s8.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -145,7 +148,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     L=Data.PipelineData_2i.s9.L,
     X_start=X_start,
     Di=Data.PipelineData_2i.s9.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -171,7 +174,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s11.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s11.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -197,7 +200,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s12.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s12.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -223,7 +226,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s14.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s14.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -249,7 +252,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     kappa=Data.PipelineData_2i.s16.kappa,
     k=Data.PipelineData_2i.s16.k,
     Di=Data.PipelineData_2i.s16.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -275,7 +278,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s18.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s18.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -301,7 +304,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     lambdam=Data.PipelineData_2i.s19.lambdam,
     X_start=X_start,
     Di=Data.PipelineData_2i.s19.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -327,7 +330,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s20.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s20.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -353,7 +356,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s21.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s21.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -379,7 +382,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     H=Data.PipelineData_2i.s22.h,
     X_start=X_start,
     Di=Data.PipelineData_2i.s22.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -405,7 +408,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     H=Data.PipelineData_2i.s24.h,
     X_start=X_start,
     Di=Data.PipelineData_2i.s24.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -431,7 +434,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s26.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s26.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -457,7 +460,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s28.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s28.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -483,7 +486,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.s30.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.s30.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -504,7 +507,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     n=nV,
     X_start=X_start,
     Di=Data.PipelineData_2i.s31.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -524,7 +527,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     pout_start=Data.PipelineData_2i.s36.pout_start,
     X_start=X_start,
     Di=Data.PipelineData_2i.s36.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -550,7 +553,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds1.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds1.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -575,7 +578,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     kappa=Data.PipelineData_2i.sds2.kappa,
     k=Data.PipelineData_2i.sds2.k,
     Di=Data.PipelineData_2i.sds2.Di,
-        quasiStatic=quasiStatic,
+        massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     ff_nom=FrictionFactor,
     computeInertialTerm=computeInertialTerm,
@@ -601,7 +604,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds3.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds3.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -627,7 +630,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds4.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds4.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -652,7 +655,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds6.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds6.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -677,7 +680,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds7.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds7.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -702,7 +705,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds8.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds8.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -728,7 +731,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds9.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds9.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -754,7 +757,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds10.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds10.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -764,7 +767,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
                 annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-154,176})));
+        origin={-154,180})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds11(
     L=Data.PipelineData_2i.sds11.L,
     H=Data.PipelineData_2i.sds11.h,
@@ -780,7 +783,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds11.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds11.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -806,7 +809,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds12.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds12.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -832,7 +835,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds13.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds13.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -858,7 +861,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     kappa=Data.PipelineData_2i.sds14.kappa,
     k=Data.PipelineData_2i.sds14.k,
     Di=Data.PipelineData_2i.sds14.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -883,7 +886,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
     k=Data.PipelineData_2i.sds15.k,
     X_start=X_start,
     Di=Data.PipelineData_2i.sds15.Di,
-      quasiStatic=quasiStatic,
+      massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     ff_nom=FrictionFactor,
@@ -899,11 +902,12 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo2(
     L=100,
     H=0,
+    m_flow_start=0.098,
     redeclare model Gas = Medium,
     redeclare model Medium = Medium,
     X_start=X_start,
     Di=0.1325,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     computeInertialTerm=computeInertialTerm,
     hctype=hctype,
@@ -914,11 +918,23 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={242,210})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.HomotopyInitializer homotopyInitializer(
+    redeclare model Medium = Medium,
+    p_start=Data.PipelineData_2i.sds11.pin_start,
+    X_start=X_start,
+    T_start=288.15)                  annotation (Placement(transformation(
+        extent={{-4,-4},{4,4}},
+        rotation=90,
+        origin={-120,184})));
+  MultiEnergySystem.H2GasFacility.Components.Manifold.HomotopyInitializer homotopyInitializer1(
+    redeclare model Medium = Medium,
+    p_start=Data.PipelineData_2i.s2.pin_start,
+    X_start=X_start,
+    T_start=288.15)                  annotation (Placement(transformation(
+        extent={{4,-4},{-4,4}},
+        rotation=90,
+        origin={-200,0})));
 equation
-  connect(sds1.inlet, s1.outlet) annotation (Line(
-      points={{-198,36},{-198,26},{-182,26}},
-      color={182,109,49},
-      thickness=0.5));
   connect(sds2.inlet, sds1.outlet) annotation (Line(
       points={{-190,66},{-198,66},{-198,56}},
       color={182,109,49},
@@ -933,26 +949,6 @@ equation
       thickness=0.5));
   connect(sds6.inlet, sds4.outlet) annotation (Line(
       points={{-122,110},{-122,104},{-124,104},{-124,92}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds6.outlet, sds7.inlet) annotation (Line(
-      points={{-122,130},{-122,140},{152,140}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds7.outlet, sds8.inlet) annotation (Line(
-      points={{172,140},{242,140},{242,166}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds9.inlet, sds6.outlet) annotation (Line(
-      points={{-122,152},{-122,130}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds10.inlet, sds9.outlet) annotation (Line(
-      points={{-144,176},{-122,176},{-122,172}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds11.inlet, sds9.outlet) annotation (Line(
-      points={{-121,192},{-122,192},{-122,172}},
       color={182,109,49},
       thickness=0.5));
   connect(sds11.outlet, sds12.inlet) annotation (Line(
@@ -970,10 +966,6 @@ equation
       thickness=0.5));
   connect(sds15.inlet, sds14.inlet) annotation (Line(
       points={{46,232},{46,216},{60,216}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s2.inlet, s1.outlet) annotation (Line(
-      points={{-198,-24},{-198,26},{-182,26}},
       color={182,109,49},
       thickness=0.5));
   connect(s4.inlet, s2.outlet) annotation (Line(
@@ -1006,14 +998,6 @@ equation
       thickness=0.5));
   connect(s16.outlet, s18.inlet) annotation (Line(
       points={{28,-6},{58,-6}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s18.outlet, s31.inlet) annotation (Line(
-      points={{78,-6},{110,-6},{110,-74},{110,-74}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(s19.inlet, s18.outlet) annotation (Line(
-      points={{146,-24},{146,-6},{78,-6}},
       color={182,109,49},
       thickness=0.5));
   connect(s36_Stadio.inlet, s31.outlet) annotation (Line(
@@ -1051,6 +1035,50 @@ equation
       thickness=0.5));
   connect(raccordo2.inlet, sds8.outlet) annotation (Line(
       points={{242,200},{242,186}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds9.inlet, sds6.outlet) annotation (Line(
+      points={{-122,152},{-122,130}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds7.inlet, sds6.outlet) annotation (Line(
+      points={{152,140},{-122,140},{-122,130}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s1.outlet, sds1.inlet) annotation (Line(
+      points={{-182,26},{-198,26},{-198,36}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s19.inlet, s31.inlet) annotation (Line(
+      points={{146,-24},{146,-6},{110,-6},{110,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s18.outlet, s31.inlet) annotation (Line(
+      points={{78,-6},{110,-6},{110,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds9.outlet, homotopyInitializer.inlet) annotation (Line(
+      points={{-122,172},{-122,176},{-120,176},{-120,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds10.inlet, homotopyInitializer.inlet) annotation (Line(
+      points={{-144,180},{-132,180},{-132,176},{-120,176},{-120,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(homotopyInitializer.outlet, sds11.inlet) annotation (Line(
+      points={{-120,188},{-120,190},{-121,190},{-121,192}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(homotopyInitializer1.inlet, sds1.inlet) annotation (Line(
+      points={{-200,4},{-200,28},{-198,28},{-198,36}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(homotopyInitializer1.outlet, s2.inlet) annotation (Line(
+      points={{-200,-4},{-200,-16},{-198,-16},{-198,-24}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds7.outlet, sds8.inlet) annotation (Line(
+      points={{172,140},{242,140},{242,166}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

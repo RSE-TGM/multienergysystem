@@ -8,7 +8,7 @@ model Test_H2_injection
   parameter Types.MassFraction X_start_H2[nX] = {0.8, 0.04, 0.04, 0.005, 0.01, 0.005, 0.1};
   parameter Types.MassFraction X_net[nX] = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
   parameter Integer n = 10 "Number of volumes in Flow1DFV";
-  parameter Boolean quasiStatic = false;
+  parameter Boolean massFractionDynamicBalance = true;
   //parameter Types.Length kappa = 0.045e-3;
 
 
@@ -74,7 +74,7 @@ model Test_H2_injection
     Tout_start=Pipe.pipe1.Tout_start,
     X_start=X_net,
     Di=Pipe.pipe1.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
@@ -96,7 +96,7 @@ model Test_H2_injection
     Tout_start=Pipe.pipe1.Tout_start,
     X_start=X_net,
     Di=Pipe.pipe1.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
@@ -118,7 +118,7 @@ model Test_H2_injection
     Tout_start=Pipe.pipe1.Tout_start,
     X_start=X_net,
     Di=Pipe.pipe1.Di,
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,

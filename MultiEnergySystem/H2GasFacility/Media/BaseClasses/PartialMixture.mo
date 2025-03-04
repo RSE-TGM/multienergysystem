@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
+﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PartialMixture "Interface for real mixture gas models"
   extends Modelica.Icons.MaterialProperty;
 
@@ -13,7 +13,7 @@ partial model PartialMixture "Interface for real mixture gas models"
   parameter Boolean computeDerivatives = true "Used to decide if it is necessary to calculate all thermodynamic derivatives";
   parameter Boolean computeEnergyVariables = true "Used to decide if is necessary to calculate HHV,SG,WI";
   parameter Integer nXi = 0 "Number of independent elements in the mass fraction array that influence fluid properties";
-  parameter Integer nX = nXi + 1 "Number of elements in the mass fraction array that influence fluid properties";
+  parameter Integer nX = nXi "Number of elements in the mass fraction array that influence fluid properties";
   parameter Types.MassFraction Xi_start[nXi] "Start value of the indepentend elements of fluid mass composition";
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";

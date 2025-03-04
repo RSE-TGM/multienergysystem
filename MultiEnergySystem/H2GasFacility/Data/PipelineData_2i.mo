@@ -1,7 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Data;
 package PipelineData_2i "Data of Rete Gas 2i"
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s1(
-      //steel
       L = 842.777,
       Di = 0.2091,
       t = 0.003,
@@ -15,7 +14,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.916e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom =  0.657,
       rho_nom =  3.3011487,
       m_flow_start = 0.413,
       cf = 0,
@@ -24,6 +22,8 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //steel
+      //rho_nom =  0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s2(
       L = 3273.422,
       Di = 0.1603,
@@ -38,7 +38,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.821e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2997186,
       m_flow_start = 0.266,
       cf = 0,
@@ -47,6 +46,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s3(
       L = 100.058,
       Di = 0.1325,
@@ -61,7 +61,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.821e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom =  0.35,
       rho_nom = 3.2762403,
       m_flow_start = 0.0001,
       cf = 0,
@@ -70,6 +69,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom =  0.35,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s4(
       L = 1663.921,
       Di = 0.1325,
@@ -84,7 +84,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.821e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2762403,
       m_flow_start = 0.266,
       cf = 0,
@@ -93,6 +92,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s8(
       L = 154.637,
       Di = 0.1325,
@@ -107,7 +107,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.676e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2398262,
       m_flow_start = 0.266,
       cf = 0,
@@ -116,6 +115,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s9(
       L = 1.635,
       Di = 0.1603,
@@ -130,7 +130,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.671e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2381206,
       m_flow_start = 0.266,
       cf = 0,
@@ -139,12 +138,13 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s11(
       L = 503.188,
       Di = 0.1603,
       t = 0.003,
       tIns = 0.15,
-      h = 31, //looka at pipe orientation
+      h = 31,
       lambdaIns = 0.04,
       lambdam = 45,
       hin_start = -4.65076e6,
@@ -153,7 +153,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.656e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2383168,
       m_flow_start = 0.266,
       cf = 0,
@@ -162,12 +161,14 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+              //looka at pipe orientation
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s12(
       L = 238.385,
       Di = 0.1325,
       t = 0.003,
       tIns = 0.15,
-      h = -11, //look at pipe orientation
+      h = -11,
       lambdaIns = 0.04,
       lambdam = 45,
       hin_start = -4.65076e6,
@@ -176,7 +177,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.636e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2266467,
       m_flow_start = 0.266,
       cf = 0,
@@ -185,12 +185,14 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+               //look at pipe orientation
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s13(
       L = 10.754,
       Di = 0.1603,
       t = 0.003,
       tIns = 0.15,
-      h = -1, //look at pipe orientation
+      h = -1,
       lambdaIns = 0.04,
       lambdam = 45,
       hin_start = -4.65076e6,
@@ -207,6 +209,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+              //look at pipe orientation
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s14(
       L = 589.277,
       Di = 0.1603,
@@ -221,7 +224,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.636e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2227125,
       m_flow_start = 0.266,
       cf = 0,
@@ -230,6 +232,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s16(
       L = 19.065,
       Di = 0.1603,
@@ -244,7 +247,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.618e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.217787,
       m_flow_start = 0.0001,
       cf = 0,
@@ -253,6 +255,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s18(
       L = 880.651,
       Di = 0.1603,
@@ -267,7 +270,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.591e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2175937,
       m_flow_start = 0.26601,
       cf = 0,
@@ -276,8 +278,8 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s19(
-      //PES5
       L = 540.807,
       Di = 0.1472,
       t = 0.003,
@@ -291,7 +293,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.572e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2088442,
       m_flow_start = 0.23194,
       cf = 0,
@@ -300,6 +301,8 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 913,
       rhom = 1850,
       kappa = 0.015e-3);
+      //PES5
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s20(
       L = 14.682,
       Di = 0.1603,
@@ -314,7 +317,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.571e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2062173,
       m_flow_start = 0.23194,
       cf = 0,
@@ -323,6 +325,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s21(
       L = 13.074,
       Di = 0.0831,
@@ -337,7 +340,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.569e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2031567,
       m_flow_start = 0.1123,
       cf = 0,
@@ -346,6 +348,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s22(
       L = 95.937,
       Di = 0.1603,
@@ -360,7 +363,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.571e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2031567,
       m_flow_start = 0.1196,
       cf = 0,
@@ -369,6 +371,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s24(
       L = 92.59,
       Di = 0.1603,
@@ -383,7 +386,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.57e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.20359,
       m_flow_start = 0.1196,
       cf = 0,
@@ -392,6 +394,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s26(
       L = 181.028,
       Di = 0.1325,
@@ -406,7 +409,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.567e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2029781,
       m_flow_start = 0.1196,
       cf = 0,
@@ -415,6 +417,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s28(
       L = 84.565,
       Di = 0.0831,
@@ -429,7 +432,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.55e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2024307,
       m_flow_start = 0.1196,
       cf = 0,
@@ -438,6 +440,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s30(
       L = 138.527,
       Di = 0.0831,
@@ -452,7 +455,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.547e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.198188,
       m_flow_start = 0.1196,
       cf = 0,
@@ -461,6 +463,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s31(
       L = 256.081,
       Di = 0.1603,
@@ -475,7 +478,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.591e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2088442,
       m_flow_start = 0.0341,
       cf = 0,
@@ -484,6 +486,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s36(
       L = 1244.898,
       Di = 0.0831,
@@ -498,7 +501,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.591e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2092228,
       m_flow_start = 0.0341,
       cf = 0,
@@ -507,9 +509,9 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     // ________________________________________________________________________
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds1(
-      // Steel
       L = 3081.109,
       Di = 0.1603,
       t = 0.003,
@@ -523,7 +525,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.888e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2997186,
       m_flow_start = 0.14706,
       cf = 0,
@@ -532,6 +533,8 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      // Steel
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds2(
       L = 92.5,
       Di = 0.1472,
@@ -546,7 +549,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.887e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.3057911,
       m_flow_start = 0.14706,
       cf = 0,
@@ -555,6 +557,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds3(
       L = 677.303,
       Di = 0.1603,
@@ -569,7 +572,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.881e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.3053627,
       m_flow_start = 0.14706,
       cf = 0,
@@ -578,6 +580,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds4(
       L = 433.985,
       Di = 0.1325,
@@ -592,7 +595,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.87e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.3063538,
       m_flow_start = 0.14706,
       cf = 0,
@@ -601,6 +603,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds6(
       L = 8027.812,
       Di = 0.1325,
@@ -615,7 +618,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.673e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.3046892,
       m_flow_start = 0.14706,
       cf = 0,
@@ -624,6 +626,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds7(
       L = 2103.419,
       Di = 0.1325,
@@ -638,7 +641,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.649e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2283714,
       m_flow_start = 0.0987,
       cf = 0,
@@ -647,6 +649,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds8(
       L = 13379.322,
       Di = 0.1325,
@@ -661,7 +664,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.371e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2167377,
       m_flow_start = 0.0987,
       cf = 0,
@@ -670,6 +672,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds9(
       L = 193.484,
       Di = 0.1325,
@@ -684,7 +687,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.672e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2283714,
       m_flow_start = 0.04837,
       cf = 0,
@@ -693,6 +695,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds10(
       L = 7.845,
       Di = 0.1079,
@@ -707,7 +710,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.672e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2298996,
       m_flow_start = 0.0213,
       cf = 0,
@@ -716,6 +718,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds11(
       L = 357.121,
       Di = 0.1079,
@@ -730,7 +733,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.671e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2298996,
       m_flow_start = 0.02711,
       cf = 0,
@@ -739,6 +741,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds12(
       L = 787.51,
       Di = 0.1079,
@@ -753,7 +756,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.669e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2321732,
       m_flow_start = 0.02711,
       cf = 0,
@@ -762,6 +764,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds13(
       L = 190.14,
       Di = 0.0831,
@@ -776,7 +779,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.667e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2230937,
       m_flow_start = 0.02711,
       cf = 0,
@@ -785,6 +787,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds14(
       L = 36.829,
       Di = 0.0831,
@@ -799,7 +802,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.667e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2223463,
       m_flow_start = 0.02711,
       cf = 0,
@@ -808,6 +810,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds15(
       L = 1015.74,
       Di = 0.0831,
@@ -822,7 +825,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.666e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2223463,
       m_flow_start = 0.0078,
       cf = 0,
@@ -831,6 +833,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds16(
       L = 194.511,
       Di = 0.0831,
@@ -845,7 +848,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.671e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2223463,
       m_flow_start = 0.0001,
       cf = 0,
@@ -854,6 +856,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine sds17(
       L = 1077.595,
       Di = 0.0831,
@@ -868,7 +871,6 @@ package PipelineData_2i "Data of Rete Gas 2i"
       pout_start = 4.671e5,
       Tin_start = 15 + 273.15,
       Tout_start = 15 + 273.15,
-      //rho_nom = 0.657,
       rho_nom = 3.2223463,
       m_flow_start = 0.0001,
       cf = 0,
@@ -877,6 +879,7 @@ package PipelineData_2i "Data of Rete Gas 2i"
       cm = 420,
       rhom = 7850,
       kappa = 0.045e-3);
+      //rho_nom = 0.657,
 
 
 

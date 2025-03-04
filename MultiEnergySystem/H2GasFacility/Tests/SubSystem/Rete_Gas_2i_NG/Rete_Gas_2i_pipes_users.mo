@@ -1,6 +1,6 @@
-within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
+﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_pipes_users
-  extends Rete_Gas_2i_pipes;
+  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
     redeclare model Medium = Medium,
     p0=463200,
@@ -68,12 +68,13 @@ model Rete_Gas_2i_pipes_users
         rotation=180,
         origin={-68,26})));
   Sensors.IdealPressureSensor idealPressureSensor(
+    redeclare model Medium = Medium,
     pin_start=493000,
     pout_start=493000,
     Tin_start=288.15,
     Tout_start=288.15,
-    m_flow_start=0.4110,
-    hin_start=-4650159.5) annotation (Placement(transformation(
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-132,26})));
@@ -81,7 +82,7 @@ model Rete_Gas_2i_pipes_users
     annotation (Placement(transformation(extent={{-128,-10},{-108,10}})));
 equation
   connect(GRM_4.inlet, sds10.outlet) annotation (Line(
-      points={{-190,176},{-164,176}},
+      points={{-190,176},{-178,176},{-178,180},{-164,180}},
       color={182,109,49},
       thickness=0.5));
   connect(GRM_5.inlet, sds15.outlet) annotation (Line(
@@ -122,8 +123,8 @@ equation
       color={182,109,49},
       thickness=0.5));
   connect(valve_controller.P_meas,idealPressureSensor. p_meas) annotation (Line(
-        points={{-128.8,0},{-138,0},{-138,18},{-135.8,18},{-135.8,18.6}}, color
-        ={0,0,127}));
+        points={{-128.8,0},{-138,0},{-138,18},{-135.8,18},{-135.8,18.6}}, color=
+         {0,0,127}));
   connect(valve_controller.ACT_x,valveLinearOpening. opening)
     annotation (Line(points={{-106.6,0},{-102,0},{-102,18}}, color={0,0,127}));
   annotation (experiment(

@@ -13,7 +13,7 @@ model PaperCaseI_CH4 "Extended PaperCaseI with pure CH4 and without H2 injection
     sourceH2_A(G=0,use_in_m_flow0 = true),
     m_flow_H2(duration = 0),
     m_flow_H2_ref = 0,
-    quasiStatic = false,
+    massFractionDynamicBalance = true,
     n = 3,
     X_start = {1},
     X_start_H2 = {1},

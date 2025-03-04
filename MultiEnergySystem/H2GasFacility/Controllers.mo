@@ -8,8 +8,7 @@ package Controllers
     parameter Real P_max = 6.0e5 "Maximum pressure of the network";
     Real ACT_comp(start=1) "Computed valve actuation";
 
-    Modelica.Blocks.Interfaces.RealInput P_meas
-      annotation (Placement(transformation(extent={{-128,-20},{-88,20}})));
+    Modelica.Blocks.Interfaces.RealInput P_meas  annotation (Placement(transformation(extent={{-128,-20},{-88,20}})));
     Modelica.Blocks.Interfaces.RealOutput ACT_x(start=1) annotation (Placement(
           transformation(extent={{92,-22},{136,22}}), iconTransformation(extent={{
               92,-22},{136,22}})));

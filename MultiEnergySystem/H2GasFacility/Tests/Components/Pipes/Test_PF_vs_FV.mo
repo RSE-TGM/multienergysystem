@@ -10,7 +10,7 @@ model Test_PF_vs_FV
   //parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter Types.MassFraction X_start[:] = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477};
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = true;
+  parameter Boolean massFractionDynamicBalance = false;
   parameter Boolean constantFrictionFactor = true;
   parameter Boolean computeInertialTerm = false;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
@@ -96,7 +96,7 @@ model Test_PF_vs_FV
         extent={{-10,-10},{10,10}},
         rotation=0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV round1DFV(
-    quasiStatic=quasiStatic,
+    massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=constantFrictionFactor,
     hctype=hctype,
     redeclare model Medium = Medium,

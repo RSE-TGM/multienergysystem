@@ -100,6 +100,15 @@ package MassMolFractionData "Data of different articles"
              Modelica.Media.IdealGases.Common.SingleGasesData.N2.MM,
              Modelica.Media.IdealGases.Common.SingleGasesData.H2.MM},
       Y = {0.93580, 0.06131, 0.00074, 0.00010, 0.00204, 0.00001, 0});
+    constant MultiEnergySystem.H2GasFacility.Data.NaturalGasMassMolCompositions NG_Paolini_Algerian(
+      MM =  {Modelica.Media.IdealGases.Common.SingleGasesData.CH4.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.C2H6.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.C3H8.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.C4H10_n_butane.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.CO2.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.N2.MM,
+             Modelica.Media.IdealGases.Common.SingleGasesData.H2.MM},
+      Y = {0.87, 0.09, 0.009, 0.001, 0.02, 0.01, 0});
   function massToMoleFractions "Return mole fractions from mass fractions X"
     extends Modelica.Icons.Function;
     input Types.MassFraction X[:] "Mass fractions of mixture";

@@ -46,7 +46,9 @@ equation
   drho_dp = rho/p;
   drho_dT = -rho/T;
   drho_dX = -rho^2*dv_dX;
-  drho_dXi = -rho*MM_mix*(ones(nXi)./MM[1:nXi] - ones(nXi)/MM[nX]);
+//   drho_dXi = -rho*MM_mix*(ones(nXi)./MM[1:nXi] - ones(nXi)/MM[nX]);
+//   drho_dXi = -rho^2*dv_dXi;
+  drho_dXi = drho_dX;
   drho_dXi = -rho^2*dv_dXi;
 
   // Specific enthalpy derivatives
@@ -58,7 +60,11 @@ equation
   du_dp = -v - p*dv_dp;
   du_dX = dh_dX - p*dv_dX;
 
-  dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
+//   dh_id_dXi = h_star[1:nXi] - ones(nXi)*h_star[nX];
+//   dh_dXi = dh_id_dXi "in mass units";
+//   du_dXi = dh_dXi - p*dv_dXi;
+
+  dh_id_dXi = dh_id_dX;
   dh_dXi = dh_id_dXi "in mass units";
   du_dXi = dh_dXi - p*dv_dXi;
 

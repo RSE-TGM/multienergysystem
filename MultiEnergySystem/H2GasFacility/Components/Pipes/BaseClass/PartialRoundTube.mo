@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
+﻿within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 partial model PartialRoundTube
   extends PartialInsulatedTube;
 

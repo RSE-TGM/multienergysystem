@@ -15,7 +15,7 @@ model PaperCaseI_NG_H2_A
       G=0,         use_in_m_flow0 = true),
     m_flow_H2(duration = 0),
     m_flow_H2_ref = 0.01,
-    quasiStatic = false,
+    massFractionDynamicBalance = true,
     n = 3,
     X_start = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0},
     X_start_H2 = {0.0, 0.00, 0.00, 0.000, 0.00, 0.000, 1},

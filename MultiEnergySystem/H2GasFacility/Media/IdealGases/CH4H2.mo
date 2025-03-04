@@ -1,7 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
 model CH4H2
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
-      nXi = 1,
+      nXi = 2,
+      nX = 2,
       X_start = {0.9, 0.1},
       T_start = 25 + 273.15,
       p_start = 1e5,

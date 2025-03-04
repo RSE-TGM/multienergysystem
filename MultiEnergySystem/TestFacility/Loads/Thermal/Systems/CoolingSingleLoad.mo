@@ -161,7 +161,7 @@ model CoolingSingleLoad
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
-        origin={1,-48.5})));
+        origin={1,-47.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
@@ -332,7 +332,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_SourceOut_FCV701.inlet,EX7X1. outhot) annotation (Line(
-      points={{20,-26},{20,-39.75},{21.3,-39.75}},
+      points={{20,-26},{20,-38.75},{21.3,-38.75}},
       color={140,56,54},
       thickness=0.5));
   connect(FT701.inlet,PL701_FCV701_FT701. outlet) annotation (Line(
@@ -348,7 +348,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn.outlet,EX7X1. inhot) annotation (Line(
-      points={{-20,3.55271e-15},{-19.3,3.55271e-15},{-19.3,-39.75}},
+      points={{-20,3.55271e-15},{-19.3,3.55271e-15},{-19.3,-38.75}},
       color={140,56,54},
       thickness=0.5));
   connect(PT7X1.inlet,TT7X1. inlet) annotation (Line(
@@ -360,11 +360,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EX7X1.outcold,TT7X4. inlet) annotation (Line(
-      points={{-19.3,-57.25},{-19.6,-57.25},{-19.6,-73}},
+      points={{-19.3,-56.25},{-19.6,-56.25},{-19.6,-73}},
       color={140,56,54},
       thickness=0.5));
   connect(TT7X3.inlet,EX7X1. incold) annotation (Line(
-      points={{19.6,-72},{19.6,-58.125},{21.3,-58.125},{21.3,-57.25}},
+      points={{19.6,-72},{19.6,-58.125},{21.3,-58.125},{21.3,-56.25}},
       color={140,56,54},
       thickness=0.5));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));

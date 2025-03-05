@@ -6,7 +6,7 @@ model PaperCaseII "Distribution network example from [2]"
   replaceable model Medium = H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
-  parameter Boolean quasiStatic = false;
+  parameter Boolean massFractionDynamicBalance = true;
   parameter Boolean computeTransport = true;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.LowPressure;
   parameter Integer n = 5 "Number of volumes in each pipeline";
@@ -36,7 +36,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_1.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_1.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_1.pout_start,
-    rho_nom=Pipe.pipeII_1.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_1.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-80,90},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(
     Di=Pipe.pipeII_2.Di,
@@ -50,7 +50,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_2.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_2.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_2.pout_start,
-    rho_nom=Pipe.pipeII_2.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_2.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-80,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(
     Di=Pipe.pipeII_3.Di,
@@ -64,7 +64,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_3.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_3.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_3.pout_start,
-    rho_nom=Pipe.pipeII_3.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_3.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-50,60},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe4(
     Di=Pipe.pipeII_4.Di,
@@ -76,7 +76,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_4.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_4.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_4.pout_start,
-    rho_nom=Pipe.pipeII_4.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_4.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-110,60},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(
     Di=Pipe.pipeII_5.Di,
@@ -89,7 +89,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_5.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_5.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_5.pout_start,
-    rho_nom=Pipe.pipeII_5.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_5.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-110,0},      extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe6(
     Di=Pipe.pipeII_6.Di,
@@ -102,7 +102,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_6.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_6.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_6.pout_start,
-    rho_nom=Pipe.pipeII_6.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_6.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-50,0},      extent={{-10,-10},{10,10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe7(
     Di=Pipe.pipeII_7.Di,
@@ -115,7 +115,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_7.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_7.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_7.pout_start,
-    rho_nom=Pipe.pipeII_7.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_7.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-80,-30},    extent={{-10,-10},{10,10}},      rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe8(
     Di=Pipe.pipeII_8.Di,
@@ -128,7 +128,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_8.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_8.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_8.pout_start,
-    rho_nom=Pipe.pipeII_8.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_8.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-140,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe9(
     Di=Pipe.pipeII_9.Di,
@@ -141,7 +141,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_9.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_9.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_9.pout_start,
-    rho_nom=Pipe.pipeII_9.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_9.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-20,30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(
     Di=Pipe.pipeII_10.Di,
@@ -154,7 +154,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_10.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_10.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_10.pout_start,
-    rho_nom=Pipe.pipeII_10.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_10.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-140,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe11(
     Di=Pipe.pipeII_11.Di,
@@ -167,7 +167,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_11.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_11.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_11.pout_start,
-    rho_nom=Pipe.pipeII_11.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_11.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={-20,-30},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(
     Di=Pipe.pipeII_12.Di,
@@ -180,7 +180,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_12.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_12.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_12.pout_start,
-    rho_nom=Pipe.pipeII_12.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_12.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={10,0},      extent={{-10,-10},{10,10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(
     Di=Pipe.pipeII_13.Di,
@@ -193,7 +193,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_13.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_13.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_13.pout_start,
-    rho_nom=Pipe.pipeII_13.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_13.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={70,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe14(
     Di=Pipe.pipeII_14.Di,
@@ -206,7 +206,7 @@ model PaperCaseII "Distribution network example from [2]"
     m_flow_start=Pipe.pipeII_14.m_flow_start,                                                                                                                                                                                                        n = n,
     pin_start(displayUnit="Pa") = Pipe.pipeII_14.pin_start,
     pout_start(displayUnit="Pa") = Pipe.pipeII_14.pout_start,
-    rho_nom=Pipe.pipeII_14.rho_nom,                                                                                                                                                                                                        quasiStatic=quasiStatic, momentum = momentum, computeTransport = computeTransport) annotation (
+    rho_nom=Pipe.pipeII_14.rho_nom,                                                                                                                                                                                                        massFractionDynamicBalance=massFractionDynamicBalance, momentum = momentum, computeTransport = computeTransport) annotation (
     Placement(visible = true, transformation(origin={130,0},      extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser node2(redeclare model

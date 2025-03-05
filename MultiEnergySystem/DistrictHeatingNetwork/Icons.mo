@@ -212,7 +212,7 @@ package Icons "Icon package for DHN components"
     end Facilities;
 
     partial model InProgress
-      annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+      annotation (Icon(                                             graphics={
               Rectangle(
               extent={{-100,100},{100,-100}},
               lineColor={28,108,200},

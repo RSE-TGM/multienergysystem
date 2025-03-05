@@ -13,7 +13,7 @@ partial model PartialMixture "Interface for real mixture gas models"
   parameter Boolean computeDerivatives = true "Used to decide if it is necessary to calculate all thermodynamic derivatives";
   parameter Boolean computeEnergyVariables = true "Used to decide if is necessary to calculate HHV,SG,WI";
   parameter Integer nXi = 0 "Number of independent elements in the mass fraction array that influence fluid properties";
-  parameter Integer nX = nXi + 1 "Number of elements in the mass fraction array that influence fluid properties";
+  parameter Integer nX = nXi "Number of elements in the mass fraction array that influence fluid properties";
   parameter Types.MassFraction Xi_start[nXi] "Start value of the indepentend elements of fluid mass composition";
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
@@ -39,12 +39,17 @@ partial model PartialMixture "Interface for real mixture gas models"
   Types.DerSpecificVolumeByTemperature dv_dT if computeDerivatives "Temperature derivative of specific volume at constant pressure";
   Types.SpecificVolume dv_dX[nX] if computeDerivatives "Mass fraction derivative of specific volume, per each component";
   Types.SpecificEntropy s "Specific Entropy" annotation (
-    HideResult = not ComputeEntropy);
-  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeEntropy);
+  Types.DynamicViscosity mu(start = mu_start) "Dynamic viscosity";
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeTransport);
   Types.Density rho "Density";
+
+initial equation
+  // Check the validity of inputs during initialization
+  assert(p >= 0, "Pressure must be non-negative.");
+  assert(T > 0, "Temperature must be positive.");
+  assert(abs(sum(X) - 1) < 1e-6, "Mass fractions must sum to 1.");
 
 protected
   function cp_T

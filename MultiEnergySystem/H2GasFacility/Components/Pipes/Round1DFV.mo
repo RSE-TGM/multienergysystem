@@ -2,8 +2,9 @@ within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV) representation"
   extends H2GasFacility.Components.Pipes.BaseClass.PartialRoundTube(
     redeclare model Medium = Gas,
-    fluidIn(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
-    fluidOut(computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
+    X_start = {1,0},
+    fluidIn(X_start = X_start, computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
+    fluidOut(X_start = X_start, computeTransport = computeTransport, computeEntropy = computeEntropy, computeEnergyVariables = computeEnergyVariables),
     inlet(nXi = nXi, m_flow(start = m_flow_start, min = if allowFlowReversal then -Modelica.Constants.inf else 0), Xi(start = X_start[1:fluid[1].nXi])),
     outlet(nXi = nXi, m_flow(start = -m_flow_start, max = if allowFlowReversal then +Modelica.Constants.inf else 0)), hin_start = fluid[1].h_id_start,
     T_ext = system.T_amb, allowFlowReversal = system.allowFlowReversal);
@@ -13,7 +14,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   import MultiEnergySystem.DistrictHeatingNetwork.Utilities.squareReg;
   import Modelica.Fluid.Utilities.regStep;
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Gas = H2GasFacility.Media.RealGases.NG6_H2_Papay
+  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4H2
       constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
      choicesAllMatching = true);
   replaceable model HeatTransferModel =
@@ -31,7 +32,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Choices"));
   parameter Boolean noInitialPressure = false "Used to remove initial equation for pressure, to be used in case of solver failure" annotation (
     Dialog(group = "Choices"));
-  parameter Boolean quasiStatic = false "Used to remove composition dynamic equation" annotation (
+  parameter Boolean massFractionDynamicBalance = true "Used to remove composition dynamic equation" annotation (
     Dialog(group = "Choices"));
   parameter Boolean constantFrictionFactor = false "Used to set a constant value for the friction factor" annotation (
     Dialog(group = "Choices"));
@@ -42,7 +43,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Choices"));
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure "Momentum equation according to the operating pressure" annotation (
     Dialog(group = "Choices"));
-  parameter Types.Pressure pin_nom = pin_start "Nominal pressure of the pipeline system" annotation (
+  parameter Types.Pressure pin_nom = 1e5 "Nominal pressure of the pipeline system" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter Types.Density rho_nom = 0.68 "Nominal density of the fluid" annotation (
     Dialog(tab = "Data", group = "Fluid"));
@@ -70,8 +71,8 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Heat Transfer Model"));
   parameter Types.PerUnit kc = 1 "Corrective factor for heat tranfer" annotation (
     Dialog(group = "Heat Transfer Model"));
-//   parameter Types.MassFraction X_start[nX] "Start value for the mass fraction"
-//     annotation (Dialog(group="Initialisation"));
+  //parameter Types.MassFraction X_start[nX] "Start value for the mass fraction"
+  //  annotation (Dialog(group="Initialisation"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
 
@@ -90,16 +91,16 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
   // State Variables
-  Types.MassFraction Xitilde[n, nXi](each stateSelect = if not quasiStatic then StateSelect.prefer else StateSelect.default, start = fill(X_start[1:nXi], n), nominal = 0.1*fill(ones(nXi),n)) "Mass Composition state";
+  Types.MassFraction Xitilde[n, nXi](each stateSelect = if massFractionDynamicBalance then StateSelect.prefer else StateSelect.default); /*start = fill(X_start[1:nXi], n), nominal = 0.1*fill(ones(nXi),n)) "Mass Composition state";*/
+
   //Types.Pressure ptilde(stateSelect = StateSelect.prefer, start = pout_start, nominal = 1e4) "Pressure state the pipe";
   Types.Pressure ptilde[n](each stateSelect = StateSelect.prefer, start = p_start[2:end], each nominal = pin_nom) "Press. state";
   Types.Temperature Ttilde[n](each stateSelect = StateSelect.prefer, start = T_start[2:end]) "State variable temperatures";
   Types.Density rhotilde[n](each start = rho_nom);
   Types.SpecificEnergy utilde[n];
   Types.MassFlowRate m_flowtilde[n](each stateSelect = StateSelect.prefer, each start = m_flow_start);
-  Types.MassFraction Xtilde[n, nX](start = fill(X_start, n), nominal = 0.1*fill(ones(nX),n));
+  //Types.MassFraction Xtilde[n, nX];//(start = fill(X_start, n), nominal = 1*fill(ones(nX),n));
   //Types.MassFlowRate m_flowtilde[n](each start = m_flow_start);
-
 
   // Inlet/Outlet Variables
   Types.Temperature Tin "Inlet temperature";
@@ -118,7 +119,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
   Types.Temperature T[n + 1] "Volume boundary temperatures";
   Types.SpecificEnthalpy h[n + 1] "Specific enthalpy at each fluid";
   //Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";
-  Types.MassFraction X[n+1, nX](nominal = fill(ones(nX),n+1)) "Mass fractions at each volume boundary";
+  Types.MassFraction X[n+1, nX](nominal = fill(ones(nX),n+1), start = fill(X_start, n+1)) "Mass fractions at each volume boundary";
   Types.MassFraction Xi[n + 1, nXi](nominal = fill(ones(nXi),n+1)) "Mass fractions at each volume boundary";
   Types.Velocity vel[n + 1](each start = vel_nom, each nominal = 1) "Velocity at each volume boundary";
   Types.Pressure p[n + 1](each nominal = pin_nom) "Pressure at each fluid";
@@ -188,6 +189,8 @@ equation
       Re[i] = max((Di/A)*homotopy(abs(m_flow[i])/fluid[i].mu_start+1e-3, m_flow_start/fluid[i].mu_start),4000) "Reynold's number";
       // Haaland formula for friction factor
       sqrtReg(ff[i]) = min(1/(-1.8*log10((6.9/Re[i]) + (kappa/(3.71*Di))^1.11)), 1/(-1.8*log10((6.9/4000) + (kappa/(3.71*Di))^1.11)));
+      // Chen formula: --> Solver not able to solve it
+      // sqrtReg(ff[i]) = min(1/(-2*log10(kappa/(3.7*Di)-((5/Re[i])*log10((k/Di)^1.1/2.8+5.8/Re[i]^0.8981)))), 1/(-2*log10(kappa/(3.7*Di)-((5/4000)*log10((k/Di)^1.1/2.8+5.8/4000^0.8981)))));
     else
       Re[i]=0;
       ff[i]=ff_nom;
@@ -203,10 +206,11 @@ equation
   if allowFlowReversal then
     Ttilde = regStep(inlet.m_flow, T[2:end], T[1:end-1], m_flow_start*dp_small);
     //Ttilde = (T[2:end] + T[1:end-1])/2;
-    //Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    Xitilde = regStep(inlet.m_flow, Xi[2:end,:], Xi[1:end-1,:], m_flow_start*dp_small);
+    //Xtilde = regStep(inlet.m_flow, X[2:end,:], X[1:end-1,:], m_flow_start*dp_small);
     //Xitilde = (Xi[2:end,:] + Xi[1:end-1,:])/2;
-    Xitilde = Xi[2:end,:];
-    Xtilde = X[2:end,:];
+    //Xitilde = Xi[2:end,:];
+    //Xtilde = X[2:end,:];
     rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_start*dp_small);
     //rhotilde = (rho[2:end] + rho[1:end-1])/2;
     utilde = regStep(inlet.m_flow, fluid[2:end].u, fluid[1:end-1].u, m_flow_start*dp_small);
@@ -242,22 +246,22 @@ equation
 
   M = Vi*rhotilde; // Total mass in the i-th volume
 
-  dvdttilde = if quasiStatic then
+  dvdttilde = if not massFractionDynamicBalance then
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)
               else
                 dv_dp.*der(ptilde)+
                 dv_dT.*der(Ttilde)+
-                {dv_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
-                //{dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
-  dudttilde = if quasiStatic then
+                {dv_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                //{dv_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
+  dudttilde = if not massFractionDynamicBalance then
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)
               else
                 du_dp.*der(ptilde)+
                 du_dT.*der(Ttilde)+
-                {du_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
-                //{du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                {du_dXi[i,:]*der(Xitilde[i,:]) for i in 1:n};
+                //{du_dX[i,:]*der(Xtilde[i,:]) for i in 1:n};
 
 // Inlet/Outlet variables
   Tin = fluid[1].T "Inlet temperature equals to temperature of first fluid";
@@ -288,11 +292,12 @@ equation
 
   for i in 1:n loop
     // Composition mass balance
-    if quasiStatic then
+    if not massFractionDynamicBalance then
       zeros(nXi) = Xi[i,:] - Xi[i+1,:];
     else
       //M[i]/m_flow[i]*der(Xitilde[i,:]) = (Xi[i,:] - Xi[i+1,:]);
-      M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
+      M[i]*der(Xitilde[i,:]) = m_flow[i]*(Xi[i,:] - Xi[i+1,:]);
+      //M[i]*der(Xitilde[i,:]) + Xitilde[i,:]*(m_flow[i]-m_flow[i+1]) = m_flow[i]*Xi[i,:] - m_flow[i+1]*Xi[i+1,:];
     end if;
 
     // Momentum Balance - Hydraulic Capacitance Position
@@ -306,10 +311,10 @@ equation
 
     // Momentum Balance - Hydraulic Capacitance Position
     if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
-      p[i] - ptilde[i] = rho[i]*g_n*H/2 + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
-      ptilde[i] - p[i+1] = rho[i+1]*g_n*H/2 + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
+      p[i] - ptilde[i] + der(m_flowtilde[i]) / 2 = rho[i]*g_n*H/(2*n) + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i])/2;
+      ptilde[i] - p[i+1] + der(m_flowtilde[i]) / 2 = rho[i+1]*g_n*H/(2*n) + homotopy(ff[i+1]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i+1]*regSquare(m_flow[i+1], m_flow_start*0.05), dp_nom/m_flow_start*m_flow[i+1])/2;
     else
-      -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i]*g_n*H + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
+      -L/(A*n)*der(m_flowtilde[i]) + p[i] - p[i+1] = rho[i]*g_n*H/n + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       //p[i] - p[i+1] = rho[i]*g_n*H + homotopy(ff[i]*(8*(L/n)/(Modelica.Constants.pi^2*Di^5))/rho[i]*regSquare(m_flow[i], m_flow_start*0.05), (dp_nom/m_flow_start)*m_flow[i]);
       ptilde[i] = p[i+1];
       //ptilde[i] = regStep(inlet.m_flow, p[i+1], p[i], m_flow_start*dp_small);
@@ -361,10 +366,11 @@ initial equation
     for i in 1:n loop
        if hctype == DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle then
          // no mass flow derivative
+         der(m_flowtilde[i]) = 0;
        else
          der(m_flowtilde[i]) = 0;
        end if;
-      if quasiStatic then
+      if not massFractionDynamicBalance then
         // nothing
         der(Ttilde[i]) = 0;
       else
@@ -393,9 +399,16 @@ initial equation
   end if;
 
   annotation (Documentation(info="<html>
-<p>Finite Volume model fo a Pipe. </p>
-<p>The dynamic model includes the following equations: Mass balance, 
-Balance, Momentu Balance, and Mass composition Balance.</p>
-<p><span style=\"font-size: 10pt;\">The Friction factor is computed using the explicit Haaland Formula. </span></p>
+<p>The <span style=\"font-family: Courier New;\">Round1DFV</span> model simulates one-dimensional fluid flow in a rigid round pipe using a <b>Finite Volume (FV)</b> representation. This approach discretizes the pipe into several finite volumes to solve mass, momentum, and energy conservation equations accurately, while allowing flexibility for various flow conditions and media properties.</p>
+<h4>Equations</h4>
+<p>The model is governed by:</p>
+<ol>
+<li><b>Mass Balance</b>: Accounts for the conservation of mass across finite volumes.</li>
+<li><b>Momentum Balance</b>: Incorporates friction and pressure losses with optional inertial effects.</li>
+<li><b>Energy Balance</b>: Includes heat transfer between the pipe walls and the fluid.</li>
+<li><b>Mass composition Balance</b>: Accounts for fluid composition.</li>
+</ol>
+<h4>Examples</h4>
+<p>Pressure source and mass flow sink: <a href=\"MultiEnergySystem.H2GasFacility.Tests.Components.Pipes.TestSinglePipe_A\">MultiEnergySystem.H2GasFacility.Tests.Components.Pipes.TestSinglePipe_A</a></p>
 </html>"));
 end Round1DFV;

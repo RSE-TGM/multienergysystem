@@ -5,7 +5,7 @@ model PaperCaseI_A "Same as PaperCaseI with injection of pure hydrogen in node 3
     useEnergyDemand = false,
     sourceH2_A(use_in_m_flow0 = true),
     m_flow_H2(duration = 0),
-    quasiStatic = false,
+    massFractionDynamicBalance = true,
     n = 3);
 equation
   connect(sourceH2_A.outlet, pipe7.inlet) annotation (
@@ -21,6 +21,17 @@ equation
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"),
     Documentation(info="<html>
-<p><span style=\"font-size: 12pt;\">Injection of pure Hydrogen in node 3 with a step at t=50 s. </span></p>
+<p>The <span style=\"font-family: Courier New;\">PaperCaseI_A</span> model is an extension of the <span style=\"font-family: Courier New;\">PaperCaseI</span> model, designed to simulate the injection of pure hydrogen (<span style=\"font-family: Courier New;\">H2</span>) into node 3 of the system. The system works with real and ideal medium models.</p>
+<h4>Use Case</h4>
+<p>This model is ideal for:</p>
+<ul>
+<li>Studying the effects of hydrogen injection in a subsystem modeled by <span style=\"font-family: Courier New;\">PaperCaseI</span>.</li>
+<li>Analyzing transient dynamics and flow distribution in the presence of pure hydrogen.</li>
+</ul>
+<h4>Assumptions</h4>
+<ul>
+<li>Pure Hydrogen (<span style=\"font-family: Courier New;\">H2</span>) is the injected medium.</li>
+<li>The system operates dynamically.</li>
+</ul>
 </html>"));
 end PaperCaseI_A;

@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
 model NG_4
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
       nXi = 3,
       X_start = {0.9, 0.05, 0.04, 0.01},

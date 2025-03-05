@@ -44,6 +44,9 @@ model PaperCaseI_MSL_NG_H2_A
   parameter Types.MassFraction X_start[nX]= {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
   parameter Types.MassFraction X_start_H2[nX] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1};
   parameter Types.MassFraction X_net[nX] = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
+  parameter Types.MassFlowRate H2Production[:, 2] = [0, m_flow_H2_ref*0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.0008655; 15*3600, 0.0003956; 16*3600, 0.0003956; 17*3600, 0; 24*3600, 0];
+  parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
+
 
   Modelica.Fluid.Sources.MassFlowSource_T boundary(
     redeclare package Medium = Medium,
@@ -59,11 +62,14 @@ model PaperCaseI_MSL_NG_H2_A
     startTime=50)                                                                                           annotation (
     Placement(visible = true, transformation(origin={-92,-26},     extent={{-6,-6},
             {6,6}},                                                                                 rotation = 0)));
+  Modelica.Blocks.Sources.TimeTable H2_Production(table=H2Production)
+    annotation (Placement(visible = true, transformation(origin={76,9},    extent = {{-180, -70}, {-160, -50}}, rotation = 0)));
 equation
 
-  connect(m_flow_H2.y, boundary.m_flow_in) annotation (Line(points={{-85.4,-26},{-80,-26}}, color={0,0,127}));
   connect(boundary.ports[1], pipe5.port_b)
     annotation (Line(points={{-70,-30},{-59,-30},{-59,-3},{-16,-3},{-16,4.16334e-16},{-16.5,4.16334e-16},{-16.5,0},{-23,0}}, color={0,127,255}));
+  connect(m_flow_H2.y, boundary.m_flow_in)
+    annotation (Line(points={{-85.4,-26},{-80,-26}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Ellipse(lineColor = {75,138,73},

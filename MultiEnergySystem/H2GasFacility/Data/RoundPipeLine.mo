@@ -5,9 +5,9 @@ record RoundPipeLine
   Types.Length t "Thickness";
   Types.Length tIns "Insulation thickness";
   Types.Length h "Outlet height w.r.t to inlet";
-  Types.Length kappa "Roughness in (m)";
+  Types.Length kappa "Roughness in (m), steel=0.045mm, PES5=0.0015mm";
   Types.ThermalConductivity lambdaIns "Insulation thermal conductivity";
-  Types.ThermalConductivity lambdam "Metal thermal conductivity";
+  Types.ThermalConductivity lambdam "Metal thermal conductivity, steel=45W/mK, PES5=2.5W/mK";
   Types.SpecificEnthalpy hin_start "Start inlet specific enthalpy";
   Types.Pressure pmax "Maximum design pressure";
   Types.Pressure pin_start "Start inlet pressure";
@@ -19,6 +19,6 @@ record RoundPipeLine
   Types.PerUnit cf "Constant Fanning friction coefficient";
   Types.Velocity u_nom "Nominal fluid velocity";
   Real k(unit = "Pa/(kg/s)")  "Coefficient for the calculation of the pressure loss across the pipe";
-  Types.SpecificHeatCapacity cm "Metal specific heat capacity";
-  Types.Density rhom "Metal density";
+  Types.SpecificHeatCapacity cm "Metal specific heat capacity, steel=420J/kgC, PES5=913J/kgC";
+  Types.Density rhom "Metal density, steel=7850kg/m3, PES5=1850kg/m3";
 end RoundPipeLine;

@@ -1,11 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes.BaseClass;
 partial model PartialInsulatedTube
-  extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(
-                                                                        inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
+  extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
 
   // Medium for the pipe
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4
       constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture
                                                                      "Medium model" annotation (
      choicesAllMatching = true);
@@ -37,7 +36,7 @@ partial model PartialInsulatedTube
     "Metal wall specific heat capacity" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
   parameter Types.Density rhom = 8000
-    "Metal density [g/cm^3], for steel = 8" annotation (
+    "Metal density [kg/m^3], for steel = 8000" annotation (
     Dialog(tab = "Data", group = "Metal Properties"));
   parameter Types.ThermalConductivity lambdam = 45
     "Metal thermal conductivity; steel = 45" annotation (
@@ -64,7 +63,9 @@ partial model PartialInsulatedTube
   parameter Types.Temperature Tout_start = 15 + 273.15
     "Temperature start value of fluid at the end of the volume" annotation (
     Dialog(group = "Initialisation"));
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X
+  //parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = {0.9, 0.05, 0.03, 0.02}
+
+  parameter H2GasFacility.Types.MassFraction X_start[:] = {0.9, 0.05, 0.03, 0.02}
     "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
 
@@ -90,5 +91,9 @@ equation
     Icon(graphics={Rectangle(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Text(
           extent={{-100,-60},{100,-120}},
           textColor={28,108,200},
-          textString="%name")}));
+          textString="%name")}), Documentation(info="<html>
+<p>This partial model represents a horizontally oriented insulated tube designed for gas transport in energy systems. It defines the physical properties of the tube, including dimensions, insulation characteristics, and material properties, and provides parameters for initializing flow and thermal conditions.</p>
+<h4>Usage:</h4>
+<p>Extend this model to define specific behaviors, such as heat transfer through the insulation or pressure drop along the tube, depending on the application.</p>
+</html>"));
 end PartialInsulatedTube;

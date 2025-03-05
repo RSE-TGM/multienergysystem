@@ -3,28 +3,10 @@ model IdealMassFlowSensor
   "Ideal Mass Flow Sensor"
   extends MultiEnergySystem.H2GasFacility.Sensors.BaseClass.PartialIdealFlowSensor;
 
-  replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
-     choicesAllMatching = true);
-
-
   parameter Types.Temperature T_start = 60 + 273.15;
   parameter Types.Pressure p_start = 2.5e5;
 
   parameter Types.MassFlowRate m_flow_start "Start value for mass flow rate" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Pressure pin_start "Pressure start value of outgoing fluid" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Pressure pout_start "Pressure start value of outgoing fluid" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.SpecificEnthalpy hin_start "Specific enthalpy start value at the inlet of the volume" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tin_start "Temperature start value of fluid at the start of the volume" annotation (
-    Dialog(group = "Initialisation"));
-  parameter Types.Temperature Tout_start "Temperature start value of fluid at the end of the volume" annotation (
-    Dialog(group = "Initialisation"));
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
     Dialog(group = "Initialisation"));
 
   Modelica.Blocks.Interfaces.RealOutput m_flow "Mass flowrate in kg/s" annotation (Placement(
@@ -75,10 +57,7 @@ equation
   q_m3hr = (m_flow/fluidIn.rho)*3600;
 
 
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-                     Rectangle(lineColor = {140, 56, 54}, fillColor={244,125,35},    fillPattern=
-              FillPattern.Solid,                                                                                      extent={{-80,20},
-              {80,-20}}),                                                                                                                                                                                                        Text(origin={0,100},    textColor={244,125,
+  annotation (Icon(                                             graphics={                                                                                                                                                       Text(origin={0,100},    textColor={244,125,
               35},                                                                                                                                                                                                        extent={{-100,
               -126},{100,-166}},
           textString="%name"),
@@ -86,12 +65,16 @@ equation
               35},                                                                                                                                                                                                        extent={{-40,100},
               {40,20}}),                                                                                                                                 Line(points={{40,60},
               {60,60}},                                                                                                                                                                      color={244,125,
-              35}),                                                                                                                                                                                                        Line(points={{0,20},{
-              0,-20}},                                                                                                                                                                                                        color={244,125,
+              35}),                                                                                                                                                                                                        Line(points={{0,20},{0,-16}},
+                                                                                                                                                                                                        color={244,125,
               35}),                                                                                                                                      Line(points={{-10,0},
               {10,0}},                                                                                                                                                                       color={244,125,
               35},
           origin={0,110},
-          rotation=90)}),                                        Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+          rotation=90),
+        Rectangle(
+          extent={{-80,18},{80,-16}},
+          lineColor={247,150,70},
+          fillColor={247,150,70},
+          fillPattern=FillPattern.Solid)}));
 end IdealMassFlowSensor;

@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.Plants.Thermal;
+﻿within MultiEnergySystem.TestFacility.Plants.Thermal;
 package Configurations "Different possible configurations of the heat generating part of the network"
   extends Modelica.Icons.VariantsPackage;
 

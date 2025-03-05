@@ -5,7 +5,7 @@ model RG2i_source1_CH4H2
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,
-    X_inj ={0,1},
+    X_inj= {0,1},
     constantFrictionFactor = false,
     massFractionDynamicBalance = true,
     Immissione_1(X0=X_inj, use_in_X0=true),

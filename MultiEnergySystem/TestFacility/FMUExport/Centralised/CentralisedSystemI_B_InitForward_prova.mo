@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
-model CentralisedSystemI_B_InitForward
+model CentralisedSystemI_B_InitForward_prova
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends Networks.Thermal.Configurations.Centralised.CentralizedSystemI_B(
@@ -81,7 +81,6 @@ model CentralisedSystemI_B_InitForward
   final parameter Boolean fixEX731Pt = not fixthetaTCV731;
   final parameter Boolean fixdFTR00 = not fixthetaFCVR01;
   final parameter Boolean fixTTR02 = not fixToutRR01;
-
 
 //Additional variables
   final parameter Boolean fixTT902 = false;
@@ -1228,4 +1227,4 @@ Facility")}),                                                    Diagram(
       StopTime=2000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end CentralisedSystemI_B_InitForward;
+end CentralisedSystemI_B_InitForward_prova;

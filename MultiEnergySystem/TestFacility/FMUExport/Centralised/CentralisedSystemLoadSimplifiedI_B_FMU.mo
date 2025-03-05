@@ -1,6 +1,7 @@
 within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CentralisedSystemLoadSimplifiedI_B_FMU
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
+  extends
+    Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
     coldSourcePEX721(T0=EX721_Tin_cold),
     coldSourcePEX711(T0=EX711_Tin_cold),
     coldSourcePEX731(T0=EX731_Tin_cold),
@@ -56,7 +57,7 @@ model CentralisedSystemLoadSimplifiedI_B_FMU
   Modelica.Blocks.Interfaces.RealInput EB401_Tout
     annotation (Placement(transformation(extent={{-418,-320},{-378,-280}})));
   Modelica.Blocks.Interfaces.RealInput GB101_Tout
-    annotation (Placement(transformation(extent={{-334,-320},{-294,-280}})));
+    annotation (Placement(transformation(extent={{-326,-282},{-286,-242}})));
   Modelica.Blocks.Interfaces.RealInput omega_P101
     annotation (Placement(transformation(extent={{-178,-200},{-218,-160}})));
   Modelica.Blocks.Interfaces.RealInput omega_P401
@@ -134,6 +135,9 @@ model CentralisedSystemLoadSimplifiedI_B_FMU
   Modelica.Blocks.Interfaces.RealOutput FT_401
     annotation (Placement(transformation(extent={{-384,-202},{-404,-182}})));
 
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
+        rotation=90,
+        origin={-372,-408})));
 equation
   connect(P901.in_omega, omega_P901) annotation (Line(points={{-747.25,66.3},{-728.625,66.3},{-728.625,
           66},{-710,66}}, color={0,0,127}));
@@ -146,7 +150,8 @@ equation
     annotation (Line(points={{734,234},{698,234},{698,235}}, color={0,0,127}));
   connect(EB401.Tout_ref, EB401_Tout) annotation (Line(points={{-361.5,-301},{-374.5,-301},{-374.5,-300},{-398,-300}},
                                             color={0,0,127}));
-  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-281.5,-301},{-281.5,-300},{-314,-300}},
+  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-281.5,-301},{
+          -281.5,-288},{-306,-288},{-306,-262}},
                               color={0,0,127}));
   connect(theta_FCV101, FCV101.opening)
     annotation (Line(points={{-194,-110},{-232,-110}}, color={0,0,127}));
@@ -211,6 +216,10 @@ equation
           -206},{-283.2,-199.9}}, color={0,0,127}));
   connect(FT401.m_flow, FT_401) annotation (Line(points={{-365.2,-195.9},{-365.2,-200},{-378,-200},{
           -378,-192},{-394,-192}}, color={0,0,127}));
+  connect(sourceVoltage.outlet, EB401.inletPower) annotation (Line(
+      points={{-372,-392},{-372,-382},{-312.5,-382},{-312.5,-301}},
+      color={56,93,138},
+      thickness=1));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemLoadSimplifiedI_B_FMU;

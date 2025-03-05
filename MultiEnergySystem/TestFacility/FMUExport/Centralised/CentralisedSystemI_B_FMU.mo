@@ -4,7 +4,7 @@ model CentralisedSystemI_B_FMU
   Modelica.Blocks.Interfaces.RealInput EB401_Tout
     annotation (Placement(transformation(extent={{-418,-320},{-378,-280}})));
   Modelica.Blocks.Interfaces.RealInput GB101_Tout
-    annotation (Placement(transformation(extent={{-334,-320},{-294,-280}})));
+    annotation (Placement(transformation(extent={{-324,-304},{-284,-264}})));
   Modelica.Blocks.Interfaces.RealInput m_flow_P101
     annotation (Placement(transformation(extent={{-178,-200},{-218,-160}})));
   Modelica.Blocks.Interfaces.RealInput m_flow_P401
@@ -67,9 +67,10 @@ model CentralisedSystemI_B_FMU
     annotation (Placement(transformation(extent={{-422,-366},{-402,-346}})));
   Modelica.Blocks.Sources.BooleanConstant GB101Status
     annotation (Placement(transformation(extent={{-336,-374},{-316,-354}})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
+        rotation=90,
+        origin={-388,-452})));
 equation
-  connect(P901.in_omega, q_P901) annotation (Line(points={{-747.25,66.3},{-728.625,
-          66.3},{-728.625,66},{-710,66}}, color={0,0,127}));
   connect(FCV901.opening, FVC_901) annotation (Line(points={{-749.9,140.5},{-731.95,140.5},{-731.95,142},{-714,142}},
                                     color={0,0,127}));
   connect(FCVC01.opening, FCV_C01) annotation (Line(points={{258,235},{276,235},
@@ -78,16 +79,16 @@ equation
     annotation (Line(points={{734,234},{698,234},{698,235}}, color={0,0,127}));
   connect(EB401.Tout_ref, EB401_Tout) annotation (Line(points={{-361.5,-301},{-374.5,-301},{-374.5,
           -300},{-398,-300}},               color={0,0,127}));
-  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-281.5,-301},{-281.5,-300},{-314,
-          -300}},             color={0,0,127}));
-  connect(P101.in_m_flow, m_flow_P101) annotation (Line(points={{-234.48,-179.8},{-216.24,-179.8},{
-          -216.24,-180},{-198,-180}}, color={0,0,127}));
+  connect(GB101.Tout_ref, GB101_Tout) annotation (Line(points={{-281.5,-301},{
+          -281.5,-304},{-304,-304},{-304,-284}},
+                              color={0,0,127}));
   connect(FCV_101, FCV101.opening)
     annotation (Line(points={{-198,-140},{-232,-140}}, color={0,0,127}));
   connect(FCV401.opening, FCV_401)
     annotation (Line(points={{-310,-136},{-286,-136}}, color={0,0,127}));
   connect(TCV701.opening, TCV_701)
-    annotation (Line(points={{90,-320},{50,-320}}, color={0,0,127}));
+    annotation (Line(points={{90,-296},{70,-296},{70,-320},{50,-320}},
+                                                   color={0,0,127}));
   connect(TCV731.opening, TCV_731)
     annotation (Line(points={{250,-320},{212,-320}}, color={0,0,127}));
   connect(TCV711.opening, TCV_711)
@@ -129,14 +130,23 @@ equation
     annotation (Line(points={{89.5,-120},{70,-120}}, color={0,0,127}));
   connect(omega_PR01, PR01.in_omega) annotation (Line(points={{666,-208},{681.75,-208},{681.75,
           -207.8},{697.5,-207.8}}, color={0,0,127}));
-  connect(m_flow_P401, P401.in_m_flow) annotation (Line(points={{-286,-176},{-299.24,-176},{-299.24,
-          -175.8},{-312.48,-175.8}}, color={0,0,127}));
   connect(EB401Status.y, EB401.heat_on)
     annotation (Line(points={{-401,-356},{-390,-356},{-390,-318.5},{-361.5,-318.5}},
                                                                                color={255,0,255}));
   connect(GB101Status.y, GB101.heat_on)
     annotation (Line(points={{-315,-364},{-302,-364},{-302,-318.5},{-281.5,-318.5}},
                                                                                color={255,0,255}));
+  connect(sourceVoltage.outlet, EB401.inletPower) annotation (Line(
+      points={{-388,-436},{-386,-436},{-386,-382},{-304,-382},{-304,-312},{
+          -312.5,-312},{-312.5,-301}},
+      color={56,93,138},
+      thickness=1));
+  connect(m_flow_P101, P101.in_omega) annotation (Line(points={{-198,-180},{
+          -198,-179.8},{-234,-179.8}}, color={0,0,127}));
+  connect(m_flow_P401, P401.in_omega) annotation (Line(points={{-286,-176},{
+          -288,-175.8},{-312,-175.8}}, color={0,0,127}));
+  connect(q_P901, P901.in_omega) annotation (Line(points={{-710,66},{-712,66.3},
+          {-747.25,66.3}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemI_B_FMU;

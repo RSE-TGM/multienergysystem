@@ -17,10 +17,7 @@ model RG2i_source2_CH4
     m_flow_H5(
       height=-25/3600,
       duration=300,
-      startTime=18000),
-    valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
-          4.93)*1e5))),
-    valve_controller(P_rng=(6 - 2.5)*10^5));
+      startTime=18000));
 
     parameter H2GasFacility.Types.MassFraction X_inj[nX]={1,0};
                                                     //Biomethane composition

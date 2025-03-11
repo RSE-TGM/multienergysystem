@@ -8,8 +8,7 @@ model RG2i_source2_CH4H2
     X_inj={0,1},
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
-    m_flow_H1(offset=0.0001),
-    valve_controller(P_rng=(6 - 2.5)*10^5));
+    m_flow_H1(offset=0.0001));
 
   annotation (Documentation(info="<html>
 <p>The 2 injection sources model is extended redeclaring the medium with CH4+H2 fluid. </p>

@@ -8,7 +8,6 @@ PaperCaseI_MSL
 PaperCaseI_MSL_NG
 PaperCaseI_MSL_NG_H2_A
 PaperCaseI_NG_H2_A
-PaperCaseI_MSL_A
 PaperCaseI_Demand
 PaperCaseI_Demand_A
 PaperCaseI_Demand_B
@@ -24,7 +23,4 @@ PaperCaseII_III
 PaperCaseII_IV
 PaperCaseI_A_IG
 PaperCaseI_Demand_A_IG
-PaperCaseII_MSL
-Rete_Gas_2i_MSL_nosources
-Rete_Gas_2i_MSL_2sources
 Rete_Gas_2i_NG

@@ -9,7 +9,7 @@ model RG2i_PID_source2_CH4H2
     massFractionDynamicBalance = true,
     valveLinearOpening(m_flow_nom=0.413, A_v=1.8*0.413/(sqrt(40.18*(60 - 4.93)*
           1e5))),
-    const(k=5*10^5));
+    const(k=4.93*10^5));
 
     parameter Types.MassFraction X_inj[nX] = {0, 1};
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(

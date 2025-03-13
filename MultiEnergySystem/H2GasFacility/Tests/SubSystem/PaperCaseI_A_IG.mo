@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
 model PaperCaseI_A_IG
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Tests.SubSystem.PaperCaseI_A(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,

@@ -223,7 +223,8 @@ model TES
     Tin_start=Tout_start_S2,
     Tout_start=Tout_start_S2,
     Di=Di_S2,
-    q_m3h_start=q_m3h_S2/2)                                                                                                                                                                                                         annotation (
+    q_m3h_start=q_m3h_S2/2,
+    hctype=hctype)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={46,-302})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_D202_Low(
     redeclare model Medium = Medium,

@@ -1256,8 +1256,29 @@ package Configurations
           thickness=1));
     end CentralisedSystem_GBEB;
 
-    model CentralisedSystem_GBEBCHP
+    partial model CentralisedSystem_GBEBCHP
       extends CentralisedSystem_GBEB;
+      parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*990/3600;
+      parameter Real q_m3h_S5_Source = 4;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*990/3600;
+      parameter Real q_m3h_S5_User = 4;
+      parameter Real P501omega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+      parameter Real P501qm3h[:, :] = [0, 8; 100, 8];
+      parameter Real Pchpomega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+      parameter Real Pchpqm3h[:, :] = [0, 3.94; 100, 3.94];
+      parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
+      parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
+
       Plants.Thermal.Systems.CHP S500(
         n=n,
         Tin_low_start=Tin_Source_start_S5,
@@ -1319,6 +1340,10 @@ package Configurations
       connect(suddenAreaChange2.inlet, rackCD_Hot_S500_SXXX.inlet) annotation (Line(
           points={{-506,-172},{-508,-172},{-508,-46},{-488,-46},{-488,45},{-500,45}},
           color={140,56,54},
+          thickness=0.5));
+      connect(S500.inletFuel, sourceGas.outlet) annotation (Line(
+          points={{-525,-336.88},{-525,-352},{-250,-352},{-250,-362}},
+          color={182,109,49},
           thickness=0.5));
     end CentralisedSystem_GBEBCHP;
   end Centralised;

@@ -16,7 +16,7 @@ model GasBoiler
 
   Gas fuel(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
 
-  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inletfuel(nXi=1)   annotation (
+  MultiEnergySystem.H2GasFacility.Interfaces.FluidPortInlet inletfuel(nXi=fuel.nXi)   annotation (
     Placement(visible = true, transformation(origin = {0, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={-60,0},   extent={{-10,-10},
             {10,10}},                                                                                                                                                                 rotation = 0)));
   Modelica.Blocks.Interfaces.BooleanInput heat_on annotation (Placement(
@@ -32,7 +32,7 @@ equation
   //Pheat = m_flow_fuel*abs(inStream(inletfuel.h_out))/convf;
   //Pheat = m_flow_fuel*fuel.HHV_mix*etanom;
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";
-  inletfuel.Xi = {1} "Dummy equation considering not fuel flow reversal";
+  inletfuel.Xi = {1, 0} "Dummy equation considering not fuel flow reversal";
   m_flow_fuel = inletfuel.m_flow;
   Pheat = delay(if heat_on then max(min(m_flow_fuel*fuel.HHV_mix*etanom, Pmaxnom),0) else 0, tdelay);
 annotation (

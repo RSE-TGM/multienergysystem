@@ -4,15 +4,15 @@ model WaterTankSystemB "System of two tanks"
 
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Boolean FV201_state = false;
-  parameter Boolean FV202_state = true;
-  parameter Boolean FV203_state = false;
-  parameter Boolean FV204_state = true;
-  parameter Boolean FV205_state = true;
-  parameter Boolean FV206_state = true;
-  parameter Boolean FV207_state = true;
-  parameter Boolean FV208_state = true;
-  parameter Boolean FV209_state = false;
+//   parameter Boolean FV201_state = false;
+//   parameter Boolean FV202_state = true;
+//   parameter Boolean FV203_state = false;
+//   parameter Boolean FV204_state = true;
+//   parameter Boolean FV205_state = true;
+//   parameter Boolean FV206_state = true;
+//   parameter Boolean FV207_state = true;
+//   parameter Boolean FV208_state = true;
+//   parameter Boolean FV209_state = false;
   parameter Boolean Load = true;
   final parameter Boolean Unload = not Load;
 
@@ -55,6 +55,19 @@ model WaterTankSystemB "System of two tanks"
   parameter Types.Length h_S2_S201_FT201 = 0;
   parameter Types.Length L_S2_D201_FT201 = 2;
   parameter Types.Length h_S2_D201_FT201 = 0;
+
+  String statusop;
+
+  Boolean FV201_state;
+  Boolean FV202_state;
+  Boolean FV203_state;
+  Boolean FV204_state;
+  Boolean FV205_state;
+  Boolean FV206_state;
+  Boolean FV207_state;
+  Boolean FV208_state;
+  Boolean FV209_state;
+
 
   inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
     Placement(visible = true, transformation(origin={270,230},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -195,13 +208,14 @@ model WaterTankSystemB "System of two tanks"
         rotation=90,
         origin={-18,86})));
   Sources.SourcePressure source(
-    use_in_p0=true,             p0=pin_start_S2, T0=Tin_start_S2,
+    use_in_p0=true,
+    use_in_T0=true,             p0=pin_start_S2, T0=Tin_start_S2,
     R=1e-3)
     annotation (Placement(transformation(extent={{-118,160},{-98,180}})));
   Modelica.Blocks.Sources.Ramp ramp(
     height=20,
     duration=1500*0,
-    offset=26 + 273.15,
+    offset=65 + 273.15,
     startTime=1000)
     annotation (Placement(transformation(extent={{40,190},{20,210}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_hot(
@@ -336,8 +350,6 @@ model WaterTankSystemB "System of two tanks"
         extent={{-6,-6},{6,6}},
         rotation=0,
         origin={-110,70})));
-  Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k=FV202_state)
-    annotation (Placement(transformation(extent={{-148,84},{-136,96}})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status
     annotation (Placement(transformation(extent={{9,-9},{-9,9}},
         rotation=-90,
@@ -378,10 +390,6 @@ model WaterTankSystemB "System of two tanks"
         extent={{-6,6},{6,-6}},
         rotation=-90,
         origin={-80,-70})));
-  Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k=FV209_state)
-    annotation (Placement(transformation(extent={{-5.5,-6},{5.5,6}},
-        rotation=90,
-        origin={-94.5,-92})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
       Placement(transformation(
         extent={{10,-10},{-10,10}},
@@ -439,34 +447,62 @@ model WaterTankSystemB "System of two tanks"
     offset=pin_start_S2,
     startTime=50000)
     annotation (Placement(transformation(extent={{-158,184},{-138,204}})));
-  Modelica.Blocks.Sources.BooleanTable FV206_OnOff(table={3e4}, startValue=FV206_state)
-    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=-90,
-        origin={-52,84})));
-  Modelica.Blocks.Sources.BooleanTable FV203_OnOff(table={3e4 - 1}, startValue=FV203_state)
-    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=180,
-        origin={50,-20})));
-  Modelica.Blocks.Sources.BooleanTable FV207_OnOff(table={3e4}, startValue=FV207_state)
-    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={-52,-92})));
-  Modelica.Blocks.Sources.BooleanTable FV201_OnOff(table={3e4 - 1}, startValue=FV201_state)
-    "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
-        extent={{10,10},{-10,-10}},
-        rotation=180,
-        origin={-168,52})));
   Modelica.Blocks.Sources.BooleanTable Loading(table={3e4}, startValue=Load)
     "Input to decide whether or nor the gas boiler is working" annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={52,60})));
-  Modelica.Blocks.Logical.Not not3
-    annotation (Placement(transformation(extent={{20,20},{0,40}})));
+  Modelica.Blocks.Sources.Ramp ramp2(
+    height=0,
+    duration=1500*0,
+    offset=45 + 273.15,
+    startTime=1000)
+    annotation (Placement(transformation(extent={{-158,220},{-138,240}})));
+  Modelica.Blocks.Sources.BooleanExpression FV202_exp(y=FV202_state) annotation (Placement(transformation(extent={{-160,70},{-140,90}})));
+  Modelica.Blocks.Sources.BooleanExpression FV201_exp(y=FV201_state) annotation (Placement(transformation(extent={{-126,28},{-106,48}})));
+  Modelica.Blocks.Sources.BooleanExpression FV206_exp(y=FV206_state) annotation (Placement(transformation(extent={{-72,34},{-52,54}})));
+  Modelica.Blocks.Sources.BooleanExpression FV203_exp(y=FV203_state) annotation (Placement(transformation(extent={{26,-46},{6,-26}})));
+  Modelica.Blocks.Sources.BooleanExpression FV207_exp(y=FV207_state) annotation (Placement(transformation(extent={{-24,-76},{-44,-56}})));
+  Modelica.Blocks.Sources.BooleanExpression FV209_exp(y=FV209_state) annotation (Placement(transformation(extent={{-118,-94},{-98,-74}})));
 equation
+  if time < 3e4 then
+    statusop = "Loading";
+  elseif time < 3.4e4 then
+    statusop = "Unloading";
+  else
+    statusop = "ByPass";
+  end if;
+  if statusop == "Loading" then
+    FV201_state = false;
+    FV202_state = true;
+    FV203_state = false;
+    FV204_state = false;
+    FV205_state = false;
+    FV206_state = true;
+    FV207_state = true;
+    FV208_state = false;
+    FV209_state = false;
+  elseif statusop == "Unloading" then
+    FV201_state = true;
+    FV202_state = false;
+    FV203_state = true;
+    FV204_state = true;
+    FV205_state = true;
+    FV206_state = false;
+    FV207_state = false;
+    FV208_state = true;
+    FV209_state = true;
+  else
+    FV201_state = true;
+    FV202_state = false;
+    FV203_state = true;
+    FV204_state = true;
+    FV205_state = true;
+    FV206_state = false;
+    FV207_state = true;
+    FV208_state = true;
+    FV209_state = false;
+  end if;
   connect(PT201.inlet,TT201. inlet) annotation (Line(
       points={{-80,115.5},{-80,120.375},{-79.85,120.375},{-79.85,125.25}},
       color={140,56,54},
@@ -626,21 +662,13 @@ equation
   connect(FV201_Status.activePort, FV201.u) annotation (Line(points={{-94.65,49},{-85.285,49},{
           -85.285,50},{-81.92,50}},
                             color={255,0,255}));
-  connect(Loading.y, not3.u)
-    annotation (Line(points={{41,60},{28,60},{28,30},{22,30}}, color={255,0,255}));
-  connect(not3.y, FV203_Status.activePort) annotation (Line(points={{-1,30},{-4,30},{-4,28},{-8,28},
-          {-8,-14},{0,-14},{0,-20},{-1.00625,-20},{-1.00625,-20.25},{-4.4625,-20.25}}, color={255,0,
-          255}));
-  connect(Loading.y, FV206.u)
-    annotation (Line(points={{41,60},{-52,60},{-52,13.92}}, color={255,0,255}));
-  connect(Loading.y, FV207_Status.activePort)
-    annotation (Line(points={{41,60},{-52,60},{-52,-66.8}}, color={255,0,255}));
-  connect(not3.y, FV201.u) annotation (Line(points={{-1,30},{-16,30},{-16,32},{-32,32},{-32,40},{
-          -90,40},{-90,48},{-88,48},{-88,49},{-85.285,49},{-85.285,50},{-81.92,50}}, color={255,0,
-          255}));
-  connect(not3.y, FV209_Status.activePort) annotation (Line(points={{-1,30},{-32,30},{-32,-62},{-88,
-          -62},{-88,-70},{-96.5,-70}}, color={255,0,255}));
-  connect(Loading.y, FV202.u) annotation (Line(points={{41,60},{28,60},{28,78},{-109,78},{-109,74},{-110,74},{-110,71.92}}, color={255,0,255}));
+  connect(ramp2.y, source.in_T0) annotation (Line(points={{-137,230},{-116,230},{-116,228},{-104,228},{-104,178.4}}, color={0,0,127}));
+  connect(FV202_exp.y, FV202.u) annotation (Line(points={{-139,80},{-132,80},{-132,76},{-111,76},{-111,74},{-110,74},{-110,71.92}}, color={255,0,255}));
+  connect(FV201_exp.y, FV201.u) annotation (Line(points={{-105,38},{-96,38},{-96,48},{-88,48},{-88,49},{-85.285,49},{-85.285,50},{-81.92,50}}, color={255,0,255}));
+  connect(FV206_exp.y, FV206_Status.activePort) annotation (Line(points={{-51,44},{-46,44},{-46,18},{-52,18},{-52,18.46},{-49.35,18.46},{-49.35,23}}, color={255,0,255}));
+  connect(FV203_exp.y, FV203.u) annotation (Line(points={{5,-36},{-18.08,-36},{-18.08,-20}}, color={255,0,255}));
+  connect(FV207_exp.y, FV207_Status.activePort) annotation (Line(points={{-45,-66},{-48,-66},{-48,-64},{-52,-64},{-52,-66.8}}, color={255,0,255}));
+  connect(FV209_exp.y, FV209_Status.activePort) annotation (Line(points={{-97,-84},{-90,-84},{-90,-70},{-96.5,-70}}, color={255,0,255}));
   annotation (
     Diagram(coordinateSystem(extent={{-280,-240},{280,240}})),
     experiment(

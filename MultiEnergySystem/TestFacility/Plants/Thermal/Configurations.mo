@@ -495,6 +495,8 @@ package Configurations "Different possible configurations of the heat generating
       MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07 "Pressure sensor at the outlet of valve FCVC01" annotation (
         Placement(transformation(extent={{230,237},{238,245}})));
       Systems.CirculationPump S900(
+        redeclare model Medium = MediumCP,
+        hctype=hctype,
         n=n,
         pumpcorrectionfactor=pumpcorrectionfactor,
         Kv=Kv,

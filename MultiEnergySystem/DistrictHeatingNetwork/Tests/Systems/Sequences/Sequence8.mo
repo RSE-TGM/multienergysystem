@@ -1005,10 +1005,10 @@ equation
   connect(FV606_OnOff.y, FV606.u)
     annotation (Line(points={{-148,-319},{-148,-311.2}}, color={255,0,255}));
 
-  connect(FV605_OnOff.y, FV605_Status.activePort) annotation (Line(points={{-148,-277},{
-          -148.25,-277},{-148.25,-277.387}},        color={255,0,255}));
-  connect(FV606_OnOff.y, FV606_Status.activePort) annotation (Line(points={{-148,-319},{
-          -164.125,-319},{-164.125,-319.113},{-148.25,-319.113}},        color={
+  connect(FV605_OnOff.y, FV605_Status.activePort) annotation (Line(points={{-148,-277},{-148.25,-277},{-148.25,-277.387}},
+                                                    color={255,0,255}));
+  connect(FV606_OnOff.y, FV606_Status.activePort) annotation (Line(points={{-148,-319},{-164.125,-319},{-164.125,-319.113},{-148.25,-319.113}},
+                                                                         color={
           255,0,255}));
   connect(FV605.outlet, PL_S400_rCD_cold.outlet) annotation (Line(
       points={{-158,-288},{-220,-288},{-220,-190},{-352,-190},{-352,-80},{-362,

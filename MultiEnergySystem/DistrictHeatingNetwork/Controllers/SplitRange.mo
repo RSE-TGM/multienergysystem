@@ -1,4 +1,4 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Actuators;
+within MultiEnergySystem.DistrictHeatingNetwork.Controllers;
 block SplitRange "Block for Split Range control structure"
   parameter Real uMaxY1 = 0;
   parameter Real uMinY1 = -0.4;

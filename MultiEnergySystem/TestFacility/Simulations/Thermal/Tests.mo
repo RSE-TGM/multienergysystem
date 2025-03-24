@@ -5989,7 +5989,7 @@ System")}),
           Placement(transformation(extent = {{-15, -160}, {5, -140}})));
         DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(Kp = 0.84502, Ti = 0.26795, Umax = 0, Umin = -2, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialState)) annotation(
           Placement(transformation(extent = {{50, -120}, {60, -110}})));
-        DistrictHeatingNetwork.Actuators.SplitRange sR_FT101 annotation(
+        DistrictHeatingNetwork.controllers.splitrange sR_FT101 annotation(
           Placement(transformation(extent = {{70, -125}, {90, -105}})));
         FMUExport.Interfaces.ControlSignalBus processVariableBus annotation(
           Placement(visible = true, transformation(origin = {-170, -2}, extent = {{50, 40}, {-50, -40}}, rotation = -90), iconTransformation(origin = {-91, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
@@ -5997,7 +5997,7 @@ System")}),
           Placement(transformation(extent = {{30, -115}, {40, -105}})));
         DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT401(Kp = 0.69355, Ti = 0.26795, Umax = 0, Umin = -2, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialState)) annotation(
           Placement(transformation(extent = {{50, -155}, {60, -145}})));
-        DistrictHeatingNetwork.Actuators.SplitRange sR_FT401 annotation(
+        DistrictHeatingNetwork.controllers.splitrange sR_FT401 annotation(
           Placement(transformation(extent = {{70, -160}, {90, -140}})));
         Modelica.Blocks.Sources.RealExpression dFT401SP_var(y = dFT401SP) annotation(
           Placement(transformation(extent = {{30, -145}, {40, -135}})));
@@ -10881,7 +10881,7 @@ System")}),
         Placement(transformation(extent = {{20, -280}, {40, -260}})));
       Modelica.Blocks.Logical.Not not4 annotation(
         Placement(transformation(extent = {{20, -320}, {40, -300}})));
-      DistrictHeatingNetwork.Actuators.SplitRange splitRange annotation(
+      DistrictHeatingNetwork.controllers.splitrange splitRange annotation(
         Placement(transformation(extent = {{58, 159}, {68, 169}})));
     equation
       EX701PtSP = if time < 4e3 then 30e3 elseif time < 5e3 then 40e3 else 40e3;
@@ -11403,7 +11403,7 @@ System")}),
         Placement(transformation(extent = {{20, -280}, {40, -260}})));
       Modelica.Blocks.Logical.Not not4 annotation(
         Placement(transformation(extent = {{20, -320}, {40, -300}})));
-      DistrictHeatingNetwork.Actuators.SplitRange splitRange annotation(
+      DistrictHeatingNetwork.controllers.splitrange splitRange annotation(
         Placement(transformation(extent = {{58, 159}, {68, 169}})));
       Modelica.Blocks.Logical.Switch switch_thetaFCV701 annotation(
         Placement(transformation(extent = {{73, -137}, {93, -157}})));
@@ -12727,7 +12727,7 @@ Act")}),
         Placement(transformation(extent = {{-15, -160}, {5, -140}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT101(Kp = 0.84502, Ti = 0.26795, Umax = 0, Umin = -2, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialState)) annotation(
         Placement(transformation(extent = {{50, -120}, {60, -110}})));
-      DistrictHeatingNetwork.Actuators.SplitRange sR_FT101 annotation(
+      DistrictHeatingNetwork.controllers.splitrange sR_FT101 annotation(
         Placement(transformation(extent = {{70, -125}, {90, -105}})));
       FMUExport.Interfaces.ControlSignalBus processVariableBus annotation(
         Placement(visible = true, transformation(origin = {-170, -2}, extent = {{50, 40}, {-50, -40}}, rotation = -90), iconTransformation(origin = {-91, -1}, extent = {{31, 33}, {-31, -33}}, rotation = -90)));
@@ -12735,7 +12735,7 @@ Act")}),
         Placement(transformation(extent = {{30, -115}, {40, -105}})));
       DistrictHeatingNetwork.Controllers.AWPIContinuous PI_FT401(Kp = 0.69355, Ti = 0.26795, Umax = 0, Umin = -2, y_start = 0, firstOrder(initType = Modelica.Blocks.Types.Init.InitialState)) annotation(
         Placement(transformation(extent = {{50, -155}, {60, -145}})));
-      DistrictHeatingNetwork.Actuators.SplitRange sR_FT401 annotation(
+      DistrictHeatingNetwork.controllers.splitrange sR_FT401 annotation(
         Placement(transformation(extent = {{70, -160}, {90, -140}})));
       Modelica.Blocks.Sources.RealExpression dFT401SP_var(y = dFT401SP) annotation(
         Placement(transformation(extent = {{30, -145}, {40, -135}})));

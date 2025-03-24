@@ -6,7 +6,7 @@ partial model PartialThreeWayValve "Partial model for the implementation of thre
   //-------------------------------
   // Declaration of fluid
   //-------------------------------
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
 
   //-------------------------------

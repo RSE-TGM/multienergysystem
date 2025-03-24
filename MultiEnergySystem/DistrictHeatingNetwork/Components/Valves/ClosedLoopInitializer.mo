@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves;
 model ClosedLoopInitializer
   "Component for the initialization of closed loops"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
     "Fluid model" annotation(choicesAllMatching = true);
   parameter DistrictHeatingNetwork.Types.Pressure p_start=1e5 "Initial value of pressure"
     annotation (Dialog(tab="Initialisation"));

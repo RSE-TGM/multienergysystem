@@ -4,7 +4,7 @@ model ControlledChillerNoDynamicsSP
   //replaceable package Medium =
   //    MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater                          constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
   //   choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp "Medium model" annotation (
      choicesAllMatching = true);
 
 

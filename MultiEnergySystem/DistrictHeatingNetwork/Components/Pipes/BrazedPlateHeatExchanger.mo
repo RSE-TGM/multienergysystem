@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
@@ -126,7 +126,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
     Dialog(enable = WallRes));
   parameter Modelica.Units.SI.ThermalConductance UA_int = 0.1 "Equivalent thermal conductance of inner half-wall" annotation (
     Dialog(enable = WallRes));
-  parameter SI.TemperatureDifference LMTD_nom = DistrictHeatingNetwork.Data.BPHEData.E701.LMTD annotation (
+  parameter SI.TemperatureDifference LMTD_nom = TestFacility.Data.BPHEData.E701.LMTD annotation (
     Dialog(group = "Wall"));
   final parameter SI.SpecificHeatCapacity cpWall = cpm_hot "Specific heat capacity of the wall";
   parameter DistrictHeatingNetwork.Types.Temperature T1_wall_start = 70 + 273.15 "Temperature start value of fluid at the end of the heat exchanger" annotation (

@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.Loads.Thermal.Systems;
 model CoolingSingleLoad
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   parameter Integer np = 5 "Number of volumes in each pipe";
   parameter Integer nHX = 9 "Number of volumes in heat exchanger";
@@ -9,22 +9,22 @@ model CoolingSingleLoad
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
 
   // Flow Control Valve parameters
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
-  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
-  parameter DistrictHeatingNetwork.Types.Density rho_nom_valve = DistrictHeatingNetwork.Data.ValveData.FCV701.rho_nom "Nominal fluid density at supply" annotation (
+  parameter DistrictHeatingNetwork.Types.Density rho_nom_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Nominal fluid density at supply" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
-  parameter Real q_m3h_nom_valve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.q_nom_m3h "Nominal volumetric flowrate in m3/h";
+  parameter Real q_m3h_nom_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Nominal volumetric flowrate in m3/h";
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_valve = 20 + 273.15 annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_valve = 2e5 annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
-  parameter DistrictHeatingNetwork.Types.Density rho_start_valve = DistrictHeatingNetwork.Data.ValveData.FCV701.rho_nom "Start value fluid density at the inlet" annotation (
+  parameter DistrictHeatingNetwork.Types.Density rho_start_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Start value fluid density at the inlet" annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
-  parameter Real q_m3h_start_valve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
+  parameter Real q_m3h_start_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
 
   // Sudden Area Change parameters
@@ -112,56 +112,56 @@ model CoolingSingleLoad
     redeclare model HeatTransferModel = HeatTransferModel,
     hctype_hot=hctype,
     alpha_hot=alpha_hot,
-    Di_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Di_cold,
-    Di_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Di_hot,
-    L_cold=DistrictHeatingNetwork.Data.BPHEData.E701.L_cold,
-    L_hot=DistrictHeatingNetwork.Data.BPHEData.E701.L_hot,
+    Di_cold=TestFacility.Data.BPHEData.E701.Di_cold,
+    Di_hot=TestFacility.Data.BPHEData.E701.Di_hot,
+    L_cold=TestFacility.Data.BPHEData.E701.L_cold,
+    L_hot=TestFacility.Data.BPHEData.E701.L_hot,
     hctype_cold=hctype,
     alpha_cold=alpha_cold,
-    MWall=DistrictHeatingNetwork.Data.BPHEData.E701.MWall,
-    Stot_cold=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_cold,
-    Stot_hot=DistrictHeatingNetwork.Data.BPHEData.E701.Stot_hot,
+    MWall=TestFacility.Data.BPHEData.E701.MWall,
+    Stot_cold=TestFacility.Data.BPHEData.E701.Stot_cold,
+    Stot_hot=TestFacility.Data.BPHEData.E701.Stot_hot,
     Tin_start_cold=EX7X1_Tin_cold,
     Tin_start_hot=EX7X1_Tin_hot,
     Tout_start_cold=EX7X1_Tout_cold,
     Tout_start_hot=EX7X1_Tout_hot,
-    cpm_cold=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_cold,
-    cpm_hot=DistrictHeatingNetwork.Data.BPHEData.E701.cpm_hot,
-    t_cold=DistrictHeatingNetwork.Data.BPHEData.E701.t_cold,
-    t_hot=DistrictHeatingNetwork.Data.BPHEData.E701.t_hot,
+    cpm_cold=TestFacility.Data.BPHEData.E701.cpm_cold,
+    cpm_hot=TestFacility.Data.BPHEData.E701.cpm_hot,
+    t_cold=TestFacility.Data.BPHEData.E701.t_cold,
+    t_hot=TestFacility.Data.BPHEData.E701.t_hot,
     gamma_nom_cold=gamma_nom_cold,
     gamma_nom_hot=gamma_nom_hot,
-    h_cold=DistrictHeatingNetwork.Data.BPHEData.E701.h_cold,
-    h_hot=DistrictHeatingNetwork.Data.BPHEData.E701.h_hot,
-    k_cold=DistrictHeatingNetwork.Data.BPHEData.E701.k_cold,
-    k_hot=DistrictHeatingNetwork.Data.BPHEData.E701.k_hot,
+    h_cold=TestFacility.Data.BPHEData.E701.h_cold,
+    h_hot=TestFacility.Data.BPHEData.E701.h_hot,
+    k_cold=TestFacility.Data.BPHEData.E701.k_cold,
+    k_hot=TestFacility.Data.BPHEData.E701.k_hot,
     kc_cold=1,
     kc_hot=1,
-    lambdam_cold=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_cold,
-    lambdam_hot=DistrictHeatingNetwork.Data.BPHEData.E701.lambdam_hot,
+    lambdam_cold=TestFacility.Data.BPHEData.E701.lambdam_cold,
+    lambdam_hot=TestFacility.Data.BPHEData.E701.lambdam_hot,
     m_flow_start_cold=m_flow_EX7X1_cold,
     m_flow_start_hot=m_flow_EX7X1_hot,
     n=nHX,
-    nPipes_cold=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_cold,
-    nPipes_hot=DistrictHeatingNetwork.Data.BPHEData.E701.nPipes_hot,
-    nPlates=DistrictHeatingNetwork.Data.BPHEData.E701.nPlates,
+    nPipes_cold=TestFacility.Data.BPHEData.E701.nPipes_cold,
+    nPipes_hot=TestFacility.Data.BPHEData.E701.nPipes_hot,
+    nPlates=TestFacility.Data.BPHEData.E701.nPlates,
     pin_start_cold=EX7X1_pin_cold,
     pin_start_hot=EX7X1_pin_hot,
     pout_start_cold=EX7X1_pout_cold,
     pout_start_hot=EX7X1_pout_hot,
-    rho_nom_cold=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_cold + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_cold)
+    rho_nom_cold=(TestFacility.Data.BPHEData.E701.rhoin_nom_cold + TestFacility.Data.BPHEData.E701.rhoout_nom_cold)
         /2,
-    rho_nom_hot=(DistrictHeatingNetwork.Data.BPHEData.E701.rhoin_nom_hot + DistrictHeatingNetwork.Data.BPHEData.E701.rhoout_nom_hot)
+    rho_nom_hot=(TestFacility.Data.BPHEData.E701.rhoin_nom_hot + TestFacility.Data.BPHEData.E701.rhoout_nom_hot)
         /2,
-    rhom_cold(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_cold,
-    rhom_hot(displayUnit="g/cm3") = DistrictHeatingNetwork.Data.BPHEData.E701.rhom_hot,
+    rhom_cold(displayUnit="kg/m3") = TestFacility.Data.BPHEData.E701.rhom_cold,
+    rhom_hot(displayUnit="g/cm3") = TestFacility.Data.BPHEData.E701.rhom_hot,
     thermalInertia=false,
-    u_nom_cold=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_cold,
-    u_nom_hot=DistrictHeatingNetwork.Data.BPHEData.E701.u_nom_hot) annotation (
+    u_nom_cold=TestFacility.Data.BPHEData.E701.u_nom_cold,
+    u_nom_hot=TestFacility.Data.BPHEData.E701.u_nom_hot) annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
-        origin={1,-47.5})));
+        origin={1,-48.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
@@ -332,7 +332,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_SourceOut_FCV701.inlet,EX7X1. outhot) annotation (Line(
-      points={{20,-26},{20,-38.75},{21.3,-38.75}},
+      points={{20,-26},{20,-39.75},{21.3,-39.75}},
       color={140,56,54},
       thickness=0.5));
   connect(FT701.inlet,PL701_FCV701_FT701. outlet) annotation (Line(
@@ -348,7 +348,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn.outlet,EX7X1. inhot) annotation (Line(
-      points={{-20,3.55271e-15},{-19.3,3.55271e-15},{-19.3,-38.75}},
+      points={{-20,3.55271e-15},{-19.3,3.55271e-15},{-19.3,-39.75}},
       color={140,56,54},
       thickness=0.5));
   connect(PT7X1.inlet,TT7X1. inlet) annotation (Line(
@@ -360,11 +360,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(EX7X1.outcold,TT7X4. inlet) annotation (Line(
-      points={{-19.3,-56.25},{-19.6,-56.25},{-19.6,-73}},
+      points={{-19.3,-57.25},{-19.6,-57.25},{-19.6,-73}},
       color={140,56,54},
       thickness=0.5));
   connect(TT7X3.inlet,EX7X1. incold) annotation (Line(
-      points={{19.6,-72},{19.6,-58.125},{21.3,-58.125},{21.3,-56.25}},
+      points={{19.6,-72},{19.6,-58.125},{21.3,-58.125},{21.3,-57.25}},
       color={140,56,54},
       thickness=0.5));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));

@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media;
 model WaterLiquidIdeal
-  "Liquid water model with constant density and specific heat capacity"
+  "Liquid water model with constant density and constant specific heat capacity"
   extends BaseClasses.PartialSubstance(
     mu_start = 0.00113,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,

@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.BaseC
 partial model PartialBoiler
   extends DistrictHeatingNetwork.Icons.ThermalMachines.Boiler;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp "Medium model" annotation (
      choicesAllMatching = true);
   constant Real pi = Modelica.Constants.pi;
   parameter DistrictHeatingNetwork.Types.Pressure pin_start=1e5 "Start value Inlet pressure of the fluid"  annotation (

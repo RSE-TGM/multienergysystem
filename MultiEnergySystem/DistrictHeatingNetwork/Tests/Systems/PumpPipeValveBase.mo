@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model PumpPipeValveBase
   extends Modelica.Icons.Example;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   constant Real pi = Modelica.Constants.pi;
   parameter Integer n = 3 "Number of volumes in each pipe";
   // System

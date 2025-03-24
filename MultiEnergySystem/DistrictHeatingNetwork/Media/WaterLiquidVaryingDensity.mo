@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media;
 model WaterLiquidVaryingDensity
-  "Liquid water model with varying specific heat capacity and density"
+  "Liquid water model with varying specific heat capacity and varying density"
   extends BaseClasses.PartialSubstance(
     compressibilityEffect = true,
     mu_start = 0.00113,

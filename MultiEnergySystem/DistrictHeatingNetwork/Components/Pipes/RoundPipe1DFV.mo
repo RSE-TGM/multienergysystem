@@ -7,13 +7,11 @@ model RoundPipe1DFV
 
   replaceable model HeatTransferModel =
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-      constrainedby
-    DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
+      constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
-     constrainedby
-     DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+     constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance
       "Water model" annotation (
      choicesAllMatching = true);
 

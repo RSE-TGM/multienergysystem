@@ -31,8 +31,8 @@ model ElectricBoilerFlowControlled "System 400"
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4;
 
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Data.ValveData.FCV401.openingChar "opening characteristic";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV401.openingChar "opening characteristic";
 
   parameter Real nR = 5 "Number of resistors";
   parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
@@ -62,27 +62,27 @@ model ElectricBoilerFlowControlled "System 400"
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     P401(
     redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tin_start,
-    Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P401.Tout_start,
-    a=DistrictHeatingNetwork.Data.PumpData.P401.a,
-    b=DistrictHeatingNetwork.Data.PumpData.P401.b,
+    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P401.Tin_start,
+    Tout_start(displayUnit="K") = TestFacility.Data.PumpData.P401.Tout_start,
+    a=TestFacility.Data.PumpData.P401.a,
+    b=TestFacility.Data.PumpData.P401.b,
     m_flow_start=m_flow_S4,
-    dpnom=DistrictHeatingNetwork.Data.PumpData.P401.dpnom,
-    etaelec=DistrictHeatingNetwork.Data.PumpData.P401.etaelec,
-    etamech=DistrictHeatingNetwork.Data.PumpData.P401.etamech,
-    etanom=DistrictHeatingNetwork.Data.PumpData.P401.etanom,
-    hin_start=DistrictHeatingNetwork.Data.PumpData.P401.hin_start,
-    m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P401.m_flow_nom,
-    omeganom=DistrictHeatingNetwork.Data.PumpData.P401.omeganom,
-    pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pin_start,
-    pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P401.pout_start,
-    headnom=DistrictHeatingNetwork.Data.PumpData.P401.headnom,
-    qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P401.qnom_inm3h,
-    rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P401.rhonom,
-    headmax=DistrictHeatingNetwork.Data.PumpData.P401.headnommax,
-    headmin=DistrictHeatingNetwork.Data.PumpData.P401.headnommin,
-    qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P401.qnommin_inm3h,
-    qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P401.qnommax_inm3h,
+    dpnom=TestFacility.Data.PumpData.P401.dpnom,
+    etaelec=TestFacility.Data.PumpData.P401.etaelec,
+    etamech=TestFacility.Data.PumpData.P401.etamech,
+    etanom=TestFacility.Data.PumpData.P401.etanom,
+    hin_start=TestFacility.Data.PumpData.P401.hin_start,
+    m_flow_nom=TestFacility.Data.PumpData.P401.m_flow_nom,
+    omeganom=TestFacility.Data.PumpData.P401.omeganom,
+    pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P401.pin_start,
+    pout_start(displayUnit="Pa") = TestFacility.Data.PumpData.P401.pout_start,
+    headnom=TestFacility.Data.PumpData.P401.headnom,
+    qnom_inm3h=TestFacility.Data.PumpData.P401.qnom_inm3h,
+    rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P401.rhonom,
+    headmax=TestFacility.Data.PumpData.P401.headnommax,
+    headmin=TestFacility.Data.PumpData.P401.headnommin,
+    qnom_inm3h_min=TestFacility.Data.PumpData.P401.qnommin_inm3h,
+    qnom_inm3h_max=TestFacility.Data.PumpData.P401.qnommax_inm3h,
     correctionfactor=pumpcorrectionfactor)                      annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,

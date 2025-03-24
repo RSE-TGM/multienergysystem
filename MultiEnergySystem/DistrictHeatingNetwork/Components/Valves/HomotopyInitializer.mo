@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves;
 model HomotopyInitializer
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
     "Fluid model" annotation(choicesAllMatching = true);
   parameter Types.Pressure p_start "Initial value of pressure";
   parameter Types.Temperature T_start "Initial value of temperature";

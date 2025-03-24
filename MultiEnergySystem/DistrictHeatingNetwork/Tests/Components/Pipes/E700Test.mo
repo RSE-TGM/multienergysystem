@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.Pipes;
 model E700Test "HX70X base test with real data"
   extends Modelica.Icons.Example;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Water model";
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp "Water model";
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient "Heat transfer model";
 
   parameter Real CorrectFactorHot = 1;

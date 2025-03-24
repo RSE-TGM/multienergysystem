@@ -1,10 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines;
 model GasBoilerTest
   extends Modelica.Icons.Example;
-  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4H2 constrainedby
-    H2GasFacility.Media.BaseClasses.PartialMixture                                                                          "Gas fluid";
-  replaceable model Water = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby
-    DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance                                                                                         "Water fluid";
+  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4H2 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture "Gas fluid";
+  replaceable model Water = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Water fluid";
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.GasBoiler boiler(
     initOpt=MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState,  Pmaxnom = 147.6e3*0.8,

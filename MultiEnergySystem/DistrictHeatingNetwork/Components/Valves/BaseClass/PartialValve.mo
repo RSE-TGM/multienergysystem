@@ -2,11 +2,10 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass;
 partial model PartialValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Water.Valve;
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort(allowFlowReversal = true);
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import Modelica.Fluid.Utilities.regRoot;
   import Modelica.Fluid.Utilities.regStep;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
 
   constant Types.PerUnit pr = 0.85 "Pressure recovery coefficient";
 

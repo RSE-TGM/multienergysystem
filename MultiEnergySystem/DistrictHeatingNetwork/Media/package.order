@@ -2,8 +2,6 @@ WaterLiquid
 WaterLiquidIdeal
 WaterLiquidVaryingcp
 WaterLiquidVaryingDensity
-cp
-rho0
 StandardWater
 BaseClasses
 Utilities

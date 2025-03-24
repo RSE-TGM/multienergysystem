@@ -3,7 +3,7 @@ model CirculationPump
  extends TestFacility.Interfaces.SystemInterfaceBaseII(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
 
@@ -12,7 +12,7 @@ model CirculationPump
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Real pumpcorrectionfactor = 1;
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
@@ -58,26 +58,26 @@ model CirculationPump
         origin={-61,-1})));
   DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P901(
     redeclare model Medium = Medium,
-    Tin_start=DistrictHeatingNetwork.Data.PumpData.P901.Tin_start,
-    Tout_start=DistrictHeatingNetwork.Data.PumpData.P901.Tout_start,
-    hin_start=DistrictHeatingNetwork.Data.PumpData.P901.hin_start,
+    Tin_start=TestFacility.Data.PumpData.P901.Tin_start,
+    Tout_start=TestFacility.Data.PumpData.P901.Tout_start,
+    hin_start=TestFacility.Data.PumpData.P901.hin_start,
     pin_start=pin_start_S9,
     pout_start=pout_start_S9,
-    a=DistrictHeatingNetwork.Data.PumpData.P901.a,
+    a=TestFacility.Data.PumpData.P901.a,
     b=b,
-    dpnom=DistrictHeatingNetwork.Data.PumpData.P901.dpnom,
-    etaelec=DistrictHeatingNetwork.Data.PumpData.P901.etaelec,
-    etamech=DistrictHeatingNetwork.Data.PumpData.P901.etamech,
-    etanom=DistrictHeatingNetwork.Data.PumpData.P901.etanom,
-    headnom=DistrictHeatingNetwork.Data.PumpData.P901.headnom,
-    headmax=DistrictHeatingNetwork.Data.PumpData.P901.headnommax,
-    headmin=DistrictHeatingNetwork.Data.PumpData.P901.headnommin,
-    m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P901.m_flow_nom,
-    omeganom=DistrictHeatingNetwork.Data.PumpData.P901.omeganom,
-    qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P901.qnom_inm3h,
-    qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P901.qnommin_inm3h,
-    rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P901.rhonom,
-    qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P901.qnommax_inm3h,
+    dpnom=TestFacility.Data.PumpData.P901.dpnom,
+    etaelec=TestFacility.Data.PumpData.P901.etaelec,
+    etamech=TestFacility.Data.PumpData.P901.etamech,
+    etanom=TestFacility.Data.PumpData.P901.etanom,
+    headnom=TestFacility.Data.PumpData.P901.headnom,
+    headmax=TestFacility.Data.PumpData.P901.headnommax,
+    headmin=TestFacility.Data.PumpData.P901.headnommin,
+    m_flow_nom=TestFacility.Data.PumpData.P901.m_flow_nom,
+    omeganom=TestFacility.Data.PumpData.P901.omeganom,
+    qnom_inm3h=TestFacility.Data.PumpData.P901.qnom_inm3h,
+    qnom_inm3h_min=TestFacility.Data.PumpData.P901.qnommin_inm3h,
+    rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P901.rhonom,
+    qnom_inm3h_max=TestFacility.Data.PumpData.P901.qnommax_inm3h,
     correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                                                   annotation (
     Placement(visible = true, transformation(                 extent={{-10,-10},{10,10}},      rotation=90,
@@ -175,10 +175,10 @@ model CirculationPump
     FCV901(
     redeclare model Medium = Medium,
     Kv=Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV901.dp_nom,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV901.dp_nom,
     openingChar=openingChar,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.q_nom_m3h,
+    rho_nom=TestFacility.Data.ValveData.FCV901.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.FCV901.q_nom_m3h,
     Tin_start(displayUnit="K") = T_hot_start,
     pin_start=pout_start_S9,
     q_m3h_start=q_m3h_S9)  annotation (Placement(transformation(

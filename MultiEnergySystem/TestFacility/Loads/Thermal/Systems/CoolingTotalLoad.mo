@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.Loads.Thermal.Systems;
 model CoolingTotalLoad "System with four heat exchangers"
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   parameter Integer np = 5 "Number of volumes in each pipe";
@@ -17,74 +17,74 @@ model CoolingTotalLoad "System with four heat exchangers"
   DistrictHeatingNetwork.Interfaces.MultiHeatPort MultiPort(n=np) annotation (Placement(transformation(extent={{-120,-10},{-100,10}}), iconTransformation(extent={{-120,-10},{-100,10}})));
 equation
   connect(EX701.inhot, inhot[1]) annotation (Line(
-      points={{-66,21},{-70,21},{-70,80},{-40,80},{-40,106.25},{-40,106.25}},
+      points={{-66.8,21.5},{-70,21.5},{-70,80},{-40,80},{-40,106.25},{-40,106.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX711.inhot, inhot[2]) annotation (Line(
-      points={{-20,21},{-20,80},{-40,80},{-40,108.75}},
+      points={{-20.8,21.5},{-20.8,80},{-40,80},{-40,108.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX721.inhot, inhot[3]) annotation (Line(
-      points={{26,21},{26,80},{-40,80},{-40,111.25}},
+      points={{25.2,21.5},{25.2,80},{-40,80},{-40,111.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX731.inhot, inhot[4]) annotation (Line(
-      points={{66,21},{66,80},{-40,80},{-40,113.75}},
+      points={{65.2,21.5},{65.2,80},{-40,80},{-40,113.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX701.outhot, outhot[1]) annotation (Line(
-      points={{-58,21},{-60,21},{-60,60},{40,60},{40,106.25}},
+      points={{-56.9,21.5},{-60,21.5},{-60,60},{40,60},{40,106.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX711.outhot, outhot[2]) annotation (Line(
-      points={{-12,21},{-12,60},{40,60},{40,108.75}},
+      points={{-10.9,21.5},{-10.9,60},{40,60},{40,108.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX721.outhot, outhot[3]) annotation (Line(
-      points={{34,21},{34,60},{40,60},{40,111.25}},
+      points={{35.1,21.5},{35.1,60},{40,60},{40,111.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX731.outhot, outhot[4]) annotation (Line(
-      points={{74,21},{74,80},{40,80},{40,113.75}},
+      points={{75.1,21.5},{75.1,80},{40,80},{40,113.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX701.outcold, outcold[1]) annotation (Line(
-      points={{-66,-1},{-66,-80},{-40,-80},{-40,-113.75}},
+      points={{-67,-1.5},{-67,-80},{-40,-80},{-40,-113.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX711.outcold, outcold[2]) annotation (Line(
-      points={{-20,-1},{-20,-80},{-40,-80},{-40,-111.25}},
+      points={{-21,-1.5},{-21,-80},{-40,-80},{-40,-111.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX721.outcold, outcold[3]) annotation (Line(
-      points={{26,-1},{26,-80},{-40,-80},{-40,-108.75}},
+      points={{25,-1.5},{25,-80},{-40,-80},{-40,-108.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX731.outcold, outcold[4]) annotation (Line(
-      points={{66,-1},{66,-80},{-40,-80},{-40,-106.25}},
+      points={{65,-1.5},{65,-80},{-40,-80},{-40,-106.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX701.incold, incold[1]) annotation (Line(
-      points={{-58,-1},{-58,-60},{40,-60},{40,-113.75}},
+      points={{-57.1,-1.5},{-57.1,-60},{40,-60},{40,-113.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX731.incold, incold[4]) annotation (Line(
-      points={{74,-1},{74,-60},{40,-60},{40,-106.25}},
+      points={{74.9,-1.5},{74.9,-60},{40,-60},{40,-106.25}},
       color={140,56,54},
       thickness=0.5));
   connect(EX721.incold, incold[3]) annotation (Line(
-      points={{34,-1},{34,-60},{40,-60},{40,-108.75}},
+      points={{34.9,-1.5},{34.9,-60},{40,-60},{40,-108.75}},
       color={140,56,54},
       thickness=0.5));
   connect(EX711.incold, incold[2]) annotation (Line(
-      points={{-12,-1},{-12,-68},{40,-68},{40,-111.25}},
+      points={{-11.1,-1.5},{-11.1,-68},{40,-68},{40,-111.25}},
       color={140,56,54},
       thickness=0.5));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
-  connect(theta[1], EX701.theta) annotation (Line(points={{-110,66.25},{-88,66.25},{-88,17},{-73,17}}, color={0,0,127}));
-  connect(theta[2], EX711.theta) annotation (Line(points={{-110,68.75},{-40,68.75},{-40,17},{-27,17}}, color={0,0,127}));
-  connect(theta[3], EX721.theta) annotation (Line(points={{-110,71.25},{10,71.25},{10,17},{19,17}}, color={0,0,127}));
-  connect(theta[4], EX731.theta) annotation (Line(points={{-110,73.75},{54,73.75},{54,17},{59,17}}, color={0,0,127}));
+  connect(theta[1], EX701.theta) annotation (Line(points={{-110,66.25},{-88,66.25},{-88,16},{-73,16}}, color={0,0,127}));
+  connect(theta[2], EX711.theta) annotation (Line(points={{-110,68.75},{-40,68.75},{-40,16},{-27,16}}, color={0,0,127}));
+  connect(theta[3], EX721.theta) annotation (Line(points={{-110,71.25},{10,71.25},{10,16},{19,16}}, color={0,0,127}));
+  connect(theta[4], EX731.theta) annotation (Line(points={{-110,73.75},{54,73.75},{54,16},{59,16}}, color={0,0,127}));
   connect(MultiPort, EX701.MultiPort) annotation (Line(
       points={{-110,0},{-84,0},{-84,10},{-73,10}},
       color={255,101,98},

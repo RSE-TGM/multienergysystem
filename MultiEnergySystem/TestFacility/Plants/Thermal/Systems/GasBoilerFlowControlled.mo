@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
 model GasBoilerFlowControlled "System 100"
   extends TestFacility.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
@@ -43,7 +43,7 @@ model GasBoilerFlowControlled "System 100"
   parameter Real FCV101theta[:,:] = [0, 1];
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
   parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;
@@ -56,27 +56,27 @@ model GasBoilerFlowControlled "System 100"
 
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(
     redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P101.Tin_start,
-    Tout_start(displayUnit="K") = DistrictHeatingNetwork.Data.PumpData.P101.Tout_start,
-    a=DistrictHeatingNetwork.Data.PumpData.P101.a,
-    b=DistrictHeatingNetwork.Data.PumpData.P101.b,
+    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P101.Tin_start,
+    Tout_start(displayUnit="K") = TestFacility.Data.PumpData.P101.Tout_start,
+    a=TestFacility.Data.PumpData.P101.a,
+    b=TestFacility.Data.PumpData.P101.b,
     m_flow_start=m_flow_S1,
-    dpnom=DistrictHeatingNetwork.Data.PumpData.P101.dpnom,
-    etaelec=DistrictHeatingNetwork.Data.PumpData.P101.etaelec,
-    etamech=DistrictHeatingNetwork.Data.PumpData.P101.etamech,
-    etanom=DistrictHeatingNetwork.Data.PumpData.P101.etanom,
-    hin_start=DistrictHeatingNetwork.Data.PumpData.P101.hin_start,
-    m_flow_nom=DistrictHeatingNetwork.Data.PumpData.P101.m_flow_nom,
-    omeganom=DistrictHeatingNetwork.Data.PumpData.P101.omeganom,
-    pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pin_start,
-    pout_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.PumpData.P101.pout_start,
-    qnom_inm3h=DistrictHeatingNetwork.Data.PumpData.P101.qnom_inm3h,
-    rhonom(displayUnit="kg/m3") = DistrictHeatingNetwork.Data.PumpData.P101.rhonom,
-    headnom=DistrictHeatingNetwork.Data.PumpData.P101.headnom,
-    headmax=DistrictHeatingNetwork.Data.PumpData.P101.headnommax,
-    headmin=DistrictHeatingNetwork.Data.PumpData.P101.headnommin,
-    qnom_inm3h_min=DistrictHeatingNetwork.Data.PumpData.P101.qnommin_inm3h,
-    qnom_inm3h_max=DistrictHeatingNetwork.Data.PumpData.P101.qnommax_inm3h,
+    dpnom=TestFacility.Data.PumpData.P101.dpnom,
+    etaelec=TestFacility.Data.PumpData.P101.etaelec,
+    etamech=TestFacility.Data.PumpData.P101.etamech,
+    etanom=TestFacility.Data.PumpData.P101.etanom,
+    hin_start=TestFacility.Data.PumpData.P101.hin_start,
+    m_flow_nom=TestFacility.Data.PumpData.P101.m_flow_nom,
+    omeganom=TestFacility.Data.PumpData.P101.omeganom,
+    pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P101.pin_start,
+    pout_start(displayUnit="Pa") = TestFacility.Data.PumpData.P101.pout_start,
+    qnom_inm3h=TestFacility.Data.PumpData.P101.qnom_inm3h,
+    rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P101.rhonom,
+    headnom=TestFacility.Data.PumpData.P101.headnom,
+    headmax=TestFacility.Data.PumpData.P101.headnommax,
+    headmin=TestFacility.Data.PumpData.P101.headnommin,
+    qnom_inm3h_min=TestFacility.Data.PumpData.P101.qnommin_inm3h,
+    qnom_inm3h_max=TestFacility.Data.PumpData.P101.qnommax_inm3h,
     correctionfactor=pumpcorrectionfactor)                                                      annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,

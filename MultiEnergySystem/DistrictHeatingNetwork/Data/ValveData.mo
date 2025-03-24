@@ -1,5 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Data;
 package ValveData
+   "Data of RSE's District Heating Test Facility valves"
   constant MultiEnergySystem.DistrictHeatingNetwork.Data.Valve TCV701(
     Name = "TCV701",
     Tin_nom = 67.73858 + 273.15 "Calculo teorico",

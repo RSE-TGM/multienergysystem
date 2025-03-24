@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Data;
 package PumpData
-  "Data of the different models of pump in Heating Nework"
+    "Data of RSE's District Heating Test Facility pumps"
     constant MultiEnergySystem.DistrictHeatingNetwork.Data.Pump P101(
     Name = "P101",
     Tin_start = 80 + 273.15,

@@ -16,14 +16,6 @@ RG2i_1sources_CH4H2_C
 RG2i_2sources_CH4H2_C
 RG2i_3sources_CH4H2_C
 RG2i_3sources_CH4H2_C_nV
-TestProgressive
-TestProgressive_CH4H2
-Rete_Gas_2i_2sources_NG
-Rete_Gas_2i_2sources_NG_H2
-RG2i_source1_NG
-RG2i_source2_NG
-RG2i_source1_NG_H2
-RG2i_source2_NG_H2
 RG2i_source1_CH4
 RG2i_source2_CH4
 RG2i_source1_CH4H2

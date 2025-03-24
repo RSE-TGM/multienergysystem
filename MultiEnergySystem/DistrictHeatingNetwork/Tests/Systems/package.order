@@ -2,12 +2,6 @@ PumpPipeValveBase
 GasBoilerSystem
 GasBoilerSystemTest
 GasBoilerSystemTestB
-GasBoilerSystemTestC
-GasBoilerSystemTestII
-GasBoilerSystemTestIIB
-ElectricBoilerSystem
-ElectricBoilerSystemTest
-ElectricBoilerSystemTestB
 S400
 S500
 S900
@@ -18,13 +12,3 @@ StratifiedWaterTankSystem
 HP301System
 HP601System
 HPSystem
-HeatPumpsEBSystem
-BaseHeatingSystem
-GasBoilerPumpingSystem
-GBEBPumpingSystem
-Sequences
-GBEBCompleteSystem
-BaseTestSystem
-LoadPlantBase
-LoadPlant
-LoadPlantSimplified

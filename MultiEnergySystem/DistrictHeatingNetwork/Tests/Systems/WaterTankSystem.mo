@@ -470,7 +470,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(D201.outlet, PL_S200_D201_High.inlet) annotation (Line(
-      points={{118,-70},{132,-70},{132,-80}},
+      points={{118,-63},{132,-63},{132,-80}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_High.inlet, PL_S200_D202_High.outlet) annotation (
@@ -484,19 +484,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D202_High.inlet, D202.outlet) annotation (Line(
-      points={{188,-80},{188,-70},{202,-70}},
+      points={{188,-80},{188,-63},{202,-63}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.inlet, D201.inlet) annotation (Line(
-      points={{150,-126},{134,-126},{134,-126},{118,-126}},
+      points={{150,-126},{134,-126},{134,-133},{118,-133}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_D202_Low.outlet, D202.inlet) annotation (Line(
-      points={{170,-126},{186,-126},{186,-126},{202,-126}},
+      points={{170,-126},{186,-126},{186,-133},{202,-133}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_FV209_D201.outlet, D201.inlet) annotation (Line(
-      points={{52,-168},{128,-168},{128,-126},{118,-126}},
+      points={{52,-168},{128,-168},{128,-133},{118,-133}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S200_D201_FT201.outlet, PL_S200_D201_High.outlet) annotation (Line(

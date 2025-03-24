@@ -1,5 +1,5 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.S500;
-model S500 "Combined Heat and Power System Model from RSE's test facility"
+within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
+model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test facility"
   extends Modelica.Icons.Example;
 
   ////////////////////////////////////
@@ -39,7 +39,6 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
   parameter DistrictHeatingNetwork.Types.Pressure pin_high_start = 1.8e5 "Reference pressure rack side";
   parameter DistrictHeatingNetwork.Types.Pressure pout_high_start = 2e5 "Reference pressure rack side";
 
-
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
     Dialog(tab = "Combustion Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
@@ -57,7 +56,6 @@ model S500 "Combined Heat and Power System Model from RSE's test facility"
   parameter DistrictHeatingNetwork.Types.Power Pel_SP[:,:] = [0, 40e3; 1e3, 40e3; 1e3, 35e3; 1e6, 35e3];
   parameter DistrictHeatingNetwork.Types.Temperature Tin_ref[:,:] = [0, 60+273.15; 1e3, 60+273.15; 2e3, 75+273.15; 3e3, 65+273.15];
   parameter DistrictHeatingNetwork.Types.Temperature Tout_SP_CHP[:,:] = [0, 90+273.15; 1e3, 90+273.15; 2e3, 90+273.15; 3e3, 90+273.15];
-
 
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(redeclare model Medium = Medium,
     Tin_start=Tin_start_CHP,
@@ -488,4 +486,4 @@ equation
       StopTime=4500,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
-end S500;
+end CHPHXSystemTest;

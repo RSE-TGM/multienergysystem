@@ -12,7 +12,7 @@ model CirculationPumpPressureControlled
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Real pumpcorrectionfactor = 1;
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 

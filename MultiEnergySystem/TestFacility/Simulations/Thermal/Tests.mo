@@ -1676,7 +1676,7 @@ package Tests
           Placement(visible = true, transformation(origin = {-342, -302}, extent = {{-34, -34}, {34, 34}}, rotation = 0)));
         DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P401(Tin_start(displayUnit = "K") = TestFacility.Data.PumpData.P401.Tin_start, Tout_start(displayUnit = "K") = TestFacility.Data.PumpData.P401.Tout_start, a = TestFacility.Data.PumpData.P401.a, b = TestFacility.Data.PumpData.P401.b, m_flow_start = m_flow_S4, dpnom = TestFacility.Data.PumpData.P401.dpnom, etaelec = TestFacility.Data.PumpData.P401.etaelec, etamech = TestFacility.Data.PumpData.P401.etamech, etanom = TestFacility.Data.PumpData.P401.etanom, hin_start = TestFacility.Data.PumpData.P401.hin_start, m_flow_nom = TestFacility.Data.PumpData.P401.m_flow_nom, omeganom = TestFacility.Data.PumpData.P401.omeganom, pin_start(displayUnit = "Pa") = TestFacility.Data.PumpData.P401.pin_start, pout_start(displayUnit = "Pa") = TestFacility.Data.PumpData.P401.pout_start, qnom_inm3h = TestFacility.Data.PumpData.P401.qnom_inm3h, rhonom(displayUnit = "kg/m3") = TestFacility.Data.PumpData.P401.rhonom, headnom = TestFacility.Data.PumpData.P401.headnom, headmax = TestFacility.Data.PumpData.P401.headnommax, headmin = TestFacility.Data.PumpData.P401.headnommin, qnom_inm3h_min = TestFacility.Data.PumpData.P401.qnommin_inm3h, qnom_inm3h_max = TestFacility.Data.PumpData.P401.qnommax_inm3h) annotation (
           Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-322, -175})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = TestFacility.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV401.dp_nom, rho_nom = TestFacility.Data.ValveData.FCV401.rho_nom, q_m3h_nom = TestFacility.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -140})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(L = L_S4_PL3, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -236})));
@@ -1700,9 +1700,9 @@ package Tests
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -52})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(L = L_S4_rCD_cold, t = t_S4, pin_start = pin_start_S4, Tin_start = Tin_start_S4, Tout_start = Tin_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-362, -54})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tin_start_S4, pin_start = pin_start_S4, q_m3h_start = q_m3h_S4) "On-Off valve connecting inlet S400 & S900 " annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV401(Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tin_start_S4, pin_start = pin_start_S4, q_m3h_start = q_m3h_S4) "On-Off valve connecting inlet S400 & S900 " annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin = {-362, -20})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -20})));
         Modelica.Blocks.Sources.TimeTable FCV401_theta(table = FCV401theta) annotation (
           Placement(transformation(extent = {{-288, -150}, {-308, -130}})));
@@ -1829,7 +1829,7 @@ package Tests
           Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin = {-792, -86.5})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_TT201_FV201(L = L_S2_PL1, t = t_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, q_m3h_start = q_m3h_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-790, -108})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-850, -198})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(L = L_S2_PL3, t = L_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 270, origin = {-850, -168})));
@@ -1859,33 +1859,33 @@ package Tests
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {-830, -440})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV201_P201(L = L_S2_PL1, t = t_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, q_m3h_start = q_m3h_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-790, -170})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = 0, origin = {-820, -128})));
         Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k = FV202_state) annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-820, -116})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin = {-820, -110})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin = {-790, -148})));
         Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k = FV201_state) annotation (
           Placement(transformation(extent = {{-808, -154}, {-796, -142}})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status annotation (
           Placement(transformation(extent = {{-798, -158}, {-818, -138}})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 180, origin = {-770, -186})));
         Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k = FV206_state) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 270, origin = {-770, -172})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV206_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin = {-770, -166})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin = {-790, -268})));
         Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k = FV209_state) annotation (
           Placement(transformation(extent = {{-5.5, -6}, {5.5, 6}}, rotation = 0, origin = {-802.5, -268})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin = {-808, -268})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 0, origin = {-770, -254})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(Kv = DistrictHeatingNetwork.Data.ValveData.FCV201.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(Kv = TestFacility.Data.ValveData.FCV201.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 90, origin = {-750, -218})));
         Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k = FV203_state) annotation (
           Placement(transformation(extent = {{-730, -224}, {-741, -212}})));
@@ -2060,7 +2060,7 @@ package Tests
           Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin = {-796, -90.5})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_TT201_FV201(L = L_S2_PL1, t = t_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, q_m3h_start = q_m3h_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-794, -112})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-854, -202})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(L = L_S2_PL3, t = L_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 270, origin = {-854, -172})));
@@ -2090,33 +2090,33 @@ package Tests
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {-834, -444})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV201_P201(L = L_S2_PL1, t = t_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, q_m3h_start = q_m3h_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-794, -174})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = 0, origin = {-824, -132})));
         Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k = FV202_state) annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-824, -120})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin = {-824, -114})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin = {-794, -152})));
         Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k = FV201_state) annotation (
           Placement(transformation(extent = {{-812, -158}, {-800, -146}})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status annotation (
           Placement(transformation(extent = {{-802, -162}, {-822, -142}})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 180, origin = {-774, -190})));
         Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k = FV206_state) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 270, origin = {-774, -176})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV206_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin = {-774, -170})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin = {-794, -272})));
         Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k = FV209_state) annotation (
           Placement(transformation(extent = {{-5.5, -6}, {5.5, 6}}, rotation = 0, origin = {-806.5, -272})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin = {-812, -272})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 0, origin = {-774, -258})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(Kv = DistrictHeatingNetwork.Data.ValveData.FCV201.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(Kv = TestFacility.Data.ValveData.FCV201.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 90, origin = {-754, -222})));
         Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k = FV203_state) annotation (
           Placement(transformation(extent = {{-734, -228}, {-745, -216}})));
@@ -2297,7 +2297,7 @@ package Tests
           Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-582, -297})));
         DistrictHeatingNetwork.Sources.PumpInput PCHP_input(useOmega = false, omega = Pchpomega, q_m3h = Pchpqm3h) annotation (
           Placement(transformation(extent = {{-548, -311}, {-568, -290}})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV1(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV1(Kv = TestFacility.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV401.dp_nom, rho_nom = TestFacility.Data.ValveData.FCV401.rho_nom, q_m3h_nom = TestFacility.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-582, -270})));
         Modelica.Blocks.Sources.TimeTable FCVchp_theta(table = FCVchptheta) annotation (
           Placement(transformation(extent = {{-548, -280}, {-568, -260}})));
@@ -2422,7 +2422,7 @@ package Tests
           Placement(transformation(extent = {{-12.5, 12}, {12.5, -12}}, rotation = 90, origin = {-616, -291.5})));
         DistrictHeatingNetwork.Sources.PumpInput PCHP_input(useOmega = false, omega = Pchpomega, q_m3h = Pchpqm3h) annotation (
           Placement(transformation(extent = {{-580, -307}, {-600, -286}})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV1(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV1(Kv = TestFacility.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV401.dp_nom, rho_nom = TestFacility.Data.ValveData.FCV401.rho_nom, q_m3h_nom = TestFacility.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-616, -264})));
         Modelica.Blocks.Sources.TimeTable FCVchp_theta(table = FCVchptheta) annotation (
           Placement(transformation(extent = {{-580, -274}, {-600, -254}})));
@@ -2631,7 +2631,7 @@ package Tests
           Placement(visible = true, transformation(origin = {-342, -302}, extent = {{-34, -34}, {34, 34}}, rotation = 0)));
         DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P401(Tin_start(displayUnit = "K") = TestFacility.Data.PumpData.P401.Tin_start, Tout_start(displayUnit = "K") = TestFacility.Data.PumpData.P401.Tout_start, a = TestFacility.Data.PumpData.P401.a, b = TestFacility.Data.PumpData.P401.b, m_flow_start = m_flow_S4, dpnom = TestFacility.Data.PumpData.P401.dpnom, etaelec = TestFacility.Data.PumpData.P401.etaelec, etamech = TestFacility.Data.PumpData.P401.etamech, etanom = TestFacility.Data.PumpData.P401.etanom, hin_start = TestFacility.Data.PumpData.P401.hin_start, m_flow_nom = TestFacility.Data.PumpData.P401.m_flow_nom, omeganom = TestFacility.Data.PumpData.P401.omeganom, pin_start(displayUnit = "Pa") = TestFacility.Data.PumpData.P401.pin_start, pout_start(displayUnit = "Pa") = TestFacility.Data.PumpData.P401.pout_start, qnom_inm3h = TestFacility.Data.PumpData.P401.qnom_inm3h, rhonom(displayUnit = "kg/m3") = TestFacility.Data.PumpData.P401.rhonom, headnom = TestFacility.Data.PumpData.P401.headnom, headmax = TestFacility.Data.PumpData.P401.headnommax, headmin = TestFacility.Data.PumpData.P401.headnommin, qnom_inm3h_min = TestFacility.Data.PumpData.P401.qnommin_inm3h, qnom_inm3h_max = TestFacility.Data.PumpData.P401.qnommax_inm3h, use_in_omega = true) annotation (
           Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = 90, origin = {-322, -175})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom, rho_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.rho_nom, q_m3h_nom = DistrictHeatingNetwork.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV401(Kv = TestFacility.Data.ValveData.FCV401.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV401.dp_nom, rho_nom = TestFacility.Data.ValveData.FCV401.rho_nom, q_m3h_nom = TestFacility.Data.ValveData.FCV401.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -110})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL3_S401(L = L_S4_PL3, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -236})));
@@ -2655,9 +2655,9 @@ package Tests
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -52})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(L = L_S4_rCD_cold, h = h_S4_rCD_cold, t = t_S4, pin_start = pin_start_S4, Tin_start = Tin_start_S4, Tout_start = Tin_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype, n = n) annotation (
           Placement(transformation(origin = {-362, -54}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV401(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tin_start_S4, pin_start = pin_start_S4, q_m3h_start = q_m3h_S4) "On-Off valve connecting inlet S400 & S900 " annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV401(Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tin_start_S4, pin_start = pin_start_S4, q_m3h_start = q_m3h_S4) "On-Off valve connecting inlet S400 & S900 " annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin = {-362, -20})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-322, -20})));
         Modelica.Blocks.Sources.TimeTable FCV401_theta(table = FCV401theta) annotation (
           Placement(transformation(extent = {{-178, -152}, {-198, -132}})));
@@ -2808,7 +2808,7 @@ package Tests
           Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin = {-796, -90.5})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_TT201_FV201(L = L_S2_PL1, t = t_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, q_m3h_start = q_m3h_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-794, -112})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-854, -202})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(L = L_S2_PL3, t = L_S2, set_m_flow_start = true, m_flow_start = 1, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 270, origin = {-854, -172})));
@@ -2838,33 +2838,33 @@ package Tests
           Placement(transformation(extent = {{10, 10}, {-10, -10}}, rotation = 0, origin = {-832, -444})));
         DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV201_P201(L = L_S2_PL1, t = t_S2, pin_start = pin_start_S2, Tin_start = Tin_start_S2, Tout_start = Tin_start_S2, Di = Di_S2, q_m3h_start = q_m3h_S2, n = n, hctype = hctype) annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-794, -174})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = 0, origin = {-824, -132})));
         Modelica.Blocks.Sources.BooleanConstant FV202_OnOff(k = FV202_state) annotation (
           Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-824, -96})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV202_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin = {-824, -106})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin = {-794, -152})));
         Modelica.Blocks.Sources.BooleanConstant FV201_OnOff(k = FV201_state) annotation (
           Placement(transformation(extent = {{-838, -158}, {-826, -146}})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV201_Status annotation (
           Placement(transformation(extent = {{-810, -162}, {-830, -142}})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 180, origin = {-774, -190})));
         Modelica.Blocks.Sources.BooleanConstant FV206_OnOff(k = FV206_state) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 270, origin = {-774, -146})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV206_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin = {-774, -160})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin = {-794, -272})));
         Modelica.Blocks.Sources.BooleanConstant FV209_OnOff(k = FV209_state) annotation (
           Placement(transformation(extent = {{-5.5, -6}, {5.5, 6}}, rotation = 0, origin = {-834.5, -272})));
         Modelica.Blocks.Interaction.Show.BooleanValue FV209_Status annotation (
           Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin = {-820, -272})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(Kv = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(Kv = TestFacility.Data.ValveData.FCV101.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2/4) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 0, origin = {-774, -258})));
-        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(Kv = DistrictHeatingNetwork.Data.ValveData.FCV201.Kv, dp_nom(displayUnit = "Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2) annotation (
+        DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(Kv = TestFacility.Data.ValveData.FCV201.Kv, dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, Tin_start(displayUnit = "K") = Tout_start_S2, pin_start = pout_start_S2, q_m3h_start = q_m3h_S2) annotation (
           Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 90, origin = {-754, -222})));
         Modelica.Blocks.Sources.BooleanConstant FV203_OnOff(k = FV203_state) annotation (
           Placement(transformation(extent = {{-708, -228}, {-719, -216}})));

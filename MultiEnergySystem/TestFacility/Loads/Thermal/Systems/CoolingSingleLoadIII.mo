@@ -9,22 +9,22 @@ model CoolingSingleLoadIII
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
 
   // Flow Control Valve parameters
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
-  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
-  parameter DistrictHeatingNetwork.Types.Density rho_nom_valve = DistrictHeatingNetwork.Data.ValveData.FCV701.rho_nom "Nominal fluid density at supply" annotation (
+  parameter DistrictHeatingNetwork.Types.Density rho_nom_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Nominal fluid density at supply" annotation (
     Dialog(tab = "Valve", group = "Characteristics"));
-  parameter Real q_m3h_nom_valve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.q_nom_m3h "Nominal volumetric flowrate in m3/h";
+  parameter Real q_m3h_nom_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Nominal volumetric flowrate in m3/h";
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_valve = 20 + 273.15 annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_valve = 2e5 annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
-  parameter DistrictHeatingNetwork.Types.Density rho_start_valve = DistrictHeatingNetwork.Data.ValveData.FCV701.rho_nom "Start value fluid density at the inlet" annotation (
+  parameter DistrictHeatingNetwork.Types.Density rho_start_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Start value fluid density at the inlet" annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
-  parameter Real q_m3h_start_valve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
+  parameter Real q_m3h_start_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "Initialisation"));
 
   // Sudden Area Change parameters
@@ -320,13 +320,13 @@ model CoolingSingleLoadIII
   Modelica.Blocks.Interfaces.RealOutput PT7X2_PT annotation (Placement(transformation(extent={{100,80},{120,100}}),  iconTransformation(extent={{100,-60},{120,-40}})));
   Modelica.Blocks.Interfaces.RealOutput PT7X1_PT annotation (Placement(transformation(extent={{100,65},{120,85}}),  iconTransformation(extent={{100,-40},{120,-20}})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV7X1(
-    Kv=DistrictHeatingNetwork.Data.ValveData.TCV701.Kv,
-    openingChar=DistrictHeatingNetwork.Data.ValveData.TCV701.openingChar,
-    dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.dp_nom,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.q_nom_m3h,
-    Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.Tin_start,
-    pin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.pin_start,
+    Kv=TestFacility.Data.ValveData.TCV701.Kv,
+    openingChar=TestFacility.Data.ValveData.TCV701.openingChar,
+    dp_nom=TestFacility.Data.ValveData.TCV701.dp_nom,
+    rho_nom=TestFacility.Data.ValveData.TCV701.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.TCV701.q_nom_m3h,
+    Tin_start=TestFacility.Data.ValveData.TCV701.Tin_start,
+    pin_start=TestFacility.Data.ValveData.TCV701.pin_start,
     q_m3h_start=m_flow_EX7X1_cold*1000/3600) annotation (Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=-90,

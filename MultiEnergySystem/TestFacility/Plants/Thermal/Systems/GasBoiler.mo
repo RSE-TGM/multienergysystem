@@ -46,7 +46,7 @@ model GasBoiler "System 100"
   parameter Real FCV101theta[:,:] = [0, 1];
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
   parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;
@@ -89,9 +89,9 @@ model GasBoiler "System 100"
     redeclare model Medium = Medium,
     Kv=Kv,
     openingChar=openingChar,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV101.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV101.q_nom_m3h,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
+    rho_nom=TestFacility.Data.ValveData.FCV101.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.FCV101.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_S1,
     pin_start=pout_start_S1,
     q_m3h_start=q_m3h_S1)

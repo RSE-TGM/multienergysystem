@@ -12,7 +12,7 @@ model CirculationPump
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Real pumpcorrectionfactor = 1;
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
@@ -175,10 +175,10 @@ model CirculationPump
     FCV901(
     redeclare model Medium = Medium,
     Kv=Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV901.dp_nom,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV901.dp_nom,
     openingChar=openingChar,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.FCV901.q_nom_m3h,
+    rho_nom=TestFacility.Data.ValveData.FCV901.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.FCV901.q_nom_m3h,
     Tin_start(displayUnit="K") = T_hot_start,
     pin_start=pout_start_S9,
     q_m3h_start=q_m3h_S9)  annotation (Placement(transformation(

@@ -138,8 +138,8 @@ model TES
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,30})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV201.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV201.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV201.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-60})));
@@ -283,8 +283,8 @@ model TES
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,-32})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV202(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV101.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = 0, origin={-48,10})));
@@ -292,8 +292,8 @@ model TES
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin={-48,36})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV101.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin={-18,-10})));
@@ -301,8 +301,8 @@ model TES
     Placement(transformation(extent={{-34,-20},{-54,0}})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV206(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV101.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2/4)                                                                                                                                                                                                         annotation (
@@ -311,8 +311,8 @@ model TES
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = -90, origin={2,-26})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV209(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV101.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin={-18,-130})));
@@ -320,16 +320,16 @@ model TES
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={-44,-130})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV207(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV101.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2/4)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 0, origin={2,-116})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV201.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=TestFacility.Data.ValveData.FCV201.Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2,
     q_m3h_start=q_m3h_S2)                                                                                                                                                                                                         annotation (

@@ -705,12 +705,12 @@ model RR00_CL
         origin={-222,98})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
                                                                 TCV731(
-    Kv=DistrictHeatingNetwork.Data.ValveData.TCV731.Kv,
-    dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.dp_nom,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.q_nom_m3h,
-    Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV731.Tin_start,
-    pin_start=DistrictHeatingNetwork.Data.ValveData.TCV731.pin_start,
+    Kv=TestFacility.Data.ValveData.TCV731.Kv,
+    dp_nom=TestFacility.Data.ValveData.TCV731.dp_nom,
+    rho_nom=TestFacility.Data.ValveData.TCV731.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.TCV731.q_nom_m3h,
+    Tin_start=TestFacility.Data.ValveData.TCV731.Tin_start,
+    pin_start=TestFacility.Data.ValveData.TCV731.pin_start,
     q_m3h_start=q_Users) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
@@ -769,12 +769,12 @@ model RR00_CL
         origin={120,-70})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
                                                                 TCV721(
-    Kv=DistrictHeatingNetwork.Data.ValveData.TCV721.Kv,
-    dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.dp_nom,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.q_nom_m3h,
-    Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV721.Tin_start,
-    pin_start=DistrictHeatingNetwork.Data.ValveData.TCV721.pin_start,
+    Kv=TestFacility.Data.ValveData.TCV721.Kv,
+    dp_nom=TestFacility.Data.ValveData.TCV721.dp_nom,
+    rho_nom=TestFacility.Data.ValveData.TCV721.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.TCV721.q_nom_m3h,
+    Tin_start=TestFacility.Data.ValveData.TCV721.Tin_start,
+    pin_start=TestFacility.Data.ValveData.TCV721.pin_start,
     q_m3h_start=q_Users) annotation (Placement(transformation(
         extent={{-10,10.5},{10,-10.5}},
         rotation=-90,
@@ -825,12 +825,12 @@ model RR00_CL
         origin={-40,-69})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
                                                                 TCV711(
-    Kv=DistrictHeatingNetwork.Data.ValveData.TCV711.Kv,
-    dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.dp_nom,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.q_nom_m3h,
-    Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV711.Tin_start,
-    pin_start=DistrictHeatingNetwork.Data.ValveData.TCV711.pin_start,
+    Kv=TestFacility.Data.ValveData.TCV711.Kv,
+    dp_nom=TestFacility.Data.ValveData.TCV711.dp_nom,
+    rho_nom=TestFacility.Data.ValveData.TCV711.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.TCV711.q_nom_m3h,
+    Tin_start=TestFacility.Data.ValveData.TCV711.Tin_start,
+    pin_start=TestFacility.Data.ValveData.TCV711.pin_start,
     q_m3h_start=q_Users) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
@@ -866,12 +866,12 @@ model RR00_CL
         origin={-80,-40})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
                                                                 TCV701(
-    Kv=DistrictHeatingNetwork.Data.ValveData.TCV701.Kv,
-    dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.dp_nom,
-    rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.rho_nom,
-    q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.q_nom_m3h,
-    Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.Tin_start,
-    pin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.pin_start,
+    Kv=TestFacility.Data.ValveData.TCV701.Kv,
+    dp_nom=TestFacility.Data.ValveData.TCV701.dp_nom,
+    rho_nom=TestFacility.Data.ValveData.TCV701.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.TCV701.q_nom_m3h,
+    Tin_start=TestFacility.Data.ValveData.TCV701.Tin_start,
+    pin_start=TestFacility.Data.ValveData.TCV701.pin_start,
     q_m3h_start=q_Users) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,

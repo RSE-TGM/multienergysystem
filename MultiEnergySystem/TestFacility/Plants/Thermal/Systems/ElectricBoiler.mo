@@ -31,8 +31,8 @@ model ElectricBoiler "System 400"
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4;
 
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Data.ValveData.FCV401.openingChar "opening characteristic";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV401.openingChar "opening characteristic";
 
   parameter Real nR = 5 "Number of resistors";
   parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
@@ -94,7 +94,7 @@ model ElectricBoiler "System 400"
     redeclare model Medium = Medium,
     Kv=Kv,
     openingChar=openingChar,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV401.dp_nom,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV401.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S4,
     pin_start=pout_start_S4,
     q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(

@@ -43,7 +43,7 @@ model GasBoilerFlowControlled "System 100"
   parameter Real FCV101theta[:,:] = [0, 1];
   parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
-  parameter Real Kv(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
 
   parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;

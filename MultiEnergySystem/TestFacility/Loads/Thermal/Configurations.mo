@@ -254,8 +254,8 @@ package Configurations "Different possible configurations for the loads"
 
 
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom,
+        Kv=TestFacility.Data.ValveData.FCV701.Kv,
+        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV701.dp_nom,
         Tin_start(displayUnit="K") = EX701_Tout_hot,
         pin_start=EX701_pout_hot,
         q_m3h_start=EX701_q_m3h_cold) annotation (Placement(transformation(
@@ -582,8 +582,8 @@ package Configurations "Different possible configurations for the loads"
 
 
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom,
+        Kv=TestFacility.Data.ValveData.FCV711.Kv,
+        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV711.dp_nom,
         Tin_start(displayUnit="K") = EX711_Tout_hot,
         pin_start=EX711_pout_hot,
         q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
@@ -695,8 +695,8 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={398,-56})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom,
+        Kv=TestFacility.Data.ValveData.FCV721.Kv,
+        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV721.dp_nom,
         Tin_start(displayUnit="K") = EX721_Tout_hot,
         pin_start=EX721_pout_hot,
         q_m3h_start=EX721_q_m3h_cold) annotation (Placement(transformation(
@@ -807,8 +807,8 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={558,-56})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
-        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom,
+        Kv=TestFacility.Data.ValveData.FCV731.Kv,
+        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV731.dp_nom,
         Tin_start(displayUnit="K") = EX731_Tout_hot,
         pin_start=EX731_pout_hot,
         q_m3h_start=EX731_q_m3h_cold) annotation (Placement(transformation(
@@ -920,12 +920,12 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={258,-60})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV731(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV731.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV731.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV731.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV731.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV731.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV731.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV731.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV731.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV731.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
@@ -980,12 +980,12 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={598,-320})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV721(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV721.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV721.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV721.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV721.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV721.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV721.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV721.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV721.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV721.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10.5},{10,-10.5}},
             rotation=-90,
@@ -1034,12 +1034,12 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={438,-319})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV711(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV711.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV711.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV711.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV711.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV711.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV711.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV711.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV711.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV711.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
@@ -1073,12 +1073,12 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={398,-290})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV701(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV701.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV701.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV701.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV701.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV701.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV701.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV701.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
@@ -2665,23 +2665,23 @@ package Configurations "Different possible configurations for the loads"
             extent={{17.5,29},{-17.5,-29}},
             rotation=-90,
             origin={279,-217.5})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV701.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV701.dp_nom, Tin_start(displayUnit="K") = EX701_Tout_hot, pin_start=EX701_pout_hot, q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV701(redeclare model Medium = MediumLPHot, Kv=TestFacility.Data.ValveData.FCV701.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV701.openingChar,                                                                                        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV701.dp_nom, Tin_start(displayUnit="K") = EX701_Tout_hot, pin_start=EX701_pout_hot, q_m3h_start=EX701_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={140,-150})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV711.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV711.dp_nom, Tin_start(displayUnit="K") = EX711_Tout_hot, pin_start=EX711_pout_hot, q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV711(redeclare model Medium = MediumLPHot, Kv=TestFacility.Data.ValveData.FCV711.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV711.openingChar,                                                                                        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV711.dp_nom, Tin_start(displayUnit="K") = EX711_Tout_hot, pin_start=EX711_pout_hot, q_m3h_start=EX711_q_m3h_hot) annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={460,-150})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV721.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV721.dp_nom, Tin_start(displayUnit="K") = EX721_Tout_hot, pin_start=EX721_pout_hot, q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV721(redeclare model Medium = MediumLPHot, Kv=TestFacility.Data.ValveData.FCV721.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV721.openingChar,                                                                                        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV721.dp_nom, Tin_start(displayUnit="K") = EX721_Tout_hot, pin_start=EX721_pout_hot, q_m3h_start=EX721_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={620,-150})));
-      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(redeclare model Medium = MediumLPHot, Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV731.openingChar,                                                                                        dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV731.dp_nom, Tin_start(displayUnit="K") = EX731_Tout_hot, pin_start=EX731_pout_hot, q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV731(redeclare model Medium = MediumLPHot, Kv=TestFacility.Data.ValveData.FCV731.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV731.openingChar,                                                                                        dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV731.dp_nom, Tin_start(displayUnit="K") = EX731_Tout_hot, pin_start=EX731_pout_hot, q_m3h_start=EX731_q_m3h_hot)  annotation (Placement(transformation(
             extent={{10,-10},{-10,10}},
             rotation=-90,
             origin={300,-150})));
@@ -3305,7 +3305,7 @@ package Configurations "Different possible configurations for the loads"
       parameter Real q_Cool(unit = "m3/h") = 32;
       parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
       parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
-      parameter Real Kvalve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCVR01.Kv; //90;
+      parameter Real Kvalve(unit = "m3/h") = TestFacility.Data.ValveData.FCVR01.Kv; //90;
       parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
       parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
       parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
@@ -3577,45 +3577,45 @@ package Configurations "Different possible configurations for the loads"
             rotation=-90,
             origin={240,-60})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV731(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV731.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV731.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV731.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV731.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV731.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV731.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV731.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV731.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV731.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV731.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={240,-320})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV721(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV721.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV721.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV721.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV721.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV721.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV721.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV721.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV721.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV721.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV721.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={560,-320})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV711(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV711.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV711.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV711.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV711.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV711.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV711.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV711.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV711.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV711.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV711.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
             origin={400,-320})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV701(
-        Kv=DistrictHeatingNetwork.Data.ValveData.TCV701.Kv,
-        dp_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.dp_nom,
-        rho_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.rho_nom,
-        q_m3h_nom=DistrictHeatingNetwork.Data.ValveData.TCV701.q_nom_m3h,
-        Tin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.Tin_start,
-        pin_start=DistrictHeatingNetwork.Data.ValveData.TCV701.pin_start,
+        Kv=TestFacility.Data.ValveData.TCV701.Kv,
+        dp_nom=TestFacility.Data.ValveData.TCV701.dp_nom,
+        rho_nom=TestFacility.Data.ValveData.TCV701.rho_nom,
+        q_m3h_nom=TestFacility.Data.ValveData.TCV701.q_nom_m3h,
+        Tin_start=TestFacility.Data.ValveData.TCV701.Tin_start,
+        pin_start=TestFacility.Data.ValveData.TCV701.pin_start,
         q_m3h_start=q_Users) annotation (Placement(transformation(
             extent={{-10,10},{10,-10}},
             rotation=-90,
@@ -3790,11 +3790,11 @@ package Configurations "Different possible configurations for the loads"
             origin={597,-400})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVR01(
         Kv=Kvalve,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCVR01.openingChar,
+        openingChar=TestFacility.Data.ValveData.FCVR01.openingChar,
         dp_nom(displayUnit="Pa") = 1.09928e5,
         rho_nom(displayUnit="kg/m3") = 1000,
         Tin_start(displayUnit="K") = Tout_start_Cool,
-        pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCVR01.pin_start,
+        pin_start(displayUnit="Pa") = TestFacility.Data.ValveData.FCVR01.pin_start,
         N=10)                                    annotation (Placement(
             transformation(
             extent={{-10,-10},{10,10}},
@@ -4034,8 +4034,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoad S701(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV701.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV701.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV701.openingChar,
         q_m3h_nom_valve=EX701_q_m3h_hot,
         Tin_start_valve=EX701_Tout_hot,
         EX7X1_q_m3h_hot=EX701_q_m3h_hot,
@@ -4072,8 +4072,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoad S731(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV731.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV731.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV731.openingChar,
         q_m3h_nom_valve=EX731_q_m3h_hot,
         Tin_start_valve=EX731_Tout_hot,
         EX7X1_q_m3h_hot=EX731_q_m3h_hot,
@@ -4112,8 +4112,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoad S711(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV711.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV711.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV711.openingChar,
         q_m3h_nom_valve=EX711_q_m3h_hot,
         Tin_start_valve=EX711_Tout_hot,
         EX7X1_q_m3h_hot=EX711_q_m3h_hot,
@@ -4150,8 +4150,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoad S721(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV721.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV721.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV721.openingChar,
         q_m3h_nom_valve=EX721_q_m3h_hot,
         Tin_start_valve=EX721_Tout_hot,
         EX7X1_q_m3h_hot=EX721_q_m3h_hot,
@@ -4626,7 +4626,7 @@ package Configurations "Different possible configurations for the loads"
       parameter Real q_Cool(unit = "m3/h") = 32;
       parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
       parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
-      parameter Real Kvalve(unit = "m3/h") = DistrictHeatingNetwork.Data.ValveData.FCVR01.Kv; //90;
+      parameter Real Kvalve(unit = "m3/h") = TestFacility.Data.ValveData.FCVR01.Kv; //90;
       parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
       parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
       parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
@@ -5067,11 +5067,11 @@ package Configurations "Different possible configurations for the loads"
             origin={597,-400})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVR01(
         Kv=Kvalve,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCVR01.openingChar,
+        openingChar=TestFacility.Data.ValveData.FCVR01.openingChar,
         dp_nom(displayUnit="Pa") = 1.09928e5,
         rho_nom(displayUnit="kg/m3") = 1000,
         Tin_start(displayUnit="K") = Tout_start_Cool,
-        pin_start(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCVR01.pin_start,
+        pin_start(displayUnit="Pa") = TestFacility.Data.ValveData.FCVR01.pin_start,
         N=10)                                    annotation (Placement(
             transformation(
             extent={{-10,-10},{10,10}},
@@ -5311,8 +5311,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoadIII S701(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV701.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV701.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV701.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV701.openingChar,
         q_m3h_nom_valve=EX701_q_m3h_hot,
         Tin_start_valve=EX701_Tout_hot,
         EX7X1_q_m3h_hot=EX701_q_m3h_hot,
@@ -5349,8 +5349,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoadIII S731(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV731.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV731.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV731.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV731.openingChar,
         q_m3h_nom_valve=EX731_q_m3h_hot,
         Tin_start_valve=EX731_Tout_hot,
         EX7X1_q_m3h_hot=EX731_q_m3h_hot,
@@ -5389,8 +5389,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoadIII S711(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV711.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV711.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV711.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV711.openingChar,
         q_m3h_nom_valve=EX711_q_m3h_hot,
         Tin_start_valve=EX711_Tout_hot,
         EX7X1_q_m3h_hot=EX711_q_m3h_hot,
@@ -5427,8 +5427,8 @@ package Configurations "Different possible configurations for the loads"
       Systems.CoolingSingleLoadIII S721(
         np=n,
         nHX=nHX,
-        Kv=DistrictHeatingNetwork.Data.ValveData.FCV721.Kv,
-        openingChar=DistrictHeatingNetwork.Data.ValveData.FCV721.openingChar,
+        Kv=TestFacility.Data.ValveData.FCV721.Kv,
+        openingChar=TestFacility.Data.ValveData.FCV721.openingChar,
         q_m3h_nom_valve=EX721_q_m3h_hot,
         Tin_start_valve=EX721_Tout_hot,
         EX7X1_q_m3h_hot=EX721_q_m3h_hot,

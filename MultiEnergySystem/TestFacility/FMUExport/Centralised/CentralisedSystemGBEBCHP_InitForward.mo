@@ -51,11 +51,11 @@ model CentralisedSystemGBEBCHP_InitForward
   parameter DistrictHeatingNetwork.Types.AngularVelocity omegaP501_nom = 2*Modelica.Constants.pi*50;
 
   parameter DistrictHeatingNetwork.Types.Temperature TT502_nom = 100 + 273.15 "Nominal temperature at the outlet of S500";
-  parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_nom= DistrictHeatingNetwork.Data.PumpData.P501.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_nom= TestFacility.Data.PumpData.P501.qnommax_inm3h*980/3600;
 
   parameter DistrictHeatingNetwork.Types.Temperature TT502_des = 80 + 273.15 "Desired temperature at the outlet of S500";
-  parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= DistrictHeatingNetwork.Data.PumpData.P501.qnom_inm3h*980/3600;
-  parameter Real b_PR01[3] = DistrictHeatingNetwork.Data.PumpData.PR01.b;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= TestFacility.Data.PumpData.P501.qnom_inm3h*980/3600;
+  parameter Real b_PR01[3] = TestFacility.Data.PumpData.PR01.b;
   Plants.Thermal.Systems.CHP S500(
     n=n,
     Tin_low_start=Tin_Source_start_S5,

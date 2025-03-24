@@ -25,8 +25,7 @@ import MultiEnergySystem.DistrictHeatingNetwork.Types;
   end IdealHeatTransfer;
 
   model FlowDependentHeatTransferCoefficient
-    extends
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer(
+    extends MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer(
        final computeTransport=false, gamma(each start=gamma_approx));
 
   initial equation
@@ -58,8 +57,7 @@ import MultiEnergySystem.DistrictHeatingNetwork.Types;
   end ConstantHeatTransferCoefficient;
 
   model FlowPressureDependentHeatTransferCoefficient
-    extends
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer(
+    extends MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer(
        final computeTransport=false, gamma(each start=gamma_approx));
 
     parameter Modelica.Units.SI.Pressure pnom_ht = p_nom

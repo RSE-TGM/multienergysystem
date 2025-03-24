@@ -12,30 +12,26 @@ package ValveCharacteristics
 
   function linear
     "Linear opening characteristic"
-    extends
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
+    extends MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
   algorithm
     rp := pos;
   end linear;
 
   function quadratic
     "Quadratic opening char."
-    extends
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
+    extends MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
   algorithm
   rp := pos*pos;
   end quadratic;
 
   function squareRoot "Square opening char."
-    extends
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
+    extends MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
   algorithm
   rp := sqrt(pos+1e-3);
   end squareRoot;
 
   function equalPercentage "Square opening char."
-    extends
-      MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
+    extends MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
       input Real N(min = 0);
   algorithm
     rp := N^(pos-1);

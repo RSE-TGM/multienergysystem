@@ -2,12 +2,10 @@ within MultiEnergySystem.TestFacility.FMUExport.Centralised;
 model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffset/OutputOffset blocks"
   extends Interfaces.SignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  import Pump = MultiEnergySystem.DistrictHeatingNetwork.Data.PumpData;
-
+  import Pump = MultiEnergySystem.TestFacility.Data.PumpData;
 
 //Boolean Parameters
   //Initialization type
-  parameter Boolean ForwardInit = true "True if forward, False if backward";
   //Input
   parameter Boolean fixthetaTCV701 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaTCV711 = ForwardInit "True if forward, False if backward";
@@ -61,9 +59,9 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     Dialog(tab = "Nominal and Desired values", group = "Power"));
   parameter DistrictHeatingNetwork.Types.Pressure EX731Pt_nom = 50e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
-  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR03_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate dFTR00_nom= DistrictHeatingNetwork.Data.PumpData.PR01.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_nom= TestFacility.Data.PumpData.PR01.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR03_nom= TestFacility.Data.PumpData.PR01.qnommax_inm3h*980/3600;
+  parameter DistrictHeatingNetwork.Types.MassFlowRate dFTR00_nom= TestFacility.Data.PumpData.PR01.qnommax_inm3h*980/3600;
   parameter DistrictHeatingNetwork.Types.Temperature TTR02_nom = 30 + 273.15 "Desired temperature at the outlet of the loads";
 
 
@@ -75,7 +73,7 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
     Dialog(tab = "Nominal and Desired values", group = "Power"));
   parameter DistrictHeatingNetwork.Types.Pressure EX731Pt_des = 50e3 "Desired low circuit pressure" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Power"));
-  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_des= DistrictHeatingNetwork.Data.PumpData.PR01.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
+  parameter DistrictHeatingNetwork.Types.MassFlowRate FTR01_des= TestFacility.Data.PumpData.PR01.qnom_inm3h*980/3600 "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));
   parameter DistrictHeatingNetwork.Types.MassFlowRate FTR03_des= 5 "Desired total hot mass flowrate" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Mass Flow Rate"));

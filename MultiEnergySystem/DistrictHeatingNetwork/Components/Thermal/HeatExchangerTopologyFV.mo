@@ -4,8 +4,7 @@ model HeatExchangerTopologyFV
   extends DistrictHeatingNetwork.Icons.Generic.HeatFlow;
   parameter Integer Nw = 2 "Number of volumes, minimum 2";
   replaceable model HeatExchangerTopology =
-      HeatExchangerTopologies.CoCurrentFlow constrainedby
-    MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.BaseClasses.HeatExchangerTopologyData
+      HeatExchangerTopologies.CoCurrentFlow constrainedby MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal.BaseClasses.HeatExchangerTopologyData
     annotation(choicesAllMatching=true);
 
   HeatExchangerTopology HET(final Nw = Nw);

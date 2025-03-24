@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.S900;
 model S900
   extends Modelica.Icons.Example;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby
     DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
   parameter Types.Length Di = 51e-3;

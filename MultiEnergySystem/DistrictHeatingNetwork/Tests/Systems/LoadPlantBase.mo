@@ -945,7 +945,7 @@ model LoadPlantBase
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   replaceable model Medium =
-      DistrictHeatingNetwork.Media.WaterLiquid;
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
 
   // EX701
   parameter Real EX701_q_m3h_hot = 2.5;

@@ -4,12 +4,13 @@ model RG2i_PID_source2_CH4H2
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,
-    X_start = {1, 0},
-    constantFrictionFactor = false,
-    massFractionDynamicBalance = true,
+    X_start={1,0},
+    constantFrictionFactor=false,
+    massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.413, A_v=1.8*0.413/(sqrt(40.18*(60 - 4.93)*
           1e5))),
-    const(k=4.93*10^5));
+    PID(k=1000),
+    p_ref(height=-0.1*10^5));
 
     parameter Types.MassFraction X_inj[nX] = {0, 1};
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
@@ -73,9 +74,9 @@ model RG2i_PID_source2_CH4H2
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
-    offset=0.0001,
     height=25/3600,
     duration=300,
+    offset=0.0001,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-409,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
@@ -87,8 +88,6 @@ model RG2i_PID_source2_CH4H2
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-348,240},{-328,260}})));
 equation
-  connect(m_flow_H1.y,add1. u2) annotation (Line(points={{-398,232},{-350,232},{
-          -350,244}},             color={0,0,127}));
   connect(add1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-327,250},{
           -302,250},{-302,238},{-306,238},{-306,225},{-308,225}},
                                              color={0,0,127}));
@@ -106,8 +105,7 @@ equation
       thickness=0.5));
   connect(m_flow_H5.y, add1.u1) annotation (Line(points={{-396,268},{-386,268},{
           -386,270},{-372,270},{-372,256},{-350,256}}, color={0,0,127}));
-  annotation (experiment(
-      StopTime=28800,
-      Tolerance=1e-05,
-      __Dymola_Algorithm="Dassl"));
+  connect(m_flow_H1.y, add1.u2) annotation (Line(points={{-398,232},{-388,232},
+          {-388,230},{-350,230},{-350,244}}, color={0,0,127}));
+  annotation (experiment(StopTime=28800, __Dymola_Algorithm="Dassl"));
 end RG2i_PID_source2_CH4H2;

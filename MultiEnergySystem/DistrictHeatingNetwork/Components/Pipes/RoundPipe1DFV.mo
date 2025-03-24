@@ -11,7 +11,7 @@ model RoundPipe1DFV
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
      choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
      constrainedby
      DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance
       "Water model" annotation (

@@ -8,7 +8,7 @@ package Tests
       extends Modelica.Icons.ExamplesPackage;
       model TestBase
         extends Modelica.Icons.Example;
-        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
         replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
         parameter Integer n = 3;
@@ -407,7 +407,7 @@ package Tests
       model TestBase
         extends Modelica.Icons.Example;
 
-        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
         constant Real pi = Modelica.Constants.pi;
         parameter Integer n = 3 "Number of volumes in each pipe";
@@ -672,7 +672,7 @@ package Tests
       extends Modelica.Icons.ExamplesPackage;
       model TestBase
         extends Modelica.Icons.Example;
-        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
         replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
         parameter Integer n = 3;
@@ -992,7 +992,7 @@ package Tests
         extends Modelica.Icons.Example;
 
         // Medium
-        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
+        replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
           constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
         parameter Real pumpcorrectionfactor = 1;
         parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005;
@@ -1302,7 +1302,7 @@ package Tests
 
     model E7X1Test "Subsystem of a single HX70X test with real data"
       extends Modelica.Icons.Example;
-      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
       replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
       parameter Real CorrectFactorHot = 1;
@@ -1515,7 +1515,7 @@ package Tests
 
     model EX7X1Test "Subsystem of a single HX70X test with real data"
       extends Modelica.Icons.Example;
-      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
       replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
       parameter Real CorrectFactorHot = 1;
@@ -1703,7 +1703,7 @@ package Tests
 
     model EX7X1PcontrolledTest "Subsystem of a single HX70X test with real data"
       extends Modelica.Icons.Example;
-      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+      replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
       replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
       parameter Real CorrectFactorHot = 1;

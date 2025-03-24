@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledHeatPumpNoDynamics
   extends DistrictHeatingNetwork.Icons.ThermalMachines.HeatPump;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid "Medium model" annotation (
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp "Medium model" annotation (
      choicesAllMatching = true);
   // Declaration of fluid models
   Medium fluidInHot(T_start = Tin_hot_start, p_start = pin_hot_start) "Hot inlet fluid";

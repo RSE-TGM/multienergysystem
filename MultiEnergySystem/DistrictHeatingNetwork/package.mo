@@ -5,7 +5,7 @@ package DistrictHeatingNetwork "Components for District Heating and Cooling Syst
   import BPHE = MultiEnergySystem.TestFacility.Data.BPHEData;
   import Pump = MultiEnergySystem.TestFacility.Data.PumpData;
   import         MultiEnergySystem.DistrictHeatingNetwork.Types;
-  import Pipe = MultiEnergySystem.DistrictHeatingNetwork.Data.PipelineData;
+  import Pipe = MultiEnergySystem.TestFacility.Data.PipelineData;
   import Valve = MultiEnergySystem.TestFacility.Data.ValveData;
   import      Modelica.Constants.pi;
 

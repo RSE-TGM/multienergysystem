@@ -220,6 +220,31 @@ package Icons "Icon package for DHN components"
               pattern=LinePattern.Dash)}), Diagram(coordinateSystem(
               preserveAspectRatio=false)));
     end InProgress;
+
+    partial model Old
+      annotation (Icon(                                             graphics={
+              Rectangle(
+              extent={{-100,100},{100,-100}},
+              lineColor={28,108,200},
+              lineThickness=0.5,
+              pattern=LinePattern.Dash),
+            Line(
+              points={{-100,-100},{100,100}},
+              color={186,36,38},
+              pattern=LinePattern.Dash,
+              thickness=1),
+            Line(
+              points={{-100,100}},
+              color={0,140,72},
+              pattern=LinePattern.Dash,
+              thickness=0.5),
+            Line(
+              points={{-100,100},{100,-100}},
+              color={152,29,31},
+              pattern=LinePattern.Dash,
+              thickness=1)}),              Diagram(coordinateSystem(
+              preserveAspectRatio=false)));
+    end Old;
   end Generic;
 
   package ThermalMachines

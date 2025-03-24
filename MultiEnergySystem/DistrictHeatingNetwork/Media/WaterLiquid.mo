@@ -1,5 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Media;
 model WaterLiquid
+  extends DistrictHeatingNetwork.Icons.Generic.Old;
   extends Media.BaseClasses.PartialSubstance(
     mu_start = 0.00113,
     MM = Modelica.Media.IdealGases.Common.SingleGasesData.H2O.MM,

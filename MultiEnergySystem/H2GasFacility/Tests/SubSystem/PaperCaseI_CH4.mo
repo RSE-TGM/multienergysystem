@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem;
-model PaperCaseI_CH4 "Same as PaperCaseI with pure CH4 and without H2 injection across the net for S.S. validation"
+model PaperCaseI_CH4 "Extended PaperCaseI with pure CH4 and without H2 injection across the net for S.S. validation"
   extends Tests.SubSystem.PaperCaseI(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4,
@@ -13,7 +13,7 @@ model PaperCaseI_CH4 "Same as PaperCaseI with pure CH4 and without H2 injection 
     sourceH2_A(G=0,use_in_m_flow0 = true),
     m_flow_H2(duration = 0),
     m_flow_H2_ref = 0,
-    quasiStatic = false,
+    massFractionDynamicBalance = true,
     n = 3,
     X_start = {1},
     X_start_H2 = {1},
@@ -30,5 +30,16 @@ equation
       StopTime=600,
       Interval=0.166667,
       Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"),
+    Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">PaperCaseI_CH4</span> model is an extension of the <span style=\"font-family: Courier New;\">PaperCaseI</span> model. This extended version is specifically designed to simulate a steady-state system using pure methane (<span style=\"font-family: Courier New;\">CH4</span>) .</p>
+<h4>Use Case</h4>
+<p>This model is useful for validating steady-state behavior in systems designed for methane-only operation. It simplifies the system configuration to exclude hydrogen while preserving the essential dynamics of the <span style=\"font-family: Courier New;\">PaperCaseI</span> setup. The parameter adjustments and redefinitions ensure compatibility and accurate representation of a methane-based system.</p>
+<h4>Assumptions</h4>
+<ul>
+<li>The medium (<span style=\"font-family: Courier New;\">CH4</span>) is treated as an ideal gas throughout the system.</li>
+<li>Hydrogen-related components are replaced with methane equivalents but retain their original roles for compatibility.</li>
+<li>The steady-state validation assumes no transient effects or energy demand.</li>
+</ul>
+</html>"));
 end PaperCaseI_CH4;

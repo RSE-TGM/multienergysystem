@@ -13,19 +13,19 @@ partial model BasePressureDrop
     "Used to decide if it is necessary to calculate the transport properties";
   parameter Boolean computeEntropy = false
     "Used to decide if it is necessary to calculate entropy";
-  parameter Types.Pressure dp_nom = 0.1e5
+  parameter Types.Pressure dp_nom = 60e5 - 4.93e5
     "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(group = "Initialization"));
-  parameter Types.Pressure pin_start = 1e5
+  parameter Types.Pressure pin_start = 60e5
     "Inlet nominal and start pressure" annotation (
     Dialog(group = "Initialization"));
   final parameter Types.Pressure pout_start = pin_start - dp_nom
     "Outlet nominal and start pressure" annotation (
     Dialog(group = "Initialization"));
-  parameter Types.Temperature Tin_start = 25 + 273.15
+  parameter Types.Temperature Tin_start = 15 + 273.15
     "Inlet nominal and start temperature" annotation (
     Dialog(group = "Initialization"));
-  parameter Types.Temperature Tout_start = 20 + 273.15
+  parameter Types.Temperature Tout_start = 15 + 273.15
     "Outlet nominal and start temperature" annotation (
     Dialog(group = "Initialization"));
   parameter Types.MassFraction X_start[fluidIn.nX]
@@ -56,4 +56,9 @@ partial model BasePressureDrop
 
 equation
 
+  annotation (Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">BasePressureDrop</span> is a partial Modelica model that provides a foundation for simulating pressure drops in fluid systems. It is designed to handle fluid flow between two ports with configurable parameters for the fluid medium, pressure, and temperature.</p>
+<h4>Use Case</h4>
+<p>This model is a base class for components such as valves, pipes, or flow restrictors where a pressure drop occurs. It can be extended with specific equations to define the pressure drop dynamics and other fluid properties.</p>
+</html>"));
 end BasePressureDrop;

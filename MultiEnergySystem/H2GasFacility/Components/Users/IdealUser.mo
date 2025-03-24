@@ -51,5 +51,20 @@ equation
     Icon(graphics={  Ellipse(lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.Sphere, lineThickness = 0.5, extent = {{-60, 60}, {60, -60}}), Text(
           extent={{-100,-80},{100,-140}},
           textColor={28,108,200},
-          textString="%name")}));
+          textString="%name")}), Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">IdealUser</span> model represents a simplified user or node in a gas network, configured to demand fluid mass flow or energy. The model is highly configurable, allowing for either mass flow or energy-based demand profiles, and operates with a replaceable fluid medium.</p>
+<h4>Equations</h4>
+<ul>
+<li>The model calculates properties such as pressure, enthalpy, and mass fractions based on the inlet fluid stream.</li>
+<li>The energy demand is calculated as the product of mass flow and the fluid&apos;s higher heating value (<span style=\"font-family: Courier New;\">HHV_mix</span>).</li>
+<li>The mass flow demand (<span style=\"font-family: Courier New;\">m_flow_demand</span>) adapts dynamically based on the selected demand approach (mass flow or energy).</li>
+</ul>
+<h4>Use Case</h4>
+<p>The <span style=\"font-family: Courier New;\">IdealUser</span> model is suitable for simulating gas network nodes or end-users with dynamic fluid demands and analyzing system behavior under various demand profiles, using either mass flow or energy as the driving metric.</p>
+<h4>Assumptions</h4>
+<ul>
+<li>The working fluid is can be ideal or real.</li>
+<li>The demand approach (mass flow or energy) is mutually exclusive and controlled by the <span style=\"font-family: Courier New;\">useEnergyDemand</span> parameter.</li>
+</ul>
+</html>"));
 end IdealUser;

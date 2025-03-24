@@ -1,3 +1,5 @@
+<img src="https://github.com/RSE-TGM/multienergysystem/blob/hydrogen/cropped-logo_rse_2022.png" alt="RSE Logo" width="250px">
+
 # MultiEnergySystem - MES
 Modelica Library for modelling, simulation &amp; control of District Heating Systems and Natural Gas Systems.
 
@@ -12,6 +14,14 @@ Modelica Library for modelling, simulation &amp; control of District Heating Sys
 - **Modeling of real gases**: It includes two equations for modeling real gases: Papay and Peng-Robinson.
 - **Multi-Energy System integration**
 - **Experimental Facility for MES analysis**
+
+## Clone repository
+
+* To clone the repository for the first time run:  
+  ``git clone --recurse-submodules https://github.com/RSE-TGM/multienergysystem.git``
+* If you have already cloned the repository, run:  
+  ``git submodule update --init --recursive``
+* The default branch of MES Library is the ``main`` branch. This means that after cloning the repository, you always checked out the ``main`` branch.
 
 
 ## License
@@ -37,6 +47,6 @@ M. A. Muro Alvarado, C. Anderis, R. Lazzari, L. Nigro and A. La Bella, "Developm
 
 ### Contributors
 
-**MultiEnergySystem** was mainly developed by Marcelo Andre Muro Alvarado ([@marcelo-muro](https://github.com/marcelo-muro)) and Guido Sassaroli ([@guidosassaroli](https://github.com/guidosassaroli)) at Ricerca sul Sistema Energetico RSE S.p.A., with the technical support of several colleagues of our research department. We hope this library proves to be a valuable resource for your multi-energy system studies and applications.
+**MultiEnergySystem** was mainly developed by Marcelo Andre Muro Alvarado ([@marcelo-muro](https://github.com/marcelo-muro)) and Guido Sassaroli ([@guidosassaroli](https://github.com/guidosassaroli)) at [Ricerca sul Sistema Energetico - RSE S.p.A.](https://www.rse-web.it/en/), with the technical support of several colleagues of our research department. We hope this library proves to be a valuable resource for your multi-energy system studies and applications.
 
 

@@ -75,7 +75,6 @@ model TES
   parameter Integer ny(min=0) = 4 "Number of output connections";
 
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(
-    redeclare model Medium = Medium,
     H=4,
     Tin_start=Tin_start_S2,
     Tout_start=Tout_start_S2,
@@ -111,7 +110,6 @@ model TES
     use_in_omega=true)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = -90, origin={-18,-70})));
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
-    redeclare model Medium = Medium,
     H=4,
     Tin_start=Tin_start_S2,
     Tout_start=Tout_start_S2,
@@ -140,8 +138,8 @@ model TES
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,30})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(
     redeclare model Medium = Medium,
-    Kv=DistrictHeatingNetwork.Data.ValveData.FCV101.Kv,
-    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV101.dp_nom,
+    Kv=DistrictHeatingNetwork.Data.ValveData.FCV201.Kv,
+    dp_nom(displayUnit="Pa") = DistrictHeatingNetwork.Data.ValveData.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-60})));
@@ -154,6 +152,7 @@ model TES
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2/2,
     n=n,
     hctype=hctype)                                                                                                                                                                                                      annotation (
     Placement(transformation(extent={{10,10},{-10,-10}},      rotation = 270, origin={-74,-30})));
@@ -166,6 +165,7 @@ model TES
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2,
     n=n,
     hctype=hctype)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,-102})));
@@ -178,6 +178,7 @@ model TES
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2/2,
     n=n,
     hctype=hctype)                                                                                                                                                                                                      annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-90})));
@@ -223,7 +224,8 @@ model TES
     Tin_start=Tout_start_S2,
     Tout_start=Tout_start_S2,
     Di=Di_S2,
-    q_m3h_start=q_m3h_S2/2)                                                                                                                                                                                                         annotation (
+    q_m3h_start=q_m3h_S2/2,
+    hctype=hctype)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={46,-302})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_D202_Low(
     redeclare model Medium = Medium,
@@ -235,6 +237,7 @@ model TES
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
+    q_m3h_start=q_m3h_S2/2,
     n=n,
     hctype=hctype)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={46,-318})));
@@ -339,8 +342,10 @@ model TES
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={2,-138})));
   Modelica.Blocks.Logical.Not not3 annotation (
     Placement(transformation(extent={{138,-48},{118,-28}})));
-  Modelica.Blocks.Interfaces.RealOutput T_D201[ny] annotation (Placement(transformation(extent={{100,-60},{120,-40}}),     iconTransformation(extent={{100,-60},{120,-40}})));
-  Modelica.Blocks.Interfaces.RealOutput T_D202[ny] annotation (Placement(transformation(extent={{100,-80},{120,-60}}),   iconTransformation(extent={{100,-80},{120,-60}})));
+  Modelica.Blocks.Interfaces.RealOutput T_D201[ny] annotation (Placement(transformation(extent={{-106,-290},{-126,-270}}),
+                                                                                                                       iconTransformation( origin={-6,248},               extent={{106,-290},{126,-270}})));
+  Modelica.Blocks.Interfaces.RealOutput T_D202[ny] annotation (Placement(transformation(extent={{172,-296},{192,-276}}),
+                                                                                                                       iconTransformation(origin={0,20},    extent={{100,-80},{120,-60}})));
 equation
   connect(PT201.inlet,TT201. inlet) annotation (
     Line(points={{-18,51.5},{-18,60.375},{-17.85,60.375},{-17.85,71.25}},                  color = {140, 56, 54}, thickness = 0.5));
@@ -442,28 +447,20 @@ equation
   connect(PL_S200_D202_High.wall, MultiPort) annotation (Line(points={{57.9,-274},{56,-274},{56,-220},{-96,-220},{-96,-70},{-110,-70}}, color={255,238,44}));
   connect(PL_S200_D201_High.wall, MultiPort) annotation (Line(points={{32.1,-274},{40,-274},{40,-220},{-96,-220},{-96,-70},{-110,-70}}, color={255,238,44}));
   connect(FT201.m_flow, m_flow_) annotation (Line(points={{29.2,-145.9},{29.2,-158},{74,-158},{74,70},{110,70}}, color={0,0,127}));
-  connect(D202.T1, T_D202[1]) annotation (Line(points={{133.12,-313.5},{154,-313.5},{154,-132},{94,-132},{94,-73.75},{110,-73.75}},
-                                                                                                                              color={0,0,127}));
-  connect(D202.T2, T_D202[2]) annotation (Line(points={{132.56,-292.5},{144,-292.5},{144,-292},{154,-292},{154,-132},{94,-132},{94,-71.25},{110,-71.25}},
-                                                                                                                                                    color={0,0,127}));
-  connect(D202.T3, T_D202[3]) annotation (Line(points={{132.56,-271.5},{154,-271.5},{154,-132},{94,-132},{94,-68.75},{110,-68.75}},
-                                                                                                                              color={0,0,127}));
-  connect(D202.T4, T_D202[4]) annotation (Line(points={{132.56,-250.5},{154,-250.5},{154,-132},{94,-132},{94,-66.25},{110,-66.25}},
-                                                                                                                              color={0,0,127}));
-  connect(D201.T1, T_D201[1]) annotation (Line(points={{-43.12,-313.5},{-144,-313.5},{-144,-53.75},{110,-53.75}},
-                                                                                                            color={0,0,127}));
-  connect(D201.T2, T_D201[2]) annotation (Line(points={{-42.56,-292.5},{-144,-292.5},{-144,-51.25},{110,-51.25}},
-                                                                                                            color={0,0,127}));
-  connect(D201.T3, T_D201[3]) annotation (Line(points={{-42.56,-271.5},{-144,-271.5},{-144,-48.75},{110,-48.75}},
-                                                                                                            color={0,0,127}));
-  connect(D201.T4, T_D201[4]) annotation (Line(points={{-42.56,-250.5},{-144,-250.5},{-144,-46.25},{110,-46.25}},
-                                                                                                            color={0,0,127}));
   connect(omega, P201.in_omega) annotation (Line(points={{-110,70},{-52,70},{-52,-68},{-24,-68},{-24,-65.2}}, color={0,0,127}));
   connect(theta, FCV201.opening) annotation (Line(points={{-110,50},{-92,50},{-92,-60},{-82,-60}}, color={0,0,127}));
   connect(TT202.T, TTout) annotation (Line(points={{31.8,70},{50,70},{50,30},{110,30}}, color={0,0,127}));
   connect(TT201.T, TTin) annotation (Line(points={{-25.925,71.25},{-32,71.25},{-32,78},{68,78},{68,50},{110,50}}, color={0,0,127}));
   connect(PT201.p, PTin) annotation (Line(points={{-26.5,51.5},{-34,51.5},{-34,58},{38,58},{38,10},{110,10}}, color={0,0,127}));
   connect(PT202.p, PTout) annotation (Line(points={{31.8,0},{40,0},{40,-10},{110,-10},{110,-10}}, color={0,0,127}));
+  connect(D202.T1, T_D202[1]) annotation (Line(points={{133.12,-313.5},{168,-313.5},{168,-289.75},{182,-289.75}}, color={0,0,127}));
+  connect(D202.T2, T_D202[2]) annotation (Line(points={{132.56,-292.5},{164,-292.5},{164,-287.25},{182,-287.25}}, color={0,0,127}));
+  connect(D202.T3, T_D202[3]) annotation (Line(points={{132.56,-271.5},{164,-271.5},{164,-284.75},{182,-284.75}}, color={0,0,127}));
+  connect(D202.T4, T_D202[4]) annotation (Line(points={{132.56,-250.5},{168,-250.5},{168,-282.25},{182,-282.25}}, color={0,0,127}));
+  connect(D201.T1, T_D201[1]) annotation (Line(points={{-43.12,-313.5},{-86,-313.5},{-86,-283.75},{-116,-283.75}}, color={0,0,127}));
+  connect(D201.T2, T_D201[2]) annotation (Line(points={{-42.56,-292.5},{-82,-292.5},{-82,-281.25},{-116,-281.25}}, color={0,0,127}));
+  connect(D201.T3, T_D201[3]) annotation (Line(points={{-42.56,-271.5},{-88,-271.5},{-88,-278.75},{-116,-278.75}}, color={0,0,127}));
+  connect(D201.T4, T_D201[4]) annotation (Line(points={{-42.56,-250.5},{-90,-250.5},{-90,-276.25},{-116,-276.25}}, color={0,0,127}));
   annotation (Icon(                                             graphics={Bitmap(
           extent={{-48,-46},{48,46}},
           imageSource="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",

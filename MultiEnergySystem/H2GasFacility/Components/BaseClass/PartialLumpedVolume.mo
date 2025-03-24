@@ -24,7 +24,6 @@ partial model PartialLumpedVolume
   outer System system "system object for global defaults";
 
   // Add model of the fluid in the pipe
-  // import MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND;
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
       constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
@@ -37,25 +36,25 @@ partial model PartialLumpedVolume
   constant Real pi = Modelica.Constants.pi;
 
   // Parameters
-  parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density";
+  parameter H2GasFacility.Types.Density rho_nom = fluidIn.rho_start "Nominal density of the fluid";
   parameter Boolean allowFlowReversal = system.allowFlowReversal "= false prohibits flow reversal";
-  parameter Types.Length H = 0 "High of the lumped tank" annotation (
+  parameter Types.Length H = 0 "Height of the lumped tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
   parameter Types.Length D = 0.5 "Diameter of the lumped tank" annotation (
     Dialog(tab = "Data", group = "Tank"));
-  parameter Types.Temperature T_start = 298.15 "Starting temperature" annotation (
+  parameter Types.Temperature T_start = 298.15 "Starting temperature of the fluid" annotation (
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.Temperature T_ext = system.T_amb "Ambient temperature" annotation (
     Dialog(tab = "Data", group = "Tank"));
-  parameter Types.Pressure pin_start = 5e5 "start pressure at lower part of the tank" annotation (
+  parameter Types.Pressure pin_start = 5e5 "Start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter Types.Pressure pout_start = pin_start - g_n*rho_nom*H "start pressure at lower part of the tank" annotation (
+  parameter Types.Pressure pout_start = pin_start - g_n*rho_nom*H "Start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.MassFlowRate m_flow_start = 1 "Start mass flow rate through the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter Types.Temperature Tin_start = T_start;
-  parameter Types.Temperature Tout_start = T_start;
-  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Mass fraction start value of fluid" annotation (
+  parameter Types.Temperature Tin_start = T_start "Initial inlet temperature";
+  parameter Types.Temperature Tout_start = T_start "Initial outlet temperature";
+  parameter H2GasFacility.Types.MassFraction X_start[fluidIn.nX] = H2GasFacility.Data.MassMolFractionData.NG_Abeysekera.X "Initial Mass fraction of the fluid" annotation (
     Dialog(group = "Initialisation"));
 
   // Final parameters
@@ -64,13 +63,13 @@ partial model PartialLumpedVolume
 
   // Variables
   Modelica.Units.SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";
-  Modelica.Units.SI.Temperature T_a_inflow(start = T_start) "Temperatue of the fluid entering/leaving the volume";
-  Modelica.Units.SI.Temperature T_b_outflow(start = T_start) "Temperatue of the fluid entering/leaving the volume";
-  Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure in the lower part of the tank";
-  Modelica.Units.SI.Pressure pout "Pressure in the high part of the tank";
+  Modelica.Units.SI.Temperature T_a_inflow(start = T_start) "Temperatue of the fluid entering the volume";
+  Modelica.Units.SI.Temperature T_b_outflow(start = T_start) "Temperatue of the fluid leaving the volume";
+  Modelica.Units.SI.Pressure pin(start = pin_start) "Pressure at the lower part of the tank";
+  Modelica.Units.SI.Pressure pout "Pressure at the upper part of the tank";
 
 
-  // Medium
+  // Medium Initialization
   Medium fluidIn(
     T_start = Tin_start,
     p_start = pin_start,
@@ -86,10 +85,21 @@ partial model PartialLumpedVolume
 
 equation
 
-//   // Definition of some variables
+     // Conservation Equations
      m_flow_in = inlet.m_flow "Mass flow rate entering the fluid";
-     pout = outlet.p;
-     pin = inlet.p;
+     pout = outlet.p "Pressure at the outlet equals outlet port pressure";
+     pin = inlet.p "Pressure at the inlet equals inlet port pressure";
 
 
+  annotation (Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">PartialLumpedVolume</span> is a simplified model of a cylindrical tank used to simulate fluid dynamics with idealized conditions. It supports configurable tank dimensions, initial conditions, and fluid properties, making it suitable for storage, transport, or mixing applications.</p>
+<h4>Key Features</h4>
+<ul>
+<li>Fluid ports for inflow (<span style=\"font-family: Courier New;\">inlet</span>) and outflow (<span style=\"font-family: Courier New;\">outlet</span>).</li>
+<li>Configurable tank dimensions (<span style=\"font-family: Courier New;\">H</span>, <span style=\"font-family: Courier New;\">D</span>) and initial conditions (e.g., <span style=\"font-family: Courier New;\">T_start</span>, <span style=\"font-family: Courier New;\">pin_start</span>).</li>
+<li>Calculates pressure dynamics with hydrostatic effects.</li>
+<li>Optional flow reversal support.</li>
+</ul>
+<p>This model assumes constant fluid mass and lumped flow behavior, ideal for simple thermal or hydraulic simulations.</p>
+</html>"));
 end PartialLumpedVolume;

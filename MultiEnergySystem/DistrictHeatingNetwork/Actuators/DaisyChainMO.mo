@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Actuators;
 model DaisyChainMO
-"Daisy Chain actuator with more then 2 control actions (Multiple Outputs)"
+"Daisy Chain actuator with more than 2 control actions (Multiple Outputs)"
   parameter Real Umax[n] "vector of 'n' elements with maximum value of actuation. e.g {10e3, 10e3, 5e3}";
   parameter Real Umin[n] "vector of 'n' elements with minium value of actuation";
   parameter Integer n = 3 " minimum 3, number of (control) actions to be activated using DaisyChain actuators";

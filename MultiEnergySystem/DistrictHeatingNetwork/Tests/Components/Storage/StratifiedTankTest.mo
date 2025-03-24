@@ -99,7 +99,7 @@ model StratifiedTankTest "Test of a single stratified tank"
         origin={16,-38})));
 
   Modelica.Blocks.Sources.Ramp ramp1(
-    height=15,
+    height=-15,
     duration=1500,
     offset=Tout_start_S2,
     startTime=3e4)

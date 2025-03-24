@@ -2,10 +2,7 @@ SourcePressure
 SinkPressure
 SourceMassFlow
 SinkMassFlow
-IdealMassFlowSource
-FixedMassFlowPump
 VariableMassFlowPump
-FixedDifferentialPressurePump
 VariableDifferentialPressurePump
 PumpInput
 BaseClass

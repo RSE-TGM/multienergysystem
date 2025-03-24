@@ -19,7 +19,7 @@ partial model IdealMixtureND
   parameter Real cp_coeff[nX, ord_cp_ideal + 1] "copied from the result of Utilities.ComputeGasCoefficients, for independent mass components";
 
   // Final parameters
-  final parameter Types.SpecificHeatCapacity R_star[nX] = {Modelica.Constants.R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
+  final parameter Types.SpecificHeatCapacity R_star[nX] = {R/MM[i] for i in 1:nX} "Specific gas constants per unit mass";
   final parameter Types.MoleFraction Y_start[nX] = massToMoleFractions(X_start, MM) "Start value for mole fraction";
   final parameter Types.MolarMass MM_mix_start = MM*Y_start;
   final parameter Types.PerUnit Z_c[nX] = {p_c[i]*v_mol_c[i]/(R*T_c[i]) for i in 1:nX} "Critical compressibility factor";
@@ -40,13 +40,13 @@ partial model IdealMixtureND
   Types.SpecificEnthalpy h_star[nX](start = h_star_start) "Ideal Specific Enthalpy of each component";
   Types.SpecificEnthalpy h_id(start = h_id_start) "Ideal Specific Enthalpy of the fluid";
   Types.SpecificEntropy s_star[nX] "Specific entropy of the fluid" annotation (
-    HideResult = not ComputeEntropy);
+    HideResult = not computeEntropy);
   Types.SpecificEntropy s_id "Ideal Specific Entropy of the fluid"  annotation (
-    HideResult = not ComputeEntropy);
+    HideResult = not computeEntropy);
   Types.SpecificHeatCapacity cp_star[nX](start = cp_star_start) "Specific heat capacity of the fluid";
   Types.SpecificHeatCapacity cp_id(start = X_start*cp_star_start) "Ideal Specific heat capacity of the fluid";
   Types.ThermalConductivity k "Thermal Conductivity" annotation (
-    HideResult = not ComputeTransport);
+    HideResult = not computeTransport);
   Types.MoleFraction Y[nX](start = Y_start) "Mole fractions of the components";
   Types.MolarMass MM_mix(start = MM*Y_start, nominal = MM*Y_start) "Molar Mass of the fluid (mixture)";
   Types.SpecificVolume v(start = v_mol_start/MM_mix_start) "Speficic volume";
@@ -71,17 +71,19 @@ initial equation
 
 equation
 
-  if nX > 1 then
-    X[1:nXi] = Xi;
-    X[nX] = 1 - sum(Xi);
-  else
-    X[1] = 1;
-  end if;
+//   if nX > 1 then
+//     X[1:nXi] = Xi;
+//     // X[nX] = 1 - sum(Xi);
+//     X[nX] = max(0, 1 - sum(Xi)); //This is a more robust solution that prevent X[nX] being slightly negative due to floating-point inaccuracies.
+//   else
+//     X[1] = 1;
+//   end if;
+  X = Xi;
 
   Y = massToMoleFractions(X, MM) "conversion from mass to mole fractions";
   MM_mix = MM*Y "molar mass of the fluid";
 
-  Z = 1;
+  Z = 1; //Ideal Gas
   p*v_mol = Z*R*T;
   rho = 1/v;
   v_mol = v*MM_mix;

@@ -42,8 +42,8 @@ model Boiler
 equation
   connect(gasBoilerPI.REF, T_Ref) annotation (
     Line(points={{-24,30},{-102,30}},      color = {0, 0, 127}));
-  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-8,26},
-          {0,26},{0,8}},                                  color={0,0,127}));
+  connect(gasBoilerPI.controlAction, heatHX.Ptransfer) annotation (Line(points={{-5,26},{0,26},{0,8}},
+                                                          color={0,0,127}));
   connect(heatHX.inlet, inlet) annotation (Line(
       points={{-10,0},{-100,0}},
       color={140,56,54},

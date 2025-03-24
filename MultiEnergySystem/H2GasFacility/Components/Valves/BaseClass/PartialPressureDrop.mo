@@ -26,7 +26,7 @@ equation
 // Mass balance
   inlet.m_flow + outlet.m_flow = 0;
 
-// Energy balance
+// Energy balance: enthalpy entering and leaving the valve remains the same (ideal conditions)
   inStream(inlet.h_out) = outlet.h_out;
   inStream(outlet.h_out) = inlet.h_out;
 
@@ -53,5 +53,15 @@ equation
 
 
   annotation (
-    Icon);
+    Icon, Documentation(info="<html>
+<p>This model simulates the pressure drop across a valve, accounting for mass flow, momentum, and energy balances.</p>
+<h4>Equations</h4>
+<ul>
+<li><b>Mass Balance</b>: Ensures mass conservation (<span style=\"font-family: Courier New;\">inlet.m_flow + outlet.m_flow = 0</span>).</li>
+<li><b>Energy Balance</b>: Assumes enthalpy conservation across the valve (<span style=\"font-family: Courier New;\">inStream(inlet.h_out) = outlet.h_out</span>).</li>
+<li><b>Momentum Balance</b>: Calculates the flow based on the pressure difference.</li>
+</ul>
+<h4>Use Case</h4>
+<p>This model can be used in fluid networks where pressure drop and mass flow are critical parameters.</p>
+</html>"));
 end PartialPressureDrop;

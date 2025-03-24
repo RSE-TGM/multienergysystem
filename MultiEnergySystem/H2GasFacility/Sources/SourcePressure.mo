@@ -1,17 +1,19 @@
 within MultiEnergySystem.H2GasFacility.Sources;
 model SourcePressure "Pressure source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Gas.SourceP;
+  // Replaceable Medium model
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.RealGases.NaturalGasPR constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture                                                                              "Medium model" annotation (
      choicesAllMatching = true);
+  // Type definition for hydraulic resistance with predefined units and quantity
   type HydraulicResistance = Real(final quantity = "HydraulicResistance", final unit = "Pa/(kg/s)");
 
   // Nominal Parameters
-  parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure";
-  parameter Types.Temperature T0 = 25 + 273.15 "Nominal temperature";
+  parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure (Pa)";
+  parameter Types.Temperature T0 = 25 + 273.15 "Nominal temperature (Kelvin)";
   parameter Types.MassFraction X0[fluid.nX] "Nominal mass fraction";
-  parameter HydraulicResistance R = 0 "Hydraulic resistance";
+  parameter HydraulicResistance R = 0 "Hydraulic resistance, 0 implies ideal pressure source";
 
   // Boolean Parameters
   parameter Boolean use_in_p0 = false "Use connector input for the pressure" annotation (
@@ -27,11 +29,12 @@ model SourcePressure "Pressure source for water/steam flows"
   parameter Boolean computeEntropy = false "Used to calculate the specific entropy";
   parameter Boolean computeEnergyVariables = false "Used to calculate HHV, SG & WI";
 
-  //Variables
+  // Variables for state and flow properties
   Types.Pressure p "Actual pressure";
   Types.Temperature T "Actual temperature";
   Types.MassFraction X[fluid.nX] "Actual mass fraction";
   Types.MassFlowRate m_flow "Actual mass flow rate";
+  // Fluid model initialization
   Medium fluid(
     T_start = T0,
     p_start = p0,
@@ -52,13 +55,18 @@ protected
   Modelica.Blocks.Interfaces.RealInput in_T0_internal;
   Modelica.Blocks.Interfaces.RealInput in_X0_internal[fluid.nX];
 equation
+  // Assign outlet properties
   outlet.h_out = fluid.h;
   outlet.Xi = fluid.Xi;
+
+  // Outlet pressure depends on hydraulic resistance and flow rate
   if R > 0 then
-    outlet.p = p + outlet.m_flow*R;
+    outlet.p = p + outlet.m_flow*R; // Non-ideal pressure source.
   else
-    outlet.p = p;
+    outlet.p = p; // Ideal pressure source.
   end if;
+
+  // Assign internal variables based on parameters or external inputs
   p = in_p0_internal;
   if not use_in_p0 then
     in_p0_internal = p0 "Pressure set by parameter";
@@ -71,19 +79,31 @@ equation
   if not use_in_X0 then
     in_X0_internal = X0 "Mass fraction set by parameter";
   end if;
-// Fluid definition
+
+  // Fluid properties definition
   fluid.p = p;
   fluid.T = T;
   fluid.Xi = X[1:fluid.nXi];
-// Variables Definition
-  m_flow = -outlet.m_flow;
-// Connect protected connectors to public conditional connectors
+  // Variables
+  m_flow = -outlet.m_flow; //Mass flow rate is the negative of the outlet flow rate
+  // Connect protected connectors to public conditional connectors
   connect(in_p0, in_p0_internal);
   connect(in_T0, in_T0_internal);
   connect(in_X0, in_X0_internal);
   annotation (
-    Documentation(info = "<html><head></head><body><p><b>Modelling options</b></p>
-<p>If <tt>R</tt> is set to zero, the pressure source is ideal; otherwise, the outlet pressure decreases proportionally to the outgoing flowrate.</p>
-<p>The pressure, temperature and mass fraction vector can be supplied from external inputs by setting to true the corresponding <code>use_in_XX</code> parameter and connecting an external signal to the input connector.</p>
-</body></html>", revisions = "<html><head></head><body></body></html>"));
+    Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">SourcePressure</span> model represents a pressure source for gas flows. It can function as an ideal source (constant outlet pressure) when the hydraulic resistance R=0, or a non-ideal source with flow-dependent pressure drop when R&gt;0.</p>
+<h4>Modeling Options</h4>
+<ul>
+<li><b>External Inputs</b>: Pressure, temperature, and mass fraction can be supplied externally by setting <span style=\"font-family: Courier New;\">use_in_p0</span>, <span style=\"font-family: Courier New;\">use_in_T0</span>, or <span style=\"font-family: Courier New;\">use_in_X0</span> to <span style=\"font-family: Courier New;\">true</span>. Otherwise, nominal values (p0, T0, X0) are used.</li>
+<li><b>Additional Calculations</b>: Optional flags enable the calculation of transport properties, specific entropy, and energy variables like HHV and Wobbe Index.</li>
+</ul>
+<h4>Connections</h4>
+<ul>
+<li><b>Output</b>: Provides outlet pressure, temperature, mass fraction, and flow rate.</li>
+<li><b>Inputs</b> (Conditional): External connectors for pressure, temperature, and mass fraction when enabled.</li>
+</ul>
+<h4>Usage</h4>
+<p>This model is suitable for energy systems and fluid networks where flexibility in source properties is required. Adjust R and input settings to fit your application.</p>
+</html>",        revisions = "<html><head></head><body></body></html>"));
 end SourcePressure;

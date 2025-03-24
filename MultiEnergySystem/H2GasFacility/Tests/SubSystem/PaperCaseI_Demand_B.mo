@@ -7,7 +7,7 @@ model PaperCaseI_Demand_B
       startTime=3*3600));
 equation
   connect(sourceH2_A.outlet, pipe17.inlet) annotation (Line(
-      points={{-94,-40},{-100,-40},{-100,-102},{6,-102},{6,0},{50,0}},
+      points={{-94,-40},{-100,-40},{-100,-102},{6,-102},{6,0},{45,0}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(

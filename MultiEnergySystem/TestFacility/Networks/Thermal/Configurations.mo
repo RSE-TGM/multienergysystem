@@ -135,6 +135,78 @@ package Configurations
         Icon(coordinateSystem(preserveAspectRatio = false)),
         Diagram(coordinateSystem(preserveAspectRatio = false)));
     end CentralizedNetworkBaseLoadSimplified;
+
+    partial model CentralisedNetworkBaseIII "New version of centralised configuration"
+      extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
+      extends Plants.Thermal.Configurations.BaseClass.CentralPlantBaseII(redeclare model MediumCP = WaterHot, cf = cfp, n = np);
+      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseIII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
+      replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
+      parameter Integer np = 3 "Number of volumes in each pipe";
+      inner DistrictHeatingNetwork.System system annotation (
+        Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    equation
+      connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
+          points={{86.5,171.7},{86.5,100},{400,100},{400,-46}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL711_FT711_rackL3L4.outlet, rackL3L4.inletComp) annotation (Line(
+          points={{440,-46},{440,112},{132,112},{132,160},{131.95,160},{131.95,172.15}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL701_rackL2L3_TT702.inlet, S900_rackL3L4_hot.outlet) annotation (Line(
+          points={{80,-48},{80,72},{-24,72},{-24,205},{-40,205}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL701_FT701_rackL2L3.outlet, S900_rackL2L3_cold.inlet) annotation (Line(
+          points={{120,-48},{120,82},{-4,82},{-4,241},{-60,241}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL4L5.outletComp, PL721_rackL4L5_TT722.inlet) annotation (Line(
+          points={{324.5,171.7},{324.5,134},{560,134},{560,-46}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL721_FT721_rackL4L5.outlet, rackL4L5.inletComp) annotation (Line(
+          points={{600,-46},{600,156},{369.95,156},{369.95,172.15}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL731_rackL6L7_TT732.inlet, rackL6L7.outletComp) annotation (Line(
+          points={{240,-50},{240,60},{528.5,60},{528.5,171.7}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(rackL6L7.inletComp, PL731_FT731_rackL6L7.outlet) annotation (Line(
+          points={{573.95,172.15},{573.95,92},{574,92},{574,20},{280,20},{280,-50}},
+          color={140,56,54},
+          thickness=0.5));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio = false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-900,-600},{900,400}}),
+                                                               graphics={
+            Line(
+              points={{840,-304},{840,-276}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{686,-274},{686,-302}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1),
+            Line(
+              points={{802,-188},{802,-170},{734,-170},{734,-188}},
+              color={28,108,200},
+              thickness=1,
+              arrow={Arrow.None,Arrow.Filled},
+              smooth=Smooth.Bezier),
+            Line(
+              points={{0,-14},{0,14}},
+              color={28,108,200},
+              arrow={Arrow.None,Arrow.Filled},
+              thickness=1,
+              origin={584,-394},
+              rotation=-90)}));
+    end CentralisedNetworkBaseIII;
   end BaseClass;
 
   package Centralised
@@ -1256,8 +1328,29 @@ package Configurations
           thickness=1));
     end CentralisedSystem_GBEB;
 
-    model CentralisedSystem_GBEBCHP
+    partial model CentralisedSystem_GBEBCHP
       extends CentralisedSystem_GBEB;
+      parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*990/3600;
+      parameter Real q_m3h_S5_Source = 4;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*990/3600;
+      parameter Real q_m3h_S5_User = 4;
+      parameter Real P501omega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+      parameter Real P501qm3h[:, :] = [0, 8; 100, 8];
+      parameter Real Pchpomega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+      parameter Real Pchpqm3h[:, :] = [0, 3.94; 100, 3.94];
+      parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
+      parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
+
       Plants.Thermal.Systems.CHP S500(
         n=n,
         Tin_low_start=Tin_Source_start_S5,
@@ -1320,6 +1413,577 @@ package Configurations
           points={{-506,-172},{-508,-172},{-508,-46},{-488,-46},{-488,45},{-500,45}},
           color={140,56,54},
           thickness=0.5));
+      connect(S500.inletFuel, sourceGas.outlet) annotation (Line(
+          points={{-525,-336.88},{-525,-352},{-250,-352},{-250,-362}},
+          color={182,109,49},
+          thickness=0.5));
     end CentralisedSystem_GBEBCHP;
+
+    partial model CentralisedSystem_GB_III "System with only Gas Boiler Systemm as source of heat"
+      extends BaseClass.CentralisedNetworkBaseIII(Tout_start_S9 = T_start_hot, Tin_start_S9 = T_start_cold);
+      replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+
+      // Gas composition
+      parameter Integer nX = 4 "Number of components in gas";
+      parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {0.9553316, 0.0341105, 0.0105579, 0} "Mass composition";
+
+      // System S100
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 70 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
+
+      parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
+      parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+      parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
+      //parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+      parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
+      parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold = 12.25;
+      parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66 - 0.54 + 1.3 + 1 - 0.5 - 0.3 "0.3";
+      parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot = 10.85;
+      parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 0.2 "to be analysed";
+      //parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+
+      parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+      parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0; //0.7 + 0.95;
+      parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 2;
+      parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 2*0;
+
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = m_flow_total;
+      parameter Real q_m3h_S1 = 9;
+      parameter Real P101omega[:, :] = [0, 2*pi*50; 100, 2*pi*50; 100, 2*pi*50; 200, 2*pi*50];
+      parameter Real P101qm3h[:, :] = [0, 7.5; 100, 7.5];
+      parameter Real FCV101theta[:, :] = [0, 1];
+      parameter Real GB101_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
+      parameter Real Kv_FCV101(unit = "m3/h") = 33 "Metri Flow Coefficient";
+      parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.84;
+      parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV101 = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
+
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(redeclare model Medium = WaterHot,L = L_S1_rCD_hot, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
+        n=np)                                                                                                                                                                                                         annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-232,-206})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(redeclare model Medium = WaterHot,L = L_S1_rCD_cold, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
+        n=np)                                                                                                                                                                                                         annotation (
+        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-266,-206})));
+      Plants.Thermal.Systems.GasBoiler S100(
+        redeclare model Medium = WaterHot,
+        hctype=hctype,
+        n=np,
+        pin_start_S1=pin_start_S1,
+        pout_start_S1=pout_start_S1,
+        Tin_start_S1=Tin_start_S1,
+        Tout_start_S1=Tout_start_S1,
+        cf=cfp,
+        eta_combustion=eta_combustion,
+        h_FT101_GB101=h_FT101_GB101,
+        h_GB101_P101=h_GB101_P101,
+        L_P101_FCV101=L_P101_FCV101,
+        h_P101_FCV101=h_P101_FCV101,
+        q_m3h_S1=q_m3h_S1,
+        Kv=Kv_FCV101,
+        openingChar=openingChar_FCV101,
+        Pmaxnom=147.6e3*0.92) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
+      H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=nX)
+                                                       annotation (
+        Placement(visible = true, transformation(extent={{-260,-376},{-240,-356}}),
+                  iconTransformation(origin={360,366}, extent={{-260,-376},{-240,-356}})));
+      ElectricNetwork.Interfaces.ElectricPortInlet electricPortInlet annotation (
+        Placement(transformation(extent={{-442,-500},{-422,-480}}),
+                                                                  iconTransformation(origin={-56,190},extent={{-64,-160},{-44,-140}})));
+      FMUExport.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-408,330},{-270,468}}),
+                                                                                                                               iconTransformation(extent={{-22,80},{18,120}})));
+      Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=false) annotation (Placement(transformation(extent={{-171,67},{-191,87}})));
+    equation
+      connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (
+        Line(points={{-266,-196},{-266,5.25},{-326.5,5.25}},       color = {140, 56, 54}, thickness = 0.5));
+      connect(PL_S100_rCD_cold.outlet, S100.inlet) annotation (Line(
+          points={{-266,-216},{-266,-225.775},{-267.16,-225.775},{-267.16,-233.4}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.inlet, S100.outlet) annotation (Line(
+          points={{-232,-216},{-232,-225.775},{-231.96,-225.775},{-231.96,-233.4}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S100_rCD_hot.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+          points={{-232,-196},{-232,45},{-235.75,45},{-235.75,44.75},{-257.5,44.75}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(inletGas, S100.inletFuel) annotation (Line(
+          points={{-250,-366},{-250,-335.04}},
+          color={182,109,49},
+          thickness=0.5));
+      connect(controlSignalBus.omegaP901, S900.omega) annotation (Line(
+          points={{-339,399},{-339,362},{-876,362},{-876,158.7},{-845.1,158.7}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV901, S900.theta) annotation (Line(
+          points={{-339,399},{-339,368},{-882,368},{-882,148.5},{-845.1,148.5}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCVC01, FCVC01.opening) annotation (Line(
+          points={{-339,399},{-339,352},{238,352},{238,223},{245,223}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCVC02, FCVC02.opening) annotation (Line(
+          points={{-339,399},{-339,360},{672,360},{672,221},{682,221}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.omegaP101, S100.omega) annotation (Line(
+          points={{-339,399},{-339,340},{-308,340},{-308,-253.2},{-298.4,-253.2}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV101, S100.theta) annotation (Line(
+          points={{-339,399},{-339,332},{-312,332},{-312,-262},{-298.4,-262}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.ToutGB101, S100.Toutset) annotation (Line(
+          points={{-339,399},{-339,324},{-316,324},{-316,-270.8},{-298.4,-270.8}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.statusGB101, S100.status) annotation (Line(
+          points={{-339,399},{-339,318},{-320,318},{-320,-279.6},{-298.4,-279.6}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV701, S701.theta_FCV7X1) annotation (Line(
+          points={{-339,399},{-339,346},{36,346},{36,-178},{56,-178}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaTCV701, S701.theta_TCV7X1) annotation (Line(
+          points={{-339,399},{-346,399},{-346,338},{30,338},{30,-186},{56,-186}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV731, S731.theta_FCV7X1) annotation (Line(
+          points={{-339,399},{-339,346},{206,346},{206,-178},{216,-178}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaTCV731, S731.theta_TCV7X1) annotation (Line(
+          points={{-339,399},{-339,340},{202,340},{202,-186},{216,-186}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV711, S711.theta_FCV7X1) annotation (Line(
+          points={{-339,399},{-339,328},{290,328},{290,82},{364,82},{364,-178},{376,-178}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaTCV711, S711.theta_TCV7X1) annotation (Line(
+          points={{-339,399},{-339,322},{288,322},{288,76},{360,76},{360,-186},{376,-186}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV721, S721.theta_FCV7X1) annotation (Line(
+          points={{-339,399},{-339,344},{490,344},{490,-178},{536,-178}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaTCV721, S721.theta_TCV7X1) annotation (Line(
+          points={{-339,399},{-339,332},{488,332},{488,-186},{536,-186}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.statusRR01, RR01.cold_on) annotation (Line(
+          points={{-339,399},{-339,366},{764,366},{764,42},{722,42},{722,-118.5},{728.45,-118.5}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.omegaPR01, PR01.in_omega) annotation (Line(
+          points={{-339,399},{-339,360},{762,360},{762,48},{720,48},{720,-207.8},{710.5,-207.8}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{6,3},{6,3}},
+          horizontalAlignment=TextAlignment.Left));
+      connect(controlSignalBus.ToutRR01, RR01.in_Tout_cold_set)
+        annotation (Line(
+          points={{-339,399},{-339,356},{767.5,356},{767.5,-93.65}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-3,6},{-3,6}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCVR01, FCVR01.opening) annotation (Line(
+          points={{-339,399},{-339,350},{776,350},{776,38},{852,38},{852,-322},{766,-322},{766,-352}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-3,6},{-3,6}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(FV933_OnOff.y, FV933.u) annotation (Line(points={{-192,77},{-218,77},{-218,46.6}}, color={255,0,255}));
+      annotation (
+        Diagram(coordinateSystem(preserveAspectRatio = false)));
+    end CentralisedSystem_GB_III;
+
+    model CentralisedSystem_GBEB_III
+      extends CentralisedSystem_GB_III;
+      // System 400
+      parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 72 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S4 = 80 + 273.15;
+
+      parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
+      parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_cold = 5.5;
+      parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_cold = 0;
+      parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_hot = 6;
+      parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_hot = -0.5;
+      parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
+      parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
+      parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
+      parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -0.8;
+      parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
+      parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
+
+      parameter Real nR = 5 "Total number of resistors";
+      parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Electric power of each resistor";
+      parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV401 = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear "opening characteristic";
+      parameter Real q_m3h_S4 = 5;
+      parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4 = q_m3h_S4*990/3600;
+      parameter Real P401omega[:, :] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
+      parameter Real P401qm3h[:, :] = [0, 5; 100, 5];
+      parameter Real FCV401theta[:, :] = [0, 1; 100, 1];
+      parameter Real EB401_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
+      parameter Real Kv_FCV401(unit = "m3/h") = 33 "Metri Flow Coefficient";
+      parameter Boolean FV401_state = true;
+      parameter Boolean FV402_state = true;
+      parameter Boolean FV401_startValue = true;
+      parameter Boolean FV402_startValue = true;
+      parameter Real FV401_s[:] = {5e6};
+      parameter Real FV402_s[:] = {5e6};
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_hot(redeclare model Medium = WaterHot, L = L_S4_rCD_hot, t = t_S4, pin_start = pout_start_S4, Tin_start = Tout_start_S4, Tout_start = Tout_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype,
+        n=np)                                                                                                                                                                                                         annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-50})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(redeclare model Medium = WaterHot, L = L_S4_rCD_cold, t = t_S4, pin_start = pin_start_S4, Tin_start = Tin_start_S4, Tout_start = Tin_start_S4, Di = Di_S4, q_m3h_start = q_m3h_S4, hctype = hctype,
+        n=np)                                                                                                                                                                                                         annotation (
+        Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-354,-50})));
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV401(redeclare model Medium = WaterHot, Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tin_start_S4, pin_start = pin_start_S4, q_m3h_start = q_m3h_S4) "On-Off valve connecting inlet S400 & S900 " annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin={-354,-16})));
+      DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(redeclare model Medium = WaterHot, Kv = DistrictHeatingNetwork.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
+        Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-16})));
+      Plants.Thermal.Systems.ElectricBoiler S400(
+        redeclare model Medium = WaterHot,
+        n=np,
+        hctype=hctype,
+        pin_start_S4=pin_start_S4,
+        pout_start_S4=pout_start_S4,
+        Tin_start_S4=Tin_start_S4,
+        Tout_start_S4=Tout_start_S4,
+        Di_S4=Di_S4,
+        t_S4=t_S4,
+        L_PT401_EB401=L_PT401_EB401,
+        h_PT401_EB401=h_PT401_EB401,
+        L_EB401_P401=L_EB401_P401,
+        h_EB401_P401=h_EB401_P401,
+        L_P401_FCV401=L_P401_FCV401,
+        h_P401_FCV401=h_P401_FCV401,
+        q_m3h_S4=q_m3h_S4,
+        Kv=Kv_FCV401,
+        openingChar=openingChar_FCV401,
+        nR=nR,
+        Pmaxres=Pmaxres) annotation (Placement(transformation(extent={{-380,-170},{-292,-82}})));
+      Modelica.Blocks.Sources.BooleanExpression booleanExpression(y=true) annotation (Placement(transformation(extent={{-386,-26},{-366,-6}})));
+      Modelica.Blocks.Sources.BooleanExpression booleanExpression1(y=true) annotation (Placement(transformation(extent={{-282,-26},{-302,-6}})));
+    equation
+      connect(PL_S400_rCD_cold.inlet, FV401.outlet) annotation (
+        Line(points={{-354,-40},{-354,-26}},      color = {140, 56, 54}, thickness = 0.5));
+      connect(PL_S400_rCD_hot.outlet, FV402.inlet) annotation (
+        Line(points={{-318,-40},{-318,-26}},      color = {140, 56, 54}, thickness = 0.5));
+      connect(FV401.inlet, rackCD_Cold_S300_S400.outlet) annotation (
+        Line(points={{-354,-6},{-354,5.25},{-408.5,5.25}},        color = {140, 56, 54}, thickness = 0.5));
+      connect(FV402.outlet, rackCD_Hot_S400_S300.inlet) annotation (
+        Line(points={{-318,-6},{-318,45},{-338,45}},        color = {140, 56, 54}, thickness = 0.5));
+      connect(PL_S400_rCD_cold.outlet, S400.inlet) annotation (Line(
+          points={{-354,-60},{-354,-67.7},{-353.16,-67.7},{-353.16,-75.4}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S400_rCD_hot.inlet, S400.outlet) annotation (Line(
+          points={{-318,-60},{-318,-66.7},{-317.96,-66.7},{-317.96,-75.4}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(S400.inletPower, electricPortInlet) annotation (Line(
+          points={{-384.4,-148},{-432,-148},{-432,-490}},
+          color={56,93,138},
+          thickness=1));
+      connect(controlSignalBus.omegaP401, S400.omega) annotation (Line(
+          points={{-339,399},{-339,300},{-400,300},{-400,-95.2},{-384.4,-95.2}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.thetaFCV401, S400.theta) annotation (Line(
+          points={{-339,399},{-339,306},{-404,306},{-404,-104},{-384.4,-104}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.ToutEB401, S400.Toutset) annotation (Line(
+          points={{-339,399},{-339,312},{-408,312},{-408,-112.8},{-384.4,-112.8}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.statusEB401, S400.status) annotation (Line(
+          points={{-339,399},{-339,320},{-412,320},{-412,-121.6},{-384.4,-121.6}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(booleanExpression.y, FV401.u) annotation (Line(points={{-365,-16},{-357.2,-16}}, color={255,0,255}));
+      connect(booleanExpression1.y, FV402.u) annotation (Line(points={{-303,-16},{-314.8,-16}}, color={255,0,255}));
+    end CentralisedSystem_GBEB_III;
+
+    model CentralisedSystem_GBEBCHP_III
+      extends CentralisedSystem_GBEB_III;
+      parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
+      parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*990/3600;
+      parameter Real q_m3h_S5_Source = 4;
+      final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*990/3600;
+      parameter Real q_m3h_S5_User = 4;
+      parameter Real P501omega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+      parameter Real P501qm3h[:, :] = [0, 8; 100, 8];
+      parameter Real Pchpomega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+      parameter Real Pchpqm3h[:, :] = [0, 3.94; 100, 3.94];
+      parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5;
+      parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
+      parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15;
+      parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
+      parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
+
+      Plants.Thermal.Systems.CHP S500(
+        n=n,
+        Tin_low_start=Tin_Source_start_S5,
+        Tout_low_start=Tout_Source_start_S5,
+        Tin_high_start=Tin_User_start_S5,
+        Tout_high_start=Tout_User_start_S5,
+        Pel_SP=PeCHP) annotation (Placement(transformation(extent={{-568,-330},{-482,-244}})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_hot(
+        L=5,
+        t=t_S5,
+        pin_start=pin_User_start_S5 - 0.04e5,
+        Tin_start=Tout_User_start_S5,
+        Tout_start=Tout_User_start_S5,
+        Di=Di_S5,
+        q_m3h_start=q_m3h_S5_User,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=90,
+            origin={-506,-213})));
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange2(D_i=51e-3, D_o=Di_S5)    annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-506,-182})));
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_cold(
+        L=5,
+        t=t_S5,
+        pin_start=pin_User_start_S5 - 0.02e5,
+        Tin_start=Tin_User_start_S5,
+        Tout_start=Tin_User_start_S5,
+        Di=Di_S5,
+        q_m3h_start=q_m3h_S5_User,
+        n=n,
+        hctype=hctype) annotation (Placement(transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=90,
+            origin={-542,-213})));
+      DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange3(D_i=51e-3, D_o=Di_S5)     annotation (
+        Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-542,-182})));
+      Modelica.Blocks.Sources.Constant const(k=1) annotation (Placement(transformation(extent={{-656,-276},{-636,-256}})));
+    equation
+      connect(PL_S500_rCD_hot.outlet,suddenAreaChange2. outlet) annotation (Line(
+          points={{-506,-203},{-506,-192}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange3.outlet,PL_S500_rCD_cold. inlet) annotation (Line(
+          points={{-542,-192},{-542,-203}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S500_rCD_cold.outlet,S500. inlet) annotation (Line(
+          points={{-542,-223},{-542,-230.275},{-541.77,-230.275},{-541.77,-237.55}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(PL_S500_rCD_hot.inlet,S500. outlet) annotation (Line(
+          points={{-506,-223},{-506,-230.275},{-507.37,-230.275},{-507.37,-237.55}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange3.inlet, rackCD_Cold_S300_S300.inlet) annotation (Line(
+          points={{-542,-172},{-542,-26},{-502,-26},{-502,5.25},{-470,5.25}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(suddenAreaChange2.inlet, rackCD_Hot_S500_SXXX.inlet) annotation (Line(
+          points={{-506,-172},{-508,-172},{-508,-46},{-488,-46},{-488,45},{-500,45}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(S500.inletFuel, inletGas) annotation (Line(
+          points={{-525,-336.88},{-525,-350},{-250,-350},{-250,-366}},
+          color={182,109,49},
+          thickness=0.5));
+      connect(controlSignalBus.omegaP501, S500.omega) annotation (Line(
+          points={{-339,399},{-339,346},{-586,346},{-586,-256.9},{-572.3,-256.9}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.ToutCHP501, S500.Toutset) annotation (Line(
+          points={{-339,399},{-339,346},{-598,346},{-598,-274.1},{-572.3,-274.1}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(const.y, S500.theta) annotation (Line(points={{-635,-266},{-603.65,-266},{-603.65,-265.5},{-572.3,-265.5}}, color={0,0,127}));
+      connect(controlSignalBus.statusCHP501, S500.status) annotation (Line(
+          points={{-339,399},{-339,354},{-602,354},{-602,-282.7},{-572.3,-282.7}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.PtCHP501, S500.Pelset) annotation (Line(
+          points={{-339,399},{-339,358},{-606,358},{-606,-291.3},{-572.3,-291.3}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.omegaP501, S500.m_flow_CHP) annotation (Line(
+          points={{-339,399},{-339,358},{-610,358},{-610,-299.9},{-572.3,-299.9}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(S500.outletPower, electricPortInlet) annotation (Line(
+          points={{-572.3,-311.94},{-594,-311.94},{-594,-440},{-432,-440},{-432,-490}},
+          color={56,93,138},
+          thickness=1));
+    end CentralisedSystem_GBEBCHP_III;
+
+    model CentralisedSystem_GBEBCHPTES_III
+      extends CentralisedSystem_GBEBCHP_III;
+
+      Plants.Thermal.Systems.TES S200 annotation (Placement(transformation(extent={{-842,-162},{-756,-76}})));
+    equation
+      connect(S200.outlet, rackCD_Hot_S200_S900.inlet) annotation (Line(
+          points={{-781.37,-69.55},{-781.37,-20},{-692,-20},{-692,44},{-690,44},{-690,44.75},{-727,44.75}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(S200.inlet, rackCD_Cold_S200_S500.inlet) annotation (Line(
+          points={{-815.77,-69.55},{-815.77,-12},{-704,-12},{-704,4.75},{-692,4.75},{-692,5.25},{-668,5.25}},
+          color={140,56,54},
+          thickness=0.5));
+      connect(controlSignalBus.thetaFCV201, S200.theta)
+        annotation (Line(
+          points={{-339,399},{-892,399},{-892,-97.5},{-846.3,-97.5}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.statusS200, S200.status)
+        annotation (Line(
+          points={{-339,399},{-898,399},{-898,-114.7},{-846.3,-114.7}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+      connect(controlSignalBus.omegaP201, S200.omega)
+        annotation (Line(
+          points={{-339,399},{-888,399},{-888,-88.9},{-846.3,-88.9}},
+          color={255,204,51},
+          thickness=0.5), Text(
+          string="%first",
+          index=-1,
+          extent={{-6,3},{-6,3}},
+          horizontalAlignment=TextAlignment.Right));
+    end CentralisedSystem_GBEBCHPTES_III;
   end Centralised;
 end Configurations;

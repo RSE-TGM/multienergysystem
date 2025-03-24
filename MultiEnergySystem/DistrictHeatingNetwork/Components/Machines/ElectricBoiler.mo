@@ -40,8 +40,7 @@ equation
   connect(referenceT, onOffController.reference) annotation (
     Line(points = {{-112, 40}, {-78, 40}}, color = {0, 0, 127}));
 
-  connect(gasBoilerInnerVolume.outlet, outlet) annotation (Line(points={{50,
-          17.1429},{50,24},{100,24},{100,0}},
+  connect(gasBoilerInnerVolume.outlet, outlet) annotation (Line(points={{50,17.1429},{50,24},{100,24},{100,0}},
                                     color={168,168,168}));
   connect(powerTransfer.outlet, gasBoilerInnerVolume.inlet) annotation (Line(
         points={{-2,0},{12,0},{12,-10},{58,-10},{58,2.85714},{50,2.85714}},

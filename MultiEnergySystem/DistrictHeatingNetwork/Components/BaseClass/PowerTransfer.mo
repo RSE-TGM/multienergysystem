@@ -2,7 +2,6 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 model PowerTransfer
   "Model a imposed power loss to the fluid, with no pressure loss"
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import MultiEnergySystem.DistrictHeatingNetwork.Types;
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;

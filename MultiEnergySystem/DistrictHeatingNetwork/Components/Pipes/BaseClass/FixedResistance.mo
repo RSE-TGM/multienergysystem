@@ -6,7 +6,7 @@ partial model FixedResistance
   import Modelica.Fluid.Utilities.regStep;
 
   // Fluid
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby
     DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
 

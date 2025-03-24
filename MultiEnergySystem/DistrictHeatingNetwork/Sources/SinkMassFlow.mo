@@ -5,7 +5,7 @@ model SinkMassFlow "Mass flow rate sink for water/steam flows"
   // Water model
   //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
   //  choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
 
   // Definition of System
   outer System system "System wide properties";

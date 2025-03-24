@@ -5,7 +5,7 @@ partial model PartialValve
   import Modelica.Fluid.Utilities.regRoot;
   import Modelica.Fluid.Utilities.regStep;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
 
   constant Types.PerUnit pr = 0.85 "Pressure recovery coefficient";
 

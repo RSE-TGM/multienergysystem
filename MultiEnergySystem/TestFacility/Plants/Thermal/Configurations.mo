@@ -7,7 +7,7 @@ package Configurations "Different possible configurations of the heat generating
 
     partial model CentralPlantBase "Base Case considering rack CD and the pipelines connecting to the loads"
       //Fluids
-      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       //Constants
       constant Real pi = Modelica.Constants.pi;
       //General parameters of pipes
@@ -319,7 +319,7 @@ package Configurations "Different possible configurations of the heat generating
 
     partial model CentralPlantBaseII "Base Case considering rack CD and the pipelines connecting to the loads"
       //Fluids
-      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       //Constants
       constant Real pi = Modelica.Constants.pi;
       //General parameters of pipesù
@@ -961,7 +961,7 @@ package Configurations "Different possible configurations of the heat generating
     partial model HeatGenerationTFBase "Base Case considering system 900"
       extends Facilities.Interfaces.HeatGeneration;
       //Fluids
-      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+      replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       //Constants
       constant Real pi = Modelica.Constants.pi;
       //General parameters of pipesù

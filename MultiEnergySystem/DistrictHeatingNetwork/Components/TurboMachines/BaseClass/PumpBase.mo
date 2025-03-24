@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.BaseCla
 partial model PumpBase "Base model to develop water pump models"
   extends DistrictHeatingNetwork.Icons.Water.WaterPump;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid annotation (
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp annotation (
      choicesAllMatching = true);
 
   //Constants

@@ -9,7 +9,7 @@ model HeatExchangerIdealTemperatureControl
 //     "Cold fluid model" annotation (
 //     Dialog(group="Fluid Models"));
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
   // HX Parameters
   parameter Real LMTD_nom = 25.62051491 "Nominal LMTD";

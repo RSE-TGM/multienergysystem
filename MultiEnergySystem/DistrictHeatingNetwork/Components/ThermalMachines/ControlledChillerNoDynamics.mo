@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledChillerNoDynamics
   extends DistrictHeatingNetwork.Icons.ThermalMachines.HeatPump;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquid
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
     constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Medium model"    annotation (
      choicesAllMatching = true);
 

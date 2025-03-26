@@ -180,49 +180,6 @@ the offset is set to the initial value of the physical output, so that the initi
 </html>"));
   end OutputOffset;
 
-  function piecewiseLinear2 "Given three points this function return a piecewise linear function connecting them"
-    input Real x;
-    input Real x1;
-    input Real x2;
-    input Real x3;
-    input Real y1;
-    input Real y2;
-    input Real y3;
-    output Real y;
-  algorithm
-    y := if x < x2 then (y1*(x - x2) - y2*(x - x1))/(x1 - x2) else (y2*(x - x3) - y3*(x - x2))/(x2 - x3);
-    annotation (
-      Evaluate = true,
-      Documentation(info = "<html>
-<p>This function, given three points (xi,yi), generates a piecewise linear function that connects them:</p>
-<p>y = piecewiseLinear(x,x1,x2,x3,y1,y2,y3);</p>
-<p><img src=\"modelica://FlexiCaL/Images/Immagini_piecewiseLinear_2.png\"/></p>
-</html>"));
-  end piecewiseLinear2;
-
-  model TestPiecewiseLinear2 "Simple test of the function piecewiseLinear2"
-    Real x[20];
-    parameter Real x_start = -1;
-    parameter Real x1 = -1;
-    parameter Real x2 = 0.1;
-    parameter Real x3 = 1;
-    parameter Real y1 = 30;
-    parameter Real y2 = 0;
-    parameter Real y3 = 0;
-    Real y[20];
-  equation
-    for i in 1:20 loop
-      if i == 1 then
-        x[i] = x_start;
-      else
-        x[i] = x[i - 1] + 0.1;
-      end if;
-      y[i] = piecewiseLinear2(x[i], x1, x2, x3, y1, y2, y3);
-    end for;
-    annotation (
-      Icon(coordinateSystem(preserveAspectRatio = false)),
-      Diagram(coordinateSystem(preserveAspectRatio = false)));
-  end TestPiecewiseLinear2;
   annotation (Icon(graphics={                                             Text(
           extent={{-80,100},{80,-100}},
           textColor={28,108,200},

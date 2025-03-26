@@ -13,9 +13,9 @@ model CentralizedDHN_A
      Dialog(tab = "Nominal and Desired values", group = "Rotational speed"));
 
 
-  Plants.Thermal.Systems.ElectricBoiler electricBoiler annotation (Placement(transformation(extent={{-36,-40},{-16,-20}})));
-  Plants.Thermal.Systems.CirculationPump circulationPump annotation (Placement(transformation(extent={{-36,20},{-16,40}})));
-  Loads.Thermal.Systems.CoolingSingleLoad coolingSingleLoad annotation (Placement(transformation(extent={{84,20},{104,40}})));
+  DHTF.Subsystems.HeatGeneration.ElectricBoiler electricBoiler annotation (Placement(transformation(extent={{-36,-40},{-16,-20}})));
+  TestFacility.DHTF.Subsystems.Distribution.CirculationPump circulationPump annotation (Placement(transformation(extent={{-36,20},{-16,40}})));
+  DHTF.Subsystems.Load.SingleLoad coolingSingleLoad annotation (Placement(transformation(extent={{84,20},{104,40}})));
   DistrictHeatingNetwork.Sources.SourceMassFlow sourceMassFlow(
     p0=200000,
     T0=288.15,

@@ -25,7 +25,7 @@ model S100
   parameter Real q_m3h(unit = "m3/h") = 6;
 
 
-  Plants.Thermal.Systems.GasBoiler gasBoiler(n=n,
+  DHTF.Subsystems.HeatGeneration.GasBoiler gasBoiler(n=n,
     Tout_start_S1=Tout_start_S1,
     h_FT101_GB101=h_FT101_GB101,
     h_GB101_P101=h_GB101_P101,

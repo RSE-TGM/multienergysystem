@@ -5,10 +5,10 @@ model CoolingTotalLoad "System with four heat exchangers"
     DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   parameter Integer np = 5 "Number of volumes in each pipe";
   parameter Integer nHX = 9 "Number of volumes in heat exchanger";
-  CoolingSingleLoad EX701(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{-72,0},{-52,20}})));
-  CoolingSingleLoad EX711(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{-26,0},{-6,20}})));
-  CoolingSingleLoad EX721(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{20,0},{40,20}})));
-  CoolingSingleLoad EX731(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{60,0},{80,20}})));
+  DHTF.Subsystems.Load.SingleLoad EX701(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{-72,0},{-52,20}})));
+  DHTF.Subsystems.Load.SingleLoad EX711(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{-26,0},{-6,20}})));
+  DHTF.Subsystems.Load.SingleLoad EX721(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{20,0},{40,20}})));
+  DHTF.Subsystems.Load.SingleLoad EX731(redeclare model Medium = Medium, redeclare model HeatTransferModel = HeatTransferModel, np=np, nHX=nHX)                          annotation (Placement(transformation(extent={{60,0},{80,20}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot[4] annotation (Placement(transformation(extent={{-50,100},{-30,120}}), iconTransformation(extent={{-50,100},{-30,120}})));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet outhot[4] annotation (Placement(transformation(extent={{30,100},{50,120}}), iconTransformation(extent={{30,100},{50,120}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet incold[4] "Inlet connector at cold side"  annotation (Placement(transformation(extent={{30,-120},{50,-100}}), iconTransformation(extent={{30,-120},{50,-100}})));

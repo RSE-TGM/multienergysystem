@@ -12,7 +12,7 @@ model PaperCaseI_Demand_D
     each duration=0,
     offset=X_start,
     each startTime=38000)                    annotation (Placement(transformation(extent={{-92,20},{-112,40}})));
-  TestFacility.Plants.Thermal.Systems.GasBoiler
+  TestFacility.DHTF.Subsystems.HeatGeneration.GasBoiler
                                    gasBoiler(redeclare model Gas = Medium,
     Pmaxnom=147.6e3*0.78)                                   annotation (Placement(transformation(extent={{120,74},{144,98}})));
   DistrictHeatingNetwork.Sources.SourcePressure

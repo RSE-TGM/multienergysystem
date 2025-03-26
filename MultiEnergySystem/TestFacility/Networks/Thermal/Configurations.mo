@@ -937,19 +937,19 @@ package Configurations
       parameter Real P101qm3h[:, :] = [0, 7.5; 100, 7.5];
       parameter Real FCV101theta[:, :] = [0, 1];
       parameter Real GB101_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
-      Plants.Thermal.Systems.GasBoiler S100 annotation (
+      DHTF.Subsystems.HeatGeneration.GasBoiler S100 annotation (
         Placement(transformation(extent = {{-95, -68}, {-59, -32}})));
-      Plants.Thermal.Systems.CirculationPump S900 annotation (
+      DHTF.Subsystems.Distribution.CirculationPump S900 annotation (
         Placement(transformation(extent = {{-18, -18}, {18, 18}}, rotation = -90, origin = {-105, 63})));
-      Loads.Thermal.Systems.CoolingSingleLoad EX701 annotation (
+      DHTF.Subsystems.Load.SingleLoad EX701 annotation (
         Placement(transformation(extent={{-36,-68},{0,-32}})));
-      Plants.Thermal.Systems.ElectricBoiler S400 annotation (
+      DHTF.Subsystems.HeatGeneration.ElectricBoiler S400 annotation (
         Placement(transformation(extent = {{-149, -67}, {-113, -31}})));
-      Loads.Thermal.Systems.CoolingSingleLoad EX711 annotation (
+      DHTF.Subsystems.Load.SingleLoad EX711 annotation (
         Placement(transformation(extent={{21,-68},{57,-32}})));
-      Loads.Thermal.Systems.CoolingSingleLoad EX721 annotation (
+      DHTF.Subsystems.Load.SingleLoad EX721 annotation (
         Placement(transformation(extent={{83,-68},{119,-32}})));
-      Loads.Thermal.Systems.CoolingSingleLoad EX731 annotation (
+      DHTF.Subsystems.Load.SingleLoad EX731 annotation (
         Placement(transformation(extent={{138,-68},{174,-32}})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV933(Kv = 33, dp_nom = 50000, Tin_start = T_start, pin_start = pin_start) annotation (
         Placement(visible = true, transformation(origin = {-48, 10}, extent = {{-4, 4}, {4, -4}}, rotation = 90)));
@@ -1094,7 +1094,7 @@ package Configurations
             extent={{14,-14},{-14,14}},
             rotation=-90,
             origin={-250,-376})));
-      Plants.Thermal.Systems.GasBoiler S100(
+      DHTF.Subsystems.HeatGeneration.GasBoiler S100(
         redeclare model Medium = WaterHot,
         hctype=hctype,
         n=np,
@@ -1186,7 +1186,7 @@ package Configurations
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin={-354,-16})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(redeclare model Medium = WaterHot, Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-16})));
-      Plants.Thermal.Systems.ElectricBoiler S400(
+      DHTF.Subsystems.HeatGeneration.ElectricBoiler S400(
         redeclare model Medium = WaterHot,
         n=np,
         hctype=hctype,
@@ -1253,7 +1253,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
       parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
 
-      Plants.Thermal.Systems.CHP S500(
+      DHTF.Subsystems.HeatGeneration.CHP S500(
         n=n,
         Tin_low_start=Tin_Source_start_S5,
         Tout_low_start=Tout_Source_start_S5,
@@ -1369,7 +1369,7 @@ package Configurations
       DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_cold(redeclare model Medium = WaterHot,L = L_S1_rCD_cold, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype,
         n=np)                                                                                                                                                                                                         annotation (
         Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-266,-206})));
-      Plants.Thermal.Systems.GasBoiler S100(
+      DHTF.Subsystems.HeatGeneration.GasBoiler S100(
         redeclare model Medium = WaterHot,
         hctype=hctype,
         n=np,
@@ -1629,7 +1629,7 @@ package Configurations
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin={-354,-16})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(redeclare model Medium = WaterHot, Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
         Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-318,-16})));
-      Plants.Thermal.Systems.ElectricBoiler S400(
+      DHTF.Subsystems.HeatGeneration.ElectricBoiler S400(
         redeclare model Medium = WaterHot,
         n=np,
         hctype=hctype,
@@ -1732,7 +1732,7 @@ package Configurations
       parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
       parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
 
-      Plants.Thermal.Systems.CHP S500(
+      DHTF.Subsystems.HeatGeneration.CHP S500(
         n=n,
         Tin_low_start=Tin_Source_start_S5,
         Tout_low_start=Tout_Source_start_S5,

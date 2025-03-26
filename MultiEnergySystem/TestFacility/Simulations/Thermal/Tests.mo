@@ -61,7 +61,7 @@ package Tests
         parameter String matrixmflowGas = "FT801" "Matrix name in file";
         parameter String timenoscale = "time" "Matrix name in file";
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
-        Plants.Thermal.Systems.GasBoiler gasBoiler(pumpcorrectionfactor = pumpcorrectionfactor, hctype = hctype, pin_start_S1 = pin_start_S1, pout_start_S1 = pout_start_S1, Tin_start_S1 = Tin_start_S1, Tout_start_S1 = Tout_start_S1, cf = cf, eta_combustion = eta_combustion, tdelay = tdelay, h_FT101_GB101 = h_FT101_GB101, h_GB101_P101 = h_GB101_P101, L_P101_FCV101 = L_P101_FCV101, h_P101_FCV101 = h_P101_FCV101, Kv = Kv, openingChar = openingChar, Pmaxnom = Pmaxnom, GB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
+        DHTF.Subsystems.HeatGeneration.GasBoiler gasBoiler(pumpcorrectionfactor = pumpcorrectionfactor, hctype = hctype, pin_start_S1 = pin_start_S1, pout_start_S1 = pout_start_S1, Tin_start_S1 = Tin_start_S1, Tout_start_S1 = Tout_start_S1, cf = cf, eta_combustion = eta_combustion, tdelay = tdelay, h_FT101_GB101 = h_FT101_GB101, h_GB101_P101 = h_GB101_P101, L_P101_FCV101 = L_P101_FCV101, h_P101_FCV101 = h_P101_FCV101, Kv = Kv, openingChar = openingChar, Pmaxnom = Pmaxnom, GB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
           Placement(transformation(extent = {{-30, -28}, {26, 28}})));
         DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = true, use_in_T0 = true, p0 = pin_start_S1, T0 = Tin_start_S1, R = 1e-3) annotation (
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin = {-14, 60})));
@@ -367,7 +367,7 @@ package Tests
         parameter String matrixFT = "FT401" "Matrix name in file";
         parameter String timenoscale = "time" "Matrix name in file";
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
-        Plants.Thermal.Systems.ElectricBoiler electricBoiler(redeclare model Medium = Medium, n = n, hctype = hctype, pumpcorrectionfactor = pumpcorrectionfactor, pin_start_S4 = pin_start_S4, pout_start_S4 = pout_start_S4, Tin_start_S4 = Tin_start_S4, Tout_start_S4 = Tout_start_S4, Di_S4 = Di_S4, t_S4 = t_S4, L_PT401_EB401 = L_PT401_EB401, h_PT401_EB401 = h_PT401_EB401, L_EB401_P401 = L_EB401_P401, h_EB401_P401 = h_EB401_P401, L_P401_FCV401 = L_P401_FCV401, h_P401_FCV401 = h_P401_FCV401, q_m3h_S4 = q_m3h_S4, Kv = Kv, openingChar = openingChar, nR = nR, Pmaxres = Pmaxres, EB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
+        DHTF.Subsystems.HeatGeneration.ElectricBoiler electricBoiler(redeclare model Medium = Medium, n = n, hctype = hctype, pumpcorrectionfactor = pumpcorrectionfactor, pin_start_S4 = pin_start_S4, pout_start_S4 = pout_start_S4, Tin_start_S4 = Tin_start_S4, Tout_start_S4 = Tout_start_S4, Di_S4 = Di_S4, t_S4 = t_S4, L_PT401_EB401 = L_PT401_EB401, h_PT401_EB401 = h_PT401_EB401, L_EB401_P401 = L_EB401_P401, h_EB401_P401 = h_EB401_P401, L_P401_FCV401 = L_P401_FCV401, h_P401_FCV401 = h_P401_FCV401, q_m3h_S4 = q_m3h_S4, Kv = Kv, openingChar = openingChar, nR = nR, Pmaxres = Pmaxres, EB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
           Placement(transformation(extent = {{-28, -32}, {30, 26}})));
         Modelica.Blocks.Sources.TimeTable FCV401_theta(table = [ts, thetav]) annotation (
           Placement(transformation(extent = {{-90, 4}, {-78, 16}})));
@@ -645,7 +645,7 @@ package Tests
           Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {14, 60})));
         H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true) annotation (
           Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {0, -62})));
-        Plants.Thermal.Systems.CHP S500(Tin_low_start = Tout_start_CHP, Tout_low_start = Tin_start_CHP, Tin_high_start = Tin_start_S5, Tout_high_start = Tout_start_S5, Tin_start_CHP = Tin_start_CHP, Tout_start_CHP = Tout_start_CHP, PL_S500_FT501_EX501(L = 80), EX501(n = 5), CHP(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState, h = h)) annotation (
+        DHTF.Subsystems.HeatGeneration.CHP S500(Tin_low_start = Tout_start_CHP, Tout_low_start = Tin_start_CHP, Tin_high_start = Tin_start_S5, Tout_high_start = Tout_start_S5, Tin_start_CHP = Tin_start_CHP, Tout_start_CHP = Tout_start_CHP, PL_S500_FT501_EX501(L = 80), EX501(n = 5), CHP(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState, h = h)) annotation (
           Placement(transformation(extent = {{-26, -26}, {26, 26}})));
         Modelica.Blocks.Sources.Ramp PCHP_m_flow(height = 0, duration = 0, offset = m_flow_low_start) annotation (
           Placement(transformation(extent = {{-90.75, -46}, {-78, -33}})));
@@ -824,7 +824,7 @@ package Tests
         parameter String timenoscale = "time" "Matrix name in file";
         parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
         parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
-        Plants.Thermal.Systems.CirculationPump circulationPump(n = 3, pumpcorrectionfactor = pumpcorrectionfactor, Kv = Kv, openingChar = openingChar, cf = cf, b = b) annotation (
+        TestFacility.DHTF.Subsystems.Distribution.CirculationPump circulationPump(n = 3, pumpcorrectionfactor = pumpcorrectionfactor, Kv = Kv, openingChar = openingChar, cf = cf, b = b) annotation (
           Placement(transformation(extent = {{-28, -22}, {32, 38}})));
         Modelica.Blocks.Sources.TimeTable TT402_profile(table = [ts, TTi]) annotation (
           Placement(transformation(extent = {{48, -78}, {36, -66}})));
@@ -1116,7 +1116,7 @@ package Tests
         Placement(transformation(extent = {{-90, 50}, {-100, 60}})));
       DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_hot_indexes "ASHRAE indexes for delta T hot" annotation (
         Placement(transformation(extent = {{90, 50}, {100, 60}})));
-      MultiEnergySystem.TestFacility.Loads.Thermal.Systems.CoolingSingleLoad EX7X1 annotation (
+      MultiEnergySystem.TestFacility.DHTF.Subsystems.Load.SingleLoad EX7X1 annotation (
         Placement(transformation(extent = {{-16, -2}, {15, 29}})));
       Modelica.Blocks.Sources.TimeTable theta(table = [t, thetaValve]) annotation (
         Placement(transformation(extent = {{-32, 43}, {-22, 53}})));
@@ -1275,7 +1275,7 @@ package Tests
         Placement(transformation(extent = {{80, -25}, {90, -15}})));
       DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_hot_indexes "ASHRAE indexes for delta T hot" annotation (
         Placement(transformation(extent = {{80, 20}, {90, 30}})));
-      MultiEnergySystem.TestFacility.Loads.Thermal.Systems.CoolingSingleLoad EX7X1 annotation (
+      MultiEnergySystem.TestFacility.DHTF.Subsystems.Load.SingleLoad EX7X1 annotation (
         Placement(transformation(extent = {{-26, -20}, {21, 27}})));
       Modelica.Blocks.Sources.TimeTable theta(table = [ts, thetaValve]) annotation (
         Placement(transformation(extent = {{-48, 15}, {-38, 25}})));

@@ -56,7 +56,7 @@ model CentralisedSystemGBEBCHP_InitForward
   parameter DistrictHeatingNetwork.Types.Temperature TT502_des = 80 + 273.15 "Desired temperature at the outlet of S500";
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= TestFacility.Data.PumpData.P501.qnom_inm3h*980/3600;
   parameter Real b_PR01[3] = TestFacility.Data.PumpData.PR01.b;
-  Plants.Thermal.Systems.CHP S500(
+  DHTF.Subsystems.HeatGeneration.CHP S500(
     n=n,
     Tin_low_start=Tin_Source_start_S5,
     Tout_low_start=Tout_Source_start_S5,

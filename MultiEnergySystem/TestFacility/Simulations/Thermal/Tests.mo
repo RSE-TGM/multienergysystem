@@ -1557,7 +1557,7 @@ package Tests
       extends DistrictHeatingNetwork.Icons.Generic.Centralised;
 
       model CentralisedSystemI_A "Sequence using Gas Boiler as heat source only"
-        extends MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemI(FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*3.141592654*30; 100, 2*3.141592654*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15]);
+        extends MultiEnergySystem.TestFacility.DHTF.Networks.Configurations.Centralised.CentralizedSystemI(FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*3.141592654*30; 100, 2*3.141592654*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15]);
         Modelica.Blocks.Sources.TimeTable FCV901_theta(table = FCV901theta) annotation (
           Placement(transformation(extent = {{-714, 93}, {-734, 113}})));
         DistrictHeatingNetwork.Sources.PumpInput P901_input(useOmega = true, omega = P901omega, q_m3h = P901qm3h) annotation (
@@ -2492,7 +2492,7 @@ package Tests
       end CentralisedSystemI_F;
 
       model CentralisedSystemLoadSimplifiedI_A "Sequence using Gas Boiler as heat source only"
-        extends MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI(FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], P101omega = [0, 2*pi*30; 100, 2*pi*30; 100, 2*pi*30; 200, 2*pi*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15], GB101(h = 1.2*0.93, Pmaxnom = 147.6e3*0.8));
+        extends MultiEnergySystem.TestFacility.DHTF.Networks.Configurations.Centralised.CentralizedSystemLoadSimplifiedI(FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 1; 100, 1], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], P101omega = [0, 2*pi*30; 100, 2*pi*30; 100, 2*pi*30; 200, 2*pi*30], FCV101theta = [0, 1; 100, 1], q_m3h_S9 = 10, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV701theta = [0, 1; 100, 1], FCV711theta = [0, 1; 100, 1], FCV721theta = [0, 1; 100, 1], FCV731theta = [0, 1; 100, 1], TCV701theta = [0, 1; 100, 1], TCV711theta = [0, 1; 100, 1], TCV721theta = [0, 1; 100, 1], TCV731theta = [0, 1; 100, 1], FCVR01theta = [0, 0.2; 100, 0.2], PR01omega = [0, 2*Modelica.Constants.pi*50; 100, 2*Modelica.Constants.pi*50], ToutcoolSP = [0, 15; 100, 15], GB101(h = 1.2*0.93, Pmaxnom = 147.6e3*0.8));
         Modelica.Blocks.Sources.TimeTable FCV901_theta(table = FCV901theta) annotation (
           Placement(transformation(extent = {{-682, 103}, {-702, 123}})));
         DistrictHeatingNetwork.Sources.PumpInput P901_input(useOmega = true, omega = P901omega, q_m3h = P901qm3h) annotation (
@@ -2995,7 +2995,7 @@ package Tests
       end CentralisedSystemLoadSimplifiedI_D;
 
       model CentralisedSystemSimplifiedLoadSimplifiedI_A "Sequence using Gas Boiler as heat source only"
-        extends MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralizedSystemSimplifiedLoadSimplifiedI(p_VE901 = 1.69e5, FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 0.2; 100, 0.2], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], FCV101theta = [0, 1; 100, 1], P101omega = [0, 2*pi*40; 100, 2*pi*40], q_m3h_S9 = 12, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV901(Kv = 20), FCVC01(Kv = 25), FCVC02(Kv = 25), EX701(Tin_start_Cool = 298.15, Tout_start_Cool = 305.15));
+        extends MultiEnergySystem.TestFacility.DHTF.Networks.Configurations.Centralised.CentralizedSystemSimplifiedLoadSimplifiedI(p_VE901 = 1.69e5, FV933_state = false, FCVC01theta = [0, 0; 100, 0], FCVC02theta = [0, 0.2; 100, 0.2], FCV901theta = [0, 1; 100, 1], P901omega = [0, 2*pi*30; 100, 2*pi*30], FCV101theta = [0, 1; 100, 1], P101omega = [0, 2*pi*40; 100, 2*pi*40], q_m3h_S9 = 12, P101qm3h = [0, 10; 100, 10], q_m3h_S1 = 10, FCV901(Kv = 20), FCVC01(Kv = 25), FCVC02(Kv = 25), EX701(Tin_start_Cool = 298.15, Tout_start_Cool = 305.15));
         parameter DistrictHeatingNetwork.Types.Power EX701PtSP[:, :] = [0, 20e3; 1e6, 20e3];
         parameter DistrictHeatingNetwork.Types.Power EX711PtSP[:, :] = [0, 20e3; 1e6, 20e3];
         parameter DistrictHeatingNetwork.Types.Power EX721PtSP[:, :] = [0, 20e3; 1e6, 20e3];
@@ -3018,7 +3018,7 @@ package Tests
         // Gas composition
         parameter Integer nX = 4 "Number of components in gas";
         parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {0.9554, 0.0341, 0.0105, 0} "Mass composition";
-        replaceable MultiEnergySystem.TestFacility.Networks.Thermal.Configurations.Centralised.CentralisedSystem_GBEBCHPTES_III centralisedSystem_GBEBCHPTES_III annotation (
+        replaceable MultiEnergySystem.TestFacility.DHTF.Networks.Configurations.Centralised.CentralisedSystem_GBEBCHPTES_III centralisedSystem_GBEBCHPTES_III annotation (
           Placement(transformation(extent = {{-28, -28}, {28, 28}})));
         H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true) annotation (
           Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin = {60, 0})));

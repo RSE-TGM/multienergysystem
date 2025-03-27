@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.Export.Linearization;
 model CentralisedSystemGBEB_InitForward
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends Networks.Thermal.Configurations.Centralised.CentralisedSystem_GBEB(
+  extends DHTF.Networks.Configurations.Centralised.CentralisedSystem_GBEB(
     S701(T1_wall_start(displayUnit="K") = 70 + 273.15, TN_wall_start(displayUnit="K") = 50 + 273.15),
     S711(T1_wall_start(displayUnit="K") = 70 + 273.15, TN_wall_start(displayUnit="K") = 50 + 273.15),
     S721(T1_wall_start(displayUnit="K") = 70 + 273.15, TN_wall_start(displayUnit="K") = 50 + 273.15),

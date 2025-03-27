@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.Export.Linearization;
 model CentralisedSystemCoolingSimplifiedI_B_InitForward
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends Networks.Thermal.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
+  extends DHTF.Networks.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
     T_start_hot = 80 +273.15,
     T_start_cold = 70 + 273.15,
     GB101(Pmaxnom = 147.6e3*0.8),

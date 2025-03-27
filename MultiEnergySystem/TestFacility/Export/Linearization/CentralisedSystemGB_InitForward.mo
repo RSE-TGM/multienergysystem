@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.Export.Linearization;
 model CentralisedSystemGB_InitForward
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends Networks.Thermal.Configurations.Centralised.CentralisedSystem_GB(
+  extends DHTF.Networks.Configurations.Centralised.CentralisedSystem_GB(
     Kvalve=40,
     redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
     redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,

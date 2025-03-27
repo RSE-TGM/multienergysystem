@@ -8,7 +8,7 @@ package Configurations
     partial model CentralizedNetworkBase
 
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase(redeclare model MediumCP = WaterHot);
-      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
+      extends DHTF.Systems.Load.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
@@ -38,7 +38,7 @@ package Configurations
 
     partial model CentralisedNetworkBaseII
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBaseII(redeclare model MediumCP = WaterHot, cf = cfp, n = np);
-      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
+      extends DHTF.Systems.Load.LoadPlantBaseII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
@@ -111,7 +111,7 @@ package Configurations
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBase(redeclare model MediumCP = WaterHot, rackL2L3_rackL3L4_hot(q_m3h_start = q_m3h_rackHot*3/4), rackL3L4_FCVC01_hot(q_m3h_start = q_m3h_rackHot/2), FCVC01_rackL4L5_hot(q_m3h_start = q_m3h_rackHot/2), rackL4L5_rackL5L6_hot(q_m3h_start = q_m3h_rackHot/4), rackL2L3_rackL3L4_cold(q_m3h_start = q_m3h_rackCold*3/4), rackL3L4_FCVC01_cold(q_m3h_start = q_m3h_rackCold/2), rackL5L6_rackL6L7_hot(q_m3h_start = q_m3h_rackHot/4), rackL4L5_rackL5L6_cold(q_m3h_start = q_m3h_rackCold/4), rackL5L6_rackL6L7_cold(q_m3h_start = q_m3h_rackCold/4), FCVC01_rackL4L5_cold(q_m3h_start = q_m3h_rackCold/2), rackL6L7_FCVC02_hot(q_m3h_start = q_m3h_rackHot/4), FCVC02(q_m3h_start = q_m3h_rackHot/4));
-      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseSimplified(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
+      extends DHTF.Systems.Load.LoadPlantBaseSimplified(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
       inner DistrictHeatingNetwork.System system annotation (
         Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
@@ -139,7 +139,7 @@ package Configurations
     partial model CentralisedNetworkBaseIII "New version of centralised configuration"
       extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
       extends Plants.Thermal.Configurations.BaseClass.CentralPlantBaseII(redeclare model MediumCP = WaterHot, cf = cfp, n = np);
-      extends Loads.Thermal.Configurations.BaseClass.LoadPlantBaseIII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
+      extends DHTF.Systems.Load.LoadPlantBaseIII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
       replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
       parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;

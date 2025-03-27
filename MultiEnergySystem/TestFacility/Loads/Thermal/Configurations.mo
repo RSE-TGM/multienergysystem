@@ -5308,7 +5308,7 @@ package Configurations "Different possible configurations for the loads"
         annotation (Placement(transformation(extent={{-6,6},{6,-6}},
             rotation=0,
             origin={240,-400})));
-      Systems.CoolingSingleLoadIII S701(
+      DHTF.Subsystems.Load.CoolingSingleLoad S701(
         np=n,
         nHX=nHX,
         Kv=TestFacility.Data.ValveData.FCV701.Kv,
@@ -5346,7 +5346,7 @@ package Configurations "Different possible configurations for the loads"
         h_TT7X4_TCV7X1=h_TT704_TCV701,
         t_Users=t_Users,
         Di_Users=Di_Users) "System EX701" annotation (Placement(transformation(extent={{60,-246},{140,-166}})));
-      Systems.CoolingSingleLoadIII S731(
+      DHTF.Subsystems.Load.CoolingSingleLoad S731(
         np=n,
         nHX=nHX,
         Kv=TestFacility.Data.ValveData.FCV731.Kv,
@@ -5386,7 +5386,7 @@ package Configurations "Different possible configurations for the loads"
         h_TT7X4_TCV7X1=h_TT734_TCV731,
         t_Users=t_Users,
         Di_Users=Di_Users) "System EX731" annotation (Placement(transformation(extent={{220,-246},{300,-166}})));
-      Systems.CoolingSingleLoadIII S711(
+      DHTF.Subsystems.Load.CoolingSingleLoad S711(
         np=n,
         nHX=nHX,
         Kv=TestFacility.Data.ValveData.FCV711.Kv,
@@ -5424,7 +5424,7 @@ package Configurations "Different possible configurations for the loads"
         h_TT7X4_TCV7X1=h_TT714_TCV711,
         t_Users=t_Users,
         Di_Users=Di_Users) "System EX711" annotation (Placement(transformation(extent={{380,-246},{460,-166}})));
-      Systems.CoolingSingleLoadIII S721(
+      DHTF.Subsystems.Load.CoolingSingleLoad S721(
         np=n,
         nHX=nHX,
         Kv=TestFacility.Data.ValveData.FCV721.Kv,

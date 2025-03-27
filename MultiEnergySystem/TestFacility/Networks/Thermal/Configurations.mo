@@ -957,17 +957,17 @@ package Configurations
         Placement(transformation(extent = {{4, -4}, {-4, 4}}, rotation = -90, origin = {190, 63})));
       DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC01(Kv = TestFacility.Data.ValveData.FCVC01.Kv, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = 60 + 273.15, pin_start = 200000) annotation (
         Placement(transformation(extent = {{4, -4}, {-4, 4}}, rotation = -90, origin = {70, 63})));
-      Plants.Thermal.Systems.ConnectorTypeI connectorTypeI annotation (
+      DHTF.Subsystems.Distribution.ConnectorTypeI connectorTypeI annotation (
         Placement(transformation(extent = {{-36, 45}, {0, 81}})));
-      Plants.Thermal.Systems.ConnectorTypeI connectorTypeI1 annotation (
+      DHTF.Subsystems.Distribution.ConnectorTypeI connectorTypeI1 annotation (
         Placement(transformation(extent = {{21, 45}, {57, 81}})));
-      Plants.Thermal.Systems.ConnectorTypeI connectorTypeI2 annotation (
+      DHTF.Subsystems.Distribution.ConnectorTypeI connectorTypeI2 annotation (
         Placement(transformation(extent = {{84, 45}, {120, 81}})));
-      Plants.Thermal.Systems.ConnectorTypeI connectorTypeI3 annotation (
+      DHTF.Subsystems.Distribution.ConnectorTypeI connectorTypeI3 annotation (
         Placement(transformation(extent = {{138, 45}, {174, 81}})));
-      Plants.Thermal.Systems.ConnectorTypeI connectorTypeI4 annotation (
+      DHTF.Subsystems.Distribution.ConnectorTypeI connectorTypeI4 annotation (
         Placement(transformation(extent = {{-149, -8}, {-113, 28}})));
-      Plants.Thermal.Systems.ConnectorTypeI connectorTypeI5 annotation (
+      DHTF.Subsystems.Distribution.ConnectorTypeI connectorTypeI5 annotation (
         Placement(transformation(extent = {{-95, -8}, {-59, 28}})));
     equation
       connect(EX701.inhot, connectorTypeI.outletComp) annotation (
@@ -1848,7 +1848,7 @@ package Configurations
     model CentralisedSystem_GBEBCHPTES_III
       extends CentralisedSystem_GBEBCHP_III;
 
-      Plants.Thermal.Systems.TES S200 annotation (Placement(transformation(extent={{-842,-162},{-756,-76}})));
+      DHTF.Subsystems.HeatGeneration.TES S200 annotation (Placement(transformation(extent={{-842,-162},{-756,-76}})));
     equation
       connect(S200.outlet, rackCD_Hot_S200_S900.inlet) annotation (Line(
           points={{-781.37,-69.55},{-781.37,-20},{-692,-20},{-692,44},{-690,44},{-690,44.75},{-727,44.75}},

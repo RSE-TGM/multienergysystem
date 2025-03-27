@@ -1,10 +1,10 @@
-within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
-model CHPFlowControlled "Combined Heat and Power System Model from RSE's test facility"
+within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
+model CHPFlowControlled "Combined Heat and Power System Model ideal flow controlled"
 
   ////////////////////////////////////
   // Extension from other models
   ////////////////////////////////////
-  extends TestFacility.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n)); //Base connectors
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n)); //Base connectors
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel; //Icon
 
   ////////////////////////////////////

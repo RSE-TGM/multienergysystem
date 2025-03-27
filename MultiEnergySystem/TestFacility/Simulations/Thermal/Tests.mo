@@ -1445,7 +1445,7 @@ package Tests
         Placement(transformation(extent = {{80, -25}, {90, -15}})));
       DistrictHeatingNetwork.Utilities.ASHRAEIndex dT_hot_indexes "ASHRAE indexes for delta T hot" annotation (
         Placement(transformation(extent = {{80, 20}, {90, 30}})));
-      MultiEnergySystem.TestFacility.Loads.Thermal.Systems.CoolingSingleLoadPowerControl EX7X1 annotation (
+      MultiEnergySystem.TestFacility.DHTF.Subsystems.Load.CoolingSingleLoadPowerControl EX7X1 annotation (
         Placement(transformation(extent = {{-26, -20}, {21, 27}})));
       Modelica.Blocks.Sources.TimeTable theta(table = [0, 30e3; 1e3, 30e3]) annotation (
         Placement(transformation(extent = {{-48, 15}, {-38, 25}})));

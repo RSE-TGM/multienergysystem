@@ -1,12 +1,10 @@
-within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
+within MultiEnergySystem.TestFacility.DHTF.Subsystems.Distribution;
 model RackTypeI
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
-  extends TestFacility.Interfaces.DHNRackBaseI(MultiPort(n=n));
+  extends TestFacility.DHTF.Interfaces.DHNRackBaseI(MultiPort(n=n));
   parameter Integer n = 3 "Number of volumes in each pipe";
-  ConnectorTypeI connectorTypeI(n=n)
-                                annotation (Placement(transformation(extent={{-74,-28},{-18,28}})));
-  ConnectorTypeI connectorTypeI1(n=n)
-                                 annotation (Placement(transformation(extent={{18,-28},{74,28}})));
+  ConnectorTypeI connectorTypeI(n=n) annotation (Placement(transformation(extent={{-74,-28},{-18,28}})));
+  ConnectorTypeI connectorTypeI1(n=n) annotation (Placement(transformation(extent={{18,-28},{74,28}})));
 equation
   connect(connectorTypeI.inletCold, connectorTypeI1.outletCold)
     annotation (Line(

@@ -1,6 +1,6 @@
-within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
-model GasBoilerFlowControlled "System 100"
-  extends TestFacility.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
+within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
+model GasBoilerFlowControlled "System 100 with ideal flow control"
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient

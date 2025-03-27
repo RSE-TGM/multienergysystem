@@ -1,6 +1,6 @@
-within MultiEnergySystem.TestFacility.Plants.Thermal.Systems;
-model ElectricBoilerFlowControlled "System 400"
-  extends TestFacility.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
+within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
+model ElectricBoilerFlowControlled "System 400 with ideal flow control"
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;

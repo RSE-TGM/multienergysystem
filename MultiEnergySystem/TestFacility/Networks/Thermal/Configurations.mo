@@ -1394,8 +1394,7 @@ package Configurations
       ElectricNetwork.Interfaces.ElectricPortInlet electricPortInlet annotation (
         Placement(transformation(extent={{-442,-500},{-422,-480}}),
                                                                   iconTransformation(origin={-56,190},extent={{-64,-160},{-44,-140}})));
-      FMUExport.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-408,330},{-270,468}}),
-                                                                                                                               iconTransformation(extent={{-22,80},{18,120}})));
+      Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-408,330},{-270,468}}),iconTransformation(extent={{-22,80},{18,120}})));
       Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=false) annotation (Placement(transformation(extent={{-171,67},{-191,87}})));
     equation
       connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (

@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks;
-package Centralized
+package Centralised
   extends DistrictHeatingNetwork.Icons.Generic.Centralised;
 
 
@@ -15,4 +15,4 @@ package Centralized
 
 
 
-end Centralized;
+end Centralised;

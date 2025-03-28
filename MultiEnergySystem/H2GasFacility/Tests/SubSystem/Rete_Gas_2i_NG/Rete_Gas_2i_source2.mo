@@ -67,13 +67,13 @@ model Rete_Gas_2i_source2 "immissione 2"
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
     duration=60,
-    height=25/3600,
-    offset=0.0001,
+    height=0.03,
+    offset=0.001,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-419,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
     duration=60,
-    height=-25/3600,
+    height=-0.03,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-417,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));

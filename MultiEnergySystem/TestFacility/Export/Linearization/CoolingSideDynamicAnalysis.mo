@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.Export.Linearization;
 model CoolingSideDynamicAnalysis
-  extends Simulations.Thermal.Tests.Control.ControlledPlants.CentralizedControlPlant_III;
+  extends DHTF.Control.Tests.CentralizedControlPlant_III;
   Export.Interfaces.ControlSignalBus inputs
     annotation (Placement(
       visible=true,

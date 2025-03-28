@@ -1,6 +1,6 @@
-within MultiEnergySystem.CaseStudies.DHNetwork_CentralisedConfig;
-model Configuration1 "Centralised configuration"
-  extends TestFacility.DHTF.Examples.CEN_GBEB_LoadSimplified(
+within MultiEnergySystem.TestFacility.DHTF.Examples;
+model CEN_231204_SequenceI "Sequence 1 done on 04/12/23"
+  extends DHTF.Examples.CEN_GBEB_LoadSimplified(
     coldSourcePEX721(T0=EX721_Tin_cold),
     coldSourcePEX711(T0=EX711_Tin_cold),
     coldSourcePEX731(T0=EX731_Tin_cold),
@@ -33,8 +33,8 @@ model Configuration1 "Centralised configuration"
     FCV401theta=[0,0.1; 1e6,0.1],
     FCV901theta=[0,0.4; 1e6,0.4],
     FCV701theta=[0,0.59; 334,0.59; 438,1; 480,1; 815,0.59; 3511,0.66; 4973,0.66; 6866,0.56; 8000,0.56; 10000,0.69; 1e6,0.69],
-    FCV711theta=[0,0.73; 442,0.73; 442,1; 482,1; 890,0.68; 1018,0.68; 1724,0.78; 2665,0.78; 3390,0.66; 3689,0.66; 4013,0.78; 4372,0.78; 6272,0.65; 6400,0.65; 6875,0.77; 7024,0.77; 7264,0.74; 7798,0.74; 8517,0.8; 8658,0.8; 9071,0.65; 9138,0.65; 9452,
-        0.78; 9689,0.78; 9689,0.79; 1e6,0.79],
+    FCV711theta=[0,0.73; 442,0.73; 442,1; 482,1; 890,0.68; 1018,0.68; 1724,0.78; 2665,0.78; 3390,0.66; 3689,0.66; 4013,0.78; 4372,0.78; 6272,0.65; 6400,0.65; 6875,0.77; 7024,0.77; 7264,0.74; 7798,0.74; 8517,0.8; 8658,0.8; 9071,0.65; 9138,0.65; 9452,0.78;
+        9689,0.78; 9689,0.79; 1e6,0.79],
     FCV721theta=[0,0.75; 442,0.75; 442,1; 890,1; 1848,0.79; 4505,0.79; 7250,0.96; 9538,0.78; 1e6,0.78],
     FCV731theta=[0,0.9; 0.041e4,0.9; 0.041e4,1; 0.3684e4,1; 0.5e4,0.92; 1e6,0.92],
     VE901(p0=1.76e5),
@@ -103,4 +103,4 @@ equation
       Interval=20,
       __Dymola_Algorithm="Dassl"),
     Diagram(coordinateSystem(extent = {{-900, -500}, {900, 500}})));
-end Configuration1;
+end CEN_231204_SequenceI;

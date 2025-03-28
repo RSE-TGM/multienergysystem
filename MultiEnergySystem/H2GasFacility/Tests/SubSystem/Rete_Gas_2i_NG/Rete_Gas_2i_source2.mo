@@ -1,6 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_source2 "immissione 2"
-  extends H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG.Rete_Gas_2i_pipes_users;
+  extends H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG.Rete_Gas_2i_pipes_users(
+  constantFrictionFactor = false,
+  massFractionDynamicBalance = false,
+  valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5))),
+  X_start = {1, 0});
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
     n=nV,
     L=Data.PipelineData_2i.sds16.L,
@@ -54,7 +58,7 @@ model Rete_Gas_2i_source2 "immissione 2"
     p0=480000,
     G=1e-8,
     T0=288.15,
-    X0=X_start,
+    X0={0,1},
     computeEnthalpyWithFixedPressure=true,
     m_flow0=0,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
@@ -63,15 +67,15 @@ model Rete_Gas_2i_source2 "immissione 2"
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
     duration=60,
-    height=0.09889,
-    offset=0.001,
-    startTime=32400)                                                                                        annotation (
+    height=25/3600,
+    offset=0.0001,
+    startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-419,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
     duration=60,
-    height=-0.09889,
+    height=-25/3600,
     offset=0,
-    startTime=46800)                                                                                        annotation (
+    startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-417,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-358,240},{-338,260}})));

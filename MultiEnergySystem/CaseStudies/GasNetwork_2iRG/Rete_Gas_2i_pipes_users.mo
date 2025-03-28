@@ -1,8 +1,8 @@
 ﻿within MultiEnergySystem.CaseStudies.GasNetwork_2iRG;
 model Rete_Gas_2i_pipes_users
   extends CaseStudies.GasNetwork_2iRG.Rete_Gas_2i_pipes(raccordo2(
-        pin_start=H2GasFacility.Data.PipelineData_2i.sds8.pout_start,
-        pout_start=H2GasFacility.Data.PipelineData_2i.sds8.pout_start));
+        pin_start=CaseStudies.GasNetwork_2iRG.PipelineData_2i.sds8.pout_start,
+        pout_start=CaseStudies.GasNetwork_2iRG.PipelineData_2i.sds8.pout_start));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
     redeclare model Medium = Medium,
     p0=463200,

@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass;
 partial model PartialLumpedVolume
   "Partial model of a Cylindrical lumped volume of water, operated ideally at constant mass with losses to ambient"
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
+  //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
   import MultiEnergySystem.DistrictHeatingNetwork.Types;
 
   // Definition of System
@@ -28,16 +28,17 @@ partial model PartialLumpedVolume
     Dialog(tab = "Data", group = "Tank"));
   parameter Types.Pressure pin_start = 5e5 "start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
-  parameter Types.Pressure pout_start = pin_start - g_n*rho0*H "start pressure at lower part of the tank" annotation (
+  parameter Types.Pressure pout_start = pin_start - g_n*rho_start*H "start pressure at lower part of the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.MassFlowRate m_flow_start = 1 "Start mass flow rate through the tank" annotation (
     Dialog(tab = "Data", group = "Initialization"));
   parameter Types.Temperature Tin_start = T_start;
   parameter Types.Temperature Tout_start = T_start;
+  parameter Types.Density rho_start = 985;
 
   // Final parameters
   final parameter Types.Volume V = pi*H*(D/2)^2 "Volume of water inside the mixing volume";
-  final parameter Types.Mass M_id = V * rho0 "Mass of water inside the mixing volume";
+  final parameter Types.Mass M_id = V * rho_start "Mass of water inside the mixing volume";
 
   // Variables
   SI.MassFlowRate m_flow_in(start = m_flow_start) "Mass flow rate across the volume";

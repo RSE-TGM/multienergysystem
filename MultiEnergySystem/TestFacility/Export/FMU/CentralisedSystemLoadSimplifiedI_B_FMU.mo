@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.Export.FMU;
 model CentralisedSystemLoadSimplifiedI_B_FMU
   extends Modelica.Icons.Example;
-  extends DHTF.Networks.Configurations.Centralised.CentralizedSystemLoadSimplifiedI_B(
+  extends DHTF.Networks.Centralised.CentralizedSystemLoadSimplifiedI_B(
     coldSourcePEX721(T0=EX721_Tin_cold),
     coldSourcePEX711(T0=EX711_Tin_cold),
     coldSourcePEX731(T0=EX731_Tin_cold),

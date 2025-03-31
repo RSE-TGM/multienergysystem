@@ -1,17 +1,6 @@
 TestSinglePipe_A
-TestSinglePipe_B
-Pipe_CH4H2
 Test2PipesInSeries_A
 Test3Pipes_A
 Test3Pipes_A_IG
-TestPlugFlowCore
-TestPlugFlowPipe
-Test_PlugFlowPipe_2
-Test_PF_vs_FV
-Test_CorePF_vs_FV
-TestSinglePipe_C_MSL
-TestSinglePipe_C_MSL_H2
 Test_H2_injection
 Test_H2_injection_MSL
-Test_H2_injection_manifold
-Test_H2_injection_manifold_MSL

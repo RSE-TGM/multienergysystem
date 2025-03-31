@@ -4,6 +4,7 @@ model NG5_H2
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixture(
       computeTransport = true,
       nXi = 6,
+      nX = 6,
       X_start = {0.9, 0.04, 0.04, 0.005, 0.005, 0.01},
       T_start = 15 + 273.15,
       p_start = 1e5,

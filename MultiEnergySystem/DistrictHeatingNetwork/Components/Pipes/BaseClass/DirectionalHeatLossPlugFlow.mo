@@ -1,13 +1,15 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model DirectionalHeatLossPlugFlow
   extends MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.PartialRoundTube;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Parameter
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal "Nominal mass flow rate";
   parameter Modelica.Units.SI.Temperature T_start = 20 + 273.15;
+  parameter Types.Density rho_start = 985 "Nominal density";
+  parameter Types.SpecificHeatCapacity cp_start = 4185 "Nominal specific heat capacity";
+
   // Final parameters
-  final parameter Real C = rho0 * Modelica.Constants.pi * (Di / 2) ^ 2 * cp "Thermal capacity per unit length of pipe";
+  final parameter Real C = rho_start * Modelica.Constants.pi * (Di / 2) ^ 2 * cp_start "Thermal capacity per unit length of pipe";
   final parameter Real R = 1 / (lambdaIns * 2 * Modelica.Constants.pi / Modelica.Math.log((Di / 2 + tIns) / (Di / 2))) "Thermal resistance per unit length from fluid to boundary temperature";
   final parameter Modelica.Units.SI.Time tau_char = R * C "Characteristic delay time";
 
@@ -25,11 +27,11 @@ equation
   // No pressure drop
   inlet.p - outlet.p = 0;
   inlet.h_out = inStream(outlet.h_out);
-  outlet.h_out = cp * T_b_outflow "Calculate enthalpy of output state";
-  T_a_inflow = inStream(inlet.h_out) / cp;
+  outlet.h_out = cp_start * T_b_outflow "Calculate enthalpy of output state";
+  T_a_inflow = inStream(inlet.h_out) / cp_start;
   // Heat losses
   T_b_outflow = T_ext + (T_a_inflow - T_ext) * Modelica.Math.exp(-tau / tau_char);
-  Q_flow = -Modelica.Media.Air.MoistAir.Utilities.spliceFunction(pos = (T_a_inflow - T_b_outflow) * cp, neg = 0, x = inlet.m_flow, deltax = m_flow_nominal / 1000) * inlet.m_flow;
+  Q_flow = -Modelica.Media.Air.MoistAir.Utilities.spliceFunction(pos = (T_a_inflow - T_b_outflow) * cp_start, neg = 0, x = inlet.m_flow, deltax = m_flow_nominal / 1000) * inlet.m_flow;
 
 annotation (
     Icon(graphics={  Line(origin = {-60, 28.7143}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20), Line(origin = {60, 29.1429}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20), Line(origin = {0, 28.7143}, points = {{0, -30}, {0, 30}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Open}, arrowSize = 20)}));

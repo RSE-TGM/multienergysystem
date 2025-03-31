@@ -26,11 +26,13 @@ model pipePF "Model of 1D fluid transport in a circular rigid pipe. Plug Flow (P
   parameter SI.Temperature T_ext = 298.15 "External temperature";
   parameter SI.Temperature T_start = 273.15 + 70 "Temperature start value";
   parameter SI.Temperature T_start_m = 273.15 + 70 "Metal temperature start value";
+  parameter Types.Density rho_start = 985 "Nominal density";
+  parameter Types.SpecificHeatCapacity cp_start = 985 "Nominal specific heat capacity";
   // Final
   final parameter Modelica.Units.SI.Area A = Modelica.Constants.pi*D^2/4;
-  final parameter SI.Velocity u_nom = m_flow_nominal/(rho0*A);
+  final parameter SI.Velocity u_nom = m_flow_nominal/(rho_start*A);
   parameter SI.SpecificHeatCapacity cpm;
-  final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((D/2 + t)^2 - (D/2)^2)*L*cpm*rhom/(cp*rho0) "Volume of water equivalent to the metal";
+  final parameter SI.Volume V_equivalent = Modelica.Constants.pi*((D/2 + t)^2 - (D/2)^2)*L*cpm*rhom/(cp_start*rho_start) "Volume of water equivalent to the metal";
   final parameter SI.Length h_equivalent = V_equivalent/(Modelica.Constants.pi*1) "Consider a diameter of 2, compute hight";
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass.DirectionalHeatLossPlugFlow outletHeatLosses(m_flow_start = m_flow_start, pin_start = pin_start, Di = D, L = L, T_ext = T_ext, T_start = T_start, tIns = tIns, t = t, h = H, lambdaIns = lambdaIns, lambdam = lambdam, m_flow_nominal = m_flow_nominal, rhom = rhom) annotation (
     Placement(transformation(origin = {40, 0}, extent = {{-10, 10}, {10, -10}})));

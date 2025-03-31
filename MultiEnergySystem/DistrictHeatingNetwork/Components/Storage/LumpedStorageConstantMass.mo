@@ -6,6 +6,8 @@ model LumpedStorageConstantMass "Model a perfectly mixed thermal storage with in
   // Insulation parameters
   parameter Types.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
   parameter Types.Length dIns = 0.15 "Insulation thickness";
+  parameter Types.Density rho_start = 985 "Nominal density";
+  parameter Types.SpecificHeatCapacity cp_start = 4185 "Nominal specific heat capacity";
   final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
   final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
 
@@ -23,10 +25,10 @@ equation
   inlet.m_flow + outlet.m_flow = 0 "No mass dynamics";
 
   // Energy Balance
-  M_id * cp * der(Ttilde) = m_flow_in * cp * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
+  M_id * cp_start * der(Ttilde) = m_flow_in * cp_start * (Tin - Tout) - Q_amb "Ideal perfectly mixed fluid";
 
   // Pressure at the bottom of the tank is increased as Stevino
-  inlet.p - outlet.p = rho0*H*g_n;
+  inlet.p - outlet.p = rho_start*H*g_n;
 
   // Computation of heat loss to ambient
   Q_amb = 1/(R_lateral + 2*R_flat)*(Ttilde - T_ext) "Insulation all around";
@@ -35,13 +37,13 @@ equation
   temperatureMixVolume = Ttilde - 273.15;
 
   // Boundary equations
-  outlet.h_out = Tout * cp;
+  outlet.h_out = Tout * cp_start;
   if not allowFlowReversal or m_flow_in > 0 then
-    Tin = inStream(inlet.h_out) / cp;
+    Tin = inStream(inlet.h_out) / cp_start;
     Tout = Ttilde;
   else
     Tin = Ttilde;
-    Tout = inStream(outlet.h_out) / cp;
+    Tout = inStream(outlet.h_out) / cp_start;
   end if;
 
 initial equation

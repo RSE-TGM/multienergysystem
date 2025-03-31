@@ -14,6 +14,9 @@ model Stratified1DStorage
   parameter SI.ThermalConductivity lambdaIns = 0.04 "Conductivity of the TES insulation";
   parameter SI.Length dIns = 0.15 "Insulation thickness";
 
+  parameter Types.Density rho_start = 985 "Nominal density";
+  parameter Types.SpecificHeatCapacity cp_start = 4185 "Nominal specific heat capacity";
+
   parameter Integer N = 5 "Number of volumes";
 
   // Final parameters
@@ -21,7 +24,7 @@ model Stratified1DStorage
   final parameter SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2)  "Flat Surface of the cylinder";
   final parameter SI.Area A = Modelica.Constants.pi*(D/2)^2 "Cross section area of the TES";
   final parameter SI.Volume V = h*A "Volume of water inside the TES";
-  final parameter SI.Mass M = V * rho0 "Mass of water inside the mixing volume";
+  final parameter SI.Mass M = V * rho_start "Mass of water inside the mixing volume";
 
   // Variables
   SI.MassFlowRate m_flow "Mass flow rate across the volume";
@@ -40,11 +43,11 @@ equation
   inlet.m_flow + outlet.m_flow = 0;
   m_flow = inlet.m_flow;
   // Pressure at the bottom of the tank is increased as Stevino
-  inlet.p - outlet.p = rho0 * h * Modelica.Constants.g_n;
+  inlet.p - outlet.p = rho_start * h * Modelica.Constants.g_n;
   // Energy balance
   for k in 1:N loop
     // Volume energy balance
-    M / N * cp * der(Ttilde[k]) = m_flow * cp * (T[k] - T[k + 1]) - Q_amb[k] - Q_cond[k];
+    M / N * cp_start * der(Ttilde[k]) = m_flow * cp_start * (T[k] - T[k + 1]) - Q_amb[k] - Q_cond[k];
     if k == 1 then
       // Heat exchange with the ambient from flat top face
       Q_amb[k] = (R_flat + R_lateral) / (R_flat * R_lateral) * (Ttilde[k] - T_ext);
@@ -65,15 +68,15 @@ equation
    // Boundary equations
   if not allowFlowReversal or m_flow > 0 then
     // Hot layer on top, inlet is at the top
-    T[1] = inStream(inlet.h_out) / cp;
+    T[1] = inStream(inlet.h_out) / cp_start;
     T[2:end] = Ttilde;
   else
 // Cold layer at the bottom
     T[1:end - 1] = Ttilde;
-    T[end] = inStream(outlet.h_out) / cp;
+    T[end] = inStream(outlet.h_out) / cp_start;
   end if;
-  inlet.h_out = T[1] * cp;
-  outlet.h_out = T[end] * cp;
+  inlet.h_out = T[1] * cp_start;
+  outlet.h_out = T[end] * cp_start;
 // Output temperature, temperature of the volumes
   tesHotT = Ttilde[1] - 273.15;
   tesColdT = Ttilde[N] - 273.15;

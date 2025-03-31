@@ -1,5 +1,4 @@
 IdealMassFlowSensor
-IdealTemperatureSensor
 IdealPressureSensor
 IdealAbsoluteTemperatureSensor
 IdealAbsoluteTemperatureSensorFirstOrderDyn

@@ -1,13 +1,5 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes;
 model HeatExchangerIdealTemperatureControl
-//   replaceable model Medium_Hot = AllamCycle.Substances.MainClasses.MixtureCO2
-//     constrainedby AllamCycle.Substances.BaseClasses.PartialMixture
-//     "Hot fluid model" annotation (
-//     Dialog(group="Fluid Models"));
-//   replaceable model Medium_Cold = AllamCycle.Substances.MainClasses.MixtureCO2
-//     constrainedby AllamCycle.Substances.BaseClasses.PartialMixture
-//     "Cold fluid model" annotation (
-//     Dialog(group="Fluid Models"));
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 

@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.BaseClass;
 model TimeDelayPlugFlow
   extends Modelica.Icons.RoundSensor;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
+  //import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
 
   // Base tube parameters
   parameter Types.Length L "Pipe length";
@@ -11,10 +11,11 @@ model TimeDelayPlugFlow
   parameter Boolean initDelay = false "Initialize delay for a constant m_flow_start if true, otherwise start from 0";
   parameter Modelica.Units.SI.MassFlowRate m_flow_start = 0 "Initialization of mass flow rate to calculate initial time delay";
   parameter Modelica.Units.SI.MassFlowRate m_flow_nominal(min = 0) "Nominal mass flow rate";
+  parameter Modelica.Units.SI.Density rho_start = 985 "Nominal density";
 
   // Final parameter
-  final parameter Modelica.Units.SI.Time t_in_start = if initDelay and abs(m_flow_start) > 1E-10 * m_flow_nominal then min(L / m_flow_start * (rho0 * D ^ 2 / 4 * Modelica.Constants.pi), 0) else 0 "Initial value of input time at inlet";
-  final parameter Modelica.Units.SI.Time t_out_start = if initDelay and abs(m_flow_start) > 1E-10 * m_flow_nominal then min(-L / m_flow_start * (rho0 * D ^ 2 / 4 * Modelica.Constants.pi), 0) else 0 "Initial value of input time at outlet";
+  final parameter Modelica.Units.SI.Time t_in_start = if initDelay and abs(m_flow_start) > 1E-10 * m_flow_nominal then min(L / m_flow_start * (rho_start * D ^ 2 / 4 * Modelica.Constants.pi), 0) else 0 "Initial value of input time at inlet";
+  final parameter Modelica.Units.SI.Time t_out_start = if initDelay and abs(m_flow_start) > 1E-10 * m_flow_nominal then min(-L / m_flow_start * (rho_start * D ^ 2 / 4 * Modelica.Constants.pi), 0) else 0 "Initial value of input time at outlet";
 
   // Variables
   Modelica.Units.SI.Time time_out_rev "Reverse flow direction output time";
@@ -34,7 +35,7 @@ initial equation
   x = 0;
   t0 = time;
 equation
-  u = m_flow / (rho0 * D ^ 2 / 4 * Modelica.Constants.pi) / L;
+  u = m_flow / (rho_start * D ^ 2 / 4 * Modelica.Constants.pi) / L;
   der(x) = u;
   (time_out_rev, time_out_des) = spatialDistribution(time, time, x, u >= 0, {0.0, 1.0}, {t0 + t_in_start, t0 + t_out_start});
   tau = time - time_out_des;

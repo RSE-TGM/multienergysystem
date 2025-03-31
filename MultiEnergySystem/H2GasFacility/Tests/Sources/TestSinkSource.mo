@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.Sources;
 model TestSinkSource
+  extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.RealGases.NaturalGasPapay;
   parameter Integer nX = 9;
   parameter Types.MassFraction X_ref[nX] = {97.201, 1.862, 0.393, 0, 0, 0, 0, 0, 0.544}/100;

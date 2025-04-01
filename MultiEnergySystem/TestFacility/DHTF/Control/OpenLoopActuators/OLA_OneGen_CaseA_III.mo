@@ -25,7 +25,7 @@ equation
   theta_FCVR01_var = theta_FCVR01SP;
   Tout_RR01_var = Tout_RR01SP;
   theta_FCV101SP = 1;
-  omega_P101SP = 2*pi*50;
+  omega_P101SP = 2*pi*40;
   Tout_GB101SP = 80 + 273.15;
   theta_FCV701SP = 1;
   theta_FCV711SP = 1;
@@ -40,7 +40,7 @@ equation
   theta_TCV721SP = 1;
   theta_TCV731SP = 1;
   theta_FCVR01SP = 1;
-  Tout_RR01SP = 40 + 273.15;
+  Tout_RR01SP = 20 + 273.15;
   if useRealExpression then
     // S100
     booldthetaFCV101 = true;

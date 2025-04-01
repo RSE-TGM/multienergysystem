@@ -3,6 +3,7 @@ TestActuator_IdealWater
 TestOpenLoopActuator
 TestCoolingPlantController
 TestCentralised
+TestCentralisedII
 StepResponseBase
 SR_OneGen_CaseA
 SR_TwoGen_CaseA

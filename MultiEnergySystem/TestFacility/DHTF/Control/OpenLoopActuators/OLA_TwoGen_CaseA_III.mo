@@ -46,7 +46,7 @@ equation
   omega_P401_var = omega_P401SP;
   Tout_EB401_var = Tout_EB401SP;
   theta_FCV401SP = 1;
-  omega_P401SP = 2*pi*50;
+  omega_P401SP = 2*pi*40;
   Tout_EB401SP = 80 + 273.15;
   if useRealExpression then
     // S400

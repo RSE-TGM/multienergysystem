@@ -1,10 +1,11 @@
-within MultiEnergySystem.TestFacility.DHTF.Systems.Distribution;
-partial model CentralPlantBaseII "Base Case considering rack CD and the pipelines connecting to the loads"
+﻿within MultiEnergySystem.TestFacility.DHTF.Systems.Distribution;
+model CentralizedFourHX "Base Case considering rack CD and the pipelines connecting to the loads"
+  extends DistrictHeatingNetwork.Icons.Water.Distribution;
   //Fluids
   replaceable model MediumCP = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   //Constants
   constant Real pi = Modelica.Constants.pi;
-  //General parameters of pipe
+  //General parameters of pipesù
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "friction factor for pipes";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
@@ -116,66 +117,36 @@ partial model CentralPlantBaseII "Base Case considering rack CD and the pipeline
   parameter Real b[3] = {23.6, 0.62, -0.0435} "Head Characteristic coefficients";
   parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
 
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV933(redeclare model Medium = MediumCP, Kv = 33, dp_nom = 50000, Tin_start = T_start, pin_start = pin_start) annotation (
-    Placement(visible = true, transformation(origin = {-218, 45}, extent = {{-5, 5}, {5, -5}}, rotation = 180)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC02(redeclare model Medium = MediumCP, Kv = TestFacility.Data.ValveData.FCVC02.Kv, openingChar=TestFacility.Data.ValveData.FCVC02.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = T_start_hot, pin_start=200000,                                                                                                                                                                                                        q_m3h_start = q_m3h_rackHot) annotation (
-    Placement(transformation(extent={{10,10},{-10,-10}},      rotation = -90, origin={690,221})));
+    Placement(transformation(extent={{10,10},{-10,-10}},      rotation = -90, origin={412,3})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC01(redeclare model Medium = MediumCP, Kv = TestFacility.Data.ValveData.FCVC01.Kv, openingChar=TestFacility.Data.ValveData.FCVC01.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = 60 + 273.15, pin_start=200000)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent={{5,5},{-5,-5}},          rotation = -90, origin={249,223})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S100_S400(redeclare model Medium = MediumCP, L = L_rCD_H1, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of gas boiler and the outlet of electric boiler" annotation (
-    Placement(transformation(extent = {{-10.25, 10.25}, {10.25, -10.25}}, rotation = 180, origin = {-267.75, 44.75})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S400_S300(redeclare model Medium = MediumCP, L = L_rCD_H2, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of the electric boiler and the outlet of heat pump HP301" annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin = {-348, 45})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S300_S500(redeclare model Medium = MediumCP, L = L_rCD_H3, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of heat pump HP301 and the outlet of hot side of CHP system" annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin = {-428, 45})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S500_SXXX(redeclare model Medium = MediumCP, L = L_rCD_H4, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of heat pump HP301 and the outlet of hot side of CHP system" annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin = {-510, 45})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_SXXX_SYYY(redeclare model Medium = MediumCP, L = L_rCD_H5, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of heat pump HP301 and the outlet of hot side of CHP system" annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 180, origin = {-588, 45})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_SYYY_S200(redeclare model Medium = MediumCP, L = L_rCD_H6, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD, pout_start = pout_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of future heat storage and the outlet of hot side of CHP system" annotation (
-    Placement(transformation(extent = {{-10, 10.25}, {10, -10.25}}, rotation = 180, origin = {-668, 44.75})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S200_S900(redeclare model Medium = MediumCP, L = L_rCD_H7, h = h_rCD_H7, t = t_rCD, pin_start = pin_start_rCD, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di, q_m3h_start = q_m3h_S9, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the outlet of future heat storage and the outlet of hot side of CHP system" annotation (
-    Placement(transformation(extent = {{-10, 10.25}, {10, -10.25}}, rotation = 180, origin = {-737, 44.75})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S400_S100(redeclare model Medium = MediumCP, L = L_rCD_C7, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S400 and S100 cold side" annotation (
-    Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin = {-337.25, 5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S300_S400(redeclare model Medium = MediumCP, L = L_rCD_C6, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
-    Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin = {-419.25, 5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S300_S300(redeclare model Medium = MediumCP, L = L_rCD_C5, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
-    Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin = {-459.25, 5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S500_S300(redeclare model Medium = MediumCP, L = L_rCD_C4, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
-    Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin = {-517.25, 5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S500_S500(redeclare model Medium = MediumCP, L = L_rCD_C3, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S300 and S400 cold side" annotation (
-    Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin = {-557.25, 5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S200_S500(redeclare model Medium = MediumCP, L = L_rCD_C2, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S200 and S500 cold side" annotation (
-    Placement(transformation(extent = {{10.75, 10.25}, {-10.75, -10.25}}, rotation = 180, origin = {-657.25, 5.25})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S900_S200(redeclare model Medium = MediumCP, L = L_rCD_C1, h = 0, t = t_rCD, m_flow_start = m_flow_start, pin_start = pin_start_rCD_cold, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di, nPipes = 1, n = n, hctype = hctype) "Pipe connecting the system S200 and S500 cold side" annotation (
-    Placement(transformation(extent={{10.75,10.75},{-10.75,-10.75}},      rotation = 180, origin={-727.25,4.75})));
+    Placement(transformation(extent={{9,9},{-9,-9}},          rotation = -90, origin={45,5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL3L4_hot(redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pin_start_Users + 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {-50, 205})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={-198,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_hot(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_H, t = t_rL_H, pin_start = pin_start_Users - 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {190, 205})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={-8,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_hot(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={430,205})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={210,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_hot(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_H, h = h_rL6L7_FCVC02_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin = {650, 205})));
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={372,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL2L3_cold(redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pout_start_Users - 0.03e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent={{11,-11},{-11,11}},      rotation = 0, origin={-71,241})));
+    Placement(transformation(extent={{11,-11},{-11,11}},      rotation = 0, origin={-219,23})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_cold(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_C, t = t_rL_C, pin_start = pout_start_Users - 0.01e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={210,241})));
+    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={-8,23})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_cold(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_C, t = t_rL_C, pin_start = pout_start_Users, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={450,241})));
+    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={210,23})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_cold(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_C, t = t_rL_C, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={656,241})));
+    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={378,23})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTA12(redeclare model Medium = MediumCP, T_start = T_start_hot) "Flow sensor at the inlet of valve FCVC02" annotation (
-    Placement(transformation(extent = {{666, 207}, {674, 199}})));
+    Placement(transformation(extent={{388,-11},{396,-19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA20 "Pressure sensor at the inlet of valve FCVC02" annotation (
-    Placement(transformation(extent = {{677, 207}, {685, 199}})));
+    Placement(transformation(extent={{399,-11},{407,-19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA19 "Pressure sensor at the outlet of valve FCVC02" annotation (
-    Placement(transformation(extent={{680,245},{688,253}})));
+    Placement(transformation(extent={{402,27},{410,35}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA08 "Pressure sensor at the inlet of valve FCVC01" annotation (
-    Placement(transformation(extent = {{220, 207}, {228, 199}})));
+    Placement(transformation(extent={{16,-11},{24,-19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07 "Pressure sensor at the outlet of valve FCVC01" annotation (
-    Placement(transformation(extent={{230,237},{238,245}})));
+    Placement(transformation(extent={{26,19},{34,27}})));
   TestFacility.DHTF.Subsystems.Distribution.CirculationPump S900(
     redeclare model Medium = MediumCP,
     hctype=hctype,
@@ -185,7 +156,9 @@ partial model CentralPlantBaseII "Base Case considering rack CD and the pipeline
     openingChar=openingChar,
     cf=cf,
     b=b) "Pumping Circulation System"
-    annotation (Placement(transformation(extent={{-840,72},{-738,174}})));
+    annotation (Placement(transformation(extent={{-51,-51},{51,51}},
+        rotation=-90,
+        origin={-311,3})));
   DHTF.Subsystems.Distribution.ConnectorTypeI rackL3L4(
     redeclare model Medium = MediumCP,
     hctype=hctype,
@@ -205,9 +178,9 @@ partial model CentralPlantBaseII "Base Case considering rack CD and the pipeline
     h_incold=0,
     h_outcold=0,
     t=t,
-    Di=Di) annotation (Placement(transformation(extent={{64,178},{154,268}})));
-  DistrictHeatingNetwork.Components.Fittings.Junction junctionHotFCVC01 annotation (Placement(transformation(extent={{244,210},{254,200}})));
-  DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdFCVC01 annotation (Placement(transformation(extent={{254,236},{244,246}})));
+    Di=Di) annotation (Placement(transformation(extent={{-136,-40},{-46,50}})));
+  DistrictHeatingNetwork.Components.Fittings.Junction junctionHotFCVC01 annotation (Placement(transformation(extent={{40,-8},{50,-18}})));
+  DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdFCVC01 annotation (Placement(transformation(extent={{50,18},{40,28}})));
   DHTF.Subsystems.Distribution.ConnectorTypeI rackL4L5(
     redeclare model Medium = MediumCP,
     hctype=hctype,
@@ -227,7 +200,7 @@ partial model CentralPlantBaseII "Base Case considering rack CD and the pipeline
     h_incold=0,
     h_outcold=0,
     t=t,
-    Di=Di) annotation (Placement(transformation(extent={{302,178},{392,268}})));
+    Di=Di) annotation (Placement(transformation(extent={{82,-40},{172,50}})));
   DHTF.Subsystems.Distribution.ConnectorTypeI rackL6L7(
     redeclare model Medium = MediumCP,
     hctype=hctype,
@@ -247,141 +220,166 @@ partial model CentralPlantBaseII "Base Case considering rack CD and the pipeline
     h_incold=0,
     h_outcold=0,
     t=t,
-    Di=Di) annotation (Placement(transformation(extent={{506,178},{596,268}})));
+    Di=Di) annotation (Placement(transformation(extent={{250,-40},{340,50}})));
+  Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,170},{20,210}}), iconTransformation(extent={{-20,80},{20,120}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet[4] fluidPortInlet annotation (Placement(transformation(extent={{76,-168},{96,-148}}),  iconTransformation(extent={{90,50},{110,70}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet[4] fluidPortOutlet annotation (Placement(transformation(extent={{-14,-168},{6,-148}}),
+                                                                                                                                       iconTransformation(extent={{90,-70},{110,-50}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet returncold annotation (Placement(transformation(extent={{-422,14},{-402,34}}), iconTransformation(extent={{-110,50},{-90,70}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet senthot annotation (Placement(transformation(extent={{-422,-28},{-402,-8}}), iconTransformation(extent={{-110,-70},{-90,-50}})));
 equation
-  connect(rackCD_Hot_S400_S300.outlet, rackCD_Hot_S300_S500.inlet) annotation (
-    Line(points = {{-358, 45}, {-418, 45}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Hot_S300_S500.outlet, rackCD_Hot_S500_SXXX.inlet) annotation (
-    Line(points = {{-438, 45}, {-500, 45}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Hot_S500_SXXX.outlet, rackCD_Hot_SXXX_SYYY.inlet) annotation (
-    Line(points = {{-520, 45}, {-578, 45}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Hot_SXXX_SYYY.outlet, rackCD_Hot_SYYY_S200.inlet) annotation (
-    Line(points = {{-598, 45}, {-627.5, 45}, {-627.5, 44.75}, {-658, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Hot_S100_S400.outlet, rackCD_Hot_S400_S300.inlet) annotation (
-    Line(points = {{-278, 44.75}, {-308, 44.75}, {-308, 45}, {-338, 45}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S400_S100.inlet, rackCD_Cold_S300_S400.outlet) annotation (
-    Line(points = {{-348, 5.25}, {-408.5, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Hot_SYYY_S200.outlet, rackCD_Hot_S200_S900.inlet) annotation (
-    Line(points = {{-678, 44.75}, {-727, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S900_S200.outlet, rackCD_Cold_S200_S500.inlet) annotation (
-    Line(points={{-716.5,4.75},{-692,4.75},{-692,5.25},{-668,5.25}},
-                                                  color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S200_S500.outlet, rackCD_Cold_S500_S500.inlet) annotation (
-    Line(points = {{-646.5, 5.25}, {-568, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S500_S500.outlet, rackCD_Cold_S500_S300.inlet) annotation (
-    Line(points = {{-546.5, 5.25}, {-528, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S500_S300.outlet, rackCD_Cold_S300_S300.inlet) annotation (
-    Line(points = {{-506.5, 5.25}, {-470, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S300_S300.outlet, rackCD_Cold_S300_S400.inlet) annotation (
-    Line(points = {{-448.5, 5.25}, {-430, 5.25}}, color = {140, 56, 54}, thickness = 0.5));
   connect(rackL6L7_FCVC02_hot.outlet, FTA12.inlet) annotation (
-    Line(points = {{660, 205}, {666, 205}, {666, 204.6}, {667.6, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
+    Line(points={{382,-13},{388,-13},{388,-13.4},{389.6,-13.4}},          color = {140, 56, 54}, thickness = 0.5));
   connect(FTA12.outlet, PTA20.inlet) annotation (
-    Line(points = {{672.4, 204.6}, {681, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
+    Line(points={{394.4,-13.4},{403,-13.4}},      color = {140, 56, 54}, thickness = 0.5));
   connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (
-    Line(points = {{200, 205}, {212, 205}, {212, 204.6}, {224, 204.6}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(FV933.outlet, rackCD_Hot_S100_S400.inlet) annotation (
-    Line(points = {{-223, 45}, {-237.75, 45}, {-237.75, 44.75}, {-257.5, 44.75}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(rackCD_Cold_S400_S100.outlet, FV933.inlet) annotation (
-    Line(points = {{-326.5, 5.25}, {-200, 5.25}, {-200, 45}, {-213, 45}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(S900_rackL2L3_cold.outlet, S900.inletcold) annotation (Line(
-      points={{-82,241},{-808.89,241},{-808.89,181.65}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(S900_rackL3L4_hot.inlet, S900.outlethot) annotation (Line(
-      points={{-60,205},{-416,205},{-416,206},{-769.11,206},{-769.11,181.65}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(rackCD_Hot_S200_S900.outlet, S900.inlethot) annotation (Line(
-      points={{-747,44.75},{-769.11,44.75},{-769.11,64.35}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(rackCD_Cold_S900_S200.inlet, S900.outletcold) annotation (Line(
-      points={{-738,4.75},{-774,4.75},{-774,6},{-808.89,6},{-808.89,64.35}},
-      color={140,56,54},
-      thickness=0.5));
+    Line(points={{2,-13},{8,-13},{8,-13.4},{20,-13.4}},                 color = {140, 56, 54}, thickness = 0.5));
   connect(rackL3L4_FCVC01_hot.inlet, rackL3L4.outletHot) annotation (Line(
-      points={{180,205},{160.3,205}},
+      points={{-18,-13},{-39.7,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4.inletHot, S900_rackL3L4_hot.outlet) annotation (Line(
-      points={{57.7,205},{-40,205}},
+      points={{-142.3,-13},{-188,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4.outletCold, S900_rackL2L3_cold.inlet) annotation (Line(
-      points={{57.7,241},{-60,241}},
+      points={{-142.3,23},{-208,23}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionHotFCVC01.inoutlet, FCVC01.inlet) annotation (Line(
-      points={{249,210},{249,218}},
+      points={{45,-8},{45,-4}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionHotFCVC01.inlet, PTA08.inlet) annotation (Line(
-      points={{244,205},{235,205},{235,204.6},{224,204.6}},
+      points={{40,-13},{31,-13},{31,-13.4},{20,-13.4}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionColdFCVC01.inoutlet, FCVC01.outlet) annotation (Line(
-      points={{249,236},{249,228}},
+      points={{45,18},{45,14}},
       color={140,56,54},
       thickness=0.5));
   connect(PTA07.inlet, rackL3L4_FCVC01_cold.inlet) annotation (Line(
-      points={{234,239.4},{234,241},{220,241}},
+      points={{30,21.4},{30,23},{2,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5.inletHot, junctionHotFCVC01.outlet) annotation (Line(
-      points={{295.7,205},{254,205}},
+      points={{75.7,-13},{50,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_hot.inlet, rackL4L5.outletHot) annotation (Line(
-      points={{420,205},{398.3,205}},
+      points={{200,-13},{178.3,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5.outletCold, junctionColdFCVC01.inlet) annotation (Line(
-      points={{295.7,241},{254,241}},
+      points={{75.7,23},{50,23}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionColdFCVC01.outlet, rackL3L4_FCVC01_cold.inlet) annotation (Line(
-      points={{244,241},{240,241},{240,240},{236,240},{236,241},{220,241}},
+      points={{40,23},{2,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_cold.outlet, rackL4L5.inletCold) annotation (Line(
-      points={{440,241},{398.3,241}},
+      points={{200,23},{178.3,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4_FCVC01_cold.outlet, rackL3L4.inletCold) annotation (Line(
-      points={{200,241},{160.3,241}},
+      points={{-18,23},{-39.7,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_hot.outlet, rackL6L7.inletHot) annotation (Line(
-      points={{440,205},{499.7,205}},
+      points={{220,-13},{243.7,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_cold.inlet, rackL6L7.outletCold) annotation (Line(
-      points={{460,241},{499.7,241}},
+      points={{220,23},{243.7,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL6L7_FCVC02_hot.inlet, rackL6L7.outletHot) annotation (Line(
-      points={{640,205},{602.3,205}},
+      points={{362,-13},{346.3,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL6L7_FCVC02_cold.outlet, rackL6L7.inletCold) annotation (Line(
-      points={{646,241},{602.3,241}},
+      points={{368,23},{346.3,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL6L7_FCVC02_cold.inlet, FCVC02.outlet) annotation (Line(
-      points={{666,241},{678,241},{678,242},{690,242},{690,231}},
+      points={{388,23},{400,23},{400,24},{412,24},{412,13}},
       color={140,56,54},
       thickness=0.5));
   connect(PTA20.inlet, FCVC02.inlet) annotation (Line(
-      points={{681,204.6},{690,204.6},{690,211}},
+      points={{403,-13.4},{412,-13.4},{412,-7}},
       color={140,56,54},
       thickness=0.5));
   connect(PTA19.inlet, FCVC02.outlet) annotation (Line(
-      points={{684,247.4},{684,242},{690,242},{690,231}},
+      points={{406,29.4},{406,24},{412,24},{412,13}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S900_rackL2L3_cold.outlet, S900.inletcold) annotation (Line(
+      points={{-230,23},{-241.175,23},{-241.175,22.89},{-252.35,22.89}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S900_rackL3L4_hot.inlet, S900.outlethot) annotation (Line(
+      points={{-208,-13},{-236,-13},{-236,-16.89},{-252.35,-16.89}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(controlSignalBus.thetaFCV901, S900.theta) annotation (Line(
+      points={{0,190},{-2,190},{-2,168},{-285.5,168},{-285.5,59.1}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(controlSignalBus.omegaP901, S900.omega) annotation (Line(
+      points={{0,190},{-2,190},{-2,162},{-275.3,162},{-275.3,59.1}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(controlSignalBus.thetaFCVC01, FCVC01.opening) annotation (Line(
+      points={{0,190},{0,164},{24,164},{24,5},{37.8,5}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(controlSignalBus.thetaFCVC02, FCVC02.opening) annotation (Line(
+      points={{0,190},{0,168},{396,168},{396,3},{404,3}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(rackL6L7.inletComp, fluidPortInlet[4]) annotation (Line(
+      points={{317.95,-45.85},{317.95,-104},{86,-104},{86,-154.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackL4L5.inletComp, fluidPortInlet[3]) annotation (Line(
+      points={{149.95,-45.85},{149.95,-88},{86,-88},{86,-156.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackL3L4.inletComp, fluidPortInlet[2]) annotation (Line(
+      points={{-68.05,-45.85},{-68.05,-78},{86,-78},{86,-159.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(fluidPortInlet[1], rackL3L4.outletCold) annotation (Line(
+      points={{86,-161.75},{82,-161.75},{82,-98},{-140,-98},{-140,-100},{-162,-100},{-162,23},{-142.3,23}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(fluidPortOutlet[1], rackL3L4.inletHot) annotation (Line(
+      points={{-4,-161.75},{-4,-122},{-178,-122},{-178,-13},{-142.3,-13}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackL3L4.outletComp, fluidPortOutlet[2]) annotation (Line(
+      points={{-113.5,-46.3},{-113.5,-116},{-4,-116},{-4,-159.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackL4L5.outletComp, fluidPortOutlet[3]) annotation (Line(
+      points={{104.5,-46.3},{104.5,-64},{-4,-64},{-4,-156.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackL6L7.outletComp, fluidPortOutlet[4]) annotation (Line(
+      points={{272.5,-46.3},{272.5,-70},{-4,-70},{-4,-154.25}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S900.outletcold, returncold) annotation (Line(
+      points={{-369.65,22.89},{-369.65,20},{-392,20},{-392,24},{-412,24}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S900.inlethot, senthot) annotation (Line(
+      points={{-369.65,-16.89},{-390.825,-16.89},{-390.825,-18},{-412,-18}},
       color={140,56,54},
       thickness=0.5));
   annotation (
-    Diagram(coordinateSystem(extent = {{-900, -500}, {900, 320}}), graphics={                                                                                                                                                                                                    Text(extent = {{-590, 105}, {-460, 67}}, textColor = {28, 108, 200}, textString = "Rack C/D")}),
-    Icon(coordinateSystem(grid = {0.5, 0.5})),
+    Diagram(coordinateSystem(extent={{-420,-200},{420,200}})),
+    Icon(coordinateSystem(grid={1,1})),
     experiment(StopTime = 500, __Dymola_Algorithm = "Dassl"));
-end CentralPlantBaseII;
+end CentralizedFourHX;

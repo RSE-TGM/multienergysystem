@@ -18,6 +18,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 70 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S4 = 80 + 273.15;
 
+
   parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
   parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
@@ -26,6 +27,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
   parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -1*0;
   parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
   parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
+
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
   parameter Real q_m3h_S4 = 5;
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
@@ -112,7 +115,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
     Di=Di_S4,
     q_m3h_start=q_m3h_S4,
     n=n,
-    hctype=hctype)        "Pipe connecting outlet of electric boiler and pump P401"
+    hctype=hctype,
+    cf=cf)                "Pipe connecting outlet of electric boiler and pump P401"
               annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
@@ -129,7 +133,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
     Di=Di_S4,
     q_m3h_start=q_m3h_S4,
     n=n,
-    hctype=hctype)        "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
+    hctype=hctype,
+    cf=cf)                "Pipe connecting pressure sensor PT401 and inlet of electric boiler"
     annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
@@ -146,7 +151,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
     Di=Di_S4,
     q_m3h_start=q_m3h_S4,
     n=n,
-    hctype=hctype)        annotation (Placement(transformation(
+    hctype=hctype,
+    cf=cf)                annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,10})));

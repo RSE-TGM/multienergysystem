@@ -3,8 +3,8 @@ model ControlTempTest
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
-  parameter Real Kp = -0.2743;
-  parameter Real Ti = 0.7859;
+  parameter Real Kp = -0.0013715;
+  parameter Real Ti = 1.17885;
 
   Load.CoolingSingleLoadTempControl load(Kp_TT7X1=Kp, Ti_TT7X1=Ti)
                                          annotation (Placement(transformation(extent={{-28,-26},{24,26}})));

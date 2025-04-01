@@ -111,10 +111,10 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Dialog(tab = "Valve", group = "TCV"));
 
   // Controllers' parameters
-  parameter Real Kp_TT7X1 = -0.0013715;
-  parameter Real Ti_TT7X1 = 1.17885;
-  parameter Real Kp_PtEX7X1 = 0.1128;
-  parameter Real Ti_PtEX7X1 = 0.26795;
+  parameter Real Kp_TT7X1 = -0.000068675;
+  parameter Real Ti_TT7X1 = 50;
+  parameter Real Kp_PtEX7X1 = 0.113;
+  parameter Real Ti_PtEX7X1 = 0.268;
   parameter Real Ki_PtEX7X1 = 0.08;
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
@@ -375,7 +375,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Umax=1,
     Umin=0)
     annotation (Placement(transformation(extent={{55,47.5},{35,27.5}})));
-  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=5)
+  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=1)
     annotation (Placement(transformation(extent={{81,47.5},{61,27.5}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=EX7X1.Pt)
     annotation (Placement(transformation(extent={{61,48},{81,68}})));
@@ -495,14 +495,13 @@ equation
     annotation (Line(points={{28,37.5},{34,37.5}}, color={0,0,127}));
   connect(TT7X1.T, PI_TT7X1.FeedBack) annotation (Line(points={{28.5,95},{36.5,95},{36.5,118},
           {-98.5,118},{-98.5,-107.5},{-55,-107.5}}, color={0,0,127}));
-  connect(I_EX7X1Pt.controlAction, PI_EX7X1Pt.REF) annotation (Line(points={{60,37.5},{57.5,
-          37.5},{57.5,33},{53,33},{53,33.5}}, color={0,0,127}));
   connect(I_EX7X1Pt.REF, EX7X1Pt_SP)
     annotation (Line(points={{79,33.5},{88.5,33.5}}, color={0,0,127}));
   connect(realExpression.y, I_EX7X1Pt.FeedBack)
     annotation (Line(points={{82,58},{85,58},{85,41.5},{79,41.5}}, color={0,0,127}));
   connect(FT701.m_flow, PI_EX7X1Pt.FeedBack) annotation (Line(points={{25,86.5},{58.5,86.5},
           {58.5,41.5},{53,41.5}}, color={0,0,127}));
+  connect(I_EX7X1Pt.controlAction, PI_EX7X1Pt.REF) annotation (Line(points={{60,37.5},{58,37.5},{58,33.5},{53,33.5}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}}, grid={0.5,0.5})),
                                                                          Icon(graphics={
                              Bitmap(

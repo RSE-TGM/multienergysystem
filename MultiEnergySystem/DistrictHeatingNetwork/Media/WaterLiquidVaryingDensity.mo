@@ -15,7 +15,6 @@ model WaterLiquidVaryingDensity
 initial equation
   assert(computeEntropy == false, "This model is not able to compute entropy");
 equation
-  //rho = (((+1.48186e-005)*T + (-0.0177278))*T + 6.36275)*T + 283.08;
   rho = rho_T(T,rho_coeff);
   //rho = 985;
   //drho_dT = 0;
@@ -48,20 +47,31 @@ equation
   end if;
   s = 0;
   annotation (
-    Documentation(info = "<HTML>
-        <p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature.
-        <p>From that reference point the water is modeled as an incompressible liquid with the density of the saturated liquid, so it obeys the following equations of state:
-        <ul>
-        <li>d(T,p) = d_sat(T)</li>
-        </ul>
-        For an incompressible fluid Internal energy os only a function of temperature, so:
-        <ul>
-        <li>u(T,p) = u_sat(T)</li>
-        </ul>
-        And cp = cv and it defined as the temperature derivative of internal energy.
-        And to conclude, enthalpy is calculated following the definition:
-        <ul>
-        <li>h = u + p / d</li>
-        </ul>
-        </HTML>"));
+    Documentation(info="<html>
+
+<p><b>WaterLiquidVaryingDensity</b> is the most detailed liquid water model in this package. It includes:</p>
+
+<ul>
+  <li>Temperature-dependent density <code>rho = rho(T)</code></li>
+  <li>Temperature-dependent specific heat capacity <code>cp = cp(T)</code></li>
+  <li>Compressibility effects: <code>drho/dT</code> and <code>dv/dT</code> enabled</li>
+</ul>
+
+<p>This model is suitable for high-fidelity simulation of thermal systems, especially when volume and density changes are relevant (e.g., storage tanks, long pipe dynamics).</p>
+
+
+<p>Liquid Water modeled using polynomial correlations obtained by interpolation of data from IF-97 standard to determine the saturated liquid state as a function of temperature. </p>
+<p>From that reference point the water is modeled as an incompressible liquid with the density of the saturated liquid, so it obeys the following equations of state: </p>
+<ul>
+<li>d(T,p) = d_sat(T) </li>
+</ul>
+<p>For an incompressible fluid Internal energy as only a function of temperature, so: </p>
+<ul>
+<li>u(T,p) = u_sat(T) </li>
+</ul>
+<p>And cp = cv and it defined as the temperature derivative of internal energy. And to conclude, enthalpy is calculated following the definition: </p>
+<ul>
+<li>h = u + p / d </li>
+</ul>
+</html>"));
 end WaterLiquidVaryingDensity;

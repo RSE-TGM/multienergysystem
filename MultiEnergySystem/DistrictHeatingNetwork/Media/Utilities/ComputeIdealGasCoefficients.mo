@@ -20,6 +20,7 @@ partial model ComputeIdealGasCoefficients
   Types.Density d_approx;
 
   String s;
+  String ss;
 
   parameter Types.Temperature T_data[:] = linspace(T_min, T_max, N);
   parameter Types.SpecificHeatCapacity cp_data[:]=
@@ -37,14 +38,24 @@ equation
 algorithm
   when (initial()) then
     s := "a = {";
+    ss := "b = {";
     for i in 1:ord_cp+1 loop
       s := s + String(coeff_cp[i], significantDigits = 14);
       if i < ord_cp + 1 then
         s := s + ",";
       end if;
     end for;
+
+    for j in 1:ord_d+1 loop
+      ss := ss + String(coeff_d[j], significantDigits = 14);
+      if j < ord_d + 1 then
+        ss := ss + ",";
+      end if;
+    end for;
     s :=s + "},";
+    ss := ss + "},";
     print(s);
+    print(ss);
   end when;
 
 annotation (

@@ -324,7 +324,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
   Modelica.Blocks.Interfaces.RealInput EX7X1Pt_SP "Opening valve" annotation (Placement(
       visible=true,
       transformation(extent={{93.5,28.5},{83.5,38.5}}),
-      iconTransformation(origin={-110,60}, extent={{-10,-10},{10,10}})));
+      iconTransformation(origin={-110,70}, extent={{-10,-10},{10,10}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet connector at hot side"   annotation (
     Placement(visible = true, transformation(origin={-20,129}, extent = {{-10, -10}, {10, 10}}, rotation = 0),
               iconTransformation(origin={-48,115}, extent={{-15,-15},{15,15}}, rotation = 0)));
@@ -362,7 +362,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
   Modelica.Blocks.Interfaces.RealInput TT7X1_SP "Opening valve" annotation (Placement(
       visible=true,
       transformation(extent={{-70,-104},{-60,-94}}),
-      iconTransformation(origin={-110,-60}, extent={{-10,-10},{10,10}})));
+      iconTransformation(origin={-110,50},  extent={{-10,-10},{10,10}})));
   DistrictHeatingNetwork.Controllers.AWPIContinuous PI_TT7X1(
     Kp=Kp_TT7X1,
     Ti=Ti_TT7X1,

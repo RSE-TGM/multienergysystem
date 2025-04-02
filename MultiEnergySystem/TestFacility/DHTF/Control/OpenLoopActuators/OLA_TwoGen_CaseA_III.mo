@@ -6,11 +6,11 @@ model OLA_TwoGen_CaseA_III "Considering two generators Gas Boiler and Electric B
   Boolean booldToutEB401;
   // S400
   DistrictHeatingNetwork.Types.PerUnit theta_FCV401SP;
-  Real theta_FCV401_var(min = -1, max = 0);
+  Real theta_FCV401_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.AngularVelocity omega_P401SP;
-  Real omega_P401_var(min = -1, max = 0);
+  Real omega_P401_var(min = 0, max = 2*pi*50);
   DistrictHeatingNetwork.Types.Temperature Tout_EB401SP(nominal = 100 + 273.15);
-  Real Tout_EB401_var(min = -1, max = 0);
+  Real Tout_EB401_var(min = 0+273.15, max = 100+273.15);
   Modelica.Blocks.Sources.TimeTable dToutEB401(table = Tout_EB401) annotation (
     Placement(transformation(extent = {{-141, -181}, {-131, -171}})));
   Modelica.Blocks.Sources.TimeTable domegaP401(table = omega_P401) annotation (
@@ -46,7 +46,7 @@ equation
   omega_P401_var = omega_P401SP;
   Tout_EB401_var = Tout_EB401SP;
   theta_FCV401SP = 1;
-  omega_P401SP = 2*pi*40;
+  omega_P401SP = 2*pi*30;
   Tout_EB401SP = 80 + 273.15;
   if useRealExpression then
     // S400

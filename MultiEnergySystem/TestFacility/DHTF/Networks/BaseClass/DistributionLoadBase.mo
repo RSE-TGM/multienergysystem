@@ -2,8 +2,15 @@ within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 model DistributionLoadBase
   extends DistrictHeatingNetwork.Icons.Water.Network;
 
-  Systems.Distribution.CentralizedFourHX distribution annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
-  Systems.Load.LoadPlantFourHXControlled load annotation (Placement(transformation(extent={{40,-20},{80,20}})));
+  Systems.Distribution.CentralizedFourHX distribution(
+    T_start_cold(displayUnit="K"),
+    T_start_hot(displayUnit="K"),
+    m_flow_S9=2.5)                                    annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
+  Systems.Load.LoadPlantFourHXControlled load(
+    EX701_TN_wall_start(displayUnit="K"),
+    EX711_Tin_cold(displayUnit="K"),
+    EX711_Tout_cold(displayUnit="K"),
+    EX711_TN_wall_start(displayUnit="K"))           annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkPressure(
     p0=210000,
@@ -11,9 +18,10 @@ model DistributionLoadBase
     R=1e-3) annotation (Placement(transformation(extent={{-38,2},{-58,22}})));
   Modelica.Blocks.Sources.RealExpression omegaP901(y=2*3.14159*40) annotation (Placement(transformation(extent={{-98,72},{-78,92}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-98,58},{-78,78}})));
-  Modelica.Blocks.Sources.RealExpression Pt701SP(y=if time < 1e3 then 30E3 else 40e3) annotation (Placement(transformation(extent={{100,90},{80,110}})));
+  Modelica.Blocks.Sources.RealExpression Pt701SP(y=if time < 1e4 then 30E3 else if time < 3e4 then 0.25*time + 27.5e3 else 35e3)
+                                                                                      annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=1) annotation (Placement(transformation(extent={{100,62},{80,82}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=if time < 1e3 then 1 else 1)   annotation (Placement(transformation(extent={{100,62},{80,82}})));
   Modelica.Blocks.Sources.RealExpression ToutSPRR01(y=15 + 273.15) annotation (Placement(transformation(extent={{100,48},{80,68}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVC0X(y=0) annotation (Placement(transformation(extent={{100,34},{80,54}})));
   Modelica.Blocks.Sources.RealExpression omegaPR01sp(y=2*3.141592*40) annotation (Placement(transformation(extent={{100,20},{80,40}})));
@@ -64,4 +72,8 @@ equation
       points={{-40,-16},{-34,-16},{-34,-14},{-28,-14},{-28,-12},{-20,-12}},
       color={140,56,54},
       thickness=0.5));
+  annotation (experiment(
+      StopTime=90000,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end DistributionLoadBase;

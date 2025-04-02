@@ -64,6 +64,7 @@ model CirculationPump "S900 - Main pump"
     pout_start=pout_start_S9,
     a=TestFacility.Data.PumpData.P901.a,
     b=b,
+    m_flow_start=m_flow_S9,
     dpnom=TestFacility.Data.PumpData.P901.dpnom,
     etaelec=TestFacility.Data.PumpData.P901.etaelec,
     etamech=TestFacility.Data.PumpData.P901.etamech,
@@ -104,6 +105,8 @@ model CirculationPump "S900 - Main pump"
         origin={22.25,87.75})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_P901_FCV901(
     h=h_P901_FCV901,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S9,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_P901_FCV901,
@@ -112,7 +115,6 @@ model CirculationPump "S900 - Main pump"
     Tin_start=T_hot_start,
     Tout_start=T_hot_start,
     Di=Di_S9,
-    q_m3h_start=q_m3h_S9,
     n=n,
     hctype=hctype,
     cf=cf)         "Pipeline connecting pump P901 and control valve FCV901"
@@ -135,6 +137,8 @@ model CirculationPump "S900 - Main pump"
         rotation=90,
         origin={-22,75})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV  PL2_S901(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S9,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S9_PL2,
@@ -144,7 +148,6 @@ model CirculationPump "S900 - Main pump"
     Tin_start=T_cold_start,
     Tout_start=T_cold_start,
     Di=Di_S9,
-    q_m3h_start=q_m3h_S9,
     n=n,
     hctype=hctype,
     cf=cf)         annotation (Placement(transformation(
@@ -152,6 +155,8 @@ model CirculationPump "S900 - Main pump"
         rotation=90,
         origin={-20,-25})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_rCD_P901(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S9,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_rCD_P901,
@@ -161,7 +166,6 @@ model CirculationPump "S900 - Main pump"
     Tin_start=T_hot_start,
     Tout_start=T_hot_start,
     Di=Di_S9,
-    q_m3h_start=q_m3h_S9,
     nPipes=1,
     n=n,
     hctype=hctype,
@@ -187,6 +191,8 @@ model CirculationPump "S900 - Main pump"
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_FCV901_PT902(
     h=h_FCV901_PT902,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S9,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_FCV901_PT902,
@@ -195,7 +201,6 @@ model CirculationPump "S900 - Main pump"
     Tin_start=T_hot_start,
     Tout_start=T_hot_start,
     Di=Di_S9,
-    q_m3h_start=q_m3h_S9,
     n=n,
     hctype=hctype,
     cf=cf)         "Pipeline connecting control valve FCV901 and pressure transmitter PT902"

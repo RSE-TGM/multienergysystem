@@ -61,16 +61,16 @@ partial model OpenLoopActuatorBase_III
   Boolean booldToutRR01;
   // S900
   DistrictHeatingNetwork.Types.PerUnit theta_FCV901SP;
-  Real theta_FCV901_var(min = -1, max = 0);
+  Real theta_FCV901_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.AngularVelocity omega_P901SP;
-  Real omega_P901_var(min = -1, max = 0);
+  Real omega_P901_var(min = 0, max = 2*pi*50);
   // S100
   DistrictHeatingNetwork.Types.PerUnit theta_FCV101SP;
-  Real theta_FCV101_var(min = -1, max = 0);
+  Real theta_FCV101_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.AngularVelocity omega_P101SP;
-  Real omega_P101_var(min = -1, max = 0);
+  Real omega_P101_var(min = 0, max = 2*pi*50);
   DistrictHeatingNetwork.Types.Temperature Tout_GB101SP(nominal = 100 + 273.15);
-  Real Tout_GB101_var(min = -1, max = 0);
+  Real Tout_GB101_var(min = 0+273.15, max = 100+273.15);
   // S400
   //   DistrictHeatingNetwork.Types.PerUnit theta_FCV401SP;
   //   Real dtheta_FCV401_var(min = -1, max = 0);
@@ -85,31 +85,31 @@ partial model OpenLoopActuatorBase_III
   //   Real dTout_CHP501_var(min = -1, max = 0);
   // S700
   DistrictHeatingNetwork.Types.PerUnit theta_FCV701SP;
-  Real theta_FCV701_var(min = -1, max = 0);
+  Real theta_FCV701_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_FCV711SP;
-  Real theta_FCV711_var(min = -1, max = 0);
+  Real theta_FCV711_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_FCV721SP;
-  Real theta_FCV721_var(min = -1, max = 0);
+  Real theta_FCV721_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_FCV731SP;
-  Real theta_FCV731_var(min = -1, max = 0);
+  Real theta_FCV731_var(min = 0, max = 1);
   // Rack
   DistrictHeatingNetwork.Types.PerUnit theta_FCVC01SP;
-  Real theta_FCVC01_var(min = -1, max = 0);
+  Real theta_FCVC01_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_FCVC02SP;
-  Real theta_FCVC02_var(min = -1, max = 0);
+  Real theta_FCVC02_var(min = 0, max = 1);
   // Cooling
   DistrictHeatingNetwork.Types.PerUnit theta_TCV701SP;
-  Real theta_TCV701_var(min = -1, max = 0);
+  Real theta_TCV701_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_TCV711SP;
-  Real theta_TCV711_var(min = -1, max = 0);
+  Real theta_TCV711_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_TCV721SP;
-  Real theta_TCV721_var(min = -1, max = 0);
+  Real theta_TCV721_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_TCV731SP;
-  Real theta_TCV731_var(min = -1, max = 0);
+  Real theta_TCV731_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.PerUnit theta_FCVR01SP;
-  Real theta_FCVR01_var(min = -1, max = 0);
+  Real theta_FCVR01_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.Temperature Tout_RR01SP(nominal = 100 + 273.15);
-  Real Tout_RR01_var(min = -1, max = 0);
+  Real Tout_RR01_var(min = 0+273.15, max = 100+273.15);
   Modelica.Blocks.Sources.TimeTable domegaP901(table = omega_P901) annotation (
     Placement(transformation(extent = {{-141, 135}, {-131, 145}})));
   Modelica.Blocks.Sources.TimeTable dthetaFCV901(table = theta_FCV901) annotation (

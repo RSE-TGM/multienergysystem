@@ -32,6 +32,7 @@ model LoadPlantFourHXControlled
 
   // EX711
   parameter Real EX711_q_m3h_hot(unit = "m3/h") = 2.5;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_hot=EX711_q_m3h_hot*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_hot=2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_hot=1.99e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV711_pout=1.98e5;
@@ -39,7 +40,7 @@ model LoadPlantFourHXControlled
   parameter DistrictHeatingNetwork.Types.Temperature EX711_Tout_hot=45 + 273.15;
 
   parameter Real EX711_q_m3h_cold(unit = "m3/h") = 1.5;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_cold=EX711_q_m3h_cold*1000/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX711_cold=EX711_q_m3h_cold*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX711_pout_cold=2e5;
   parameter DistrictHeatingNetwork.Types.Temperature EX711_Tin_cold=7 + 273.15;
@@ -50,6 +51,7 @@ model LoadPlantFourHXControlled
 
   // EX721
   parameter Real EX721_q_m3h_hot(unit = "m3/h") = 2.5;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_hot=EX721_q_m3h_hot*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_hot=2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_hot=1.99e5;
   parameter DistrictHeatingNetwork.Types.Pressure FCV721_pout=1.98e5;
@@ -57,7 +59,7 @@ model LoadPlantFourHXControlled
   parameter DistrictHeatingNetwork.Types.Temperature EX721_Tout_hot=45 + 273.15;
 
   parameter Real EX721_q_m3h_cold(unit = "m3/h") = 1.5;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_cold=EX721_q_m3h_cold*1000/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX721_cold=EX721_q_m3h_cold*1000/3600;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pin_cold=2.2e5;
   parameter DistrictHeatingNetwork.Types.Pressure EX721_pout_cold=2e5;
   parameter DistrictHeatingNetwork.Types.Temperature EX721_Tin_cold=7 + 273.15;
@@ -88,10 +90,10 @@ model LoadPlantFourHXControlled
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
 
-  parameter Real FCV701theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCV711theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCV721theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCV731theta[:,:] = [0, 1; 100, 1];
+//   parameter Real FCV701theta[:,:] = [0, 1; 100, 1];
+//   parameter Real FCV711theta[:,:] = [0, 1; 100, 1];
+//   parameter Real FCV721theta[:,:] = [0, 1; 100, 1];
+//   parameter Real FCV731theta[:,:] = [0, 1; 100, 1];
 
   //1. Cooling System
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool = 0.92e5;
@@ -107,12 +109,12 @@ model LoadPlantFourHXControlled
   parameter Real Kvalve(unit = "m3/h") = TestFacility.Data.ValveData.FCVR01.Kv; //90;
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
   parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
-  parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
-  parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
-  parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
-  parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 500, 16 + 273.15; 1000, 25 + 273.15; 3000, 16 + 273.15; 4000, 16 + 273.15];
-  parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
-  parameter Real PTR02_profile[:,:] = [0, 2.2e5; 3000, 2.2e5];
+//   parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
+//   parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
+//   parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
+//   parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 500, 16 + 273.15; 1000, 25 + 273.15; 3000, 16 + 273.15; 4000, 16 + 273.15];
+//   parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
+//   parameter Real PTR02_profile[:,:] = [0, 2.2e5; 3000, 2.2e5];
 
   //2. Users System
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_Users = 3e5;
@@ -124,10 +126,10 @@ model LoadPlantFourHXControlled
   parameter DistrictHeatingNetwork.Types.Length Di_Users = 32e-3;
   parameter DistrictHeatingNetwork.Types.Length t_Rack = 1.5e-3;
   parameter DistrictHeatingNetwork.Types.Length Di_Rack = 51e-3;
-  parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
-  parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
-  parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
-  parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
+//   parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
+//   parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
+//   parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
+//   parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
 
   // Lengths of pipelines COLD SIDE
   parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
@@ -258,12 +260,14 @@ model LoadPlantFourHXControlled
   parameter DistrictHeatingNetwork.Types.Length L_RR_UsersOut=2;
   parameter DistrictHeatingNetwork.Types.Length h_RR_UsersOut=0;
 
-  parameter Real ToutcoolSP[:,:] = [0, 7; 50, 7; 60, 17; 100, 17];
+  //parameter Real ToutcoolSP[:,:] = [0, 7; 50, 7; 60, 17; 100, 17];
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
     L=L_FT701_rackL2L3,
     h=h_FT701_rackL2L3,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_hot,
     pin_start=FCV701_pout,
     Tin_start=EX701_Tout_hot,
     Tout_start=EX701_Tout_hot,
@@ -278,12 +282,13 @@ model LoadPlantFourHXControlled
     L=L_rackL2L3_TT702,
     h=h_rackL2L3_TT702,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_hot,
     pin_start=EX701_pin_hot,
     Tin_start=EX701_Tin_hot,
     Tout_start=EX701_Tin_hot,
     Di=Di_S700,
     redeclare model Medium = MediumLPHot,
-    q_m3h_start=EX701_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -294,11 +299,12 @@ model LoadPlantFourHXControlled
     L=L_FT711_rackL3L4,
     h=h_FT711_rackL3L4,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX711_hot,
     pin_start=FCV711_pout,
     Tin_start=EX711_Tout_hot,
     Tout_start=EX711_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX711_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -308,11 +314,12 @@ model LoadPlantFourHXControlled
     L=L_rackL3L4_TT712,
     h=h_rackL3L4_TT712,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX711_hot,
     pin_start=EX711_pin_hot,
     Tin_start=EX711_Tin_hot,
     Tout_start=EX711_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX711_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -322,11 +329,12 @@ model LoadPlantFourHXControlled
     L=L_FT721_rackL4L5,
     h=h_FT721_rackL4L5,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX721_hot,
     pin_start=FCV721_pout,
     Tin_start=EX721_Tout_hot,
     Tout_start=EX721_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -336,11 +344,12 @@ model LoadPlantFourHXControlled
     L=L_rackL4L5_TT722,
     h=h_rackL4L5_TT722,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX721_hot,
     pin_start=EX721_pin_hot,
     Tin_start=EX721_Tin_hot,
     Tout_start=EX721_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX721_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -351,11 +360,12 @@ model LoadPlantFourHXControlled
     L=L_FT731_rackL6L7,
     h=h_FT731_rackL6L7,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX731_hot,
     pin_start=FCV731_pout,
     Tin_start=EX731_Tout_hot,
     Tout_start=EX731_Tout_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -365,11 +375,12 @@ model LoadPlantFourHXControlled
     L=L_rackL6L7_TT732,
     h=h_rackL6L7_TT732,
     t=t_S700,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX731_hot,
     pin_start=EX731_pin_hot,
     Tin_start=EX731_Tin_hot,
     Tout_start=EX731_Tin_hot,
     Di=Di_S700,
-    q_m3h_start=EX731_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
@@ -789,6 +800,7 @@ model LoadPlantFourHXControlled
   DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S701(
     np=n,
     nHX=nHX,
+    hctype=hctype,
     Kv=TestFacility.Data.ValveData.FCV701.Kv,
     openingChar=TestFacility.Data.ValveData.FCV701.openingChar,
     q_m3h_nom_valve=EX701_q_m3h_hot,
@@ -823,10 +835,13 @@ model LoadPlantFourHXControlled
     L_TT7X4_TCV7X1=L_TT704_TCV701,
     h_TT7X4_TCV7X1=h_TT704_TCV701,
     t_Users=t_Users,
-    Di_Users=Di_Users) "System EX701" annotation (Placement(transformation(extent={{-362,-38},{-282,42}})));
+    Di_Users=Di_Users,
+    q_m3h_start_valve_TCV=EX701_q_m3h_cold)
+                       "System EX701" annotation (Placement(transformation(extent={{-362,-38},{-282,42}})));
   DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S731(
     np=n,
     nHX=nHX,
+    hctype=hctype,
     Kv=TestFacility.Data.ValveData.FCV731.Kv,
     openingChar=TestFacility.Data.ValveData.FCV731.openingChar,
     q_m3h_nom_valve=EX731_q_m3h_hot,
@@ -867,6 +882,7 @@ model LoadPlantFourHXControlled
   DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S711(
     np=n,
     nHX=nHX,
+    hctype=hctype,
     Kv=TestFacility.Data.ValveData.FCV711.Kv,
     openingChar=TestFacility.Data.ValveData.FCV711.openingChar,
     q_m3h_nom_valve=EX711_q_m3h_hot,
@@ -901,10 +917,13 @@ model LoadPlantFourHXControlled
     L_TT7X4_TCV7X1=L_TT714_TCV711,
     h_TT7X4_TCV7X1=h_TT714_TCV711,
     t_Users=t_Users,
-    Di_Users=Di_Users) "System EX711" annotation (Placement(transformation(extent={{-42,-38},{38,42}})));
+    Di_Users=Di_Users,
+    q_m3h_start_valve_TCV=EX711_q_m3h_cold)
+                       "System EX711" annotation (Placement(transformation(extent={{-42,-38},{38,42}})));
   DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S721(
     np=n,
     nHX=nHX,
+    hctype=hctype,
     Kv=TestFacility.Data.ValveData.FCV721.Kv,
     openingChar=TestFacility.Data.ValveData.FCV721.openingChar,
     q_m3h_nom_valve=EX721_q_m3h_hot,
@@ -947,7 +966,7 @@ model LoadPlantFourHXControlled
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet[4] fluidPortOutlet annotation (Placement(transformation(extent={{80,250},{100,270}}),
                                                                                                                                        iconTransformation(extent={{-110,50},{-90,70}})));
 equation
-  connect(PL_EX701_EX731_hot.inlet,PL_TCV701_rackUsersOut. outlet) annotation (
+  connect(PL_EX701_EX731_hot.inlet,PL_TCV701_rackUsersOut.outlet) annotation (
       Line(
       points={{-264,-192},{-342,-192},{-342,-180}},
       color={140,56,54},

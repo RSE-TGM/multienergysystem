@@ -4,6 +4,7 @@ TestOpenLoopActuator
 TestCoolingPlantController
 TestCentralised
 TestCentralisedII
+TestCentralisedIII
 StepResponseBase
 SR_OneGen_CaseA
 SR_TwoGen_CaseA

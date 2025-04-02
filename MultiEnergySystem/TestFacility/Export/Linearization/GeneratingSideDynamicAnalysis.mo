@@ -42,4 +42,8 @@ equation
       index=-1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
+  annotation (experiment(
+      StopTime=1500,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end GeneratingSideDynamicAnalysis;

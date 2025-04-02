@@ -10,22 +10,22 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
 
   // Flow Control Valve parameters
   parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
-    Dialog(tab = "Valve", group = "Characteristics"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic" annotation (
-    Dialog(tab = "Valve", group = "Characteristics"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
-    Dialog(tab = "Valve", group = "Characteristics"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Density rho_nom_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Nominal fluid density at supply" annotation (
-    Dialog(tab = "Valve", group = "Characteristics"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter Real q_m3h_nom_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Nominal volumetric flowrate in m3/h";
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_valve = 20 + 273.15 annotation (
-    Dialog(tab = "Valve", group = "Initialisation"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_valve = 2e5 annotation (
-    Dialog(tab = "Valve", group = "Initialisation"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Density rho_start_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Start value fluid density at the inlet" annotation (
-    Dialog(tab = "Valve", group = "Initialisation"));
+    Dialog(tab = "Valve", group = "FCV"));
   parameter Real q_m3h_start_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
-    Dialog(tab = "Valve", group = "Initialisation"));
+    Dialog(tab = "Valve", group = "FCV"));
 
   // Sudden Area Change parameters
   parameter DistrictHeatingNetwork.Types.Length D_i = 0.1 "Input diameter" annotation (
@@ -182,7 +182,9 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     rhom_hot(displayUnit="g/cm3") = TestFacility.Data.BPHEData.E701.rhom_hot,
     thermalInertia=false,
     u_nom_cold=TestFacility.Data.BPHEData.E701.u_nom_cold,
-    u_nom_hot=TestFacility.Data.BPHEData.E701.u_nom_hot) annotation (
+    u_nom_hot=TestFacility.Data.BPHEData.E701.u_nom_hot,
+    T1_wall_start=T1_wall_start,
+    TN_wall_start=TN_wall_start)                         annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
@@ -247,8 +249,8 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     h=h_TT7X4_TCV7X1,
     t=t_Users,
     pin_start=EX7X1_pin_hot,
-    Tin_start=EX7X1_Tin_hot,
-    Tout_start=EX7X1_Tin_hot,
+    Tin_start=EX7X1_Tout_cold,
+    Tout_start=EX7X1_Tout_cold,
     Di=Di_Users,
     n=np,
     hctype=hctype,
@@ -263,9 +265,9 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     L=L_rUsersIn_TT7X3,
     h=h_rUsersIn_TT7X3,
     t=t_Users,
-    pin_start=EX7X1_pin_hot,
-    Tin_start=EX7X1_Tin_hot,
-    Tout_start=EX7X1_Tin_hot,
+    pin_start=EX7X1_pin_cold,
+    Tin_start=EX7X1_Tin_cold,
+    Tout_start=EX7X1_Tin_cold,
     Di=Di_Users,
     n=np,
     hctype=hctype,

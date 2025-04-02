@@ -14,10 +14,10 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
   parameter DistrictHeatingNetwork.Types.Temperature T_start = 15 + 273.15;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_total = 2.5;
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start_Users = m_flow_total/4;
-  parameter Real rL2L3cold_mflow_start(unit = "m3/h") = 1;
-  parameter Real rL3L4cold_mflow_start(unit = "m3/h") = 1;
-  parameter Real rL5L6cold_mflow_start(unit = "m3/h") = 1;
-  parameter Real rL6L7cold_mflow_start(unit = "m3/h") = 1;
+//   parameter Real rL2L3cold_mflow_start(unit = "m3/h") = 1;
+//   parameter Real rL3L4cold_mflow_start(unit = "m3/h") = 1;
+//   parameter Real rL5L6cold_mflow_start(unit = "m3/h") = 1;
+//   parameter Real rL6L7cold_mflow_start(unit = "m3/h") = 1;
   parameter Real Kv_FCV901(unit = "m3/h") = 12 "Metri Flow Coefficient ";
   parameter DistrictHeatingNetwork.Types.Pressure dp_nom_UsersValve = 50000;
   // Rack CD
@@ -85,8 +85,8 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S9 = 2.7e5;
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_P901 = 2.5e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_P901 = 3.5e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S9 = 17 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S9 = 17 + 273.15;
+//   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S9 = 17 + 273.15;
+//   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S9 = 17 + 273.15;
   parameter DistrictHeatingNetwork.Types.Length L_S9 = 10;
   parameter DistrictHeatingNetwork.Types.Length L_S9_PL1 = 0.82;
   //parameter DistrictHeatingNetwork.Types.Length L_S9_PL2=2.3;
@@ -119,23 +119,26 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
 
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC02(redeclare model Medium = MediumCP, Kv = TestFacility.Data.ValveData.FCVC02.Kv, openingChar=TestFacility.Data.ValveData.FCVC02.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = T_start_hot, pin_start=200000,                                                                                                                                                                                                        q_m3h_start = q_m3h_rackHot) annotation (
     Placement(transformation(extent={{10,10},{-10,-10}},      rotation = -90, origin={412,3})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC01(redeclare model Medium = MediumCP, Kv = TestFacility.Data.ValveData.FCVC01.Kv, openingChar=TestFacility.Data.ValveData.FCVC01.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = 60 + 273.15, pin_start=200000)                                                                                                                                                                                                         annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVC01(redeclare model Medium = MediumCP, Kv = TestFacility.Data.ValveData.FCVC01.Kv, openingChar=TestFacility.Data.ValveData.FCVC01.openingChar, dp_nom(displayUnit = "Pa") = dp_nom_UsersValve, Tin_start(displayUnit = "K") = T_start_hot, pin_start=200000)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent={{9,9},{-9,-9}},          rotation = -90, origin={45,5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL3L4_hot(redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pin_start_Users + 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={-198,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_hot(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_H, t = t_rL_H, pin_start = pin_start_Users - 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={-8,-13})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_hot(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
-    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={210,-13})));
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_hot(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H,
+    q_m3h_start=q_m3h_rackHot,                                                                                                                                                                                                        n = n, hctype = hctype) annotation (
+    Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={212,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_hot(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_H, h = h_rL6L7_FCVC02_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={372,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL2L3_cold(redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pout_start_Users - 0.03e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
     Placement(transformation(extent={{11,-11},{-11,11}},      rotation = 0, origin={-219,23})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL3L4_FCVC01_cold(redeclare model Medium = MediumCP, L = L_rL3L4_FCVC01_C, t = t_rL_C, pin_start = pout_start_Users - 0.01e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={-8,23})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_cold(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_C, t = t_rL_C, pin_start = pout_start_Users, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL4L5_rackL5L6_cold(redeclare model Medium = MediumCP, L = L_rL4L5_rL5L6_C, t = t_rL_C, pin_start = pout_start_Users, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C,
+    q_m3h_start=q_m3h_rackCold,                                                                                                                                                                                                        n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={210,23})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_cold(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_C, t = t_rL_C, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C, q_m3h_start = q_m3h_rackCold, n = n, hctype = hctype) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackL6L7_FCVC02_cold(redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_C, t = t_rL_C, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_rL_C,
+    q_m3h_start=q_m3h_rackCold/4,                                                                                                                                                                                                        n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={378,23})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTA12(redeclare model Medium = MediumCP, T_start = T_start_hot) "Flow sensor at the inlet of valve FCVC02" annotation (
     Placement(transformation(extent={{388,-11},{396,-19}})));
@@ -155,6 +158,7 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     Kv=Kv,
     openingChar=openingChar,
     cf=cf,
+    q_m3h_S9=q_m3h_S9,
     b=b) "Pumping Circulation System"
     annotation (Placement(transformation(extent={{-51,-51},{51,51}},
         rotation=-90,
@@ -267,7 +271,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_hot.inlet, rackL4L5.outletHot) annotation (Line(
-      points={{200,-13},{178.3,-13}},
+      points={{202,-13},{178.3,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5.outletCold, junctionColdFCVC01.inlet) annotation (Line(
@@ -287,7 +291,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_hot.outlet, rackL6L7.inletHot) annotation (Line(
-      points={{220,-13},{243.7,-13}},
+      points={{222,-13},{243.7,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_cold.inlet, rackL6L7.outletCold) annotation (Line(

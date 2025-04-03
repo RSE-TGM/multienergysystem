@@ -1,7 +1,10 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Tests.Components.ThermalMachines;
 model ControlledElectricBoilerTest
   extends Modelica.Icons.Example;
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler eBoiler(D = 0.4, Pmaxnom = 50e3, Pnimnom = 10e3, Pnom = 50e3, Tin_start = 60 + 273.15, etanom = 0.98, h = 1.25, m_flow_nom = 1, pin_start = 300000, pout_start = 289999.9999999999) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler eBoiler(D = 0.4, Pmaxnom = 50e3, Pnimnom = 10e3, Pnom = 50e3,
+    Tin_start=333.15,                                                                                                                                                                 etanom = 0.98, h = 1.25, m_flow_nom = 1,
+    pin_start=300000,
+    pout_start=290000)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={36,-22},  extent = {{-26, -26}, {26, 26}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(T0 = 80 + 273.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = true) annotation (
     Placement(visible = true, transformation(origin={22,48},     extent = {{10, -10}, {-10, 10}}, rotation = 0)));

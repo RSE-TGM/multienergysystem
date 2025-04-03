@@ -143,16 +143,6 @@ equation
   M = Vi*rhotilde;
   Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*cons);
 
-
-  // Momentum Balance
-//   if hctype == Choices.Pipe.HCtypes.Middle then
-//     pin - ptilde = (L/A)*der(inlet.m_flow)/2 + (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
-//     ptilde - pout = (L/A)*der(m_flow[end])/2 + (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
-//   else
-//     pin - pout = (L/A)*der(inlet.m_flow) + rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
-//     ptilde = pout;
-//   end if;
-
   if hctype == Choices.Pipe.HCtypes.Middle then
     pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
     ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
@@ -199,17 +189,12 @@ equation
 initial equation
   if initOpt == Choices.Init.Options.steadyState then
     der(Ttilde) = zeros(n);
-    //der(inlet.m_flow) = 0;
-    //der(ptilde) = 0;
     if not noInitialPressure then
       //der(ptilde) = 0;
     else
 //No initial pressure
     end if;
   elseif initOpt == Choices.Init.Options.fixedState then
-//     for i in 1:n loop
-//       fluid[i+1].T = T_start[i+1];
-//     end for;
     Ttilde = T_start[2:n+1];
     if not noInitialPressure then
       //ptilde = pout_start;

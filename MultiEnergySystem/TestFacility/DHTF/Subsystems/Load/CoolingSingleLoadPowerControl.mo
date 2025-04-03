@@ -11,7 +11,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
   // Flow Control Valve parameters
   parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "FCV"));
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic" annotation (
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(tab = "Valve", group = "FCV"));
@@ -94,7 +94,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
   // Temperature Control Valve parameters
   parameter Real Kv_TCV(unit = "m3/h") = TestFacility.Data.ValveData.TCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "TCV"));
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_TCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic" annotation (
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_TCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "TCV"));
   parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve_TCV = TestFacility.Data.ValveData.TCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(tab = "Valve", group = "TCV"));
@@ -380,7 +380,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     y_start=0.2)
     annotation (Placement(transformation(extent={{55,47.5},{35,27.5}})));
   DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=1.5)
-    annotation (Placement(transformation(extent={{81,47.5},{61,27.5}})));
+    annotation (Placement(transformation(extent={{81.5,48},{61.5,28}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=EX7X1.Pt)
     annotation (Placement(transformation(extent={{61,48},{81,68}})));
   DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyInitializer(p_start=EX7X1_pin_hot, T_start=EX7X1_Tin_hot) annotation (Placement(transformation(
@@ -500,12 +500,13 @@ equation
   connect(TT7X1.T, PI_TT7X1.FeedBack) annotation (Line(points={{28.5,95},{36.5,95},{36.5,118},
           {-98.5,118},{-98.5,-107.5},{-55,-107.5}}, color={0,0,127}));
   connect(I_EX7X1Pt.REF, EX7X1Pt_SP)
-    annotation (Line(points={{79,33.5},{88.5,33.5}}, color={0,0,127}));
+    annotation (Line(points={{79.5,34},{84,34},{84,33.5},{88.5,33.5}},
+                                                     color={0,0,127}));
   connect(realExpression.y, I_EX7X1Pt.FeedBack)
-    annotation (Line(points={{82,58},{85,58},{85,41.5},{79,41.5}}, color={0,0,127}));
+    annotation (Line(points={{82,58},{85,58},{85,42},{79.5,42}},   color={0,0,127}));
   connect(FT701.m_flow, PI_EX7X1Pt.FeedBack) annotation (Line(points={{25,86.5},{58.5,86.5},
           {58.5,41.5},{53,41.5}}, color={0,0,127}));
-  connect(I_EX7X1Pt.controlAction, PI_EX7X1Pt.REF) annotation (Line(points={{60,37.5},{58,37.5},{58,33.5},{53,33.5}}, color={0,0,127}));
+  connect(I_EX7X1Pt.controlAction, PI_EX7X1Pt.REF) annotation (Line(points={{60.5,38},{58,38},{58,33.5},{53,33.5}},   color={0,0,127}));
   connect(homotopyInitializer.inlet, PL701_TT702_SourceIn.outlet) annotation (Line(
       points={{-20.5,35.5},{-20.5,45.25},{-20,45.25},{-20,55}},
       color={140,56,54},

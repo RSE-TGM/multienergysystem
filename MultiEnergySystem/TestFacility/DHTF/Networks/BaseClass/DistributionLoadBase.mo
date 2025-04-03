@@ -46,10 +46,11 @@ model DistributionLoadBase
     R=1e-3) annotation (Placement(transformation(extent={{-38,2},{-58,22}})));
   Modelica.Blocks.Sources.RealExpression omegaP901(y=2*pi*40)      annotation (Placement(transformation(extent={{-98,72},{-78,92}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-98,58},{-78,78}})));
-  Modelica.Blocks.Sources.RealExpression Pt701SP(y=if time < 1e4 then 30E3 else if time < 3e4 then 0.25*time + 27.5e3 else 35e3)
+  Modelica.Blocks.Sources.RealExpression Pt701SP(y=if time < 1e4 then 30E3 else if time < 3e4 then 0.75*time + 22.5e3 else if time < 5e4 then -1.75*time + 97.5e3 else 10e3)
                                                                                       annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=if time < 1e3 then 1 else 1)   annotation (Placement(transformation(extent={{100,62},{80,82}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=if time < 10e3 then 1 else if time < 30e3 then -0.00004*time + 1.4 else 0.2)
+                                                                                      annotation (Placement(transformation(extent={{100,62},{80,82}})));
   Modelica.Blocks.Sources.RealExpression ToutSPRR01(y=15 + 273.15) annotation (Placement(transformation(extent={{100,48},{80,68}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVC0X(y=0) annotation (Placement(transformation(extent={{100,34},{80,54}})));
   Modelica.Blocks.Sources.RealExpression omegaPR01sp(y=2*pi*40)       annotation (Placement(transformation(extent={{100,20},{80,40}})));
@@ -107,7 +108,7 @@ equation
       extent={{-3,6},{-3,6}},
       horizontalAlignment=TextAlignment.Right));
   annotation (experiment(
-      StopTime=90000,
+      StopTime=100000,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end DistributionLoadBase;

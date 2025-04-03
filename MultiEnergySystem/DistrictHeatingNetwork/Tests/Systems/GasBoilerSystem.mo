@@ -55,7 +55,7 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
     Placement(transformation(origin = {18, -40}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(L = L_FT101_GB101, h = h_FT101_GB101, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1) annotation (
     Placement(transformation(origin = {-18, -42}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1, HH = 55.5e6, Pmaxnom = 0.8*147.6e3) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1,              Pmaxnom = 0.8*147.6e3) annotation (
     Placement(transformation(origin = {0, -104}, extent = {{-46, -46}, {46, 46}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT102(T_start = Tout_start_S1, p_start = pout_start_S1) "Temperature sensor at the outlet of valve FCV101" annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {20, 100})));

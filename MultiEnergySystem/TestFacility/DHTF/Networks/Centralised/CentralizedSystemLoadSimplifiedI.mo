@@ -43,7 +43,7 @@ partial model CentralizedSystemLoadSimplifiedI "System with only Gas Boiler as s
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV101(redeclare model Medium = WaterHot, Kv = TestFacility.Data.ValveData.FCV101.Kv,
     openingChar=TestFacility.Data.ValveData.FCV101.openingChar,                                                    dp_nom(displayUnit = "Pa") = TestFacility.Data.ValveData.FCV101.dp_nom, rho_nom = TestFacility.Data.ValveData.FCV101.rho_nom, q_m3h_nom = TestFacility.Data.ValveData.FCV101.q_nom_m3h, Tin_start(displayUnit = "K") = Tout_start_S1, pin_start = pout_start_S1, q_m3h_start = TestFacility.Data.PumpData.P101.qnom_inm3h) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-240, -110})));
-  DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(redeclare model Medium = WaterHot, Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1, Tout_start = Tout_start_S1, HH = 55.5e6) annotation (
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(redeclare model Medium = WaterHot, Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1, Tout_start = Tout_start_S1)              annotation (
     Placement(visible = true, transformation(origin = {-257, -301}, extent = {{-35, -35}, {35, 35}}, rotation = 0)));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT102(redeclare model Medium = WaterHot, T_start = Tout_start_S1, p_start = pout_start_S1) "Temperature sensor at the outlet of valve FCV101" annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-238, -72})));

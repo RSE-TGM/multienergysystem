@@ -48,7 +48,7 @@ partial model CentralizedSystemI "System with only Gas Boiler as source of heat"
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-276, -232})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL4_S101(redeclare model Medium = WaterHot,L = L_S1_PL3, t = t_S1, pin_start = pout_start_S1, Tin_start = Tout_start_S1, Tout_start = Tout_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1, hctype = hctype, n = n) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-240, -106})));
-  DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1, Tout_start = Tout_start_S1, HH = 55.5e6) annotation (
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1, Tout_start = Tout_start_S1)              annotation (
     Placement(visible = true, transformation(origin = {-257, -301}, extent = {{-35, -35}, {35, 35}}, rotation = 0)));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT102(redeclare model Medium = WaterHot, T_start = Tout_start_S1, p_start = pout_start_S1) "Temperature sensor at the outlet of valve FCV101" annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {-238, -72})));

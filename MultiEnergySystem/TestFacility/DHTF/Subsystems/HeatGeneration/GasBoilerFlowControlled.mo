@@ -92,8 +92,7 @@ model GasBoilerFlowControlled "System 100 with ideal flow control"
     pout_start=pout_start_S1,
     Tout_start=Tout_start_S1,
     Pnimnom=Pminnom,
-    Pnom=Pnom,
-    HH=55.5e6) annotation (Placement(visible=true, transformation(
+    Pnom=Pnom) annotation (Placement(visible=true, transformation(
         origin={0,-84},
         extent={{-36,-36},{36,36}},
         rotation=0)));

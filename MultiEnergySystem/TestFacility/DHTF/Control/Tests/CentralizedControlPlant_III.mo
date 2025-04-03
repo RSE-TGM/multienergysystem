@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.Tests;
-model CentralizedControlPlant_III
+partial model CentralizedControlPlant_III
   extends DHTF.Control.Tests.PlantControlBaseIII;
 equation
   controller.TT701SP = if time < 2e3 then 70 + 273.15 else 65 + 273.15;

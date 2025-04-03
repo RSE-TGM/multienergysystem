@@ -22,10 +22,11 @@ model AWIContinuous
         rotation=0)));
   Modelica.Blocks.Math.Add add(k1 = +1, k2=-1)    annotation (
         Placement(visible = true, transformation(origin={-16,34},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin)  annotation (
+  Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin,
+    homotopyType=Modelica.Blocks.Types.LimiterHomotopy.UpperLimit)     annotation (
         Placement(visible = true, transformation(origin={76,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.Integrator integrator(k=Ki, initType=Modelica.Blocks.Types.Init.SteadyState)
-                                                   annotation (Placement(transformation(extent={{34,24},{54,44}})));
+  Modelica.Blocks.Continuous.Integrator integrator(k=Ki, initType=Modelica.Blocks.Types.Init.SteadyState,
+    y_start=y_start)                               annotation (Placement(transformation(extent={{34,24},{54,44}})));
   Modelica.Blocks.Nonlinear.DeadZone deadZone(uMax=Umax, uMin=Umin) annotation (Placement(transformation(extent={{12,-42},{-8,-22}})));
 equation
   connect(REF, feedback.u1) annotation (
@@ -35,11 +36,11 @@ equation
   connect(limiter.y, controlAction) annotation (
         Line(points={{87,34},{100,34}},      color = {0, 0, 127}));
   connect(deadZone.y, add.u2) annotation (Line(points={{-9,-32},{-34,-32},{-34,28},{-28,28}}, color={0,0,127}));
-  connect(add.y, integralGain.u) annotation (Line(points={{-5,34},{4,34}}, color={0,0,127}));
   connect(feedback.y, add.u1) annotation (Line(points={{-51,40},{-28,40}}, color={0,0,127}));
   connect(integralGain.y, integrator.u) annotation (Line(points={{27,34},{32,34}}, color={0,0,127}));
   connect(integrator.y, limiter.u) annotation (Line(points={{55,34},{64,34}}, color={0,0,127}));
   connect(deadZone.u, limiter.u) annotation (Line(points={{14,-32},{58,-32},{58,34},{64,34}}, color={0,0,127}));
+  connect(add.y, integralGain.u) annotation (Line(points={{-5,34},{4,34}}, color={0,0,127}));
   annotation (
       Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-100}}),    Text(extent={{-100,100},{100,-100}},
           textColor={0,0,0},

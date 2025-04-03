@@ -35,7 +35,7 @@ partial model PartialValve
     Dialog(group = "Initialisation"));
   parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real N = 50;
+  parameter Real N(fixed = true, max = 50) = 50;
 
   // Final parameters
   final parameter Types.MassFlowRate m_flow_start = q_start*rho_start;

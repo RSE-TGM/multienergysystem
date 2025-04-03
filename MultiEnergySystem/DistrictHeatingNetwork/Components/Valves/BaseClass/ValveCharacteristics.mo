@@ -32,9 +32,10 @@ package ValveCharacteristics
 
   function equalPercentage "Square opening char."
     extends MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass.ValveCharacteristics.baseFunction;
-      input Real N(min = 0);
+      input Real N(min = 0, max = 100);
   algorithm
     rp := N^(pos-1);
     //rp := 14^(pos^3 -1); // gas boiler;
+      annotation(Inline=true);
   end equalPercentage;
 end ValveCharacteristics;

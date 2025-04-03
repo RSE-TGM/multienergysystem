@@ -67,8 +67,8 @@ partial model PumpBase "Base model to develop water pump models"
   final parameter Types.VolumeFlowRate qnommin = qnom_inm3h_min/3600 "nominal minimun compressor volume flowrate" annotation (
     Dialog(group = "Pump Characteristics"));
   //Variables
-  Types.MassFlowRate m_flow(min = 0) "Mass flow rate";
-  Types.VolumeFlowRate q(start = qnom) "Volume flow rate";
+  Types.MassFlowRate m_flow(min = 0, start = m_flow_start) "Mass flow rate";
+  Types.VolumeFlowRate q "Volume flow rate";
   Real q_m3h(unit = "m3/h", start = m_flow_start*3600/1000) "Volumetric flow rate in m3/hr";
   Types.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
   Types.Length head(nominal = headmax) "Pump head";

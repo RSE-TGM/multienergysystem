@@ -109,6 +109,10 @@ model LoadPlantFourHXControlled
   parameter Real Kvalve(unit = "m3/h") = TestFacility.Data.ValveData.FCVR01.Kv; //90;
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
   parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
+
+  //FCVR01 Valve
+  parameter Real q_FCVR01_start(unit = "m3/h") = q_Cool - q_Users_total;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_FCVR01_start = q_FCVR01_start*1000/3600;
 //   parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
 //   parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
 //   parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
@@ -559,8 +563,10 @@ model LoadPlantFourHXControlled
     openingChar=TestFacility.Data.ValveData.FCVR01.openingChar,
     dp_nom(displayUnit="Pa") = 1.09928e5,
     rho_nom(displayUnit="kg/m3") = 1000,
+    q_m3h_nom=TestFacility.Data.ValveData.FCVR01.q_nom_m3h,
     Tin_start(displayUnit="K") = Tout_start_Cool,
     pin_start(displayUnit="Pa") = TestFacility.Data.ValveData.FCVR01.pin_start,
+    q_m3h_start=q_FCVR01_start,
     N=10)                                    annotation (Placement(
         transformation(
         extent={{-10,-10},{10,10}},

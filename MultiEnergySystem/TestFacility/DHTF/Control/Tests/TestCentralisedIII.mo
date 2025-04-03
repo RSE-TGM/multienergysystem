@@ -12,18 +12,7 @@ model TestCentralisedIII
     Placement(transformation(extent={{-18,42},{18,78}})));
   inner System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
-  Networks.Centralised.CentralizedSystem_LoadControlled plant(load(
-      EX701_TN_wall_start=298.15,
-      EX711_TN_wall_start=298.15,
-      EX721_TN_wall_start=298.15,
-      EX731_TN_wall_start=298.15,
-      h_FT701_rackL2L3=-0.85,
-      h_FT711_rackL3L4=-1,
-      h_FT721_rackL4L5=-1,
-      h_FT731_rackL6L7=-1.25,
-      h_FTR03_PTR01=0,
-      h_PTR01_FTR01=0,
-      h_FTR01_RR01=0))                                        annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
+  Networks.Centralised.CentralizedSystem_LoadControlled plant                                        annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation
   connect(sourceVoltage.outlet, plant.electricPortInlet) annotation (Line(
       points={{-56,0},{-24,0}},

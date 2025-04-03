@@ -106,13 +106,13 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
   parameter Real Kv_FCVC01(unit = "m3/h") = 30.55;
   parameter Real Kv_FCVC02(unit = "m3/h") = 30.55;
   parameter Boolean FV933_state = true;
-  parameter Real FCV901theta[:, :] = [0, 1];
-  parameter Real FCVC01theta[:, :] = [0, 1];
-  parameter Real FCVC02theta[:, :] = [0, 1];
+//   parameter Real FCV901theta[:, :] = [0, 1];
+//   parameter Real FCVC01theta[:, :] = [0, 1];
+//   parameter Real FCVC02theta[:, :] = [0, 1];
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
   //Pumps
-  parameter Real P901omega[:, :] = [0, 2*3.141592654*40];
-  parameter Real P901qm3h[:, :] = [0, 12];
+//   parameter Real P901omega[:, :] = [0, 2*3.141592654*40];
+//   parameter Real P901qm3h[:, :] = [0, 12];
   parameter Real pumpcorrectionfactor = 1;
   parameter Real b[3] = {23.6, 0.62, -0.0435} "Head Characteristic coefficients";
   parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
@@ -159,7 +159,9 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     openingChar=openingChar,
     cf=cf,
     q_m3h_S9=q_m3h_S9,
-    b=b) "Pumping Circulation System"
+    b=b,
+    P901(pin_start=pin_start_P901))
+         "Pumping Circulation System"
     annotation (Placement(transformation(extent={{-51,-51},{51,51}},
         rotation=-90,
         origin={-311,3})));
@@ -182,7 +184,7 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     h_incold=0,
     h_outcold=0,
     t=t,
-    Di=Di) annotation (Placement(transformation(extent={{-136,-40},{-46,50}})));
+    Di=Di) annotation (Placement(transformation(extent={{-134,-40},{-44,50}})));
   DistrictHeatingNetwork.Components.Fittings.Junction junctionHotFCVC01 annotation (Placement(transformation(extent={{40,-8},{50,-18}})));
   DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdFCVC01 annotation (Placement(transformation(extent={{50,18},{40,28}})));
   DHTF.Subsystems.Distribution.ConnectorTypeI rackL4L5(
@@ -239,15 +241,15 @@ equation
   connect(rackL3L4_FCVC01_hot.outlet, PTA08.inlet) annotation (
     Line(points={{2,-13},{8,-13},{8,-13.4},{20,-13.4}},                 color = {140, 56, 54}, thickness = 0.5));
   connect(rackL3L4_FCVC01_hot.inlet, rackL3L4.outletHot) annotation (Line(
-      points={{-18,-13},{-39.7,-13}},
+      points={{-18,-13},{-37.7,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4.inletHot, S900_rackL3L4_hot.outlet) annotation (Line(
-      points={{-142.3,-13},{-188,-13}},
+      points={{-140.3,-13},{-188,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4.outletCold, S900_rackL2L3_cold.inlet) annotation (Line(
-      points={{-142.3,23},{-208,23}},
+      points={{-140.3,23},{-208,23}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionHotFCVC01.inoutlet, FCVC01.inlet) annotation (Line(
@@ -287,7 +289,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4_FCVC01_cold.outlet, rackL3L4.inletCold) annotation (Line(
-      points={{-18,23},{-39.7,23}},
+      points={{-18,23},{-37.7,23}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5_rackL5L6_hot.outlet, rackL6L7.inletHot) annotation (Line(
@@ -351,19 +353,19 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4.inletComp, fluidPortInlet[2]) annotation (Line(
-      points={{-68.05,-45.85},{-68.05,-78},{86,-78},{86,-159.25}},
+      points={{-66.05,-45.85},{-66.05,-78},{86,-78},{86,-159.25}},
       color={140,56,54},
       thickness=0.5));
   connect(fluidPortInlet[1], rackL3L4.outletCold) annotation (Line(
-      points={{86,-161.75},{82,-161.75},{82,-98},{-140,-98},{-140,-100},{-162,-100},{-162,23},{-142.3,23}},
+      points={{86,-161.75},{82,-161.75},{82,-98},{-140,-98},{-140,-100},{-162,-100},{-162,23},{-140.3,23}},
       color={140,56,54},
       thickness=0.5));
   connect(fluidPortOutlet[1], rackL3L4.inletHot) annotation (Line(
-      points={{-4,-161.75},{-4,-122},{-178,-122},{-178,-13},{-142.3,-13}},
+      points={{-4,-161.75},{-4,-122},{-178,-122},{-178,-13},{-140.3,-13}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL3L4.outletComp, fluidPortOutlet[2]) annotation (Line(
-      points={{-113.5,-46.3},{-113.5,-116},{-4,-116},{-4,-159.25}},
+      points={{-111.5,-46.3},{-111.5,-116},{-4,-116},{-4,-159.25}},
       color={140,56,54},
       thickness=0.5));
   connect(rackL4L5.outletComp, fluidPortOutlet[3]) annotation (Line(

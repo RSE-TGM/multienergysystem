@@ -9,14 +9,17 @@ model ControlPowerTest
   parameter Real Kp_Pt = 0.1128;
   parameter Real Ti_Pt = 0.26795;
 
-  parameter Real Ki_PtEX7X1 = 0.5;
+  parameter Real Ki_PtEX7X1 = 0.5*2;
 
-  Load.CoolingSingleLoadPowerControl load(Kp_TT7X1=Kp_TT7X1, Ti_TT7X1=Ti_TT7X1,
+  Load.CoolingSingleLoadPowerControl load(
+    nHX = 3,                               Kp_TT7X1=Kp_TT7X1, Ti_TT7X1=Ti_TT7X1,
     Kp_PtEX7X1=Kp_Pt,
     Ti_PtEX7X1=Ti_Pt,
     Ki_PtEX7X1=Ki_PtEX7X1,
-    I_EX7X1Pt(Umax=1, integrator(initType=Modelica.Blocks.Types.Init.SteadyState)))
-                                         annotation (Placement(transformation(extent={{-28,-26},{24,26}})));
+    I_EX7X1Pt(Umax=1.5,
+                      integrator(initType=Modelica.Blocks.Types.Init.SteadyState)),
+    PI_EX7X1Pt(y_start=1),
+    PI_TT7X1(y_start=1), np = 3)                 annotation (Placement(transformation(extent={{-28,-26},{24,26}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkHot_p(
     redeclare model Medium = Medium,
     use_in_p0=false,
@@ -67,11 +70,8 @@ equation
       points={{22,68},{11.26,68},{11.26,29.9}},
       color={140,56,54},
       thickness=0.5));
-  connect(Tout_SP.y, load.TT7X1_SP) annotation (Line(points={{-45,-16},{-37.8,-16},{-37.8,-15.6},{-30.6,-15.6}}, color={0,0,127}));
-  connect(Pt_SP.y, load.EX7X1Pt_SP) annotation (Line(points={{-45,18},{-45,15.6},{-30.6,15.6}}, color={0,0,127}));
+  connect(Tout_SP.y, load.TT7X1_SP) annotation (Line(points={{-45,-16},{-37.8,-16},{-37.8,13},{-30.6,13}},       color={0,0,127}));
+  connect(Pt_SP.y, load.EX7X1Pt_SP) annotation (Line(points={{-45,18},{-45,18.2},{-30.6,18.2}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
-    experiment(
-      StopTime=6000,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+    experiment(StopTime=6000, __Dymola_Algorithm="Dassl"));
 end ControlPowerTest;

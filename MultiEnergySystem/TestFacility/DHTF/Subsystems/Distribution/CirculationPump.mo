@@ -104,6 +104,7 @@ model CirculationPump "S900 - Main pump"
         rotation=90,
         origin={22.25,87.75})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_P901_FCV901(
+    allowFlowReversal=false,
     h=h_P901_FCV901,
     set_m_flow_start=true,
     m_flow_start=m_flow_S9,
@@ -137,6 +138,7 @@ model CirculationPump "S900 - Main pump"
         rotation=90,
         origin={-22,75})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV  PL2_S901(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_S9,
     redeclare model Medium = Medium,
@@ -190,6 +192,7 @@ model CirculationPump "S900 - Main pump"
         origin={20,14})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S900_FCV901_PT902(
+    allowFlowReversal=false,
     h=h_FCV901_PT902,
     set_m_flow_start=true,
     m_flow_start=m_flow_S9,

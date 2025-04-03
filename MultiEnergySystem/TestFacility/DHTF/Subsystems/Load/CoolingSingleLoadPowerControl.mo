@@ -111,11 +111,11 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Dialog(tab = "Valve", group = "TCV"));
 
   // Controllers' parameters
-  parameter Real Kp_TT7X1 = -0.000068675;
+  parameter Real Kp_TT7X1 = -0.000068675*10;
   parameter Real Ti_TT7X1 = 50;
   parameter Real Kp_PtEX7X1 = 0.113;
   parameter Real Ti_PtEX7X1 = 0.268;
-  parameter Real Ki_PtEX7X1 = 0.08;
+  parameter Real Ki_PtEX7X1 = 0.08/0.08;
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
     redeclare model Medium = Medium,
@@ -369,18 +369,28 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Kp=Kp_TT7X1,
     Ti=Ti_TT7X1,
     Umax=1,
-    Umin=0)
+    Umin=0,
+    y_start=0.2)
     annotation (Placement(transformation(extent={{-57,-113.5},{-37,-93.5}})));
   DistrictHeatingNetwork.Controllers.AWPIContinuous PI_EX7X1Pt(
     Kp=Kp_PtEX7X1,
     Ti=Ti_PtEX7X1,
     Umax=1,
-    Umin=0)
+    Umin=0,
+    y_start=0.2)
     annotation (Placement(transformation(extent={{55,47.5},{35,27.5}})));
-  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=1)
+  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=1.5)
     annotation (Placement(transformation(extent={{81,47.5},{61,27.5}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=EX7X1.Pt)
     annotation (Placement(transformation(extent={{61,48},{81,68}})));
+  DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyInitializer(p_start=EX7X1_pin_hot, T_start=EX7X1_Tin_hot) annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={-20.5,25.5})));
+  DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyInitializer1(p_start=EX7X1_pin_cold, T_start=EX7X1_Tin_cold) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=90,
+        origin={20.5,-103})));
 equation
 
   connect(PL701_FCV701_FT701.inlet,FCV7X1. outlet) annotation (Line(
@@ -407,10 +417,6 @@ equation
       points={{-20,91.5},{-20,99.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn.outlet,EX7X1. inhot) annotation (Line(
-      points={{-20,55},{-20,-2},{-28,-2},{-28,-12.75},{-19.3,-12.75}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PT7X1.inlet,TT7X1. inlet) annotation (Line(
       points={{20,105},{20,95}},
       color={140,56,54},
@@ -426,10 +432,6 @@ equation
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
   connect(PL701_TT702_SourceIn1.inlet, TT7X4.inlet) annotation (Line(
       points={{-20,-63.5},{-20,-59.5},{-20.1,-59.5},{-20.1,-44}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL701_TT702_SourceIn2.inlet, incold) annotation (Line(
-      points={{20.5,-82.5},{20,-82.5},{20,-130}},
       color={140,56,54},
       thickness=0.5));
   connect(TT7X3_TT, TT7X3_TT) annotation (Line(points={{110,-75},{110,-75}}, color={0,0,127}));
@@ -504,6 +506,22 @@ equation
   connect(FT701.m_flow, PI_EX7X1Pt.FeedBack) annotation (Line(points={{25,86.5},{58.5,86.5},
           {58.5,41.5},{53,41.5}}, color={0,0,127}));
   connect(I_EX7X1Pt.controlAction, PI_EX7X1Pt.REF) annotation (Line(points={{60,37.5},{58,37.5},{58,33.5},{53,33.5}}, color={0,0,127}));
+  connect(homotopyInitializer.inlet, PL701_TT702_SourceIn.outlet) annotation (Line(
+      points={{-20.5,35.5},{-20.5,45.25},{-20,45.25},{-20,55}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(homotopyInitializer.outlet, EX7X1.inhot) annotation (Line(
+      points={{-20.5,15.5},{-20.5,-2},{-28,-2},{-28,-12.75},{-19.3,-12.75}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL701_TT702_SourceIn2.inlet, homotopyInitializer1.outlet) annotation (Line(
+      points={{20.5,-82.5},{20,-82.5},{20.5,-93}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(homotopyInitializer1.inlet, incold) annotation (Line(
+      points={{20.5,-113},{20.5,-121.5},{20,-121.5},{20,-130}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}}, grid={0.5,0.5})),
                                                                          Icon(graphics={
                              Bitmap(

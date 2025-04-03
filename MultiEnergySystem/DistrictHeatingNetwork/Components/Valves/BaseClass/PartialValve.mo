@@ -1,30 +1,43 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass;
+﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.BaseClass;
 partial model PartialValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Water.Valve;
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialHorizontalTwoPort(allowFlowReversal = true);
   import Modelica.Fluid.Utilities.regRoot;
   import Modelica.Fluid.Utilities.regStep;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
+  //-------------------------------
+  // Declaration of fluid
+  //-------------------------------
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+    constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
-  constant Types.PerUnit pr = 0.85 "Pressure recovery coefficient";
-
-
+  //-------------------------------
+  // Valve Characteristics
+  //-------------------------------
   parameter Types.PerUnit nomOpening = 1 "Nominal valve opening" annotation (
     Dialog(group = "Valve characteristics"));
-  parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter" annotation (
+  parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition" annotation (
     Dialog(group = "Valve characteristics"));
   parameter Real Kv(unit = "m3/h") = 12 "Metri Flow Coefficient" annotation (
     Dialog(group = "Valve characteristics"));
   parameter Components.Types.valveOpeningChar openingChar = Components.Types.valveOpeningChar.Linear "opening characteristic" annotation (
     Dialog(group = "Valve characteristics"));
+  parameter Real N = 50 "Rangeability factor (used for equal-percentage opening law)" annotation (
+    Dialog(group = "Valve characteristics"));
 
-  // Nominal Values
-  parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump";
-  parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply";
-  parameter Real q_m3h_nom = 6 "Nominal volumetric flowrate in m3h";
+  //-------------------------------
+  // Nominal Conditions
+  //-------------------------------
+  parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump" annotation (
+    Dialog(group = "Nominal Conditions"));
+  parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply" annotation (
+    Dialog(group = "Nominal Conditions"));
+  parameter Real q_m3h_nom = 6 "Nominal volumetric flowrate in m3h" annotation (
+    Dialog(group = "Nominal Conditions"));
 
-  // Start values
+  //-------------------------------
+  // Initialization
+  //-------------------------------
   parameter Types.Temperature Tin_start = 20 + 273.15 annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Pressure pin_start = 2e5 annotation (
@@ -35,7 +48,7 @@ partial model PartialValve
     Dialog(group = "Initialisation"));
   parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate" annotation (
     Dialog(group = "Initialisation"));
-  parameter Real N = 50;
+
 
   // Final parameters
   final parameter Types.MassFlowRate m_flow_start = q_start*rho_start;
@@ -45,7 +58,9 @@ partial model PartialValve
   final parameter Types.Pressure pout_start = pin_start - dp_nom;
   final parameter Types.Area Av = 2.7778e-5*Kv "Opening area of the valve";
 
-  // Variables
+  //-------------------------------
+  // Fluid Variables
+  //-------------------------------
   Types.MassFlowRate m_flow(start = m_flow_start) "Mass flow rate through the valve";
   Types.VolumeFlowRate q "Volumetric flow rate";
   Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/h";
@@ -99,5 +114,28 @@ equation
   dp = pin - pout;
 
   annotation (
-    Icon);
+    Icon, Documentation(info="<html>
+
+  <h4>PartialValve – 2-Port Control Valve Base Model</h4>
+
+  <p>This is a base class for two-port flow control valves with configurable opening laws. 
+  It models pressure drop, mass flow rate, and thermodynamic conditions across the valve.</p>
+
+  <h5>Features</h5>
+  <ul>
+    <li>Supports multiple valve characteristics (linear, quadratic, square-root, equal-percentage)</li>
+    <li>Polynomial coefficient-free formulation using <code>Kv</code> (metric flow coefficient)</li>
+    <li>Flow, pressure, and temperature dynamics included</li>
+    <li>Fluid medium is customizable via replaceable model</li>
+  </ul>
+
+  <h5>Equations</h5>
+  <ul>
+    <li>Mass flow: <code>m_flow = f(opening, Δp)</code></li>
+    <li>Enthalpy continuity: <code>h_out = h_in</code> (perfect mixing)</li
+  </ul>
+
+  <p>Extend this model to implement specific valve behaviors.</p>
+
+</html>"));
 end PartialValve;

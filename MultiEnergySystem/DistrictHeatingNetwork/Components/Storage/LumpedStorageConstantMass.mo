@@ -1,7 +1,6 @@
 ﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
 model LumpedStorageConstantMass "Model a perfectly mixed thermal storage with insulation all around. Output temperature in Celsius [°C]"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.BaseClass.PartialLumpedVolume;
 
   // Insulation parameters
   parameter Types.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";

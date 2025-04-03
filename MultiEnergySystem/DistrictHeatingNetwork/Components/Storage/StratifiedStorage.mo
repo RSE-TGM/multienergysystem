@@ -1,29 +1,38 @@
-﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
+within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
 model StratifiedStorage
-  "Model a perfectly mixed thermal storage with insulation all around. Output temperature in Celsius [°C]"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PartialLumpedVolume(redeclare model Medium =
+  "Model a perfectly mixed thermal storage with insulation all around"
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.BaseClass.PartialLumpedVolume(redeclare model Medium =
         DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity);
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
+
   import Modelica.Fluid.Utilities.regStep;
 
-  parameter Integer n = 4 "Number of volumes (min = 2)" annotation (
-    Dialog(tab = "Data", group = "Fluid"));
+  parameter Integer n = 4 "Number of volumes (min = 4)" annotation (
+    Dialog(tab = "Data", group = "Fluid")); // Number of vertical layers
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
-  // Insulation parameters
+
+  // ------------------------------
+  // Insulation Parameters
+  // ------------------------------
   parameter SI.ThermalConductivity lambdaIns = 0.04 "Conductance of the insulation material";
   parameter SI.Length dIns = 0.15 "Insulation thickness";
   parameter SI.ThermalConductivity lambda_w = 0.4 "Water conductivity for heat exchange between volumes";
 
   outer System system "system object for global defaults";
-  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
-  final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
-  final parameter Types.Area A = Modelica.Constants.pi*(D/2)^2 "Cross section area of the TES";
+
   parameter Types.MassFlowRate m_flow_nom = 2 "Nominal mass flow rate";
   parameter Types.SpecificEnthalpy hin_start = fluid[1].h_start;
 
-  //Variables
-  //SI.Mass M(start = M_id) "Total mass in the tank";
+  // ------------------------------
+  // Final parameters (auto-calculated geometry)
+  // ------------------------------
+  final parameter Modelica.Units.SI.ThermalResistance R_lateral = log((D/2 + dIns)/(D/2))/(lambdaIns*2*Modelica.Constants.pi*H) "Thermal resistance [K/W] computed approximating the TES with a cylinder.";
+  final parameter Modelica.Units.SI.ThermalResistance R_flat = dIns/(lambdaIns*Modelica.Constants.pi*(D/2)^2) "Flat Surface of the cylinder";
+  final parameter Types.Area A = Modelica.Constants.pi*(D/2)^2 "Cross section area of the TES";
+
+  // ------------------------------
+  // Variables
+  // ------------------------------
   Types.Density rho[n+1](each nominal = 1000) "Density of the fluid in the tank (at the outlet)";
   Types.MassFlowRate m_flow[n+1](each start = m_flow_start);
   Types.Pressure p[n+1](start = linspace(pin_start, pout_start, n+1));
@@ -76,52 +85,35 @@ equation
   Mtot = sum(M) "Total mass";
 
   // Mass Balance
-  //inlet.m_flow + outlet.m_flow = 0;
   M = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*1e-5)*(V/n);
 
   // Energy balance
   for i in 1:n loop
     // Mass Balance
-    //m_flow[i] - m_flow[i+1] = (V/n)*(fluid[i+1].drho_dT*der(Ttilde[i]) + 1e-5*der(ptilde[i]));
-    //m_flow[i] - m_flow[i+1] = 0;
     m_flow[i] - m_flow[i+1] = (V/n)*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*1e-5)*der(Ttilde[i]));
     // Volume energy balance
-    //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
-    //((V/n)*fluid[i+1].drho_dT*fluid[i+1].u + M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
-    //(M[i]*fluid[i+1].cp)*der(Ttilde[i]) = m_flow[i]*fluid[i+1].cp*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
-    //(M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-5))*der(Ttilde[i]) = m_flow[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-5)*(T[i]-T[i+1]) - Q_amb[i] - Q_cond[i];
     (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp, m_flow_nom*1e-5))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h - Q_amb[i] - Q_cond[i];
 
     if i == 1 then
       // Heat exchange with the ambient from flat top face
       Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(Ttilde[i] - T_ext);
-      //Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(T[i] - T_ext);
       // Heat exchange with 2nd volume
-      //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
-      //Q_cond[i] = fluid[1].kappa*A/(H/n)*(Ttilde[i] - Ttilde[i+1]);
       Q_cond[i] = fluid[i].kappa*A/(H/n)*(T[i] - T[i+1]);
     elseif i == n then
       // Heat exchange with ambient
       Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(Ttilde[i] - T_ext);
-      //Q_amb[i] = (R_flat + R_lateral)/(R_flat*R_lateral)*(T[i] - T_ext);
       // Heat exchange with N-1th volume
-      //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
-      //Q_cond[i] = fluid[i-1].kappa*A/(H/n)*(Ttilde[i-1] - Ttilde[i]);
       Q_cond[i] = fluid[i].kappa*A/(H/n)*(T[i] - T[i+1]);
     else
       // Heat exchange with the ambient from lateral faces
-      //Q_amb[i] = 1/R_lateral*(Ttilde[i] - T_ext);
       Q_amb[i] = 1/R_lateral*(T[i] - T_ext);
       // Heat exchange with layer above and below
-      //Q_cond[i] = lambda_w*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
-      //Q_cond[i] = fluid[i].kappa*A/(H/n)*(Ttilde[i+1] - 2*Ttilde[i] + Ttilde[i-1]);
       Q_cond[i] = fluid[i].kappa*A/(H/n)*(T[i] - T[i+1]);
     end if;
 
   end for;
 
   // Momentum Balance
-  //pin - pout = rho[n+1]*H*g_n;
   p[1:n] - p[2:n+1] = rho[1:n]*(H/n)*g_n;
 
   if noEvent(inlet.m_flow > 0) then
@@ -166,5 +158,28 @@ initial equation
               FillPattern.Solid,                                                                                                                                                                                                        points = {{-11, -14}, {-21, 12}, {-13, 14}, {-1, -14}, {-1, -14}, {-11, -14}}), Polygon(origin={5,-146},    fillColor={140,56,
               54},                                                                                                                                                                                                        fillPattern=
               FillPattern.Solid,                                                                                                                                                                                                        points = {{-13, -14}, {-13, 22}, {3, 22}, {3, -14}, {3, -14}, {-13, -14}})}, coordinateSystem(extent={{-100,
-            -160},{100,160}})));
+            -160},{100,160}})), Documentation(info="<html>
+
+<p><b>StratifiedStorage</b> models a thermal energy storage system using multiple perfectly mixed control volumes to represent vertical thermal stratification. It is designed for use in district heating network simulations, where accurate representation of temperature layering is important.</p>
+
+<h4>Main Features:</h4>
+<ul>
+  <li>Discretized vertical temperature layers (configurable via <code>n</code>)</li>
+  <li>Dynamic heat and mass balances for each volume</li>
+  <li>Heat losses to ambient through lateral and flat surfaces</li>
+  <li>Internal conduction between adjacent volumes</li>
+</ul>
+
+<h4>Assumptions:</h4>
+<ul>
+  <li>Water is modeled with variable density and thermal properties (via <code>WaterLiquidVaryingDensity</code>)</li>
+  <li>One inlet and one outlet for fluid exchange</li>
+  <li>Neglects buoyancy-driven mixing and short-circuiting</li>
+</ul>
+
+<h4>Typical Use Case:</h4>
+<p>This model is ideal for analyzing the thermal behavior of stratified tanks in district heating systems, particularly in studies related to system flexibility, storage performance, and demand response.</p>
+
+
+</html>"));
 end StratifiedStorage;

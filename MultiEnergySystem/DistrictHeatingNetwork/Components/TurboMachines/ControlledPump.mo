@@ -49,4 +49,40 @@ equation
   connect(in_m_flow, in_m_flow_int);
   connect(in_pout, in_pout_int);
 
+  annotation (Documentation(info="<html>
+<h3>ControlledPump</h3>
+
+<p>
+  <strong>Summary:</strong><br>
+  <code>ControlledPump</code> extends the base <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.BaseClass.PumpBase\">PumpBase</a> model to enable dynamic control of the pump
+  based on either mass flow rate or outlet pressure. It includes input ports for external control signals and allows
+  fallback to nominal conditions if not connected.
+</p>
+
+<p>
+  <strong>Key Features:</strong>
+  <ul>
+    <li>Can control pump operation via mass flow rate or outlet pressure</li>
+    <li>Customizable use of external input signals</li>
+    <li>Inherits thermohydraulic and efficiency behavior from <code>PumpBase</code></li>
+    <li>Characteristic equations for head and power based on polynomial approximation</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Parameters to Set:</strong>
+  <ul>
+    <li><code>control_m_flow</code>: Selects between flow rate control (true) and pressure control (false)</li>
+    <li><code>use_m_flow</code>: Enables external mass flow rate input</li>
+    <li><code>use_pout</code>: Enables external outlet pressure input</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Intended Use:</strong><br>
+  This model is suited for controlled hydraulic loops where the pump must be governed by an external controller
+  that enforces a specific mass flow rate or outlet pressure depending on the system's requirements.
+</p>
+
+</html>"));
 end ControlledPump;

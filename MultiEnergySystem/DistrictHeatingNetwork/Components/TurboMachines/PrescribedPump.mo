@@ -18,5 +18,49 @@ equation
   head = if q_m3h >= qnom_inm3h_min then homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
                   ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))))) else (omega/omeganom)^2*(b[1]+ (qnom_inm3h_min)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_min)*(omeganom/omega))) "Head Characteristic equation";
   annotation (
-    Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+    Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}})), Documentation(info="<html>
+<h3>PrescribedPump</h3>
+
+<p>
+  <strong>Summary:</strong><br>
+  The <code>PrescribedPump</code> model simulates a pump with a prescribed rotational speed (omega). It extends the
+  <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.BaseClass.PumpBase\">PumpBase</a> class and calculates pump head and power consumption based on polynomial characteristic curves.
+</p>
+
+<p>
+  <strong>Key Features:</strong>
+  <ul>
+    <li>Uses externally prescribed or fixed rotational speed</li>
+    <li>Includes head and power characteristic curves via polynomial expressions</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Parameters:</strong>
+  <ul>
+    <li><code>use_in_omega</code>: If <code>true</code>, enables the external input for the pump's angular velocity</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Inputs:</strong>
+  <ul>
+    <li><code>in_omega</code> (optional): Input for rotational speed in rad/s</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Equations:</strong>
+  <ul>
+    <li>Pump head and power are computed using polynomial characteristics, scaled by the current omega value</li>
+    <li>Handles minimum flow rate conditions for safe pump operation</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Use Case:</strong><br>
+  Ideal for simulation of pumps driven by a motor operating at a fixed or externally controlled speed.
+</p>
+
+</html>"));
 end PrescribedPump;

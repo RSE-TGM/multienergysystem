@@ -4,7 +4,8 @@ partial model PartialIdealFlowSensor "Partial component of a generic sensor for 
   extends MultiEnergySystem.H2GasFacility.Interfaces.PartialHorizontalTwoPort(
                                                                         inlet(nXi = fluidIn.nXi), outlet(nXi = fluidOut.nXi));
 
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
 
   // Parameters
   parameter Types.Pressure pin_start "Pressure start value of outgoing fluid" annotation (

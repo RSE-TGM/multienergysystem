@@ -1,22 +1,25 @@
-within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
+within MultiEnergySystem.CaseStudies.Report_062024;
 model Test_H2_injection_MSL
   parameter Integer nX = 7 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[nX]= {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
-  parameter Types.MassFraction X_start_H2[nX] = {0.8, 0.04, 0.04, 0.005, 0.01, 0.005, 0.1};
-  parameter Types.MassFraction X_net[nX] = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
+  parameter H2GasFacility.Types.MassFraction X_start[nX]={0.9,0.04,0.04,0.005,
+      0.01,0.005,0.0};
+  parameter H2GasFacility.Types.MassFraction X_start_H2[nX]={0.8,0.04,0.04,
+      0.005,0.01,0.005,0.1};
+  parameter H2GasFacility.Types.MassFraction X_net[nX]={0.9,0.04,0.04,0.005,
+      0.01,0.005,0.0};
   parameter Integer n = 10 "Number of volumes in Flow1DFV";
 
   Modelica.Fluid.Pipes.DynamicPipe pipe1(
     redeclare package Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
-    length=Pipe.pipe1.L,
-    diameter=Pipe.pipe1.Di,
-    roughness=Pipe.pipe1.kappa,
-    p_a_start=Pipe.pipe1.pin_start,
-    p_b_start=Pipe.pipe1.pout_start,
-    T_start=Pipe.pipe1.Tin_start,
+    length=H2GasFacility.Data.PipelineData.pipe1.L,
+    diameter=H2GasFacility.Data.PipelineData.pipe1.Di,
+    roughness=H2GasFacility.Data.PipelineData.pipe1.kappa,
+    p_a_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    p_b_start=H2GasFacility.Data.PipelineData.pipe1.pout_start,
+    T_start=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
     X_start=X_net,
-    m_flow_start=Pipe.pipe1.m_flow_start,
+    m_flow_start=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
     nNodes=n,
     modelStructure=Modelica.Fluid.Types.ModelStructure.a_v_b)
                                           annotation (Placement(transformation(
@@ -40,8 +43,8 @@ model Test_H2_injection_MSL
   Modelica.Fluid.Sources.MassFlowSource_T sinkMassFlow2(
     redeclare package Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
-    m_flow=-Pipe.pipe1.m_flow_start,
-    T=Pipe.pipe1.Tout_start,
+    m_flow=-H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
+    T=H2GasFacility.Data.PipelineData.pipe1.Tout_start,
     X=X_net,
     nPorts=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -50,8 +53,8 @@ model Test_H2_injection_MSL
   Modelica.Fluid.Sources.MassFlowSource_T sinkMassFlow3(
     redeclare package Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
-    m_flow=-Pipe.pipe1.m_flow_start,
-    T=Pipe.pipe1.Tout_start,
+    m_flow=-H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
+    T=H2GasFacility.Data.PipelineData.pipe1.Tout_start,
     X=X_net,
     nPorts=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -60,14 +63,14 @@ model Test_H2_injection_MSL
   Modelica.Fluid.Pipes.DynamicPipe pipe2(
     redeclare package Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
-    length=Pipe.pipe1.L,
-    diameter=Pipe.pipe1.Di,
-    roughness=Pipe.pipe1.kappa,
-    p_a_start=Pipe.pipe1.pin_start,
-    p_b_start=Pipe.pipe1.pout_start,
-    T_start=Pipe.pipe1.Tin_start,
+    length=H2GasFacility.Data.PipelineData.pipe1.L,
+    diameter=H2GasFacility.Data.PipelineData.pipe1.Di,
+    roughness=H2GasFacility.Data.PipelineData.pipe1.kappa,
+    p_a_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    p_b_start=H2GasFacility.Data.PipelineData.pipe1.pout_start,
+    T_start=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
     X_start=X_net,
-    m_flow_start=Pipe.pipe1.m_flow_start,
+    m_flow_start=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
     nNodes=n,
     modelStructure=Modelica.Fluid.Types.ModelStructure.a_v_b,
     useLumpedPressure=false)              annotation (Placement(transformation(
@@ -77,14 +80,14 @@ model Test_H2_injection_MSL
   Modelica.Fluid.Pipes.DynamicPipe pipe3(
     redeclare package Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.SimpleNaturalGas_H2,
-    length=Pipe.pipe1.L,
-    diameter=Pipe.pipe1.Di,
-    roughness=Pipe.pipe1.kappa,
-    p_a_start=Pipe.pipe1.pin_start,
-    p_b_start=Pipe.pipe1.pout_start,
-    T_start=Pipe.pipe1.Tin_start,
+    length=H2GasFacility.Data.PipelineData.pipe1.L,
+    diameter=H2GasFacility.Data.PipelineData.pipe1.Di,
+    roughness=H2GasFacility.Data.PipelineData.pipe1.kappa,
+    p_a_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    p_b_start=H2GasFacility.Data.PipelineData.pipe1.pout_start,
+    T_start=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
     X_start=X_net,
-    m_flow_start=Pipe.pipe1.m_flow_start,
+    m_flow_start=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
     nNodes=n,
     useLumpedPressure=false)              annotation (Placement(transformation(
         extent={{-17,-17},{17,17}},

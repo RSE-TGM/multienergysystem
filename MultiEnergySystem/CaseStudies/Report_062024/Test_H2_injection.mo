@@ -1,16 +1,18 @@
-within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
+within MultiEnergySystem.CaseStudies.Report_062024;
 model Test_H2_injection
   replaceable model Medium =
       MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2 constrainedby
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Integer nX = 7 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[nX]= {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
-  parameter Types.MassFraction X_start_H2[nX] = {0.8, 0.04, 0.04, 0.005, 0.01, 0.005, 0.1};
-  parameter Types.MassFraction X_net[nX] = {0.9, 0.04, 0.04, 0.005, 0.01, 0.005, 0.0};
+  parameter H2GasFacility.Types.MassFraction X_start[nX]={0.9,0.04,0.04,0.005,
+      0.01,0.005,0.0};
+  parameter H2GasFacility.Types.MassFraction X_start_H2[nX]={0.8,0.04,0.04,
+      0.005,0.01,0.005,0.1};
+  parameter H2GasFacility.Types.MassFraction X_net[nX]={0.9,0.04,0.04,0.005,
+      0.01,0.005,0.0};
   parameter Integer n = 10 "Number of volumes in Flow1DFV";
   parameter Boolean massFractionDynamicBalance = true;
   //parameter Types.Length kappa = 0.045e-3;
-
 
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourcePressure(
     redeclare model Medium =
@@ -22,29 +24,29 @@ model Test_H2_injection
     annotation (Placement(transformation(extent={{-80,-4},{-60,16}})));
   MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow3(
     redeclare model Medium = Medium,
-    pin_start=Pipe.pipe1.pin_start,
-    p0=Pipe.pipe1.pin_start,
-    T0=Pipe.pipe1.Tin_start,
+    pin_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    p0=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    T0=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
     X0=X_net,
-    m_flow0=Pipe.pipe1.m_flow_start,
+    m_flow0=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
     G=0) annotation (Placement(transformation(extent={{70,-16},{90,4}})));
 
   MultiEnergySystem.H2GasFacility.Sources.SinkMassFlow sinkMassFlow2(
     redeclare model Medium =
         Medium,
-    pin_start=Pipe.pipe1.pin_start,
-    p0=Pipe.pipe1.pin_start,
-    T0=Pipe.pipe1.Tin_start,
+    pin_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    p0=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    T0=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
     X0=X_net,
-    m_flow0=Pipe.pipe1.m_flow_start,
+    m_flow0=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
     G=0)
     annotation (Placement(transformation(extent={{72,16},{92,36}})));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow sourceMassFlow1(
-    p0=Pipe.pipe1.pin_start,
-    T0=Pipe.pipe1.Tin_start,
+    p0=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    T0=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
     redeclare model Medium = Medium,
     X0=X_net,
-    m_flow0=Pipe.pipe1.m_flow_start,
+    m_flow0=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
     G=0,
     use_in_m_flow0=true,
     use_in_T0=false,
@@ -65,67 +67,67 @@ model Test_H2_injection
     annotation (Placement(transformation(extent={{-90,74},{-70,94}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(
     redeclare model Gas = Medium,
-    L=Pipe.pipe1.L,
-    m_flow_start=Pipe.pipe1.m_flow_start,
-    pin_start=Pipe.pipe1.pin_start,
-    pout_start=Pipe.pipe1.pout_start,
-    hin_start=Pipe.pipe1.hin_start,
-    Tin_start=Pipe.pipe1.Tin_start,
-    Tout_start=Pipe.pipe1.Tout_start,
+    L=H2GasFacility.Data.PipelineData.pipe1.L,
+    m_flow_start=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
+    pin_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    pout_start=H2GasFacility.Data.PipelineData.pipe1.pout_start,
+    hin_start=H2GasFacility.Data.PipelineData.pipe1.hin_start,
+    Tin_start=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
+    Tout_start=H2GasFacility.Data.PipelineData.pipe1.Tout_start,
     X_start=X_net,
-    Di=Pipe.pipe1.Di,
+    Di=H2GasFacility.Data.PipelineData.pipe1.Di,
     massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
-    rho_nom=Pipe.pipe1.rho_nom,
+    rho_nom=H2GasFacility.Data.PipelineData.pipe1.rho_nom,
     n=n,
-    kappa=Pipe.pipe1.kappa,
-    k=Pipe.pipe1.k)
+    kappa=H2GasFacility.Data.PipelineData.pipe1.kappa,
+    k=H2GasFacility.Data.PipelineData.pipe1.k)
     annotation (Placement(transformation(extent={{-36,-2},{-16,18}})));
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(
     redeclare model Gas =
         Medium,
-    L=Pipe.pipe1.L,
-    m_flow_start=Pipe.pipe1.m_flow_start,
-    pin_start=Pipe.pipe1.pin_start,
-    pout_start=Pipe.pipe1.pout_start,
-    hin_start=Pipe.pipe1.hin_start,
-    Tin_start=Pipe.pipe1.Tin_start,
-    Tout_start=Pipe.pipe1.Tout_start,
+    L=H2GasFacility.Data.PipelineData.pipe1.L,
+    m_flow_start=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
+    pin_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    pout_start=H2GasFacility.Data.PipelineData.pipe1.pout_start,
+    hin_start=H2GasFacility.Data.PipelineData.pipe1.hin_start,
+    Tin_start=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
+    Tout_start=H2GasFacility.Data.PipelineData.pipe1.Tout_start,
     X_start=X_net,
-    Di=Pipe.pipe1.Di,
+    Di=H2GasFacility.Data.PipelineData.pipe1.Di,
     massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
-    rho_nom=Pipe.pipe1.rho_nom,
+    rho_nom=H2GasFacility.Data.PipelineData.pipe1.rho_nom,
     n=n,
-    kappa=Pipe.pipe1.kappa,
-    k=Pipe.pipe1.k)
+    kappa=H2GasFacility.Data.PipelineData.pipe1.kappa,
+    k=H2GasFacility.Data.PipelineData.pipe1.k)
     annotation (Placement(transformation(extent={{24,14},{44,34}})));
 
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(
     redeclare model Gas =
         Medium,
-    L=Pipe.pipe1.L,
-    m_flow_start=Pipe.pipe1.m_flow_start,
-    pin_start=Pipe.pipe1.pin_start,
-    pout_start=Pipe.pipe1.pout_start,
-    hin_start=Pipe.pipe1.hin_start,
-    Tin_start=Pipe.pipe1.Tin_start,
-    Tout_start=Pipe.pipe1.Tout_start,
+    L=H2GasFacility.Data.PipelineData.pipe1.L,
+    m_flow_start=H2GasFacility.Data.PipelineData.pipe1.m_flow_start,
+    pin_start=H2GasFacility.Data.PipelineData.pipe1.pin_start,
+    pout_start=H2GasFacility.Data.PipelineData.pipe1.pout_start,
+    hin_start=H2GasFacility.Data.PipelineData.pipe1.hin_start,
+    Tin_start=H2GasFacility.Data.PipelineData.pipe1.Tin_start,
+    Tout_start=H2GasFacility.Data.PipelineData.pipe1.Tout_start,
     X_start=X_net,
-    Di=Pipe.pipe1.Di,
+    Di=H2GasFacility.Data.PipelineData.pipe1.Di,
     massFractionDynamicBalance=massFractionDynamicBalance,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,
     momentum=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure,
-    rho_nom=Pipe.pipe1.rho_nom,
+    rho_nom=H2GasFacility.Data.PipelineData.pipe1.rho_nom,
     n=n,
-    kappa=Pipe.pipe1.kappa,
-    k=Pipe.pipe1.k)
+    kappa=H2GasFacility.Data.PipelineData.pipe1.kappa,
+    k=H2GasFacility.Data.PipelineData.pipe1.k)
     annotation (Placement(transformation(extent={{24,-16},{44,4}})));
 
   Modelica.Blocks.Sources.Ramp pin(

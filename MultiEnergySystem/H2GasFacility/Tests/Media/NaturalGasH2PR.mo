@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.Media;
 model NaturalGasH2PR
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Tests.Media.SinglePTXFluidTest(
     redeclare model Medium = H2GasFacility.Media.RealGases.NaturalGasH2PR,
     T_ref = 500 + 273.15,

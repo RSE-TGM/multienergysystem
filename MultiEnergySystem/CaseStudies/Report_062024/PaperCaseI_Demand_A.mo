@@ -13,7 +13,11 @@ equation
       points={{-94,-40},{-86,-40},{-86,-59},{-57,-59},{-57,-6},{-20,-6},{-20,-10}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime = 86400, Interval = 44, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"),
+  annotation (experiment(
+      StopTime=86400,
+      Interval=44,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"),
   Diagram(coordinateSystem(extent = {{-180, -140}, {180, 140}}, grid = {1, 1})),
     Documentation(info="<html>
 <p>Hydrogen injection in node 3 following the H2 production profile. </p>

@@ -94,403 +94,403 @@ partial model PaperCaseI "Distribution network example from [1]"
     Placement(visible = true, transformation(origin={170,130},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe1.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe1.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe1.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe1.Tout_start,
+        CaseStudies.Report_062024.PipelineData.pipe1.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe1.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe1.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe1.Tout_start,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe1.rho_nom,                                                                                                                                                      X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe1.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe1.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe1.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe1.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe1.pout_start,                                                                                                                                                                                                        momentum = momentum,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe1.rho_nom,                                                                                                                                                      X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe1.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe1.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe1.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe1.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe1.pout_start,                                                                                                                                                                                                        momentum = momentum,
     kappa=kappa,
     constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe2.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe2.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe2.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe2.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe2.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe2.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe2.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe2.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe2.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe2.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe2.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe2.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe2.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe2.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe2.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe2.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe2.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe2.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe2.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe2.rho_nom,
     kappa=kappa,
 constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-20, 20}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe3.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe3.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe3.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe3.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe3.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe3.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe3.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe3.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe3.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe3.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe3.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe3.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe3.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe3.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe3.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe3.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe3.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe3.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe3.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe3.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {0, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe4(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe4.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe4.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe4.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe4.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe4.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe4.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe4.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe4.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe4.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe4.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe4.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe4.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe4.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe4.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe4.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe4.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe4.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe4.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe4.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe4.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe5(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe5.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe5.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe5.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe5.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe5.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe5.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe5.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe5.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe5.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe5.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe5.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe5.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe5.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe5.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe5.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe5.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe5.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe5.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe5.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe5.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-40, 0}, extent={{-10,10},{10,-10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe6(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe6.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe6.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe6.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe6.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe6.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe6.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe6.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe6.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe6.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe6.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe6.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe6.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe6.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe6.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe6.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe6.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe6.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe6.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe6.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe6.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe7(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe7.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe7.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe7.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe7.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe7.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe7.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe7.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe7.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe7.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe7.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe7.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe7.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe7.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe7.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe7.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe7.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe7.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe7.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe7.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe7.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-20, -20}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe8(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe8.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe8.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe8.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe8.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe8.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe8.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe8.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe8.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe8.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe8.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe8.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe8.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe8.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe8.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe8.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe8.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe8.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe8.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe8.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe8.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-70, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe9(redeclare
       model Medium =                                                                        Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe9.Di,                                                                       L =
-        H2GasFacility.Data.PipelineData.pipe9.L,                                                                                          Tin_start =
-        H2GasFacility.Data.PipelineData.pipe9.Tin_start,                                                                                                                    Tout_start =
-        H2GasFacility.Data.PipelineData.pipe9.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe9.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe9.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe9.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe9.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe9.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe9.Di,                                                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe9.L,                                                                                          Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe9.Tin_start,                                                                                                                    Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe9.Tout_start,                                                                                                                                                       X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe9.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe9.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe9.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe9.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe9.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe9.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe9.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {30, 20}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe10(Di =
-        H2GasFacility.Data.PipelineData.pipe10.Di,                                       L =
-        H2GasFacility.Data.PipelineData.pipe10.L,                                                           redeclare
+        CaseStudies.Report_062024.PipelineData.pipe10.Di,                                       L =
+        CaseStudies.Report_062024.PipelineData.pipe10.L,                                                           redeclare
       model Medium =                                                                                                                 Medium, Tin_start =
-        H2GasFacility.Data.PipelineData.pipe10.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe10.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe10.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe10.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe10.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe10.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe10.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe10.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe10.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe10.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe10.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe10.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe10.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe10.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe10.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe10.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-70, -18}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe11(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe11.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe11.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe11.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe11.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe11.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe11.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe11.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe11.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe11.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe11.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe11.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe11.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe11.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe11.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe11.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe11.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe11.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe11.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe11.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe11.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {30, -20}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe12(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe12.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe12.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe12.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe12.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe12.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe12.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe12.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe12.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe12.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe12.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe12.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe12.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe12.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe12.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe12.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe12.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe12.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe12.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe12.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe12.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {0, -40}, extent = {{10, -10}, {-10, 10}}, rotation = -180)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe13(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe13.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe13.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe13.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe13.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe13.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe13.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe13.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe13.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe13.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe13.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe13.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe13.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe13.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe13.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe13.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe13.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe13.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe13.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe13.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe13.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-40, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe14(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe14.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe14.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe14.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe14.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe14.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe14.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe14.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe14.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe14.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe14.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe14.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe14.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe14.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe14.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe14.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe14.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe14.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe14.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe14.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe14.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={55,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe15(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe15.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe15.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe15.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe15.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe15.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe15.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe15.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe15.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe15.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe15.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe15.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe15.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe15.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe15.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe15.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe15.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe15.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe15.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe15.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe15.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={105,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe16(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe16.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe16.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe16.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe16.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe16.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe16.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe16.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe16.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe16.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe16.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe16.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe16.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe16.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe16.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe16.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe16.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe16.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe16.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe16.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe16.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={130,-60},    extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe17(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe17.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe17.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe17.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe17.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe17.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe17.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe17.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe17.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe17.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe17.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe17.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe17.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe17.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe17.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe17.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe17.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe17.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe17.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe17.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe17.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={55,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe18(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe18.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe18.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe18.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe18.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe18.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe18.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe18.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe18.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe18.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe18.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe18.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe18.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe18.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe18.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe18.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe18.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe18.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe18.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe18.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe18.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin={80,20},    extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe19(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe19.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe19.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe19.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe19.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe19.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe19.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe19.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe19.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe19.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe19.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe19.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe19.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe19.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe19.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe19.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe19.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe19.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe19.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe19.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe19.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-20, -60}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe20(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe20.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe20.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe20.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe20.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe20.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe20.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe20.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe20.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe20.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe20.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe20.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe20.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe20.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe20.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe20.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe20.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe20.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe20.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe20.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe20.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-44, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe21(redeclare
       model Medium =                                                                         Medium, Di =
-        H2GasFacility.Data.PipelineData.pipe21.Di,                                                                        L =
-        H2GasFacility.Data.PipelineData.pipe21.L,                                                                                            Tin_start =
-        H2GasFacility.Data.PipelineData.pipe21.Tin_start,                                                                                                                       Tout_start =
-        H2GasFacility.Data.PipelineData.pipe21.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
-        H2GasFacility.Data.PipelineData.pipe21.hin_start,                                                                                                                                                                                                        k =
-        H2GasFacility.Data.PipelineData.pipe21.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
-        H2GasFacility.Data.PipelineData.pipe21.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
-        H2GasFacility.Data.PipelineData.pipe21.pin_start,                                                                                                                                                                                                        pout_start =
-        H2GasFacility.Data.PipelineData.pipe21.pout_start,                                                                                                                                                                                                        momentum = momentum,
+        CaseStudies.Report_062024.PipelineData.pipe21.Di,                                                                        L =
+        CaseStudies.Report_062024.PipelineData.pipe21.L,                                                                                            Tin_start =
+        CaseStudies.Report_062024.PipelineData.pipe21.Tin_start,                                                                                                                       Tout_start =
+        CaseStudies.Report_062024.PipelineData.pipe21.Tout_start,                                                                                                                                                           X_start = X_start, hin_start =
+        CaseStudies.Report_062024.PipelineData.pipe21.hin_start,                                                                                                                                                                                                        k =
+        CaseStudies.Report_062024.PipelineData.pipe21.k,                                                                                                                                                                                                        kc = 1, m_flow_start =
+        CaseStudies.Report_062024.PipelineData.pipe21.m_flow_start,                                                                                                                                                                                                        n = n, pin_start =
+        CaseStudies.Report_062024.PipelineData.pipe21.pin_start,                                                                                                                                                                                                        pout_start =
+        CaseStudies.Report_062024.PipelineData.pipe21.pout_start,                                                                                                                                                                                                        momentum = momentum,
     massFractionDynamicBalance=massFractionDynamicBalance, hctype = hctype,
     pin_nom=p_nom,
-    rho_nom=H2GasFacility.Data.PipelineData.pipe21.rho_nom,
+    rho_nom=CaseStudies.Report_062024.PipelineData.pipe21.rho_nom,
     kappa=kappa, constantFrictionFactor=constantFrictionFactor)                                                                                                                                                                                                         annotation (
     Placement(visible = true, transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user4(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe3.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe3.pout_start,                                            X0 = X_start,
     m_flow0=0.045489,
     massflowratedemand=[0,0.045489; 3600,0.045489],                                                                                                                                                                                                      useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {30, 40}, extent={{-10,10},{10,-10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user5(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe4.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe4.pout_start,                                            X0 = X_start,
     m_flow0=0.0356,
     massflowratedemand=[0,0.0356; 3600,0.0356],                                                                                                                                                                                                 useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-70, 40}, extent = {{-10, -10}, {10, 10}}, rotation=180)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user10(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe10.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe10.pout_start,                                            X0 = X_start,
     m_flow0=0.041533,
     massflowratedemand=[0,0.041533; 3600,0.041533],                                                                                                                                                                                                   useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-70, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user11(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe14.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe14.pout_start,                                            X0 = X_start,
     m_flow0=0.009889,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin={80,-40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user12(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe15.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe15.pout_start,                                            X0 = X_start,
     m_flow0=0.014833,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin={130,-40},    extent={{-10,10},{10,-10}},      rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user13(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe16.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe16.pout_start,                                            X0 = X_start,
     m_flow0=0.006922,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin={130,-80},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user14(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe17.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe17.pout_start,                                            X0 = X_start,
     m_flow0=0.008900,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin={80,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user15(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe18.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe18.pout_start,                                            X0 = X_start,
     m_flow0=0.017800,                                                                                                                                                                                                        useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin={80,40},    extent = {{-10, -10}, {10, 10}}, rotation=180)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user16(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe19.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe19.pout_start,                                            X0 = X_start,
     m_flow0=0.012856,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-20, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser user17(redeclare
       model Medium =
         MediumUsers,
-    p0=H2GasFacility.Data.PipelineData.pipe20.pout_start,                                            X0 = X_start,
+    p0=CaseStudies.Report_062024.PipelineData.pipe20.pout_start,                                            X0 = X_start,
     m_flow0=0.010878,                                                                                                                     useEnergyDemand = useEnergyDemand) annotation (
     Placement(visible = true, transformation(origin = {-70, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare
@@ -518,18 +518,18 @@ constantFrictionFactor=constantFrictionFactor)                                  
 
   MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I2O manifold2I2O(redeclare
       model Medium =                                                                                     Medium,
-    p_start=H2GasFacility.Data.PipelineData.pipe8.pin_start,
-    T_start=H2GasFacility.Data.PipelineData.pipe8.Tin_start,
+    p_start=CaseStudies.Report_062024.PipelineData.pipe8.pin_start,
+    T_start=CaseStudies.Report_062024.PipelineData.pipe8.Tin_start,
     X_start=X_start)                                                                                             annotation (Placement(transformation(extent={{-74,-4},{-66,4}})));
   MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I2O manifold2I2O1(
     redeclare model Medium = Medium,
-    p_start=H2GasFacility.Data.PipelineData.pipe9.pin_start,
-    T_start=H2GasFacility.Data.PipelineData.pipe9.Tin_start,
+    p_start=CaseStudies.Report_062024.PipelineData.pipe9.pin_start,
+    T_start=CaseStudies.Report_062024.PipelineData.pipe9.Tin_start,
     X_start=X_start)                                                                                             annotation (Placement(transformation(extent={{26,-4},{34,4}})));
   MultiEnergySystem.H2GasFacility.Components.Manifold.Manifold2I2O manifold2I2O2(
     redeclare model Medium = Medium,
-    p_start=H2GasFacility.Data.PipelineData.pipe2.pin_start,
-    T_start=H2GasFacility.Data.PipelineData.pipe2.Tin_start,
+    p_start=CaseStudies.Report_062024.PipelineData.pipe2.pin_start,
+    T_start=CaseStudies.Report_062024.PipelineData.pipe2.Tin_start,
     X_start=X_start)                                                                                             annotation (Placement(transformation(extent={{-4,-4},{4,4}},
         rotation=-90,
         origin={-20,40})));

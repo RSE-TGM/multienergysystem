@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
 model NG4_H2_Papay
   "Mixture of natural gas with four components and hydrogen using Papay equation"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PapayMixture(
       computeTransport = true,
       nXi = 4,

@@ -1,9 +1,10 @@
 within MultiEnergySystem.H2GasFacility.Components.Manifold;
 model Junction
-  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   // Mediums
   parameter Integer nXi = 1;
-  replaceable model Medium = MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4 constrainedby
+  replaceable model Medium =
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4                        constrainedby
     H2GasFacility.Media.BaseClasses.PartialMixture;
 
   Interfaces.FluidPortInlet fluidPortInlet(nXi = nXi) annotation (Placement(transformation(

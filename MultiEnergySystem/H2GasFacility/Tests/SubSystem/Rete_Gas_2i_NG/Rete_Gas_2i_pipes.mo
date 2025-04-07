@@ -6,7 +6,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   //    MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
   //  MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2;
       //MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean massFractionDynamicBalance = false;
@@ -14,8 +14,8 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
-  parameter Integer nX = 1 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[nX] = {1};
+  parameter Integer nX = 2 "Number of components in the gas fluid";
+  parameter Types.MassFraction X_start[nX] = {1, 0};
   //parameter Types.MassFraction X_start[nX] = {1, 0, 0, 0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.657;

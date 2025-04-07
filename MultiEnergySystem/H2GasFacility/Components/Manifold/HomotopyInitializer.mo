@@ -31,4 +31,19 @@ equation
   refFluid.T = T_start;
   refFluid.Xi = X_start[1:refFluid.nXi];
 
+  annotation (Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">HomotopyInitializer</span> model is designed to initialize the pressure, temperature, enthalpy, and composition of a fluid. It serves as a source model with homotopy-based initialization to improve convergence in numerical simulations.</p>
+<h4>Equations and Assumptions:</h4>
+<ul>
+<li>The model ensures that the pressure at the inlet and outlet remains equal (<span style=\"font-family: Courier New;\">inlet.p = outlet.p</span>).</li>
+<li>Mass flow balance is maintained (<span style=\"font-family: Courier New;\">inlet.m_flow + outlet.m_flow = 0</span>).</li>
+<li>The outlet enthalpy and composition are initialized using a homotopy transformation to improve solver convergence: </li>
+<p><span style=\"font-family: Courier New;\">outlet.h_out = homotopy(inStream(inlet.h_out), h_start);</span></p>
+<p><span style=\"font-family: Courier New;\">outlet.Xi = homotopy(inStream(inlet.Xi), X_start[1:refFluid.nXi]);</span></p>
+<li>The specific enthalpy at the inlet is set to the initialized value (<span style=\"font-family: Courier New;\">inlet.h_out = h_start</span>).</li>
+<li>The composition mass fractions are tracked.</li>
+</ul>
+<h4>Usage:</h4>
+<p>This model is useful for setting up fluid initialization conditions in hydrogen gas networks, especially when dealing with complex compositions. The use of homotopy functions helps stabilize simulations by providing a smooth transition between simplified and full system equations.</p>
+</html>"));
 end HomotopyInitializer;

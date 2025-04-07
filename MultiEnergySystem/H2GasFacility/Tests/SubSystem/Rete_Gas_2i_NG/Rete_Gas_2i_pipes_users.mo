@@ -1,6 +1,8 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_pipes_users
-  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
+  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
+  constantFrictionFactor = false,
+    massFractionDynamicBalance = false);
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
     redeclare model Medium = Medium,
     p0=463200,
@@ -54,7 +56,6 @@ model Rete_Gas_2i_pipes_users
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_nom=0.41245 + 0*0.41055,
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,
@@ -129,7 +130,7 @@ equation
     annotation (Line(points={{-106.6,0},{-102,0},{-102,18}}, color={0,0,127}));
   annotation (experiment(
       StopTime=100,
-      Tolerance=0.0001,
+      Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"), Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));

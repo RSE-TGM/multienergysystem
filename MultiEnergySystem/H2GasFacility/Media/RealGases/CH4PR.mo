@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.RealGases;
 model CH4PR "Methane model using PR EoS"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.PengRobinsonMixture(
       nXi = 0,
       X_start = {1},

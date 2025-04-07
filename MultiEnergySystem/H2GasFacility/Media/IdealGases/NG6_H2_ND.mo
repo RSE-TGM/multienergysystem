@@ -1,10 +1,11 @@
 within MultiEnergySystem.H2GasFacility.Media.IdealGases;
 model NG6_H2_ND
   "Mixture fluid model of natural gas with 4 components and hydrogen using Papay compressiblity factor equation"
-  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Media.BaseClasses.IdealMixtureND(
     computeTransport = true,
-    nXi = 6,
+    nXi = 7,
+    nX = 7,
     X_start = {0.9, 0.04, 0.04, 0.005, 0.005, 0.01, 0.01},
     T_start = 15 + 273.15,
     p_start = 1e5,
@@ -74,6 +75,7 @@ model NG6_H2_ND
                 {1.03129915813e-06, -0.0007502975376648, 0.18832534569691, 1022.8662075313},
                 {8.0738788389137e-05, -0.097360047650082, 40.00291818555, 8892.3843103683}},
     mu_start = 1.088e-5);
+    // nXi = 6,
 equation
 
 end NG6_H2_ND;

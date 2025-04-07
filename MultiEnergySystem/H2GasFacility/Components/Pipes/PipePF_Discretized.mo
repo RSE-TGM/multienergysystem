@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model PipePF_Discretized
   "Plug Flow Pipe Discretized"
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends MultiEnergySystem.H2GasFacility.Interfaces.PartialTwoPort;
 
   replaceable model Medium =

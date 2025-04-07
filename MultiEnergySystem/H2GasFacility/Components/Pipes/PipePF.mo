@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Components.Pipes;
 model PipePF
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends Components.Pipes.BaseClass.PartialRoundTube;
 
   // Medium & Heat Transfer Model for the pipe
@@ -11,7 +12,7 @@ model PipePF
   import Modelica.Units.SI;
   // Flow initial parameters
   parameter SI.MassFlowRate m_flow_nominal = 1 "Nominal mass flow";
-  parameter SI.MassFlowRate m_flow_start "Starting mass flow";
+  parameter SI.MassFlowRate m_flow_start = 1 "Starting mass flow";
   parameter SI.MassFlowRate m_flow_small = 0.01 "Minimum mass flow rate for regularization";
   parameter SI.PerUnit cf = 0.004 "Constant Fanning factor";
   // Pressure initial parameteers

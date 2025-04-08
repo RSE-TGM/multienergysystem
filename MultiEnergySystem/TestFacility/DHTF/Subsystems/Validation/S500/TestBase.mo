@@ -74,7 +74,7 @@ model TestBase
     Placement(transformation(extent = {{-88, 26}, {-76, 38}})));
   Modelica.Blocks.Sources.TimeTable m_flow_ref(table = [ts, m_flow_approx]) annotation (
     Placement(transformation(extent = {{40, 48}, {28, 60}})));
-  inner DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
   Modelica.Blocks.Continuous.FirstOrder lowPassomega(k = 1, T = 1, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = omega[1, 1]) annotation (
     Placement(transformation(extent = {{-68, 26}, {-56, 38}})));

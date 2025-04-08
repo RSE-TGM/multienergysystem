@@ -63,7 +63,7 @@ model Test_H2_injection
         origin={-90,-60},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  inner System system(T_amb=288.15)
+  inner MultiEnergySystem.System system(T_amb=288.15)
     annotation (Placement(transformation(extent={{-90,74},{-70,94}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(
     redeclare model Gas = Medium,

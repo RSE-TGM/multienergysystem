@@ -70,7 +70,7 @@ model TestBase
     Placement(transformation(extent = {{-70, -40}, {-58, -28}})));
   Modelica.Blocks.Sources.TimeTable EB401_ToutSP1(table = [0, 80 + 273.15; 100, 80 + 273.15]) annotation (
     Placement(transformation(extent = {{-68, -18}, {-56, -6}})));
-  inner DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
   DistrictHeatingNetwork.Sources.SinkMassFlow sinkMassFlow(redeclare model Medium = Medium, use_in_m_flow = true, pin_start = pout_start_S4, p0 = pout_start_S4, T0 = Tout_start_S4, m_flow0 = m_flow_approx[1, 1], G = 1e-8) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {16, 84})));

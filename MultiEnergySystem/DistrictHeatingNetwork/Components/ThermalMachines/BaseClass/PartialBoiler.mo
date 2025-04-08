@@ -59,7 +59,7 @@ partial model PartialBoiler
   //-------------------------------
   // System Object
   //-------------------------------
-  outer DistrictHeatingNetwork.System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   //-------------------------------
   // Variables

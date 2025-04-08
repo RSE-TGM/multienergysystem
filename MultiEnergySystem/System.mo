@@ -16,8 +16,8 @@ model System
           points={{-100,100},{100,100},{100,-100},{-100,-100},{-100,100}},
           lineColor={0,0,255},
           smooth=Smooth.None,
-          fillColor={170,213,255},
-          fillPattern=FillPattern.Solid), Text(
+          fillPattern=FillPattern.Solid,
+          fillColor={255,255,255}),       Text(
           extent={{-80,40},{80,-40}},
           lineColor={0,0,255},
           textString="ambient")}));

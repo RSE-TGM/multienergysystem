@@ -31,7 +31,7 @@ model ControlledChillerNoDynamics
   parameter DistrictHeatingNetwork.Types.PerUnit COP_nom = 2.7 "Nominal coefficient of performance";
 
 
-  outer DistrictHeatingNetwork.System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   DistrictHeatingNetwork.Types.Pressure pin_cold "Cold side inlet pressure";
   DistrictHeatingNetwork.Types.Pressure pout_cold "Cold side outlet pressure";

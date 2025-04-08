@@ -45,7 +45,7 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
   parameter Types.Temperature GB101ToutSP[:, :] = [0, 80 + 273.15; 0, 80 + 273.15];
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
 
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {150, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P101(Tin_start(displayUnit = "K") = Pump.P101.Tin_start, Tout_start(displayUnit = "K") = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, m_flow_start = m_flow_S1, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start(displayUnit = "Pa") = Pump.P101.pin_start, pout_start(displayUnit = "Pa") = Pump.P101.pout_start, qnom_inm3h = Pump.P101.qnom_inm3h, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom, headmax = Pump.P101.headnommax, headmin = Pump.P101.headnommin, qnom_inm3h_min = Pump.P101.qnommin_inm3h, qnom_inm3h_max = Pump.P101.qnommax_inm3h, use_in_omega = true) annotation (
     Placement(transformation(origin = {18, -7}, extent = {{-12, 12}, {12, -12}}, rotation = 90)));

@@ -1,10 +1,9 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Manifold;
 model TestGManifold
   extends MultiEnergySystem.H2GasFacility.Tests.Components.Manifold.TestManifold(
-  redeclare model MediumIn1 = H2GasFacility.Media.IdealGases.CH4H2, redeclare
-      model                                                                         MediumIn2 =
-        H2GasFacility.Media.IdealGases.CH4H2,                                                                                         redeclare
-      model MediumOut =
+  redeclare model MediumIn1 = H2GasFacility.Media.IdealGases.CH4H2, redeclare model MediumIn2 =
+        H2GasFacility.Media.IdealGases.CH4H2,                                                                                         redeclare model
+            MediumOut =
         H2GasFacility.Media.IdealGases.CH4H2,
   redeclare H2GasFacility.Components.Manifold.GManifold2I1O manifold,
     source2(                                                          X0 =         {0, 1}),

@@ -80,7 +80,7 @@ model TestBase "Base test for S100 validation"
     Placement(transformation(extent = {{66, 12}, {78, 0}})));
   Modelica.Blocks.Sources.TimeTable Tout_ref(table = [ts, TTo]) annotation (
     Placement(transformation(extent = {{42, -18}, {54, -6}})));
-  inner DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
   Modelica.Blocks.Continuous.FirstOrder lowPassomega(k = 1, T = 1, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = omega[1, 1]) annotation (
     Placement(transformation(extent = {{-68, 26}, {-56, 38}})));

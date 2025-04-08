@@ -4,21 +4,21 @@ model PipePF
   extends Components.Pipes.BaseClass.PartialRoundTube;
 
   // Medium & Heat Transfer Model for the pipe
-  replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
-      constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
-     choicesAllMatching = true);
+//   replaceable model Medium =
+//       MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
+//       constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture "Medium model" annotation (
+//      choicesAllMatching = true);
 
   import Modelica.Units.SI;
   // Flow initial parameters
   parameter SI.MassFlowRate m_flow_nominal = 1 "Nominal mass flow";
-  parameter SI.MassFlowRate m_flow_start = 1 "Starting mass flow";
+  //parameter SI.MassFlowRate m_flow_start = 1 "Starting mass flow";
   parameter SI.MassFlowRate m_flow_small = 0.01 "Minimum mass flow rate for regularization";
   parameter SI.PerUnit cf = 0.004 "Constant Fanning factor";
   // Pressure initial parameteers
-  parameter SI.Pressure pin_start "Starting initial pressure";
+  //parameter SI.Pressure pin_start = 1E5 "Starting initial pressure";
   // Parameter
-  parameter SI.Length L "Length";
+  //parameter SI.Length L "Length";
   parameter SI.Length D "Internal diameter";
   parameter SI.Length H = 0 "Hight, positive if outlet is higher than inlet. = 0 ports at same hight";
   parameter SI.Length tIns = 0.15 "Insulation thickness";
@@ -148,8 +148,7 @@ model PipePF
     Tout_start=Tin_start,
     X_start=X_start,
     T_start=T_start,
-    m_flow_start=m_flow_start,
-    hin_start=hin_start)
+    m_flow_start=m_flow_start)
     annotation (Placement(transformation(extent={{-54,-10},{-34,10}})));
   BaseClass.TimeDelayPlugFlow timeDelayPlugFlow(
   redeclare model Medium = Medium,

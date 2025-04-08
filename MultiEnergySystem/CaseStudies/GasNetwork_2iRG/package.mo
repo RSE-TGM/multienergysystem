@@ -1,6 +1,7 @@
 within MultiEnergySystem.CaseStudies;
 package GasNetwork_2iRG "Set of tests which have been developed for the study of the hydrogen injection in a local italian natural gas distribution network"
   extends Modelica.Icons.ExamplesPackage;
+
   annotation (Documentation(info="<html>
 <p>This package includes the models that have been used to generate the results of the following article:</p>
 <p>Sassaroli G., Casamassima V. &amp; Muro Alvarado M.</p>

@@ -265,7 +265,7 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
         extent={{-5,5},{5,-5}},
         rotation=-90,
         origin={-51.25,42.5})));
-  inner System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
+  inner MultiEnergySystem.System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
   Modelica.Blocks.Sources.Ramp P501_omega(
     height=0,
     duration=0,

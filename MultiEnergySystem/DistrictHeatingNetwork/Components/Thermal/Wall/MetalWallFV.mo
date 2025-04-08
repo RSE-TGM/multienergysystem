@@ -18,7 +18,7 @@ model MetalWallFV
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(tab="Initialisation"));
 
-  outer DistrictHeatingNetwork.System system "System wide properties";
+  outer MultiEnergySystem.System system "System wide properties";
   Types.Temperature Tvol[Nw](start=Tvolstart) "Volume temperatures";
   DistrictHeatingNetwork.Interfaces.MultiHeatPort int(final n=Nw, T(start=Tvolstart)) "Internal surface" annotation (Placement(transformation(extent={{-40,20},{40,40}}, rotation=0)));
   DistrictHeatingNetwork.Interfaces.MultiHeatPort ext(final n=Nw, T(start=Tvolstart)) "External surface" annotation (Placement(transformation(extent={{-40,-42},{40,-20}}, rotation=0)));

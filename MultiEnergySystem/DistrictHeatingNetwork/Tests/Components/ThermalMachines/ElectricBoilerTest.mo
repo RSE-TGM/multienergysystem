@@ -20,7 +20,7 @@ model ElectricBoilerTest
   Modelica.Blocks.Sources.Ramp m_flow(duration = 100,
     height=-0.2*0,                                                   offset = 0.5, startTime = 100) annotation (
     Placement(visible = true, transformation(origin={-72,30},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system                                                                                      annotation (
+  inner MultiEnergySystem.System system                                                                                      annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(sinkM.inlet, eBoiler.outlet) annotation (

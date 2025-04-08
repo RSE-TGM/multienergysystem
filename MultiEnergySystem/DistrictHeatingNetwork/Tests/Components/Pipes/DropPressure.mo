@@ -25,7 +25,7 @@ model DropPressure
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe1(Di = Di, L = L, Tin_start = Tin_start, Tout_start = Tin_start, allowFlowReversal = system.allowFlowReversal,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle,                                                                                                             cf = cf, h = H, k = Pipe.S100.k, kc = 1, m_flow_start = m_flow_start, n = n, pin_start = pin_start, pout_start = pout_start, rho_nom = rho_start, t = t, tIns = tIns, u_nom = u_start) annotation (
     Placement(visible = true, transformation(origin={0,80},    extent = {{-14, -14}, {14, 14}}, rotation = 0)));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin={90,150},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow_set(duration = 50, height = -1.5*m_flow_start, offset = m_flow_start, startTime = 50) annotation (
     Placement(visible = true, transformation(origin={70,30},     extent = {{10, -10}, {-10, 10}}, rotation = 0)));

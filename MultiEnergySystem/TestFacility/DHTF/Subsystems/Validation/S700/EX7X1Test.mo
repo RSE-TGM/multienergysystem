@@ -39,7 +39,7 @@ model EX7X1Test "Subsystem of a single HX70X test with real data"
   //  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
   //  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Data,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
   //  *1000/3600 "Matrix data";
-  inner DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   DistrictHeatingNetwork.Sources.SourceMassFlow sourceHot_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tin_start_hot, m_flow0 = TestFacility.Data.BPHEData.E701.m_flow_start_hot, G = 1e-8) annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-14, 60})));

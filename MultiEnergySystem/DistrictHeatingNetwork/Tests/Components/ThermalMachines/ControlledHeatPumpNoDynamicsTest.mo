@@ -22,7 +22,7 @@ model ControlledHeatPumpNoDynamicsTest
     Placement(visible = true, transformation(origin = {-10, -90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tinhot(duration = 20, height = 5, offset = 30 + 273.15, startTime = 40) annotation (
     Placement(visible = true, transformation(origin = {-70, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner System system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{80,80},{100,100}})));
 equation
   connect(sinkCold.inlet, heatpump.outcold) annotation (

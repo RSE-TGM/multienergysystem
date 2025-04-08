@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility;
 package Controllers
   "Package containing simple controls ready to be implemented"
-  extends Modelica.Icons.Package;
+  extends DistrictHeatingNetwork.Icons.Generic.Control;
   model Valve_controller
     "Proportional controller for the REMI station valve"
     parameter Real P_rng = (6-4.93)*10^5 "Tunable parameter to get the right valve opening";

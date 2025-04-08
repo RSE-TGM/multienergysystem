@@ -7,7 +7,6 @@ model WaterLiquid
     rho_coeff = {-0.0034821889243192,1.8159726369743,764.95410451574},
     cp_coeff = {-7.9613160841789e-05,0.090325271418373,-33.186924873704,8156.6624352755},
     kappa_coeff = {-8.1509980345909e-06,0.0063995962643842,-0.57622073567604});
-    //h(start = h_start),
 
   //parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff) - u_bias;
   //parameter Types.SpecificEnthalpy h_start = h_T(T_start,cp_coeff);

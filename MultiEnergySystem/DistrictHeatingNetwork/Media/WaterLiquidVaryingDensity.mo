@@ -16,28 +16,18 @@ initial equation
   assert(computeEntropy == false, "This model is not able to compute entropy");
 equation
   rho = rho_T(T,rho_coeff);
-  //rho = 985;
-  //drho_dT = 0;
-  rho = 1/v;
   drho_dT = drhodT_T(T, rho_coeff);
-  //dTdv = drhodv/drhodT;
-  //dpdT = (p/rho)*drhodT;
-  //u = (((+0.00393447)*T + (-3.7185))*T + 5350.25)*T + (-1.26407e+006);
-  //u = u_T(T,cp_coeff) - u_bias;
-  h = u + p/rho;
-  //h = h_T(T,cp_coeff) - u_bias;
-  h = h_T(T,cp_coeff);
-  cp = du_dT;
+  v = 1/rho;
+  v_mol = MM*v;
   cp = cp_T(T, cp_coeff);
-  cv = cp;
-  //cp = cv - T*dpdT/dTdv;
+  h = h_T(T,cp_coeff);
+  u = h - p*v;
+  cv = cp + (p/rho^2)*drho_dT;
+  dv_dT = -drho_dT*v^2;
+  du_dT = cv;
   du_dp = 0.00001 "Pressure derivative of the Specific Internal Energy";
-//MESSE A 0
-  rho = MM/v_mol "fluid density";
   dv_dp = 0 "Pressure derivative of specific volume at constant Temperature";
-  //du_dT = ((+0.00393447*3)*T + (-3.7185)*2)*T + 5350.25;
-  dv_dT = -(((+1.48186e-005*3)*T + (-0.0177278)*2)*T + 6.36275)/rho^2;
-//p_sat = ((((+0.000342217) * T + (-0.295484)) * T + 85.5469) * T + (-8298.06)) * T + (-104.079);
+
   if computeTransport == true then
     mu = mu_start;
     kappa = kappa_T(T, kappa_coeff);

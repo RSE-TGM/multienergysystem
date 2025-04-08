@@ -112,7 +112,7 @@ model CHP "S500 - Combined Heat and Power System Model"
     redeclare model Medium = Medium,
     n=n,
     hctype=hctype)                                                                                                        "Pipe connecting CHP with three-way valve FV502"
-    annotation (Placement(transformation(extent={{29.25,-65.75},{19.25,-55.75}})));
+    annotation (Placement(transformation(extent={{29.5,-65.5},{19.5,-55.5}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FV501_CHPWP(
     t=t_S5,
     Di=Di_CHP,
@@ -409,7 +409,7 @@ equation
   fuel.p = inletFuel.p;
   fuel.h = inStream(inletFuel.h_out);
   connect(PL_S500_CHP_FV502.inlet,CHP. outlet) annotation (Line(
-      points={{29.25,-60.75},{35.75,-60.75},{35.75,-60.225},{38.85,-60.225}},
+      points={{29.5,-60.5},{35.75,-60.5},{35.75,-60.225},{38.85,-60.225}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_CHPHP_CHP.outlet,CHP. inlet) annotation (Line(
@@ -433,7 +433,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_FV502_ReducerHot.inlet, PL_S500_CHP_FV502.outlet) annotation (Line(
-      points={{-15.25,-53.25},{-15.25,-60.75},{19.25,-60.75}},
+      points={{-15.25,-53.25},{-15.25,-60.5},{19.5,-60.5}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_ReducerHot_EX501.outlet, TT504.inlet) annotation (Line(
@@ -547,7 +547,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(PL_S500_CHP_FV502.wall, PL_S500_FV502_ReducerHot.wall) annotation (Line(
-      points={{24.25,-58.7},{24.25,-55.75},{-9.75,-55.75},{-9.75,-48.25},{-13.2,-48.25}},
+      points={{24.5,-58.45},{24.5,-55.75},{-9.75,-55.75},{-9.75,-48.25},{-13.2,-48.25}},
       color={255,101,98},
       thickness=0.5));
   connect(MultiPort, PL_S500_FV501_CHPWP.wall) annotation (Line(

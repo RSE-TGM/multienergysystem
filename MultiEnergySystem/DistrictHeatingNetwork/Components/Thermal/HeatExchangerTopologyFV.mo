@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Thermal;
 model HeatExchangerTopologyFV
-  "Connects two DHTVolumes ports according to a selected heat exchanger topology"
+  "Connects two MultiHeatPort ports according to a selected heat exchanger topology"
   extends DistrictHeatingNetwork.Icons.Generic.HeatFlow;
   parameter Integer Nw = 2 "Number of volumes, minimum 2";
   replaceable model HeatExchangerTopology =

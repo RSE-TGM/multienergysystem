@@ -3,9 +3,8 @@ model SourceMassFlow "Mass flow rate source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceW;
 
   // Water model
-  //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
-  //  choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+    constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Default water medium model" annotation(choicesAllMatching = true);
 
   // Definition of System
   outer System system "System wide properties";

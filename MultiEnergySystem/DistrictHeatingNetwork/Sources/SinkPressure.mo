@@ -3,8 +3,8 @@ model SinkPressure "Pressure sink for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
 
   // Water model
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp "Medium model" annotation (
-    choicesAllMatching = true);
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+    constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Default water medium model" annotation(choicesAllMatching = true);
 
 
   // Definition of System

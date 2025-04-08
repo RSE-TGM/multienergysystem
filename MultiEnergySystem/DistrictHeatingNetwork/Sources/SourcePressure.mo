@@ -3,9 +3,8 @@ model SourcePressure "Pressure source for water/steam flows"
   extends DistrictHeatingNetwork.Icons.Water.SourceP;
 
   // Water model
-  //replaceable package Medium = Water constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation(
-  //  choicesAllMatching = true);
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
+  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+    constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Default water medium model" annotation(choicesAllMatching = true);
 
   // Definition of System
   outer System system "System wide properties";
@@ -92,10 +91,6 @@ equation
   connect(in_p0, in_p0_internal);
   connect(in_T0, in_T0_internal);
 
-  // Restrictions on modelling options
-  //assert(not (use_in_T and use_in_h), "Either temperature or specific enthalpy input");
- // assert(not (use_T and use_in_h), "use_in_h required use_T = false");
-  //assert(not (not use_T and use_in_T), "use_in_T required use_T = true");
   annotation (
     Documentation(info="<HTML>
 <p><b>Modelling options</b></p>

@@ -1,9 +1,11 @@
 within MultiEnergySystem;
-model System
+model SystemSettings
   // Assumptions
-  parameter Boolean allowFlowReversal=true     "= false to restrict to design flow direction (flangeA -> flangeB)"  annotation (
-      Evaluate=true,
-      Dialog(group="Simulation options"));
+  // Default media
+  replaceable model Water = MultiEnergySystem.DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+    constrainedby MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Default water medium model" annotation(choicesAllMatching = true,Dialog(group="Standard conditions"));
+  parameter Boolean allowFlowReversal=true "= false to restrict to design flow direction"  annotation (Evaluate=true,  Dialog(group="Simulation options"));
+  parameter DistrictHeatingNetwork.Types.Density rho_nom = 995 "Nominal water density" annotation (Dialog(group="Standard conditions"));
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt=DistrictHeatingNetwork.Choices.Init.Options.steadyState  annotation (Dialog(group="Simulation options"));
   parameter DistrictHeatingNetwork.Types.Pressure p_amb = 101325 "Ambient pressure" annotation(Dialog(group="Ambient conditions"));
   parameter DistrictHeatingNetwork.Types.Temperature T_amb = 294.15 "Ambient Temperature (dry bulb)" annotation(Dialog(group="Ambient conditions"));
@@ -20,6 +22,6 @@ model System
           fillPattern=FillPattern.Solid), Text(
           extent={{-80,40},{80,-40}},
           lineColor={0,0,255},
-          textString="ambient")}));
+          textString="settings")}));
 
-end System;
+end SystemSettings;

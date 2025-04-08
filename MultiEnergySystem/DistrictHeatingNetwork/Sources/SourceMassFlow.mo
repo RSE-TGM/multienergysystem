@@ -7,7 +7,7 @@ model SourceMassFlow "Mass flow rate source for water/steam flows"
     constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance "Default water medium model" annotation(choicesAllMatching = true);
 
   // Definition of System
-  outer System system "System wide properties";
+  outer MultiEnergySystem.System system "System wide properties";
 
   // Initial Choices
   parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation (

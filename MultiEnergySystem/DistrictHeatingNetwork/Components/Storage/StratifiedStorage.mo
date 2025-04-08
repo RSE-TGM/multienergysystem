@@ -18,7 +18,7 @@ model StratifiedStorage
   parameter SI.Length dIns = 0.15 "Insulation thickness";
   parameter SI.ThermalConductivity lambda_w = 0.4 "Water conductivity for heat exchange between volumes";
 
-  outer System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   parameter Types.MassFlowRate m_flow_nom = 2 "Nominal mass flow rate";
   parameter Types.SpecificEnthalpy hin_start = fluid[1].h_start;

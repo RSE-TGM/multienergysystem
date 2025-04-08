@@ -63,7 +63,7 @@ model RoundPipeFV
   final parameter Types.Volume V = A * L * nPipes "Total volume of the fluid in the pipe";
   final parameter Types.Volume Vi = V / n "Volume of one finite element";
 
-  outer System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   // Variables
   Types.MassFlowRate m_flow[n + 1](each start = m_flow_start, each nominal = m_flow_nom) "Mass flow rate in each section across the pipe";

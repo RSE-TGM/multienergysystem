@@ -5,7 +5,7 @@ partial model PartialLumpedVolume "Partial model of a Cylindrical lumped volume 
   //-------------------------------
   // System-wide object for shared default values
   //-------------------------------
-  outer System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   //-------------------------------
   // Fluid model definition

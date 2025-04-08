@@ -24,7 +24,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
      choicesAllMatching = true);
 
   constant Types.Acceleration g_n = Modelica.Constants.g_n "Gravity";
-  outer System system;
+  outer MultiEnergySystem.System system;
   // Main Parameters
   parameter Boolean computeTransport = false "Used to calculate the transport properties" annotation (
     Dialog(group = "Choices"));

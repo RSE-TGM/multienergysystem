@@ -8,7 +8,7 @@ model SinkPressure "Pressure sink for water/steam flows"
 
 
   // Definition of System
-  outer System system "System wide properties";
+  outer MultiEnergySystem.System system "System wide properties";
 
   // Initial choices
   parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation (

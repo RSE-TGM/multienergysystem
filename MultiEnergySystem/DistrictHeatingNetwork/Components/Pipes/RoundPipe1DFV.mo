@@ -70,7 +70,7 @@ model RoundPipe1DFV
   final parameter Types.Volume Vi = V / n "Volume of one finite element";
   final parameter Types.PerUnit Re_start = Di * m_flow_start / (A * fluid[1].mu_start) "Start value for Reynolds number";
 
-  outer System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   // Variables
   Types.MassFlowRate m_flow[n + 1](each start = m_flow_start, each nominal = m_flow_nom) "Mass flow rate in each section across the pipe";

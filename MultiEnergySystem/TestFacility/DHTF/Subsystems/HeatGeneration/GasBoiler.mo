@@ -112,7 +112,6 @@ model GasBoiler "System 100 - Gas Boiler"
     Tout_start=Tout_start_S1,
     Pnimnom=Pminnom,
     Pnom=Pnom,
-    HH=55.5e6,
     tdelay=tdelay)
                annotation (Placement(visible=true, transformation(
         origin={0,-97},

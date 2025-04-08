@@ -5,7 +5,7 @@ model HomotopyInitializer
     "Fluid model" annotation(choicesAllMatching = true);
   parameter Types.Pressure p_start "Initial value of pressure";
   parameter Types.Temperature T_start "Initial value of temperature";
-  outer System system "System object";
+  outer MultiEnergySystem.System system "System object";
   Types.SpecificEnthalpy h_start "Specific Enthalpy start value";
   Medium refFluid(
       p_start = p_start,

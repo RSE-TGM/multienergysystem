@@ -1,4 +1,4 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components;
 package Loads
-  extends Modelica.Icons.Package;
+  extends DistrictHeatingNetwork.Icons.Generic.ThermalLoads;
 end Loads;

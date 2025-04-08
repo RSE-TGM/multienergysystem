@@ -1184,7 +1184,7 @@ protected
 
   Modelica.Blocks.Sources.TimeTable EX701_T(table=[t,TT_702])
     annotation (Placement(transformation(extent={{-310,148},{-290,168}})));
-  inner System                        system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{298,280},{318,300}})));
   Modelica.Blocks.Sources.TimeTable EX711_T(table=[t,TT_712])
     annotation (Placement(transformation(extent={{-18,148},{2,168}})));

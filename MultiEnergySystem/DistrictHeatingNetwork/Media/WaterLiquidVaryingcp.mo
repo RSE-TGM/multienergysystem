@@ -18,7 +18,8 @@ equation
   cp = cp_T(T, cp_coeff);
   h = h_T(T,cp_coeff);
   h = u + p/rho;
-  cp = du_dT;
+  cv = du_dT;
+  //cp = du_dT;
   cv = cp;
   rho = MM/v_mol;
   dv_dp = 0;

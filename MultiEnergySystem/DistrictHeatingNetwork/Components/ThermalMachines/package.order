@@ -1,8 +1,8 @@
 BaseClass
 GasBoiler
 ElectricBoiler
-ControlledElectricBoiler
 ControlledGasBoiler
+ControlledElectricBoiler
 ControlledCHP
 ChillerNoDynamics
 ControlledChillerNoDynamics

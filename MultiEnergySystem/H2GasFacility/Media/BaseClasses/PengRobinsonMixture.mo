@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model PengRobinsonMixture
-  extends PartialMixture(Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
+  extends PartialMixture(nX = nXi + 1, Xi_start = X_start[1:nXi], mu(start = mu_start), rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
 
   // Parameters

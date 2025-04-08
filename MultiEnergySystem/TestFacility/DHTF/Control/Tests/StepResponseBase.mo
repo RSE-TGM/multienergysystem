@@ -7,6 +7,7 @@ model StepResponseBase
     Placement(transformation(origin = {-1, 0}, extent = {{11, -38}, {55, 38}})));
   //     thetaFCV401Offset(fixInput=false, fixOffset=true),
   //omegaP401Offset(fixInput=false, fixOffset=true),    omegaP501Offset(fixInput=false, fixOffset=true)
+  inner System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
 equation
   connect(actuator.controlSignalBus, plant.controlSignalBus) annotation (
     Line(points = {{-7.32, 0}, {2, 0}, {2, -0.38}, {12.86, -0.38}}, color = {255, 204, 51}, thickness = 0.5));

@@ -370,7 +370,7 @@ model HPSystem
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={188,-107})));
-  inner System system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{241,239},{261,259}})));
   Modelica.Blocks.Sources.Ramp P601_omega(
     offset=2*3.141592654*30,

@@ -1,5 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.Sources;
 model TestSourceSink
+  extends Modelica.Icons.Example;
   replaceable model Medium = H2GasFacility.Media.RealGases.NaturalGasPapay;
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure source(X0 = {97.201, 1.862, 0.393, 0, 0, 0, 0, 0, 0.544}/100, p0 = 1e5)  annotation (
     Placement(visible = true, transformation(origin = {-34, -6}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

@@ -69,7 +69,7 @@ model WaterTankSystemB "System of two tanks"
   Boolean FV209_state;
 
 
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin={270,230},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage
     D201(H=4, D=1.7,

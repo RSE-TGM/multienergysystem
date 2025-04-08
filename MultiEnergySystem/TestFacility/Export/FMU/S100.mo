@@ -75,7 +75,7 @@ model S100 "Example of system S100 fmu test model"
         extent={{-20,-20},{20,20}},
         rotation=-90,
         origin={40,100})));
-  inner DistrictHeatingNetwork.System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
+  inner MultiEnergySystem.System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
   H2GasFacility.Sources.SourcePressure sourcePressure(redeclare model Medium = Gas,
     X0=X_gas,
     R=1e-3,

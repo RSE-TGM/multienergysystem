@@ -21,7 +21,7 @@ partial model PartialLumpedVolume
         rotation=0)));
 
   // Definition of System
-  outer System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
 
   // Add model of the fluid in the pipe
   replaceable model Medium =

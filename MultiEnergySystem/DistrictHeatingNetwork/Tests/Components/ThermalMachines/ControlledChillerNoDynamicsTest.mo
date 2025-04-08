@@ -17,7 +17,7 @@ model ControlledChillerNoDynamicsTest
     Placement(visible = true, transformation(origin={-48,-40},    extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp Tincold(duration = 20, height = -7, offset = 14 + 273.15, startTime = 10)  annotation (
     Placement(visible = true, transformation(origin={-8,-70},     extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner System system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{80,80},{100,100}})));
   Modelica.Blocks.Sources.BooleanTable Chiller_Status(table={1e6}, startValue=true) "Input to decide whether or nor the chiller is working" annotation (Placement(transformation(extent={{-66,14},{-54,26}})));
 equation

@@ -138,15 +138,6 @@ model CentralisedSystemGBEBCHP_InitForward
         origin={-505,-268},
         extent={{-5,-5},{5,5}},
         rotation=0)));
-  H2GasFacility.Sources.SourcePressure sourceGasCHP(
-    redeclare model Medium = Gas,
-    T0=system.T_amb,
-    X0=X_gas,
-    R=1e-3,
-    computeEnergyVariables=true) annotation (Placement(transformation(
-        extent={{-13,-13},{13,13}},
-        rotation=90,
-        origin={-571,-373})));
 equation
   connect(PL_S500_rCD_hot.outlet, suddenAreaChange2.outlet) annotation (Line(
       points={{-552,-197},{-552,-186}},

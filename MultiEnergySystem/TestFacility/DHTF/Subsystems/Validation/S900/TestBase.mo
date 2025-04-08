@@ -63,7 +63,7 @@ model TestBase "Test base for validation of system 900, using S400 as reference"
     Placement(transformation(extent = {{48, 86}, {60, 98}})));
   DistrictHeatingNetwork.Utilities.ASHRAEIndex m_flow_index annotation (
     Placement(transformation(extent = {{74, 84}, {86, 96}})));
-  inner DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
   Modelica.Blocks.Continuous.FirstOrder lowPassomega(k = 1, T = 5, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = omega[1, 1]) annotation (
     Placement(transformation(extent = {{-54, 32}, {-42, 44}})));

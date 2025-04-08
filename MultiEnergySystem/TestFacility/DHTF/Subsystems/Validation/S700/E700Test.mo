@@ -47,7 +47,7 @@ model E700Test "HX70X base test with real data"
   //  final parameter Real PT701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Pressures,matrixPT701,dim[1],dim[2])*1e5 "Matrix data";
   //  final parameter Real thetaFCV701[dim[1],dim[2]] = Modelica.Utilities.Streams.readRealMatrix(Actuators,matrixthetaFCV701,dim[1],dim[2]) "Matrix data";
   //  *1000/3600 "Matrix data";
-  inner DistrictHeatingNetwork.System system annotation (Placement(visible=true, transformation(
+  inner MultiEnergySystem.System system annotation (Placement(visible=true, transformation(
         origin={-90,90},
         extent={{-10,-10},{10,10}},
         rotation=0)));

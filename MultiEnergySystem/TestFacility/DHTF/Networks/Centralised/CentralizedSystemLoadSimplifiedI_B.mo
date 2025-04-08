@@ -61,6 +61,9 @@ partial model CentralizedSystemLoadSimplifiedI_B
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin = {-358, -16})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(redeclare model Medium = WaterHot, Kv = TestFacility.Data.ValveData.FCV401.Kv, Tin_start = Tout_start_S4, pin_start = pout_start_S4, q_m3h_start = q_m3h_S4) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {-318, -16})));
+  ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (Placement(transformation(extent={{-16,-16},{16,16}},
+        rotation=90,
+        origin={-302,-350})));
 equation
   connect(P401.inlet, PL3_S401.outlet) annotation (
     Line(points = {{-318, -180.6}, {-318, -222}}, color = {140, 56, 54}, thickness = 0.5));
@@ -101,4 +104,8 @@ equation
     annotation (
     Line(points={{-318,-100},{-318,-92},{-318,-82},{-318.4,-82}},
                                                color = {140, 56, 54}));
+  connect(sourceVoltage.outlet, EB401.inletPower) annotation (Line(
+      points={{-302,-334},{-302,-301},{-312.5,-301}},
+      color={56,93,138},
+      thickness=1));
 end CentralizedSystemLoadSimplifiedI_B;

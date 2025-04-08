@@ -45,7 +45,7 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
   parameter Types.Temperature GB101ToutSP[:, :] = [0, 80 + 273.15; 0, 80 + 273.15];
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {1, 0, 0, 0};
 
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {150, 150}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P101(Tin_start(displayUnit = "K") = Pump.P101.Tin_start, Tout_start(displayUnit = "K") = Pump.P101.Tout_start, a = Pump.P101.a, b = Pump.P101.b, m_flow_start = m_flow_S1, dpnom = Pump.P101.dpnom, etaelec = Pump.P101.etaelec, etamech = Pump.P101.etamech, etanom = Pump.P101.etanom, hin_start = Pump.P101.hin_start, m_flow_nom = Pump.P101.m_flow_nom, omeganom = Pump.P101.omeganom, pin_start(displayUnit = "Pa") = Pump.P101.pin_start, pout_start(displayUnit = "Pa") = Pump.P101.pout_start, qnom_inm3h = Pump.P101.qnom_inm3h, rhonom(displayUnit = "kg/m3") = Pump.P101.rhonom, headmax = Pump.P101.headnommax, headmin = Pump.P101.headnommin, qnom_inm3h_min = Pump.P101.qnommin_inm3h, qnom_inm3h_max = Pump.P101.qnommax_inm3h, use_in_omega = true) annotation (
     Placement(transformation(origin = {18, -7}, extent = {{-12, 12}, {12, -12}}, rotation = 90)));
@@ -55,7 +55,7 @@ model GasBoilerSystem "Main components of System 100 - Gas Boiler of the RSE's d
     Placement(transformation(origin = {18, -40}, extent = {{-10, 10}, {10, -10}}, rotation = 90)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(L = L_FT101_GB101, h = h_FT101_GB101, t = t_S1, pin_start = pin_start_S1, Tin_start = Tin_start_S1, Tout_start = Tin_start_S1, Di = Di_S1, q_m3h_start = q_m3h_S1) annotation (
     Placement(transformation(origin = {-18, -42}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1, HH = 55.5e6, Pmaxnom = 0.8*147.6e3) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB101(Tin_start = Tin_start_S1, pin_start = pin_start_S1, pout_start = pout_start_S1,              Pmaxnom = 0.8*147.6e3) annotation (
     Placement(transformation(origin = {0, -104}, extent = {{-46, -46}, {46, 46}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT102(T_start = Tout_start_S1, p_start = pout_start_S1) "Temperature sensor at the outlet of valve FCV101" annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin = {20, 100})));

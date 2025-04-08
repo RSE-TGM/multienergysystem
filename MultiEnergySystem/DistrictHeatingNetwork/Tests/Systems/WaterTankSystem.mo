@@ -54,7 +54,7 @@ model WaterTankSystem "System of two tanks"
   parameter Types.Length h_S2_D201_FT201 = 0;
 
 
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin={270,230},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   replaceable MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.LumpedStorage
     D201(H=4, D=1.7,

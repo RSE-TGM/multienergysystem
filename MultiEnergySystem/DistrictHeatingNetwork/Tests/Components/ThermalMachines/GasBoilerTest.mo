@@ -17,7 +17,7 @@ model GasBoilerTest
     Placement(transformation(origin={-30,40},    extent = {{-10, 10}, {10, -10}})));
   H2GasFacility.Sources.SourceMassFlow sourceCH4(redeclare model Medium = Gas, p0 = 0.105e6, T0 = 15 + 273.15, X0 = {1, 0}, m_flow0 = 5.8) annotation (
     Placement(transformation(origin={-50,0},    extent = {{-10, -10}, {10, 10}})));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
     "Input to decide whether or nor the gas boiler is working"

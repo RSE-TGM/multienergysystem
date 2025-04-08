@@ -32,7 +32,7 @@ model ControlledCHPTest "Initial test for a single controlled CHP with ideal bou
     p0=310000,
     use_in_T0=true)                                                                                                                                    annotation (
     Placement(transformation(origin={-30,40},    extent = {{-10, 10}, {10, -10}})));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table={1e6}, startValue=true)
     "Input to decide whether or nor the gas boiler is working"

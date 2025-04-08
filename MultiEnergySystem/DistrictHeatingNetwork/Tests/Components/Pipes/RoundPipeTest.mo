@@ -46,7 +46,7 @@ model RoundPipeTest
     annotation (Placement(transformation(extent={{-10,44},{10,64}})));
   Modelica.Blocks.Sources.RealExpression Q(y=50000)
     annotation (Placement(transformation(extent={{-32,58},{-12,78}})));
-  inner System system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{80,120},{100,140}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV hotside(
     L=0.7073,

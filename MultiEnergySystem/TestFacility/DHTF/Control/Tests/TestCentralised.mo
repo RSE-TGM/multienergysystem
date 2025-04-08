@@ -12,7 +12,7 @@ model TestCentralised
     Placement(transformation(extent = {{-76, -10}, {-56, 10}})));
   replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGenTES_Case_A_III openLoopActuatorBase_III annotation (
     Placement(transformation(extent = {{4, 68}, {24, 88}})));
-  inner System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
 equation
   connect(sourceGas.outlet, centralisedSystem_GBEBCHPTES_III.inletGas) annotation (

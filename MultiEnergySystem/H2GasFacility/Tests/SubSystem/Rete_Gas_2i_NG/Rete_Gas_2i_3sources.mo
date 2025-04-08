@@ -1,13 +1,15 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model Rete_Gas_2i_3sources
   //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
-  extends Rete_Gas_2i_2sources(FrictionFactor = 0.02);
+  extends Rete_Gas_2i_2sources(FrictionFactor = 0.02,
+    m_flow_H1(height=0.01),
+    m_flow_H5(height=-0.01));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_3(
     redeclare model Medium = Medium,
     p0=Data.PipelineData_2i.sds8.pout_start,
     G=1e-8,
     T0=288.15,
-    X0=X_start,
+    X0={0,1},
     m_flow0=0.1,
     computeEnthalpyWithFixedPressure=true,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
@@ -16,13 +18,13 @@ model Rete_Gas_2i_3sources
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H4(
     duration=60,
-    height=0.09889,
+    height=0.03,
     offset=1e-3,
     startTime=61200)                                                                                        annotation (
     Placement(visible = true, transformation(origin={373,216},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H6(
     duration=60,
-    height=-0.09889,
+    height=-0.03,
     offset=0,
     startTime=75600)                                                                                        annotation (
     Placement(visible = true, transformation(origin={367,260},     extent = {{-10, -10}, {10, 10}}, rotation=0)));

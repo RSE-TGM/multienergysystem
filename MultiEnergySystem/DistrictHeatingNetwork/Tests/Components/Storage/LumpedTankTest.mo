@@ -9,7 +9,7 @@ model LumpedTankTest
     Placement(visible = true, transformation(origin = {-60, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
   Modelica.Blocks.Sources.RealExpression m_flow(y = if time < 10 then 2 else 5)  annotation (
     Placement(visible = true, transformation(origin = {-82, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {88, 68}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.StratifiedStorage tank2(D = 1.7, T_start(displayUnit = "K") = 338.15, allowFlowReversal = false, H = 4,
     pin_start=100000,

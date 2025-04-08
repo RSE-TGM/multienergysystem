@@ -9,7 +9,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   parameter Integer n = 3 "Number of volumes in the heat exchanger";
   parameter Integer nPlates = 18 "Number of plates in the BPHE";
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option";
-  outer System system "system object for global defaults";
+  outer MultiEnergySystem.System system "system object for global defaults";
   // Hot side
   parameter Modelica.Units.SI.Length L_hot = 0.5 "Length of the tube hot side" annotation (
     Dialog(tab = "Hot Side", group = "Pipe"));

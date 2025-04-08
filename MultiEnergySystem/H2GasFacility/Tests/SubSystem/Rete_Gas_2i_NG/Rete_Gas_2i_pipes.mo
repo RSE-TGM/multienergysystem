@@ -6,7 +6,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   //    MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
   //  MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4;
+      MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2;
       //MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
   parameter Boolean useEnergyDemand = false;
   parameter Boolean massFractionDynamicBalance = false;
@@ -14,8 +14,8 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
   parameter Real FrictionFactor = 0.009;
   parameter Boolean computeInertialTerm = false;
   parameter Integer n = 3 "Number of volumes in each pipeline";
-  parameter Integer nX = 1 "Number of components in the gas fluid";
-  parameter Types.MassFraction X_start[nX] = {1};
+  parameter Integer nX = 2 "Number of components in the gas fluid";
+  parameter Types.MassFraction X_start[nX] = {1, 0};
   //parameter Types.MassFraction X_start[nX] = {1, 0, 0, 0};
   parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
   parameter Types.Density rho_nom = 0.657;
@@ -897,7 +897,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={46,242})));
-  inner System system(T_amb=288.15)
+  inner MultiEnergySystem.System system(T_amb=288.15)
     annotation (Placement(transformation(extent={{-270,264},{-250,284}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo2(
     L=100,

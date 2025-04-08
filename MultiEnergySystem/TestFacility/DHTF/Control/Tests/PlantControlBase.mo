@@ -34,6 +34,7 @@ partial model PlantControlBase
   parameter Real theta_TCV721_delta = 0;
   parameter Real theta_TCV731 = 1;
   parameter Real theta_TCV731_delta = 0;
+  inner System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
 equation
   connect(controller.controlSignalBus, plant.controlSignalBus) annotation (
     Line(points = {{-7.32, 0}, {2, 0}, {2, -0.38}, {12.86, -0.38}}, color = {255, 204, 51}, thickness = 0.5));

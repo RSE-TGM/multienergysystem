@@ -4,7 +4,7 @@ model ThreeWayValveTestBase "Base test model for three-way valve tests"
   MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(T0=Valve.TCV701.Tin_start,
       p0=Valve.TCV701.pin_start)                                                                                              annotation (
     Placement(visible = true, transformation(origin={-42,0},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  inner MultiEnergySystem.DistrictHeatingNetwork.System system annotation (
+  inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp theta(duration = 20,
     height=-0.9,                                                offset = 1, startTime = 30) annotation (

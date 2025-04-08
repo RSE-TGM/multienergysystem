@@ -897,7 +897,7 @@ partial model Rete_Gas_2i_pipes "Base network with no sources"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={46,242})));
-  inner System system(T_amb=288.15)
+  inner MultiEnergySystem.System system(T_amb=288.15)
     annotation (Placement(transformation(extent={{-270,264},{-250,284}})));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV raccordo2(
     L=100,

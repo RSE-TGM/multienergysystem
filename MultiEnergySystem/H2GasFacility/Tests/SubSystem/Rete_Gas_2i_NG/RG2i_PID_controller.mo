@@ -84,8 +84,14 @@ model RG2i_PID_controller
     Ti=0.1,
     yMax=1,
     yMin=0) annotation (Placement(transformation(extent={{-128,-18},{-108,2}})));
-  Modelica.Blocks.Sources.Constant const(k=4.93*10^5)
-    annotation (Placement(transformation(extent={{-162,-20},{-142,0}})));
+  Modelica.Blocks.Sources.Ramp p_ref(
+    offset=4.93*10^5,
+    height=-0.5*10^5,
+    duration=300,
+    startTime=3600) annotation (Placement(visible=true, transformation(
+        origin={-155,-8},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
 equation
   connect(GRM_4.inlet, sds10.outlet) annotation (Line(
       points={{-190,176},{-178,176},{-178,180},{-164,180}},
@@ -130,10 +136,10 @@ equation
       thickness=0.5));
   connect(PID.y, valveLinearOpening.opening) annotation (Line(points={{-107,-8},
           {-98,-8},{-98,18},{-102,18}}, color={0,0,127}));
-  connect(const.y, PID.u_s) annotation (Line(points={{-141,-10},{-141,-8},{-130,
-          -8}}, color={0,0,127}));
   connect(idealPressureSensor.p_meas, PID.u_m) annotation (Line(points={{-135.8,
           18.6},{-170,18.6},{-170,-36},{-118,-36},{-118,-20}}, color={0,0,127}));
+  connect(p_ref.y, PID.u_s)
+    annotation (Line(points={{-144,-8},{-130,-8}}, color={0,0,127}));
   annotation (experiment(
       StopTime=100,
       Tolerance=0.0001,

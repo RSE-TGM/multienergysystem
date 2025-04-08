@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
+within MultiEnergySystem.DistrictHeatingNetwork.Media.BaseClasses;
 partial model PartialSubstance "Base model for liquid pure substances"
   extends Modelica.Icons.MaterialProperty;
 
@@ -58,7 +58,6 @@ protected
     output Types.SpecificHeatCapacity cp;
   algorithm
     cp := a[4] + T*(a[3] + T*(a[2] + T*a[1]));
-    //cp := a[3] + T*(a[2] + T*a[1]);
     annotation (
       Inline = true);
   end cp_T;
@@ -69,7 +68,6 @@ protected
     output Types.SpecificEnthalpy h;
   algorithm
     h := T*(a[4] + T*(a[3]/2 + T*(a[2]/3 + T*a[1]/4)));
-    //h := T*(a[3] + T*(a[2]/2 + T*a[1]/3));
   annotation(Inline = true);
   end h_T;
 
@@ -124,53 +122,38 @@ protected
       Inline = true);
   end s_T;
   annotation (
-    Documentation(info="<HTML>
-  <h4>PartialSubstance – Base Model for Incompressible Liquid Substances</h4>
-
-  <p>This is a partial model that provides the structure for modeling liquid substances used in 
-  district heating networks. It is designed for substances where density and internal energy are 
-  primarily temperature-dependent, such as saturated liquid water in operating conditions 
-  (15–85&nbsp;°C).</p>
-
-  <p>Models extending this base can define various levels of complexity, from constant property models 
-  to polynomial approximations of <code>cp(T)</code>, <code>rho(T)</code>, and transport properties.</p>
-
-  <h5>Main Assumptions</h5>
-  <ul>
-    <li>Substance is a <b>pure liquid</b>, modeled as incompressible or weakly compressible depending on <code>compressibilityEffect</code>.</li>
-    <li>Internal energy <code>u</code> is primarily a function of temperature: <code>u = u(T)</code>.</li>
-    <li>Enthalpy follows the relation: <code>h = u + p / rho</code>.</li>
-    <li>Specific heat capacities: <code>cp = cv = du/dT</code>.</li>
-    <li>Entropy <code>s</code> is not computed by default (<code>computeEntropy = false</code>).</li>
-    <li>Transport properties <code>mu</code> and <code>kappa</code> are computed only if <code>computeTransport = true</code>.</li>
-  </ul>
-
-  <h5>Key Parameters</h5>
-  <ul>
-    <li><code>rho_coeff</code>, <code>cp_coeff</code>, <code>kappa_coeff</code> – Polynomial coefficients for fitting thermophysical properties.</li>
-    <li><code>mu_start</code>, <code>rho_start</code>, <code>cp_start</code> – Used as initialization or fallback values.</li>
-    <li><code>compressibilityEffect</code> – If <code>true</code>, enables derivatives such as <code>drho/dT</code> and <code>du/dp</code>.</li>
-    <li><code>computeTransport</code> – Enables dynamic viscosity and thermal conductivity calculation.</li>
-    <li><code>computeEntropy</code> – Enables entropy output if needed (disabled by default).</li>
-  </ul>
-
-  <h5>Typical Use</h5>
-  <p>Use this model as a base class when building custom liquid medium models for simulation in 
-  heating systems. Extend it and define the necessary thermodynamic and transport property equations 
-  in the <code>equation</code> section.</p>
-
-  <h5>Helper Functions</h5>
-  <p>Several inline helper functions are available to evaluate property polynomials:</p>
-  <ul>
-    <li><code>cp_T(T, a)</code>: Computes <code>cp</code> from 4-coefficient polynomial</li>
-    <li><code>rho_T(T, a)</code>: Computes <code>rho</code> from 3-coefficient polynomial</li>
-    <li><code>kappa_T(T, a)</code>: Computes <code>kappa</code> from 3-coefficient polynomial</li>
-    <li><code>drhodT_T(T, a)</code>: Computes <code>drho/dT</code></li>
-    <li><code>u_T(T, a)</code>: Computes internal energy from polynomial cp(T)</li>
-  </ul>
-
-  <p>For coefficient generation, see models in the <code>Utilities</code> subpackage.</p>
-
-        </HTML>"));
+    Documentation(info="<html>
+<p><b>PartialSubstance &ndash; Base Model for Incompressible Liquid Substances</b> </p>
+<p>This is a partial model that provides the structure for modeling liquid substances used in district heating networks. It is designed for substances where density and internal energy are primarily temperature-dependent, such as saturated liquid water in operating conditions (15&ndash;85&nbsp;&deg;C). </p>
+<p>Models extending this base can define various levels of complexity, from constant property models to polynomial approximations of <span style=\"font-family: Courier New;\">cp(T)</span>, <span style=\"font-family: Courier New;\">rho(T)</span>, and transport properties. </p>
+<p><b><span style=\"font-size: 8pt;\">Main Assumptions</span></b> </p>
+<ul>
+<li>Substance is a <b>pure liquid</b>, modeled as incompressible or weakly compressible depending on <span style=\"font-family: Courier New;\">compressibilityEffect</span>. </li>
+<li>Enthalpy follows the relation: <span style=\"font-family: Courier New;\">h = u + p / rho</span>. </li>
+<li>Specific heat capacities: <span style=\"font-family: Courier New;\">cp = cv = du/dT</span>. </li>
+<li>Entropy <span style=\"font-family: Courier New;\">s</span> is not computed by default (<span style=\"font-family: Courier New;\">computeEntropy = false</span>). </li>
+<li>Transport properties <span style=\"font-family: Courier New;\">mu</span> and <span style=\"font-family: Courier New;\">kappa</span> are computed only if <span style=\"font-family: Courier New;\">computeTransport = true</span>. </li>
+</ul>
+<p><b><span style=\"font-size: 8pt;\">Key Parameters</span></b> </p>
+<ul>
+<li><span style=\"font-family: Courier New;\">rho_coeff</span>, <span style=\"font-family: Courier New;\">cp_coeff</span>, <span style=\"font-family: Courier New;\">kappa_coeff</span> &ndash; Polynomial coefficients for fitting thermophysical properties. </li>
+<li><span style=\"font-family: Courier New;\">mu_start</span>, <span style=\"font-family: Courier New;\">rho_start</span>, <span style=\"font-family: Courier New;\">cp_start</span> &ndash; Used as initialization or fixed values. </li>
+<li><span style=\"font-family: Courier New;\">compressibilityEffect</span> &ndash; If <span style=\"font-family: Courier New;\">true</span>, enables derivatives such as <span style=\"font-family: Courier New;\">drho/dT</span> and <span style=\"font-family: Courier New;\">du/dp</span>. </li>
+<li><span style=\"font-family: Courier New;\">computeTransport</span> &ndash; Enables dynamic viscosity and thermal conductivity calculation. </li>
+<li><span style=\"font-family: Courier New;\">computeEntropy</span> &ndash; Enables entropy output if needed (disabled by default). </li>
+</ul>
+<p><b><span style=\"font-size: 8pt;\">Typical Use</span></b> </p>
+<p>Use this model as a base class when building custom liquid medium models for simulation in heating systems. Extend it and define the necessary thermodynamic and transport property equations in the <span style=\"font-family: Courier New;\">equation</span> section. </p>
+<p><b><span style=\"font-size: 8pt;\">Helper Functions</span></b> </p>
+<p>Several inline helper functions are available to evaluate property polynomials: </p>
+<ul>
+<li><span style=\"font-family: Courier New;\">cp_T(T, a)</span>: Computes <span style=\"font-family: Courier New;\">cp</span> from 4-coefficient polynomial </li>
+<li><span style=\"font-family: Courier New;\">rho_T(T, a)</span>: Computes <span style=\"font-family: Courier New;\">rho</span> from 3-coefficient polynomial </li>
+<li><span style=\"font-family: Courier New;\">kappa_T(T, a)</span>: Computes <span style=\"font-family: Courier New;\">kappa</span> from 3-coefficient polynomial </li>
+<li><span style=\"font-family: Courier New;\">drhodT_T(T, a)</span>: Computes <span style=\"font-family: Courier New;\">drho/dT</span> </li>
+<li><span style=\"font-family: Courier New;\">u_T(T, a)</span>: Computes internal energy from polynomial cp(T) </li>
+</ul>
+<p>For coefficient generation, see models in the <span style=\"font-family: Courier New;\">Utilities</span> subpackage. </p>
+</html>"));
 
 end PartialSubstance;

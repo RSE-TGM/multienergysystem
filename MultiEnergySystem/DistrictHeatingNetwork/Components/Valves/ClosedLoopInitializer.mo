@@ -12,7 +12,7 @@ model ClosedLoopInitializer
     "Initial value of the mass flow rate"
     annotation (Dialog(tab="Initialisation"));
   final parameter Types.MassFlowRate m_flow_b(fixed=false, start=0);
-  outer System system "System object";
+  outer MultiEnergySystem.System system "System object";
 
   DistrictHeatingNetwork.Types.MassFlowRate m_flow(min=0, start=m_flow_start);
 

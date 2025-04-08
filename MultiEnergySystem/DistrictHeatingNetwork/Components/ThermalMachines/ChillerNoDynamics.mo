@@ -1,9 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ChillerNoDynamics
   extends DistrictHeatingNetwork.Icons.ThermalMachines.HeatPump;
-  //replaceable package Medium =
-  //    MultiEnergySystem.DistrictHeatingNetwork.Media.StandardWater                          constrainedby Modelica.Media.Interfaces.PartialMedium "Medium model" annotation (
-  //   choicesAllMatching = true);
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp "Medium model" annotation (
      choicesAllMatching = true);
   // Declaration of fluid models

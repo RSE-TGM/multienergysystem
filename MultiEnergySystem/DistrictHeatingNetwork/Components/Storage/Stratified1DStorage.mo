@@ -1,7 +1,7 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
 model Stratified1DStorage
+  extends DistrictHeatingNetwork.Icons.Generic.Old;
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp,rho0};
   import      Modelica.Units.SI;
 
   // Parameter

@@ -335,7 +335,7 @@ model HP301System
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-10,-140})));
-  inner System system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{120,160},{140,180}})));
   Modelica.Blocks.Sources.Ramp omega_P301(
     offset=2*3.141592654*40,

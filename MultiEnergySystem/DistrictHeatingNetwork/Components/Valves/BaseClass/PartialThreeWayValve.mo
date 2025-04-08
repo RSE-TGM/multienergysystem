@@ -45,8 +45,6 @@ partial model PartialThreeWayValve "Partial model for the implementation of thre
     Dialog(group = "Initialisation"));
   final parameter Real q_m3h_start_valve(unit = "m3/h") = q_m3h_start*(q_q1_start /(q_q1_start + 1));
   final parameter Real q_m3h_start_valve1(unit = "m3/h") = q_m3h_start*(1/(q_q1_start + 1));
-  //final parameter Modelica.Units.SI.PressureDifference dp_start = m_flow_start^2/(Av^2*rho_start) "Start value valve pressure drop" annotation (
-  //  Dialog(group = "Initialisation"));
 
 
   //-------------------------------

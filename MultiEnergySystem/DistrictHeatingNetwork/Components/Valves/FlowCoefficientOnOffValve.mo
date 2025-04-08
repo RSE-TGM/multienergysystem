@@ -1,8 +1,16 @@
-within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves;
+﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.Valves;
 model FlowCoefficientOnOffValve
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort(allowFlowReversal = true);
   extends MultiEnergySystem.DistrictHeatingNetwork.Icons.Water.Valve;
+
+  //-------------------------------
+  // Declaration of fluid
+  //-------------------------------
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
+
+  //-------------------------------
+  // Valve Characteristics
+  //-------------------------------
   parameter Types.PerUnit nomOpening = 1 "Nominal valve opening" annotation (
     Dialog(group = "Valve characteristics"));
   parameter Types.PerUnit minimumOpening = 0.001 "Minimum opening area, avoid no flow condition, default 3mm diameter" annotation (
@@ -12,12 +20,16 @@ model FlowCoefficientOnOffValve
   parameter Components.Types.valveOpeningChar openingChar = Components.Types.valveOpeningChar.Linear "opening characteristic" annotation (
     Dialog(group = "Valve characteristics"));
 
-// Nominal Values
+  //-------------------------------
+  // Nominal Conditions
+  //-------------------------------
   parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump";
   parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply";
   parameter Real q_m3h_nom = 6 "Nominal volumetric flowrate in m3h";
 
-// Start values
+  //-------------------------------
+  // Initialization
+  //-------------------------------
   parameter Types.Temperature Tin_start = 20 + 273.15 annotation (
     Dialog(group = "Initialisation"));
   parameter Types.Pressure pin_start = 2e5 annotation (
@@ -27,6 +39,9 @@ model FlowCoefficientOnOffValve
   parameter Real q_m3h_start(unit = "m3/h") = 6 "Start value volumetric flowrate" annotation (
     Dialog(group = "Initialisation"));
 
+  //-------------------------------
+  // Subcomponents
+  //-------------------------------
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve valve(
     redeclare model Medium = Medium,
     allowFlowReversal=true,
@@ -78,5 +93,23 @@ equation
   connect(Command.y, firstOrder.u) annotation (Line(points={{0.5,51},{0.5,48.5},{2.22045e-15,48.5},{2.22045e-15,44}}, color={0,0,127}));
   connect(firstOrder.y, valve.opening) annotation (Line(points={{-1.9984e-15,21},{-1.9984e-15,20},{0,20},{0,12.8}}, color={0,0,127}));
 annotation (
-    Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+    Diagram(coordinateSystem(extent = {{-100, -100}, {100, 100}})), Documentation(info="<html>
+
+  <h4>FlowCoefficientOnOffValve – On/Off Control Valve</h4>
+
+  <p>This model represents a two-port valve with flow governed by a <b>flow coefficient (Kv)</b> and a Boolean on/off input.</p>
+
+  <h5>Key Features</h5>
+  <ul>
+    <li>Uses <code>FlowCoefficientValve</code> to model pressure drop and flow</li>
+    <li>Boolean input (<code>u</code>) activates/deactivates the valve</li>
+    <li>Opening signal passes through a <code>BooleanToReal</code> block and <code>FirstOrder</code> block for actuator smoothing</li>
+    <li>Supports various valve opening characteristics (linear, quadratic, etc.)</li>
+  </ul>
+
+  <h5>Typical Usage</h5>
+  <p>Use this component when you want to simulate simple control behavior, such as digital control from a thermostat or automation system that toggles the valve state (open/close).</p>
+
+
+</html>"));
 end FlowCoefficientOnOffValve;

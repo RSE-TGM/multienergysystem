@@ -14,7 +14,7 @@ partial model PartialMixture "Interface for real mixture gas models"
   parameter Boolean computeEnergyVariables = true "Used to decide if is necessary to calculate HHV,SG,WI";
   parameter Integer nXi = 0 "Number of independent elements in the mass fraction array that influence fluid properties";
   parameter Integer nX = nXi "Number of elements in the mass fraction array that influence fluid properties";
-  parameter Types.MassFraction Xi_start[nXi] "Start value of the indepentend elements of fluid mass composition";
+  parameter Types.MassFraction Xi_start[nXi] "Start value of the independent elements of fluid mass composition";
   parameter Types.Pressure p_start "Start value of the fluid pressure";
   parameter Types.Temperature T_start "Start value of the fluid temperature";
   parameter Types.MassFraction X_start[nX] "Start value of the fluid mass composition";

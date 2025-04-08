@@ -122,5 +122,23 @@ initial equation
   end if;
 
 annotation (
-    Icon(graphics={  Rectangle(rotation = 90, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Rectangle(origin = {60, 0}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, -40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, 40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}})}, coordinateSystem(extent = {{-100, -100}, {100, 100}})));
+    Icon(graphics={  Rectangle(rotation = 90, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, 40}, {100, -40}}), Rectangle(origin = {60, 0}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, -40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {-60, 40}, lineColor = {182, 109, 49}, fillColor = {247, 150, 70}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-20, 20}, {20, -20}})}, coordinateSystem(extent = {{-100, -100}, {100, 100}})),
+      Documentation(info="<html>
+<p>The <span style=\"font-family: Courier New;\">BaseManifold</span> model represents a gas manifold that combines two inlet streams and directs the mixed fluid to an outlet. This model is a partial model, meaning it is intended to be extended by more specific implementations. It includes mass, momentum, and energy balance equations, allowing for the tracking of fluid properties such as pressure, temperature, and composition.</p>
+<h4>Equations and Assumptions:</h4>
+<p>1. <b>Mass Balance:</b> The mass flow into the manifold equals the mass flow out (dM_dt = m_flow_in1 + m_flow_in2 - m_flow_out).</p>
+<p>2. <b>Energy Balance:</b> Energy is conserved between inlets and the outlet (dU_dt = m_flow_in1 * hin1 + m_flow_in2 * hin2 - m_flow_out * h).</p>
+<p>3. <b>Momentum Balance:</b> The pressure is assumed to be uniform across all ports (p = inlet1.p = inlet2.p = outlet.p).</p>
+<p>4. <b>Fluid Properties:</b> Each fluid medium (inlets and outlet) is initialized with specific temperature, pressure, and composition.</p>
+<p>5. <b>Flow Reversal Handling:</b> Ensures that composition and enthalpy remain consistent when flow direction changes.</p>
+<p>6. <b>Initial Conditions:</b> The model assumes a steady-state condition by setting time derivatives of temperature and composition to zero (der(T) = 0, der(Xi) = 0).</p>
+<h4>Fluid Ports: </h4>
+<ul>
+<li><span style=\"font-family: Courier New;\">inlet1</span>: First inlet for gas mixture.</li>
+<li><span style=\"font-family: Courier New;\">inlet2</span>: Second inlet for gas mixture.</li>
+<li><span style=\"font-family: Courier New;\">outlet</span>: Outlet for mixed gas.</li>
+</ul>
+<h4>Usage:</h4>
+<p>This model is designed to be <b>extended</b> by more specific manifold models. It provides a <b>flexible</b> and <b>generalized</b> framework for gas mixing applications, particularly in hydrogen and methane distribution networks.</p>
+</html>"));
 end BaseManifold;

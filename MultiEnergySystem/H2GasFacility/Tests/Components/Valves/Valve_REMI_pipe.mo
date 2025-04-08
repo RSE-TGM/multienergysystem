@@ -50,7 +50,7 @@ extends Modelica.Icons.Example;
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-78,4})));
-  inner System system(T_amb=288.15)
+  inner MultiEnergySystem.System system(T_amb=288.15)
     annotation (Placement(transformation(extent={{-90,76},{-70,96}})));
   Modelica.Blocks.Sources.Ramp opening1(
     height=-1,

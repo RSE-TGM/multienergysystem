@@ -2,18 +2,23 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.BaseCla
 partial model PumpBase "Base model to develop water pump models"
   extends DistrictHeatingNetwork.Icons.Water.WaterPump;
 
+  //-------------------------------
+  // Declaration of fluid
+  //-------------------------------
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp annotation (
      choicesAllMatching = true);
 
-  //Constants
-  parameter Real a[3] = {338.084416, 130887.059346, -8074937.668508} "value of coefficients for Linear Power Characteristic of pump model";
-  parameter Real b[3] = {7.38557689, 617.03274734, -545218.57934041} "value of quadratic polynomial coefficients for head calculation";
+  //-------------------------------
+  // Constants
+  //-------------------------------
   constant Types.Power W_eps = 1e-8 "Small coefficient to avoid numerical singularities";
   constant Types.AngularVelocity omega_eps = 1e-6 "Small coefficient to avoid numerical singularities";
   constant Types.Acceleration g = Modelica.Constants.g_n "constant gravity";
   constant Real pi = Modelica.Constants.pi "pi";
 
-  //Start Parameters
+  //-------------------------------
+  // Initial conditions
+  //-------------------------------
   parameter Modelica.Units.SI.Temperature Tin_start "Start value of the inlet temperature" annotation (
     Dialog(tab = "Initialisation"));
   parameter Modelica.Units.SI.Temperature Tout_start "Start value of the outlet temperature" annotation (
@@ -27,7 +32,13 @@ partial model PumpBase "Base model to develop water pump models"
   parameter Modelica.Units.SI.MassFlowRate m_flow_start = m_flow_nom "Mass Flow Rate Start Value" annotation (
     Dialog(tab = "Initialisation"));
 
-  //Nominal parameters
+  //-------------------------------
+  // Nominal operating values
+  //-------------------------------
+  parameter Real a[3] = {338.084416, 130887.059346, -8074937.668508} "value of coefficients for Linear Power Characteristic of pump model" annotation (
+    Dialog(group = "Pump Characteristics"));
+  parameter Real b[3] = {7.38557689, 617.03274734, -545218.57934041} "value of quadratic polynomial coefficients for head calculation" annotation (
+    Dialog(group = "Pump Characteristics"));
   parameter Types.MassFlowRate m_flow_nom = qnom_inm3h_max*985/3600 "nomimal outlet mass flowrate" annotation (
     Dialog(group = "Pump Characteristics"));
   parameter Types.Density rhonom = 1000 "Nominal Liquid Density" annotation (
@@ -95,12 +106,6 @@ partial model PumpBase "Base model to develop water pump models"
 equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
-//   assert(headmax > head, "Head is higher than its maximum value", AssertionLevel.error);
-//   assert(headmin < head, "Head is lower than its minimum value", AssertionLevel.error);
-//   assert(qnom_inm3h_max > q_m3h, "Volumetric flowrate is higher than its maximum operating value", AssertionLevel.error);
-//   assert(qnom_inm3h_min < q_m3h, "Volumetric flowrate is lower than its minimum operating value", AssertionLevel.error);
-//   assert(2*pi*50 >= omega, "Frequency is higher than its maximum operating value", AssertionLevel.error);
-//   assert(2*pi*30 <= omega, "Frequency is lower than its minimum operating value", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;
@@ -137,9 +142,39 @@ equation
   0 = outlet.m_flow*hout + inlet.m_flow*hin + W - Qloss "Energy balance";
   Pm = W/etamech;
   Pe = Pm/etaelec;
-  //inlet.h_out = inStream(outlet.h_out) "Equation for flow reversal, not used in this model";
-  //inletPower.P = Pe;
+
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false)),
-    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})));
+    Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}})),
+    Documentation(info="<html>
+<h3>PumpBase</h3>
+<p>
+  <strong>Summary:</strong><br>
+  <code>PumpBase</code> is a partial model representing the base class for water pump components. It defines the structural elements and balance equations 
+  for flow, pressure, power, and energy transfer, and it supports customization via replaceable fluid models.
+</p>
+
+<p>
+  <strong>Key Features:</strong>
+  <ul>
+    <li>Customizable fluid medium</li>
+    <li>Polynomial-based head and power characteristics</li>
+    <li>Thermodynamic state tracking (p, T, h, rho)</li>
+    <li>Support for initialization via nominal conditions</li>
+    <li>Calculations of mechanical and electrical power</li>
+  </ul>
+</p>
+
+<p>
+  <strong>Intended Use:</strong><br>
+  This base model should be extended by specific pump implementations (e.g., <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.ControlledPump\">ControlledPump</a>, <a href=\"modelica://MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump\">PrescribedPump</a>) 
+  where the control law or driving logic is defined.
+</p>
+
+<p>
+  <strong>Parameters to Set:</strong><br>
+  <code>m_flow_nom</code>, <code>headnom</code>, <code>etanom</code>, <code>qnom_inm3h</code>, <code>a</code>, <code>b</code> (characteristic curves), etc.
+</p>
+
+</html>"));
 end PumpBase;

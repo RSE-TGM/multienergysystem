@@ -79,7 +79,7 @@ model PumpPipeValveBase
                                              annotation (Placement(transformation(extent={{12,20},{32,40}})));
   Modelica.Blocks.Sources.TimeTable omegaSet(table=omega)
                                              annotation (Placement(transformation(extent={{-70,20},{-50,40}})));
-  inner System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
+  inner MultiEnergySystem.System system annotation (Placement(transformation(extent={{80,80},{100,100}})));
   Sources.SourceMassFlow sourceMassFlow(redeclare model Medium = Medium,
     use_in_m_flow=true,
     p0=pin_start,

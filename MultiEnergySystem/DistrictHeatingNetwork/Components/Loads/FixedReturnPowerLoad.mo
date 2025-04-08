@@ -22,7 +22,7 @@ model FixedReturnPowerLoad
         origin={-50,0},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.BaseClass.PowerTransfer loadHX(
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Loads.BaseClass.PowerTransfer loadHX(
       redeclare model Medium = Medium,
       allowFlowReversal=false) annotation (Placement(visible=true,
         transformation(

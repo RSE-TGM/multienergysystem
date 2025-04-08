@@ -1251,7 +1251,7 @@ protected
     p0=200000,
     T0=323.15)
     annotation (Placement(transformation(extent={{-332,128},{-312,148}})));
-  inner System                        system
+  inner MultiEnergySystem.System system
     annotation (Placement(transformation(extent={{410,442},{430,462}})));
 equation
   connect(RR00_PL_RR01_PR01.outlet,PR01. inlet) annotation (Line(

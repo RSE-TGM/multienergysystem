@@ -5,8 +5,6 @@ partial model CentralizedNetworkBase
   replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
-  inner DistrictHeatingNetwork.System system annotation (
-    Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
     Line(points = {{98, -48}, {98, 38}, {14, 38}, {14, 205}, {60, 205}}, color = {140, 56, 54}, thickness = 0.5));

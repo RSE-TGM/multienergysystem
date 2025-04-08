@@ -7,8 +7,6 @@ partial model CentralisedNetworkBaseIII "New version of centralised configuratio
   replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
   parameter Integer np = 3 "Number of volumes in each pipe";
-  inner DistrictHeatingNetwork.System system annotation (
-    Placement(visible = true, transformation(origin = {889, 309}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(rackL3L4.outletComp, PL711_rackL3L4_TT712.inlet) annotation (Line(
       points={{86.5,171.7},{86.5,100},{400,100},{400,-46}},

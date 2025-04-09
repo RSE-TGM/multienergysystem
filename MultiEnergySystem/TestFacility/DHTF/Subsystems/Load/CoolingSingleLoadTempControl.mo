@@ -111,7 +111,7 @@ model CoolingSingleLoadTempControl "S900 - Load model including temp control onl
     Dialog(tab = "Valve", group = "TCV"));
 
   // Controllers' parameters
-  parameter Real Kp_TT7X1 = -0.0013715;
+  parameter Real Kp_TT7X1 = -0.0013715/10;
   parameter Real Ti_TT7X1 = 1.17885;
   parameter Real Kp_PtEX7X1 = 0.1128;
   parameter Real Ti_PtEX7X1 = 0.26795;
@@ -369,6 +369,13 @@ model CoolingSingleLoadTempControl "S900 - Load model including temp control onl
     Umax=1,
     Umin=0)
     annotation (Placement(transformation(extent={{-57,-113.5},{-37,-93.5}})));
+  Modelica.Blocks.Continuous.PI PI(
+    k=Kp_TT7X1,
+    T=Ti_TT7X1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+    x_start=1,
+    y_start=1) annotation (Placement(transformation(extent={{-66,-83.5},{-46,-63.5}})));
+  Modelica.Blocks.Math.Feedback feedback annotation (Placement(transformation(extent={{-92.5,-69.5},{-72.5,-49.5}})));
 equation
 
   connect(PL701_FCV701_FT701.inlet,FCV7X1. outlet) annotation (Line(
@@ -479,11 +486,14 @@ equation
       thickness=0.5));
   connect(TT7X1_SP, PI_TT7X1.REF) annotation (Line(points={{-65,-99},{-60,-99},{-60,-99.5},
           {-55,-99.5}}, color={0,0,127}));
-  connect(PI_TT7X1.controlAction, TCV7X1.opening)
-    annotation (Line(points={{-36,-103.5},{-28,-103.5}}, color={0,0,127}));
   connect(TT7X1.T, PI_TT7X1.FeedBack) annotation (Line(points={{28.5,95},{36.5,95},{36.5,118},
           {-98.5,118},{-98.5,-107.5},{-55,-107.5}}, color={0,0,127}));
   connect(theta_FCV7X1, FCV7X1.opening) annotation (Line(points={{42.5,37.5},{28,37.5}}, color={0,0,127}));
+  connect(feedback.y,PI. u) annotation (Line(points={{-73.5,-59.5},{-72.5,-59.5},{-72.5,-71.5},{-68,-71.5},{-68,-73.5}},
+                                                                                                                       color={0,0,127}));
+  connect(PI.y, TCV7X1.opening) annotation (Line(points={{-45,-73.5},{-44,-73.5},{-44,-85.5},{-31,-85.5},{-31,-103.5},{-28,-103.5}}, color={0,0,127}));
+  connect(feedback.u2, PI_TT7X1.FeedBack) annotation (Line(points={{-82.5,-67.5},{-83.5,-107.5},{-55,-107.5}}, color={0,0,127}));
+  connect(TT7X1_SP, feedback.u1) annotation (Line(points={{-65,-99},{-90.5,-99},{-90.5,-59.5}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}}, grid={0.5,0.5})),
                                                                          Icon(graphics={
                              Bitmap(

@@ -493,10 +493,6 @@ equation
       thickness=0.5));
   connect(TT7X1_SP, PI_TT7X1.REF) annotation (Line(points={{-65,-99},{-60,-99},{-60,-99.5},
           {-55,-99.5}}, color={0,0,127}));
-  connect(PI_TT7X1.controlAction, TCV7X1.opening)
-    annotation (Line(points={{-36,-103.5},{-28,-103.5}}, color={0,0,127}));
-  connect(FCV7X1.opening, PI_EX7X1Pt.controlAction)
-    annotation (Line(points={{28,37.5},{34,37.5}}, color={0,0,127}));
   connect(TT7X1.T, PI_TT7X1.FeedBack) annotation (Line(points={{28.5,95},{36.5,95},{36.5,118},
           {-98.5,118},{-98.5,-107.5},{-55,-107.5}}, color={0,0,127}));
   connect(I_EX7X1Pt.REF, EX7X1Pt_SP)
@@ -523,6 +519,8 @@ equation
       points={{20.5,-113},{20.5,-121.5},{20,-121.5},{20,-130}},
       color={140,56,54},
       thickness=0.5));
+  connect(PI_TT7X1.controlAction, TCV7X1.opening) annotation (Line(points={{-36,-103.5},{-28,-103.5}}, color={0,0,127}));
+  connect(PI_EX7X1Pt.controlAction, FCV7X1.opening) annotation (Line(points={{34,37.5},{28,37.5}}, color={0,0,127}));
   annotation (Diagram(coordinateSystem(extent={{-100,-120},{100,120}}, grid={0.5,0.5})),
                                                                          Icon(graphics={
                              Bitmap(

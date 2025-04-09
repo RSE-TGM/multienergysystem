@@ -20,8 +20,7 @@ model AWPIContinuous
         Placement(visible = true, transformation(origin={-24,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Math.Add add(k1 = +1, k2 = +1)  annotation (
         Placement(visible = true, transformation(origin={14,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin,
-    homotopyType=Modelica.Blocks.Types.LimiterHomotopy.UpperLimit)     annotation (
+  Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin)  annotation (
         Placement(visible = true, transformation(origin={52,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Continuous.FirstOrder firstOrder(T = Ti,
   initType=Modelica.Blocks.Types.Init.SteadyState,                                                       k = 1,

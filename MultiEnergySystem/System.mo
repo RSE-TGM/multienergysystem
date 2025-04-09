@@ -14,12 +14,12 @@ model System
     missingInnerMessage="The System object is missing, please drag it on the top layer of your model",
     Icon(graphics={Polygon(
           points={{-100,100},{100,100},{100,-100},{-100,-100},{-100,100}},
-          lineColor={0,0,255},
+          lineColor={0,0,0},
           smooth=Smooth.None,
           fillPattern=FillPattern.Solid,
           fillColor={255,255,255}),       Text(
           extent={{-80,40},{80,-40}},
-          lineColor={0,0,255},
-          textString="ambient")}));
+          lineColor={0,0,0},
+          textString="system")}));
 
 end System;

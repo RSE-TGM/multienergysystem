@@ -1,5 +1,6 @@
 within MultiEnergySystem.CaseStudies.Report_062024;
 package PipelineData "Data of Cheli's Paper [1]"
+  extends Modelica.Icons.RecordsPackage;
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine pipe1(
       L = 200,
       Di = 0.16,

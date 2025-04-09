@@ -1,5 +1,6 @@
 within MultiEnergySystem.CaseStudies.GasNetwork_2iRG;
 package PipelineData_2i "Data of Rete Gas 2i"
+  extends Modelica.Icons.RecordsPackage;
     constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s1(
       L = 842.777,
       Di = 0.2091,

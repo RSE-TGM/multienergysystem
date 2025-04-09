@@ -3,8 +3,8 @@ model ControlPowerTest
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
-  parameter Real Kp_TT7X1 = -0.0013715/2;
-  parameter Real Ti_TT7X1 = 150/3;
+  parameter Real Kp_TT7X1 = -0.001;
+  parameter Real Ti_TT7X1 = 40;
 
   parameter Real Kp_Pt = 0.1128;
   parameter Real Ti_Pt = 0.26795;
@@ -12,13 +12,13 @@ model ControlPowerTest
   parameter Real Ki_PtEX7X1 = 0.5*2;
 
   Load.CoolingSingleLoadPowerControl load(
-    nHX = 3,                               Kp_TT7X1=Kp_TT7X1, Ti_TT7X1=Ti_TT7X1,
+    nHX = 7,                               Kp_TT7X1=Kp_TT7X1, Ti_TT7X1=Ti_TT7X1,
     Kp_PtEX7X1=Kp_Pt,
     Ti_PtEX7X1=Ti_Pt,
     Ki_PtEX7X1=Ki_PtEX7X1,
     I_EX7X1Pt(Umax=1.5, integrator(initType=Modelica.Blocks.Types.Init.SteadyState, y_start=1)),
     PI_EX7X1Pt(y_start=1),
-    PI_TT7X1(y_start=1), np = 3, EX7X1_Tin_cold = 15 + 273.15, EX7X1_Tout_cold = 30 + 273.15, initType_PI = Modelica.Blocks.Types.Init.InitialOutput, initType_I = Modelica.Blocks.Types.Init.InitialOutput)                 annotation (Placement(transformation(extent={{-28,-26},{24,26}})));
+    PI_TT7X1(y_start=1), np = 3, EX7X1_Tin_cold = 15 + 273.15, EX7X1_Tout_cold = 30 + 273.15)                 annotation (Placement(transformation(extent={{-28,-26},{24,26}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkHot_p(
     redeclare model Medium = Medium,
     use_in_p0=false,

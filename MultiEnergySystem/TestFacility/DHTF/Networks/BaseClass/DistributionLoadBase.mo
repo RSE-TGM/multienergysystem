@@ -109,6 +109,5 @@ equation
       horizontalAlignment=TextAlignment.Right));
   annotation (experiment(
       StopTime=100000,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      Tolerance=1e-06, StartTime = 0, Interval = 200));
 end DistributionLoadBase;

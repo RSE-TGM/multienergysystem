@@ -111,16 +111,16 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Dialog(tab = "Valve", group = "TCV"));
 
   // Controllers' parameters
-  parameter Real Kp_TT7X1 = -0.000068675*10 "proportional gain for temperature controller" annotation(Dialog(group="Controller Parameters"));
-  parameter Real Ti_TT7X1 = 50 "integral time for temperature controller" annotation(Dialog(group="Controller Parameters"));
+  parameter Real Kp_TT7X1 = -0.001 "proportional gain for temperature controller" annotation(Dialog(group="Controller Parameters"));
+  parameter Real Ti_TT7X1 = 40 "integral time for temperature controller" annotation(Dialog(group="Controller Parameters"));
   parameter Real Kp_PtEX7X1 = 0.113 "proportional gain for thermal power controller" annotation(Dialog(group="Controller Parameters"));
   parameter Real Ti_PtEX7X1 = 0.268 "integral time for thermal power controller" annotation(Dialog(group="Controller Parameters"));
-  parameter Real Ki_PtEX7X1 = 0.08/0.08 annotation(Dialog(group="Controller Parameters"));
+  parameter Real Ki_PtEX7X1 = 1 annotation(Dialog(group="Controller Parameters"));
   parameter Real y_start_PI_TT(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
   parameter Real y_start_PI_Pt(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
   parameter Real y_start_I_m_flow(min = 0, max = 2) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));    
-  parameter Modelica.Blocks.Types.Init initType_PI = Modelica.Blocks.Types.Init.SteadyState "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
-  parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.NoInit "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));       
+  parameter Modelica.Blocks.Types.Init initType_PI = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
+  parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));       
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
     redeclare model Medium = Medium,

@@ -5,7 +5,8 @@ model AWPIContinuous
   parameter Real Ti = 1 "Integral Time";
   parameter Real Umax = 1 "Maximum control action";
   parameter Real Umin = 0 "Minimum control action";
-  parameter Real y_start = 1 "Nominal output";
+  parameter Real y_start = 1 "Nominal output" annotation(Dialog(group="Initialization"));
+  parameter Modelica.Blocks.Types.Init initType = Modelica.Blocks.Types.Init.SteadyState "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));  
   Modelica.Blocks.Interfaces.RealInput REF annotation (
       Placement(visible = true, transformation(origin={-110,40},    extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin={-80,40},    extent={{-20,-20},
             {20,20}},                                                                                                                                                                       rotation = 0)));
@@ -22,8 +23,8 @@ model AWPIContinuous
         Placement(visible = true, transformation(origin={14,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin)  annotation (
         Placement(visible = true, transformation(origin={52,34},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Modelica.Blocks.Continuous.FirstOrder firstOrder(T = Ti,
-  initType=Modelica.Blocks.Types.Init.SteadyState,                                                       k = 1,
+  Modelica.Blocks.Continuous.FirstOrder firstOrder(T = Ti, y(min = -10, max = 10),
+  initType=initType,                                                       k = 1,
     y_start=y_start)                                                                                                          annotation (
         Placement(visible = true, transformation(origin={30,-10},    extent = {{-10, -10}, {10, 10}}, rotation = 180)));
 equation

@@ -19,7 +19,7 @@ model ControlTempTest
     redeclare model Medium = Medium,
     use_in_p0=false,
     use_in_T0=false,
-    p0=TestFacility.Data.BPHEData.E701.pout_start_cold,
+    p0=1.8e5,
     T0(displayUnit="K") = 25 + 273.15,
     R=1e-3)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent={{9.5,9.5},{-9.5,-9.5}},      rotation = 90, origin={-16.5,-60.5})));
@@ -31,7 +31,7 @@ model ControlTempTest
     annotation (Placement(transformation(extent={{-40,58},{-20,78}})));
   DistrictHeatingNetwork.Sources.SourcePressure sourceCold_p(
     redeclare model Medium = Medium,
-    p0=TestFacility.Data.BPHEData.E701.pin_start_cold,
+    p0=2e5,
     T0(displayUnit="K") = 15 + 273.15,
     R=1e-3) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},

@@ -111,11 +111,16 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Dialog(tab = "Valve", group = "TCV"));
 
   // Controllers' parameters
-  parameter Real Kp_TT7X1 = -0.000068675*10;
-  parameter Real Ti_TT7X1 = 50;
-  parameter Real Kp_PtEX7X1 = 0.113;
-  parameter Real Ti_PtEX7X1 = 0.268;
-  parameter Real Ki_PtEX7X1 = 0.08/0.08;
+  parameter Real Kp_TT7X1 = -0.000068675*10 "proportional gain for temperature controller" annotation(Dialog(group="Controller Parameters"));
+  parameter Real Ti_TT7X1 = 50 "integral time for temperature controller" annotation(Dialog(group="Controller Parameters"));
+  parameter Real Kp_PtEX7X1 = 0.113 "proportional gain for thermal power controller" annotation(Dialog(group="Controller Parameters"));
+  parameter Real Ti_PtEX7X1 = 0.268 "integral time for thermal power controller" annotation(Dialog(group="Controller Parameters"));
+  parameter Real Ki_PtEX7X1 = 0.08/0.08 annotation(Dialog(group="Controller Parameters"));
+  parameter Real y_start_PI_TT(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
+  parameter Real y_start_PI_Pt(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
+  parameter Real y_start_I_m_flow(min = 0, max = 2) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));    
+  parameter Modelica.Blocks.Types.Init initType_PI = Modelica.Blocks.Types.Init.SteadyState "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
+  parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.NoInit "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));       
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
     redeclare model Medium = Medium,
@@ -248,7 +253,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     L=L_TT7X4_TCV7X1,
     h=h_TT7X4_TCV7X1,
     t=t_Users,
-    pin_start=EX7X1_pin_hot,
+    pin_start=EX7X1_pout_cold,
     Tin_start=EX7X1_Tout_cold,
     Tout_start=EX7X1_Tout_cold,
     Di=Di_Users,
@@ -257,7 +262,7 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     nPipes=1)      annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
-        origin={-20,-73.5})));
+        origin={-20.5,-73.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn2(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
@@ -370,16 +375,16 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
     Ti=Ti_TT7X1,
     Umax=1,
     Umin=0,
-    y_start=0.2)
+    y_start=y_start_PI_TT, initType = initType_PI)
     annotation (Placement(transformation(extent={{-57,-113.5},{-37,-93.5}})));
   DistrictHeatingNetwork.Controllers.AWPIContinuous PI_EX7X1Pt(
     Kp=Kp_PtEX7X1,
     Ti=Ti_PtEX7X1,
     Umax=1,
     Umin=0,
-    y_start=0.2)
+    y_start=y_start_PI_Pt, initType = initType_PI)
     annotation (Placement(transformation(extent={{55,47.5},{35,27.5}})));
-  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=1.5)
+  DistrictHeatingNetwork.Controllers.AWIContinuous I_EX7X1Pt(Ki=Ki_PtEX7X1, Umax=1.5, initType = initType_I, y_start = y_start_I_m_flow)
     annotation (Placement(transformation(extent={{81.5,48},{61.5,28}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y=EX7X1.Pt)
     annotation (Placement(transformation(extent={{61,48},{81,68}})));
@@ -431,7 +436,7 @@ equation
       thickness=0.5));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
   connect(PL701_TT702_SourceIn1.inlet, TT7X4.inlet) annotation (Line(
-      points={{-20,-63.5},{-20,-59.5},{-20.1,-59.5},{-20.1,-44}},
+      points={{-20.5,-63.5},{-20.5,-59.5},{-20.1,-59.5},{-20.1,-44}},
       color={140,56,54},
       thickness=0.5));
   connect(TT7X3_TT, TT7X3_TT) annotation (Line(points={{110,-75},{110,-75}}, color={0,0,127}));
@@ -444,7 +449,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn1.wall, MultiPort) annotation (Line(
-      points={{-24.1,-73.5},{-40,-73.5},{-40,0},{-110,0}},
+      points={{-24.6,-73.5},{-40,-73.5},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
   connect(PL701_SourceOut_FCV701.wall, MultiPort) annotation (Line(
@@ -484,7 +489,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL701_TT702_SourceIn1.outlet,TCV7X1. inlet) annotation (Line(
-      points={{-20,-83.5},{-20,-93.5}},
+      points={{-20.5,-83.5},{-20.5,-88.5},{-20,-88.5},{-20,-93.5}},
       color={140,56,54},
       thickness=0.5));
   connect(TCV7X1.outlet, outcold) annotation (Line(

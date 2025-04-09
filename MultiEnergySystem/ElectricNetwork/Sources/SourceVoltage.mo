@@ -6,26 +6,18 @@ model SourceVoltage "Voltage source"
   outer MultiEnergySystem.System system "System wide properties";
 
   // Initial choices
-  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation (
-    Evaluate=true, Dialog(group = "Choices"));
+  parameter Boolean allowFlowReversal = system.allowFlowReversal "= if true, allow flow reversal" annotation (Evaluate=true, Dialog(group = "Choices"));
 
   // External input conditions
-  parameter Boolean use_in_v0 = false "Use connector input for the voltage" annotation (
-    Dialog(group="External inputs"), choices(checkBox=true));
+  parameter Boolean use_in_v0 = false "Use connector input for the voltage" annotation (Dialog(group="External inputs"), choices(checkBox=true));
 
   // Nominal parameters
   parameter Modelica.Units.SI.Voltage v0=385 "Nominal voltage" annotation (Dialog(group="Fluid parameters"));
 
-  // Variables
-  //Medium.ThermodynamicState fluid "Actual fluid, including its variables";
-
   Modelica.Units.SI.Voltage v;
 
-  // Outlet fluid connector
-  Interfaces.ElectricPortOutlet outlet annotation (Placement(
-    transformation(extent={{80,-20},{120,20}}, rotation=0)));
 
-  // Input connectors
+  Interfaces.ElectricPortOutlet outlet annotation (Placement(transformation(extent={{80,-20},{120,20}}, rotation=0)));
   Modelica.Blocks.Interfaces.RealInput in_v0 if use_in_v0 "Externally supplied Voltage"  annotation (Placement(
         transformation(
         origin={-40,92},

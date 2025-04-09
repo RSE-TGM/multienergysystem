@@ -1,10 +1,10 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.Tests;
 model TestCentralisedIII
-  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model Gas = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   // Gas composition
-  parameter Integer nX = 4 "Number of components in gas";
-  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {0.9554, 0.0341, 0.0105, 0} "Mass composition";
-  H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true) annotation (
+  parameter Integer nX = 1 "Number of components in gas";
+  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
+  H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
     Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin={36,-54})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(extent = {{-76, -10}, {-56, 10}})));
@@ -31,7 +31,6 @@ equation
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     experiment(
       StopTime=6000,
-      Interval=2,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"));
+      Interval=1,
+      Tolerance=1e-06, StartTime = 0));
 end TestCentralisedIII;

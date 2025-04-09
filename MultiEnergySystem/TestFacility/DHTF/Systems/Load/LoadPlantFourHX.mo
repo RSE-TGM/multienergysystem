@@ -88,11 +88,6 @@ model LoadPlantFourHX
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3;
 
-  parameter Real FCV701theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCV711theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCV721theta[:,:] = [0, 1; 100, 1];
-  parameter Real FCV731theta[:,:] = [0, 1; 100, 1];
-
   //1. Cooling System
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool = 0.92e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool = 0.92e5;

@@ -18,8 +18,8 @@ model OLA_ThreeGen_GBEBCHP_II
   Modelica.Blocks.Sources.RealExpression domegaPR01_var(y = 2*3.14159*45) annotation (
     Placement(transformation(extent = {{69, -64}, {79, -54}})));
   Modelica.Blocks.Sources.RealExpression mflowCHP_var(y=1.2) annotation (Placement(transformation(extent={{55,-105},{65,-95}})));
-  Modelica.Blocks.Sources.RealExpression PtEX7X1SP(y=35E3) annotation (Placement(transformation(extent={{73,-115},{83,-105}})));
-  Modelica.Blocks.Sources.RealExpression TTEX7X1SP(y=70 + 273.15) annotation (Placement(transformation(extent={{73,-123},{83,-113}})));
+  Modelica.Blocks.Sources.RealExpression PtEX7X1SP(y= 30E3) annotation (Placement(transformation(extent={{73,-115},{83,-105}})));
+  Modelica.Blocks.Sources.RealExpression TTEX7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{73,-123},{83,-113}})));
 equation
   connect(domegaP501_var.y, controlSignalBus.omegaP501) annotation (
     Line(points = {{65.5, -90}, {160, -90}, {160, 0}}, color = {0, 0, 127}),

@@ -12,7 +12,7 @@ model CentralizedOneGenGB
   parameter Integer n = 3 "Number of volumes in each pipe";
 
   // Gas composition
-  parameter Integer nX = 4 "Number of components in gas";
+  parameter Integer nX = S100.fuel.nXi "Number of components in gas";
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {0.9553316, 0.0341105, 0.0105579, 0} "Mass composition";
 
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_total = 2.5;
@@ -82,6 +82,7 @@ model CentralizedOneGenGB
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-192,74})));
   Subsystems.HeatGeneration.GasBoiler      S100(
     redeclare model Medium = WaterHot,
+    redeclare model Gas = Gas,
     hctype=hctype,
     n=n,
     pin_start_S1=pin_start_S1,

@@ -1,8 +1,8 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 model CentralizedBase
   extends DistrictHeatingNetwork.Icons.Water.Network;
-
-  replaceable Systems.HeatGeneration.CentralizedOneGenGB heatGeneration annotation (Placement(transformation(extent={{-80,-20},{-40,20}})));
+  replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable Systems.HeatGeneration.CentralizedOneGenGB heatGeneration(redeclare model Gas = Gas) annotation (Placement(transformation(extent={{-80,-20},{-40,20}})));
   Systems.Distribution.CentralizedFourHX distribution annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
   replaceable Systems.Load.LoadPlantFourHX load annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));

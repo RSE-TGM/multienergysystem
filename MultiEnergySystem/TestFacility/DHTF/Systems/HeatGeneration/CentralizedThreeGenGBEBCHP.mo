@@ -23,6 +23,8 @@ model CentralizedThreeGenGBEBCHP
   parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
   parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
   Subsystems.HeatGeneration.CHP      S500(
+    redeclare model Medium = WaterHot,  
+    redeclare model Gas = Gas,
     n=n,
     Tin_low_start=Tin_Source_start_S5,
     Tout_low_start=Tout_Source_start_S5,

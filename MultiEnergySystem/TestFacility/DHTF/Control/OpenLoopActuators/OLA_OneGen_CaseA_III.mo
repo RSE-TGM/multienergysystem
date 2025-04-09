@@ -33,8 +33,8 @@ equation
   theta_FCV731SP = 1;
   theta_FCV901SP = 1;
   omega_P901SP = 2*pi*35;
-  theta_FCVC01SP = 1;
-  theta_FCVC02SP = 1;
+  theta_FCVC01SP = 0.5;
+  theta_FCVC02SP = 0.5;
   theta_TCV701SP = 1;
   theta_TCV711SP = 1;
   theta_TCV721SP = 1;

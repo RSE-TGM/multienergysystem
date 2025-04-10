@@ -30,7 +30,7 @@ equation
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     experiment(
-      StopTime=6000,
+      StopTime= 9000,
       Interval=1,
       Tolerance=1e-06, StartTime = 0));
 end TestCentralisedIII;

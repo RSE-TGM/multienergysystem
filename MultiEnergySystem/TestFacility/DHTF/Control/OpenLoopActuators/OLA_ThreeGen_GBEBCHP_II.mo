@@ -1,6 +1,8 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.OpenLoopActuators;
 model OLA_ThreeGen_GBEBCHP_II
   extends OLA_TwoGen_CaseA_III;
+
+  parameter String file1 = "modelica://MultiEnergySystem/TestFacility/Resources/loadprofile.csv";
   Modelica.Blocks.Sources.RealExpression domegaP501_var(y=2*pi*40)   annotation (
     Placement(transformation(extent = {{55, -95}, {65, -85}})));
   Modelica.Blocks.Sources.BooleanExpression GB101status(y = true) annotation (
@@ -20,6 +22,12 @@ model OLA_ThreeGen_GBEBCHP_II
   Modelica.Blocks.Sources.RealExpression mflowCHP_var(y=1.2) annotation (Placement(transformation(extent={{55,-105},{65,-95}})));
   Modelica.Blocks.Sources.RealExpression PtEX7X1SP(y= if time < 6e3 then 30e3 else 25e3) annotation (Placement(transformation(extent={{73,-115},{83,-105}})));
   Modelica.Blocks.Sources.RealExpression TTEX7X1SP(y= if time < 3e3 then 65 + 273.15 else 60 + 273.15) annotation (Placement(transformation(extent={{73,-123},{83,-113}})));
+  Modelica.Blocks.Sources.CombiTimeTable PtEX701SP(
+    tableOnFile=false,
+    table=[0,12000; 3600,12000; 7200,20000; 10800,30000; 14400,36000; 18000,40000; 21600,38000; 25200,32000; 28800,20000; 32400,12000; 36000,8000; 39600,7500; 43200,7000; 46800,7000; 50400,7500; 54000,10000; 57600,20000; 61200,32000; 64800,40000;
+        68400,38000; 72000,32000; 75600,20000; 79200,12000; 82800,12000; 86400,12000],
+    fileName=file1,                                                                                                                                                                                                        extrapolation = Modelica.Blocks.Types.Extrapolation.HoldLastPoint) annotation (
+    Placement(transformation(origin = {34, -108}, extent = {{-10, -10}, {10, 10}})));
 equation
   connect(domegaP501_var.y, controlSignalBus.omegaP501) annotation (
     Line(points = {{65.5, -90}, {160, -90}, {160, 0}}, color = {0, 0, 127}),
@@ -46,7 +54,6 @@ equation
     Line(points = {{79.5, -59}, {160, -59}, {160, 0}}, color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
   connect(mflowCHP_var.y, controlSignalBus.mflowCHP) annotation (Line(points={{65.5,-100},{160,-100},{160,0}}, color={0,0,127}));
-  connect(PtEX7X1SP.y, controlSignalBus.PtEX701) annotation (Line(points={{83.5,-110},{160,-110},{160,0}}, color={0,0,127}));
   connect(PtEX7X1SP.y, controlSignalBus.PtEX711) annotation (Line(points={{83.5,-110},{108,-110},{108,-114},{160,-114},{160,0}}, color={0,0,127}));
   connect(PtEX7X1SP.y, controlSignalBus.PtEX721) annotation (Line(points={{83.5,-110},{90,-110},{90,-108},{142,-108},{142,-28},{160,-28},{160,0}}, color={0,0,127}));
   connect(PtEX7X1SP.y, controlSignalBus.PtEX731) annotation (Line(points={{83.5,-110},{112,-110},{112,-104},{148,-104},{148,-28},{160,-28},{160,0}}, color={0,0,127}));
@@ -54,4 +61,10 @@ equation
   connect(TTEX7X1SP.y, controlSignalBus.ToutEX711) annotation (Line(points={{83.5,-118},{114,-118},{114,-122},{166,-122},{166,0},{160,0}}, color={0,0,127}));
   connect(TTEX7X1SP.y, controlSignalBus.ToutEX721) annotation (Line(points={{83.5,-118},{160,-118},{160,0}}, color={0,0,127}));
   connect(TTEX7X1SP.y, controlSignalBus.ToutEX731) annotation (Line(points={{83.5,-118},{120,-118},{120,-124},{160,-124},{160,0}}, color={0,0,127}));
+  connect(PtEX701SP.y[1], controlSignalBus.PtEX701)
+    annotation (Line(points={{45,-108},{74,-108},{74,-98},{160,-98},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
 end OLA_ThreeGen_GBEBCHP_II;

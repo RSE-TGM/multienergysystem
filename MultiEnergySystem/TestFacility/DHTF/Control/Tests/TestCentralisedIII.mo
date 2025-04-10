@@ -4,6 +4,8 @@ model TestCentralisedIII
   // Gas composition
   parameter Integer nX = 1 "Number of components in gas";
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
+
+  //parameter String file1 = loadResource("modelica://MultiEnergySystem/TestFacility/Resources/loadprofile.csv");
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
     Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin={36,-54})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
@@ -30,7 +32,7 @@ equation
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     experiment(
-      StopTime= 9000,
-      Interval=1,
+      StopTime= 86400,
+      Interval=17.28,
       Tolerance=1e-06, StartTime = 0));
 end TestCentralisedIII;

@@ -17,6 +17,7 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
   parameter Integer nHX = 9 "Number of volumes in heat exchanger";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
   // Flow Control Valve parameters
   parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
@@ -218,7 +219,8 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     Di=Di_S700,
     n=np,
     hctype=hctype,
-    nPipes=1) annotation (Placement(transformation(
+    nPipes=1,
+    cf=cf)    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,64.5})));
@@ -236,7 +238,8 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     q_m3h_start=EX7X1_q_m3h_hot,
     n=np,
     hctype=hctype,
-    nPipes=1) "Pipeline connecting the outlet of the hotside of the heat exchanger the valve FCV7X1" annotation (Placement(transformation(
+    nPipes=1,
+    cf=cf)    "Pipeline connecting the outlet of the hotside of the heat exchanger the valve FCV7X1" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,11.5})));
@@ -253,10 +256,11 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     Di=Di_S700,
     n=np,
     hctype=hctype,
-    nPipes=1) "Pipe connecting sensors 7x2 with the inlet of the hot side of the heat exchanger" annotation (Placement(transformation(
+    nPipes=1,
+    cf=cf)    "Pipe connecting sensors 7x2 with the inlet of the hot side of the heat exchanger" annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
-        origin={-20,65})));
+        origin={-20,65.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X4_TCV7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
@@ -406,7 +410,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S700_TT7X2_InHot.inlet, TT7X2.inlet) annotation (Line(
-      points={{-20,75},{-20,91.5}},
+      points={{-20,75.5},{-20,91.5}},
       color={140,56,54},
       thickness=0.5));
   connect(TT7X2.inlet,PT7X2. inlet) annotation (Line(
@@ -448,7 +452,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(PL_S700_TT7X2_InHot.wall, MultiPort) annotation (Line(
-      points={{-24.1,65},{-32,65},{-32,64.5},{-39.5,64.5},{-39.5,0},{-110,0}},
+      points={{-24.1,65.5},{-32,65.5},{-32,64.5},{-39.5,64.5},{-39.5,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
   connect(PL_S700_TT7X3_InCold.wall, MultiPort) annotation (Line(
@@ -488,7 +492,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(homotopyhot.inlet, PL_S700_TT7X2_InHot.outlet) annotation (Line(
-      points={{-20.5,35.5},{-20.5,45.25},{-20,45.25},{-20,55}},
+      points={{-20.5,35.5},{-20.5,45.25},{-20,45.25},{-20,55.5}},
       color={140,56,54},
       thickness=0.5));
   connect(homotopyhot.outlet, EX7X1.inhot) annotation (Line(

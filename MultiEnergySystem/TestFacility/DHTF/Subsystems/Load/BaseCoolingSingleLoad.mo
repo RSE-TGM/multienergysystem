@@ -205,7 +205,7 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
         origin={1,-21.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FCV701_FT701(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_FCV7X1_FT7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = Medium,
@@ -218,11 +218,11 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     Di=Di_S700,
     n=np,
     hctype=hctype,
-    nPipes=1)      annotation (Placement(transformation(
+    nPipes=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,64.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_SourceOut_FCV701(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_OutHot_FCV7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = Medium,
@@ -236,11 +236,11 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     q_m3h_start=EX7X1_q_m3h_hot,
     n=np,
     hctype=hctype,
-    nPipes=1)      annotation (Placement(transformation(
+    nPipes=1) "Pipeline connecting the outlet of the hotside of the heat exchanger the valve FCV7X1" annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,11.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X2_InHot(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = Medium,
@@ -253,11 +253,11 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     Di=Di_S700,
     n=np,
     hctype=hctype,
-    nPipes=1)      annotation (Placement(transformation(
+    nPipes=1) "Pipe connecting sensors 7x2 with the inlet of the hot side of the heat exchanger" annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-20,65})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn1(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X4_TCV7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
     redeclare model Medium = Medium,
@@ -270,11 +270,11 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     Di=Di_Users,
     n=np,
     hctype=hctype,
-    nPipes=1)      annotation (Placement(transformation(
+    nPipes=1) annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-20.5,-73.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_TT702_SourceIn2(
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X3_InCold(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
     redeclare model Medium = Medium,
@@ -287,7 +287,7 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
     Di=Di_Users,
     n=np,
     hctype=hctype,
-    nPipes=1)      annotation (Placement(transformation(
+    nPipes=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20.5,-72.5})));
@@ -321,7 +321,7 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
         extent={{-6,6},{6,-6}},
         rotation=90,
         origin={23,-47.5})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT701(T_start=EX7X1_Tout_hot, p_start=EX7X1_pout_hot)
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT7X1(redeclare model Medium = Medium, T_start=EX7X1_Tout_hot, p_start=EX7X1_pout_hot)
                                                                                                         "Flow sensor at the outlet outlet of EX701 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
@@ -373,33 +373,39 @@ partial model BaseCoolingSingleLoad "S900 - Base load model"
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-20,-103.5})));
-  DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyInitializer(redeclare model Medium = Medium, p_start=EX7X1_pin_hot, T_start=EX7X1_Tin_hot) annotation (Placement(transformation(
+  DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyhot(
+    redeclare model Medium = Medium,
+    p_start=EX7X1_pin_hot,
+    T_start=EX7X1_Tin_hot) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20.5,25.5})));
-  DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyInitializer1(redeclare model Medium = Medium, p_start=EX7X1_pin_cold, T_start=EX7X1_Tin_cold) annotation (Placement(transformation(
+  DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopycold(
+    redeclare model Medium = Medium,
+    p_start=EX7X1_pin_cold,
+    T_start=EX7X1_Tin_cold) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20.5,-103})));
 equation
 
-  connect(PL701_FCV701_FT701.inlet,FCV7X1. outlet) annotation (Line(
+  connect(PL_S700_FCV7X1_FT7X1.inlet, FCV7X1.outlet) annotation (Line(
       points={{20,54.5},{20,47.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV7X1.inlet,PL701_SourceOut_FCV701. outlet) annotation (Line(
+  connect(FCV7X1.inlet, PL_S700_OutHot_FCV7X1.outlet) annotation (Line(
       points={{20,27.5},{20,21.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_SourceOut_FCV701.inlet,EX7X1. outhot) annotation (Line(
+  connect(PL_S700_OutHot_FCV7X1.inlet, EX7X1.outhot) annotation (Line(
       points={{20,1.5},{20,-12.75},{21.3,-12.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(FT701.inlet,PL701_FCV701_FT701. outlet) annotation (Line(
+  connect(FT7X1.inlet, PL_S700_FCV7X1_FT7X1.outlet) annotation (Line(
       points={{20,80},{20,74.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn.inlet,TT7X2. inlet) annotation (Line(
+  connect(PL_S700_TT7X2_InHot.inlet, TT7X2.inlet) annotation (Line(
       points={{-20,75},{-20,91.5}},
       color={140,56,54},
       thickness=0.5));
@@ -411,7 +417,7 @@ equation
       points={{20,105},{20,95}},
       color={140,56,54},
       thickness=0.5));
-  connect(TT7X1.inlet,FT701. outlet) annotation (Line(
+  connect(TT7X1.inlet,FT7X1. outlet) annotation (Line(
       points={{20,95},{20,86}},
       color={140,56,54},
       thickness=0.5));
@@ -420,7 +426,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(MultiPort, MultiPort) annotation (Line(points={{-110,0},{-110,0}}, color={255,238,44}));
-  connect(PL701_TT702_SourceIn1.inlet, TT7X4.inlet) annotation (Line(
+  connect(PL_S700_TT7X4_TCV7X1.inlet, TT7X4.inlet) annotation (Line(
       points={{-20.5,-63.5},{-20.5,-59.5},{-20.1,-59.5},{-20.1,-44}},
       color={140,56,54},
       thickness=0.5));
@@ -433,19 +439,19 @@ equation
       points={{20,105},{20,129}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn1.wall, MultiPort) annotation (Line(
+  connect(PL_S700_TT7X4_TCV7X1.wall, MultiPort) annotation (Line(
       points={{-24.6,-73.5},{-40,-73.5},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL701_SourceOut_FCV701.wall, MultiPort) annotation (Line(
+  connect(PL_S700_OutHot_FCV7X1.wall, MultiPort) annotation (Line(
       points={{15.9,11.5},{-5,11.5},{-5,-11},{-40,-11},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn.wall, MultiPort) annotation (Line(
+  connect(PL_S700_TT7X2_InHot.wall, MultiPort) annotation (Line(
       points={{-24.1,65},{-32,65},{-32,64.5},{-39.5,64.5},{-39.5,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn2.wall, MultiPort) annotation (Line(
+  connect(PL_S700_TT7X3_InCold.wall, MultiPort) annotation (Line(
       points={{16.4,-72.5},{-6,-72.5},{-6,-56},{-21,-56},{-21,-57},{-40,-57},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
@@ -460,12 +466,12 @@ equation
           -52},{95,-95},{110,-95}},                                                                                   color={0,0,127}));
   connect(TT7X3.T, TT7X3_TT) annotation (Line(points={{30.8,-47.5},{98.5,-47.5},{98.5,-75},
           {110,-75}},                                                                                              color={0,0,127}));
-  connect(PL701_FCV701_FT701.wall, MultiPort) annotation (Line(
+  connect(PL_S700_FCV7X1_FT7X1.wall, MultiPort) annotation (Line(
       points={{15.9,64.5},{-5,64.5},{-5,-11},{-40,-11},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
-  connect(FT701.m_flow, FT7X1_FT) annotation (Line(points={{25,86.5},{33,86.5},{33,111},{91,111},{91,45},{110,45}},       color={0,0,127}));
-  connect(PL701_TT702_SourceIn2.outlet, TT7X3.inlet) annotation (Line(
+  connect(FT7X1.m_flow, FT7X1_FT) annotation (Line(points={{25,86.5},{33,86.5},{33,111},{91,111},{91,45},{110,45}},       color={0,0,127}));
+  connect(PL_S700_TT7X3_InCold.outlet, TT7X3.inlet) annotation (Line(
       points={{20.5,-62.5},{20,-62.5},{20,-54},{16,-54},{16,-40},{20.6,-40},{20.6,-47.5}},
       color={140,56,54},
       thickness=0.5));
@@ -473,7 +479,7 @@ equation
       points={{21.3,-30.25},{21,-30.25},{21,-47},{20.5,-47},{20.5,-47.5},{20.6,-47.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn1.outlet,TCV7X1. inlet) annotation (Line(
+  connect(PL_S700_TT7X4_TCV7X1.outlet, TCV7X1.inlet) annotation (Line(
       points={{-20.5,-83.5},{-20.5,-88.5},{-20,-88.5},{-20,-93.5}},
       color={140,56,54},
       thickness=0.5));
@@ -481,19 +487,19 @@ equation
       points={{-20,-113.5},{-20,-130}},
       color={140,56,54},
       thickness=0.5));
-  connect(homotopyInitializer.inlet, PL701_TT702_SourceIn.outlet) annotation (Line(
+  connect(homotopyhot.inlet, PL_S700_TT7X2_InHot.outlet) annotation (Line(
       points={{-20.5,35.5},{-20.5,45.25},{-20,45.25},{-20,55}},
       color={140,56,54},
       thickness=0.5));
-  connect(homotopyInitializer.outlet, EX7X1.inhot) annotation (Line(
+  connect(homotopyhot.outlet, EX7X1.inhot) annotation (Line(
       points={{-20.5,15.5},{-20.5,-2},{-28,-2},{-28,-12.75},{-19.3,-12.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL701_TT702_SourceIn2.inlet, homotopyInitializer1.outlet) annotation (Line(
+  connect(PL_S700_TT7X3_InCold.inlet, homotopycold.outlet) annotation (Line(
       points={{20.5,-82.5},{20,-82.5},{20.5,-93}},
       color={140,56,54},
       thickness=0.5));
-  connect(homotopyInitializer1.inlet, incold) annotation (Line(
+  connect(homotopycold.inlet, incold) annotation (Line(
       points={{20.5,-113},{20.5,-121.5},{20,-121.5},{20,-130}},
       color={140,56,54},
       thickness=0.5));

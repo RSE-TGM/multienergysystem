@@ -52,7 +52,7 @@ model TestBase "Base test for S100 validation"
   parameter String matrixmflowGas = "FT801" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
   parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
-  DHTF.Subsystems.HeatGeneration.GasBoiler gasBoiler(pumpcorrectionfactor = pumpcorrectionfactor, hctype = hctype, pin_start_S1 = pin_start_S1, pout_start_S1 = pout_start_S1, Tin_start_S1 = Tin_start_S1, Tout_start_S1 = Tout_start_S1, cf = cf, eta_combustion = eta_combustion, tdelay = tdelay, h_FT101_GB101 = h_FT101_GB101, h_GB101_P101 = h_GB101_P101, L_P101_FCV101 = L_P101_FCV101, h_P101_FCV101 = h_P101_FCV101, Kv = Kv, openingChar = openingChar, Pmaxnom = Pmaxnom, GB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
+  DHTF.Subsystems.HeatGeneration.GasBoiler gasBoiler(pumpcorrectionfactor = pumpcorrectionfactor, hctype = hctype, pin_start_S1 = pin_start_S1, pout_start_S1 = pout_start_S1, Tin_start_S1 = Tin_start_S1, Tout_start_S1 = Tout_start_S1,          eta_combustion = eta_combustion, tdelay = tdelay,                                                                                                                           Kv = Kv, openingChar = openingChar, Pmaxnom = Pmaxnom, GB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
     Placement(transformation(extent = {{-30, -28}, {26, 28}})));
   DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = true, use_in_T0 = true, p0 = pin_start_S1, T0 = Tin_start_S1, R = 1e-3) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin = {-14, 60})));

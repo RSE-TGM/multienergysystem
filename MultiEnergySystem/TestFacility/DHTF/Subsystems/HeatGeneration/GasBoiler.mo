@@ -2,6 +2,7 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model GasBoiler "System 100 - Gas Boiler"
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
+  import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S100;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
@@ -17,8 +18,8 @@ model GasBoiler "System 100 - Gas Boiler"
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 65 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
-  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
+//  parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
+//  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
   parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 1 "Combustion efficiency";
   parameter Modelica.Units.SI.Time tdelay = 10 "Rising time of heater from 0 to full power";
@@ -26,25 +27,25 @@ model GasBoiler "System 100 - Gas Boiler"
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
   final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
 
-  final parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
-  parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
-  final parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
-  parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
-  final parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
-  parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
-  parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
-  parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
-  final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
-  final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
-  final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
-  final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+//   final parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
+//   parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
+//   final parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
+//   parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
+//   final parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
+//   parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
+//   parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
+//   parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
+  //final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
+  //final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
+  //final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
+  //final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
 
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
   parameter Real q_m3h_S1(unit = "m3/h") = 9;
-  parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
-  parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
-  parameter Real FCV101theta[:,:] = [0, 1];
-  parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
+  //parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
+  //parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
+  //parameter Real FCV101theta[:,:] = [0, 1];
+  //parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
   parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
@@ -118,56 +119,66 @@ model GasBoiler "System 100 - Gas Boiler"
         extent={{-36,-36},{36,36}},
         rotation=0)));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S1,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_GB101_P101,
-    h=h_GB101_P101,
-    t=t_S1,
+    L=pipeData.PL_GB101_P101.L,
+    h=pipeData.PL_GB101_P101.h,
+    t=pipeData.PL_GB101_P101.t,
     pin_start=pout_start_S1,
     Tin_start=Tout_start_S1,
     Tout_start=Tout_start_S1,
-    Di=Di_S1,
+    Di=pipeData.PL_GB101_P101.Di,
     q_m3h_start=q_m3h_S1,
     n=n,
-    u_nom=u_nom,
+    u_nom=pipeData.PL_GB101_P101.u_nom,
     hctype=hctype,
-    cf=cf)         annotation (Placement(transformation(
+    cf=pipeData.PL_GB101_P101.cf)
+                   annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,-24})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S1,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_FT101_GB101,
-    h=h_FT101_GB101,
-    t=t_S1,
+    L=pipeData.PL_FT101_GB101.L,
+    h=pipeData.PL_FT101_GB101.h,
+    t=pipeData.PL_FT101_GB101.t,
     pin_start=pin_start_S1,
     Tin_start=Tin_start_S1,
     Tout_start=Tin_start_S1,
-    Di=Di_S1,
+    Di=pipeData.PL_FT101_GB101.Di,
     q_m3h_start=q_m3h_S1,
     n=n,
-    u_nom=u_nom,
+    u_nom=pipeData.PL_FT101_GB101.u_nom,
     hctype=hctype,
-    cf=cf)         annotation (Placement(transformation(
+    cf=pipeData.PL_FT101_GB101.cf)
+                   annotation (Placement(transformation(
         extent={{10,10},{-10,-10}},
         rotation=90,
-        origin={-20,-24})));
+        origin={-20,-23.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S1,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_P101_FCV101,
-    h=h_P101_FCV101,
-    t=t_S1,
+    L=pipeData.PL_P101_FCV101.L,
+    h=pipeData.PL_P101_FCV101.h,
+    t=pipeData.PL_P101_FCV101.t,
     pin_start=pout_start_S1,
     Tin_start=Tout_start_S1,
     Tout_start=Tout_start_S1,
-    Di=Di_S1,
+    Di=pipeData.PL_P101_FCV101.Di,
     q_m3h_start=q_m3h_S1,
     n=n,
-    u_nom=u_nom,
+    rho_nom=pipeData.PL_P101_FCV101.rho_nom,
+    u_nom=pipeData.PL_P101_FCV101.u_nom,
     hctype=hctype,
-    cf=cf)         annotation (Placement(transformation(
+    cf=pipeData.PL_P101_FCV101.cf)
+                   annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={20,34})));
@@ -230,7 +241,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT.outlet, PL_S100_FT101_GB101.inlet) annotation (Line(
-      points={{-20,38},{-20,-14}},
+      points={{-20,38},{-20,-13.5}},
       color={140,56,54},
       thickness=0.5));
   connect(FCV101.outlet, PT102.inlet) annotation (Line(
@@ -274,7 +285,7 @@ equation
   connect(omega, P101.in_omega) annotation (Line(points={{-110,70},{-103.5,70},{-103.5,70.5},{-95,70.5},{-95,137},{7,137},{7,0},{10.5,0},{10.5,0.2},{14,0.2}}, color={0,0,127}));
   connect(theta, FCV101.opening) annotation (Line(points={{-110,50},{-97.5,50},{-97.5,138},{8,138},{8,62},{12,62}}, color={0,0,127}));
   connect(GB.inlet, PL_S100_FT101_GB101.outlet) annotation (Line(
-      points={{-10.8,-68.2},{-10.8,-55},{-20,-55},{-20,-34}},
+      points={{-10.8,-68.2},{-10.8,-55},{-20,-55},{-20,-33.5}},
       color={140,56,54},
       thickness=0.5));
   connect(GB.outlet, PL_S100_GB101_P101.inlet) annotation (Line(
@@ -286,7 +297,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(PL_S100_FT101_GB101.wall, PL_S100_GB101_P101.wall) annotation (Line(
-      points={{-15.9,-24},{15.9,-24}},
+      points={{-15.9,-23.5},{0,-23.5},{0,-24},{15.9,-24}},
       color={255,101,98},
       thickness=0.5));
   connect(MultiPort, PL_S100_GB101_P101.wall) annotation (Line(

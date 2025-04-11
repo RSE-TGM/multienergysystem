@@ -1,13 +1,13 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.Load;
-model LoadPlantFourHX
+partial model LoadPlantFourHXBase
   extends DistrictHeatingNetwork.Icons.Water.Load;
   constant Real pi = Modelica.Constants.pi;
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter Integer nHX = 5 "Number of volumes in each heat exchanger";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model MediumHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model MediumCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
   replaceable model Pipe = DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV;
 
@@ -102,12 +102,6 @@ model LoadPlantFourHX
   parameter Real Kvalve(unit = "m3/h") = TestFacility.Data.ValveData.FCVR01.Kv; //90;
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
   parameter DistrictHeatingNetwork.Types.Pressure dp_RR01 = 0.5e5;
-  parameter Real FCVR01theta[:,:] = [0, 1; 100, 1];
-  parameter Real PR01omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
-  parameter Real PTR01_profile[:,:] = [0, 1.23e5; 1780, 1.23e5; 1780, 1.03e5; 3000, 1.03e5];
-  parameter Real TTR01_profile[:,:] = [0, 16 + 273.15; 500, 16 + 273.15; 1000, 25 + 273.15; 3000, 16 + 273.15; 4000, 16 + 273.15];
-  parameter Real TTRSP_profile[:,:] = [0, 15 + 273.15; 3000, 15 + 273.15];
-  parameter Real PTR02_profile[:,:] = [0, 2.2e5; 3000, 2.2e5];
 
   //2. Users System
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_Users = 3e5;
@@ -119,10 +113,6 @@ model LoadPlantFourHX
   parameter DistrictHeatingNetwork.Types.Length Di_Users = 32e-3;
   parameter DistrictHeatingNetwork.Types.Length t_Rack = 1.5e-3;
   parameter DistrictHeatingNetwork.Types.Length Di_Rack = 51e-3;
-  parameter Real TCV701theta[:,:] = [0, 1; 100, 1];
-  parameter Real TCV711theta[:,:] = [0, 1; 100, 1];
-  parameter Real TCV721theta[:,:] = [0, 1; 100, 1];
-  parameter Real TCV731theta[:,:] = [0, 1; 100, 1];
 
   // Lengths of pipelines COLD SIDE
   parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
@@ -253,9 +243,8 @@ model LoadPlantFourHX
   parameter DistrictHeatingNetwork.Types.Length L_RR_UsersOut=2;
   parameter DistrictHeatingNetwork.Types.Length h_RR_UsersOut=0;
 
-  parameter Real ToutcoolSP[:,:] = [0, 7; 50, 7; 60, 17; 100, 17];
-
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
+    redeclare model Medium = MediumHot,
     L=L_FT701_rackL2L3,
     h=h_FT701_rackL2L3,
     t=t_S700,
@@ -277,7 +266,7 @@ model LoadPlantFourHX
     Tin_start=EX701_Tin_hot,
     Tout_start=EX701_Tin_hot,
     Di=Di_S700,
-    redeclare model Medium = MediumLPHot,
+    redeclare model Medium = MediumHot,
     q_m3h_start=EX701_q_m3h_hot,
     n=n,
     hctype=hctype) annotation (Placement(transformation(
@@ -782,11 +771,18 @@ model LoadPlantFourHX
         rotation=0,
         origin={-182,-192})));
   DHTF.Subsystems.Load.CoolingSingleLoad S701(
+    redeclare model MediumHot = MediumHot,
+    redeclare model MediumCold = MediumCold,
     np=n,
     nHX=nHX,
     Kv=TestFacility.Data.ValveData.FCV701.Kv,
+    openingChar_FCV=TestFacility.Data.ValveData.FCV701.openingChar,
     q_m3h_nom_valve=EX701_q_m3h_hot,
     Tin_start_valve=EX701_Tout_hot,
+    Kv_TCV=TestFacility.Data.ValveData.TCV701.Kv,
+    openingChar_TCV=TestFacility.Data.ValveData.TCV701.openingChar,
+    q_m3h_nom_valve_TCV=EX701_q_m3h_cold,
+    Tin_start_valve_TCV=EX701_Tout_cold,
     EX7X1_q_m3h_hot=EX701_q_m3h_hot,
     EX7X1_pin_hot=EX701_pin_hot,
     EX7X1_pout_hot=EX701_pin_hot,
@@ -799,22 +795,37 @@ model LoadPlantFourHX
     EX7X1_Tout_cold=EX701_Tout_cold,
     T1_wall_start=EX701_T1_wall_start,
     TN_wall_start=EX701_TN_wall_start,
-    Di_S700=Di_S700,
-    t_S700=t_S700,
-    alpha_hot=0.67402256,
-    alpha_cold=0.67402256,
-    L_rUsersIn_TT7X3=L_rUsersIn_TT703,
-    h_rUsersIn_TT7X3=h_rUsersIn_TT703,
-    L_TT7X4_TCV7X1=L_TT704_TCV701,
-    h_TT7X4_TCV7X1=h_TT704_TCV701,
-    t_Users=t_Users,
-    Di_Users=Di_Users) "System EX701" annotation (Placement(transformation(extent={{-362,-38},{-282,42}})));
+    gamma_nom_hot=TestFacility.Data.BPHEData.E701.gamma_nom_hot,
+    gamma_nom_cold=TestFacility.Data.BPHEData.E701.gamma_nom_cold,
+    alpha_hot=TestFacility.Data.BPHEData.E701.alpha_hot,
+    alpha_cold=TestFacility.Data.BPHEData.E701.alpha_cold,
+    Di_S700=TestFacility.Data.PipelineData.S700.Di_hot,
+    t_S700=TestFacility.Data.PipelineData.S700.t_hot,
+    Di_Users=TestFacility.Data.PipelineData.S700.Di_cold,
+    t_Users=TestFacility.Data.PipelineData.S700.t_cold,
+    L_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S701_TT7X2_InHot.L,
+    h_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S701_TT7X2_InHot.h,
+    L_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S701_OutHot_FCV7X1.L,
+    h_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S701_OutHot_FCV7X1.h,
+    L_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S701_FCV7X1_FT7X1.L,
+    h_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S701_FCV7X1_FT7X1.h,
+    L_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S701_TT7X3_InCold.L,
+    h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S701_TT7X3_InCold.h,
+    L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S701_TT7X4_TCV7X1.L,
+    h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S701_TT7X4_TCV7X1.h) "System EX701" annotation (Placement(transformation(extent={{-362,-38},{-282,42}})));
   DHTF.Subsystems.Load.CoolingSingleLoad S731(
+    redeclare model MediumHot = MediumHot,
+    redeclare model MediumCold = MediumCold,
     np=n,
     nHX=nHX,
     Kv=TestFacility.Data.ValveData.FCV731.Kv,
+    openingChar_FCV=TestFacility.Data.ValveData.FCV731.openingChar,
     q_m3h_nom_valve=EX731_q_m3h_hot,
     Tin_start_valve=EX731_Tout_hot,
+    Kv_TCV=TestFacility.Data.ValveData.TCV731.Kv,
+    openingChar_TCV=TestFacility.Data.ValveData.TCV731.openingChar,
+    q_m3h_nom_valve_TCV=EX731_q_m3h_cold,
+    Tin_start_valve_TCV=EX731_Tout_cold,
     EX7X1_q_m3h_hot=EX731_q_m3h_hot,
     EX7X1_pin_hot=EX731_pin_hot,
     EX7X1_pout_hot=EX731_pin_hot,
@@ -827,24 +838,37 @@ model LoadPlantFourHX
     EX7X1_Tout_cold=EX731_Tout_cold,
     T1_wall_start=EX731_T1_wall_start,
     TN_wall_start=EX731_TN_wall_start,
-    Di_S700=Di_S700,
-    t_S700=t_S700,
-    gamma_nom_hot=3666.84441,
-    gamma_nom_cold=9520.42245,
-    alpha_hot=0.67402256,
-    alpha_cold=0.67402256,
-    L_rUsersIn_TT7X3=L_rUsersIn_TT733,
-    h_rUsersIn_TT7X3=h_rUsersIn_TT733,
-    L_TT7X4_TCV7X1=L_TT734_TCV731,
-    h_TT7X4_TCV7X1=h_TT734_TCV731,
-    t_Users=t_Users,
-    Di_Users=Di_Users) "System EX731" annotation (Placement(transformation(extent={{-202,-38},{-122,42}})));
+    gamma_nom_hot=TestFacility.Data.BPHEData.E731.gamma_nom_hot,
+    gamma_nom_cold=TestFacility.Data.BPHEData.E731.gamma_nom_cold,
+    alpha_hot=TestFacility.Data.BPHEData.E731.alpha_hot,
+    alpha_cold=TestFacility.Data.BPHEData.E731.alpha_cold,
+    Di_S700=TestFacility.Data.PipelineData.S700.Di_hot,
+    t_S700=TestFacility.Data.PipelineData.S700.t_hot,
+    Di_Users=TestFacility.Data.PipelineData.S700.Di_cold,
+    t_Users=TestFacility.Data.PipelineData.S700.t_cold,
+    L_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S731_TT7X2_InHot.L,
+    h_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S731_TT7X2_InHot.h,
+    L_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S731_OutHot_FCV7X1.L,
+    h_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S731_OutHot_FCV7X1.h,
+    L_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S731_FCV7X1_FT7X1.L,
+    h_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S731_FCV7X1_FT7X1.h,
+    L_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S731_TT7X3_InCold.L,
+    h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S731_TT7X3_InCold.h,
+    L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S731_TT7X4_TCV7X1.L,
+    h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S731_TT7X4_TCV7X1.h) "System EX731" annotation (Placement(transformation(extent={{-202,-38},{-122,42}})));
   DHTF.Subsystems.Load.CoolingSingleLoad S711(
+    redeclare model MediumHot = MediumHot,
+    redeclare model MediumCold = MediumCold,
     np=n,
     nHX=nHX,
     Kv=TestFacility.Data.ValveData.FCV711.Kv,
+    openingChar_FCV=TestFacility.Data.ValveData.FCV711.openingChar,
     q_m3h_nom_valve=EX711_q_m3h_hot,
     Tin_start_valve=EX711_Tout_hot,
+    Kv_TCV=TestFacility.Data.ValveData.TCV711.Kv,
+    openingChar_TCV=TestFacility.Data.ValveData.TCV711.openingChar,
+    q_m3h_nom_valve_TCV=EX711_q_m3h_cold,
+    Tin_start_valve_TCV=EX711_Tout_cold,
     EX7X1_q_m3h_hot=EX711_q_m3h_hot,
     EX7X1_pin_hot=EX711_pin_hot,
     EX7X1_pout_hot=EX711_pin_hot,
@@ -857,22 +881,37 @@ model LoadPlantFourHX
     EX7X1_Tout_cold=EX711_Tout_cold,
     T1_wall_start=EX711_T1_wall_start,
     TN_wall_start=EX711_TN_wall_start,
-    Di_S700=Di_S700,
-    t_S700=t_S700,
-    alpha_hot=0.67402256,
-    alpha_cold=0.67402256,
-    L_rUsersIn_TT7X3=L_rUsersIn_TT713,
-    h_rUsersIn_TT7X3=h_rUsersIn_TT713,
-    L_TT7X4_TCV7X1=L_TT714_TCV711,
-    h_TT7X4_TCV7X1=h_TT714_TCV711,
-    t_Users=t_Users,
-    Di_Users=Di_Users) "System EX711" annotation (Placement(transformation(extent={{-42,-38},{38,42}})));
+    gamma_nom_hot=TestFacility.Data.BPHEData.E711.gamma_nom_hot,
+    gamma_nom_cold=TestFacility.Data.BPHEData.E711.gamma_nom_cold,
+    alpha_hot=TestFacility.Data.BPHEData.E711.alpha_hot,
+    alpha_cold=TestFacility.Data.BPHEData.E711.alpha_cold,
+    Di_S700=TestFacility.Data.PipelineData.S700.Di_hot,
+    t_S700=TestFacility.Data.PipelineData.S700.t_hot,
+    Di_Users=TestFacility.Data.PipelineData.S700.Di_cold,
+    t_Users=TestFacility.Data.PipelineData.S700.t_cold,
+    L_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S711_TT7X2_InHot.L,
+    h_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S711_TT7X2_InHot.h,
+    L_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S711_OutHot_FCV7X1.L,
+    h_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S711_OutHot_FCV7X1.h,
+    L_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S711_FCV7X1_FT7X1.L,
+    h_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S711_FCV7X1_FT7X1.h,
+    L_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S711_TT7X3_InCold.L,
+    h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S711_TT7X3_InCold.h,
+    L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S711_TT7X4_TCV7X1.L,
+    h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S711_TT7X4_TCV7X1.h) "System EX711" annotation (Placement(transformation(extent={{-42,-38},{38,42}})));
   DHTF.Subsystems.Load.CoolingSingleLoad S721(
+    redeclare model MediumHot = MediumHot,
+    redeclare model MediumCold = MediumCold,
     np=n,
     nHX=nHX,
     Kv=TestFacility.Data.ValveData.FCV721.Kv,
+    openingChar_FCV=TestFacility.Data.ValveData.FCV721.openingChar,
     q_m3h_nom_valve=EX721_q_m3h_hot,
     Tin_start_valve=EX721_Tout_hot,
+    Kv_TCV=TestFacility.Data.ValveData.TCV721.Kv,
+    openingChar_TCV=TestFacility.Data.ValveData.TCV721.openingChar,
+    q_m3h_nom_valve_TCV=EX721_q_m3h_cold,
+    Tin_start_valve_TCV=EX721_Tout_cold,
     EX7X1_q_m3h_hot=EX721_q_m3h_hot,
     EX7X1_pin_hot=EX721_pin_hot,
     EX7X1_pout_hot=EX721_pin_hot,
@@ -885,18 +924,24 @@ model LoadPlantFourHX
     EX7X1_Tout_cold=EX721_Tout_cold,
     T1_wall_start=EX721_T1_wall_start,
     TN_wall_start=EX721_TN_wall_start,
-    Di_S700=Di_S700,
-    t_S700=t_S700,
-    gamma_nom_hot=3666.84441,
-    gamma_nom_cold=9520.42245,
-    alpha_hot=0.67402256,
-    alpha_cold=0.67402256,
-    L_rUsersIn_TT7X3=L_rUsersIn_TT723,
-    h_rUsersIn_TT7X3=h_rUsersIn_TT723,
-    L_TT7X4_TCV7X1=L_TT724_TCV721,
-    h_TT7X4_TCV7X1=h_TT724_TCV721,
-    t_Users=t_Users,
-    Di_Users=Di_Users) "System EX721" annotation (Placement(transformation(extent={{118,-38},{198,42}})));
+    gamma_nom_hot=TestFacility.Data.BPHEData.E721.gamma_nom_hot,
+    gamma_nom_cold=TestFacility.Data.BPHEData.E721.gamma_nom_cold,
+    alpha_hot=TestFacility.Data.BPHEData.E721.alpha_hot,
+    alpha_cold=TestFacility.Data.BPHEData.E721.alpha_cold,
+    Di_S700=TestFacility.Data.PipelineData.S700.Di_hot,
+    t_S700=TestFacility.Data.PipelineData.S700.t_hot,
+    Di_Users=TestFacility.Data.PipelineData.S700.Di_cold,
+    t_Users=TestFacility.Data.PipelineData.S700.t_cold,
+    L_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S721_TT7X2_InHot.L,
+    h_HX7X1_TT7X2_SourceIn=TestFacility.Data.PipelineData.S700.PL_S721_TT7X2_InHot.h,
+    L_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S721_OutHot_FCV7X1.L,
+    h_HX7X1_SourceOut_FCV7X1=TestFacility.Data.PipelineData.S700.PL_S721_OutHot_FCV7X1.h,
+    L_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S721_FCV7X1_FT7X1.L,
+    h_FCV7X1_FT7X1=TestFacility.Data.PipelineData.S700.PL_S721_FCV7X1_FT7X1.h,
+    L_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S721_TT7X3_InCold.L,
+    h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S721_TT7X3_InCold.h,
+    L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S721_TT7X4_TCV7X1.L,
+    h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S721_TT7X4_TCV7X1.h) "System EX721" annotation (Placement(transformation(extent={{118,-38},{198,42}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,280},{20,320}}), iconTransformation(extent={{-20,80},{20,120}})));
   DistrictHeatingNetwork.Interfaces.FluidPortInlet[4] fluidPortInlet annotation (Placement(transformation(extent={{-100,250},{-80,270}}), iconTransformation(extent={{-110,-70},{-90,-50}})));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet[4] fluidPortOutlet annotation (Placement(transformation(extent={{80,250},{100,270}}),
@@ -1159,38 +1204,6 @@ equation
       points={{-142,158},{-142,196},{90,196},{90,263.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(controlSignalBus.thetaFCV701, S701.theta_FCV7X1) annotation (Line(
-      points={{0,300},{0,284},{-400,284},{-400,30},{-366,30}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaTCV701, S701.theta_TCV7X1) annotation (Line(
-      points={{0,300},{-2,300},{-2,286},{-402,286},{-402,22},{-366,22}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaFCV731, S731.theta_FCV7X1) annotation (Line(
-      points={{0,300},{0,280},{-214,280},{-214,30},{-206,30}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaTCV731, S731.theta_TCV7X1) annotation (Line(
-      points={{0,300},{-2,300},{-2,282},{-216,282},{-216,22},{-206,22}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaFCV711, S711.theta_FCV7X1) annotation (Line(
-      points={{0,300},{0,268},{-54,268},{-54,30},{-46,30}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaTCV711, S711.theta_TCV7X1) annotation (Line(
-      points={{0,300},{0,270},{-56,270},{-56,22},{-46,22}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaFCV721, S721.theta_FCV7X1) annotation (Line(
-      points={{0,300},{0,280},{104,280},{104,30},{114,30}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaTCV721, S721.theta_TCV7X1) annotation (Line(
-      points={{0,300},{0,276},{102,276},{102,22},{114,22}},
-      color={255,204,51},
-      thickness=0.5));
   connect(controlSignalBus.thetaFCVR01, FCVR01.opening) annotation (Line(
       points={{0,300},{2,300},{2,286},{236,286},{236,-136},{344,-136},{344,-144}},
       color={255,204,51},
@@ -1296,4 +1309,4 @@ equation
           color={162,29,33},
           arrow={Arrow.None,Arrow.Filled},
           thickness=1)}));
-end LoadPlantFourHX;
+end LoadPlantFourHXBase;

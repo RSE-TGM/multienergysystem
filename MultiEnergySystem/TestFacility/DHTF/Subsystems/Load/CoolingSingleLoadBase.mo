@@ -5,7 +5,8 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   //-------------------------------
   // Declaration of fluid
   //-------------------------------
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model MediumHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model MediumCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
   //-------------------------------
   // Heat Exchanger heat transfer model
@@ -21,9 +22,9 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   // Flow Control Valve parameters
   parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "FCV"));
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "FCV"));
-  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Nominal pressure drop in the valve" annotation (
     Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Density rho_nom_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Nominal fluid density at supply" annotation (
     Dialog(tab = "Valve", group = "FCV"));
@@ -81,12 +82,12 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   // Lengths of pipelines Hot side
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3 "Inlet diameter - hot side" annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3 "Tickness - hot side" annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
-  parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=2.9 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_HX701_TT702_SourceIn=2.5 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
-  parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
-  parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.5 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=0 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_HX7X1_TT7X2_SourceIn=2.9 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_HX7X1_TT7X2_SourceIn=2.5 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_HX7X1_SourceOut_FCV7X1=0.6 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_HX7X1_SourceOut_FCV7X1=0 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_FCV7X1_FT7X1=2.5 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FCV7X1_FT7X1=0 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
 
   // Length of pipelines Cooling side
   parameter DistrictHeatingNetwork.Types.Length t_Users=1.5e-3 "Tickness - cold side" annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
@@ -101,7 +102,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
     Dialog(tab = "Valve", group = "TCV"));
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_TCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "TCV"));
-  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve_TCV = TestFacility.Data.ValveData.TCV701.dp_nom "Pressure drop between supply and return, as imposed by the differential pump" annotation (
+  parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve_TCV = TestFacility.Data.ValveData.TCV701.dp_nom "Nominal pressure drop in the valve" annotation (
     Dialog(tab = "Valve", group = "TCV"));
   parameter DistrictHeatingNetwork.Types.Density rho_nom_valve_TCV = TestFacility.Data.ValveData.TCV701.rho_nom "Nominal fluid density at supply" annotation (
     Dialog(tab = "Valve", group = "TCV"));
@@ -131,9 +132,9 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
 //   parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
 
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumHot,
     Kv=TestFacility.Data.ValveData.FCV701.Kv,
-    openingChar=openingChar,
+    openingChar=openingChar_FCV,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV701.dp_nom,
     rho_nom=TestFacility.Data.ValveData.FCV701.rho_nom,
     q_m3h_nom=TestFacility.Data.ValveData.FCV701.q_nom_m3h,
@@ -146,7 +147,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=-90,
         origin={20,37.5})));
   DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX7X1(
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumHot,
     redeclare model HeatTransferModel = HeatTransferModel,
     hctype_hot=hctype,
     alpha_hot=alpha_hot,
@@ -205,9 +206,9 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_FCV7X1_FT7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
-    redeclare model Medium = Medium,
-    L=L_FCV701_FT701,
-    h=h_FCV701_FT701,
+    redeclare model Medium = MediumHot,
+    L=L_FCV7X1_FT7X1,
+    h=h_FCV7X1_FT7X1,
     t=t_S700,
     pin_start=EX7X1_pout_hot - 0.5e5,
     Tin_start=EX7X1_Tout_hot,
@@ -223,9 +224,9 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_OutHot_FCV7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
-    redeclare model Medium = Medium,
-    L=L_HX701_SourceOut_FCV701,
-    h=h_HX701_SourceOut_FCV701,
+    redeclare model Medium = MediumHot,
+    L=L_HX7X1_SourceOut_FCV7X1,
+    h=h_HX7X1_SourceOut_FCV7X1,
     t=t_S700,
     pin_start=EX7X1_pout_hot,
     Tin_start=EX7X1_Tout_hot,
@@ -242,9 +243,9 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X2_InHot(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
-    redeclare model Medium = Medium,
-    L=L_HX701_TT702_SourceIn,
-    h=h_HX701_TT702_SourceIn,
+    redeclare model Medium = MediumHot,
+    L=L_HX7X1_TT7X2_SourceIn,
+    h=h_HX7X1_TT7X2_SourceIn,
     t=t_S700,
     pin_start=EX7X1_pin_hot,
     Tin_start=EX7X1_Tin_hot,
@@ -260,7 +261,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X4_TCV7X1(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumCold,
     L=L_TT7X4_TCV7X1,
     h=h_TT7X4_TCV7X1,
     t=t_Users,
@@ -277,7 +278,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X3_InCold(
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumCold,
     L=L_rUsersIn_TT7X3,
     h=h_rUsersIn_TT7X3,
     t=t_Users,
@@ -290,22 +291,22 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
     nPipes=1) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={20.5,-72.5})));
+        origin={20.5,-68})));
 
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare model Medium = Medium, T_start=EX7X1_Tout_hot,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare model Medium = MediumHot, T_start=EX7X1_Tout_hot,
     p_start=EX7X1_pout_hot)
                            "Temperature sensor at the outlet of EX7X1 - hot side"   annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={22,95})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(redeclare model Medium = Medium, T_start=EX7X1_Tin_hot,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(redeclare model Medium = MediumHot, T_start=EX7X1_Tin_hot,
       p_start=EX7X1_pin_hot) "Temperature sensor at the inlet of EX7X1 - hot side"  annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-22,91.5})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare model Medium = MediumCold,
     T_start=EX7X1_Tout_cold,
     p_start(displayUnit="Pa") = EX7X1_pout_cold)
                                  "Temperature sensor at the outlet of EX7X1 - cold side"   annotation (
@@ -313,7 +314,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-22.5,-44})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare model Medium = MediumCold,
     T_start=EX7X1_Tin_cold,
     p_start(displayUnit="Pa") = EX7X1_pin_cold)
                                  "Temperature sensor at the inlet of EX7X1 - cold side" annotation (
@@ -321,7 +322,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         extent={{-6,6},{6,-6}},
         rotation=90,
         origin={23,-47.5})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT7X1(redeclare model Medium = Medium, T_start=EX7X1_Tout_hot, p_start=EX7X1_pout_hot)
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT7X1(redeclare model Medium = MediumHot, T_start=EX7X1_Tout_hot, p_start=EX7X1_pout_hot)
                                                                                                         "Flow sensor at the outlet outlet of EX701 - hot side" annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
@@ -360,7 +361,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   Modelica.Blocks.Interfaces.RealOutput PT7X2_PT annotation (Placement(transformation(extent={{100,80},{120,100}}),  iconTransformation(extent={{100,-60},{120,-40}})));
   Modelica.Blocks.Interfaces.RealOutput PT7X1_PT annotation (Placement(transformation(extent={{100,65},{120,85}}),  iconTransformation(extent={{100,-40},{120,-20}})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV7X1(
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumCold,
     Kv=TestFacility.Data.ValveData.TCV701.Kv,
     openingChar=openingChar_TCV,
     dp_nom=TestFacility.Data.ValveData.TCV701.dp_nom,
@@ -374,14 +375,14 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=-90,
         origin={-20,-103.5})));
   DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopyhot(
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumHot,
     p_start=EX7X1_pin_hot,
     T_start=EX7X1_Tin_hot) annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={-20.5,25.5})));
   DistrictHeatingNetwork.Components.Valves.HomotopyInitializer homotopycold(
-    redeclare model Medium = Medium,
+    redeclare model Medium = MediumCold,
     p_start=EX7X1_pin_cold,
     T_start=EX7X1_Tin_cold) annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -452,7 +453,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(PL_S700_TT7X3_InCold.wall, MultiPort) annotation (Line(
-      points={{16.4,-72.5},{-6,-72.5},{-6,-56},{-21,-56},{-21,-57},{-40,-57},{-40,0},{-110,0}},
+      points={{16.4,-68},{-6,-68},{-6,-56},{-21,-56},{-21,-57},{-40,-57},{-40,0},{-110,0}},
       color={255,101,98},
       thickness=0.5));
   connect(PT7X2.p, PT7X2_PT) annotation (Line(points={{-28.5,99.5},{-30.5,99.5},{-30.5,115.5},{94.5,115.5},{94.5,90},{110,90}},
@@ -472,7 +473,7 @@ equation
       thickness=0.5));
   connect(FT7X1.m_flow, FT7X1_FT) annotation (Line(points={{25,86.5},{33,86.5},{33,111},{91,111},{91,45},{110,45}},       color={0,0,127}));
   connect(PL_S700_TT7X3_InCold.outlet, TT7X3.inlet) annotation (Line(
-      points={{20.5,-62.5},{20,-62.5},{20,-54},{16,-54},{16,-40},{20.6,-40},{20.6,-47.5}},
+      points={{20.5,-58},{20,-58},{20,-54},{16,-54},{16,-40},{20.6,-40},{20.6,-47.5}},
       color={140,56,54},
       thickness=0.5));
   connect(EX7X1.incold, TT7X3.inlet) annotation (Line(
@@ -496,7 +497,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(PL_S700_TT7X3_InCold.inlet, homotopycold.outlet) annotation (Line(
-      points={{20.5,-82.5},{20,-82.5},{20.5,-93}},
+      points={{20.5,-78},{20.5,-93}},
       color={140,56,54},
       thickness=0.5));
   connect(homotopycold.inlet, incold) annotation (Line(

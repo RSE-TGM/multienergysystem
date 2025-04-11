@@ -48,8 +48,12 @@ package PipelineData
 
   package S700
     constant DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
+    constant DistrictHeatingNetwork.Types.Length t_hot = 1.5e-3;
+    constant DistrictHeatingNetwork.Types.Length Di_hot = 51e-3;
+    constant DistrictHeatingNetwork.Types.Length t_cold = 1.5e-3;
+    constant DistrictHeatingNetwork.Types.Length Di_cold = 32e-3;
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S701_TT7X2_InHot(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.9,
@@ -62,7 +66,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S701_OutHot_FCV7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=0.6,
@@ -75,7 +79,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S701_FCV7X1_FT7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.5,
@@ -88,7 +92,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S701_TT7X4_TCV7X1(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.5,
@@ -101,7 +105,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S701_TT7X3_InCold(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.5,
@@ -114,7 +118,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S711_TT7X2_InHot(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.9,
@@ -127,7 +131,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S711_OutHot_FCV7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=0.6,
@@ -140,7 +144,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S711_FCV7X1_FT7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.5,
@@ -153,7 +157,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S711_TT7X4_TCV7X1(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=0.8,
@@ -166,7 +170,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S711_TT7X3_InCold(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.1,
@@ -179,7 +183,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S721_TT7X2_InHot(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.9,
@@ -192,7 +196,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S721_OutHot_FCV7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=0.6,
@@ -205,7 +209,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S721_FCV7X1_FT7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.5,
@@ -218,7 +222,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S721_TT7X4_TCV7X1(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=1.25,
@@ -231,7 +235,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S721_TT7X3_InCold(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.1,
@@ -244,7 +248,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S731_TT7X2_InHot(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.9,
@@ -257,7 +261,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S731_OutHot_FCV7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=0.6,
@@ -270,7 +274,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S731_FCV7X1_FT7X1(
-      Di=51e-3,
+      Di=Di_hot,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.25,
@@ -283,7 +287,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S731_TT7X4_TCV7X1(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=0.65,
@@ -296,7 +300,7 @@ package PipelineData
       cm=445,
       rhom=8000);
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_S731_TT7X3_InCold(
-      Di=32e-3,
+      Di=Di_cold,
       t=1.5e-3,
       tIns=1.5e-1,
       L=2.90,

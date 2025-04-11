@@ -3,7 +3,6 @@ model SuddenAreaChange
   "Model a sudden area change in the fluid flow"
   extends MultiEnergySystem.DistrictHeatingNetwork.Interfaces.PartialTwoPort;
   import Modelica.Units.SI;
-  import MultiEnergySystem.DistrictHeatingNetwork.Media.{cp, rho0};
 
   // Parameters
   parameter SI.Length D_i = 0.1 "Input diameter";

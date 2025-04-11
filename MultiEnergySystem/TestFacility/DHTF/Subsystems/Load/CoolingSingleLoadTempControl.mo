@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.Load;
 model CoolingSingleLoadTempControl "S900 - Load model including temp control only"
-  extends BaseCoolingSingleLoad;
+  extends CoolingSingleLoadBase;
 //   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 //   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 //   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;

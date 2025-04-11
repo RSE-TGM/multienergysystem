@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.Load;
 model CoolingSingleLoad "S7X0 - Cooling Single Load (HX)"
-  extends BaseCoolingSingleLoad;
+  extends CoolingSingleLoadBase;
 //   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 //   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 //   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;

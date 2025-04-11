@@ -24,8 +24,8 @@ model OLA_ThreeGen_GBEBCHP_II
   Modelica.Blocks.Sources.RealExpression TTEX7X1SP(y= if time < 3e3 then 65 + 273.15 else 60 + 273.15) annotation (Placement(transformation(extent={{73,-123},{83,-113}})));
   Modelica.Blocks.Sources.CombiTimeTable PtEX701SP(
     tableOnFile=false,
-    table=[0,12000; 3600,12000; 7200,20000; 10800,30000; 14400,36000; 18000,40000; 21600,38000; 25200,32000; 28800,20000; 32400,12000; 36000,8000; 39600,7500; 43200,7000; 46800,7000; 50400,7500; 54000,10000; 57600,20000; 61200,32000; 64800,40000;
-        68400,38000; 72000,32000; 75600,20000; 79200,12000; 82800,12000; 86400,12000],
+    table=[0,15000; 3600,15000; 7200,20000; 10800,30000; 14400,36000; 18000,40000; 21600,38000; 25200,32000; 28800,20000; 32400,15000; 36000,12000; 39600,10000; 43200,9000; 46800,9000; 50400,10000; 54000,12000; 57600,20000; 61200,32000; 64800,40000;
+        68400,38000; 72000,32000; 75600,20000; 79200,15000; 82800,15000; 86400,15000],
     fileName=file1,                                                                                                                                                                                                        extrapolation = Modelica.Blocks.Types.Extrapolation.HoldLastPoint) annotation (
     Placement(transformation(origin = {34, -108}, extent = {{-10, -10}, {10, 10}})));
 equation

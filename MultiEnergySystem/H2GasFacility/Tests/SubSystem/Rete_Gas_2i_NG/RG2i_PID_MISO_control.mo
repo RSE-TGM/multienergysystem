@@ -134,14 +134,14 @@ model RG2i_PID_MISO_control
         origin={-196,140},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_1(k=4.603)
+  Modelica.Blocks.Sources.Constant const_5(k=4.603)
     annotation (Placement(transformation(extent={{2,284},{18,300}})));
   Modelica.Blocks.Math.Feedback feedback_5 annotation (Placement(visible=true,
         transformation(
         origin={36,292},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_2(k=4.371)
+  Modelica.Blocks.Sources.Constant const_7(k=4.371)
     annotation (Placement(transformation(extent={{196,264},{212,280}})));
   Modelica.Blocks.Math.Feedback feedback_7 annotation (Placement(visible=true,
         transformation(
@@ -155,29 +155,36 @@ model RG2i_PID_MISO_control
         origin={32,-146},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_5(k=4.595)
+  Modelica.Blocks.Sources.Constant const_1(k=4.595)
     annotation (Placement(transformation(extent={{260,-64},{244,-48}})));
   Modelica.Blocks.Math.Feedback feedback_1 annotation (Placement(visible=true,
         transformation(
         origin={222,-56},
         extent={{10,-10},{-10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_6(k=4.547)
+  Modelica.Blocks.Sources.Constant const_2(k=4.547)
     annotation (Placement(transformation(extent={{174,-294},{190,-278}})));
   Modelica.Blocks.Math.Feedback feedback_2 annotation (Placement(visible=true,
         transformation(
         origin={212,-286},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Controllers.MultiplMax multiplMax
-    annotation (Placement(transformation(extent={{-266,-6},{-242,38}})));
-  Modelica.Blocks.Math.Gain gain(k=1)     annotation (
-        Placement(visible = true, transformation(origin={-138,-4},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Math.Gain gain(k=1e-10) annotation (
+        Placement(visible = true, transformation(origin={-138,4},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.REMI_station REMI_station(redeclare
       model Medium =                                                                         Medium,
     nX=nX,
     X_start=X_start)
-    annotation (Placement(transformation(extent={{-96,22},{-76,42}})));
+    annotation (Placement(transformation(extent={{-114,16},{-94,36}})));
+  Modelica.Blocks.Math.Feedback feedback_6 annotation (Placement(visible=true,
+        transformation(
+        origin={104,250},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Modelica.Blocks.Sources.Constant const_6(k=4.619)
+    annotation (Placement(transformation(extent={{72,242},{88,258}})));
+  Controllers.MultiplMax multiplMax
+    annotation (Placement(transformation(extent={{-258,-6},{-238,14}})));
 equation
   connect(sds14.outlet, idealPressureSensor2.inlet) annotation (Line(
       points={{80,216},{92,216}},
@@ -239,9 +246,9 @@ equation
     annotation (Line(points={{-204,140},{-213.2,140}}, color={0,0,127}));
   connect(idealPressureSensor.p_meas, feedback_4.u2) annotation (Line(points={{-189.8,
           172.6},{-188,172.6},{-188,160},{-196,160},{-196,148}}, color={0,0,127}));
-  connect(feedback_5.u1, const_1.y)
+  connect(feedback_5.u1,const_5. y)
     annotation (Line(points={{28,292},{18.8,292}}, color={0,0,127}));
-  connect(feedback_7.u1, const_2.y)
+  connect(feedback_7.u1,const_7. y)
     annotation (Line(points={{226,272},{212.8,272}}, color={0,0,127}));
   connect(idealPressureSensor1.p_meas, feedback_5.u2) annotation (Line(points={{
           32.2,275.4},{36,276},{36,284}}, color={0,0,127}));
@@ -251,44 +258,46 @@ equation
     annotation (Line(points={{24,-146},{10.8,-146}}, color={0,0,127}));
   connect(feedback_3.u2, idealPressureSensor5.p_meas) annotation (Line(points={{
           32,-138},{32,-128},{38.2,-128},{38.2,-117.4}}, color={0,0,127}));
-  connect(feedback_1.u1, const_5.y)
+  connect(feedback_1.u1, const_1.y)
     annotation (Line(points={{230,-56},{243.2,-56}}, color={0,0,127}));
   connect(feedback_1.u2, idealPressureSensor6.p_meas) annotation (Line(points={{
           222,-64},{216,-64},{216,-74.6},{209.8,-74.6}}, color={0,0,127}));
-  connect(feedback_2.u1, const_6.y)
+  connect(feedback_2.u1, const_2.y)
     annotation (Line(points={{204,-286},{190.8,-286}}, color={0,0,127}));
   connect(idealPressureSensor7.p_meas, feedback_2.u2) annotation (Line(points={{
           218.2,-265.4},{220,-265.4},{220,-272},{212,-272},{212,-278}}, color={0,
           0,127}));
-  connect(feedback_5.y, multiplMax.u2) annotation (Line(points={{45,292},{56,292},
-          {56,312},{-284,312},{-284,29.42},{-265.88,29.42}}, color={0,0,127}));
-  connect(multiplMax.u6, multiplMax.u7) annotation (Line(points={{-265.88,3.46},
-          {-265.88,-3.14}}, color={0,0,127}));
-  connect(multiplMax.u7, feedback_3.y) annotation (Line(points={{-265.88,-3.14},
-          {-282,-3.14},{-282,-204},{34,-204},{34,-146},{41,-146}}, color={0,0,127}));
-  connect(multiplMax.u6, feedback_2.y) annotation (Line(points={{-265.88,3.46},{
-          -302,3.46},{-302,-328},{214,-328},{214,-286},{221,-286}}, color={0,0,127}));
-  connect(multiplMax.u5, feedback_1.y) annotation (Line(points={{-265.88,10.06},
-          {-280,10.06},{-280,10},{-322,10},{-322,-348},{294,-348},{294,-28},{202,
-          -28},{202,-56},{213,-56}},      color={0,0,127}));
-  connect(multiplMax.u4, feedback_7.y) annotation (Line(points={{-265.88,16.22},
-          {-265.88,16},{-292,16},{-292,328},{256,328},{256,272},{243,272}},
-        color={0,0,127}));
-  connect(idealPressureSensor2.p_meas, multiplMax.u3) annotation (Line(points={{
-          105.8,223.4},{105.8,316},{-268,316},{-268,292},{-280,292},{-280,23.26},
-          {-265.88,23.26}}, color={0,0,127}));
   connect(s1.inlet, REMI_station.fluidPortOutlet) annotation (Line(
-      points={{-162,26},{-104,26},{-104,32},{-96,32}},
+      points={{-162,26},{-114,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(multiplMax.u1, feedback_4.y) annotation (Line(points={{-265.88,35.58},
-          {-274,35.58},{-274,114},{-170,114},{-170,140},{-187,140}}, color={0,0,
+  connect(gain.y, REMI_station.in_opening) annotation (Line(points={{-127,4},{
+          -84,4},{-84,44},{-98.4,44},{-98.4,34.4}},              color={0,0,127}));
+  connect(idealPressureSensor2.p_meas, feedback_6.u2) annotation (Line(points={
+          {105.8,223.4},{104,223.4},{104,242}}, color={0,0,127}));
+  connect(feedback_6.u1, const_6.y)
+    annotation (Line(points={{96,250},{88.8,250}}, color={0,0,127}));
+  connect(multiplMax.y, gain.u)
+    annotation (Line(points={{-237.4,4},{-150,4}}, color={0,0,127}));
+  connect(feedback_1.y, multiplMax.u5) annotation (Line(points={{213,-56},{204,
+          -56},{204,-52},{198,-52},{198,-32},{316,-32},{316,-336},{-292,-336},{
+          -292,1.3},{-257.9,1.3}}, color={0,0,127}));
+  connect(feedback_2.y, multiplMax.u6) annotation (Line(points={{221,-286},{252,
+          -286},{252,-300},{-284,-300},{-284,-1.7},{-257.9,-1.7}}, color={0,0,
           127}));
-  connect(multiplMax.y, gain.u) annotation (Line(points={{-241.28,16},{-192,16},
-          {-192,8},{-160,8},{-160,-4},{-150,-4}},
-                                         color={0,0,127}));
-  connect(gain.y, REMI_station.in_opening) annotation (Line(points={{-127,-4},{-92,
-          -4},{-92,2},{-58,2},{-58,50},{-80.4,50},{-80.4,40.4}}, color={0,0,127}));
+  connect(feedback_3.y, multiplMax.u7) annotation (Line(points={{41,-146},{54,
+          -146},{54,-148},{62,-148},{62,-174},{-276,-174},{-276,-4.7},{-257.9,
+          -4.7}}, color={0,0,127}));
+  connect(feedback_4.y, multiplMax.u1) annotation (Line(points={{-187,140},{
+          -176,140},{-176,132},{-168,132},{-168,104},{-272,104},{-272,12.9},{
+          -257.9,12.9}}, color={0,0,127}));
+  connect(feedback_7.y, multiplMax.u4) annotation (Line(points={{243,272},{266,
+          272},{266,324},{-316,324},{-316,4.1},{-257.9,4.1}}, color={0,0,127}));
+  connect(feedback_6.y, multiplMax.u3) annotation (Line(points={{113,250},{128,
+          250},{128,248},{142,248},{142,316},{-298,316},{-298,7.3},{-257.9,7.3}},
+        color={0,0,127}));
+  connect(multiplMax.u2, feedback_5.y) annotation (Line(points={{-257.9,10.1},{
+          -290,10.1},{-290,302},{66,302},{66,292},{45,292}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end RG2i_PID_MISO_control;

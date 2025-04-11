@@ -9,11 +9,11 @@ model RoundPipe1DFV
       DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer
       "Heat transfer model for " annotation (
-     choicesAllMatching = true);
+     choicesAllMatching = true, Dialog(group = "Base Settings"));
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
      constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance
       "Water model" annotation (
-     choicesAllMatching = true);
+     choicesAllMatching = true, Dialog(group = "Base Settings"));
 
   constant Types.Acceleration g = Modelica.Constants.g_n;
 
@@ -38,7 +38,7 @@ model RoundPipe1DFV
   parameter Types.Pressure p_nom = 5e5 "Nominal working pressure" annotation (
     Dialog(tab = "Data", group = "Fluid"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Downstream "Location of pressure state" annotation (
-    Dialog(tab = "Data", group = "Fluid"));
+    Dialog(group = "Base Settings"));
 
   parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
     Dialog(tab = "Data", group = "Pipe"));

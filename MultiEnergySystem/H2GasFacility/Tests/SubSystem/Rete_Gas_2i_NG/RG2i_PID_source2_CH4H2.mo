@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model RG2i_PID_source2_CH4H2
-  extends RG2i_PID_controller(
+  extends RG2i_P_controller(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,
@@ -9,8 +9,7 @@ model RG2i_PID_source2_CH4H2
     massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.413, A_v=1.8*0.413/(sqrt(40.18*(60 - 4.93)*
           1e5))),
-    PID(k=1000),
-    p_ref(height=-0.1*10^5));
+    p_ref(height=-0.01*10^5, startTime=8000));
 
     parameter Types.MassFraction X_inj[nX] = {0, 1};
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(

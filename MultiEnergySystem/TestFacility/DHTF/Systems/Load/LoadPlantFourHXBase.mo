@@ -770,7 +770,7 @@ partial model LoadPlantFourHXBase
     annotation (Placement(transformation(extent={{-6,6},{6,-6}},
         rotation=0,
         origin={-182,-192})));
-  DHTF.Subsystems.Load.CoolingSingleLoad S701(
+  DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S701(
     redeclare model MediumHot = MediumHot,
     redeclare model MediumCold = MediumCold,
     np=n,
@@ -813,7 +813,7 @@ partial model LoadPlantFourHXBase
     h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S701_TT7X3_InCold.h,
     L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S701_TT7X4_TCV7X1.L,
     h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S701_TT7X4_TCV7X1.h) "System EX701" annotation (Placement(transformation(extent={{-362,-38},{-282,42}})));
-  DHTF.Subsystems.Load.CoolingSingleLoad S731(
+  DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S731(
     redeclare model MediumHot = MediumHot,
     redeclare model MediumCold = MediumCold,
     np=n,
@@ -856,7 +856,7 @@ partial model LoadPlantFourHXBase
     h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S731_TT7X3_InCold.h,
     L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S731_TT7X4_TCV7X1.L,
     h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S731_TT7X4_TCV7X1.h) "System EX731" annotation (Placement(transformation(extent={{-202,-38},{-122,42}})));
-  DHTF.Subsystems.Load.CoolingSingleLoad S711(
+  DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S711(
     redeclare model MediumHot = MediumHot,
     redeclare model MediumCold = MediumCold,
     np=n,
@@ -899,7 +899,7 @@ partial model LoadPlantFourHXBase
     h_rUsersIn_TT7X3=TestFacility.Data.PipelineData.S700.PL_S711_TT7X3_InCold.h,
     L_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S711_TT7X4_TCV7X1.L,
     h_TT7X4_TCV7X1=TestFacility.Data.PipelineData.S700.PL_S711_TT7X4_TCV7X1.h) "System EX711" annotation (Placement(transformation(extent={{-42,-38},{38,42}})));
-  DHTF.Subsystems.Load.CoolingSingleLoad S721(
+  DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S721(
     redeclare model MediumHot = MediumHot,
     redeclare model MediumCold = MediumCold,
     np=n,

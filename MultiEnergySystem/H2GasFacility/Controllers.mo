@@ -38,7 +38,7 @@ package Controllers
 Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false)));
   end Valve_controller;
 
-  model MultiplMax "Pass through the largest signal."
+  block MultiplMax "Pass through the largest signal."
 
     Modelica.Blocks.Interfaces.RealInput
               u1 "Connector of Real input signal 1" annotation (Placement(

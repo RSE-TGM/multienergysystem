@@ -2,7 +2,8 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.Validation.S700;
 model EX7X1Test "Subsystem of a single HX70X test with real data"
   extends Modelica.Icons.Example;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
   parameter Real CorrectFactorHot = 1;
   parameter Real CorrectFactorCold = 1;
   parameter DistrictHeatingNetwork.Types.Density rhohotref = 985;
@@ -41,9 +42,11 @@ model EX7X1Test "Subsystem of a single HX70X test with real data"
   //  *1000/3600 "Matrix data";
   inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DistrictHeatingNetwork.Sources.SourceMassFlow sourceHot_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tin_start_hot, m_flow0 = TestFacility.Data.BPHEData.E701.m_flow_start_hot, G = 1e-8) annotation (
+  DistrictHeatingNetwork.Sources.SourceMassFlow sourceHot_mflow(redeclare model
+                                                                                Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tin_start_hot, m_flow0 = TestFacility.Data.BPHEData.E701.m_flow_start_hot, G = 1e-8) annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin = {-14, 60})));
-  DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_cold, T0 = TestFacility.Data.BPHEData.E701.Tin_start_cold, m_flow0 = 0.32, G = 1e-8) annotation (
+  DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold_mflow(redeclare
+      model                                                                      Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_cold, T0 = TestFacility.Data.BPHEData.E701.Tin_start_cold, m_flow0 = 0.32, G = 1e-8) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {9, -48})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkHot_p(redeclare model Medium = Medium, use_in_p0 = true, p0 = TestFacility.Data.BPHEData.E701.pout_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tout_start_hot, R = 1e-3) annotation (
     Placement(transformation(extent = {{14, 50}, {34, 70}})));

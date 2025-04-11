@@ -1,10 +1,13 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 partial model CentralizedNetworkBaseLoadSimplified
   // Fluids
-  replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model WaterHot =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                          constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model WaterCold =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                           constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   extends DHTF.Systems.Distribution.CentralPlantBase(redeclare model MediumCP = WaterHot, rackL2L3_rackL3L4_hot(q_m3h_start = q_m3h_rackHot*3/4), rackL3L4_FCVC01_hot(q_m3h_start = q_m3h_rackHot/2), FCVC01_rackL4L5_hot(q_m3h_start = q_m3h_rackHot/2), rackL4L5_rackL5L6_hot(q_m3h_start = q_m3h_rackHot/4), rackL2L3_rackL3L4_cold(q_m3h_start = q_m3h_rackCold*3/4), rackL3L4_FCVC01_cold(q_m3h_start = q_m3h_rackCold/2), rackL5L6_rackL6L7_hot(q_m3h_start = q_m3h_rackHot/4), rackL4L5_rackL5L6_cold(q_m3h_start = q_m3h_rackCold/4), rackL5L6_rackL6L7_cold(q_m3h_start = q_m3h_rackCold/4), FCVC01_rackL4L5_cold(q_m3h_start = q_m3h_rackCold/2), rackL6L7_FCVC02_hot(q_m3h_start = q_m3h_rackHot/4), FCVC02(q_m3h_start = q_m3h_rackHot/4));
-  extends DHTF.Systems.Load.LoadPlantBaseSimplified(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
+  extends DHTF.Systems.Load.LoadPlantBaseSimplified(redeclare model MediumLPHot = WaterHot, redeclare
+      model                                                                                                 MediumLPCold = WaterCold);
 equation
   connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (
     Line(points = {{100, -40}, {100, 38}, {14, 38}, {14, 205}, {60, 205}}, color = {140, 56, 54}, thickness = 0.5));

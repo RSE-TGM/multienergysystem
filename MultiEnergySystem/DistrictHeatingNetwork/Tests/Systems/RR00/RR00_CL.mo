@@ -8,7 +8,8 @@ model RR00_CL
   parameter Types.MassFlowRate m_flow_total = 2.4;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
 
   // EX701

@@ -45,9 +45,11 @@ model TestBase "Test base for validation of system 900, using S400 as reference"
     Placement(transformation(extent = {{48, -78}, {36, -66}})));
   Modelica.Blocks.Sources.TimeTable PT402_profile(table = [ts, PTi]) annotation (
     Placement(transformation(extent = {{64, -98}, {52, -86}})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD(m_flow_start = m_flow_start, redeclare model Medium = Medium, L = L_rCD, h = h_rCD, t = t_rCD, pin_start = pin_start_S9, Tin_start = Tout_start_S9, Tout_start = Tout_start_S9, Di = Di_rCD, nPipes = 1, n = 5) "Pipe connecting the outlet of S900 and the pressure transmiter PT401" annotation (
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD(m_flow_start = m_flow_start, redeclare
+      model                                                                                                 Medium = Medium, L = L_rCD, h = h_rCD, t = t_rCD, pin_start = pin_start_S9, Tin_start = Tout_start_S9, Tout_start = Tout_start_S9, Di = Di_rCD, nPipes = 1, n = 5) "Pipe connecting the outlet of S900 and the pressure transmiter PT401" annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 90, origin = {14, -40})));
-  DistrictHeatingNetwork.Sources.SourcePressure sourceP(use_in_p0 = true, use_in_T0 = true, redeclare model Medium = Medium, p0 = pin_start_S9, T0 = Tin_start_S9, R = 1e-3) annotation (
+  DistrictHeatingNetwork.Sources.SourcePressure sourceP(use_in_p0 = true, use_in_T0 = true, redeclare
+      model                                                                                                 Medium = Medium, p0 = pin_start_S9, T0 = Tin_start_S9, R = 1e-3) annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 90, origin = {14, -92})));
   DistrictHeatingNetwork.Sources.SinkMassFlow sink_(redeclare model Medium = Medium, G = 1e-8) annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin = {-10, -90})));
@@ -57,7 +59,8 @@ model TestBase "Test base for validation of system 900, using S400 as reference"
     Placement(transformation(extent = {{-72, 12}, {-60, 24}})));
   Modelica.Blocks.Sources.TimeTable PT902_profile(table = [ts, PTo]) annotation (
     Placement(transformation(extent = {{96, 32}, {84, 44}})));
-  DistrictHeatingNetwork.Sources.SinkPressure sinkP(use_in_p0 = true, redeclare model Medium = Medium, p0 = pout_start_S9, T0 = Tout_start_S9, R = 1e-3) annotation (
+  DistrictHeatingNetwork.Sources.SinkPressure sinkP(use_in_p0 = true, redeclare
+      model                                                                           Medium = Medium, p0 = pout_start_S9, T0 = Tout_start_S9, R = 1e-3) annotation (
     Placement(transformation(extent = {{56, 62}, {68, 50}})));
   Modelica.Blocks.Sources.TimeTable m_flow_ref(table = [ts, m_flow_approx]) annotation (
     Placement(transformation(extent = {{48, 86}, {60, 98}})));
@@ -71,7 +74,8 @@ model TestBase "Test base for validation of system 900, using S400 as reference"
     Placement(transformation(extent = {{-54, 12}, {-42, 24}})));
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange(D_i = Di_S4, D_o = Di_rCD) annotation (
     Placement(transformation(extent = {{-4, -4}, {4, 4}}, rotation = 270, origin = {14, -56})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD(m_flow_start = m_flow_start, redeclare model Medium = Medium, L = L_S400_rCD, h = h_S400_rCD, t = t_S4, pin_start = pin_start_S9, Tin_start = Tout_start_S9, Tout_start = Tout_start_S9, Di = Di_S4, nPipes = 1, n = 5) "Pipe connecting rackCD and the pressure transmiter PT402" annotation (
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD(m_flow_start = m_flow_start, redeclare
+      model                                                                                                      Medium = Medium, L = L_S400_rCD, h = h_S400_rCD, t = t_S4, pin_start = pin_start_S9, Tin_start = Tout_start_S9, Tout_start = Tout_start_S9, Di = Di_S4, nPipes = 1, n = 5) "Pipe connecting rackCD and the pressure transmiter PT402" annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = 90, origin = {14, -72})));
   Modelica.Blocks.Continuous.FirstOrder lowPasspout(k = 1, T = 5, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = PTo[1, 1]) annotation (
     Placement(transformation(extent = {{74, 32}, {62, 44}})));

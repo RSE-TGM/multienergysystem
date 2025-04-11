@@ -2,7 +2,8 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems.S400;
 model S400 "Main components of System 400 - Electric Boiler"
   extends Modelica.Icons.Example;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model Medium =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity                        constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
   constant Real pi = Modelica.Constants.pi;
   parameter Integer n = 3 "Number of volumes in each pipe";
@@ -150,7 +151,8 @@ model S400 "Main components of System 400 - Electric Boiler"
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-18,52})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT401(redeclare model Medium = Medium, T_start=Tin_start_S4, p_start=pin_start_S4)
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT401(redeclare
+      model                                                                                  Medium = Medium, T_start=Tin_start_S4, p_start=pin_start_S4)
     annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,

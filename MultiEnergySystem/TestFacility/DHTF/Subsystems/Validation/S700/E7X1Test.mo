@@ -2,7 +2,8 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.Validation.S700;
 model E7X1Test "Subsystem of a single HX70X test with real data"
   extends Modelica.Icons.Example;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
   parameter Real CorrectFactorHot = 1;
   parameter Real CorrectFactorCold = 1;
   parameter DistrictHeatingNetwork.Types.Density rhohotref = 985;
@@ -41,9 +42,11 @@ model E7X1Test "Subsystem of a single HX70X test with real data"
   //  *1000/3600 "Matrix data";
   inner MultiEnergySystem.System system annotation (
     Placement(visible = true, transformation(origin = {-90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  DistrictHeatingNetwork.Sources.SourceMassFlow sourceHot_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tin_start_hot, m_flow0 = TestFacility.Data.BPHEData.E701.m_flow_start_hot) annotation (
+  DistrictHeatingNetwork.Sources.SourceMassFlow sourceHot_mflow(redeclare model
+                                                                                Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tin_start_hot, m_flow0 = TestFacility.Data.BPHEData.E701.m_flow_start_hot) annotation (
     Placement(transformation(extent = {{61, 41}, {41, 21}})));
-  DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold_mflow(redeclare model Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_cold, T0 = TestFacility.Data.BPHEData.E701.Tin_start_cold, m_flow0 = 0.32) annotation (
+  DistrictHeatingNetwork.Sources.SourceMassFlow sourceCold_mflow(redeclare
+      model                                                                      Medium = Medium, use_in_m_flow = true, use_in_T = true, p0 = TestFacility.Data.BPHEData.E701.pin_start_cold, T0 = TestFacility.Data.BPHEData.E701.Tin_start_cold, m_flow0 = 0.32) annotation (
     Placement(transformation(extent = {{-60, -42}, {-40, -22}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkHot_p(redeclare model Medium = Medium, use_in_p0 = true, p0 = TestFacility.Data.BPHEData.E701.pout_start_hot, T0 = TestFacility.Data.BPHEData.E701.Tout_start_hot) annotation (
     Placement(transformation(extent = {{44, -43}, {64, -23}})));
@@ -67,13 +70,17 @@ model E7X1Test "Subsystem of a single HX70X test with real data"
     Placement(transformation(origin = {-58, 110}, extent = {{68, -50}, {88, -30}})));
   Modelica.Blocks.Sources.TimeTable outhot_Tref(table = [t, TT701]) annotation (
     Placement(transformation(origin = {-50, 10}, extent = {{100, 70}, {80, 90}}, rotation = -0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare model Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tout_start_hot, p_start = TestFacility.Data.BPHEData.E701.pout_start_hot) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare
+      model                                                                                             Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tout_start_hot, p_start = TestFacility.Data.BPHEData.E701.pout_start_hot) annotation (
     Placement(transformation(extent = {{31, -36}, {41, -26}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare model Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tout_start_cold, p_start = TestFacility.Data.BPHEData.E701.pout_start_cold) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare
+      model                                                                                             Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tout_start_cold, p_start = TestFacility.Data.BPHEData.E701.pout_start_cold) annotation (
     Placement(transformation(extent = {{-42, 28}, {-32, 38}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare model Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tin_start_cold, p_start = TestFacility.Data.BPHEData.E701.pin_start_cold) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare
+      model                                                                                             Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tin_start_cold, p_start = TestFacility.Data.BPHEData.E701.pin_start_cold) annotation (
     Placement(transformation(extent = {{-40, -35}, {-30, -25}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(redeclare model Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tin_start_hot, p_start = TestFacility.Data.BPHEData.E701.pin_start_hot) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(redeclare
+      model                                                                                             Medium = Medium, T_start = TestFacility.Data.BPHEData.E701.Tin_start_hot, p_start = TestFacility.Data.BPHEData.E701.pin_start_hot) annotation (
     Placement(transformation(extent = {{27, 28}, {37, 38}})));
   Modelica.Blocks.Math.Add dT_cold_sim(k1 = -1) annotation (
     Placement(transformation(extent = {{-70, 40}, {-80, 50}})));

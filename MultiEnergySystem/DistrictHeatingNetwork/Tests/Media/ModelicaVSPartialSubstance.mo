@@ -3,7 +3,8 @@ model ModelicaVSPartialSubstance
   extends Modelica.Icons.Example;
   replaceable package MediumIdeal =
       DistrictHeatingNetwork.Media.StandardWater "Modelica Water";
-  replaceable model MediumReal = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity "Simplified Water model";
+  replaceable model MediumReal =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity                            "Simplified Water model";
   parameter Types.Temperature T_min = 10 + 273.15 "Minimum temperature of the temperature range";
   parameter Types.Temperature T_max = 80 + 273.15 "Maximum temperature of the temperature range";
   parameter Types.Pressure p = 0.5e6 "Pressure";

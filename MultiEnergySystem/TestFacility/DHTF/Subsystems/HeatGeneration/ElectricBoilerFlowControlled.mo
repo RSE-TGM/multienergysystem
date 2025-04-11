@@ -3,8 +3,10 @@ model ElectricBoilerFlowControlled "System 400 with ideal flow control"
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+  replaceable model Medium =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity                        constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
 
   constant Real pi = Modelica.Constants.pi;

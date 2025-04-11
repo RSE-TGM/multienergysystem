@@ -6,7 +6,8 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
   // Fluids' base model
   ////////////////////////////////////
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
@@ -57,7 +58,8 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
   parameter DistrictHeatingNetwork.Types.Temperature Tin_ref[:,:] = [0, 60+273.15; 1e3, 60+273.15; 2e3, 75+273.15; 3e3, 65+273.15];
   parameter DistrictHeatingNetwork.Types.Temperature Tout_SP_CHP[:,:] = [0, 90+273.15; 1e3, 90+273.15; 2e3, 90+273.15; 3e3, 90+273.15];
 
-  DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(redeclare
+      model                                                                           Medium = Medium,
     Tin_start=Tin_start_CHP,
     Tout_start=Tout_start_CHP,
     Pmaxnom=Pmaxnom,
@@ -68,7 +70,8 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
     eta_th_nom=eta_th_nom) annotation (Placement(transformation(extent={{-24.25,-24.25},{24.25,24.25}},
         rotation=90,
         origin={62.5,-68})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHPHP_CHP(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_CHPHP_CHP(redeclare
+      model                                                                               Medium = Medium,
     set_m_flow_start=true,
     m_flow_start=m_flow_low_start,
     Tin_start=Tout_low_start,
@@ -79,16 +82,19 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
     set_m_flow_start=true,
     m_flow_start=m_flow_low_start,
     Tin_start=Tin_low_start,
-    Tout_start=Tin_low_start,                                             redeclare model Medium = Medium, hctype=hctype) "Pipe connecting CHP with three-way valve FV502"
+    Tout_start=Tin_low_start,                                             redeclare
+      model                                                                               Medium = Medium, hctype=hctype) "Pipe connecting CHP with three-way valve FV502"
     annotation (Placement(transformation(extent={{28.75,-56.25},{18.75,-66.25}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_FV501_CHPWP(
     set_m_flow_start=true,
     m_flow_start=m_flow_low_start,
     pin_start=pout_low_start,
     Tin_start=Tout_low_start,
-    Tout_start=Tout_low_start,                                              redeclare model Medium = Medium, hctype=hctype) "Pipe connecting three-way valve FV501 and CHP water circulation pump"
+    Tout_start=Tout_low_start,                                              redeclare
+      model                                                                                 Medium = Medium, hctype=hctype) "Pipe connecting three-way valve FV501 and CHP water circulation pump"
     annotation (Placement(transformation(extent={{-34.5,-70.25},{-24.5,-80.25}})));
-  DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Components.Pipes.BrazedPlateHeatExchanger EX501(redeclare
+      model                                                                              Medium = Medium,
     hctype_hot=hctype,
     Di_cold=TestFacility.Data.BPHEData.E501.Di_cold,
     Di_hot=TestFacility.Data.BPHEData.E501.Di_hot,
@@ -193,7 +199,8 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
         rotation=-90,
         origin={-44.25,-23.75})));
 
-  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(redeclare model Medium = Medium, use_in_omega=true,
+  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P501(redeclare
+      model                                                                           Medium = Medium, use_in_omega=true,
     Tin_start(displayUnit="K") = Tout_high_start,
     Tout_start(displayUnit="K") = Tout_high_start,
     a=TestFacility.Data.PumpData.P501.a,
@@ -222,7 +229,8 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
     set_m_flow_start=true,
     m_flow_start=m_flow_high_start,
     Tin_start=Tout_high_start,
-    Tout_start=Tout_high_start,                                            redeclare model Medium = Medium, hctype=hctype)
+    Tout_start=Tout_high_start,                                            redeclare
+      model                                                                                Medium = Medium, hctype=hctype)
     "Pipeline connecting EX501 and P501 inlet"
     annotation (Placement(transformation(
         extent={{5,5},{-5,-5}},
@@ -323,7 +331,8 @@ model CHPHXSystemTest "Combined Heat and Power System Model from RSE's test faci
     m_flow0=m_flow_high_start,
     G=0)
     annotation (Placement(transformation(extent={{-4.5,80},{15.5,100}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT501(redeclare model Medium = Medium, T_start=
+  MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT501(redeclare
+      model                                                                                             Medium = Medium, T_start=
         Tin_high_start,
     p_start=pin_high_start)
     annotation (Placement(transformation(

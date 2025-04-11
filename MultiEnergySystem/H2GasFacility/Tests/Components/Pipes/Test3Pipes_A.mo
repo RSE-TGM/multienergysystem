@@ -44,26 +44,27 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
     Placement(visible = true, transformation(origin = {-86, 52}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp p_in(duration = 50, height = 1000*0, offset = pin_start, startTime = 200) annotation (
     Placement(visible = true, transformation(origin = {-86, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model
-            Medium =
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe1(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare
+      model Medium =
         MediumPipes,                                                                                                                           Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start,                      n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom, massFractionDynamicBalance = massFractionDynamicBalance, constantFrictionFactor = constantFrictionFactor,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,                                                                                                                                                                                                        dp_small = dp_small) annotation (
     Placement(visible = true, transformation(origin = {-28, 2.22045e-16}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model
-            Medium =
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe2(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare
+      model Medium =
         MediumPipes,                                                                                                                           Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start,                      n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom,
     massFractionDynamicBalance = false,
     constantFrictionFactor=true,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,                                                                                                                                                                                                        dp_small = dp_small) annotation (
     Placement(visible = true, transformation(origin = {38, 0}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare model
-            Medium =
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV pipe3(Di = Pipe.pipe1.Di, L = Pipe.pipe1.L, redeclare
+      model Medium =
         MediumPipes,                                                                                                                           Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start,
     constantFrictionFactor=true,                                                                                                                                                                                                        dp_small = dp_small,
     hctype=MultiEnergySystem.DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream,                                                                                                                                                                                                        hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start,                      n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start,
     massFractionDynamicBalance = false,                                                                                                                                                                                                        rho_nom = Pipe.pipe1.rho_nom) annotation (
     Placement(visible = true, transformation(origin = {6, -50}, extent = {{22, -22}, {-22, 22}}, rotation = -90)));
-  MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare model Medium =
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourceP1(redeclare
+      model                                                                       Medium =
         MediumBoundaries,
     R=1e-3,                                                                                                         T0(displayUnit = "K") = 293.15, X0 = Xref_2, p0 = pin_start, use_in_T0 = true, use_in_p0 = true) annotation (
     Placement(visible = true, transformation(origin = {-20, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

@@ -4,7 +4,8 @@ model ControlledGasBoiler
   //-------------------------------
   // Declaration of gas fuel
   //-------------------------------
-  replaceable model Gas = MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+  replaceable model Gas = MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4
+                                                                                constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
 
   //-------------------------------
   // Fuel properties and reference values

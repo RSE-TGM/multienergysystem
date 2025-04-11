@@ -11,9 +11,11 @@ model GasBoilerTest
     pout_start=290000,
     tdelay=120)                                                                                                                                                            annotation (
     Placement(visible = true, transformation(origin = {-8.88178e-16, 8.88178e-16}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(redeclare model Medium = Water, T0 = 353.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = false) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SinkMassFlow sinkM(redeclare
+      model                                                                           Medium = Water, T0 = 353.15, m_flow0 = 1.2, p0 = 300000, pin_start = 300000, use_in_m_flow = false) annotation (
     Placement(transformation(origin={32,40},    extent = {{-12, 12}, {12, -12}}, rotation = -0)));
-  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(redeclare model Medium = Water, T0 = 333.15, p0 = 310000, use_in_T0 = false) annotation (
+  MultiEnergySystem.DistrictHeatingNetwork.Sources.SourcePressure sourceP(redeclare
+      model                                                                               Medium = Water, T0 = 333.15, p0 = 310000, use_in_T0 = false) annotation (
     Placement(transformation(origin={-30,40},    extent = {{-10, 10}, {10, -10}})));
   H2GasFacility.Sources.SourceMassFlow sourceCH4(redeclare model Medium = Gas, p0 = 0.105e6, T0 = 15 + 273.15, X0 = {1, 0}, m_flow0 = 5.8) annotation (
     Placement(transformation(origin={-50,0},    extent = {{-10, -10}, {10, 10}})));

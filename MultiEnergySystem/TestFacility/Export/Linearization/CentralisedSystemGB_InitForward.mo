@@ -4,8 +4,10 @@ model CentralisedSystemGB_InitForward
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends DHTF.Networks.Centralised.CentralisedSystem_GB(
     Kvalve=40,
-    redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
-    redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
+    redeclare model WaterHot =
+        DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
+    redeclare model WaterCold =
+        DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
     T_start_hot=80 + 273.15,
     T_start_cold=70 + 273.15,
     EX701_Tin_hot=T_start_hot,

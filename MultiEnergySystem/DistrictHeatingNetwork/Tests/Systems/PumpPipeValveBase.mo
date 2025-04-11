@@ -31,7 +31,8 @@ model PumpPipeValveBase
 
 
 
-  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump pump(redeclare model Medium = Medium,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump pump(redeclare
+      model                                                                                             Medium = Medium,
       Tin_start=Pump.P101.Tin_start,
       Tout_start=Pump.P101.Tout_start,
       hin_start=Pump.P101.hin_start,
@@ -54,7 +55,8 @@ model PumpPipeValveBase
       rhonom=Pump.P101.rhonom,
       qnom_inm3h_max=Pump.P101.qnommax_inm3h,
     use_in_omega=true)                        annotation (Placement(transformation(extent={{-50,-10},{-30,10}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe(redeclare model Medium = Medium, n=n,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipe(redeclare
+      model                                                                                    Medium = Medium, n=n,
     L=L,
     h=h,                                                                                                                                                   t = t,
     pin_start=pin_start_pipe,
@@ -62,7 +64,8 @@ model PumpPipeValveBase
     Tout_start=Tin_start,                                                                                                                                                                                                        Di = Di,
     q_m3h_start=q_m3h_start,
     hctype=hctype)      annotation (Placement(transformation(extent={{-14,-14},{14,14}})));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve valve(redeclare model Medium = Medium,
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve valve(redeclare
+      model                                                                                             Medium = Medium,
     Kv=Kv,
     openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage,
     dp_nom(displayUnit="Pa") = Valve.FCV101.dp_nom,

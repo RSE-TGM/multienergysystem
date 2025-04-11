@@ -2,7 +2,9 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.Load;
 model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power control loop"
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient
+                                                                                                                                     constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   parameter Integer np = 5 "Number of volumes in each pipe";
   parameter Integer nHX = 9 "Number of volumes in heat exchanger";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
@@ -274,20 +276,23 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
         rotation=90,
         origin={20.5,-72.5})));
 
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare model Medium = Medium, T_start=EX7X1_Tout_hot,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X1(redeclare
+      model                                                                           Medium = Medium, T_start=EX7X1_Tout_hot,
     p_start=EX7X1_pout_hot)
                            "Temperature sensor at the outlet of EX7X1 - hot side"   annotation (
       Placement(transformation(
         extent={{-5,5},{5,-5}},
         rotation=90,
         origin={22,95})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(redeclare model Medium = Medium, T_start=EX7X1_Tin_hot,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X2(redeclare
+      model                                                                           Medium = Medium, T_start=EX7X1_Tin_hot,
       p_start=EX7X1_pin_hot) "Temperature sensor at the inlet of EX7X1 - hot side"  annotation (Placement(
         transformation(
         extent={{-5,-5},{5,5}},
         rotation=90,
         origin={-22,91.5})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X4(redeclare
+      model                                                                           Medium = Medium,
     T_start=EX7X1_Tout_cold,
     p_start(displayUnit="Pa") = EX7X1_pout_cold)
                                  "Temperature sensor at the outlet of EX7X1 - cold side"   annotation (
@@ -295,7 +300,8 @@ model CoolingSingleLoadPowerControl "S900 - Load model including a thermal power
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-22.5,-44})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare model Medium = Medium,
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT7X3(redeclare
+      model                                                                           Medium = Medium,
     T_start=EX7X1_Tin_cold,
     p_start(displayUnit="Pa") = EX7X1_pin_cold)
                                  "Temperature sensor at the inlet of EX7X1 - cold side" annotation (

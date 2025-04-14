@@ -7,7 +7,7 @@ Rete_Gas_2i_3sources
 RG2i_source2_CH4
 RG2i_source2_CH4H2_demand
 RG2i_source2_CH4H2_demand_init
-RG2i_P_controller
+RG2i_PI_controller
 RG2i_AWPI
 RG2i_PID_source2_CH4H2
 RG2i_PID_MISO_control

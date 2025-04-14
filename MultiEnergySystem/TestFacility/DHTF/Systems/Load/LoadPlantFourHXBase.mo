@@ -91,8 +91,8 @@ partial model LoadPlantFourHXBase
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_PR01 = 2e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start_Cool = 20 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_start_Cool = 15 + 273.15;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool = 8.88;
   parameter Real q_Cool(unit = "m3/h") = 32;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Cool_total = q_Cool*998/1000;
   parameter DistrictHeatingNetwork.Types.Length t_RR = 1.5e-3;
   parameter DistrictHeatingNetwork.Types.Length Di_RR = 85e-3;
   parameter Real Kvalve(unit = "m3/h") = TestFacility.Data.ValveData.FCVR01.Kv; //90;
@@ -240,9 +240,9 @@ partial model LoadPlantFourHXBase
   parameter DistrictHeatingNetwork.Types.Length h_RR_UsersOut=0;
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
+    redeclare model Medium = MediumHot,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX701_hot,
-    redeclare model Medium = MediumHot,
     L=L_FT701_rackL2L3,
     h=h_FT701_rackL2L3,
     t=t_hot,
@@ -257,9 +257,9 @@ partial model LoadPlantFourHXBase
         rotation=90,
         origin={-302,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
+    redeclare model Medium = MediumHot,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX701_hot,
-    redeclare model Medium = MediumHot,
     L=L_rackL2L3_TT702,
     h=h_rackL2L3_TT702,
     t=t_hot,
@@ -378,9 +378,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-182,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX721_EX711_cold(
+    redeclare model Medium = MediumCold,
     L=L_EX721_EX711_cold,
     h=h_EX721_EX711_cold,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold + m_flow_EX731_cold + m_flow_EX711_cold,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -394,9 +397,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={64,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
+    redeclare model Medium = MediumCold,
     L=L_EX701_EX731_cold,
     h=h_EX701_EX731_cold,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold + m_flow_EX731_cold,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -410,9 +416,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-64,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX711_EX701_cold(
+    redeclare model Medium = MediumCold,
     L=L_EX711_EX701_cold,
     h=h_EX711_EX701_cold,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -426,9 +435,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-222,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV701_rackUsersOut(
+    redeclare model Medium = MediumCold,
     L=L_TCV701_rUsersOut,
     h=h_TCV701_rUsersOut,
     t=t_Users,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -442,9 +454,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-342,-170})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV731_rackUsersOut(
+    redeclare model Medium = MediumCold,
     L=L_TCV731_rUsersOut,
     h=h_TCV731_rUsersOut,
     t=t_Users,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX731_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -458,9 +473,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-182,-170})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX711_EX701_hot(
+    redeclare model Medium = MediumCold,
     L=L_EX711_EX701_hot,
     h=h_EX711_EX701_hot,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold + m_flow_EX731_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -474,9 +492,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-104,-192})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV711_rackUsersOut(
+    redeclare model Medium = MediumCold,
     L=L_TCV711_rUsersOut,
     h=h_TCV711_rUsersOut,
     t=t_Users,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX711_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -490,9 +511,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-22,-170})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX721_EX711_hot(
+    redeclare model Medium = MediumCold,
     L=L_EX721_EX711_hot,
     h=h_EX721_EX711_hot,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold + m_flow_EX731_cold + m_flow_EX711_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -506,9 +530,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={56,-192})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_hot(
+    redeclare model Medium = MediumCold,
     L=L_EX701_EX731_hot,
     h=h_EX701_EX731_hot,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -522,9 +549,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-254,-192})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV721_rackUsersOut(
+    redeclare model Medium = MediumCold,
     L=L_TCV721_rUsersOut,
     h=h_TCV721_rUsersOut,
     t=t_Users,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX721_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -538,9 +568,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={138,-171})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_UsersIn_EX721(
+    redeclare model Medium = MediumCold,
     L=L_UsersIn_EX721,
     h=h_UsersIn_EX721,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold + m_flow_EX731_cold + m_flow_EX711_cold + m_flow_EX721_cold,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -554,9 +587,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={206,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_UsersOut_EX721(
+    redeclare model Medium = MediumCold,
     L=L_UsersOut_EX721,
     h=h_UsersOut_EX721,
     t=t_Rack,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_EX701_cold + m_flow_EX731_cold + m_flow_EX711_cold + m_flow_EX721_cold,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -568,6 +604,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={175,-192})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVR01(
+    redeclare model Medium = MediumCold,
     Kv=Kvalve,
     openingChar=TestFacility.Data.ValveData.FCVR01.openingChar,
     dp_nom(displayUnit="Pa") = 1.09928e5,
@@ -580,6 +617,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={344,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_VER901_FCVR01(
+    redeclare model Medium = MediumCold,
     L=L_VER901_FCVR01,
     h=h_VER901_FCVR01,
     t=t_RR,
@@ -594,6 +632,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={314,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FCVR01_FTR03(
+    redeclare model Medium = MediumCold,
     L=L_FCVR01_FTR03,
     h=h_FCVR01_FTR03,
     t=t_RR,
@@ -623,9 +662,12 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={390,-150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PTR01_FTR01(
+    redeclare model Medium = MediumCold,
     L=L_PTR01_FTR01,
     h=h_PTR01_FTR01,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool_total,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -636,8 +678,10 @@ partial model LoadPlantFourHXBase
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={404,-46})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TTR01(T_start=
-        Tin_start_Cool, p_start=pin_start_Cool)
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TTR01(
+    redeclare model Medium = MediumCold,
+    T_start=Tin_start_Cool,
+    p_start=pin_start_Cool)
     "Temperature sensor at the inlet of chiller RR01" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
@@ -649,17 +693,22 @@ partial model LoadPlantFourHXBase
         extent={{-6,-6},{6,6}},
         rotation=-90,
         origin={406,-81})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR01(T_start=
-        Tin_start_Cool, p_start=pin_start_Cool)
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR01(
+    redeclare model Medium = MediumCold,
+    T_start=Tin_start_Cool,
+    p_start=pin_start_Cool)
     "Flow Sensor at the inlet of chiller RR01" annotation (Placement(
         transformation(
         extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={406,-21})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FTR01_RR01(
+    redeclare model Medium = MediumCold,
     L=L_FTR01_RR01,
     h=h_FTR01_RR01,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool_total,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -673,9 +722,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={404,4})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FTR03_PTR01(
+    redeclare model Medium = MediumCold,
     L=L_FTR03_PTR01,
     h=h_FTR03_PTR01,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool_total,
     pin_start=pin_start_Users,
     Tin_start=Tin_start_Cool,
     Tout_start=Tin_start_Cool,
@@ -686,8 +738,10 @@ partial model LoadPlantFourHXBase
         extent={{10,-10},{-10,10}},
         rotation=-90,
         origin={404,-126})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TTR02(T_start=
-        Tout_start_Cool, p_start=pin_start_Users)
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TTR02(
+    redeclare model Medium = MediumCold,
+    T_start=Tout_start_Cool,
+    p_start=pin_start_Users)
     "Temperature sensor at the outlet of chiller RR01" annotation (Placement(
         transformation(
         extent={{-6,-6},{6,6}},
@@ -703,6 +757,8 @@ partial model LoadPlantFourHXBase
     L=L_PR01_PTR02,
     h=h_PR01_PTR02,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool_total,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -719,6 +775,8 @@ partial model LoadPlantFourHXBase
     L=L_TTR02_VER901,
     h=h_TTR02_VER901,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool_total,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -730,11 +788,12 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={282,-98})));
   DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump PR01(
+    redeclare model Medium = MediumCold,
     Tin_start(displayUnit="K") = Tout_start_Cool,
     Tout_start(displayUnit="K") = Tout_start_Cool,
     a=TestFacility.Data.PumpData.PR01.a,
     b=TestFacility.Data.PumpData.PR01.b,
-    m_flow_start=m_flow_Cool,
+    m_flow_start=m_flow_Cool_total,
     dpnom=TestFacility.Data.PumpData.PR01.dpnom,
     etaelec=TestFacility.Data.PumpData.PR01.etaelec,
     etamech=TestFacility.Data.PumpData.PR01.etamech,
@@ -757,9 +816,12 @@ partial model LoadPlantFourHXBase
         origin={282,-5})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_RR01_PR01(
+    redeclare model Medium = MediumCold,
     L=L_RR01_PR01,
     h=h_RR01_PR01,
     t=t_RR,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_Cool_total,
     pin_start=pin_start_Users,
     Tin_start=Tout_start_Cool,
     Tout_start=Tout_start_Cool,
@@ -774,11 +836,12 @@ partial model LoadPlantFourHXBase
 
     DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
     RR01(
+    redeclare model Medium = MediumCold,
     use_in_Tout_cold_set=true,
     Tin_cold_start=Tin_start_Cool,
     Tout_cold_nom(displayUnit="K") = Tout_start_Cool,
     dp_cold_start=dp_RR01,
-    m_flow_cold_start=m_flow_Cool,
+    m_flow_cold_start=m_flow_Cool_total,
     V=0.001) "Chiller"
     annotation (Placement(transformation(extent={{310,54},{381,125}})));
 
@@ -786,10 +849,8 @@ partial model LoadPlantFourHXBase
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange                   suddenAreaChange1(D_i=Di_RR, D_o=Di_Rack) annotation (Placement(transformation(extent={{224,-202},{244,-182}})));
   DistrictHeatingNetwork.Components.Fittings.Junction junction
     annotation (Placement(transformation(extent={{-136,-146},{-148,-158}})));
-  DistrictHeatingNetwork.Components.Fittings.Junction junction1
-    annotation (Placement(transformation(extent={{24,-146},{12,-158}})));
-  DistrictHeatingNetwork.Components.Fittings.Junction junction2
-    annotation (Placement(transformation(extent={{184,-146},{172,-158}})));
+  DistrictHeatingNetwork.Components.Fittings.Junction juncEX711Going annotation (Placement(transformation(extent={{24,-146},{12,-158}})));
+  DistrictHeatingNetwork.Components.Fittings.Junction juncEX721Going annotation (Placement(transformation(extent={{184,-146},{172,-158}})));
   DistrictHeatingNetwork.Components.Fittings.Junction junction3
     annotation (Placement(transformation(extent={{-6,6},{6,-6}},
         rotation=-90,
@@ -798,12 +859,12 @@ partial model LoadPlantFourHXBase
     annotation (Placement(transformation(extent={{6,-6},{-6,6}},
         rotation=-90,
         origin={404,-152})));
-  DistrictHeatingNetwork.Components.Fittings.Junction2 junction5
-    annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+  DistrictHeatingNetwork.Components.Fittings.Junction2 juncEX721Return annotation (Placement(transformation(
+        extent={{-6,6},{6,-6}},
         rotation=0,
         origin={138,-192})));
-  DistrictHeatingNetwork.Components.Fittings.Junction2 junction6
-    annotation (Placement(transformation(extent={{-6,6},{6,-6}},
+  DistrictHeatingNetwork.Components.Fittings.Junction2 juncEX711Return annotation (Placement(transformation(
+        extent={{-6,6},{6,-6}},
         rotation=0,
         origin={-22,-192})));
   DistrictHeatingNetwork.Components.Fittings.Junction2 junction7
@@ -1072,19 +1133,19 @@ equation
       points={{-148,-152},{-212,-152}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_EX721_EX711_cold.outlet, junction1.inlet) annotation (Line(
+  connect(PL_EX721_EX711_cold.outlet, juncEX711Going.inlet) annotation (Line(
       points={{54,-152},{24,-152}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction1.outlet, PL_EX701_EX731_cold.inlet) annotation (Line(
+  connect(juncEX711Going.outlet, PL_EX701_EX731_cold.inlet) annotation (Line(
       points={{12,-152},{-54,-152}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_UsersIn_EX721.outlet, junction2.inlet) annotation (Line(
+  connect(PL_UsersIn_EX721.outlet, juncEX721Going.inlet) annotation (Line(
       points={{196,-152},{184,-152}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction2.outlet, PL_EX721_EX711_cold.inlet) annotation (Line(
+  connect(juncEX721Going.outlet, PL_EX721_EX711_cold.inlet) annotation (Line(
       points={{172,-152},{74,-152}},
       color={140,56,54},
       thickness=0.5));
@@ -1116,27 +1177,27 @@ equation
       points={{244,-192},{404,-192},{404,-158}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction5.inoutlet, PL_TCV721_rackUsersOut.outlet) annotation (Line(
+  connect(juncEX721Return.inoutlet, PL_TCV721_rackUsersOut.outlet) annotation (Line(
       points={{138,-186},{138,-181}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_UsersOut_EX721.inlet, junction5.outlet) annotation (Line(
+  connect(PL_UsersOut_EX721.inlet, juncEX721Return.outlet) annotation (Line(
       points={{165,-192},{144,-192}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction5.inlet, PL_EX721_EX711_hot.outlet) annotation (Line(
+  connect(juncEX721Return.inlet, PL_EX721_EX711_hot.outlet) annotation (Line(
       points={{132,-192},{66,-192}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction6.inoutlet, PL_TCV711_rackUsersOut.outlet) annotation (Line(
+  connect(juncEX711Return.inoutlet, PL_TCV711_rackUsersOut.outlet) annotation (Line(
       points={{-22,-186},{-22,-180}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction6.inlet, PL_EX711_EX701_hot.outlet) annotation (Line(
+  connect(juncEX711Return.inlet, PL_EX711_EX701_hot.outlet) annotation (Line(
       points={{-28,-192},{-94,-192}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_EX721_EX711_hot.inlet, junction6.outlet) annotation (Line(
+  connect(PL_EX721_EX711_hot.inlet, juncEX711Return.outlet) annotation (Line(
       points={{46,-192},{-16,-192}},
       color={140,56,54},
       thickness=0.5));
@@ -1172,7 +1233,7 @@ equation
       points={{-141.6,48},{-141.6,93},{-142,93},{-142,140}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction1.inoutlet, S711.incold) annotation (Line(
+  connect(juncEX711Going.inoutlet, S711.incold) annotation (Line(
       points={{18,-146},{18,-96},{17.6,-96},{17.6,-44}},
       color={140,56,54},
       thickness=0.5));
@@ -1196,7 +1257,7 @@ equation
       points={{138.8,48},{138.8,95},{138,95},{138,140}},
       color={140,56,54},
       thickness=0.5));
-  connect(junction2.inoutlet, S721.incold) annotation (Line(
+  connect(juncEX721Going.inoutlet, S721.incold) annotation (Line(
       points={{178,-146},{178,-95},{177.6,-95},{177.6,-44}},
       color={140,56,54},
       thickness=0.5));

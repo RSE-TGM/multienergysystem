@@ -5,7 +5,9 @@ model RG2i_PID_MISO_control
   redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4,
     nX=1,
-    X_start = {1});
+    X_start = {1},
+    constantFrictionFactor = false,
+    massFractionDynamicBalance = false);
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
 
   Sensors.IdealPressureSensor idealPressureSensor(
@@ -187,7 +189,7 @@ model RG2i_PID_MISO_control
         origin={212,-286},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Modelica.Blocks.Math.Gain gain(k=1e-10) annotation (
+  Modelica.Blocks.Math.Gain gain(k=1e-16) annotation (
         Placement(visible = true, transformation(origin={-138,4},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.REMI_station REMI_station(redeclare
       model Medium =                                                                         Medium,

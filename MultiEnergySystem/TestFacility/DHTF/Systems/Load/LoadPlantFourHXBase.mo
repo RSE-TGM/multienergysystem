@@ -81,9 +81,6 @@ partial model LoadPlantFourHXBase
   parameter DistrictHeatingNetwork.Types.Pressure EX731_pin_cold=2.2e5 annotation(Dialog(tab = "Initialization", group = "Pressures"));
   parameter DistrictHeatingNetwork.Types.Pressure EX731_pout_cold=2e5 annotation(Dialog(tab = "Initialization", group = "Pressures"));
 
-  final parameter DistrictHeatingNetwork.Types.Length Di_hot=51e-3;
-  final parameter DistrictHeatingNetwork.Types.Length t_hot=1.5e-3;
-
   //1. Cooling System
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_Cool = 0.92e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_Cool = 0.92e5;
@@ -111,14 +108,14 @@ partial model LoadPlantFourHXBase
   parameter DistrictHeatingNetwork.Types.Length Di_Rack = 51e-3;
 
   // Lengths of pipelines COLD SIDE
-  parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
-  parameter DistrictHeatingNetwork.Types.Length L_HX711_SourceOut_FCV711=0.6;
-  parameter DistrictHeatingNetwork.Types.Length L_HX721_SourceOut_FCV721=0.6;
-  parameter DistrictHeatingNetwork.Types.Length L_HX731_SourceOut_FCV731=0.6;
-  parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0;
-  parameter DistrictHeatingNetwork.Types.Length h_HX711_SourceOut_FCV711=0;
-  parameter DistrictHeatingNetwork.Types.Length h_HX721_SourceOut_FCV721=0;
-  parameter DistrictHeatingNetwork.Types.Length h_HX731_SourceOut_FCV731=0;
+//   parameter DistrictHeatingNetwork.Types.Length L_HX701_SourceOut_FCV701=0.6;
+//   parameter DistrictHeatingNetwork.Types.Length L_HX711_SourceOut_FCV711=0.6;
+//   parameter DistrictHeatingNetwork.Types.Length L_HX721_SourceOut_FCV721=0.6;
+//   parameter DistrictHeatingNetwork.Types.Length L_HX731_SourceOut_FCV731=0.6;
+//   parameter DistrictHeatingNetwork.Types.Length h_HX701_SourceOut_FCV701=0;
+//   parameter DistrictHeatingNetwork.Types.Length h_HX711_SourceOut_FCV711=0;
+//   parameter DistrictHeatingNetwork.Types.Length h_HX721_SourceOut_FCV721=0;
+//   parameter DistrictHeatingNetwork.Types.Length h_HX731_SourceOut_FCV731=0;
 
 //   parameter DistrictHeatingNetwork.Types.Length L_FCV701_FT701=2.50;
 //   parameter DistrictHeatingNetwork.Types.Length h_FCV701_FT701=2.50;
@@ -138,14 +135,28 @@ partial model LoadPlantFourHXBase
 //   parameter DistrictHeatingNetwork.Types.Length L_FCV731_FT731=2.25;
 //   parameter DistrictHeatingNetwork.Types.Length h_FCV731_FT731=0;
 
-  parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-0.7; //-1;
-  parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1.4; //-1;
-  parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 + 1 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1.6; //-1;
-  parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 + 0.25 + 0.3 + 3 + 0.4 + 0.5;
-  parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-2.4; //-0.25 - 0.5;
+
+  // ------ Dimensions hot side ------
+
+  final parameter DistrictHeatingNetwork.Types.Length Di_hot=51e-3;
+  final parameter DistrictHeatingNetwork.Types.Length t_hot=1.5e-3;
+  parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL3L4_TT712=1 + 0.7 + 5 + 9.2 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL3L4_TT712=-1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL4L5_TT722=1 + 2 + 5 + 9 + 1 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 + 0.3 + 3 + 0.4 + 0.5 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+
+  parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-0.7 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-1;
+  parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1.4 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-1;
+  parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 + 1 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1.6 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-1;
+  parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 + 0.25 + 0.3 + 3 + 0.4 + 0.5 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-2.4 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-0.25 - 0.5;
 
   // Lengths of pipelines HOT SIDE
 //   parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=1.5 + 1.0 + 0.4;
@@ -157,20 +168,11 @@ partial model LoadPlantFourHXBase
 //   parameter DistrictHeatingNetwork.Types.Length h_HX721_TT722_SourceIn=1.5 + 1.0;
 //   parameter DistrictHeatingNetwork.Types.Length h_HX731_TT732_SourceIn=1.5 + 1.0;
 
-  parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1;
-  parameter DistrictHeatingNetwork.Types.Length L_rackL3L4_TT712=1 + 0.7 + 5 + 9.2 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_rackL3L4_TT712=-1;
-  parameter DistrictHeatingNetwork.Types.Length L_rackL4L5_TT722=1 + 2 + 5 + 9 + 1 + 1;
-  parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1;
-  parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 + 0.3 + 3 + 0.4 + 0.5;
-  parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5;
-
   // Internal diameters & thickness
   //parameter DistrictHeatingNetwork.Types.Length t_Source=1.5e-3;
   //parameter DistrictHeatingNetwork.Types.Length Di_Source=32e-3;
 
-  // Lengths of pipelines source side
+  // ------ Dimensions cold side ------
   parameter DistrictHeatingNetwork.Types.Length L_VER901_FCVR01=1;
   parameter DistrictHeatingNetwork.Types.Length h_VER901_FCVR01=-0.8*0;
   parameter DistrictHeatingNetwork.Types.Length L_FCVR01_FTR03=2.95;

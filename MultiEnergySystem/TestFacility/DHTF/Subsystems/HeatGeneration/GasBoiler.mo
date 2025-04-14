@@ -10,7 +10,6 @@ model GasBoiler "System 100 - Gas Boiler"
 
   constant Real pi = Modelica.Constants.pi;
 
-
   //-------------------------------
   // Initialization
   //-------------------------------

@@ -6,21 +6,36 @@ model CentralizedThreeGenGBEBCHP
   //-------------------------------
   // Initialization
   //-------------------------------
-  parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
-  parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3;
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*985/3600;
-  parameter Real q_m3h_S5_Source = 4;
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*985/3600;
-  parameter Real q_m3h_S5_User = 4;
-  parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3 annotation (
+    Dialog(group = "S500"));
+  parameter Real q_m3h_S5_Source = 4 annotation (
+    Dialog(group = "S500"));
+  parameter Real q_m3h_S5_User = 4 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_Source_start_S5 = 69 + 273.15 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Pressure pin_User_start_S5 = 1.69e5 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_User_start_S5 = 2.5e5 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15 annotation (
+    Dialog(group = "S500"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15 annotation (
+    Dialog(group = "S500"));
   parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
+
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*985/3600 annotation (
+    Dialog(group = "S500"));
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*985/3600 annotation (
+    Dialog(group = "S500"));
 
   Subsystems.HeatGeneration.CHP      S500(
     redeclare model Medium = WaterHot,
@@ -32,8 +47,11 @@ model CentralizedThreeGenGBEBCHP
     Tout_high_start=Tout_User_start_S5,
     Pel_SP=PeCHP) annotation (Placement(transformation(extent={{56,-50},{146,40}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_hot(
+    redeclare model Medium = WaterHot,
     L=5,
     t=t_S5,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_User_S5,
     pin_start=pin_User_start_S5 - 0.04e5,
     Tin_start=Tout_User_start_S5,
     Tout_start=Tout_User_start_S5,
@@ -48,8 +66,11 @@ model CentralizedThreeGenGBEBCHP
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange suddenAreaChange2(D_i=51e-3, D_o=Di_S5)    annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={120,102})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_cold(
+    redeclare model Medium = WaterHot,
     L=5,
     t=t_S5,
+    set_m_flow_start=true,
+    m_flow_start=m_flow_User_S5,
     pin_start=pin_User_start_S5 - 0.02e5,
     Tin_start=Tin_User_start_S5,
     Tout_start=Tin_User_start_S5,

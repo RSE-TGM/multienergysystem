@@ -49,16 +49,13 @@ partial model CentralisedSystem_GB_III "System with only Gas Boiler Systemm as s
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-266,-206})));
   DHTF.Subsystems.HeatGeneration.GasBoiler S100(
     redeclare model Medium = WaterHot,
+    pin_start=pin_start_S1,
+    pout_start=pout_start_S1,
+    Tin_start=Tin_start_S1,
+    Tout_start=Tout_start_S1,
     hctype=hctype,
     n=np,
-    pin_start_S1=pin_start_S1,
-    pout_start_S1=pout_start_S1,
-    Tin_start_S1=Tin_start_S1,
-    Tout_start_S1=Tout_start_S1,
-    eta_combustion=eta_combustion,
     q_m3h_S1=q_m3h_S1,
-    Kv=Kv_FCV101,
-    openingChar=openingChar_FCV101,
     Pmaxnom=147.6e3*0.92) annotation (Placement(transformation(extent={{-294,-328},{-206,-240}})));
   H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=nX)
                                                    annotation (

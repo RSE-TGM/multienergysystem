@@ -7,9 +7,9 @@ model TES "S200 - Thermal Energy Storage"
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   constant Real pi = Modelica.Constants.pi;
 
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Integer n = 3 "Number of volumes in each pipe";
+
+
+
   // System S200
   // Unloading
   //   parameter Boolean FV201_state = true;
@@ -36,24 +36,43 @@ model TES "S200 - Thermal Energy Storage"
   parameter Real Load2Unload = 4e5;
   parameter Real Unload2Load = 5e5;
   parameter Integer nTank = 9 "Number of volumes in stratified tank";
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2 = 2.1e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2 = 1.8e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_pump = 1.79e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump = 3e5;
-  final parameter DistrictHeatingNetwork.Types.Pressure pin_start_S2_tank = pout_start_S2_pump;
-  final parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_tank = pin_start_S2_tank - 9.81*4*990;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S2 = 75 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S2 = 76 + 273.15;
+
+
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start = 2.1e5 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2 = 1.8e5 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start_pump = 1.79e5 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_pump = 3e5 annotation (
+    Dialog(group = "Initialization"));
+  final parameter DistrictHeatingNetwork.Types.Pressure pin_start_tank = pout_start_S2_pump annotation (
+    Dialog(group = "Initialization"));
+  final parameter DistrictHeatingNetwork.Types.Pressure pout_start_S2_tank = pin_start_tank - 9.81*4*990 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S2 = 75 + 273.15 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S2 = 76 + 273.15 annotation (
+    Dialog(group = "Initialization"));
+  parameter Real q_m3h_S2(unit = "m3/h") = 4 annotation (
+    Dialog(group = "Initialization"));
+  final parameter DistrictHeatingNetwork.Types.VolumeFlowRate q = q_m3h_S2/3600 annotation (
+    Dialog(group = "Initialization"));
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2 = q*985 annotation (
+    Dialog(group = "Initialization"));
+
+
+  //-------------------------------
+  // Pipes
+  //-------------------------------
+  parameter Integer n = 3 "Number of volumes in each pipe";
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter DistrictHeatingNetwork.Types.Length L_S2 = 10;
   parameter DistrictHeatingNetwork.Types.Length Di_S2 = 51e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S2 = 1.5e-3;
-  parameter Real q_m3h_S2(unit = "m3/h") = 4;
-  final parameter DistrictHeatingNetwork.Types.VolumeFlowRate q = q_m3h_S2/3600;
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2 = q*985;
-  parameter Real P201omega[:, :] = [0, 2*pi*30; 4.2e5, 2*pi*30; 1e6, 2*pi*30];
-  parameter Real P201qm3h[:, :] = [0, 14.5; 100, 14.5];
-  parameter Real FCV201theta[:, :] = [0, 1; 4.1e5, 1; 4.1e5, 0.5; 1e6, 0.5];
-  // Pipe length
   parameter DistrictHeatingNetwork.Types.Length L_S2_PL0 = 24.5;
   parameter DistrictHeatingNetwork.Types.Length L_S2_PL1 = 1.7;
   parameter DistrictHeatingNetwork.Types.Length L_S2_PL2 = 1.5;
@@ -81,7 +100,7 @@ model TES "S200 - Thermal Energy Storage"
     n=nTank,
     D=1.7,
     T_start(displayUnit="K") = 70 + 273.15,
-    pin_start=pin_start_S2_tank,
+    pin_start=pin_start_tank,
     m_flow_start=m_flow_S2/2)                                                                                                                                                                                                         "Stratified tank 1" annotation (
     Placement(transformation(extent={{14,-338},{-42,-226}})));
   DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P201(
@@ -116,10 +135,10 @@ model TES "S200 - Thermal Energy Storage"
     n=nTank,
     D=1.7,
     T_start(displayUnit="K") = 70 + 273.15,
-    pin_start=pin_start_S2_tank,
+    pin_start=pin_start_tank,
     m_flow_start=m_flow_S2/2)                                                                                                                                                                                                         "Stratified tank 2" annotation (
     Placement(transformation(extent={{76,-338},{132,-226}})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT201(redeclare model Medium = Medium, T_start=Tin_start_S2, p_start=pin_start_S2)     "Temperature sensor at the inlet of pump 201" annotation (
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT201(redeclare model Medium = Medium, T_start=Tin_start_S2, p_start=pin_start)     "Temperature sensor at the inlet of pump 201" annotation (
     Placement(transformation(extent = {{-4.75, -4.75}, {4.75, 4.75}}, rotation = 90, origin={-19.75,71.25})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT201 "Pressure sensor at the inlet of pump 201" annotation (
     Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin={-20,51.5})));
@@ -128,7 +147,7 @@ model TES "S200 - Thermal Energy Storage"
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_PL1,
     t=t_S2,
-    pin_start=pin_start_S2,
+    pin_start=pin_start,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
@@ -148,7 +167,7 @@ model TES "S200 - Thermal Energy Storage"
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_PL3,
     t=L_S2,
-    pin_start=pin_start_S2,
+    pin_start=pin_start,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
@@ -174,7 +193,7 @@ model TES "S200 - Thermal Energy Storage"
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_PL4,
     t=t_S2,
-    pin_start=pin_start_S2,
+    pin_start=pin_start,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,
@@ -273,7 +292,7 @@ model TES "S200 - Thermal Energy Storage"
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_PL1,
     t=t_S2,
-    pin_start=pin_start_S2,
+    pin_start=pin_start,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
     Di=Di_S2,

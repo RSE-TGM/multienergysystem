@@ -23,46 +23,71 @@ model CHP "S500 - Combined Heat and Power System Model"
   ////////////////////////////////////
   // Parameters
   ////////////////////////////////////
+  parameter Integer n = 3 "Number of volumes in each pipe" annotation (
+    Dialog(group = "Pipe settings"));
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Integer n = 3 "Number of volumes in each pipe";
-  parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
-  parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3;
-  parameter DistrictHeatingNetwork.Types.Length Di_CHP = 51e-3;
+      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3 "inlet diameter" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3 " tickness" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length Di_CHP = 51e-3 "inlet diameter CHP system" annotation (
+    Dialog(group = "Pipe settings"));
 
-  ////////////////////////////////////
-  // Start values
-  ////////////////////////////////////
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_low_start = 1.50 "Starting mass flow rate CHP side";
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_high_start = 1.70 "Starting mass flow rate rack side";
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_low_start = 80 + 273.15 "Starting Inlet temperature HX501 CHP side";
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_low_start = 70 + 273.15 "Starting Outlet temperature HX501 CHP side";
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_high_start = 59 + 273.15 "Starting Inlet temperature HX501 rack side";
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_high_start = 70 + 273.15 "Starting Outlet temperature HX501 rack side";
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = Tout_low_start "CHP Starting Inlet temperature";
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = Tin_low_start "CHP Starting Outlet temperature";
-  parameter DistrictHeatingNetwork.Types.Pressure p_low_ref = 1.2e5 "Reference pressure CHP side";
-  parameter DistrictHeatingNetwork.Types.Pressure dp_low_ref = 0.9e5 "Reference pressure CHP side";
-  parameter DistrictHeatingNetwork.Types.Pressure pout_low_start = p_low_ref "Reference pressure side";
-  parameter DistrictHeatingNetwork.Types.Pressure pin_high_start = 1.8e5 "Reference pressure rack side";
-  parameter DistrictHeatingNetwork.Types.Pressure pout_high_start = 2e5 "Reference pressure rack side";
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_low_start = 1.50 "Starting mass flow rate CHP side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_high_start = 1.70 "Starting mass flow rate rack side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_low_start = 80 + 273.15 "Starting Inlet temperature HX501 CHP side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_low_start = 70 + 273.15 "Starting Outlet temperature HX501 CHP side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_high_start = 59 + 273.15 "Starting Inlet temperature HX501 rack side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_high_start = 70 + 273.15 "Starting Outlet temperature HX501 rack side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_CHP = Tout_low_start "CHP Starting Inlet temperature" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_CHP = Tin_low_start "CHP Starting Outlet temperature" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_low_start = p_low_ref "Reference pressure side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pin_high_start = 1.8e5 "Reference pressure rack side" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_high_start = 2e5 "Reference pressure rack side" annotation (
+    Dialog(group = "Initialization"));
 
+  //-------------------------------
+  // CHP Data
+  //-------------------------------
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_nom = 0.004 "Nominal fuel (CH4) mass flow rate" annotation (
-    Dialog(tab = "Combustion Data"));
+    Dialog(tab = "CHP Data"));
   parameter Real HH(unit = "J/kg", nominal = 10e6) = 50e6 "Nominal fuel calorific power" annotation (
-    Dialog(tab = "Combustion Data"));
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control";
-  parameter DistrictHeatingNetwork.Types.Time tau_el = 10 "Time constant of electric power first order response";
+    Dialog(tab = "CHP Data"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_ref = 80 + 273.15 "Reference value for internal control" annotation (
+    Dialog(tab = "CHP Data"));
+  parameter DistrictHeatingNetwork.Types.Time tau_el = 10 "Time constant of electric power first order response" annotation (
+    Dialog(tab = "CHP Data"));
   parameter DistrictHeatingNetwork.Types.PerUnit eta_el_nom = 0.3448273 "Nominal electrical efficiency" annotation (
-    Dialog(tab = "Nominal Data"));
+    Dialog(tab = "CHP Data"));
   parameter DistrictHeatingNetwork.Types.PerUnit eta_th_nom = 0.5586210 "Nominal thermal efficiency" annotation (
-    Dialog(tab = "Nominal Data"));
-  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 145e3 "Nominal Combustion Power";
+    Dialog(tab = "CHP Data"));
+  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 145e3 "Nominal Combustion Power" annotation (
+    Dialog(tab = "CHP Data"));
+  parameter DistrictHeatingNetwork.Types.Pressure p_low_ref = 1.2e5 "Reference pressure CHP side" annotation (
+    Dialog(tab = "CHP Data"));
+  parameter DistrictHeatingNetwork.Types.Pressure dp_low_ref = 0.9e5 "Reference pressure CHP side" annotation (
+    Dialog(tab = "CHP Data"));
 
-  // Gas composition
-  parameter DistrictHeatingNetwork.Types.MassFraction X_gas[4] = {0.9553316, 0.0341105, 0.0105579, 0};
+  //-------------------------------
+  // Set-points
+  //-------------------------------
   parameter DistrictHeatingNetwork.Types.Power Pel_SP[:,:] = [0, 40e3; 1e3, 40e3; 1e3, 35e3; 1e6, 35e3];
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_ref[:,:] = [0, 60+273.15; 1e3, 60+273.15; 2e3, 75+273.15; 3e3, 65+273.15];
+  //parameter DistrictHeatingNetwork.Types.Temperature Tin_ref[:,:] = [0, 60+273.15; 1e3, 60+273.15; 2e3, 75+273.15; 3e3, 65+273.15];
   parameter DistrictHeatingNetwork.Types.Temperature Tout_SP_CHP[:,:] = [0, 90+273.15; 1e3, 90+273.15; 2e3, 90+273.15; 3e3, 90+273.15];
 
   ////////////////////////////////////

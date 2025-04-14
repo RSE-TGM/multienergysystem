@@ -21,7 +21,7 @@ model StratifiedStorage
   outer MultiEnergySystem.System system "system object for global defaults";
 
   parameter Types.MassFlowRate m_flow_nom = 2 "Nominal mass flow rate";
-  parameter Types.SpecificEnthalpy hin_start = fluid[1].h_start;
+  final parameter Types.SpecificEnthalpy hin_start = fluid[1].h_start;
 
   // ------------------------------
   // Final parameters (auto-calculated geometry)

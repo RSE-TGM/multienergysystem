@@ -4,15 +4,8 @@ model WaterTankSystemB "System of two tanks"
 
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-//   parameter Boolean FV201_state = false;
-//   parameter Boolean FV202_state = true;
-//   parameter Boolean FV203_state = false;
-//   parameter Boolean FV204_state = true;
-//   parameter Boolean FV205_state = true;
-//   parameter Boolean FV206_state = true;
-//   parameter Boolean FV207_state = true;
-//   parameter Boolean FV208_state = true;
-//   parameter Boolean FV209_state = false;
+  DistrictHeatingNetwork.Choices.Storage.Status statusop "Operating status";
+
   parameter Boolean Load = true;
   final parameter Boolean Unload = not Load;
 
@@ -56,7 +49,7 @@ model WaterTankSystemB "System of two tanks"
   parameter Types.Length L_S2_D201_FT201 = 2;
   parameter Types.Length h_S2_D201_FT201 = 0;
 
-  String statusop;
+  //String statusop;
 
   Boolean FV201_state;
   Boolean FV202_state;
@@ -466,13 +459,16 @@ model WaterTankSystemB "System of two tanks"
   Modelica.Blocks.Sources.BooleanExpression FV209_exp(y=FV209_state) annotation (Placement(transformation(extent={{-118,-94},{-98,-74}})));
 equation
   if time < 3e4 then
-    statusop = "Loading";
+    //statusop = "Loading";
+    statusop = DistrictHeatingNetwork.Choices.Storage.Status.Loading;
   elseif time < 3.4e4 then
-    statusop = "Unloading";
+    //statusop = "Unloading";
+    statusop = DistrictHeatingNetwork.Choices.Storage.Status.Unloading;
   else
-    statusop = "ByPass";
+    statusop = DistrictHeatingNetwork.Choices.Storage.Status.Bypass;
+    //statusop = "ByPass";
   end if;
-  if statusop == "Loading" then
+  if statusop == DistrictHeatingNetwork.Choices.Storage.Status.Loading then
     FV201_state = false;
     FV202_state = true;
     FV203_state = false;
@@ -482,7 +478,7 @@ equation
     FV207_state = true;
     FV208_state = false;
     FV209_state = false;
-  elseif statusop == "Unloading" then
+  elseif statusop == DistrictHeatingNetwork.Choices.Storage.Status.Unloading then
     FV201_state = true;
     FV202_state = false;
     FV203_state = true;

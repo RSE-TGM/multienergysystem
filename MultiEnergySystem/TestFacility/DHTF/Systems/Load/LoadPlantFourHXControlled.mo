@@ -1,6 +1,10 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.Load;
 model LoadPlantFourHXControlled
-  extends LoadPlantFourHXBase;
+  extends LoadPlantFourHXBase(
+    redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S701,
+    redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S711,
+    redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S721,
+    redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S731);
 equation
   connect(controlSignalBus.PtEX701, S701.EX7X1Pt_SP) annotation (Line(
       points={{0,300},{-4,300},{-4,290},{-380,290},{-380,30},{-366,30}},

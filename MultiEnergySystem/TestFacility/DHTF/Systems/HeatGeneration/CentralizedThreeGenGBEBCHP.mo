@@ -1,17 +1,17 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration;
 model CentralizedThreeGenGBEBCHP
   extends CentralizedTwoGenGBEB;
+  // System S500
 
+  //-------------------------------
+  // Initialization
+  //-------------------------------
   parameter DistrictHeatingNetwork.Types.Length Di_S5 = 39e-3;
   parameter DistrictHeatingNetwork.Types.Length t_S5 = 1.5e-3;
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*990/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_Source_S5 = q_m3h_S5_Source*985/3600;
   parameter Real q_m3h_S5_Source = 4;
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*990/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*985/3600;
   parameter Real q_m3h_S5_User = 4;
-  parameter Real P501omega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
-  parameter Real P501qm3h[:, :] = [0, 8; 100, 8];
-  parameter Real Pchpomega[:, :] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
-  parameter Real Pchpqm3h[:, :] = [0, 3.94; 100, 3.94];
   parameter DistrictHeatingNetwork.Types.Pressure pin_Source_start_S5 = 2e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_Source_start_S5 = 1.9e5;
   parameter DistrictHeatingNetwork.Types.Temperature Tin_Source_start_S5 = 80 + 273.15;
@@ -21,7 +21,7 @@ model CentralizedThreeGenGBEBCHP
   parameter DistrictHeatingNetwork.Types.Temperature Tin_User_start_S5 = 70 + 273.15;
   parameter DistrictHeatingNetwork.Types.Temperature Tout_User_start_S5 = 75 + 273.15;
   parameter DistrictHeatingNetwork.Types.Power PeCHP[:, :] = [0, 30e3; 100, 30e3];
-  parameter Real FCVchptheta[:, :] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
+
   Subsystems.HeatGeneration.CHP      S500(
     redeclare model Medium = WaterHot,
     redeclare model Gas = Gas,

@@ -1,65 +1,64 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration;
 model CentralizedTwoGenGBEB
   extends CentralizedOneGenGB;
-  // System 400
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 72 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S4 = 80 + 273.15;
+  // System S400
 
-  parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
-  parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
-  parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_cold = 5.5;
-  parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_cold = 0;
-  parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_hot = 6;
-  parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_hot = -0.5;
-  parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
-  parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
-  parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
-  parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -0.8;
-  parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
-  parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S400 = 1.695e5 annotation (
+    Dialog(group = "S400"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S400 = 1.6e5 annotation (
+    Dialog(group = "S400"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S400 = 72 + 273.15 annotation (
+    Dialog(group = "S400"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S400 = 80 + 273.15 annotation (
+    Dialog(group = "S400"));
+  parameter Real q_m3h_start_S400(unit = "m3/h") = 5 annotation (
+    Dialog(group = "S400"));
 
-  parameter Real nR = 5 "Total number of resistors";
-  parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Electric power of each resistor";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV401 = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Linear "opening characteristic";
-  parameter Real q_m3h_S4 = 5;
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4 = q_m3h_S4*990/3600;
-  parameter Real P401omega[:, :] = [0, 2*3.141592654*50; 100, 2*3.141592654*50; 100, 2*3.141592654*50; 200, 2*3.141592654*50];
-  parameter Real P401qm3h[:, :] = [0, 5; 100, 5];
-  parameter Real FCV401theta[:, :] = [0, 1; 100, 1];
-  parameter Real EB401_ToutSP[:, :] = [0, 80 + 273.15; 100, 80 + 273.15];
-  parameter Real Kv_FCV401(unit = "m3/h") = 33 "Metri Flow Coefficient";
-  parameter Boolean FV401_state = true;
-  parameter Boolean FV402_state = true;
-  parameter Boolean FV401_startValue = true;
-  parameter Boolean FV402_startValue = true;
-  parameter Real FV401_s[:] = {5e6};
-  parameter Real FV402_s[:] = {5e6};
+  final parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
+  final parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
+  final parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_cold = 5.5;
+  final parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_cold = 0;
+  final parameter DistrictHeatingNetwork.Types.Length L_S4_rCD_hot = 6;
+  final parameter DistrictHeatingNetwork.Types.Length h_S4_rCD_hot = -0.5;
+
+  final parameter Real nR = 5 "Total number of resistors";
+  final parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Electric power of each resistor";
+  final parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV401 = TestFacility.Data.ValveData.FCV401.openingChar "opening characteristic";
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start_S400 = q_m3h_start_S400*985/3600;
+  final parameter Real Kv_FCV401(unit = "m3/h") = TestFacility.Data.ValveData.FCV401.Kv "Metri Flow Coefficient";
+
+
 
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_hot(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_start_S400,
     redeclare model Medium = WaterHot,
     L=L_S4_rCD_hot,
     t=t_S4,
-    pin_start=pout_start_S4,
-    Tin_start=Tout_start_S4,
-    Tout_start=Tout_start_S4,
+    pin_start=pout_start_S400,
+    Tin_start=Tout_start_S400,
+    Tout_start=Tout_start_S400,
     Di=Di_S4,
-    q_m3h_start=q_m3h_S4,
+    q_m3h_start=q_m3h_start_S400,
     hctype=hctype,
     n=n,
     cf=cf)                                                                                                                                                                                                        annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-18,74})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_rCD_cold(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_start_S400,
     redeclare model Medium = WaterHot,
     L=L_S4_rCD_cold,
     t=t_S4,
-    pin_start=pin_start_S4,
-    Tin_start=Tin_start_S4,
-    Tout_start=Tin_start_S4,
+    pin_start=pin_start_S400,
+    Tin_start=Tin_start_S400,
+    Tout_start=Tin_start_S400,
     Di=Di_S4,
-    q_m3h_start=q_m3h_S4,
+    q_m3h_start=q_m3h_start_S400,
     hctype=hctype,
     n=n,
     cf=cf)                                                                                                                                                                                                        annotation (
@@ -67,35 +66,29 @@ model CentralizedTwoGenGBEB
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV401(
     redeclare model Medium = WaterHot,
     Kv=TestFacility.Data.ValveData.FCV401.Kv,
-    Tin_start=Tin_start_S4,
-    pin_start=pin_start_S4,
-    q_m3h_start=q_m3h_S4)                                                                                                                                                                                                         "On-Off valve connecting inlet S400 & S900 " annotation (
+    Tin_start=Tin_start_S400,
+    pin_start=pin_start_S400,
+    q_m3h_start=q_m3h_start_S400)                                                                                                                                                                                                         "On-Off valve connecting inlet S400 & S900 " annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin={-54,108})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV402(
     redeclare model Medium = WaterHot,
     Kv=TestFacility.Data.ValveData.FCV401.Kv,
-    Tin_start=Tout_start_S4,
-    pin_start=pout_start_S4,
-    q_m3h_start=q_m3h_S4)                                                                                                                                                                                                         annotation (
+    Tin_start=Tout_start_S400,
+    pin_start=pout_start_S400,
+    q_m3h_start=q_m3h_start_S400)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-18,108})));
   Subsystems.HeatGeneration.ElectricBoiler      S400(
     redeclare model Medium = WaterHot,
+    pin_start=pin_start_S400,
+    pout_start=pout_start_S400,
+    Tin_start=Tin_start_S400,
+    Tout_start=Tout_start_S400,
     n=n,
     hctype=hctype,
-    pin_start_S4=pin_start_S4,
-    pout_start_S4=pout_start_S4,
-    Tin_start_S4=Tin_start_S4,
-    Tout_start_S4=Tout_start_S4,
     Di_S4=Di_S4,
     t_S4=t_S4,
-    L_PT401_EB401=L_PT401_EB401,
-    h_PT401_EB401=h_PT401_EB401,
-    L_EB401_P401=L_EB401_P401,
-    h_EB401_P401=h_EB401_P401,
-    L_P401_FCV401=L_P401_FCV401,
-    h_P401_FCV401=h_P401_FCV401,
     cf=cf,
-    q_m3h_S4=q_m3h_S4,
+    q_m3h_S4=q_m3h_start_S400,
     Kv=Kv_FCV401,
     openingChar=openingChar_FCV401,
     nR=nR,

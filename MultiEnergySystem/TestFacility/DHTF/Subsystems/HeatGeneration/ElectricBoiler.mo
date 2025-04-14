@@ -2,61 +2,83 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model ElectricBoiler "System 400 - Electric Boiler"
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
-
+  import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
 
   constant Real pi = Modelica.Constants.pi;
-  parameter Integer n = 3 "Number of volumes in each pipe";
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Real pumpcorrectionfactor = 1;
-
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S4 = 70 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S4 = 80 + 273.15;
 
 
-  parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3;
-  parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3;
-  parameter DistrictHeatingNetwork.Types.Length L_PT401_EB401 = 0.5+0.4+0.2;
-  parameter DistrictHeatingNetwork.Types.Length h_PT401_EB401 = -0.1*0;
-  parameter DistrictHeatingNetwork.Types.Length L_EB401_P401 = 0.3+1+1+0.4;
-  parameter DistrictHeatingNetwork.Types.Length h_EB401_P401 = -1*0;
-  parameter DistrictHeatingNetwork.Types.Length L_P401_FCV401 = 0.2+0.4+0.6;
-  parameter DistrictHeatingNetwork.Types.Length h_P401_FCV401 = 0.2*0;
-
-  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
-
-  parameter Real q_m3h_S4 = 5;
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start = 1.695e5 "inlet pressure start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start = 1.6e5 "outlet pressure start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start = 70 + 273.15 "inlet temperature start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start = 80 + 273.15 "outlet temperature start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter Real q_m3h_S4(unit = "m3/h") = 5 annotation (
+    Dialog(group = "Initialization"));
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4;
 
-  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV401.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV401.openingChar "opening characteristic";
+  //-------------------------------
+  // Pipes
+  //-------------------------------
+  parameter Integer n = 3 "Number of volumes in each pipe" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3 "inlet diameter" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3 "tickness" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
+      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
+    Dialog(group = "Pipe settings"));
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4 "nominal mass flow rate" annotation (
+    Dialog(group = "Pipe settings"));
 
-  parameter Real nR = 5 "Number of resistors";
-  parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3;
-  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 50e3;
-  parameter DistrictHeatingNetwork.Types.Power Pminnom = 0;
-  parameter DistrictHeatingNetwork.Types.Length h = 1.25;
-  parameter DistrictHeatingNetwork.Types.Length D = 0.4;
+  //-------------------------------
+  // Valve parameters
+  //-------------------------------
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV401.Kv "Metric Flow Coefficient" annotation (
+    Dialog(group = "Valve settings"));
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV401.openingChar "opening characteristic" annotation (
+    Dialog(group = "Valve settings"));
+
+  //-------------------------------
+  // Boiler parameters
+  //-------------------------------
+  parameter Real nR = 5 "Number of resistors" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Maximum thermal power per each resistor" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 50e3 "Maximum thermal power" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Power Pminnom = 0 "Minimum thermal power" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Length h = 1.25 "Height boiler" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Length D = 0.4 "Diameter boiler" annotation (
+    Dialog(group = "Boiler settings"));
 
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB(
     redeclare model Medium = Medium,
-    Tout_start=Tout_start_S4,
+    Tout_start=Tout_start,
     D=D,
     Pmaxnom=Pmaxnom,
     Pnimnom=Pminnom,
     Pnom=Pmaxnom,
-    Tin_start=Tin_start_S4,
+    Tin_start=Tin_start,
     etanom=0.98,
     h=h,
     m_flow_nom=m_flow_nom,
-    pin_start=pin_start_S4,
-    pout_start=pout_start_S4,
+    pin_start=pin_start,
+    pout_start=pout_start,
     nR=nR,
     Pmaxres=Pmaxres)   annotation (Placement(visible=true, transformation(
         origin={0,-107.5},
@@ -86,7 +108,6 @@ model ElectricBoiler "System 400 - Electric Boiler"
     headmin=TestFacility.Data.PumpData.P401.headnommin,
     qnom_inm3h_min=TestFacility.Data.PumpData.P401.qnommin_inm3h,
     qnom_inm3h_max=TestFacility.Data.PumpData.P401.qnommax_inm3h,
-    correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                      annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
@@ -97,8 +118,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
     Kv=Kv,
     openingChar=openingChar,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV401.dp_nom,
-    Tin_start(displayUnit="K") = Tout_start_S4,
-    pin_start=pout_start_S4,
+    Tin_start(displayUnit="K") = Tout_start,
+    pin_start=pout_start,
     q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(
         extent={{-8,-8},{8,8}},
         rotation=90,
@@ -106,13 +127,13 @@ model ElectricBoiler "System 400 - Electric Boiler"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_EB401_P401(
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_EB401_P401,
-    h=h_EB401_P401,
-    t=t_S4,
-    pin_start=pout_start_S4,
-    Tin_start=Tout_start_S4,
-    Tout_start=Tout_start_S4,
-    Di=Di_S4,
+    L=pipeData.PL_EB401_P401.L,
+    h=pipeData.PL_EB401_P401.h,
+    t=pipeData.PL_EB401_P401.t,
+    pin_start=pout_start,
+    Tin_start=Tout_start,
+    Tout_start=Tout_start,
+    Di=pipeData.PL_EB401_P401.Di,
     q_m3h_start=q_m3h_S4,
     n=n,
     hctype=hctype,
@@ -124,13 +145,13 @@ model ElectricBoiler "System 400 - Electric Boiler"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_PT401_EB401(
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_PT401_EB401,
-    h=h_PT401_EB401,
-    t=t_S4,
-    pin_start=pin_start_S4,
-    Tin_start=Tin_start_S4,
-    Tout_start=Tin_start_S4,
-    Di=Di_S4,
+    L=pipeData.PL_PT401_EB401.L,
+    h=pipeData.PL_PT401_EB401.h,
+    t=pipeData.PL_PT401_EB401.t,
+    pin_start=pin_start,
+    Tin_start=Tin_start,
+    Tout_start=Tin_start,
+    Di=pipeData.PL_PT401_EB401.Di,
     q_m3h_start=q_m3h_S4,
     n=n,
     hctype=hctype,
@@ -142,13 +163,13 @@ model ElectricBoiler "System 400 - Electric Boiler"
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_P401_FCV401(
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_P401_FCV401,
-    h=h_P401_FCV401,
-    t=t_S4,
-    pin_start=pout_start_S4,
-    Tin_start=Tout_start_S4,
-    Tout_start=Tout_start_S4,
-    Di=Di_S4,
+    L=pipeData.PL_P401_FCV401.L,
+    h=pipeData.PL_P401_FCV401.h,
+    t=pipeData.PL_P401_FCV401.t,
+    pin_start=pout_start,
+    Tin_start=Tout_start,
+    Tout_start=Tout_start,
+    Di=pipeData.PL_P401_FCV401.Di,
     q_m3h_start=q_m3h_S4,
     n=n,
     hctype=hctype,
@@ -157,7 +178,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
         rotation=90,
         origin={20,10})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT402(redeclare model Medium = Medium,T_start=Tout_start_S4, p_start=pout_start_S4)
+    TT402(redeclare model Medium = Medium,T_start=Tout_start, p_start=pout_start)
     "Temperature sensor at the outlet of valve FCV401"       annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
@@ -176,7 +197,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
         rotation=90,
         origin={-18,70})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
-    TT401(redeclare model Medium = Medium,T_start=Tin_start_S4, p_start=pin_start_S4)
+    TT401(redeclare model Medium = Medium,T_start=Tin_start, p_start=pin_start)
     "Temperature sensor at the inlet of electrib boiler"     annotation (
       Placement(transformation(
         extent={{-6,6},{6,-6}},
@@ -184,8 +205,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
         origin={-18,84})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT(
     redeclare model Medium = Medium,
-    T_start=Tin_start_S4,
-    p_start=pin_start_S4) annotation (Placement(transformation(
+    T_start=Tin_start,
+    p_start=pin_start) annotation (Placement(transformation(
         extent={{7,-7},{-7,7}},
         rotation=90,
         origin={-23,53})));
@@ -268,7 +289,8 @@ equation
       points={{-110,-80},{0,-80},{0,-50},{15.9,-50}},
       color={255,101,98},
       thickness=0.5));
-  annotation (                                                   Diagram(coordinateSystem(
+                                                                                         annotation (
+    Dialog(group = "Initialization"),                            Diagram(coordinateSystem(
                                      extent={{-100,-140},{100,140}}, grid={0.5,0.5})),
                                                                        Icon(coordinateSystem(grid={
             1,1}),                                                          graphics={Bitmap(

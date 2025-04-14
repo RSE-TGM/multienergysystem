@@ -9,52 +9,65 @@ model GasBoiler "System 100 - Gas Boiler"
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   constant Real pi = Modelica.Constants.pi;
-  //parameter Real pumpcorrectionfactor = 1;
 
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Integer n = 3 "Number of volumes in each pipe";
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start = 1.695e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start = 1.6e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start = 65 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start = 80 + 273.15;
+
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start = 1.695e5 "inlet pressure start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start = 1.6e5 "outlet pressure start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start = 65 + 273.15 "inlet temperature start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start = 80 + 273.15 "outlet temperature start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter Real q_m3h_S1(unit = "m3/h") = 9 "volumetric flow rate start value" annotation (
+    Dialog(group = "Initialization"));
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
+
 //  parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
 //  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
-  parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.92 "Combustion efficiency";
-  parameter Modelica.Units.SI.Time tdelay = 10 "Rising time of heater from 0 to full power";
 
-  final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
-  final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3;
+  //-------------------------------
+  // Pipes
+  //-------------------------------
+  parameter Integer n = 3 "Number of volumes in each pipe" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
+      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
+    Dialog(group = "Pipe settings"));
+  final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3 "Internal diameter" annotation (
+    Dialog(group = "Pipe settings"));
+  final parameter DistrictHeatingNetwork.Types.Length t_S1 = 1.5e-3 "Thickness" annotation (
+    Dialog(group = "Pipe settings"));
 
-//   final parameter DistrictHeatingNetwork.Types.Length L_TT101_FT101 = 0.7;
-//   parameter DistrictHeatingNetwork.Types.Length h_TT101_FT101 = 0;
-//   final parameter DistrictHeatingNetwork.Types.Length L_FT101_GB101 = 1.25 + 0.7;
-//   parameter DistrictHeatingNetwork.Types.Length h_FT101_GB101 = -0.7*0;
-//   final parameter DistrictHeatingNetwork.Types.Length L_GB101_P101 = 0.7 + 0.95;
-//   parameter DistrictHeatingNetwork.Types.Length h_GB101_P101 = 0.7 + 0.95;
-//   parameter DistrictHeatingNetwork.Types.Length L_P101_FCV101 = 1;
-//   parameter DistrictHeatingNetwork.Types.Length h_P101_FCV101 = 1;
-  //final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_cold=12.25;
-  //final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_cold = -0.66-0.54+1.3+1-0.5-0.3 "0.3";
-  //final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
-  //final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
+  //-------------------------------
+  // Valve parameters
+  //-------------------------------
+  final parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient" annotation (
+    Dialog(group = "Valve settings"));
+  final parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV101.openingChar "opening characteristic" annotation (
+    Dialog(group = "Valve settings"));
 
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
-  parameter Real q_m3h_S1(unit = "m3/h") = 9;
-  //parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
-  //parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
-  //parameter Real FCV101theta[:,:] = [0, 1];
-  //parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
-
-  final parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
-  final parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV101.openingChar "opening characteristic";
-
-  parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;
-  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.8;
-  parameter DistrictHeatingNetwork.Types.Power Pminnom = 147.6e3*0.2;
-  final parameter DistrictHeatingNetwork.Types.Length h = 1.2*0.93;
-  final parameter DistrictHeatingNetwork.Types.Length D = 0.64;
+  //-------------------------------
+  // Boiler parameters
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.92 "Combustion efficiency" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter Modelica.Units.SI.Time tdelay = 10 "Rising time of heater from 0 to full power" annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3 annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.8 annotation (
+    Dialog(group = "Boiler settings"));
+  parameter DistrictHeatingNetwork.Types.Power Pminnom = 147.6e3*0.2 annotation (
+    Dialog(group = "Boiler settings"));
+  final parameter DistrictHeatingNetwork.Types.Length h = 1.2*0.93 annotation (
+    Dialog(group = "Boiler settings"));
+  final parameter DistrictHeatingNetwork.Types.Length D = 0.64 annotation (
+    Dialog(group = "Boiler settings"));
 
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference outlet fluid";
 
@@ -114,7 +127,7 @@ model GasBoiler "System 100 - Gas Boiler"
     Pnom=Pnom,
     tdelay=tdelay)
                annotation (Placement(visible=true, transformation(
-        origin={0,-97},
+        origin={0,-96.5},
         extent={{-36,-36},{36,36}},
         rotation=0)));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
@@ -268,9 +281,9 @@ equation
       points={{19.6,92},{19.6,101},{20,101},{20,110}},
       color={140,56,54},
       thickness=0.5));
-  connect(Toutset, GB.Tout_ref) annotation (Line(points={{-110,30},{-95.5,30},{-95.5,-137.5},{-31.5,-137.5},{-31.5,-97},{-25.2,-97}},
+  connect(Toutset, GB.Tout_ref) annotation (Line(points={{-110,30},{-95.5,30},{-95.5,-137.5},{-31.5,-137.5},{-31.5,-96.5},{-25.2,-96.5}},
                                                                                                     color={0,0,127}));
-  connect(status, GB.heat_on) annotation (Line(points={{-110,10},{-97.5,10},{-97.5,-139},{-30,-139},{-30,-115},{-25.2,-115}},
+  connect(status, GB.heat_on) annotation (Line(points={{-110,10},{-97.5,10},{-97.5,-139},{-30,-139},{-30,-114.5},{-25.2,-114.5}},
                                                                                                     color={255,0,255}));
   connect(FT.m_flow, m_flow_) annotation (Line(points={{-30,37},{-30,32},{-40,32},{-40,136},{96,136},{96,70},{110,70}}, color={0,0,127}));
   connect(TT101.T, TTin) annotation (Line(points={{-29.8,76},{-34,76},{-34,134.5},{94,134.5},{94,50},{110,50}}, color={0,0,127}));
@@ -278,17 +291,17 @@ equation
   connect(PT101.p, PTin) annotation (Line(points={{-29.8,64},{-32,64},{-32,131.5},{90,131.5},{90,10},{110,10}}, color={0,0,127}));
   connect(PT102.p, PTout) annotation (Line(points={{29.8,82},{34,82},{34,129.5},{88,129.5},{88,-10},{110,-10}}, color={0,0,127}));
   connect(GB.inletfuel, inletFuel) annotation (Line(
-      points={{21.6,-97},{30,-97},{30,-125},{54,-125},{54,-122}},
+      points={{21.6,-96.5},{30,-96.5},{30,-125},{54,-125},{54,-122}},
       color={182,109,49},
       thickness=0.5));
   connect(omega, P101.in_omega) annotation (Line(points={{-110,70},{-103.5,70},{-103.5,70.5},{-95,70.5},{-95,137},{7,137},{7,0},{10.5,0},{10.5,0.2},{14,0.2}}, color={0,0,127}));
   connect(theta, FCV101.opening) annotation (Line(points={{-110,50},{-97.5,50},{-97.5,138},{8,138},{8,62},{12,62}}, color={0,0,127}));
   connect(GB.inlet, PL_S100_FT101_GB101.outlet) annotation (Line(
-      points={{-10.8,-68.2},{-10.8,-55},{-20,-55},{-20,-33.5}},
+      points={{-10.8,-67.7},{-10.8,-55},{-20,-55},{-20,-33.5}},
       color={140,56,54},
       thickness=0.5));
   connect(GB.outlet, PL_S100_GB101_P101.inlet) annotation (Line(
-      points={{10.8,-68.2},{10.8,-55},{20,-55},{20,-34}},
+      points={{10.8,-67.7},{10.8,-55},{20,-55},{20,-34}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S100_P101_FCV101.wall, PL_S100_GB101_P101.wall) annotation (Line(

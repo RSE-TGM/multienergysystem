@@ -38,7 +38,11 @@ model TestBase
   parameter String matrixFT = "FT401" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
   parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
-  DHTF.Subsystems.HeatGeneration.ElectricBoiler electricBoiler(redeclare model Medium = Medium, n = n, hctype = hctype, pumpcorrectionfactor = pumpcorrectionfactor, pin_start_S4 = pin_start_S4, pout_start_S4 = pout_start_S4, Tin_start_S4 = Tin_start_S4, Tout_start_S4 = Tout_start_S4, Di_S4 = Di_S4, t_S4 = t_S4, L_PT401_EB401 = L_PT401_EB401, h_PT401_EB401 = h_PT401_EB401, L_EB401_P401 = L_EB401_P401, h_EB401_P401 = h_EB401_P401, L_P401_FCV401 = L_P401_FCV401, h_P401_FCV401 = h_P401_FCV401, q_m3h_S4 = q_m3h_S4, Kv = Kv, openingChar = openingChar, nR = nR, Pmaxres = Pmaxres, EB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
+  DHTF.Subsystems.HeatGeneration.ElectricBoiler electricBoiler(redeclare model Medium = Medium, n = n, hctype = hctype, pumpcorrectionfactor = pumpcorrectionfactor,
+    pin_start=pin_start_S4,
+    pout_start=pout_start_S4,
+    Tin_start=Tin_start_S4,
+    Tout_start=Tout_start_S4,                                                                                                                                                                                                        Di_S4 = Di_S4, t_S4 = t_S4, L_PT401_EB401 = L_PT401_EB401, h_PT401_EB401 = h_PT401_EB401, L_EB401_P401 = L_EB401_P401, h_EB401_P401 = h_EB401_P401, L_P401_FCV401 = L_P401_FCV401, h_P401_FCV401 = h_P401_FCV401, q_m3h_S4 = q_m3h_S4, Kv = Kv, openingChar = openingChar, nR = nR, Pmaxres = Pmaxres, EB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
     Placement(transformation(extent = {{-28, -32}, {30, 26}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table = [ts, thetav]) annotation (
     Placement(transformation(extent = {{-90, 4}, {-78, 16}})));

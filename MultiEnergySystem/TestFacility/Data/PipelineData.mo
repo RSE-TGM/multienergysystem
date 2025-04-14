@@ -47,13 +47,13 @@ package PipelineData
   end S100;
 
   package S400 "Package including pipelines' information from subsystem S400"
-    constant DistrictHeatingNetwork.Types.PerUnit cf = 0.004;
+    constant DistrictHeatingNetwork.Types.PerUnit cf = 0.005;
     constant DistrictHeatingNetwork.Types.Velocity u_nom = 5;
     constant MultiEnergySystem.TestFacility.Data.RoundPipeLine PL_PT401_EB401(
       Di=51e-3,
       t=1.5e-3,
       tIns=1.5e-1,
-      L=1.95,
+      L=1.1,
       h=0,
       lambdaIns=0.04,
       lambdam=45,
@@ -66,8 +66,8 @@ package PipelineData
       Di=51e-3,
       t=1.5e-3,
       tIns=1.5e-1,
-      L=1.65,
-      h=0,
+      L=2.7,
+      h=-0.8,
       lambdaIns=0.04,
       lambdam=45,
       rho_nom=1000,
@@ -79,7 +79,7 @@ package PipelineData
       Di=51e-3,
       t=1.5e-3,
       tIns=1.5e-1,
-      L=2,
+      L=1.2,
       h=0,
       lambdaIns=0.04,
       lambdam=45,

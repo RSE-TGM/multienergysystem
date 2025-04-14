@@ -1,83 +1,101 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
 model RG2i_PID_MISO_control
   "Multiple Input Single Output pressure controller for REMI station"
-  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
+  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
+  redeclare model Medium =
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4,
+    nX=1,
+    X_start = {1});
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
 
   Sensors.IdealPressureSensor idealPressureSensor(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=463200,
+    pout_start=463200,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=463200,
+    m_flow_start=0.021261)
+                          annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-186,180})));
   Sensors.IdealPressureSensor idealPressureSensor1(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=460300,
+    pout_start=460300,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=460300,
+    m_flow_start=0.007765)
+                          annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=180,
         origin={36,268})));
   Sensors.IdealPressureSensor idealPressureSensor2(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=461900,
+    pout_start=461900,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=461900,
+    m_flow_start=0.019358)
+                          annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={102,216})));
   Sensors.IdealPressureSensor idealPressureSensor3(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=437100,
+    pout_start=437100,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=437100,
+    m_flow_start=0.098685)
+                          annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=180,
         origin={234,238})));
   Sensors.IdealPressureSensor idealPressureSensor5(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=459100,
+    pout_start=459100,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=459100,
+    m_flow_start=0.034069)
+                          annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={42,-110})));
   Sensors.IdealPressureSensor idealPressureSensor6(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=459500,
+    pout_start=459500,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=459500,
+    m_flow_start=0.112338)
+                          annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={206,-82})));
   Sensors.IdealPressureSensor idealPressureSensor7(
     redeclare model Medium = Medium,
-    pin_start=493000,
-    pout_start=493000,
+    pin_start=454700,
+    pout_start=454700,
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
-    m_flow_start=0.4110)  annotation (Placement(transformation(
+    p_start=454700,
+    m_flow_start=0.119588)
+                          annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={222,-258})));
@@ -299,5 +317,6 @@ equation
   connect(multiplMax.u2, feedback_5.y) annotation (Line(points={{-257.9,10.1},{
           -290,10.1},{-290,302},{66,302},{66,292},{45,292}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+        coordinateSystem(preserveAspectRatio=false)),
+    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
 end RG2i_PID_MISO_control;

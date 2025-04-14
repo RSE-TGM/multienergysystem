@@ -10,7 +10,7 @@ package ValveData
     Kv=12,
     Tin_start=36.7 + 273.15,
     pin_start=4.5e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve TCV711(
     Name="TCV711",
     Tin_nom=67.73858 + 273.15 "Calculo teorico",
@@ -20,7 +20,7 @@ package ValveData
     Kv=12,
     Tin_start=36.7 + 273.15,
     pin_start=4.5e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve TCV721(
     Name="TCV721",
     Tin_nom=67.73858 + 273.15 "Calculo teorico",
@@ -30,7 +30,7 @@ package ValveData
     Kv=12,
     Tin_start=36.7 + 273.15,
     pin_start=4.5e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve TCV731(
     Name="TCV731",
     Tin_nom=67.73858 + 273.15 "Calculo teorico",
@@ -40,7 +40,7 @@ package ValveData
     Kv=12,
     Tin_start=36.7 + 273.15,
     pin_start=4.5e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve TCV301(
     Name="TCV301",
     Tin_nom=8.721643 + 273.15 "Calculo teorico",
@@ -107,7 +107,7 @@ package ValveData
     Kv=12,
     Tin_start=60 + 273.15,
     pin_start=3e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve FCV711(
     Name="FCV711",
     Tin_nom=60 + 273.15,
@@ -117,7 +117,7 @@ package ValveData
     Kv=12,
     Tin_start=60 + 273.15,
     pin_start=3e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve FCV721(
     Name="FCV721",
     Tin_nom=60 + 273.15,
@@ -127,7 +127,7 @@ package ValveData
     Kv=12,
     Tin_start=60 + 273.15,
     pin_start=3e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve FCV731(
     Name="FCV731",
     Tin_nom=60 + 273.15,
@@ -137,7 +137,7 @@ package ValveData
     Kv=12,
     Tin_start=60 + 273.15,
     pin_start=3e5,
-    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage);
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve FCVC01(
     Name="FCVC01",
     Tin_nom=60 + 273.15,

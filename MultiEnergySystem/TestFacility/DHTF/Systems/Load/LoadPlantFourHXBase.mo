@@ -140,23 +140,23 @@ partial model LoadPlantFourHXBase
 
   final parameter DistrictHeatingNetwork.Types.Length Di_hot=51e-3;
   final parameter DistrictHeatingNetwork.Types.Length t_hot=1.5e-3;
-  parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length L_rackL3L4_TT712=1 + 0.7 + 5 + 9.2 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_rackL3L4_TT712=-1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length L_rackL4L5_TT722=1 + 2 + 5 + 9 + 1 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 + 0.3 + 3 + 0.4 + 0.5 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5 annotation(Dialog(tab = "Initialization", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL2L3_TT702=5.2 + 5 + 1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL2L3_TT702=-1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL3L4_TT712=1 + 0.7 + 5 + 9.2 + 1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL3L4_TT712=-1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL4L5_TT722=1 + 2 + 5 + 9 + 1 + 1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL4L5_TT722=-1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length L_rackL6L7_TT732=1.2 + 4 + 0.25 + 0.3 + 3 + 0.4 + 0.5 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_rackL6L7_TT732=-0.25 - 0.5 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
 
-  parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-0.7 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-1;
-  parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1.4 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-1;
-  parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 + 1 + 1 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1.6 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-1;
-  parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 + 0.25 + 0.3 + 3 + 0.4 + 0.5 annotation(Dialog(tab = "Initialization", group = "Hot side"));
-  parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-2.4 annotation(Dialog(tab = "Initialization", group = "Hot side")); //-0.25 - 0.5;
+  parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-0.7 annotation(Dialog(tab = "Dimensions", group = "Hot side")); //-1;
+  parameter DistrictHeatingNetwork.Types.Length L_FT711_rackL3L4=1 + 0.7 + 5 + 9.2 + 1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT711_rackL3L4=-1.4 annotation(Dialog(tab = "Dimensions", group = "Hot side")); //-1;
+  parameter DistrictHeatingNetwork.Types.Length L_FT721_rackL4L5=1 + 2 + 5 + 9 + 1 + 1 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT721_rackL4L5=-1.6 annotation(Dialog(tab = "Dimensions", group = "Hot side")); //-1;
+  parameter DistrictHeatingNetwork.Types.Length L_FT731_rackL6L7=1.2 + 4 + 0.25 + 0.25 + 0.3 + 3 + 0.4 + 0.5 annotation(Dialog(tab = "Dimensions", group = "Hot side"));
+  parameter DistrictHeatingNetwork.Types.Length h_FT731_rackL6L7=-2.4 annotation(Dialog(tab = "Dimensions", group = "Hot side")); //-0.25 - 0.5;
 
   // Lengths of pipelines HOT SIDE
 //   parameter DistrictHeatingNetwork.Types.Length L_HX701_TT702_SourceIn=1.5 + 1.0 + 0.4;

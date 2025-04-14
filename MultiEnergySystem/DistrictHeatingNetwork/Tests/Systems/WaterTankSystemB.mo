@@ -4,7 +4,7 @@ model WaterTankSystemB "System of two tanks"
 
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  DistrictHeatingNetwork.Choices.Storage.Status statusop "Operating status";
+  DistrictHeatingNetwork.Choices.Storage.Status statusOp "Operating status";
 
   parameter Boolean Load = true;
   final parameter Boolean Unload = not Load;

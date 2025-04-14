@@ -7,7 +7,7 @@ model TES "S200 - Thermal Energy Storage"
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   constant Real pi = Modelica.Constants.pi;
 
-
+  DistrictHeatingNetwork.Choices.Storage.Status statusOp "Operating status";
 
 
   // System S200
@@ -359,13 +359,50 @@ model TES "S200 - Thermal Energy Storage"
     Placement(transformation(extent = {{7, 7}, {-7, -7}}, rotation = 90, origin={25,-141})));
   Modelica.Blocks.Interaction.Show.BooleanValue FV207_Status annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={2,-138})));
-  Modelica.Blocks.Logical.Not not3 annotation (
-    Placement(transformation(extent={{138,-48},{118,-28}})));
   Modelica.Blocks.Interfaces.RealOutput T_D201[ny] annotation (Placement(transformation(extent={{-106,-290},{-126,-270}}),
                                                                                                                        iconTransformation( origin={-6,248},               extent={{106,-290},{126,-270}})));
   Modelica.Blocks.Interfaces.RealOutput T_D202[ny] annotation (Placement(transformation(extent={{172,-296},{192,-276}}),
                                                                                                                        iconTransformation(origin={0,20},    extent={{100,-80},{120,-60}})));
 equation
+
+  // Map the integer input to the enumeration
+  statusOp = if status == 1 then DistrictHeatingNetwork.Choices.Storage.Status.Loading
+         elseif status == 2 then DistrictHeatingNetwork.Choices.Storage.Status.Unloading
+         else DistrictHeatingNetwork.Choices.Storage.Status.Bypass;
+
+
+  if statusOp == DistrictHeatingNetwork.Choices.Storage.Status.Loading then
+    FV201.u = false;
+    FV202.u = true;
+    FV203.u = false;
+//     FV204.u = false;
+//     FV205.u = false;
+    FV206.u = true;
+    FV207.u = true;
+//     FV208.u = false;
+    FV209.u = false;
+  elseif statusOp == DistrictHeatingNetwork.Choices.Storage.Status.Unloading then
+    FV201.u = true;
+    FV202.u = false;
+    FV203.u = true;
+//     FV204.u = true;
+//     FV205.u = true;
+    FV206.u = false;
+    FV207.u = false;
+//     FV208.u = true;
+    FV209.u = true;
+  else
+    FV201.u = true;
+    FV202.u = false;
+    FV203.u = true;
+//     FV204.u = true;
+//     FV205.u = true;
+    FV206.u = false;
+    FV207.u = true;
+//     FV208.u = true;
+    FV209.u = false;
+  end if;
+
   connect(PT201.inlet,TT201. inlet) annotation (
     Line(points={{-18,51.5},{-18,60.375},{-17.85,60.375},{-17.85,71.25}},                  color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S200_TT201_FV201.inlet,PT201. inlet) annotation (
@@ -424,16 +461,10 @@ equation
     Line(points={{2,-37.5},{2,-46.08}},              color = {255, 0, 255}));
   connect(FV207_Status.activePort,FV207. u) annotation (
     Line(points={{2,-126.5},{2,-117.92}},            color = {255, 0, 255}));
-  connect(not3.y,FV201. u) annotation (
-    Line(points={{117,-38},{64,-38},{64,-18},{-26,-18},{-26,-10},{-19.92,-10}},                            color = {255, 0, 255}));
-  connect(not3.y,FV203. u) annotation (
-    Line(points={{117,-38},{64,-38},{64,-58},{28,-58},{28,-80},{23.92,-80}},                               color = {255, 0, 255}));
   connect(FV203_Status.activePort,FV203. u) annotation (
     Line(points={{30.5,-80},{23.92,-80}},            color = {255, 0, 255}));
   connect(FV201_Status.activePort,FV201. u) annotation (
     Line(points={{-32.5,-10},{-19.92,-10}},          color = {255, 0, 255}));
-  connect(not3.y,FV209. u) annotation (
-    Line(points={{117,-38},{64,-38},{64,-150},{-26,-150},{-26,-130},{-19.92,-130}},                        color = {255, 0, 255}));
   connect(FV209_Status.activePort,FV209. u) annotation (
     Line(points={{-32.5,-130},{-19.92,-130}},        color = {255, 0, 255}));
   connect(FV202_Status.activePort,FV202. u) annotation (
@@ -442,10 +473,6 @@ equation
     Line(points={{28,-284},{28,-302},{-46,-302}},             color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S200_D201_FT201.outlet,FT201. outlet) annotation (
     Line(points={{-66,-302},{-70,-302},{-70,-202},{22.2,-202},{22.2,-145.2}},                   color = {140, 56, 54}, thickness = 0.5));
-  connect(status, not3.u) annotation (Line(points={{-110,10},{-88,10},{-88,-108},{158,-108},{158,-38},{140,-38}}, color={255,0,255}));
-  connect(status, FV202.u) annotation (Line(points={{-110,10},{-84,10},{-84,18},{-48,18},{-48,11.92}}, color={255,0,255}));
-  connect(status, FV207.u) annotation (Line(points={{-110,10},{-88,10},{-88,-122},{2,-122},{2,-117.92}}, color={255,0,255}));
-  connect(status, FV206.u) annotation (Line(points={{-110,10},{-88,10},{-88,-44},{2,-44},{2,-46.08}}, color={255,0,255}));
   connect(outlet, TT202.inlet) annotation (Line(
       points={{20,110},{20,90},{21.6,90},{21.6,70}},
       color={140,56,54},

@@ -19,7 +19,7 @@ partial model SystemInterfaceBaseIII
                                                            annotation (
     Placement(visible = true, transformation(origin={20,110},  extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={41,115},    extent={{-15,-15},{15,15}},      rotation = 0)));
   Modelica.Blocks.Interfaces.RealOutput m_flow_ "Mass flow rate" annotation (Placement(transformation(extent={{100,60},{120,80}}), iconTransformation(extent={{100,60},{120,80}})));
-  Modelica.Blocks.Interfaces.BooleanInput status "On/Off status of the machine"
+  Modelica.Blocks.Interfaces.IntegerInput status "Status of the machine"
     annotation (Placement(transformation(extent={{-120,0},{-100,20}}), iconTransformation(extent={{-120,0},{-100,20}})));
   annotation (                                                   Diagram(coordinateSystem(preserveAspectRatio=false)));
 end SystemInterfaceBaseIII;

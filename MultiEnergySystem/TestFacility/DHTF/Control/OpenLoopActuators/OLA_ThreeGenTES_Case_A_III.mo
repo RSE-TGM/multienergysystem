@@ -13,7 +13,7 @@ model OLA_ThreeGenTES_Case_A_III
     Placement(transformation(extent = {{52, -154}, {72, -134}})));
   Modelica.Blocks.Sources.BooleanExpression CHP501status(y = true) annotation (
     Placement(transformation(extent = {{52, -170}, {72, -150}})));
-  Modelica.Blocks.Sources.BooleanExpression S200status(y = true) annotation (
+  Modelica.Blocks.Sources.IntegerExpression S200status(y = 1) annotation (
     Placement(transformation(extent = {{52, -186}, {72, -166}})));
   Modelica.Blocks.Sources.BooleanExpression RR01status(y = true) annotation (
     Placement(transformation(extent = {{52, -200}, {72, -180}})));

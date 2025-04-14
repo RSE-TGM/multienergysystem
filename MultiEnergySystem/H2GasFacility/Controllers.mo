@@ -87,7 +87,8 @@ Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false))
   model AWPIDContinuous
 
     parameter Real Kp = 1 "Proportional gain";
-    parameter Real Kd = 1 "Derivative gain";
+    parameter Real Kd = 0 "Derivative gain";
+    parameter Real Ki = 0 "Integer gain";
     parameter Real Ti = 1 "Integral Time";
     parameter Real Td = 1 "Derivative Time";
     parameter Real Umax = 1 "Maximum control action";
@@ -108,7 +109,8 @@ Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false))
     Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin)  annotation (
           Placement(visible = true, transformation(origin={70,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     Modelica.Blocks.Continuous.FirstOrder firstOrder(T = Ti,
-    initType=Modelica.Blocks.Types.Init.SteadyState,                                                       k = 1,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+      k=Ki,
       y_start=y_start)                                                                                                          annotation (
           Placement(visible = true, transformation(origin={-10,4},     extent={{10,-10},
               {-10,10}},                                                                                rotation = 180)));

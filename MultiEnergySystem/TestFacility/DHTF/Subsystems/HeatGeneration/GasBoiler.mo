@@ -9,19 +9,19 @@ model GasBoiler "System 100 - Gas Boiler"
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   constant Real pi = Modelica.Constants.pi;
-  parameter Real pumpcorrectionfactor = 1;
+  //parameter Real pumpcorrectionfactor = 1;
 
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter Integer n = 3 "Number of volumes in each pipe";
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S1 = 1.695e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S1 = 1.6e5;
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start_S1 = 65 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start_S1 = 80 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start = 1.695e5;
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start = 1.6e5;
+  parameter DistrictHeatingNetwork.Types.Temperature Tin_start = 65 + 273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature Tout_start = 80 + 273.15;
 //  parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
 //  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
-  parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 1 "Combustion efficiency";
+  parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.92 "Combustion efficiency";
   parameter Modelica.Units.SI.Time tdelay = 10 "Rising time of heater from 0 to full power";
 
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3;
@@ -40,21 +40,21 @@ model GasBoiler "System 100 - Gas Boiler"
   //final parameter DistrictHeatingNetwork.Types.Length L_S1_rCD_hot=10.85;
   //final parameter DistrictHeatingNetwork.Types.Length h_S1_rCD_hot = 1 - 1.1 - 1.2 + 0.6 "-0.7";
 
-  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
+  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
   parameter Real q_m3h_S1(unit = "m3/h") = 9;
   //parameter Real P101omega[:,:] = [0, 2*pi*50; 100, 2*pi*50];
   //parameter Real P101qm3h[:,:] = [0, 7.5; 100, 7.5];
   //parameter Real FCV101theta[:,:] = [0, 1];
   //parameter Real GB101_ToutSP[:,:] = [0, 80+273.15; 100, 80+273.15];
 
-  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage "opening characteristic";
+  final parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient";
+  final parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV101.openingChar "opening characteristic";
 
   parameter DistrictHeatingNetwork.Types.Power Pnom = 147.6e3;
   parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 147.6e3*0.8;
   parameter DistrictHeatingNetwork.Types.Power Pminnom = 147.6e3*0.2;
-  parameter DistrictHeatingNetwork.Types.Length h = 1.2*0.93;
-  parameter DistrictHeatingNetwork.Types.Length D = 0.64;
+  final parameter DistrictHeatingNetwork.Types.Length h = 1.2*0.93;
+  final parameter DistrictHeatingNetwork.Types.Length D = 0.64;
 
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference outlet fluid";
 
@@ -81,7 +81,6 @@ model GasBoiler "System 100 - Gas Boiler"
     headmin=TestFacility.Data.PumpData.P101.headnommin,
     qnom_inm3h_min=TestFacility.Data.PumpData.P101.qnommin_inm3h,
     qnom_inm3h_max=TestFacility.Data.PumpData.P101.qnommax_inm3h,
-    correctionfactor=pumpcorrectionfactor,
     use_in_omega=true)                                                      annotation (Placement(transformation(
         extent={{-12,-12},{12,12}},
         rotation=90,
@@ -93,8 +92,8 @@ model GasBoiler "System 100 - Gas Boiler"
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     rho_nom=TestFacility.Data.ValveData.FCV101.rho_nom,
     q_m3h_nom=TestFacility.Data.ValveData.FCV101.q_nom_m3h,
-    Tin_start(displayUnit="K") = Tout_start_S1,
-    pin_start=pout_start_S1,
+    Tin_start(displayUnit="K") = Tout_start,
+    pin_start=pout_start,
     q_m3h_start=q_m3h_S1)
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
@@ -107,10 +106,10 @@ model GasBoiler "System 100 - Gas Boiler"
     h=h,
     D=D,
     Pmaxnom=Pmaxnom,
-    Tin_start=Tin_start_S1,
-    pin_start=pin_start_S1,
-    pout_start=pout_start_S1,
-    Tout_start=Tout_start_S1,
+    Tin_start=Tin_start,
+    pin_start=pin_start,
+    pout_start=pout_start,
+    Tout_start=Tout_start,
     Pnimnom=Pminnom,
     Pnom=Pnom,
     tdelay=tdelay)
@@ -126,9 +125,9 @@ model GasBoiler "System 100 - Gas Boiler"
     L=pipeData.PL_GB101_P101.L,
     h=pipeData.PL_GB101_P101.h,
     t=pipeData.PL_GB101_P101.t,
-    pin_start=pout_start_S1,
-    Tin_start=Tout_start_S1,
-    Tout_start=Tout_start_S1,
+    pin_start=pout_start,
+    Tin_start=Tout_start,
+    Tout_start=Tout_start,
     Di=pipeData.PL_GB101_P101.Di,
     q_m3h_start=q_m3h_S1,
     n=n,
@@ -147,9 +146,9 @@ model GasBoiler "System 100 - Gas Boiler"
     L=pipeData.PL_FT101_GB101.L,
     h=pipeData.PL_FT101_GB101.h,
     t=pipeData.PL_FT101_GB101.t,
-    pin_start=pin_start_S1,
-    Tin_start=Tin_start_S1,
-    Tout_start=Tin_start_S1,
+    pin_start=pin_start,
+    Tin_start=Tin_start,
+    Tout_start=Tin_start,
     Di=pipeData.PL_FT101_GB101.Di,
     q_m3h_start=q_m3h_S1,
     n=n,
@@ -168,9 +167,9 @@ model GasBoiler "System 100 - Gas Boiler"
     L=pipeData.PL_P101_FCV101.L,
     h=pipeData.PL_P101_FCV101.h,
     t=pipeData.PL_P101_FCV101.t,
-    pin_start=pout_start_S1,
-    Tin_start=Tout_start_S1,
-    Tout_start=Tout_start_S1,
+    pin_start=pout_start,
+    Tin_start=Tout_start,
+    Tout_start=Tout_start,
     Di=pipeData.PL_P101_FCV101.Di,
     q_m3h_start=q_m3h_S1,
     n=n,
@@ -184,23 +183,23 @@ model GasBoiler "System 100 - Gas Boiler"
         origin={20,34})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT(
     redeclare model Medium = Medium,
-    T_start=Tin_start_S1,
-    p_start=pin_start_S1)  annotation (Placement(transformation(
+    T_start=Tin_start,
+    p_start=pin_start)  annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-24,44})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT101(
     redeclare model Medium = Medium,
-    T_start=Tin_start_S1,
-    p_start=pin_start_S1)  "Temperature sensor at the outlet of valve FCV101" annotation (
+    T_start=Tin_start,
+    p_start=pin_start)  "Temperature sensor at the outlet of valve FCV101" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=90,
         origin={-22,76})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT102(
     redeclare model Medium = Medium,
-    T_start=Tout_start_S1,
-    p_start=pout_start_S1)  "Temperature sensor at the outlet of valve FCV101" annotation (
+    T_start=Tout_start,
+    p_start=pout_start)  "Temperature sensor at the outlet of valve FCV101" annotation (
       Placement(transformation(
         extent={{-6,-6},{6,6}},
         rotation=-90,

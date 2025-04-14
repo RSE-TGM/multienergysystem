@@ -7,7 +7,7 @@ model StratifiedStorage
   import Modelica.Fluid.Utilities.regStep;
 
   parameter Integer n = 4 "Number of volumes (min = 4)" annotation (
-    Dialog(tab = "Data", group = "Fluid")); // Number of vertical layers
+    Dialog(tab = "Data", group = "Tank")); // Number of vertical layers
   parameter DistrictHeatingNetwork.Choices.Init.Options initOpt = system.initOpt "Initialisation option" annotation (
     Dialog(group = "Initialisation"));
 

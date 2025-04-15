@@ -8,12 +8,21 @@ model ConnectorTypeI "Model to be used for connecting one source or one load to 
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   constant Real pi = Modelica.Constants.pi;
 
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Integer n = 3 "Number of volumes in each pipe of the system";
-
-  parameter Real q_m3h_line_start(unit = "m3/h") = 14;
-  parameter Real q_m3h_load_start(unit = "m3/h") = 3.5;
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start_hot = 2.8e5 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start_cold = 2.3e5 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature T_start_hot = 80 + 273.15 annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature T_start_cold = 65 + 273.15 annotation (
+    Dialog(group = "Initialization"));
+  parameter Real q_m3h_line_start(unit = "m3/h") = 14 annotation (
+    Dialog(group = "Initialization"));
+  parameter Real q_m3h_load_start(unit = "m3/h") = 3.5 annotation (
+    Dialog(group = "Initialization"));
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_line_start = q_m3h_line_start*(rho_avg/3600);
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_load_start = q_m3h_load_start*(rho_avg/3600);
 
@@ -21,26 +30,37 @@ model ConnectorTypeI "Model to be used for connecting one source or one load to 
   parameter DistrictHeatingNetwork.Types.Density rho_cold = 985;
   final parameter DistrictHeatingNetwork.Types.Density rho_avg = (rho_hot+rho_cold)/2;
 
-  parameter DistrictHeatingNetwork.Types.Temperature T_start_hot = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature T_start_cold = 65 + 273.15;
-
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_hot = 2.8e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_cold = 2.3e5;
-
-  parameter DistrictHeatingNetwork.Types.Length L_inhot = 2;
-  parameter DistrictHeatingNetwork.Types.Length L_outhot = 2;
-  parameter DistrictHeatingNetwork.Types.Length L_incold = 2;
-  parameter DistrictHeatingNetwork.Types.Length L_outcold = 2;
-  parameter DistrictHeatingNetwork.Types.Length h_inhot = 2;
-  parameter DistrictHeatingNetwork.Types.Length h_outhot = 2;
-  parameter DistrictHeatingNetwork.Types.Length h_incold = 2;
-  parameter DistrictHeatingNetwork.Types.Length h_outcold = 2;
-
-  parameter DistrictHeatingNetwork.Types.Length t = 1.5e-3;
-  parameter DistrictHeatingNetwork.Types.Length Di = 51e-3;
-
-  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
-  parameter Integer nPipes = 1 "Number of parallel pipes";
+  //-------------------------------
+  // Pipes
+  //-------------------------------
+  parameter Integer n = 3 "Number of volumes in each pipe of the system" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length t = 1.5e-3 "Thickness" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length Di = 51e-3 "Inlet diameter" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter Integer nPipes = 1 "Number of parallel pipes" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_inhot = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_outhot = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_incold = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_outcold = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_inhot = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_outhot = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_incold = 2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_outcold = 2 annotation (
+    Dialog(group = "Pipe settings"));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipeInletHot(
     L=L_inhot,

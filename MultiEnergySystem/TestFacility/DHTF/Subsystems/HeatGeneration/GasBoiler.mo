@@ -34,8 +34,7 @@ model GasBoiler "System 100 - Gas Boiler"
   //-------------------------------
   parameter Integer n = 3 "Number of volumes in each pipe" annotation (
     Dialog(group = "Pipe settings"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
     Dialog(group = "Pipe settings"));
   final parameter DistrictHeatingNetwork.Types.Length Di_S1 = 51e-3 "Internal diameter" annotation (
     Dialog(group = "Pipe settings"));

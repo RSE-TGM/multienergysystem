@@ -8,45 +8,71 @@ model CirculationPump "S900 - Main pump"
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
 
   constant Real pi = Modelica.Constants.pi;
-  parameter Integer n = 3 "Number of volumes in each pipe";
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  parameter Real pumpcorrectionfactor = 1;
-  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV901.Kv "Metric Flow Coefficient";
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic";
-  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
-  parameter DistrictHeatingNetwork.Types.Length Di = 51e-3;
-  parameter DistrictHeatingNetwork.Types.Length L_v = 1;
-  parameter Real q_m3h_S9 = 10;
+  //-------------------------------
+  // Initialization
+  //-------------------------------
+  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S9 = 2.3e5 "inlet pressure start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S9 = 3.2e5 "outlet pressure start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature T_hot_start = 80 + 273.15 "hot temperature start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter DistrictHeatingNetwork.Types.Temperature T_cold_start = 60 + 273.15 "cold temperature start value" annotation (
+    Dialog(group = "Initialization"));
+  parameter Real q_m3h_S9 = 10 "volumetric flow rate start value" annotation (
+    Dialog(group = "Initialization"));
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S9=q_m3h_S9*990/3600;
 
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start_S9 = 2.3e5;
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start_S9 = 3.2e5;
-  parameter DistrictHeatingNetwork.Types.Temperature T_hot_start = 80 + 273.15;
-  parameter DistrictHeatingNetwork.Types.Temperature T_cold_start = 60 + 273.15;
+  //-------------------------------
+  // Pipes
+  //-------------------------------
+  parameter Integer n = 3 "Number of volumes in each pipe" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient" annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length Di_S9 = 51e-3 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length t_S9 = 1.5e-3 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length Di_rCD = 72e-3 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length t_rCD = 2e-3 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_S9_PL2 = 2.3 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_S9_PL2 = 0.5 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_P901_FCV901 = 0.5 + 1.4 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_P901_FCV901 = 1.4 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_FCV901_PT902 = 0.6+0.3+1.3+0.1+1.1+0.2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_FCV901_PT902 = 0.9- 0.1- 0.2 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length L_rCD_P901 = 0.3+0.25+2.3+3+0.5+7.5+1.7 annotation (
+    Dialog(group = "Pipe settings"));
+  parameter DistrictHeatingNetwork.Types.Length h_rCD_P901 = -2.3-0.5+1.7 annotation (
+    Dialog(group = "Pipe settings"));
 
-  //parameter Real b[3] = {24.122662, 0.669933, -0.039537} "Head Characteristic coefficients";
-  parameter Real b[3] = {23.6, 0.62, -0.0435} "Head Characteristic coefficients";
+  //-------------------------------
+  // Pump parameters
+  //-------------------------------
+  parameter Real pumpcorrectionfactor = 1 "correctiong factor for validation" annotation (
+    Dialog(group = "Pump settings"));
+  parameter Real b[3] = {23.6, 0.62, -0.0435} "Head Characteristic coefficients" annotation (
+    Dialog(group = "Pump settings"));
 
-//   parameter DistrictHeatingNetwork.Types.Length L_S9_PL1 = 0.82;
-  parameter DistrictHeatingNetwork.Types.Length L_S9_PL2 = 2.3;
-  parameter DistrictHeatingNetwork.Types.Length h_S9_PL2 = 0.5;
-//   parameter DistrictHeatingNetwork.Types.Length L_S9_PL3 = 1.5;
-//   parameter DistrictHeatingNetwork.Types.Length h_S9_PL3 = 1;
-//   parameter DistrictHeatingNetwork.Types.Length L_S9_PL4 = 0.65;
-//   parameter DistrictHeatingNetwork.Types.Length L_rCD_H7 = 15;
-  parameter DistrictHeatingNetwork.Types.Length Di_S9 = 51e-3;
-  parameter DistrictHeatingNetwork.Types.Length t_S9 = 1.5e-3;
-  parameter DistrictHeatingNetwork.Types.Length Di_rCD = 72e-3;
-  parameter DistrictHeatingNetwork.Types.Length t_rCD = 2e-3;
-
-  parameter DistrictHeatingNetwork.Types.Length L_P901_FCV901 = 0.5 + 1.4;
-  parameter DistrictHeatingNetwork.Types.Length h_P901_FCV901 = 1.4;
-  parameter DistrictHeatingNetwork.Types.Length L_FCV901_PT902 = 0.6+0.3+1.3+0.1+1.1+0.2;
-  parameter DistrictHeatingNetwork.Types.Length h_FCV901_PT902 = 0.9- 0.1- 0.2;
-  parameter DistrictHeatingNetwork.Types.Length L_rCD_P901 = 0.3+0.25+2.3+3+0.5+7.5+1.7;
-  parameter DistrictHeatingNetwork.Types.Length h_rCD_P901 = -2.3-0.5+1.7;
+  //-------------------------------
+  // Valve parameters
+  //-------------------------------
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV901.Kv "Metric Flow Coefficient" annotation (
+    Dialog(group = "Valve settings"));
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = DistrictHeatingNetwork.Components.Types.valveOpeningChar.SquareRoot "opening characteristic" annotation (
+    Dialog(group = "Valve settings"));
 
   parameter DistrictHeatingNetwork.Types.Pressure p_VE901 = 2e5;
   parameter DistrictHeatingNetwork.Types.Temperature T_VE901 = T_cold_start;

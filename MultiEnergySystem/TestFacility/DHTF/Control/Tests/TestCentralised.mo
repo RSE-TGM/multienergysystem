@@ -20,7 +20,7 @@ equation
   connect(sourceVoltage.outlet, centralisedSystem_GBEBCHPTES_III.electricPortInlet) annotation (
     Line(points = {{-56, 0}, {-42, 0}, {-42, 11.2}, {-30.8, 11.2}}, color = {56, 93, 138}, thickness = 1));
   connect(openLoopActuatorBase_III.controlSignalBus, centralisedSystem_GBEBCHPTES_III.controlSignalBus) annotation (
-    Line(points = {{23.4, 78}, {38, 78}, {38, 42}, {-0.56, 42}, {-0.56, 28}}, color = {255, 204, 51}, thickness = 0.5));
+    Line(points={{14,68},{38,68},{38,42},{-0.56,42},{-0.56,28}},              color = {255, 204, 51}, thickness = 0.5));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = false)),

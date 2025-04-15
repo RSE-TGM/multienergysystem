@@ -1283,13 +1283,7 @@ equation
   connect(TCV731Dynamics.y, S731.theta_TCV7X1) annotation (Line(points={{221,-320},{226,-320},{226,-322},{230,-322},{230,-264},{208,-264},{208,-186},{216,-186}}, color={0,0,127}));
   connect(TCV711Dynamics.y, S711.theta_TCV7X1) annotation (Line(points={{379,-320},{388,-320},{388,-264},{364,-264},{364,-186},{376,-186}}, color={0,0,127}));
   connect(TCV721Dynamics.y, S721.theta_TCV7X1) annotation (Line(points={{541,-320},{546,-320},{546,-254},{526,-254},{526,-186},{536,-186}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-70,100},{70,-100}},
-          textColor={140,56,54},
-          textStyle={TextStyle.Bold},
-          textString="Thermal
-Facility")}),                                                    Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     experiment(
       StopTime=2000,

@@ -1426,13 +1426,7 @@ equation
   connect(FCV731Dynamics.y, S731.theta_FCV7X1) annotation (Line(points={{210.5,-166},{212,-166},{212,-167},{216,-167},{216,-178}}, color={0,0,127}));
   connect(FCV711Dynamics.y, S711.theta_FCV7X1) annotation (Line(points={{370.5,-167},{376,-167},{376,-178}}, color={0,0,127}));
   connect(FCV721Dynamics.y, S721.theta_FCV7X1) annotation (Line(points={{530.5,-170},{532,-170},{532,-169},{536,-169},{536,-178}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-70,100},{70,-100}},
-          textColor={140,56,54},
-          textStyle={TextStyle.Bold},
-          textString="Thermal
-Facility")}),                                                    Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(grid={1,1})),
     experiment(
       StopTime=2000,

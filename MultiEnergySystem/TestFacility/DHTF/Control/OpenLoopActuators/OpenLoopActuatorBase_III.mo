@@ -35,18 +35,14 @@ partial model OpenLoopActuatorBase_III
   parameter Real theta_TCV731[:, :] = [0, 1; 1e6, 1];
   parameter Real theta_FCVR01[:, :] = [0, 0.5; 1e6, 0.5];
   parameter Real Tout_RR01[:, :] = [0, 15 + 273.15; 1e6, 15 + 273.15];
-  parameter Real FTR01[:, :] = [0, 2*pi*40; 1000, 2*pi*40; 1000, -0.05; 1E5, -0.05];
+  parameter Real FTR01[:, :] = [0, 2*pi*40; 1000, 2*pi*40];
   // Boolean variables to decide whether use a TimeTable (parameter) or a RealExpression (variable) as setpoint
   Boolean booldthetaFCV901;
   Boolean booldomegaP901;
   Boolean booldthetaFCV101;
   Boolean booldomegaP101;
   Boolean booldToutGB101;
-  //   Boolean booldthetaFCV401;
-  //   Boolean booldomegaP401;
-  //   Boolean booldToutEB401;
-  //   Boolean booldomegaP501;
-  //   Boolean booldToutCHP501;
+
   Boolean booldthetaFCV701;
   Boolean booldthetaFCV711;
   Boolean booldthetaFCV721;
@@ -110,369 +106,334 @@ partial model OpenLoopActuatorBase_III
   Real theta_FCVR01_var(min = 0, max = 1);
   DistrictHeatingNetwork.Types.Temperature Tout_RR01SP(nominal = 100 + 273.15);
   Real Tout_RR01_var(min = 0+273.15, max = 100+273.15);
-  Modelica.Blocks.Sources.TimeTable domegaP901(table = omega_P901) annotation (
-    Placement(transformation(extent = {{-141, 135}, {-131, 145}})));
+  Modelica.Blocks.Sources.TimeTable omegaP901(table=omega_P901) annotation (Placement(transformation(extent={{-144,138},{-134,148}})));
   Modelica.Blocks.Sources.TimeTable dthetaFCV901(table = theta_FCV901) annotation (
-    Placement(transformation(extent = {{-141, 102}, {-131, 112}})));
+    Placement(transformation(extent={{-144,105},{-134,115}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (
     Placement(visible = true, transformation(origin = {160, 0}, extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin={0,-100},  extent = {{-30, -30}, {30, 30}}, rotation=180)));
-  Modelica.Blocks.Sources.TimeTable dToutGB101(table = Tout_GB101) annotation (
-    Placement(transformation(extent = {{-141, -41}, {-131, -31}})));
-  Modelica.Blocks.Sources.RealExpression domegaP901_var(y = omega_P901_var) annotation (
-    Placement(transformation(extent = {{-141, 155}, {-131, 165}})));
-  Modelica.Blocks.Logical.Switch switch_domegaP901 annotation (
-    Placement(transformation(extent = {{-122, 145}, {-112, 155}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_domegaP901(y = booldomegaP901) annotation (
-    Placement(transformation(extent = {{-141, 145}, {-131, 155}})));
+  Modelica.Blocks.Sources.TimeTable ToutGB101(table=Tout_GB101) annotation (Placement(transformation(extent={{-45,-92},{-35,-82}})));
+  Modelica.Blocks.Sources.RealExpression omegaP901_var(y=omega_P901_var) annotation (Placement(transformation(extent={{-144,158},{-134,168}})));
+  Modelica.Blocks.Logical.Switch switch_omegaP901 annotation (Placement(transformation(extent={{-125,148},{-115,158}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_omegaP901(y=booldomegaP901) annotation (Placement(transformation(extent={{-144,148},{-134,158}})));
   Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV901(y = booldthetaFCV901) annotation (
-    Placement(transformation(extent = {{-141, 112}, {-131, 122}})));
+    Placement(transformation(extent={{-144,115},{-134,125}})));
   Modelica.Blocks.Sources.RealExpression dthetaFCV901_var(y = theta_FCV901_var) annotation (
-    Placement(transformation(extent = {{-141, 121}, {-131, 131}})));
+    Placement(transformation(extent={{-144,124},{-134,134}})));
   Modelica.Blocks.Logical.Switch switch_dthetaFCV901 annotation (
-    Placement(transformation(extent = {{-123, 112}, {-113, 122}})));
-  Modelica.Blocks.Interaction.Show.RealValue domega_P901_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, 140}, {-85, 160}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV901_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, 107}, {-85, 127}})));
-  Modelica.Blocks.Sources.TimeTable domegaP101(table = omega_P101) annotation (
-    Placement(transformation(extent = {{-141, 25}, {-131, 35}})));
-  Modelica.Blocks.Sources.TimeTable dthetaFCV101(table = theta_FCV101) annotation (
-    Placement(transformation(extent = {{-141, -8}, {-131, 2}})));
-  Modelica.Blocks.Sources.RealExpression domegaP101_var(y = omega_P101_var) annotation (
-    Placement(transformation(extent = {{-141, 45}, {-131, 55}})));
-  Modelica.Blocks.Logical.Switch switch_domegaP101 annotation (
-    Placement(transformation(extent = {{-122, 35}, {-112, 45}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_domegaP101(y = booldomegaP101) annotation (
-    Placement(transformation(extent = {{-141, 35}, {-131, 45}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV101(y = booldthetaFCV101) annotation (
-    Placement(transformation(extent = {{-141, 2}, {-131, 12}})));
-  Modelica.Blocks.Sources.RealExpression dthetaFCV101_var(y = theta_FCV101_var) annotation (
-    Placement(transformation(extent = {{-141, 11}, {-131, 21}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaFCV101 annotation (
-    Placement(transformation(extent = {{-123, 2}, {-113, 12}})));
-  Modelica.Blocks.Interaction.Show.RealValue domega_P101_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, 30}, {-85, 50}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV101_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, -3}, {-85, 17}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dToutGB101(y = booldToutGB101) annotation (
-    Placement(transformation(extent = {{-141, -31}, {-131, -21}})));
-  Modelica.Blocks.Sources.RealExpression dToutGB101_var(y = Tout_GB101_var) annotation (
-    Placement(transformation(extent = {{-141, -22}, {-131, -12}})));
-  Modelica.Blocks.Logical.Switch switch_dToutGB101 annotation (
-    Placement(transformation(extent = {{-123, -31}, {-113, -21}})));
-  Modelica.Blocks.Interaction.Show.RealValue dTout_GB101_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, -36}, {-85, -16}})));
-  Modelica.Blocks.Sources.TimeTable dthetaFCV701(table = theta_FCV701) annotation (
-    Placement(transformation(extent = {{-50, 140}, {-40, 150}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV701(y = booldthetaFCV701) annotation (
-    Placement(transformation(extent = {{-50, 150}, {-40, 160}})));
-  Modelica.Blocks.Sources.RealExpression dthetaFCV701_var(y = theta_FCV701_var) annotation (
-    Placement(transformation(extent = {{-50, 159}, {-40, 169}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaFCV701 annotation (
-    Placement(transformation(extent = {{-32, 150}, {-22, 160}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV701_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-14, 145}, {6, 165}})));
+    Placement(transformation(extent={{-126,115},{-116,125}})));
+  Modelica.Blocks.Sources.TimeTable omegaP101(table=omega_P101) annotation (Placement(transformation(extent={{-45,-26},{-35,-16}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCV101(table=theta_FCV101) annotation (Placement(transformation(extent={{-45,-59},{-35,-49}})));
+  Modelica.Blocks.Sources.RealExpression omegaP101_var(y=omega_P101_var) annotation (Placement(transformation(extent={{-45,-6},{-35,4}})));
+  Modelica.Blocks.Logical.Switch switch_omegaP101 annotation (Placement(transformation(extent={{-26,-16},{-16,-6}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_omegaP101(y=booldomegaP101) annotation (Placement(transformation(extent={{-45,-16},{-35,-6}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCV101(y=booldthetaFCV101) annotation (Placement(transformation(extent={{-45,-49},{-35,-39}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCV101_var(y=theta_FCV101_var) annotation (Placement(transformation(extent={{-45,-40},{-35,-30}})));
+  Modelica.Blocks.Logical.Switch switch_thetaFCV101 annotation (Placement(transformation(extent={{-27,-49},{-17,-39}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_ToutGB101(y=booldToutGB101) annotation (Placement(transformation(extent={{-45,-82},{-35,-72}})));
+  Modelica.Blocks.Sources.RealExpression ToutGB101_var(y=Tout_GB101_var) annotation (Placement(transformation(extent={{-45,-73},{-35,-63}})));
+  Modelica.Blocks.Logical.Switch switch_ToutGB101 annotation (Placement(transformation(extent={{-27,-82},{-17,-72}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCV701(table=theta_FCV701) annotation (Placement(transformation(extent={{-72,140},{-62,150}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCV701(y=booldthetaFCV701) annotation (Placement(transformation(extent={{-72,150},{-62,160}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCV701_var(y=theta_FCV701_var) annotation (Placement(transformation(extent={{-72,159},{-62,169}})));
+  Modelica.Blocks.Logical.Switch switch_thetaFCV701 annotation (Placement(transformation(extent={{-54,150},{-44,160}})));
   Modelica.Blocks.Sources.TimeTable dthetaFCV711(table = theta_FCV711) annotation (
-    Placement(transformation(extent = {{-50, 106}, {-40, 116}})));
+    Placement(transformation(extent={{-72,106},{-62,116}})));
   Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV711(y = booldthetaFCV711) annotation (
-    Placement(transformation(extent = {{-50, 116}, {-40, 126}})));
+    Placement(transformation(extent={{-72,116},{-62,126}})));
   Modelica.Blocks.Sources.RealExpression dthetaFCV711_var(y = theta_FCV711_var) annotation (
-    Placement(transformation(extent = {{-50, 125}, {-40, 135}})));
+    Placement(transformation(extent={{-72,125},{-62,135}})));
   Modelica.Blocks.Logical.Switch switch_dthetaFCV711 annotation (
-    Placement(transformation(extent = {{-32, 116}, {-22, 126}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV711_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-14, 111}, {6, 131}})));
+    Placement(transformation(extent={{-54,116},{-44,126}})));
   Modelica.Blocks.Sources.TimeTable dthetaFCV721(table = theta_FCV721) annotation (
-    Placement(transformation(extent = {{-50, 73}, {-40, 83}})));
+    Placement(transformation(extent={{-72,73},{-62,83}})));
   Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV721(y = booldthetaFCV721) annotation (
-    Placement(transformation(extent = {{-50, 83}, {-40, 93}})));
+    Placement(transformation(extent={{-72,83},{-62,93}})));
   Modelica.Blocks.Sources.RealExpression dthetaFCV721_var(y = theta_FCV721_var) annotation (
-    Placement(transformation(extent = {{-50, 92}, {-40, 102}})));
+    Placement(transformation(extent={{-72,92},{-62,102}})));
   Modelica.Blocks.Logical.Switch switch_dthetaFCV721 annotation (
-    Placement(transformation(extent = {{-32, 83}, {-22, 93}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV721_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-14, 78}, {6, 98}})));
+    Placement(transformation(extent={{-54,83},{-44,93}})));
   Modelica.Blocks.Sources.TimeTable dthetaFCV731(table = theta_FCV731) annotation (
-    Placement(transformation(extent = {{-50, 41}, {-40, 51}})));
+    Placement(transformation(extent={{-72,41},{-62,51}})));
   Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV731(y = booldthetaFCV731) annotation (
-    Placement(transformation(extent = {{-50, 51}, {-40, 61}})));
+    Placement(transformation(extent={{-72,51},{-62,61}})));
   Modelica.Blocks.Sources.RealExpression dthetaFCV731_var(y = theta_FCV731_var) annotation (
-    Placement(transformation(extent = {{-50, 60}, {-40, 70}})));
+    Placement(transformation(extent={{-72,60},{-62,70}})));
   Modelica.Blocks.Logical.Switch switch_dthetaFCV731 annotation (
-    Placement(transformation(extent = {{-32, 51}, {-22, 61}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV731_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-14, 46}, {6, 66}})));
-  Modelica.Blocks.Sources.TimeTable dthetaFCVC01(table = theta_FCVC01) annotation (
-    Placement(transformation(extent = {{-50, -21}, {-40, -11}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCVC01(y = booldthetaFCVC01) annotation (
-    Placement(transformation(extent = {{-50, -11}, {-40, -1}})));
-  Modelica.Blocks.Sources.RealExpression dthetaFCVC01_var(y = theta_FCVC01_var) annotation (
-    Placement(transformation(extent = {{-50, -2}, {-40, 8}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaFCVC01 annotation (
-    Placement(transformation(extent = {{-32, -11}, {-22, -1}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCVC01_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-14, -16}, {6, 4}})));
-  Modelica.Blocks.Sources.TimeTable dthetaFCVC02(table = theta_FCVC02) annotation (
-    Placement(transformation(extent = {{-50, -55}, {-40, -45}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCVC02(y = booldthetaFCVC02) annotation (
-    Placement(transformation(extent = {{-50, -45}, {-40, -35}})));
-  Modelica.Blocks.Sources.RealExpression dthetaFCVC02_var(y = theta_FCVC02_var) annotation (
-    Placement(transformation(extent = {{-50, -36}, {-40, -26}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaFCVC02 annotation (
-    Placement(transformation(extent = {{-32, -45}, {-22, -35}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCVC02_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-14, -50}, {6, -30}})));
-  Modelica.Blocks.Sources.TimeTable dthetaTCV701(table = theta_TCV701) annotation (
-    Placement(transformation(extent = {{39, 140}, {49, 150}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaTCV701(y = booldthetaTCV701) annotation (
-    Placement(transformation(extent = {{39, 150}, {49, 160}})));
-  Modelica.Blocks.Sources.RealExpression dthetaTCV701_var(y = theta_TCV701_var) annotation (
-    Placement(transformation(extent = {{39, 159}, {49, 169}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaTCV701 annotation (
-    Placement(transformation(extent = {{57, 150}, {67, 160}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_TCV701_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{75, 145}, {95, 165}})));
-  Modelica.Blocks.Sources.TimeTable dthetaTCV711(table = theta_TCV711) annotation (
-    Placement(transformation(extent = {{39, 106}, {49, 116}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaTCV711(y = booldthetaTCV711) annotation (
-    Placement(transformation(extent = {{39, 116}, {49, 126}})));
-  Modelica.Blocks.Sources.RealExpression dthetaTCV711_var(y = theta_TCV711_var) annotation (
-    Placement(transformation(extent = {{39, 125}, {49, 135}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaTCV711 annotation (
-    Placement(transformation(extent = {{57, 116}, {67, 126}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_TCV711_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{75, 111}, {95, 131}})));
-  Modelica.Blocks.Sources.TimeTable dthetaTCV721(table = theta_TCV721) annotation (
-    Placement(transformation(extent = {{39, 73}, {49, 83}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaTCV721(y = booldthetaTCV721) annotation (
-    Placement(transformation(extent = {{39, 83}, {49, 93}})));
-  Modelica.Blocks.Sources.RealExpression dthetaTCV721_var(y = theta_TCV721_var) annotation (
-    Placement(transformation(extent = {{39, 92}, {49, 102}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaTCV721 annotation (
-    Placement(transformation(extent = {{57, 83}, {67, 93}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_TCV721_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{75, 78}, {95, 98}})));
-  Modelica.Blocks.Sources.TimeTable dthetaTCV731(table = theta_TCV731) annotation (
-    Placement(transformation(extent = {{39, 41}, {49, 51}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaTCV731(y = booldthetaTCV731) annotation (
-    Placement(transformation(extent = {{39, 51}, {49, 61}})));
-  Modelica.Blocks.Sources.RealExpression dthetaTCV731_var(y = theta_TCV731_var) annotation (
-    Placement(transformation(extent = {{39, 60}, {49, 70}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaTCV731 annotation (
-    Placement(transformation(extent = {{57, 51}, {67, 61}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_TCV731_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{75, 46}, {95, 66}})));
-  Modelica.Blocks.Sources.TimeTable dthetaFCVR01(table = theta_FCVR01) annotation (
-    Placement(transformation(extent = {{39, 8}, {49, 18}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCVR01(y = booldthetaFCVR01) annotation (
-    Placement(transformation(extent = {{39, 18}, {49, 28}})));
-  Modelica.Blocks.Sources.RealExpression dthetaFCVR01_var(y = theta_FCVR01_var) annotation (
-    Placement(transformation(extent = {{39, 27}, {49, 37}})));
-  Modelica.Blocks.Logical.Switch switch_dthetaFCVR01 annotation (
-    Placement(transformation(extent = {{57, 18}, {67, 28}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_TCV731_act1(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{75, 13}, {95, 33}})));
-  Modelica.Blocks.Sources.TimeTable dToutRR01(table = Tout_RR01) annotation (
-    Placement(transformation(extent = {{39, -25}, {49, -15}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_dToutRR01(y = booldToutRR01) annotation (
-    Placement(transformation(extent = {{39, -15}, {49, -5}})));
-  Modelica.Blocks.Sources.RealExpression dToutRR01_var(y = Tout_RR01_var) annotation (
-    Placement(transformation(extent = {{39, -6}, {49, 4}})));
-  Modelica.Blocks.Logical.Switch switch_dToutRR01 annotation (
-    Placement(transformation(extent = {{57, -15}, {67, -5}})));
-  Modelica.Blocks.Interaction.Show.RealValue dTout_RR01_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{75, -20}, {95, 0}})));
+    Placement(transformation(extent={{-54,51},{-44,61}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCVC01(table=theta_FCVC01) annotation (Placement(transformation(extent={{-142,46},{-132,56}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCVC01(y=booldthetaFCVC01) annotation (Placement(transformation(extent={{-142,56},{-132,66}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVC01_var(y=theta_FCVC01_var) annotation (Placement(transformation(extent={{-142,65},{-132,75}})));
+  Modelica.Blocks.Logical.Switch switch_thetaFCVC01 annotation (Placement(transformation(extent={{-124,56},{-114,66}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCVC02(table=theta_FCVC02) annotation (Placement(transformation(extent={{-142,12},{-132,22}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCVC02(y=booldthetaFCVC02) annotation (Placement(transformation(extent={{-142,22},{-132,32}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVC02_var(y=theta_FCVC02_var) annotation (Placement(transformation(extent={{-142,31},{-132,41}})));
+  Modelica.Blocks.Logical.Switch switch_thetaFCVC02 annotation (Placement(transformation(extent={{-124,22},{-114,32}})));
+  Modelica.Blocks.Sources.TimeTable thetaTCV701(table=theta_TCV701) annotation (Placement(transformation(extent={{-25,140},{-15,150}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaTCV701(y=booldthetaTCV701) annotation (Placement(transformation(extent={{-25,150},{-15,160}})));
+  Modelica.Blocks.Sources.RealExpression thetaTCV701_var(y=theta_TCV701_var) annotation (Placement(transformation(extent={{-25,159},{-15,169}})));
+  Modelica.Blocks.Logical.Switch switch_thetaTCV701 annotation (Placement(transformation(extent={{-7,150},{3,160}})));
+  Modelica.Blocks.Sources.TimeTable thetaTCV711(table=theta_TCV711) annotation (Placement(transformation(extent={{-25,106},{-15,116}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaTCV711(y=booldthetaTCV711) annotation (Placement(transformation(extent={{-25,116},{-15,126}})));
+  Modelica.Blocks.Sources.RealExpression thetaTCV711_var(y=theta_TCV711_var) annotation (Placement(transformation(extent={{-25,125},{-15,135}})));
+  Modelica.Blocks.Logical.Switch switch_thetaTCV711 annotation (Placement(transformation(extent={{-7,116},{3,126}})));
+  Modelica.Blocks.Sources.TimeTable thetaTCV721(table=theta_TCV721) annotation (Placement(transformation(extent={{-25,73},{-15,83}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaTCV721(y=booldthetaTCV721) annotation (Placement(transformation(extent={{-25,83},{-15,93}})));
+  Modelica.Blocks.Sources.RealExpression thetaTCV721_var(y=theta_TCV721_var) annotation (Placement(transformation(extent={{-25,92},{-15,102}})));
+  Modelica.Blocks.Logical.Switch switch_thetaTCV721 annotation (Placement(transformation(extent={{-7,83},{3,93}})));
+  Modelica.Blocks.Sources.TimeTable thetaTCV731(table=theta_TCV731) annotation (Placement(transformation(extent={{-25,41},{-15,51}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaTCV731(y=booldthetaTCV731) annotation (Placement(transformation(extent={{-25,51},{-15,61}})));
+  Modelica.Blocks.Sources.RealExpression thetaTCV731_var(y=theta_TCV731_var) annotation (Placement(transformation(extent={{-25,60},{-15,70}})));
+  Modelica.Blocks.Logical.Switch switch_thetaTCV731 annotation (Placement(transformation(extent={{-7,51},{3,61}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCVR01(table=theta_FCVR01) annotation (Placement(transformation(extent={{49,79},{59,89}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCVR01(y=booldthetaFCVR01) annotation (Placement(transformation(extent={{49,89},{59,99}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVR01_var(y=theta_FCVR01_var) annotation (Placement(transformation(extent={{49,98},{59,108}})));
+  Modelica.Blocks.Logical.Switch switch_thetaFCVR01 annotation (Placement(transformation(extent={{67,89},{77,99}})));
+  Modelica.Blocks.Sources.TimeTable ToutRR01(table=Tout_RR01) annotation (Placement(transformation(extent={{49,46},{59,56}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_ToutRR01(y=booldToutRR01) annotation (Placement(transformation(extent={{49,56},{59,66}})));
+  Modelica.Blocks.Sources.RealExpression ToutRR01_var(y=Tout_RR01_var) annotation (Placement(transformation(extent={{49,65},{59,75}})));
+  Modelica.Blocks.Logical.Switch switch_ToutRR01 annotation (Placement(transformation(extent={{67,56},{77,66}})));
+  Modelica.Blocks.Sources.CombiTimeTable PtEX7X1SP(
+    tableOnFile=false,
+    table=[0,20000,20000,25000,25000; 3600,20000,20000,25000,25000; 7200,20000,20000,25000,25000; 10800,30000,30000,35000,35000; 14400,36000,36000,40000,40000; 18000,40000,40000,42000,42000; 21600,38000,38000,38000,38000; 25200,35000,35000,35000,
+        35000; 28800,20000,20000,25000,25000; 32400,20000,20000,25000,25000; 36000,20000,20000,25000,25000; 39600,20000,20000,25000,25000; 43200,20000,20000,25000,25000; 46800,20000,20000,25000,25000; 50400,20000,20000,25000,25000; 54000,20000,20000,
+        25000,25000; 57600,20000,20000,25000,25000; 61200,20000,20000,25000,25000; 64800,20000,20000,25000,25000; 68400,20000,20000,25000,25000; 72000,20000,20000,25000,25000; 75600,20000,20000,25000,25000; 79200,20000,20000,25000,25000; 82800,20000,
+        20000,25000,25000; 86400,20000,20000,25000,25000],
+    extrapolation=Modelica.Blocks.Types.Extrapolation.HoldLastPoint)                                                                                                                                                                                                         annotation (
+    Placement(transformation(origin={50,170},     extent={{-10,-10},{10,10}})));
+  Modelica.Blocks.Sources.CombiTimeTable TT7X1SP(
+    tableOnFile=false,
+    table=[0,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 3600,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 7200,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 10800,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 14400,65 + 273.15,65 +
+        273.15,65 + 273.15,65 + 273.15; 18000,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 21600,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 25200,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 28800,65 + 273.15,65 + 273.15,65 + 273.15,65
+         + 273.15; 32400,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 36000,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 39600,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 43200,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 46800,65
+         + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 50400,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 54000,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 57600,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 61200,65 + 273.15,65 + 273.15,
+        65 + 273.15,65 + 273.15; 64800,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 68400,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 72000,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 75600,65 + 273.15,65 + 273.15,65 + 273.15,65 +
+        273.15; 79200,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 82800,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 86400,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15],
+    extrapolation=Modelica.Blocks.Types.Extrapolation.HoldLastPoint) annotation (Placement(transformation(origin={50,140}, extent={{-10,-10},{10,10}})));
+  Modelica.Blocks.Sources.BooleanExpression GB101status(y=true)   annotation (
+    Placement(transformation(extent={{-47,-116},{-27,-96}})));
+  Modelica.Blocks.Sources.BooleanExpression RR01status(y=true)   annotation (
+    Placement(transformation(extent={{49,22},{69,42}})));
+  Modelica.Blocks.Sources.RealExpression omegaPR01_var(y=2*3.14159*45) annotation (Placement(transformation(extent={{49,7},{70,27}})));
 equation
-  connect(domegaP901_var.y, switch_domegaP901.u1) annotation (
-    Line(points = {{-130.5, 160}, {-127, 160}, {-127, 154}, {-123, 154}}, color = {0, 0, 127}));
-  connect(bool_domegaP901.y, switch_domegaP901.u2) annotation (
-    Line(points = {{-130.5, 150}, {-123, 150}}, color = {255, 0, 255}));
-  connect(domegaP901.y, switch_domegaP901.u3) annotation (
-    Line(points = {{-130.5, 140}, {-127, 140}, {-127, 146}, {-123, 146}}, color = {0, 0, 127}));
+  connect(omegaP901_var.y, switch_omegaP901.u1) annotation (Line(points={{-133.5,163},{-130,163},{-130,157},{-126,157}}, color={0,0,127}));
+  connect(bool_omegaP901.y, switch_omegaP901.u2) annotation (Line(points={{-133.5,153},{-126,153}}, color={255,0,255}));
+  connect(omegaP901.y, switch_omegaP901.u3) annotation (Line(points={{-133.5,143},{-130,143},{-130,149},{-126,149}}, color={0,0,127}));
   connect(bool_dthetaFCV901.y, switch_dthetaFCV901.u2) annotation (
-    Line(points = {{-130.5, 117}, {-124, 117}}, color = {255, 0, 255}));
+    Line(points={{-133.5,120},{-127,120}},      color = {255, 0, 255}));
   connect(dthetaFCV901_var.y, switch_dthetaFCV901.u1) annotation (
-    Line(points = {{-130.5, 126}, {-127, 126}, {-127, 121}, {-124, 121}}, color = {0, 0, 127}));
+    Line(points={{-133.5,129},{-130,129},{-130,124},{-127,124}},          color = {0, 0, 127}));
   connect(dthetaFCV901.y, switch_dthetaFCV901.u3) annotation (
-    Line(points = {{-130.5, 107}, {-127, 107}, {-127, 113}, {-124, 113}}, color = {0, 0, 127}));
-  connect(switch_domegaP901.y, domega_P901_act.numberPort) annotation (
-    Line(points = {{-111.5, 150}, {-106.5, 150}}, color = {0, 0, 127}));
-  connect(dtheta_FCV901_act.numberPort, switch_dthetaFCV901.y) annotation (
-    Line(points = {{-106.5, 117}, {-112.5, 117}}, color = {0, 0, 127}));
-  connect(domegaP101_var.y, switch_domegaP101.u1) annotation (
-    Line(points = {{-130.5, 50}, {-127, 50}, {-127, 44}, {-123, 44}}, color = {0, 0, 127}));
-  connect(bool_domegaP101.y, switch_domegaP101.u2) annotation (
-    Line(points = {{-130.5, 40}, {-123, 40}}, color = {255, 0, 255}));
-  connect(domegaP101.y, switch_domegaP101.u3) annotation (
-    Line(points = {{-130.5, 30}, {-127, 30}, {-127, 36}, {-123, 36}}, color = {0, 0, 127}));
-  connect(bool_dthetaFCV101.y, switch_dthetaFCV101.u2) annotation (
-    Line(points = {{-130.5, 7}, {-124, 7}}, color = {255, 0, 255}));
-  connect(dthetaFCV101_var.y, switch_dthetaFCV101.u1) annotation (
-    Line(points = {{-130.5, 16}, {-127, 16}, {-127, 11}, {-124, 11}}, color = {0, 0, 127}));
-  connect(dthetaFCV101.y, switch_dthetaFCV101.u3) annotation (
-    Line(points = {{-130.5, -3}, {-127, -3}, {-127, 3}, {-124, 3}}, color = {0, 0, 127}));
-  connect(switch_domegaP101.y, domega_P101_act.numberPort) annotation (
-    Line(points = {{-111.5, 40}, {-106.5, 40}}, color = {0, 0, 127}));
-  connect(dtheta_FCV101_act.numberPort, switch_dthetaFCV101.y) annotation (
-    Line(points = {{-106.5, 7}, {-112.5, 7}}, color = {0, 0, 127}));
-  connect(bool_dToutGB101.y, switch_dToutGB101.u2) annotation (
-    Line(points = {{-130.5, -26}, {-124, -26}}, color = {255, 0, 255}));
-  connect(dToutGB101_var.y, switch_dToutGB101.u1) annotation (
-    Line(points = {{-130.5, -17}, {-127, -17}, {-127, -22}, {-124, -22}}, color = {0, 0, 127}));
-  connect(dTout_GB101_act.numberPort, switch_dToutGB101.y) annotation (
-    Line(points = {{-106.5, -26}, {-112.5, -26}}, color = {0, 0, 127}));
-  connect(dToutGB101.y, switch_dToutGB101.u3) annotation (
-    Line(points = {{-130.5, -36}, {-127, -36}, {-127, -30}, {-124, -30}}, color = {0, 0, 127}));
-  connect(bool_dthetaFCV701.y, switch_dthetaFCV701.u2) annotation (
-    Line(points = {{-39.5, 155}, {-33, 155}}, color = {255, 0, 255}));
-  connect(dthetaFCV701_var.y, switch_dthetaFCV701.u1) annotation (
-    Line(points = {{-39.5, 164}, {-36, 164}, {-36, 159}, {-33, 159}}, color = {0, 0, 127}));
-  connect(dthetaFCV701.y, switch_dthetaFCV701.u3) annotation (
-    Line(points = {{-39.5, 145}, {-36, 145}, {-36, 151}, {-33, 151}}, color = {0, 0, 127}));
-  connect(dtheta_FCV701_act.numberPort, switch_dthetaFCV701.y) annotation (
-    Line(points = {{-15.5, 155}, {-21.5, 155}}, color = {0, 0, 127}));
+    Line(points={{-133.5,110},{-130,110},{-130,116},{-127,116}},          color = {0, 0, 127}));
+  connect(omegaP101_var.y, switch_omegaP101.u1) annotation (Line(points={{-34.5,-1},{-31,-1},{-31,-7},{-27,-7}}, color={0,0,127}));
+  connect(bool_omegaP101.y, switch_omegaP101.u2) annotation (Line(points={{-34.5,-11},{-27,-11}}, color={255,0,255}));
+  connect(omegaP101.y, switch_omegaP101.u3) annotation (Line(points={{-34.5,-21},{-31,-21},{-31,-15},{-27,-15}}, color={0,0,127}));
+  connect(bool_thetaFCV101.y, switch_thetaFCV101.u2) annotation (Line(points={{-34.5,-44},{-28,-44}}, color={255,0,255}));
+  connect(thetaFCV101_var.y, switch_thetaFCV101.u1) annotation (Line(points={{-34.5,-35},{-31,-35},{-31,-40},{-28,-40}}, color={0,0,127}));
+  connect(thetaFCV101.y, switch_thetaFCV101.u3) annotation (Line(points={{-34.5,-54},{-31,-54},{-31,-48},{-28,-48}}, color={0,0,127}));
+  connect(bool_ToutGB101.y, switch_ToutGB101.u2) annotation (Line(points={{-34.5,-77},{-28,-77}}, color={255,0,255}));
+  connect(ToutGB101_var.y, switch_ToutGB101.u1) annotation (Line(points={{-34.5,-68},{-31,-68},{-31,-73},{-28,-73}}, color={0,0,127}));
+  connect(ToutGB101.y, switch_ToutGB101.u3) annotation (Line(points={{-34.5,-87},{-31,-87},{-31,-81},{-28,-81}}, color={0,0,127}));
+  connect(bool_thetaFCV701.y, switch_thetaFCV701.u2) annotation (Line(points={{-61.5,155},{-55,155}}, color={255,0,255}));
+  connect(thetaFCV701_var.y, switch_thetaFCV701.u1) annotation (Line(points={{-61.5,164},{-58,164},{-58,159},{-55,159}}, color={0,0,127}));
+  connect(thetaFCV701.y, switch_thetaFCV701.u3) annotation (Line(points={{-61.5,145},{-58,145},{-58,151},{-55,151}}, color={0,0,127}));
   connect(bool_dthetaFCV711.y, switch_dthetaFCV711.u2) annotation (
-    Line(points = {{-39.5, 121}, {-33, 121}}, color = {255, 0, 255}));
+    Line(points={{-61.5,121},{-55,121}},      color = {255, 0, 255}));
   connect(dthetaFCV711_var.y, switch_dthetaFCV711.u1) annotation (
-    Line(points = {{-39.5, 130}, {-36, 130}, {-36, 125}, {-33, 125}}, color = {0, 0, 127}));
+    Line(points={{-61.5,130},{-58,130},{-58,125},{-55,125}},          color = {0, 0, 127}));
   connect(dthetaFCV711.y, switch_dthetaFCV711.u3) annotation (
-    Line(points = {{-39.5, 111}, {-36, 111}, {-36, 117}, {-33, 117}}, color = {0, 0, 127}));
-  connect(dtheta_FCV711_act.numberPort, switch_dthetaFCV711.y) annotation (
-    Line(points = {{-15.5, 121}, {-21.5, 121}}, color = {0, 0, 127}));
+    Line(points={{-61.5,111},{-58,111},{-58,117},{-55,117}},          color = {0, 0, 127}));
   connect(bool_dthetaFCV721.y, switch_dthetaFCV721.u2) annotation (
-    Line(points = {{-39.5, 88}, {-33, 88}}, color = {255, 0, 255}));
+    Line(points={{-61.5,88},{-55,88}},      color = {255, 0, 255}));
   connect(dthetaFCV721_var.y, switch_dthetaFCV721.u1) annotation (
-    Line(points = {{-39.5, 97}, {-36, 97}, {-36, 92}, {-33, 92}}, color = {0, 0, 127}));
+    Line(points={{-61.5,97},{-58,97},{-58,92},{-55,92}},          color = {0, 0, 127}));
   connect(dthetaFCV721.y, switch_dthetaFCV721.u3) annotation (
-    Line(points = {{-39.5, 78}, {-36, 78}, {-36, 84}, {-33, 84}}, color = {0, 0, 127}));
-  connect(dtheta_FCV721_act.numberPort, switch_dthetaFCV721.y) annotation (
-    Line(points = {{-15.5, 88}, {-21.5, 88}}, color = {0, 0, 127}));
+    Line(points={{-61.5,78},{-58,78},{-58,84},{-55,84}},          color = {0, 0, 127}));
   connect(bool_dthetaFCV731.y, switch_dthetaFCV731.u2) annotation (
-    Line(points = {{-39.5, 56}, {-33, 56}}, color = {255, 0, 255}));
+    Line(points={{-61.5,56},{-55,56}},      color = {255, 0, 255}));
   connect(dthetaFCV731_var.y, switch_dthetaFCV731.u1) annotation (
-    Line(points = {{-39.5, 65}, {-36, 65}, {-36, 60}, {-33, 60}}, color = {0, 0, 127}));
+    Line(points={{-61.5,65},{-58,65},{-58,60},{-55,60}},          color = {0, 0, 127}));
   connect(dthetaFCV731.y, switch_dthetaFCV731.u3) annotation (
-    Line(points = {{-39.5, 46}, {-36, 46}, {-36, 52}, {-33, 52}}, color = {0, 0, 127}));
-  connect(dtheta_FCV731_act.numberPort, switch_dthetaFCV731.y) annotation (
-    Line(points = {{-15.5, 56}, {-21.5, 56}}, color = {0, 0, 127}));
-  connect(bool_dthetaFCVC01.y, switch_dthetaFCVC01.u2) annotation (
-    Line(points = {{-39.5, -6}, {-33, -6}}, color = {255, 0, 255}));
-  connect(dthetaFCVC01_var.y, switch_dthetaFCVC01.u1) annotation (
-    Line(points = {{-39.5, 3}, {-36, 3}, {-36, -2}, {-33, -2}}, color = {0, 0, 127}));
-  connect(dthetaFCVC01.y, switch_dthetaFCVC01.u3) annotation (
-    Line(points = {{-39.5, -16}, {-36, -16}, {-36, -10}, {-33, -10}}, color = {0, 0, 127}));
-  connect(dtheta_FCVC01_act.numberPort, switch_dthetaFCVC01.y) annotation (
-    Line(points = {{-15.5, -6}, {-21.5, -6}}, color = {0, 0, 127}));
-  connect(bool_dthetaFCVC02.y, switch_dthetaFCVC02.u2) annotation (
-    Line(points = {{-39.5, -40}, {-33, -40}}, color = {255, 0, 255}));
-  connect(dthetaFCVC02_var.y, switch_dthetaFCVC02.u1) annotation (
-    Line(points = {{-39.5, -31}, {-36, -31}, {-36, -36}, {-33, -36}}, color = {0, 0, 127}));
-  connect(dthetaFCVC02.y, switch_dthetaFCVC02.u3) annotation (
-    Line(points = {{-39.5, -50}, {-36, -50}, {-36, -44}, {-33, -44}}, color = {0, 0, 127}));
-  connect(dtheta_FCVC02_act.numberPort, switch_dthetaFCVC02.y) annotation (
-    Line(points = {{-15.5, -40}, {-21.5, -40}}, color = {0, 0, 127}));
-  connect(bool_dthetaTCV701.y, switch_dthetaTCV701.u2) annotation (
-    Line(points = {{49.5, 155}, {56, 155}}, color = {255, 0, 255}));
-  connect(dthetaTCV701_var.y, switch_dthetaTCV701.u1) annotation (
-    Line(points = {{49.5, 164}, {53, 164}, {53, 159}, {56, 159}}, color = {0, 0, 127}));
-  connect(dthetaTCV701.y, switch_dthetaTCV701.u3) annotation (
-    Line(points = {{49.5, 145}, {53, 145}, {53, 151}, {56, 151}}, color = {0, 0, 127}));
-  connect(dtheta_TCV701_act.numberPort, switch_dthetaTCV701.y) annotation (
-    Line(points = {{73.5, 155}, {67.5, 155}}, color = {0, 0, 127}));
-  connect(bool_dthetaTCV711.y, switch_dthetaTCV711.u2) annotation (
-    Line(points = {{49.5, 121}, {56, 121}}, color = {255, 0, 255}));
-  connect(dthetaTCV711_var.y, switch_dthetaTCV711.u1) annotation (
-    Line(points = {{49.5, 130}, {53, 130}, {53, 125}, {56, 125}}, color = {0, 0, 127}));
-  connect(dthetaTCV711.y, switch_dthetaTCV711.u3) annotation (
-    Line(points = {{49.5, 111}, {53, 111}, {53, 117}, {56, 117}}, color = {0, 0, 127}));
-  connect(dtheta_TCV711_act.numberPort, switch_dthetaTCV711.y) annotation (
-    Line(points = {{73.5, 121}, {67.5, 121}}, color = {0, 0, 127}));
-  connect(bool_dthetaTCV721.y, switch_dthetaTCV721.u2) annotation (
-    Line(points = {{49.5, 88}, {56, 88}}, color = {255, 0, 255}));
-  connect(dthetaTCV721_var.y, switch_dthetaTCV721.u1) annotation (
-    Line(points = {{49.5, 97}, {53, 97}, {53, 92}, {56, 92}}, color = {0, 0, 127}));
-  connect(dthetaTCV721.y, switch_dthetaTCV721.u3) annotation (
-    Line(points = {{49.5, 78}, {53, 78}, {53, 84}, {56, 84}}, color = {0, 0, 127}));
-  connect(dtheta_TCV721_act.numberPort, switch_dthetaTCV721.y) annotation (
-    Line(points = {{73.5, 88}, {67.5, 88}}, color = {0, 0, 127}));
-  connect(bool_dthetaTCV731.y, switch_dthetaTCV731.u2) annotation (
-    Line(points = {{49.5, 56}, {56, 56}}, color = {255, 0, 255}));
-  connect(dthetaTCV731_var.y, switch_dthetaTCV731.u1) annotation (
-    Line(points = {{49.5, 65}, {53, 65}, {53, 60}, {56, 60}}, color = {0, 0, 127}));
-  connect(dthetaTCV731.y, switch_dthetaTCV731.u3) annotation (
-    Line(points = {{49.5, 46}, {53, 46}, {53, 52}, {56, 52}}, color = {0, 0, 127}));
-  connect(dtheta_TCV731_act.numberPort, switch_dthetaTCV731.y) annotation (
-    Line(points = {{73.5, 56}, {67.5, 56}}, color = {0, 0, 127}));
-  connect(bool_dthetaFCVR01.y, switch_dthetaFCVR01.u2) annotation (
-    Line(points = {{49.5, 23}, {56, 23}}, color = {255, 0, 255}));
-  connect(dthetaFCVR01_var.y, switch_dthetaFCVR01.u1) annotation (
-    Line(points = {{49.5, 32}, {53, 32}, {53, 27}, {56, 27}}, color = {0, 0, 127}));
-  connect(dthetaFCVR01.y, switch_dthetaFCVR01.u3) annotation (
-    Line(points = {{49.5, 13}, {53, 13}, {53, 19}, {56, 19}}, color = {0, 0, 127}));
-  connect(dtheta_TCV731_act1.numberPort, switch_dthetaFCVR01.y) annotation (
-    Line(points = {{73.5, 23}, {67.5, 23}}, color = {0, 0, 127}));
-  connect(bool_dToutRR01.y, switch_dToutRR01.u2) annotation (
-    Line(points = {{49.5, -10}, {56, -10}}, color = {255, 0, 255}));
-  connect(dToutRR01_var.y, switch_dToutRR01.u1) annotation (
-    Line(points = {{49.5, -1}, {53, -1}, {53, -6}, {56, -6}}, color = {0, 0, 127}));
-  connect(dTout_RR01_act.numberPort, switch_dToutRR01.y) annotation (
-    Line(points = {{73.5, -10}, {67.5, -10}}, color = {0, 0, 127}));
-  connect(dToutRR01.y, switch_dToutRR01.u3) annotation (
-    Line(points = {{49.5, -20}, {53, -20}, {53, -14}, {56, -14}}, color = {0, 0, 127}));
-  connect(switch_dthetaTCV701.y, controlSignalBus.thetaTCV701) annotation (
-    Line(points = {{67.5, 155}, {70, 155}, {70, 141}, {140, 141}, {140, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaTCV711.y, controlSignalBus.thetaTCV711) annotation (
-    Line(points = {{67.5, 121}, {70, 121}, {70, 110}, {139, 110}, {139, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaTCV721.y, controlSignalBus.thetaTCV721) annotation (
-    Line(points = {{67.5, 88}, {69, 88}, {69, 80}, {138, 80}, {138, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaTCV731.y, controlSignalBus.thetaTCV731) annotation (
-    Line(points = {{67.5, 56}, {70, 56}, {70, 40}, {137, 40}, {137, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaFCVR01.y, controlSignalBus.thetaFCVR01) annotation (
-    Line(points = {{67.5, 23}, {70, 23}, {70, 10}, {136, 10}, {136, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dToutRR01.y, controlSignalBus.ToutRR01) annotation (
-    Line(points = {{67.5, -10}, {70, -10}, {70, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaFCV701.y, controlSignalBus.thetaFCV701) annotation (
-    Line(points = {{-21.5, 155}, {-19, 155}, {-19, 140}, {20, 140}, {20, -40}, {139, -40}, {139, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
+    Line(points={{-61.5,46},{-58,46},{-58,52},{-55,52}},          color = {0, 0, 127}));
+  connect(bool_thetaFCVC01.y, switch_thetaFCVC01.u2) annotation (Line(points={{-131.5,61},{-125,61}}, color={255,0,255}));
+  connect(thetaFCVC01_var.y, switch_thetaFCVC01.u1) annotation (Line(points={{-131.5,70},{-128,70},{-128,65},{-125,65}}, color={0,0,127}));
+  connect(thetaFCVC01.y, switch_thetaFCVC01.u3) annotation (Line(points={{-131.5,51},{-128,51},{-128,57},{-125,57}}, color={0,0,127}));
+  connect(bool_thetaFCVC02.y, switch_thetaFCVC02.u2) annotation (Line(points={{-131.5,27},{-125,27}}, color={255,0,255}));
+  connect(thetaFCVC02_var.y, switch_thetaFCVC02.u1) annotation (Line(points={{-131.5,36},{-128,36},{-128,31},{-125,31}}, color={0,0,127}));
+  connect(thetaFCVC02.y, switch_thetaFCVC02.u3) annotation (Line(points={{-131.5,17},{-128,17},{-128,23},{-125,23}}, color={0,0,127}));
+  connect(bool_thetaTCV701.y, switch_thetaTCV701.u2) annotation (Line(points={{-14.5,155},{-8,155}}, color={255,0,255}));
+  connect(thetaTCV701_var.y, switch_thetaTCV701.u1) annotation (Line(points={{-14.5,164},{-11,164},{-11,159},{-8,159}}, color={0,0,127}));
+  connect(thetaTCV701.y, switch_thetaTCV701.u3) annotation (Line(points={{-14.5,145},{-11,145},{-11,151},{-8,151}}, color={0,0,127}));
+  connect(bool_thetaTCV711.y, switch_thetaTCV711.u2) annotation (Line(points={{-14.5,121},{-8,121}}, color={255,0,255}));
+  connect(thetaTCV711_var.y, switch_thetaTCV711.u1) annotation (Line(points={{-14.5,130},{-11,130},{-11,125},{-8,125}}, color={0,0,127}));
+  connect(thetaTCV711.y, switch_thetaTCV711.u3) annotation (Line(points={{-14.5,111},{-11,111},{-11,117},{-8,117}}, color={0,0,127}));
+  connect(bool_thetaTCV721.y, switch_thetaTCV721.u2) annotation (Line(points={{-14.5,88},{-8,88}}, color={255,0,255}));
+  connect(thetaTCV721_var.y, switch_thetaTCV721.u1) annotation (Line(points={{-14.5,97},{-11,97},{-11,92},{-8,92}}, color={0,0,127}));
+  connect(thetaTCV721.y, switch_thetaTCV721.u3) annotation (Line(points={{-14.5,78},{-11,78},{-11,84},{-8,84}}, color={0,0,127}));
+  connect(bool_thetaTCV731.y, switch_thetaTCV731.u2) annotation (Line(points={{-14.5,56},{-8,56}}, color={255,0,255}));
+  connect(thetaTCV731_var.y, switch_thetaTCV731.u1) annotation (Line(points={{-14.5,65},{-11,65},{-11,60},{-8,60}}, color={0,0,127}));
+  connect(thetaTCV731.y, switch_thetaTCV731.u3) annotation (Line(points={{-14.5,46},{-11,46},{-11,52},{-8,52}}, color={0,0,127}));
+  connect(bool_thetaFCVR01.y, switch_thetaFCVR01.u2) annotation (Line(points={{59.5,94},{66,94}}, color={255,0,255}));
+  connect(thetaFCVR01_var.y, switch_thetaFCVR01.u1) annotation (Line(points={{59.5,103},{63,103},{63,98},{66,98}}, color={0,0,127}));
+  connect(thetaFCVR01.y, switch_thetaFCVR01.u3) annotation (Line(points={{59.5,84},{63,84},{63,90},{66,90}}, color={0,0,127}));
+  connect(bool_ToutRR01.y, switch_ToutRR01.u2) annotation (Line(points={{59.5,61},{66,61}}, color={255,0,255}));
+  connect(ToutRR01_var.y, switch_ToutRR01.u1) annotation (Line(points={{59.5,70},{63,70},{63,65},{66,65}}, color={0,0,127}));
+  connect(ToutRR01.y, switch_ToutRR01.u3) annotation (Line(points={{59.5,51},{63,51},{63,57},{66,57}}, color={0,0,127}));
+  connect(switch_thetaTCV701.y, controlSignalBus.thetaTCV701)
+    annotation (Line(points={{3.5,155},{6,155},{6,195},{140,195},{140,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaTCV711.y, controlSignalBus.thetaTCV711)
+    annotation (Line(points={{3.5,121},{7,121},{7,194},{139,194},{139,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaTCV721.y, controlSignalBus.thetaTCV721)
+    annotation (Line(points={{3.5,88},{8,88},{8,193},{138,193},{138,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaTCV731.y, controlSignalBus.thetaTCV731)
+    annotation (Line(points={{3.5,56},{9,56},{9,192},{137,192},{137,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaFCVR01.y, controlSignalBus.thetaFCVR01)
+    annotation (Line(points={{77.5,94},{110,94},{110,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_ToutRR01.y, controlSignalBus.ToutRR01) annotation (Line(points={{77.5,61},{109,61},{109,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaFCV701.y, controlSignalBus.thetaFCV701)
+    annotation (Line(points={{-43.5,155},{-42,155},{-42,200},{144,200},{144,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   connect(switch_dthetaFCV711.y, controlSignalBus.thetaFCV711) annotation (
-    Line(points = {{-21.5, 121}, {-19, 121}, {-19, 110}, {19, 110}, {19, -42}, {140, -42}, {140, 0}, {160, 0}}, color = {0, 0, 127}),
+    Line(points={{-43.5,121},{-41,121},{-41,199},{143,199},{143,0},{160,0}},                                    color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
   connect(switch_dthetaFCV721.y, controlSignalBus.thetaFCV721) annotation (
-    Line(points = {{-21.5, 88}, {-19, 88}, {-19, 80}, {18, 80}, {18, -43}, {141, -43}, {141, 0}, {160, 0}}, color = {0, 0, 127}),
+    Line(points={{-43.5,88},{-40,88},{-40,198},{142,198},{142,0},{160,0}},                                  color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
   connect(switch_dthetaFCV731.y, controlSignalBus.thetaFCV731) annotation (
-    Line(points = {{-21.5, 56}, {-19, 56}, {-19, 50}, {17, 50}, {17, -44}, {142, -44}, {142, 0}, {160, 0}}, color = {0, 0, 127}),
+    Line(points={{-43.5,56},{-39,56},{-39,197},{141,197},{141,0},{160,0}},                                  color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaFCVC01.y, controlSignalBus.thetaFCVC01) annotation (
-    Line(points = {{-21.5, -6}, {-19, -6}, {-19, -12}, {16, -12}, {16, -45}, {143, -45}, {143, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaFCVC02.y, controlSignalBus.thetaFCVC02) annotation (
-    Line(points = {{-21.5, -40}, {-19, -40}, {-19, -34}, {15, -34}, {15, -46}, {144, -46}, {144, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_domegaP901.y, controlSignalBus.omegaP901) annotation (
-    Line(points = {{-111.5, 150}, {-110, 150}, {-110, 160}, {-77, 160}, {-77, 197}, {149, 197}, {149, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
+  connect(switch_thetaFCVC01.y, controlSignalBus.thetaFCVC01)
+    annotation (Line(points={{-113.5,61},{-113.5,60},{-106,60},{-106,208},{147,208},{147,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaFCVC02.y, controlSignalBus.thetaFCVC02)
+    annotation (Line(points={{-113.5,27},{-113.5,26},{-105,26},{-105,207},{146,207},{146,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_omegaP901.y, controlSignalBus.omegaP901)
+    annotation (Line(points={{-114.5,153},{-108,153},{-108,210},{149,210},{149,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   connect(switch_dthetaFCV901.y, controlSignalBus.thetaFCV901) annotation (
-    Line(points = {{-112.5, 117}, {-111, 117}, {-111, 140}, {-76, 140}, {-76, 196}, {148, 196}, {148, 0}, {160, 0}}, color = {0, 0, 127}),
+    Line(points={{-115.5,120},{-107,120},{-107,209},{148,209},{148,0},{160,0}},                                      color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_domegaP101.y, controlSignalBus.omegaP101) annotation (
-    Line(points = {{-111.5, 40}, {-110, 40}, {-110, 34}, {25, 34}, {25, -35}, {124, -35}, {124, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaFCV101.y, controlSignalBus.thetaFCV101) annotation (
-    Line(points = {{-112.5, 7}, {-110, 7}, {-110, 33}, {24, 33}, {24, -36}, {125, -36}, {125, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dToutGB101.y, controlSignalBus.ToutGB101) annotation (
-    Line(points = {{-112.5, -26}, {-110, -26}, {-110, -10}, {-77, -10}, {-77, 32}, {23, 32}, {23, -37}, {127, -37}, {127, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
+  connect(switch_omegaP101.y, controlSignalBus.omegaP101)
+    annotation (Line(points={{-15.5,-11},{-8,-11},{-8,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaFCV101.y, controlSignalBus.thetaFCV101)
+    annotation (Line(points={{-16.5,-44},{-2,-44},{-2,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_ToutGB101.y, controlSignalBus.ToutGB101) annotation (Line(points={{-16.5,-77},{2,-77},{2,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PtEX7X1SP.y[1], controlSignalBus.PtEX701) annotation (Line(points={{61,170},{136,170},{136,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PtEX7X1SP.y[2], controlSignalBus.PtEX711) annotation (Line(points={{61,170},{135,170},{135,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PtEX7X1SP.y[3], controlSignalBus.PtEX721) annotation (Line(points={{61,170},{134,170},{134,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(PtEX7X1SP.y[4], controlSignalBus.PtEX731) annotation (Line(points={{61,170},{133,170},{133,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(TT7X1SP.y[1], controlSignalBus.ToutEX701) annotation (Line(points={{61,140},{132,140},{132,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(TT7X1SP.y[2], controlSignalBus.ToutEX711) annotation (Line(points={{61,140},{131,140},{131,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(TT7X1SP.y[3], controlSignalBus.ToutEX721) annotation (Line(points={{61,140},{130,140},{130,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(TT7X1SP.y[4], controlSignalBus.ToutEX731) annotation (Line(points={{61,140},{129,140},{129,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(GB101status.y, controlSignalBus.statusGB101) annotation (Line(points={{-26,-106},{6,-106},{6,0},{160,0}}, color={255,0,255}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(RR01status.y, controlSignalBus.statusRR01) annotation (Line(points={{70,32},{105,32},{105,0},{160,0}}, color={255,0,255}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(omegaPR01_var.y, controlSignalBus.omegaPR01) annotation (Line(points={{71.05,17},{102,17},{102,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   annotation (
     Icon(                                               graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-70, 100}, {70, -100}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "Open
 Loop
 Act")}),
-    Diagram(coordinateSystem(extent = {{-160, -200}, {160, 200}}, grid = {1, 1}), graphics={  Rectangle(extent = {{-150, 190}, {-80, 90}}, fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-145, 190}, {-85, 170}}, textString = "S900", textColor = {0, 0, 0}), Rectangle(extent = {{-150, 80}, {-80, -50}}, fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-145, 80}, {-85, 60}}, textColor = {0, 0, 0}, textString = "S100"), Rectangle(extent = {{-60, 190}, {10, 36}}, fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-55, 190}, {5, 170}}, textColor = {0, 0, 0}, textString = "S700"), Rectangle(extent = {{-60, 30}, {10, -60}}, fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-56, 28}, {4, 8}}, textColor = {0, 0, 0}, textString = "RACK"), Rectangle(extent = {{30, 190}, {100, -30}}, fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{34, 190}, {94, 170}}, textColor = {0, 0, 0}, textString = "RR00")}));
+    Diagram(coordinateSystem(extent={{-160,-220},{160,220}}, grid={1,1}),         graphics={  Rectangle(extent={{-150,190},{-100,100}},    fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-150,
+              190},{-100,170}},                                                                                                                                                                                                        textString = "S900", textColor = {0, 0, 0}), Rectangle(extent={{-49,29},
+              {-10,-120}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-49,29},
+              {-9,9}},                                                                                                                                                                                                        textColor = {0, 0, 0}, textString = "S100"), Rectangle(extent={{-80,190},
+              {20,36}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None),                                                                                    Rectangle(extent={{-150,96},
+              {-100,6}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-150,96},
+              {-100,76}},                                                                                                                                                                                                        textColor = {0, 0, 0}, textString = "RACK"), Rectangle(extent={{40,127},
+              {90,7}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{40,127},
+              {90,107}},                                                                                                                                                                                                        textColor = {0, 0, 0}, textString = "RR00"),
+                                                                                                                                                                                                        Text(extent={{-80,190},
+              {20,170}},                                                                                                                                                                                                        textColor = {0, 0, 0}, textString = "S700")}));
 end OpenLoopActuatorBase_III;

@@ -41,6 +41,8 @@ model OLA_TwoGen_CaseA_III "Considering two generators Gas Boiler and Electric B
     Placement(transformation(extent = {{-123, -171}, {-113, -161}})));
   Modelica.Blocks.Interaction.Show.RealValue dTout_EB401_act(use_numberPort = true, significantDigits = 2) annotation (
     Placement(transformation(extent = {{-105, -176}, {-85, -156}})));
+  Modelica.Blocks.Sources.BooleanExpression EB401status(y=true)   annotation (
+    Placement(transformation(extent={{-144,-208},{-124,-188}})));
 equation
   theta_FCV401_var = theta_FCV401SP;
   omega_P401_var = omega_P401SP;
@@ -92,6 +94,12 @@ equation
   connect(switch_dToutEB401.y, controlSignalBus.ToutEB401) annotation (
     Line(points = {{-112.5, -166}, {-111, -166}, {-111, -150}, {-68, -150}, {-68, -76}, {22, -76}, {22, -52}, {132, -52}, {132, 0}, {160, 0}}, color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
+  connect(EB401status.y, controlSignalBus.statusEB401)
+    annotation (Line(points={{-123,-198},{-66,-198},{-66,-78},{24,-78},{24,-54},{134,-54},{134,0},{160,0}}, color={255,0,255}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   annotation (
-    Diagram(graphics={  Rectangle(extent = {{-150, -60}, {-80, -190}}, fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-145, -60}, {-85, -80}}, textColor = {0, 0, 0}, textString = "S400")}));
+    Diagram(graphics={  Rectangle(extent={{-150,-60},{-80,-214}},      fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-145, -60}, {-85, -80}}, textColor = {0, 0, 0}, textString = "S400")}));
 end OLA_TwoGen_CaseA_III;

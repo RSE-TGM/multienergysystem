@@ -60,7 +60,7 @@ partial model CentralisedSystem_GB_III "System with only Gas Boiler Systemm as s
   H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=nX)
                                                    annotation (
     Placement(visible = true, transformation(extent={{-260,-376},{-240,-356}}),
-              iconTransformation(origin={250,266}, extent={{-260,-376},{-240,-356}})));
+              iconTransformation(origin={350,366}, extent={{-260,-376},{-240,-356}})));
   ElectricNetwork.Interfaces.ElectricPortInlet electricPortInlet annotation (
     Placement(transformation(extent={{-442,-500},{-422,-480}}),
                                                               iconTransformation(origin={-46,150},extent={{-64,-160},{-44,-140}})));

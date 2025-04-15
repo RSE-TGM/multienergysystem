@@ -7,7 +7,7 @@ model CentralizedBase
   replaceable Systems.Load.LoadPlantFourHX load annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));
   H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=heatGeneration.S100.fuel.nXi)
-                                                                      annotation (Placement(transformation(extent={{-10,-90},{10,-70}}),   iconTransformation(extent={{-10,-110},{10,-90}})));
+                                                                      annotation (Placement(transformation(extent={{-10,-90},{10,-70}}),   iconTransformation(extent={{90,-10},{110,10}})));
 equation
   connect(heatGeneration.senthot, distribution.senthot) annotation (Line(
       points={{-40,-12},{-30,-12},{-30,-12},{-20,-12}},

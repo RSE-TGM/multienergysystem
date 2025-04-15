@@ -1222,13 +1222,9 @@ equation
   connect(thetaFCV721Offset.u, FCV721Dynamics.u) annotation (Line(points={{614.6,-140},{592,-140}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731Dynamics.u) annotation (Line(points={{294.6,-140},{272,-140}}, color={0,0,127}));
   connect(thetaTCV701Offset.u, TCV701Dynamics.u) annotation (Line(points={{21.4,-320},{38,-320}}, color={0,0,127}));
-  connect(TCV701Dynamics.y, TCV701.opening) annotation (Line(points={{61,-320},{72,-320}}, color={0,0,127}));
   connect(thetaTCV711Offset.u, TCV711Dynamics.u) annotation (Line(points={{345.4,-320},{356,-320}}, color={0,0,127}));
-  connect(TCV711Dynamics.y, TCV711.opening) annotation (Line(points={{379,-320},{392,-320}}, color={0,0,127}));
   connect(thetaTCV721Offset.u, TCV721Dynamics.u) annotation (Line(points={{511.4,-320},{518,-320}}, color={0,0,127}));
-  connect(TCV721Dynamics.y, TCV721.opening) annotation (Line(points={{541,-320},{552,-320}},   color={0,0,127}));
   connect(thetaTCV731Offset.u, TCV731Dynamics.u) annotation (Line(points={{191.4,-320},{198,-320}}, color={0,0,127}));
-  connect(TCV731Dynamics.y, TCV731.opening) annotation (Line(points={{221,-320},{232,-320}}, color={0,0,127}));
   connect(TT702Offset.deltaYnorm, processVariableBus.dTT702)
     annotation (Line(points={{171.4,-176},{182,-176},{182,-3},{896,-3}},
                                                                       color={0,0,127}), Text(
@@ -1266,23 +1262,27 @@ equation
   connect(S711.FT7X1_FT, FT711Offset.y) annotation (Line(points={{464,-210},{476,-210},{476,-220},{481.2,-220}}, color={0,0,127}));
   connect(S711.PT7X1_PT, PT711Offset.y) annotation (Line(points={{464,-218},{474,-218},{474,-236},{481.2,-236}}, color={0,0,127}));
   connect(S711.PT7X2_PT, PT712Offset.y) annotation (Line(points={{464,-226},{472,-226},{472,-252},{481.2,-252}}, color={0,0,127}));
-  connect(FCV721Dynamics.y, S721.theta) annotation (Line(points={{569,-140},{528,-140},{528,-182},{536,-182}}, color={0,0,127}));
   connect(S721.PT7X2_PT, PT722Offset.y) annotation (Line(points={{624,-226},{632,-226},{632,-254},{639.2,-254}}, color={0,0,127}));
-  connect(FCV731Dynamics.y, S731.theta) annotation (Line(points={{249,-140},{206,-140},{206,-182},{216,-182}}, color={0,0,127}));
   connect(S731.TT7X1_TT, TT731Offset.y) annotation (Line(points={{304,-178},{312,-178},{312,-160},{321.2,-160}}, color={0,0,127}));
   connect(S731.TT7X2_TT, TT732Offset.y) annotation (Line(points={{304,-186},{316,-186},{316,-176},{321.2,-176}}, color={0,0,127}));
   connect(S731.TT7X4_TT, TT734Offset.y) annotation (Line(points={{304,-202},{316,-202},{316,-206},{321.2,-206}}, color={0,0,127}));
   connect(S731.FT7X1_FT, FT731Offset.y) annotation (Line(points={{304,-210},{318,-210},{318,-222},{321.2,-222}}, color={0,0,127}));
   connect(S731.PT7X1_PT, PT731Offset.y) annotation (Line(points={{304,-218},{316,-218},{316,-238},{321.2,-238}}, color={0,0,127}));
   connect(S731.PT7X2_PT, PT732Offset.y) annotation (Line(points={{304,-226},{314,-226},{314,-254},{321.2,-254}}, color={0,0,127}));
-  connect(FCV711Dynamics.y, S711.theta) annotation (Line(points={{409,-140},{368,-140},{368,-182},{376,-182}}, color={0,0,127}));
-  connect(FCV701Dynamics.y, S701.theta) annotation (Line(points={{89,-140},{42,-140},{42,-182},{56,-182}}, color={0,0,127}));
   connect(S701.TT7X1_TT, TT701Offset.y) annotation (Line(points={{144,-178},{152,-178},{152,-160},{161.2,-160}}, color={0,0,127}));
   connect(S701.TT7X2_TT, TT702Offset.y) annotation (Line(points={{144,-186},{156,-186},{156,-176},{161.2,-176}}, color={0,0,127}));
   connect(S701.TT7X4_TT, TT704Offset.y) annotation (Line(points={{144,-202},{156,-202},{156,-206},{161.2,-206}}, color={0,0,127}));
   connect(S701.FT7X1_FT, FT701Offset.y) annotation (Line(points={{144,-210},{156,-210},{156,-222},{161.2,-222}}, color={0,0,127}));
   connect(S701.PT7X1_PT, PT701Offset.y) annotation (Line(points={{144,-218},{154,-218},{154,-238},{161.2,-238}}, color={0,0,127}));
   connect(S701.PT7X2_PT, PT702Offset.y) annotation (Line(points={{144,-226},{152,-226},{152,-254},{161.2,-254}}, color={0,0,127}));
+  connect(FCV701Dynamics.y, S701.theta_FCV7X1) annotation (Line(points={{89,-140},{68,-140},{68,-142},{44,-142},{44,-178},{56,-178}}, color={0,0,127}));
+  connect(FCV711Dynamics.y, S711.theta_FCV7X1) annotation (Line(points={{409,-140},{390,-140},{390,-138},{364,-138},{364,-178},{376,-178}}, color={0,0,127}));
+  connect(FCV731Dynamics.y, S731.theta_FCV7X1) annotation (Line(points={{249,-140},{208,-140},{208,-178},{216,-178}}, color={0,0,127}));
+  connect(FCV721Dynamics.y, S721.theta_FCV7X1) annotation (Line(points={{569,-140},{524,-140},{524,-178},{536,-178}}, color={0,0,127}));
+  connect(TCV701Dynamics.y, S701.theta_TCV7X1) annotation (Line(points={{61,-320},{68,-320},{68,-272},{44,-272},{44,-186},{56,-186}}, color={0,0,127}));
+  connect(TCV731Dynamics.y, S731.theta_TCV7X1) annotation (Line(points={{221,-320},{226,-320},{226,-322},{230,-322},{230,-264},{208,-264},{208,-186},{216,-186}}, color={0,0,127}));
+  connect(TCV711Dynamics.y, S711.theta_TCV7X1) annotation (Line(points={{379,-320},{388,-320},{388,-264},{364,-264},{364,-186},{376,-186}}, color={0,0,127}));
+  connect(TCV721Dynamics.y, S721.theta_TCV7X1) annotation (Line(points={{541,-320},{546,-320},{546,-254},{526,-254},{526,-186},{536,-186}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
           extent={{-70,100},{70,-100}},

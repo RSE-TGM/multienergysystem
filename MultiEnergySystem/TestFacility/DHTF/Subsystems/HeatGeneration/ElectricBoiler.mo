@@ -125,6 +125,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
         rotation=90,
         origin={20,40})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_EB401_P401(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S4,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=pipeData.PL_EB401_P401.L,
@@ -143,6 +145,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
         rotation=90,
         origin={20,-50})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_PT401_EB401(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S4,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=pipeData.PL_PT401_EB401.L,
@@ -161,6 +165,8 @@ model ElectricBoiler "System 400 - Electric Boiler"
         rotation=90,
         origin={-20,-50})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S400_P401_FCV401(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_S4,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=pipeData.PL_P401_FCV401.L,

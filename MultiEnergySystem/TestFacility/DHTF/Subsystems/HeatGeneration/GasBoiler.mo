@@ -45,9 +45,9 @@ model GasBoiler "System 100 - Gas Boiler"
   //-------------------------------
   // Valve parameters
   //-------------------------------
-  final parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient" annotation (
+  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV101.Kv "Metric Flow Coefficient" annotation (
     Dialog(group = "Valve settings"));
-  final parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV101.openingChar "opening characteristic" annotation (
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV101.openingChar "opening characteristic" annotation (
     Dialog(group = "Valve settings"));
 
   //-------------------------------

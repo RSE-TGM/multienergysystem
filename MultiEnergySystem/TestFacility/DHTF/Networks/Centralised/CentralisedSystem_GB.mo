@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised;
 partial model CentralisedSystem_GB "System with only Gas Boiler Systemm as source of heat"
-  extends DHTF.Networks.BaseClass.CentralisedNetworkBaseII(Tout_start_S9 = T_start_hot, Tin_start_S9 = T_start_cold);
+  extends DHTF.Networks.BaseClass.CentralisedNetworkBaseIII(Tout_start_S9 = T_start_hot, Tin_start_S9 = T_start_cold);
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
   // Gas composition
@@ -57,12 +57,12 @@ partial model CentralisedSystem_GB "System with only Gas Boiler Systemm as sourc
         origin={-250,-376})));
   DHTF.Subsystems.HeatGeneration.GasBoiler S100(
     redeclare model Medium = WaterHot,
+    pin_start=pin_start_S1,
+    pout_start=pout_start_S1,
+    Tin_start=Tin_start_S1,
+    Tout_start=Tout_start_S1,
     hctype=hctype,
     n=np,
-    pin_start_S1=pin_start_S1,
-    pout_start_S1=pout_start_S1,
-    Tin_start_S1=Tin_start_S1,
-    Tout_start_S1=Tout_start_S1,
     eta_combustion=eta_combustion,
     q_m3h_S1=q_m3h_S1,
     Kv=Kv_FCV101,

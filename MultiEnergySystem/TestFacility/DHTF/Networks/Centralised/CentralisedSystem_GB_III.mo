@@ -60,11 +60,11 @@ partial model CentralisedSystem_GB_III "System with only Gas Boiler Systemm as s
   H2GasFacility.Interfaces.FluidPortInlet inletGas(nXi=nX)
                                                    annotation (
     Placement(visible = true, transformation(extent={{-260,-376},{-240,-356}}),
-              iconTransformation(origin={360,366}, extent={{-260,-376},{-240,-356}})));
+              iconTransformation(origin={250,266}, extent={{-260,-376},{-240,-356}})));
   ElectricNetwork.Interfaces.ElectricPortInlet electricPortInlet annotation (
     Placement(transformation(extent={{-442,-500},{-422,-480}}),
-                                                              iconTransformation(origin={-56,190},extent={{-64,-160},{-44,-140}})));
-  Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-408,330},{-270,468}}),iconTransformation(extent={{-22,80},{18,120}})));
+                                                              iconTransformation(origin={-46,150},extent={{-64,-160},{-44,-140}})));
+  Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-408,330},{-270,468}}),iconTransformation(extent={{-20,80},{20,120}})));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=false) annotation (Placement(transformation(extent={{-171,67},{-191,87}})));
 equation
   connect(PL_S100_rCD_cold.inlet, rackCD_Cold_S400_S100.outlet) annotation (

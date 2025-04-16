@@ -12,7 +12,7 @@ partial model CaseCentralisedBase
     Placement(transformation(extent={{-69,-69},{-49,-49}})));
   inner System system annotation (
     Placement(transformation(extent={{80,-100},{100,-80}})));
-  replaceable DHTF.Networks.Centralised.CentralizedSystem_LoadControlled plant annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
+  replaceable DHTF.Networks.Centralised.CentralizedSystem_LoadControlled facility annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
   Interfaces.ControlSignalBus        controlSignalBus annotation (Placement(transformation(extent={{-20,26},{20,66}}),   iconTransformation(extent={{-20,80},{20,120}})));
   Modelica.Blocks.Interfaces.RealInput TT701_SP
     annotation (Placement(transformation(
@@ -115,16 +115,32 @@ partial model CaseCentralisedBase
         rotation=0,
         origin={-100,10})));
   Modelica.Blocks.Sources.BooleanExpression RR01_status(y=true) annotation (Placement(transformation(extent={{100,10},{80,30}})));
+  Modelica.Blocks.Sources.RealExpression TT701_exp(y=facility.load.S701.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-80.5},{-89,-69.5}})));
+  Modelica.Blocks.Sources.RealExpression TT711_exp(y=facility.load.S711.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-87.5},{-89,-77.5}})));
+  Modelica.Blocks.Sources.RealExpression TT721_exp(y=facility.load.S721.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-95.5},{-89,-84.5}})));
+  Modelica.Blocks.Sources.RealExpression TT731_exp(y=facility.load.S731.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-103},{-89,-92}})));
+  Modelica.Blocks.Sources.RealExpression EX701Pt_exp(y=facility.load.S701.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-80},{-60,-70}})));
+  Modelica.Blocks.Sources.RealExpression EX711Pt_exp(y=facility.load.S711.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-87.5},{-60,-77.5}})));
+  Modelica.Blocks.Sources.RealExpression EX721Pt_exp(y=facility.load.S721.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-95},{-60,-85}})));
+  Modelica.Blocks.Sources.RealExpression EX731Pt_exp(y=facility.load.S731.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-102.5},{-60,-92.5}})));
+  Modelica.Blocks.Interfaces.RealOutput EX701Pt annotation (Placement(transformation(extent={{-55,-80},{-45,-70}}), iconTransformation(extent={{-55,-80},{-45,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput EX711Pt annotation (Placement(transformation(extent={{-55,-87.5},{-45,-77.5}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput EX721Pt annotation (Placement(transformation(extent={{-55,-95},{-45,-85}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput EX731Pt annotation (Placement(transformation(extent={{-55,-102.5},{-45,-92.5}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput TT701 annotation (Placement(transformation(extent={{-85,-80},{-75,-70}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput TT711 annotation (Placement(transformation(extent={{-85,-87.5},{-75,-77.5}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput TT721 annotation (Placement(transformation(extent={{-85,-95},{-75,-85}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
+  Modelica.Blocks.Interfaces.RealOutput TT731 annotation (Placement(transformation(extent={{-85,-102.5},{-75,-92.5}}), iconTransformation(extent={{-20,-80},{-10,-70}})));
 equation
-  connect(plant.inletGas, sourceGas.outlet) annotation (Line(
+  connect(facility.inletGas, sourceGas.outlet) annotation (Line(
       points={{30,0},{40,0},{40,-60},{50,-60}},
       color={182,109,49},
       thickness=0.5));
-  connect(sourceVoltage.outlet, plant.electricPortInlet) annotation (Line(
+  connect(sourceVoltage.outlet, facility.electricPortInlet) annotation (Line(
       points={{-49,-59},{-40,-59},{-40,0},{-30,0}},
       color={56,93,138},
       thickness=1));
-  connect(controlSignalBus, plant.controlSignalBus)
+  connect(controlSignalBus, facility.controlSignalBus)
     annotation (Line(
       points={{0,46},{0,30}},
       color={255,204,51},
@@ -216,6 +232,14 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
+  connect(EX701Pt_exp.y, EX701Pt) annotation (Line(points={{-59.5,-75},{-50,-75}}, color={0,0,127}));
+  connect(EX711Pt_exp.y, EX711Pt) annotation (Line(points={{-59.5,-82.5},{-50,-82.5}}, color={0,0,127}));
+  connect(EX721Pt_exp.y, EX721Pt) annotation (Line(points={{-59.5,-90},{-50,-90}}, color={0,0,127}));
+  connect(EX731Pt_exp.y, EX731Pt) annotation (Line(points={{-59.5,-97.5},{-50,-97.5}}, color={0,0,127}));
+  connect(TT701_exp.y, TT701) annotation (Line(points={{-88.5,-75},{-80,-75}}, color={0,0,127}));
+  connect(TT711_exp.y, TT711) annotation (Line(points={{-88.5,-82.5},{-80,-82.5}}, color={0,0,127}));
+  connect(TT721_exp.y, TT721) annotation (Line(points={{-88.5,-90},{-80,-90}}, color={0,0,127}));
+  connect(TT731_exp.y, TT731) annotation (Line(points={{-88.5,-97.5},{-80,-97.5}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(grid={0.5,0.5})),

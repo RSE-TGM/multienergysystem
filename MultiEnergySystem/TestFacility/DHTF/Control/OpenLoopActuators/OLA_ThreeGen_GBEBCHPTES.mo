@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.OpenLoopActuators;
 model OLA_ThreeGen_GBEBCHPTES
   extends OLA_ThreeGen_GBEBCHP_II;
-  Modelica.Blocks.Sources.IntegerExpression S200status(y=1)   annotation (
+  Modelica.Blocks.Sources.IntegerExpression S200status(y= 1)   annotation (
     Placement(transformation(extent={{12,-176},{32,-156}})));
   Modelica.Blocks.Sources.RealExpression domegaP201_var(y=2*pi*35)   annotation (
     Placement(transformation(extent={{12,-192},{33,-171}})));

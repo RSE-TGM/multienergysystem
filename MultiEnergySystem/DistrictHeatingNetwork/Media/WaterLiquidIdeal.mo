@@ -21,7 +21,7 @@ equation
   rho = 1/v;
   v_mol = MM/rho;
   h = u + p/rho;
-  h = cp*T;
+  h = cp*T + 349750.921818182;
   du_dT = cv;
   cv = cp;
   drho_dT = 0;

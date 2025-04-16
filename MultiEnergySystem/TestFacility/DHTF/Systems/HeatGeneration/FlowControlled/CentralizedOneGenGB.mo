@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration;
+within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration.FlowControlled;
 model CentralizedOneGenGB
   extends DistrictHeatingNetwork.Icons.Water.HeatGeneration;
   extends Systems.HeatGeneration.BaseHeatGeneration(inletGas(nXi=nXi), final nXi = S100.fuel.nXi);
@@ -19,7 +19,6 @@ model CentralizedOneGenGB
   parameter Real q_m3h_start_S100(unit = "m3/h") = 9 annotation (
     Dialog(group = "S100"));
 
-
   //-------------------------------
   // Final parameters
   //-------------------------------
@@ -32,7 +31,6 @@ model CentralizedOneGenGB
   final parameter DistrictHeatingNetwork.Types.Length t_S100 = 1.5e-3;
   final parameter DistrictHeatingNetwork.Types.PerUnit eta_combustion = 0.92 "Combustion efficiency";
   final parameter Modelica.Units.SI.Time tdelay = 0 "Rising time of heater from 0 to full power";
-
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_rCD_hot(
     set_m_flow_start=true,
@@ -64,7 +62,7 @@ model CentralizedOneGenGB
     n=n,
     cf=cf)                                                                                                                                                                                                        annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-192,74})));
-  replaceable Subsystems.HeatGeneration.GasBoiler S100(
+  Subsystems.HeatGeneration.GasBoiler S100(
     redeclare model Medium = WaterHot,
     redeclare model Gas = Gas,
     hctype=hctype,
@@ -94,14 +92,6 @@ equation
       thickness=0.5));
   connect(controlSignalBus.ToutGB101, S100.Toutset) annotation (Line(
       points={{-290,-2},{-258,-2},{-258,9.2},{-224.4,9.2}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.thetaFCV101, S100.theta) annotation (Line(
-      points={{-290,-2},{-280,-2},{-280,16},{-224.4,16},{-224.4,18}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.omegaP101, S100.omega) annotation (Line(
-      points={{-290,-2},{-288,-2},{-288,26.8},{-224.4,26.8}},
       color={255,204,51},
       thickness=0.5));
   connect(inletGas, S100.inletFuel) annotation (Line(

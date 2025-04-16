@@ -1,8 +1,8 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised;
-model CentralizedSystem_LoadControlled
+model CentralizedSystem_LoadControlledII
   extends BaseClass.CentralizedBase(
     redeclare model Gas = H2GasFacility.Media.IdealGases.CH4,
-    redeclare DHTF.Systems.HeatGeneration.CentralizedThreeGenGBEBCHP heatGeneration(X_gas = {1}),
+    redeclare DHTF.Systems.HeatGeneration.CentralizedThreeGenGBEBCHPTES heatGeneration(X_gas = {1}),
     redeclare DHTF.Systems.Load.LoadPlantFourHXControlled load(nHX=5,
     EX701_q_m3h_hot=2,
       EX701_Tin_hot=353.15,
@@ -39,4 +39,4 @@ equation
       points={{-80,0},{-80,0},{-80,-64}},
       color={56,93,138},
       thickness=1));
-end CentralizedSystem_LoadControlled;
+end CentralizedSystem_LoadControlledII;

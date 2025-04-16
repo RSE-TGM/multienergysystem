@@ -7,7 +7,7 @@ model TestCentralisedIII
 
   //parameter String file1 = loadResource("modelica://MultiEnergySystem/TestFacility/Resources/loadprofile.csv");
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
-    Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin={36,-54})));
+    Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin={58,0})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(extent = {{-76, -10}, {-56, 10}})));
   replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHP_II openLoopActuatorBase_III annotation (
@@ -21,7 +21,7 @@ equation
       color={56,93,138},
       thickness=1));
   connect(sourceGas.outlet, plant.inletGas) annotation (Line(
-      points={{22,-54},{12,-54},{12,-52},{0,-52},{0,-24}},
+      points={{44,3.55271e-15},{34,3.55271e-15},{34,0},{24,0}},
       color={182,109,49},
       thickness=0.5));
   connect(openLoopActuatorBase_III.controlSignalBus, plant.controlSignalBus) annotation (Line(

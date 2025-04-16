@@ -10,11 +10,10 @@ model TestCentralisedIV
     Placement(transformation(extent={{-10,-10},{10,10}},      rotation = 180, origin={60,0})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(extent = {{-76, -10}, {-56, 10}})));
-  replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHPTES openLoopActuatorBase_III annotation (
-    Placement(transformation(extent={{-18,42},{18,78}})));
+  replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHPTES actuator annotation (Placement(transformation(extent={{-18,42},{18,78}})));
   inner System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
-  Networks.Centralised.CentralizedSystem_LoadControlled plant                                        annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
+  Networks.Centralised.CentralizedSystem_LoadControlledII plant                                        annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation
   connect(sourceVoltage.outlet, plant.electricPortInlet) annotation (Line(
       points={{-56,0},{-24,0}},
@@ -24,7 +23,7 @@ equation
       points={{50,6.66134e-16},{35,6.66134e-16},{35,0},{24,0}},
       color={182,109,49},
       thickness=0.5));
-  connect(openLoopActuatorBase_III.controlSignalBus, plant.controlSignalBus) annotation (Line(
+  connect(actuator.controlSignalBus, plant.controlSignalBus) annotation (Line(
       points={{0,42},{0,24}},
       color={255,204,51},
       thickness=0.5));

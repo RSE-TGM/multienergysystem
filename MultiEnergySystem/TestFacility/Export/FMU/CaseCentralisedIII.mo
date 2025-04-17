@@ -5,19 +5,19 @@ model CaseCentralisedIII
   Modelica.Blocks.Interfaces.RealInput P501omega annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=180,
-        origin={100,45}), iconTransformation(extent={{110,-100},{90,-80}})));
+        origin={100,45}), iconTransformation(extent={{110,-70},{100,-60}})));
   Modelica.Blocks.Interfaces.RealInput CHP501Tout_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=180,
-        origin={100,60}), iconTransformation(extent={{110,-60},{90,-40}})));
+        origin={100,60}), iconTransformation(extent={{110,-50},{100,-40}})));
   Modelica.Blocks.Interfaces.RealInput CHPmflow annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=180,
-        origin={100,37.5}), iconTransformation(extent={{110,-60},{90,-80}})));
+        origin={100,37.5}), iconTransformation(extent={{110,-50},{100,-60}})));
   Modelica.Blocks.Interfaces.RealInput CHP501Pel_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=180,
-        origin={100,52}), iconTransformation(extent={{110,-40},{90,-20}})));
+        origin={100,52}), iconTransformation(extent={{110,-40},{100,-30}})));
 equation
   connect(CHP501_status.y, controlSignalBus.statusCHP501)
     annotation (Line(points={{79,-25},{60,-25},{60,46},{0,46}}, color={255,0,255}), Text(
@@ -49,5 +49,7 @@ equation
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  annotation (Diagram(coordinateSystem(grid={0.5,0.5})));
+  annotation (
+    Icon(coordinateSystem(grid={0.5,0.5})),
+  Diagram(coordinateSystem(grid={0.5,0.5})));
 end CaseCentralisedIII;

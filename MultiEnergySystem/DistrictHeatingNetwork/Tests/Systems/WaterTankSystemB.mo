@@ -26,7 +26,7 @@ model WaterTankSystemB "System of two tanks"
   parameter Real P201omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
   parameter Real P201qm3h[:,:] = [0, 2.8289046; 100, 2.8289046];
 
-  parameter Real FCV201theta[:,:] = [0, 1; 100, 1; 105, 1; 200, 1];
+  parameter Real FCV201theta[:,:] = [0, 0.4; 100, 0.4; 105, 0.4; 200, 0.4];
 
   // Pipe length
   parameter Types.Length L_S2_PL0 = 24.5;
@@ -141,6 +141,7 @@ model WaterTankSystemB "System of two tanks"
   MultiEnergySystem.DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
     FCV201(
     Kv=Valve.FCV201.Kv,
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic,
     dp_nom(displayUnit="Pa") = Valve.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start_S2,
     pin_start=pout_start_S2) annotation (Placement(transformation(
@@ -460,15 +461,15 @@ model WaterTankSystemB "System of two tanks"
 equation
   if time < 3e4 then
     //statusop = "Loading";
-    statusop = DistrictHeatingNetwork.Choices.Storage.Status.Loading;
-  elseif time < 3.4e4 then
+    statusOp = DistrictHeatingNetwork.Choices.Storage.Status.Loading;
+  elseif time < 4e4 then
     //statusop = "Unloading";
-    statusop = DistrictHeatingNetwork.Choices.Storage.Status.Unloading;
+    statusOp = DistrictHeatingNetwork.Choices.Storage.Status.Unloading;
   else
-    statusop = DistrictHeatingNetwork.Choices.Storage.Status.Bypass;
+    statusOp = DistrictHeatingNetwork.Choices.Storage.Status.Bypass;
     //statusop = "ByPass";
   end if;
-  if statusop == DistrictHeatingNetwork.Choices.Storage.Status.Loading then
+  if statusOp == DistrictHeatingNetwork.Choices.Storage.Status.Loading then
     FV201_state = false;
     FV202_state = true;
     FV203_state = false;
@@ -478,7 +479,7 @@ equation
     FV207_state = true;
     FV208_state = false;
     FV209_state = false;
-  elseif statusop == DistrictHeatingNetwork.Choices.Storage.Status.Unloading then
+  elseif statusOp == DistrictHeatingNetwork.Choices.Storage.Status.Unloading then
     FV201_state = true;
     FV202_state = false;
     FV203_state = true;

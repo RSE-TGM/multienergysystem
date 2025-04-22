@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 partial model CentralizedNetworkBaseLoadSimplified
-  extends DistrictHeatingNetwork.Icons.Water.Network;
+  //extends DistrictHeatingNetwork.Icons.Water.Network;
   // Fluids
   replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;

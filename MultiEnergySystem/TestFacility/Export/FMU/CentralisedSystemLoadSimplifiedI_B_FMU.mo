@@ -218,5 +218,5 @@ equation
       color={56,93,138},
       thickness=1));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
+        coordinateSystem(preserveAspectRatio=false, extent={{-920,-400},{860,400}})));
 end CentralisedSystemLoadSimplifiedI_B_FMU;

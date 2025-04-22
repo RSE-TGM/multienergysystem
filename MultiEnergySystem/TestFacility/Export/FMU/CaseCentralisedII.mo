@@ -1,6 +1,7 @@
 within MultiEnergySystem.TestFacility.Export.FMU;
 model CaseCentralisedII
-  extends CaseCentralisedI;
+  extends CaseCentralisedI(
+    redeclare DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_II facility);
   Modelica.Blocks.Sources.BooleanExpression EB101_status(y=true) annotation (Placement(transformation(extent={{100,-19},{80,1}})));
   Modelica.Blocks.Interfaces.RealInput EB401Tout_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},

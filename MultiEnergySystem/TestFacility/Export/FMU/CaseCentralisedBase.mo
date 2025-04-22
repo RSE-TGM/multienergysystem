@@ -12,7 +12,7 @@ partial model CaseCentralisedBase
     Placement(transformation(extent={{-69,-69},{-49,-49}})));
   inner System system annotation (
     Placement(transformation(extent={{80,-100},{100,-80}})));
-  replaceable DHTF.Networks.Centralised.CentralizedSystem_LoadControlled facility annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
+  replaceable DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_I facility annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
   Interfaces.ControlSignalBus        controlSignalBus annotation (Placement(transformation(extent={{-20,26},{20,66}}),   iconTransformation(extent={{-20,80},{20,120}})));
   Modelica.Blocks.Interfaces.RealInput TT701_SP
     annotation (Placement(transformation(
@@ -44,25 +44,25 @@ partial model CaseCentralisedBase
         rotation=-90,
         origin={5,100}),  iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
-        origin={-45,-105})));
+        origin={10,-105})));
   Modelica.Blocks.Interfaces.RealInput EX711Pt_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={15,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
-        origin={-35,-105})));
+        origin={20,-105})));
   Modelica.Blocks.Interfaces.RealInput EX721Pt_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={25,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
-        origin={-25,-105})));
+        origin={30,-105})));
   Modelica.Blocks.Interfaces.RealInput EX731Pt_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={35,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
-        origin={-15,-105})));
+        origin={40,-105})));
   Modelica.Blocks.Interfaces.RealInput FCVC01theta
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
@@ -137,16 +137,16 @@ partial model CaseCentralisedBase
         origin={90,-105})));
   Modelica.Blocks.Interfaces.RealOutput TT701 annotation (Placement(transformation(extent={{-85,-80},{-75,-70}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
-        origin={15,-105})));
+        origin={-40,-105})));
   Modelica.Blocks.Interfaces.RealOutput TT711 annotation (Placement(transformation(extent={{-85,-87.5},{-75,-77.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
-        origin={25,-105})));
+        origin={-30,-105})));
   Modelica.Blocks.Interfaces.RealOutput TT721 annotation (Placement(transformation(extent={{-85,-95},{-75,-85}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
-        origin={35,-105})));
+        origin={-20,-105})));
   Modelica.Blocks.Interfaces.RealOutput TT731 annotation (Placement(transformation(extent={{-85,-102.5},{-75,-92.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
-        origin={45,-105})));
+        origin={-10,-105})));
 equation
   connect(facility.inletGas, sourceGas.outlet) annotation (Line(
       points={{30,0},{40,0},{40,-60},{50,-60}},
@@ -259,7 +259,7 @@ equation
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5}, preserveAspectRatio = false), graphics={
                   Text(
-                extent={{-88,-60},{20,-92}},
+                extent={{-53.5,-49.5},{54.5,-81.5}},
                 textColor={135,135,135},
                 textString="to FMU"),                                     Bitmap(
           extent={{-60,-50},{60,70}},

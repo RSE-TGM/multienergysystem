@@ -12,37 +12,31 @@ model OLA_TwoGen_CaseA_III "Considering two generators Gas Boiler and Electric B
   DistrictHeatingNetwork.Types.Temperature Tout_EB401SP(nominal = 100 + 273.15);
   Real Tout_EB401_var(min = 0+273.15, max = 100+273.15);
   Modelica.Blocks.Sources.TimeTable dToutEB401(table = Tout_EB401) annotation (
-    Placement(transformation(extent = {{-141, -181}, {-131, -171}})));
+    Placement(transformation(extent={{-82,-131},{-72,-121}})));
   Modelica.Blocks.Sources.TimeTable domegaP401(table = omega_P401) annotation (
-    Placement(transformation(extent = {{-141, -115}, {-131, -105}})));
+    Placement(transformation(extent={{-82,-65},{-72,-55}})));
   Modelica.Blocks.Sources.TimeTable dthetaFCV401(table = theta_FCV401) annotation (
-    Placement(transformation(extent = {{-141, -148}, {-131, -138}})));
+    Placement(transformation(extent={{-82,-98},{-72,-88}})));
   Modelica.Blocks.Sources.RealExpression domegaP401_var(y = omega_P401_var) annotation (
-    Placement(transformation(extent = {{-141, -95}, {-131, -85}})));
+    Placement(transformation(extent={{-82,-45},{-72,-35}})));
   Modelica.Blocks.Logical.Switch switch_domegaP401 annotation (
-    Placement(transformation(extent = {{-122, -105}, {-112, -95}})));
+    Placement(transformation(extent={{-63,-55},{-53,-45}})));
   Modelica.Blocks.Sources.BooleanExpression bool_domegaP401(y = booldomegaP401) annotation (
-    Placement(transformation(extent = {{-141, -105}, {-131, -95}})));
+    Placement(transformation(extent={{-82,-55},{-72,-45}})));
   Modelica.Blocks.Sources.BooleanExpression bool_dthetaFCV401(y = booldthetaFCV401) annotation (
-    Placement(transformation(extent = {{-141, -138}, {-131, -128}})));
+    Placement(transformation(extent={{-82,-88},{-72,-78}})));
   Modelica.Blocks.Sources.RealExpression dthetaFCV401_var(y = theta_FCV401_var) annotation (
-    Placement(transformation(extent = {{-141, -129}, {-131, -119}})));
+    Placement(transformation(extent={{-82,-79},{-72,-69}})));
   Modelica.Blocks.Logical.Switch switch_dthetaFCV401 annotation (
-    Placement(transformation(extent = {{-123, -138}, {-113, -128}})));
-  Modelica.Blocks.Interaction.Show.RealValue domega_P401_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, -110}, {-85, -90}})));
-  Modelica.Blocks.Interaction.Show.RealValue dtheta_FCV401_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, -143}, {-85, -123}})));
+    Placement(transformation(extent={{-64,-88},{-54,-78}})));
   Modelica.Blocks.Sources.BooleanExpression bool_dToutEB401(y = booldToutEB401) annotation (
-    Placement(transformation(extent = {{-141, -171}, {-131, -161}})));
+    Placement(transformation(extent={{-82,-121},{-72,-111}})));
   Modelica.Blocks.Sources.RealExpression dToutEB401_var(y = Tout_EB401_var) annotation (
-    Placement(transformation(extent = {{-141, -162}, {-131, -152}})));
+    Placement(transformation(extent={{-82,-112},{-72,-102}})));
   Modelica.Blocks.Logical.Switch switch_dToutEB401 annotation (
-    Placement(transformation(extent = {{-123, -171}, {-113, -161}})));
-  Modelica.Blocks.Interaction.Show.RealValue dTout_EB401_act(use_numberPort = true, significantDigits = 2) annotation (
-    Placement(transformation(extent = {{-105, -176}, {-85, -156}})));
+    Placement(transformation(extent={{-64,-121},{-54,-111}})));
   Modelica.Blocks.Sources.BooleanExpression EB401status(y=true)   annotation (
-    Placement(transformation(extent={{-144,-208},{-124,-188}})));
+    Placement(transformation(extent={{-85,-155.5},{-65,-135.5}})));
 equation
   theta_FCV401_var = theta_FCV401SP;
   omega_P401_var = omega_P401SP;
@@ -62,44 +56,48 @@ equation
     //
   end if;
   connect(domegaP401_var.y, switch_domegaP401.u1) annotation (
-    Line(points = {{-130.5, -90}, {-127, -90}, {-127, -96}, {-123, -96}}, color = {0, 0, 127}));
+    Line(points={{-71.5,-40},{-68,-40},{-68,-46},{-64,-46}},              color = {0, 0, 127}));
   connect(bool_domegaP401.y, switch_domegaP401.u2) annotation (
-    Line(points = {{-130.5, -100}, {-123, -100}}, color = {255, 0, 255}));
+    Line(points={{-71.5,-50},{-64,-50}},          color = {255, 0, 255}));
   connect(domegaP401.y, switch_domegaP401.u3) annotation (
-    Line(points = {{-130.5, -110}, {-127, -110}, {-127, -104}, {-123, -104}}, color = {0, 0, 127}));
+    Line(points={{-71.5,-60},{-68,-60},{-68,-54},{-64,-54}},                  color = {0, 0, 127}));
   connect(bool_dthetaFCV401.y, switch_dthetaFCV401.u2) annotation (
-    Line(points = {{-130.5, -133}, {-124, -133}}, color = {255, 0, 255}));
+    Line(points={{-71.5,-83},{-65,-83}},          color = {255, 0, 255}));
   connect(dthetaFCV401_var.y, switch_dthetaFCV401.u1) annotation (
-    Line(points = {{-130.5, -124}, {-127, -124}, {-127, -129}, {-124, -129}}, color = {0, 0, 127}));
+    Line(points={{-71.5,-74},{-68,-74},{-68,-79},{-65,-79}},                  color = {0, 0, 127}));
   connect(dthetaFCV401.y, switch_dthetaFCV401.u3) annotation (
-    Line(points = {{-130.5, -143}, {-127, -143}, {-127, -137}, {-124, -137}}, color = {0, 0, 127}));
-  connect(switch_domegaP401.y, domega_P401_act.numberPort) annotation (
-    Line(points = {{-111.5, -100}, {-106.5, -100}}, color = {0, 0, 127}));
-  connect(dtheta_FCV401_act.numberPort, switch_dthetaFCV401.y) annotation (
-    Line(points = {{-106.5, -133}, {-112.5, -133}}, color = {0, 0, 127}));
+    Line(points={{-71.5,-93},{-68,-93},{-68,-87},{-65,-87}},                  color = {0, 0, 127}));
   connect(bool_dToutEB401.y, switch_dToutEB401.u2) annotation (
-    Line(points = {{-130.5, -166}, {-124, -166}}, color = {255, 0, 255}));
+    Line(points={{-71.5,-116},{-65,-116}},        color = {255, 0, 255}));
   connect(dToutEB401_var.y, switch_dToutEB401.u1) annotation (
-    Line(points = {{-130.5, -157}, {-127, -157}, {-127, -162}, {-124, -162}}, color = {0, 0, 127}));
-  connect(dTout_EB401_act.numberPort, switch_dToutEB401.y) annotation (
-    Line(points = {{-106.5, -166}, {-112.5, -166}}, color = {0, 0, 127}));
+    Line(points={{-71.5,-107},{-68,-107},{-68,-112},{-65,-112}},              color = {0, 0, 127}));
   connect(dToutEB401.y, switch_dToutEB401.u3) annotation (
-    Line(points = {{-130.5, -176}, {-127, -176}, {-127, -170}, {-124, -170}}, color = {0, 0, 127}));
-  connect(switch_domegaP401.y, controlSignalBus.omegaP401) annotation (
-    Line(points = {{-111.5, -100}, {-110, -100}, {-110, -90}, {-70, -90}, {-70, -74}, {20, -74}, {20, -50}, {130, -50}, {130, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dthetaFCV401.y, controlSignalBus.thetaFCV401) annotation (
-    Line(points = {{-112.5, -133}, {-111, -133}, {-111, -132}, {-110, -132}, {-110, -120}, {-69, -120}, {-69, -75}, {21, -75}, {21, -51}, {131, -51}, {131, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_dToutEB401.y, controlSignalBus.ToutEB401) annotation (
-    Line(points = {{-112.5, -166}, {-111, -166}, {-111, -150}, {-68, -150}, {-68, -76}, {22, -76}, {22, -52}, {132, -52}, {132, 0}, {160, 0}}, color = {0, 0, 127}),
-    Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
+    Line(points={{-71.5,-126},{-68,-126},{-68,-120},{-65,-120}},              color = {0, 0, 127}));
+  connect(switch_domegaP401.y, controlSignalBus.omegaP401)
+    annotation (Line(points={{-52.5,-50},{-42.5,-50},{-42.5,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_dthetaFCV401.y, controlSignalBus.thetaFCV401)
+    annotation (Line(points={{-53.5,-83},{-40,-83},{-40,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_dToutEB401.y, controlSignalBus.ToutEB401)
+    annotation (Line(points={{-53.5,-116},{-38.5,-116},{-38.5,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   connect(EB401status.y, controlSignalBus.statusEB401)
-    annotation (Line(points={{-123,-198},{-66,-198},{-66,-78},{24,-78},{24,-54},{134,-54},{134,0},{160,0}}, color={255,0,255}), Text(
+    annotation (Line(points={{-64,-145.5},{-38,-145.5},{-38,0},{160,0}}, color={255,0,255}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   annotation (
-    Diagram(graphics={  Rectangle(extent={{-150,-60},{-80,-214}},      fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent = {{-145, -60}, {-85, -80}}, textColor = {0, 0, 0}, textString = "S400")}));
+    Diagram(coordinateSystem(grid={0.5,0.5}),
+            graphics={  Rectangle(extent={{-90,-10},{-45,-160}},       fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-90,-10},{-45,-30}},       textColor = {0, 0, 0}, textString = "S400")}));
 end OLA_TwoGen_CaseA_III;

@@ -1,8 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.OpenLoopActuators;
 model OLA_ThreeGen_GBEBCHP_II
   extends OLA_TwoGen_CaseA_III;
-
-  parameter String file1 = "modelica://MultiEnergySystem/TestFacility/Resources/loadprofile.csv";
   Modelica.Blocks.Sources.RealExpression domegaP501_var(y=2*pi*40)   annotation (
     Placement(transformation(extent = {{55, -95}, {65, -85}})));
   Modelica.Blocks.Sources.BooleanExpression CHP501status(y = true) annotation (

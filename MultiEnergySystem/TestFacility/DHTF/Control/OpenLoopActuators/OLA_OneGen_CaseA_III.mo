@@ -1,6 +1,27 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.OpenLoopActuators;
 model OLA_OneGen_CaseA_III "Step Actuator for test facility plant considering only one generator which in this case is the gas boiler"
   extends OpenLoopActuatorBase_III;
+  // S100
+  DistrictHeatingNetwork.Types.PerUnit theta_FCV101SP;
+  Real theta_FCV101_var(min = 0, max = 1);
+  DistrictHeatingNetwork.Types.AngularVelocity omega_P101SP;
+  Real omega_P101_var(min = 0, max = 2*pi*50);
+  DistrictHeatingNetwork.Types.Temperature Tout_GB101SP(nominal = 100 + 273.15);
+  Real Tout_GB101_var(min = 0+273.15, max = 100+273.15);
+  Modelica.Blocks.Sources.TimeTable ToutGB101(table=Tout_GB101) annotation (Placement(transformation(extent={{-140,-132},{-130,-122}})));
+  Modelica.Blocks.Sources.TimeTable omegaP101(table=omega_P101) annotation (Placement(transformation(extent={{-140,-66},{-130,-56}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCV101(table=theta_FCV101) annotation (Placement(transformation(extent={{-140,-99},{-130,-89}})));
+  Modelica.Blocks.Sources.RealExpression omegaP101_var(y=omega_P101_var) annotation (Placement(transformation(extent={{-140,-46},{-130,-36}})));
+  Modelica.Blocks.Logical.Switch switch_omegaP101 annotation (Placement(transformation(extent={{-121,-56},{-111,-46}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_omegaP101(y=booldomegaP101) annotation (Placement(transformation(extent={{-140,-56},{-130,-46}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCV101(y=booldthetaFCV101) annotation (Placement(transformation(extent={{-140,-89},{-130,-79}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCV101_var(y=theta_FCV101_var) annotation (Placement(transformation(extent={{-140,-80},{-130,-70}})));
+  Modelica.Blocks.Logical.Switch switch_thetaFCV101 annotation (Placement(transformation(extent={{-122,-89},{-112,-79}})));
+  Modelica.Blocks.Sources.BooleanExpression bool_ToutGB101(y=booldToutGB101) annotation (Placement(transformation(extent={{-140,-122},{-130,-112}})));
+  Modelica.Blocks.Sources.RealExpression ToutGB101_var(y=Tout_GB101_var) annotation (Placement(transformation(extent={{-140,-113},{-130,-103}})));
+  Modelica.Blocks.Logical.Switch switch_ToutGB101 annotation (Placement(transformation(extent={{-122,-122},{-112,-112}})));
+  Modelica.Blocks.Sources.BooleanExpression GB101status(y=true)   annotation (
+    Placement(transformation(extent={{-142,-156},{-122,-136}})));
 equation
   // S900
   theta_FCV901_var = theta_FCV901SP;
@@ -88,4 +109,47 @@ equation
     booldthetaFCVR01 = false;
     booldToutRR01 = false;
   end if;
+  connect(omegaP101_var.y,switch_omegaP101. u1) annotation (Line(points={{-129.5,-41},{-126,-41},{-126,-47},{-122,-47}},
+                                                                                                                 color={0,0,127}));
+  connect(bool_omegaP101.y,switch_omegaP101. u2) annotation (Line(points={{-129.5,-51},{-122,-51}},
+                                                                                                  color={255,0,255}));
+  connect(omegaP101.y,switch_omegaP101. u3) annotation (Line(points={{-129.5,-61},{-126,-61},{-126,-55},{-122,-55}},
+                                                                                                                 color={0,0,127}));
+  connect(bool_thetaFCV101.y,switch_thetaFCV101. u2) annotation (Line(points={{-129.5,-84},{-123,-84}},
+                                                                                                      color={255,0,255}));
+  connect(thetaFCV101_var.y,switch_thetaFCV101. u1) annotation (Line(points={{-129.5,-75},{-126,-75},{-126,-80},{-123,-80}},
+                                                                                                                         color={0,0,127}));
+  connect(thetaFCV101.y,switch_thetaFCV101. u3) annotation (Line(points={{-129.5,-94},{-126,-94},{-126,-88},{-123,-88}},
+                                                                                                                     color={0,0,127}));
+  connect(bool_ToutGB101.y,switch_ToutGB101. u2) annotation (Line(points={{-129.5,-117},{-123,-117}},
+                                                                                                  color={255,0,255}));
+  connect(ToutGB101_var.y,switch_ToutGB101. u1) annotation (Line(points={{-129.5,-108},{-126,-108},{-126,-113},{-123,-113}},
+                                                                                                                     color={0,0,127}));
+  connect(ToutGB101.y,switch_ToutGB101. u3) annotation (Line(points={{-129.5,-127},{-126,-127},{-126,-121},{-123,-121}},
+                                                                                                                 color={0,0,127}));
+  connect(switch_omegaP101.y, controlSignalBus.omegaP101) annotation (Line(points={{-110.5,-51},{-104.5,-51},{-104.5,-51.5},{-102.5,-51.5},{-102.5,0.5},{36.5,0.5},{36.5,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_thetaFCV101.y, controlSignalBus.thetaFCV101)
+    annotation (Line(points={{-111.5,-84},{-101.5,-84},{-101.5,-0.5},{-62,-0.5},{-62,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(switch_ToutGB101.y, controlSignalBus.ToutGB101) annotation (Line(points={{-111.5,-117},{-105,-117},{-105,-117.5},{-100.5,-117.5},{-100.5,-1.5},{160,-1.5},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(GB101status.y, controlSignalBus.statusGB101)
+    annotation (Line(points={{-121,-146},{-110,-146},{-110,-145.5},{-99,-145.5},{-99,0},{160,0}}, color={255,0,255}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  annotation (Diagram(coordinateSystem(extent={{-160,-220},{160,220}}, grid={0.5,0.5}), graphics={                                                                                                                                                                                  Rectangle(extent={{-150,
+              -10},{-105,-160}},                                                                                                                                                                                                  fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-147.5,
+              -10},{-107.5,-30}},                                                                                                                                                                                             textColor = {0, 0, 0}, textString = "S100")}));
 end OLA_OneGen_CaseA_III;

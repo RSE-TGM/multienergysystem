@@ -1,6 +1,15 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.OpenLoopActuators;
 model OLA_ThreeGen_GBEBCHP
   extends OLA_TwoGen_CaseA_III;
+//   Boolean booldomegaP501;
+//   Boolean booldToutCHP501;
+//   // S500
+//   DistrictHeatingNetwork.Types.AngularVelocity omega_P501SP;
+//   Real omega_P501_var(min = 0, max = 2*pi*50);
+//   DistrictHeatingNetwork.Types.Temperature Tout_CHP501SP(nominal = 100 + 273.15);
+//   Real Tout_CHP501_var(min = 0+273.15, max = 100+273.15);
+
+
   Modelica.Blocks.Sources.RealExpression domegaP501_var(y=2*pi*40)   annotation (
     Placement(transformation(extent = {{55, -95}, {65, -85}})));
   Modelica.Blocks.Sources.BooleanExpression CHP501status(y = true) annotation (

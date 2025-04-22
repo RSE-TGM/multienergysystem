@@ -61,12 +61,12 @@ partial model OpenLoopActuatorBase_III
   DistrictHeatingNetwork.Types.AngularVelocity omega_P901SP;
   Real omega_P901_var(min = 0, max = 2*pi*50);
   // S100
-  DistrictHeatingNetwork.Types.PerUnit theta_FCV101SP;
-  Real theta_FCV101_var(min = 0, max = 1);
-  DistrictHeatingNetwork.Types.AngularVelocity omega_P101SP;
-  Real omega_P101_var(min = 0, max = 2*pi*50);
-  DistrictHeatingNetwork.Types.Temperature Tout_GB101SP(nominal = 100 + 273.15);
-  Real Tout_GB101_var(min = 0+273.15, max = 100+273.15);
+//   DistrictHeatingNetwork.Types.PerUnit theta_FCV101SP;
+//   Real theta_FCV101_var(min = 0, max = 1);
+//   DistrictHeatingNetwork.Types.AngularVelocity omega_P101SP;
+//   Real omega_P101_var(min = 0, max = 2*pi*50);
+//   DistrictHeatingNetwork.Types.Temperature Tout_GB101SP(nominal = 100 + 273.15);
+//   Real Tout_GB101_var(min = 0+273.15, max = 100+273.15);
   // S400
   //   DistrictHeatingNetwork.Types.PerUnit theta_FCV401SP;
   //   Real dtheta_FCV401_var(min = -1, max = 0);
@@ -111,7 +111,6 @@ partial model OpenLoopActuatorBase_III
     Placement(transformation(extent={{-144,105},{-134,115}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (
     Placement(visible = true, transformation(origin = {160, 0}, extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin={0,-100},  extent = {{-30, -30}, {30, 30}}, rotation=180)));
-  Modelica.Blocks.Sources.TimeTable ToutGB101(table=Tout_GB101) annotation (Placement(transformation(extent={{-45,-92},{-35,-82}})));
   Modelica.Blocks.Sources.RealExpression omegaP901_var(y=omega_P901_var) annotation (Placement(transformation(extent={{-144,158},{-134,168}})));
   Modelica.Blocks.Logical.Switch switch_omegaP901 annotation (Placement(transformation(extent={{-125,148},{-115,158}})));
   Modelica.Blocks.Sources.BooleanExpression bool_omegaP901(y=booldomegaP901) annotation (Placement(transformation(extent={{-144,148},{-134,158}})));
@@ -121,17 +120,6 @@ partial model OpenLoopActuatorBase_III
     Placement(transformation(extent={{-144,124},{-134,134}})));
   Modelica.Blocks.Logical.Switch switch_dthetaFCV901 annotation (
     Placement(transformation(extent={{-126,115},{-116,125}})));
-  Modelica.Blocks.Sources.TimeTable omegaP101(table=omega_P101) annotation (Placement(transformation(extent={{-45,-26},{-35,-16}})));
-  Modelica.Blocks.Sources.TimeTable thetaFCV101(table=theta_FCV101) annotation (Placement(transformation(extent={{-45,-59},{-35,-49}})));
-  Modelica.Blocks.Sources.RealExpression omegaP101_var(y=omega_P101_var) annotation (Placement(transformation(extent={{-45,-6},{-35,4}})));
-  Modelica.Blocks.Logical.Switch switch_omegaP101 annotation (Placement(transformation(extent={{-26,-16},{-16,-6}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_omegaP101(y=booldomegaP101) annotation (Placement(transformation(extent={{-45,-16},{-35,-6}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_thetaFCV101(y=booldthetaFCV101) annotation (Placement(transformation(extent={{-45,-49},{-35,-39}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCV101_var(y=theta_FCV101_var) annotation (Placement(transformation(extent={{-45,-40},{-35,-30}})));
-  Modelica.Blocks.Logical.Switch switch_thetaFCV101 annotation (Placement(transformation(extent={{-27,-49},{-17,-39}})));
-  Modelica.Blocks.Sources.BooleanExpression bool_ToutGB101(y=booldToutGB101) annotation (Placement(transformation(extent={{-45,-82},{-35,-72}})));
-  Modelica.Blocks.Sources.RealExpression ToutGB101_var(y=Tout_GB101_var) annotation (Placement(transformation(extent={{-45,-73},{-35,-63}})));
-  Modelica.Blocks.Logical.Switch switch_ToutGB101 annotation (Placement(transformation(extent={{-27,-82},{-17,-72}})));
   Modelica.Blocks.Sources.TimeTable thetaFCV701(table=theta_FCV701) annotation (Placement(transformation(extent={{-72,140},{-62,150}})));
   Modelica.Blocks.Sources.BooleanExpression bool_thetaFCV701(y=booldthetaFCV701) annotation (Placement(transformation(extent={{-72,150},{-62,160}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV701_var(y=theta_FCV701_var) annotation (Placement(transformation(extent={{-72,159},{-62,169}})));
@@ -209,8 +197,6 @@ partial model OpenLoopActuatorBase_III
         65 + 273.15,65 + 273.15; 64800,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 68400,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 72000,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 75600,65 + 273.15,65 + 273.15,65 + 273.15,65 +
         273.15; 79200,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 82800,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15; 86400,65 + 273.15,65 + 273.15,65 + 273.15,65 + 273.15],
     extrapolation=Modelica.Blocks.Types.Extrapolation.HoldLastPoint) annotation (Placement(transformation(origin={50,140}, extent={{-10,-10},{10,10}})));
-  Modelica.Blocks.Sources.BooleanExpression GB101status(y=true)   annotation (
-    Placement(transformation(extent={{-47,-116},{-27,-96}})));
   Modelica.Blocks.Sources.BooleanExpression RR01status(y=true)   annotation (
     Placement(transformation(extent={{49,22},{69,42}})));
   Modelica.Blocks.Sources.RealExpression omegaPR01_var(y=2*3.14159*45) annotation (Placement(transformation(extent={{49,7},{70,27}})));
@@ -224,15 +210,6 @@ equation
     Line(points={{-133.5,129},{-130,129},{-130,124},{-127,124}},          color = {0, 0, 127}));
   connect(dthetaFCV901.y, switch_dthetaFCV901.u3) annotation (
     Line(points={{-133.5,110},{-130,110},{-130,116},{-127,116}},          color = {0, 0, 127}));
-  connect(omegaP101_var.y, switch_omegaP101.u1) annotation (Line(points={{-34.5,-1},{-31,-1},{-31,-7},{-27,-7}}, color={0,0,127}));
-  connect(bool_omegaP101.y, switch_omegaP101.u2) annotation (Line(points={{-34.5,-11},{-27,-11}}, color={255,0,255}));
-  connect(omegaP101.y, switch_omegaP101.u3) annotation (Line(points={{-34.5,-21},{-31,-21},{-31,-15},{-27,-15}}, color={0,0,127}));
-  connect(bool_thetaFCV101.y, switch_thetaFCV101.u2) annotation (Line(points={{-34.5,-44},{-28,-44}}, color={255,0,255}));
-  connect(thetaFCV101_var.y, switch_thetaFCV101.u1) annotation (Line(points={{-34.5,-35},{-31,-35},{-31,-40},{-28,-40}}, color={0,0,127}));
-  connect(thetaFCV101.y, switch_thetaFCV101.u3) annotation (Line(points={{-34.5,-54},{-31,-54},{-31,-48},{-28,-48}}, color={0,0,127}));
-  connect(bool_ToutGB101.y, switch_ToutGB101.u2) annotation (Line(points={{-34.5,-77},{-28,-77}}, color={255,0,255}));
-  connect(ToutGB101_var.y, switch_ToutGB101.u1) annotation (Line(points={{-34.5,-68},{-31,-68},{-31,-73},{-28,-73}}, color={0,0,127}));
-  connect(ToutGB101.y, switch_ToutGB101.u3) annotation (Line(points={{-34.5,-87},{-31,-87},{-31,-81},{-28,-81}}, color={0,0,127}));
   connect(bool_thetaFCV701.y, switch_thetaFCV701.u2) annotation (Line(points={{-61.5,155},{-55,155}}, color={255,0,255}));
   connect(thetaFCV701_var.y, switch_thetaFCV701.u1) annotation (Line(points={{-61.5,164},{-58,164},{-58,159},{-55,159}}, color={0,0,127}));
   connect(thetaFCV701.y, switch_thetaFCV701.u3) annotation (Line(points={{-61.5,145},{-58,145},{-58,151},{-55,151}}, color={0,0,127}));
@@ -349,23 +326,6 @@ equation
   connect(switch_dthetaFCV901.y, controlSignalBus.thetaFCV901) annotation (
     Line(points={{-115.5,120},{-107,120},{-107,209},{148,209},{148,0},{160,0}},                                      color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
-  connect(switch_omegaP101.y, controlSignalBus.omegaP101)
-    annotation (Line(points={{-15.5,-11},{-8,-11},{-8,0},{160,0}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(switch_thetaFCV101.y, controlSignalBus.thetaFCV101)
-    annotation (Line(points={{-16.5,-44},{-2,-44},{-2,0},{160,0}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(switch_ToutGB101.y, controlSignalBus.ToutGB101) annotation (Line(points={{-16.5,-77},{2,-77},{2,0},{160,0}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
   connect(PtEX7X1SP.y[1], controlSignalBus.PtEX701) annotation (Line(points={{61,170},{136,170},{136,0},{160,0}}, color={0,0,127}), Text(
       string="%second",
       index=1,
@@ -406,11 +366,6 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(GB101status.y, controlSignalBus.statusGB101) annotation (Line(points={{-26,-106},{6,-106},{6,0},{160,0}}, color={255,0,255}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
   connect(RR01status.y, controlSignalBus.statusRR01) annotation (Line(points={{70,32},{105,32},{105,0},{160,0}}, color={255,0,255}), Text(
       string="%second",
       index=1,
@@ -425,10 +380,9 @@ equation
     Icon(                                               graphics={  Rectangle(lineColor = {175, 175, 175}, fillColor = {215, 215, 215}, fillPattern = FillPattern.Solid, lineThickness = 1, extent = {{-100, 100}, {100, -100}}, radius = 25), Text(extent = {{-70, 100}, {70, -100}}, textColor = {0, 0, 0}, textStyle = {TextStyle.Bold}, textString = "Open
 Loop
 Act")}),
-    Diagram(coordinateSystem(extent={{-160,-220},{160,220}}, grid={1,1}),         graphics={  Rectangle(extent={{-150,190},{-100,100}},    fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-150,
-              190},{-100,170}},                                                                                                                                                                                                        textString = "S900", textColor = {0, 0, 0}), Rectangle(extent={{-49,29},
-              {-10,-120}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-49,29},
-              {-9,9}},                                                                                                                                                                                                        textColor = {0, 0, 0}, textString = "S100"), Rectangle(extent={{-80,190},
+    Diagram(coordinateSystem(extent={{-160,-220},{160,220}}, grid={0.5,0.5}),     graphics={  Rectangle(extent={{-150,190},{-100,100}},    fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-150,
+              190},{-100,170}},                                                                                                                                                                                                        textString = "S900", textColor = {0, 0, 0}),
+                                                                                                                                                                                                        Rectangle(extent={{-80,190},
               {20,36}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None),                                                                                    Rectangle(extent={{-150,96},
               {-100,6}},                                                                                                                                                                                                        fillColor = {255, 200, 160}, fillPattern = FillPattern.Solid, pattern = LinePattern.None), Text(extent={{-150,96},
               {-100,76}},                                                                                                                                                                                                        textColor = {0, 0, 0}, textString = "RACK"), Rectangle(extent={{40,127},

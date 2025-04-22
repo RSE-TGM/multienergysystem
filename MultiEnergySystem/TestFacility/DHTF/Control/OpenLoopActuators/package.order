@@ -10,4 +10,7 @@ OpenLoopActuator
 OLA_ThreeGen_GBEBCHP
 OLA_ThreeGen_GBEBCHP_II
 OLA_ThreeGen_GBEBCHPTES
-FMUActuatorBase
+BaseClass
+FMUActuator_I
+FMUActuator_II
+FMUActuator_III

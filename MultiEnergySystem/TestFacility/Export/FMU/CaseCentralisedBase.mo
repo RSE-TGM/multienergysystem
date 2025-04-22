@@ -7,13 +7,12 @@ partial model CaseCentralisedBase
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
 
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
-    Placement(transformation(extent={{-10,10},{10,-10}},      rotation=180,   origin={60,-60})));
+    Placement(transformation(extent={{-10,10},{10,-10}},      rotation=180,   origin={60,-51})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
-    Placement(transformation(extent={{-69,-69},{-49,-49}})));
+    Placement(transformation(extent={{-69,-60},{-49,-40}})));
   inner System system annotation (
     Placement(transformation(extent={{80,-100},{100,-80}})));
   replaceable DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_I facility annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
-  Interfaces.ControlSignalBus        controlSignalBus annotation (Placement(transformation(extent={{-20,26},{20,66}}),   iconTransformation(extent={{-20,80},{20,120}})));
   Modelica.Blocks.Interfaces.RealInput TT701_SP
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
@@ -82,13 +81,14 @@ partial model CaseCentralisedBase
         origin={-105,80})));
   Modelica.Blocks.Interfaces.RealInput P901omega annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
-        rotation=-90,
-        origin={44.5,100}),
+        rotation=0,
+        origin={-100,42.5}),
                           iconTransformation(extent={{-110,15.5},{-100,25.5}})));
   Modelica.Blocks.Interfaces.RealInput FCV901theta annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
-        rotation=-90,
-        origin={55,100}), iconTransformation(extent={{-110,25},{-100,35}})));
+        rotation=0,
+        origin={-100,49.5}),
+                          iconTransformation(extent={{-110,25},{-100,35}})));
   Modelica.Blocks.Interfaces.RealInput RR01Tout_SP
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
@@ -114,7 +114,6 @@ partial model CaseCentralisedBase
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,45})));
-  Modelica.Blocks.Sources.BooleanExpression RR01_status(y=true) annotation (Placement(transformation(extent={{100,10},{80,30}})));
   Modelica.Blocks.Sources.RealExpression TT701_exp(y=facility.load.S701.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-80.5},{-89,-69.5}})));
   Modelica.Blocks.Sources.RealExpression TT711_exp(y=facility.load.S711.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-87.5},{-89,-77.5}})));
   Modelica.Blocks.Sources.RealExpression TT721_exp(y=facility.load.S721.TT7X1.T_meas) annotation (Placement(transformation(extent={{-99,-95.5},{-89,-84.5}})));
@@ -147,107 +146,12 @@ partial model CaseCentralisedBase
   Modelica.Blocks.Interfaces.RealOutput TT731 annotation (Placement(transformation(extent={{-85,-102.5},{-75,-92.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-10,-105})));
+  replaceable DHTF.Control.OpenLoopActuators.BaseClass.FMUActuatorBase actuator annotation (Placement(transformation(extent={{-20,42},{20.5,82.5}})));
 equation
   connect(facility.inletGas, sourceGas.outlet) annotation (Line(
-      points={{30,0},{40,0},{40,-60},{50,-60}},
+      points={{30,0},{40,0},{40,-51},{50,-51}},
       color={182,109,49},
       thickness=0.5));
-  connect(sourceVoltage.outlet, facility.electricPortInlet) annotation (Line(
-      points={{-49,-59},{-40,-59},{-40,0},{-30,0}},
-      color={56,93,138},
-      thickness=1));
-  connect(controlSignalBus, facility.controlSignalBus)
-    annotation (Line(
-      points={{0,46},{0,30}},
-      color={255,204,51},
-      thickness=0.5), Text(
-      string="%first",
-      index=-1,
-      extent={{-3,6},{-3,6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(TT731_SP, controlSignalBus.ToutEX731) annotation (Line(points={{-5,100},{-5,86},{0,86},{0,46}},   color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(TT721_SP, controlSignalBus.ToutEX721) annotation (Line(points={{-15,100},{-15,85},{0,85},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(TT711_SP, controlSignalBus.ToutEX711) annotation (Line(points={{-25,100},{-25,84},{0,84},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(TT701_SP, controlSignalBus.ToutEX701) annotation (Line(points={{-35,100},{-35,83},{0,83},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(EX701Pt_SP, controlSignalBus.PtEX701) annotation (Line(points={{5,100},{5,86},{0,86},{0,46}},   color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(EX711Pt_SP, controlSignalBus.PtEX711) annotation (Line(points={{15,100},{15,85},{0,85},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(EX721Pt_SP, controlSignalBus.PtEX721) annotation (Line(points={{25,100},{25,84},{0,84},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(EX731Pt_SP, controlSignalBus.PtEX731) annotation (Line(points={{35,100},{35,83},{0,83},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(RR01_status.y, controlSignalBus.statusRR01) annotation (Line(points={{79,20},{70,20},{70,46},{0,46}}, color={255,0,255}), Text(
-      string="%second",
-      index=1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(FCVC02theta, controlSignalBus.thetaFCVC02) annotation (Line(points={{-45.5,100},{-45.5,82},{0,82},{0,46}},
-                                                                                                                 color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(FCVC01theta, controlSignalBus.thetaFCVC01) annotation (Line(points={{-55,100},{-55,81},{0,81},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(P901omega, controlSignalBus.omegaP901) annotation (Line(points={{44.5,100},{44.5,82},{0,82},{0,46}},
-                                                                                                           color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(FCV901theta, controlSignalBus.thetaFCV901) annotation (Line(points={{55,100},{55,81},{0,81},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-3,-6},{-3,-6}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(RR01Tout_SP, controlSignalBus.ToutRR01) annotation (Line(points={{-100,75},{0,75},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(FCVR01theta, controlSignalBus.thetaFCVR01)
-    annotation (Line(points={{-100,67.5},{0,67.5},{0,46}},               color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(PR01omega, controlSignalBus.omegaPR01) annotation (Line(points={{-100,60},{0,60},{0,46}},                   color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
   connect(EX711Pt_exp.y, EX711Pt) annotation (Line(points={{-59.5,-82.5},{-50,-82.5}}, color={0,0,127}));
   connect(EX721Pt_exp.y, EX721Pt) annotation (Line(points={{-59.5,-90},{-50,-90}}, color={0,0,127}));
   connect(EX731Pt_exp.y, EX731Pt) annotation (Line(points={{-59.5,-97.5},{-50,-97.5}}, color={0,0,127}));
@@ -256,6 +160,25 @@ equation
   connect(TT721_exp.y, TT721) annotation (Line(points={{-88.5,-90},{-80,-90}}, color={0,0,127}));
   connect(TT731_exp.y, TT731) annotation (Line(points={{-88.5,-97.5},{-80,-97.5}}, color={0,0,127}));
   connect(EX701Pt_exp.y, EX701Pt) annotation (Line(points={{-59.5,-75},{-50,-75}}, color={0,0,127}));
+  connect(facility.controlSignalBus, actuator.controlSignalBus) annotation (Line(
+      points={{0,30},{0,36.405},{0.25,36.405},{0.25,42.81}},
+      color={255,204,51},
+      thickness=0.5));
+  connect(TT701_SP, actuator.TT701_SP) annotation (Line(points={{-35,100},{-35,91},{-15.14,91},{-15.14,83.5125}}, color={0,0,127}));
+  connect(TT711_SP, actuator.TT711_SP) annotation (Line(points={{-25,100},{-25,92},{-13.115,92},{-13.115,83.5125}}, color={0,0,127}));
+  connect(TT721_SP, actuator.TT721_SP) annotation (Line(points={{-15,100},{-15,93},{-11.09,93},{-11.09,83.5125}}, color={0,0,127}));
+  connect(TT731_SP, actuator.TT731_SP) annotation (Line(points={{-5,100},{-5.5,100},{-5.5,91},{-9.065,91},{-9.065,83.5125}}, color={0,0,127}));
+  connect(EX701Pt_SP, actuator.EX701Pt_SP) annotation (Line(points={{5,100},{5,90.5},{2,90.5},{2,83.5125},{1.465,83.5125}}, color={0,0,127}));
+  connect(EX711Pt_SP, actuator.EX711Pt_SP) annotation (Line(points={{15,100},{14.5,100},{14.5,90},{3.49,90},{3.49,83.5125}}, color={0,0,127}));
+  connect(EX721Pt_SP, actuator.EX721Pt_SP) annotation (Line(points={{25,100},{25,88.5},{5.515,88.5},{5.515,83.5125}}, color={0,0,127}));
+  connect(EX731Pt_SP, actuator.EX731Pt_SP) annotation (Line(points={{35,100},{35,87},{7.54,87},{7.54,83.5125}}, color={0,0,127}));
+  connect(FCVC01theta, actuator.FCVC01theta) annotation (Line(points={{-55,100},{-55,80.475},{-21.0125,80.475}}, color={0,0,127}));
+  connect(FCVC02theta, actuator.FCVC02theta) annotation (Line(points={{-45.5,100},{-46,100},{-46,78.45},{-21.0125,78.45}}, color={0,0,127}));
+  connect(RR01Tout_SP, actuator.RR01Tout_SP) annotation (Line(points={{-100,75},{-93,75},{-93,75.5},{-86,75.5},{-86,75.4125},{-21.0125,75.4125}}, color={0,0,127}));
+  connect(FCVR01theta, actuator.FCVR01theta) annotation (Line(points={{-100,67.5},{-90,67.5},{-90,73.3875},{-21.0125,73.3875}}, color={0,0,127}));
+  connect(PR01omega, actuator.PR01omega) annotation (Line(points={{-100,60},{-88.5,60},{-88.5,71.3625},{-21.0125,71.3625}}, color={0,0,127}));
+  connect(FCV901theta, actuator.FCV901theta) annotation (Line(points={{-100,49.5},{-70,49.5},{-70,68.325},{-21.0125,68.325}}, color={0,0,127}));
+  connect(P901omega, actuator.P901omega) annotation (Line(points={{-100,42.5},{-67.5,42.5},{-67.5,66.4013},{-21.0125,66.4013}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5}, preserveAspectRatio = false), graphics={
                   Text(

@@ -10,35 +10,53 @@ model DistributionLoadBase
     pin_start_P901=200000,
     m_flow_S9=2.5)                                    annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
   Systems.Load.LoadPlantFourHXControlled load(
-    nHX=5,
+    nHX=3,
     EX701_q_m3h_hot=2,
     EX701_Tin_hot=353.15,
     EX701_Tout_hot=338.15,
     EX701_q_m3h_cold=1,
     EX701_Tin_cold=288.15,
-    EX701_Tout_cold=298.15,
+    EX701_Tout_cold=313.15,
     EX701_TN_wall_start(displayUnit="K"),
     EX711_q_m3h_hot=2,
     EX711_Tin_hot=353.15,
     EX711_Tout_hot=338.15,
     EX711_q_m3h_cold=1,
     EX711_Tin_cold(displayUnit="degC") = 288.15,
-    EX711_Tout_cold(displayUnit="degC") = 298.15,
+    EX711_Tout_cold(displayUnit="degC") = 313.15,
     EX711_TN_wall_start(displayUnit="K"),
     EX721_q_m3h_hot=2,
     EX721_Tin_hot=353.15,
     EX721_Tout_hot=338.15,
     EX721_q_m3h_cold=1,
     EX721_Tin_cold=288.15,
-    EX721_Tout_cold=298.15,
+    EX721_Tout_cold=313.15,
     EX731_q_m3h_hot=2,
     EX731_Tin_hot=353.15,
     EX731_Tout_hot=338.15,
     EX731_q_m3h_cold=1,
     EX731_Tin_cold=288.15,
-    EX731_Tout_cold=298.15,
+    EX731_Tout_cold=313.15,
     q_Cool=25,
-    q_Users_total=8)                                         annotation (Placement(transformation(extent={{40,-20},{80,20}})));
+    q_Users_total=8,
+    S701(
+      y_start_PI_TT=0.4,
+      y_start_PI_Pt=0.5,
+      PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+      PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
+    S711(
+      y_start_PI_TT=0.4,
+      y_start_PI_Pt=0.5,
+         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState), PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
+    S731(
+      y_start_PI_TT=0.4,
+      y_start_PI_Pt=0.5,
+         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState), PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
+    S721(
+      y_start_PI_TT=0.4,
+      y_start_PI_Pt=0.5,
+         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState), PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
+                                                             annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkPressure(
     p0=210000,
@@ -46,13 +64,12 @@ model DistributionLoadBase
     R=1e-3) annotation (Placement(transformation(extent={{-38,2},{-58,22}})));
   Modelica.Blocks.Sources.RealExpression omegaP901(y=2*pi*40)      annotation (Placement(transformation(extent={{-98,72},{-78,92}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-98,58},{-78,78}})));
-  Modelica.Blocks.Sources.RealExpression Pt701SP(y=if time < 1e4 then 30E3 else if time < 3e4 then 0.75*time + 22.5e3 else if time < 5e4 then -1.75*time + 97.5e3 else 10e3)
-                                                                                      annotation (Placement(transformation(extent={{100,90},{80,110}})));
+  Modelica.Blocks.Sources.RealExpression Pt701SP(y=35e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=if time < 10e3 then 1 else if time < 30e3 then -0.00004*time + 1.4 else 0.2)
-                                                                                      annotation (Placement(transformation(extent={{100,62},{80,82}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=1)                             annotation (Placement(transformation(extent={{100,62},{80,82}})));
   Modelica.Blocks.Sources.RealExpression ToutSPRR01(y=15 + 273.15) annotation (Placement(transformation(extent={{100,48},{80,68}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVC0X(y=0) annotation (Placement(transformation(extent={{100,34},{80,54}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVC0X(y=0.3)
+                                                          annotation (Placement(transformation(extent={{100,34},{80,54}})));
   Modelica.Blocks.Sources.RealExpression omegaPR01sp(y=2*pi*40)       annotation (Placement(transformation(extent={{100,20},{80,40}})));
   Modelica.Blocks.Sources.BooleanExpression booleanExpression(y=true) annotation (Placement(transformation(extent={{-68,40},{-48,60}})));
   inner System system annotation (Placement(transformation(extent={{80,-80},{100,-60}})));

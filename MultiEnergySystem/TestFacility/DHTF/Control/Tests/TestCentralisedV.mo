@@ -1,7 +1,5 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.Tests;
 model TestCentralisedV
-  //extends TestCentralisedIV(plant(heatGeneration(redeclare TestFacility.DHTF.Subsystems.HeatGeneration.GasBoilerFC S100)), openLoopActuatorBase_III(bool_omegaP101(y=false), omegaP101(table=[0,2; 1e6,2])));
-
   extends TestCentralisedIV(plant(
     heatGeneration(redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidIdeal),
     distribution(redeclare model MediumCP = DistrictHeatingNetwork.Media.WaterLiquidIdeal),

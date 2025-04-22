@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 partial model CentralizedNetworkBaseLoadSimplified
+  extends DistrictHeatingNetwork.Icons.Water.Network;
   // Fluids
   replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
@@ -23,6 +24,5 @@ equation
   connect(PL721_FT721_rackL4L5.outlet, FCVC01_rackL4L5_cold.inlet) annotation (
     Line(points = {{620, -40}, {620, 158}, {358, 158}, {358, 264}, {354, 264}, {354, 265}, {330, 265}}, color = {140, 56, 54}, thickness = 0.5));
   annotation (
-    Icon(coordinateSystem(preserveAspectRatio = false)),
-    Diagram(coordinateSystem(preserveAspectRatio = false)));
+    Icon(coordinateSystem(preserveAspectRatio = false)), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-940,-350},{820,350}})));
 end CentralizedNetworkBaseLoadSimplified;

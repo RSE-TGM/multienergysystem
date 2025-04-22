@@ -5,7 +5,7 @@ model TestCentralisedIV
   parameter Integer nX = 1 "Number of components in gas";
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
 
-//parameter String file1 = loadResource("modelica://MultiEnergySystem/TestFacility/Resources/loadprofile.csv");
+
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
     Placement(transformation(extent={{-10,-10},{10,10}},      rotation = 180, origin={60,0})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
@@ -13,7 +13,7 @@ model TestCentralisedIV
   replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHPTES actuator annotation (Placement(transformation(extent={{-18,42},{18,78}})));
   inner System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
-  Networks.Centralised.CentralizedSystem_LoadControlledII plant                                        annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
+  Networks.Centralised.CentralizedSystem_LoadControlledII plant annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation
   connect(sourceVoltage.outlet, plant.electricPortInlet) annotation (Line(
       points={{-56,0},{-24,0}},

@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 partial model CentralizedNetworkBase
+  extends DistrictHeatingNetwork.Icons.Water.Network;
   extends DHTF.Systems.Distribution.CentralPlantBase(redeclare model MediumCP = WaterHot);
   extends DHTF.Systems.Load.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
   replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
@@ -24,5 +25,5 @@ equation
     Line(points = {{598, -46}, {598, 158}, {358, 158}, {358, 264}, {354, 264}, {354, 265}, {330, 265}}, color = {140, 56, 54}, thickness = 0.5));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
-    Diagram(coordinateSystem(preserveAspectRatio = false)));
+    Diagram(coordinateSystem(extent={{-940,-460},{940,360}})));
 end CentralizedNetworkBase;

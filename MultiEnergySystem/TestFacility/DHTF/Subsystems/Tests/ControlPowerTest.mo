@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.Tests;
 model ControlPowerTest
+  extends Modelica.Icons.Example;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 

@@ -1,3 +1,4 @@
+BaseClass
 GasBoiler
 GasBoilerFC
 ElectricBoiler
@@ -5,4 +6,3 @@ TES
 CHP
 ElectricBoilerFlowControlled
 CHPFlowControlled
-BaseClass

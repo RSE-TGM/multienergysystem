@@ -164,6 +164,5 @@ equation
   connect(FV209.outlet, PL_S200_FV209_D201.inlet) annotation (
     Line(points = {{-802, -272}, {-802, -328}, {-862, -328}, {-862, -488}, {-840, -488}}, color = {140, 56, 54}, thickness = 0.5));
   annotation (
-    Icon(coordinateSystem(preserveAspectRatio = false)),
-    Diagram(coordinateSystem(preserveAspectRatio = false)));
+    Icon(coordinateSystem(preserveAspectRatio = false)));
 end CentralizedSystemIII;

@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised;
+within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised.LoadSimplified;
 partial model CentralizedSystemLoadSimplifiedI "System with only Gas Boiler as source of heat"
   extends DHTF.Networks.BaseClass.CentralizedNetworkBaseLoadSimplified;
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;

@@ -1,19 +1,21 @@
 within MultiEnergySystem.TestFacility.Export.FMU;
 model CaseCentralisedIV
-  extends CaseCentralisedIII;
+  extends CaseCentralisedIII(
+    redeclare DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_IV facility,
+    redeclare DHTF.Control.OpenLoopActuators.FMUActuator_IV actuator);
   Modelica.Blocks.Interfaces.RealInput P201omega
     annotation (
     Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
-        origin={-100,50}),
+        origin={-100.5,-16}),
     iconTransformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,-75})));
   Modelica.Blocks.Interfaces.IntegerInput S200_status annotation (
     Placement(transformation(
-        extent={{-105,29.5},{-95,39.5}},
+        extent={{-105.5,-36.5},{-95.5,-26.5}},
         rotation=0),
     iconTransformation(
         extent={{105.004,29.5001},{95.0038,39.5001}},
@@ -22,26 +24,12 @@ model CaseCentralisedIV
   Modelica.Blocks.Interfaces.RealInput FCV201theta annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
-        origin={-100,42.5}), iconTransformation(extent={{-110,-90},{-100,-80}})));
+        origin={-100.5,-23.5}),
+                             iconTransformation(extent={{-110,-90},{-100,-80}})));
 equation
-  connect(P201omega, controlSignalBus.omegaP201)
-    annotation (Line(points={{-100,50},{-89.5,50},{-89.5,58.5},{0,58.5},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(FCV201theta, controlSignalBus.thetaFCV201)
-    annotation (Line(points={{-100,42.5},{-88.5,42.5},{-88.5,46},{0,46}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(S200_status, controlSignalBus.statusS200) annotation (Line(points={{-100,34.5},{-23,34.5},{-23,46},{0,46}},
-                                                                                                                  color={255,127,0}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
+  connect(P201omega, actuator.P201omega) annotation (Line(points={{-100.5,-16},{-50,-16},{-50,47.0625},{-21.0125,47.0625}}, color={0,0,127}));
+  connect(FCV201theta, actuator.FCV201theta) annotation (Line(points={{-100.5,-23.5},{-48.5,-23.5},{-48.5,45.0375},{-21.0125,45.0375}}, color={0,0,127}));
+  connect(S200_status, actuator.S200_status) annotation (Line(points={{-100.5,-31.5},{-47,-31.5},{-47,43.0125},{-21.0125,43.0125}}, color={255,127,0}));
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5})),
     Diagram(coordinateSystem(grid={0.5,0.5})));

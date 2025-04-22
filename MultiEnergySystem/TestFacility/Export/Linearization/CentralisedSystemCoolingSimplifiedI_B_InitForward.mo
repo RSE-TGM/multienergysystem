@@ -2,7 +2,7 @@ within MultiEnergySystem.TestFacility.Export.Linearization;
 model CentralisedSystemCoolingSimplifiedI_B_InitForward
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
-  extends DHTF.Networks.Centralised.CentralizedSystemLoadSimplifiedI_B(
+  extends DHTF.Networks.Centralised.LoadSimplified.CentralizedSystemLoadSimplifiedI_B(
     T_start_hot = 80 +273.15,
     T_start_cold = 70 + 273.15,
     GB101(Pmaxnom = 147.6e3*0.8),
@@ -1133,12 +1133,6 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(thetaFCV401Offset.u, FCV401.opening) annotation (Line(points={{-271.4,-140},{-300,-140},{-300,-110},{-310,-110}}, color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-70,100},{70,-100}},
-          textColor={140,56,54},
-          textStyle={TextStyle.Bold},
-          textString="Thermal
-Facility")}),                                                    Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end CentralisedSystemCoolingSimplifiedI_B_InitForward;

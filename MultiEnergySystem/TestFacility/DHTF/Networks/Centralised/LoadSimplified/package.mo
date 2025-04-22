@@ -1,4 +1,4 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised;
-package LoadControl
+package LoadSimplified
   extends Modelica.Icons.Package;
-end LoadControl;
+end LoadSimplified;

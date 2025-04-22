@@ -1213,13 +1213,7 @@ equation
   connect(diffPTRR01.u2, FTR01Offset.y) annotation (Line(points={{908.8,-338.4},{840,-338.4},{840,-236},{838,-222},{838,-221},{845.4,-221}}, color={0,0,127}));
   connect(thetaTCV701Offset.u, TCV701.opening) annotation (Line(points={{69.4,-320},{80,-320},{80,-296},{90,-296}},
                                                                                                 color={0,0,127}));
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-        Text(
-          extent={{-70,100},{70,-100}},
-          textColor={140,56,54},
-          textStyle={TextStyle.Bold},
-          textString="Thermal
-Facility")}),                                                    Diagram(
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     experiment(
       StopTime=2000,

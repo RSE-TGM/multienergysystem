@@ -1,6 +1,6 @@
-within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised;
+within MultiEnergySystem.TestFacility.DHTF.Networks.Centralised.LoadSimplified;
 partial model CentralizedSystemLoadSimplifiedI_B
-  extends CentralizedSystemLoadSimplifiedI;
+  extends LoadSimplified.CentralizedSystemLoadSimplifiedI;
   // System 400
   parameter DistrictHeatingNetwork.Types.Pressure pin_start_S4 = 1.695e5;
   parameter DistrictHeatingNetwork.Types.Pressure pout_start_S4 = 1.6e5;

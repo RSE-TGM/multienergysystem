@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model ElectricBoilerFC "System 400 with ideal flow control"
-  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIV(MultiPort(n=n));
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends BaseClass.ElectricBoilerBase;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB(
@@ -214,7 +214,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(MultiPort,PL_S400_EB401_P401. wall) annotation (Line(
-      points={{-110,-70},{4,-70},{4,-48.5},{19.9,-48.5}},
+      points={{-110,-80},{4,-80},{4,-48.5},{19.9,-48.5}},
       color={255,101,98},
       thickness=0.5));
   connect(EB.inletPower, inletPower) annotation (Line(
@@ -225,7 +225,7 @@ equation
       points={{23.6,63.5},{23.5,63.5},{23.5,57},{23,57},{23,24.5},{24,24.5},{24,21.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(m_flow_set, P401.in_m_flow) annotation (Line(points={{-110,50},{-99,50},{-99,49.5},{-94.5,49.5},{-94.5,138.5},{7.5,138.5},{7.5,-22.3},{18.48,-22.3}}, color={0,0,127}));
+  connect(omega, P401.in_m_flow) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-22.3},{18.48,-22.3}}, color={0,0,127}));
   annotation (                                                   Diagram(coordinateSystem(
                                      extent={{-100,-140},{100,140}}, grid={0.5,0.5})),
                                                                        Icon(coordinateSystem(grid={

@@ -1,8 +1,7 @@
 within MultiEnergySystem.TestFacility.DHTF.Interfaces;
 partial model SystemInterfaceBaseI
   Modelica.Blocks.Interfaces.RealInput theta "Valve opening" annotation (Placement(transformation(extent={{-120,40},{-100,60}}), iconTransformation(extent={{-120,40},{-100,60}})));
-  Modelica.Blocks.Interfaces.RealInput omega "Input for pump frequency"
-    annotation (Placement(transformation(extent={{-120,60},{-100,80}}), iconTransformation(extent={{-120,60},{-100,80}})));
+  Modelica.Blocks.Interfaces.RealInput pumpset "Input for pump - it could be for frequency, mass flow or pressure difference" annotation (Placement(transformation(extent={{-120,60},{-100,80}}), iconTransformation(extent={{-120,60},{-100,80}})));
   Modelica.Blocks.Interfaces.RealInput Toutset "Outlet temperature set-point of thermal machine"
     annotation (Placement(transformation(extent={{-120,20},{-100,40}}), iconTransformation(extent={{-120,20},{-100,40}})));
   Modelica.Blocks.Interfaces.RealOutput TTin "Inlet temperature" annotation (Placement(transformation(extent={{100,40},{120,60}}), iconTransformation(extent={{100,40},{120,60}})));

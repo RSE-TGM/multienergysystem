@@ -225,7 +225,7 @@ equation
       points={{23.6,63.5},{23.5,63.5},{23.5,57},{23,57},{23,24.5},{24,24.5},{24,21.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(omega, P401.in_m_flow) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-22.3},{18.48,-22.3}}, color={0,0,127}));
+  connect(pumpset, P401.in_m_flow) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-22.3},{18.48,-22.3}}, color={0,0,127}));
   annotation (                                                   Diagram(coordinateSystem(
                                      extent={{-100,-140},{100,140}}, grid={0.5,0.5})),
                                                                        Icon(coordinateSystem(grid={

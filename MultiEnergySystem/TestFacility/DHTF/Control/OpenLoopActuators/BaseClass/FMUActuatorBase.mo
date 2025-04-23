@@ -72,7 +72,7 @@ model FMUActuatorBase
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,80})));
-  Modelica.Blocks.Interfaces.RealInput P901omega annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput P901input annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={44.5,100}),
@@ -115,7 +115,7 @@ equation
       index=1,
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
-  connect(P901omega, controlSignalBus.omegaP901) annotation (Line(points={{44.5,100},{44.5,84},{160,84},{160,0}}, color={0,0,127}), Text(
+  connect(P901input, controlSignalBus.omegaP901) annotation (Line(points={{44.5,100},{44.5,84},{160,84},{160,0}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-3,-6},{-3,-6}},
@@ -173,7 +173,7 @@ equation
       index=1,
       extent={{-3,-6},{-3,-6}},
       horizontalAlignment=TextAlignment.Right));
-  connect(PR01omega, controlSignalBus.omegaPR01) annotation (Line(points={{-100,60},{-93,60},{-93,0},{160,0}}, color={0,0,127}), Text(
+  connect(PR01omega, controlSignalBus.omegaPR01) annotation (Line(points={{-100,60},{-90,60},{-90,0},{160,0}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

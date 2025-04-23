@@ -164,7 +164,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(CHP501Status.y, S500.status) annotation (Line(points={{-661,-278},{-620,-278},{-620,-276.7},{-618.3,-276.7}}, color={255,0,255}));
-  connect(P501Dynamics.y, S500.omega) annotation (Line(points={{-659,-210},{-640,-210},{-640,-250.9},{-618.3,-250.9}}, color={0,0,127}));
+  connect(P501Dynamics.y, S500.pumpset) annotation (Line(points={{-659,-210},{-640,-210},{-640,-250.9},{-618.3,-250.9}}, color={0,0,127}));
   connect(P501Dynamics.u, omegaP501Offset.u) annotation (Line(points={{-682,-210},{-697,-210}}, color={0,0,127}));
   connect(m_flow_ref_CHP.y, S500.m_flow_CHP) annotation (Line(points={{-659,-340},{-638,-340},{-638,-293.9},{-618.3,-293.9}}, color={0,0,127}));
   connect(PelSP.y, S500.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));

@@ -136,7 +136,7 @@ equation
       points={{-290,-2},{-286,-2},{-286,-76},{-104,-76},{-104,17.5},{-86.5,17.5}},
       color={255,204,51},
       thickness=0.5));
-  connect(controlSignalBus.omegaP401, S400.omega) annotation (Line(
+  connect(controlSignalBus.omegaP401, S400.pumpset) annotation (Line(
       points={{-290,-2},{-290,-74},{-106,-74},{-106,26.5},{-86.5,26.5}},
       color={255,204,51},
       thickness=0.5));

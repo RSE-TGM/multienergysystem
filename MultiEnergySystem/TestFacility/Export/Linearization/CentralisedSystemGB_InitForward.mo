@@ -1211,11 +1211,10 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(P101Dynamics.y, S100.omega) annotation (Line(points={{-339,-240},{-320,-240},{-320,-253.2},{-298.4,-253.2}}, color={0,0,127}));
+  connect(P101Dynamics.y, S100.pumpset) annotation (Line(points={{-339,-240},{-320,-240},{-320,-253.2},{-298.4,-253.2}}, color={0,0,127}));
   connect(omegaP101Offset.u, P101Dynamics.u) annotation (Line(points={{-381,-240},{-362,-240}}, color={0,0,127}));
   connect(omegaP901Offset.u, P901Dynamics.u) annotation (Line(points={{-901,170},{-892,170}}, color={0,0,127}));
-  connect(P901Dynamics.y, S900.omega) annotation (Line(points={{-869,170},{-860,170},{-860,
-          158.7},{-845.1,158.7}}, color={0,0,127}));
+  connect(P901Dynamics.y, S900.pumpset) annotation (Line(points={{-869,170},{-860,170},{-860,158.7},{-845.1,158.7}}, color={0,0,127}));
   connect(FCV701Dynamics.u, thetaFCV701Offset.u)
     annotation (Line(points={{112,-140},{124.6,-140}}, color={0,0,127}));
   connect(thetaFCV711Offset.u, FCV711Dynamics.u) annotation (Line(points={{454.6,-140},{432,-140}}, color={0,0,127}));

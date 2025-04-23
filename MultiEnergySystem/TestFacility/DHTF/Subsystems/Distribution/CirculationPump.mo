@@ -310,7 +310,7 @@ equation
   connect(TTout, TT902.T) annotation (Line(points={{110,30},{95,30},{95,134},{33.5,134},{33.5,88},{30.5,88},{30.5,87.75},{27.125,87.75}}, color={0,0,127}));
   connect(PT901.p, PTin) annotation (Line(points={{-28.5,75},{-33,75},{-33,132.5},{93.5,132.5},{93.5,10},{110,10}}, color={0,0,127}));
   connect(PTout, PT902.p) annotation (Line(points={{110,-10},{101.5,-10},{101.5,-10.5},{92,-10.5},{92,131},{35,131},{35,76.25},{27.2,76.25}}, color={0,0,127}));
-  connect(omega, P901.in_omega) annotation (Line(points={{-110,70},{-97,70},{-97,138.5},{7.5,138.5},{7.5,-40},{15,-40}}, color={0,0,127}));
+  connect(pumpset, P901.in_omega) annotation (Line(points={{-110,70},{-97,70},{-97,138.5},{7.5,138.5},{7.5,-40},{15,-40}}, color={0,0,127}));
   connect(theta, FCV901.opening) annotation (Line(points={{-110,50},{-95.5,50},{-95.5,137},{9,137},{9,14},{15.2,14}}, color={0,0,127}));
   connect(PL2_S901.wall, PL_S900_rCD_P901.wall) annotation (Line(
       points={{-15.9,-25},{0.5,-25},{0.5,-59.5},{15.9,-59.5},{15.9,-60}},

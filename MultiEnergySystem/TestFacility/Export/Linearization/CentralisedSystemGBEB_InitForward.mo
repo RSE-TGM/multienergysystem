@@ -1390,7 +1390,7 @@ equation
   connect(S701.TT7X2_TT, TT702Offset.y) annotation (Line(points={{144,-186},{151,-186},{151,-180},{156,-180}}, color={0,0,127}));
   connect(S701.TT7X1_TT, TT701Offset.y) annotation (Line(points={{144,-178},{150,-178},{150,-165},{156,-165}}, color={0,0,127}));
   connect(thetaFCV731Offset.u, FCV731Dynamics.u) annotation (Line(points={{195.5,-166},{199,-166}}, color={0,0,127}));
-  connect(P401Dynamics.y, S400.omega) annotation (Line(points={{-404.5,-90},{-400,-90},{-400,-95},{-392,-95},{-392,-95.2},{-384.4,-95.2}}, color={0,0,127}));
+  connect(P401Dynamics.y, S400.pumpset) annotation (Line(points={{-404.5,-90},{-400,-90},{-400,-95},{-392,-95},{-392,-95.2},{-384.4,-95.2}}, color={0,0,127}));
   connect(thetaFCV721Offset.u, FCV721Dynamics.u) annotation (Line(points={{516.5,-170},{519,-170}}, color={0,0,127}));
   connect(S400.PTout, PT402Offset.y) annotation (Line(points={{-287.6,-130.4},{-283.3,-130.4},{-283.3,-130},{-279,-130}}, color={0,0,127}));
   connect(S400.m_flow_, FT401Offset.y) annotation (Line(points={{-287.6,-95.2},{-282,-95.2},{-282,-85},{-279,-85}}, color={0,0,127}));
@@ -1406,14 +1406,14 @@ equation
   connect(S900.PTin, PT901Offset.y) annotation (Line(points={{-732.9,128.1},{-721,128.1},{-721,130},{-714,130}}, color={0,0,127}));
   connect(S900.PTout, PT902Offset.y) annotation (Line(points={{-732.9,117.9},{-722,117.9},{-722,115},{-714,115}}, color={0,0,127}));
   connect(omegaP901Offset.u, P901Dynamics.u) annotation (Line(points={{-875.5,160},{-871,160}}, color={0,0,127}));
-  connect(P901Dynamics.y, S900.omega) annotation (Line(points={{-859.5,160},{-857,160},{-857,158.7},{-845.1,158.7}}, color={0,0,127}));
+  connect(P901Dynamics.y, S900.pumpset) annotation (Line(points={{-859.5,160},{-857,160},{-857,158.7},{-845.1,158.7}}, color={0,0,127}));
   connect(FCV901Dynamics.y, S900.theta) annotation (Line(points={{-859.5,145},{-856,145},{-856,148.5},{-845.1,148.5}}, color={0,0,127}));
   connect(EB401Status.y, S400.status) annotation (Line(points={{-398.5,-135},{-396,-135},{-396,-136},{-394,-136},{-394,-121.6},{-384.4,-121.6}}, color={255,0,255}));
   connect(ToutEB401Offset.u, S400.Toutset) annotation (Line(points={{-420.5,-120},{-400,-120},{-400,-113},{-392,-113},{-392,-112.8},{-384.4,-112.8}}, color={0,0,127}));
   connect(S100.PTout, PT102Offset.y) annotation (Line(points={{-201.6,-288.4},{-195.3,-288.4},{-195.3,-290},{-189,-290}}, color={0,0,127}));
   connect(S100.m_flow_, FT101Offset.y) annotation (Line(points={{-201.6,-253.2},{-194,-253.2},{-194,-245},{-189,-245}}, color={0,0,127}));
   connect(ToutGB101Offset.u, S100.Toutset) annotation (Line(points={{-330.5,-280},{-310,-280},{-310,-270.8},{-298.4,-270.8}}, color={0,0,127}));
-  connect(P101Dynamics.y, S100.omega) annotation (Line(points={{-314.5,-250},{-308,-250},{-308,-253.2},{-298.4,-253.2}}, color={0,0,127}));
+  connect(P101Dynamics.y, S100.pumpset) annotation (Line(points={{-314.5,-250},{-308,-250},{-308,-253.2},{-298.4,-253.2}}, color={0,0,127}));
   connect(thetaFCV711Offset.u, FCV711Dynamics.u) annotation (Line(points={{355.5,-167},{356,-167},{356,-166},{357,-166},{357,-167},{359,-167}},
                                                                                                     color={0,0,127}));
   connect(thetaFCVR01Offset.u, FCVR01.opening) annotation (Line(points={{755.5,-335},{766,-335},{766,-352}}, color={0,0,127}));

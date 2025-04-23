@@ -605,7 +605,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(m_flow_CHP, CHPCWP_.m_flow) annotation (Line(points={{-110,-30},{-99.75,-30},{-99.75,-30.25},{-90.25,-30.25},{-90.25,-92.75},{-49.75,-92.75},{-49.75,-61.935},{-45.05,-61.935}}, color={0,0,127}));
-  connect(omega, P501.in_omega) annotation (Line(points={{-110,70},{-97.5,70},{-97.5,98.75},{-22.75,98.75},{-22.75,53.45},{-20.375,53.45}}, color={0,0,127}));
+  connect(pumpset, P501.in_omega) annotation (Line(points={{-110,70},{-97.5,70},{-97.5,98.75},{-22.75,98.75},{-22.75,53.45},{-20.375,53.45}}, color={0,0,127}));
   connect(outletPower, CHP.outletPower) annotation (Line(
       points={{-110,-58},{-97.5,-58},{-97.5,-98.5},{86.75,-98.5},{86.75,-45},{65.525,-45},{65.525,-50.525}},
       color={56,93,138},

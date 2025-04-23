@@ -82,7 +82,7 @@ model S100 "Example of system S100 fmu test model"
     computeEnergyVariables=true) annotation (Placement(transformation(extent={{-30,-90},{-10,-70}})));
 equation
   connect(f, gain.u) annotation (Line(points={{-120,60},{-75.2,60}}, color={0,0,127}));
-  connect(gain.y, gasBoiler.omega) annotation (Line(points={{-61.4,60},{-56,60},{-56,27.4},{-46.2,27.4}}, color={0,0,127}));
+  connect(gain.y, gasBoiler.pumpset) annotation (Line(points={{-61.4,60},{-56,60},{-56,27.4},{-46.2,27.4}}, color={0,0,127}));
   connect(status, gasBoiler.status) annotation (Line(points={{-120,-60},{-68,-60},{-68,2.2},{-46.2,2.2}}, color={255,0,255}));
   connect(theta, gasBoiler.theta) annotation (Line(points={{-120,20},{-68,20},{-68,19},{-46.2,19}}, color={0,0,127}));
   connect(ToutSP, gasBoiler.Toutset) annotation (Line(points={{-120,-20},{-76,-20},{-76,10.6},{-46.2,10.6}},

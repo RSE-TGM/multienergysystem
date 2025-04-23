@@ -79,7 +79,7 @@ partial model CaseCentralisedBase
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,80})));
-  Modelica.Blocks.Interfaces.RealInput P901omega annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput P901input annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,42.5}),
@@ -178,7 +178,7 @@ equation
   connect(FCVR01theta, actuator.FCVR01theta) annotation (Line(points={{-100,67.5},{-90,67.5},{-90,73.3875},{-21.0125,73.3875}}, color={0,0,127}));
   connect(PR01omega, actuator.PR01omega) annotation (Line(points={{-100,60},{-88.5,60},{-88.5,71.3625},{-21.0125,71.3625}}, color={0,0,127}));
   connect(FCV901theta, actuator.FCV901theta) annotation (Line(points={{-100,49.5},{-70,49.5},{-70,68.325},{-21.0125,68.325}}, color={0,0,127}));
-  connect(P901omega, actuator.P901omega) annotation (Line(points={{-100,42.5},{-67.5,42.5},{-67.5,66.4013},{-21.0125,66.4013}}, color={0,0,127}));
+  connect(P901input,actuator.P901input)  annotation (Line(points={{-100,42.5},{-67.5,42.5},{-67.5,66.4013},{-21.0125,66.4013}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5}, preserveAspectRatio = false), graphics={
                   Text(

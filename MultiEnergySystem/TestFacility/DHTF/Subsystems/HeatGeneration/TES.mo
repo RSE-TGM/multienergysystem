@@ -6,6 +6,7 @@ model TES "S200 - Thermal Energy Storage"
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   constant Real pi = Modelica.Constants.pi;
+  constant Real g_n = Modelica.Constants.g_n;
 
   // System S200
   parameter Integer nTank = 9 "Number of volumes in stratified tank" annotation (
@@ -29,7 +30,7 @@ model TES "S200 - Thermal Energy Storage"
     Dialog(group = "Initialization"));
   final parameter DistrictHeatingNetwork.Types.Pressure pin_start_tank = pout_start_pump annotation (
     Dialog(group = "Initialization"));
-  final parameter DistrictHeatingNetwork.Types.Pressure pout_start_tank = pin_start_tank - 9.81*4*990 annotation (
+  final parameter DistrictHeatingNetwork.Types.Pressure pout_start_tank = pin_start_tank - g_n*H*990 annotation (
     Dialog(group = "Initialization"));
   parameter DistrictHeatingNetwork.Types.Temperature Tin_start = 75 + 273.15 annotation (
     Dialog(group = "Initialization"));
@@ -177,7 +178,8 @@ model TES "S200 - Thermal Energy Storage"
     Kv=TestFacility.Data.ValveData.FCV201.Kv,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start,
-    pin_start=pout_start)                                                                                                                                                                                                         annotation (
+    pin_start=pout_start,
+    q_m3h_start=q_m3h_S2/2)                                                                                                                                                                                                       annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-60})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(
     h=h_FCV201_FV202,
@@ -346,7 +348,8 @@ model TES "S200 - Thermal Energy Storage"
     Kv=TestFacility.Data.ValveData.FCV101.Kv,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
     Tin_start(displayUnit="K") = Tout_start,
-    pin_start=pout_start)                                                                                                                                                                                                         annotation (
+    pin_start=pout_start,
+    q_m3h_start=q_m3h_S2/2)                                                                                                                                                                                                       annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = 0, origin={-48,10})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV203(
     redeclare model Medium = Medium,
@@ -508,7 +511,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT201.m_flow, m_flow_) annotation (Line(points={{29.2,-145.9},{29.2,-150},{90,-150},{90,70},{110,70}}, color={0,0,127}));
-  connect(omega, P201.in_omega) annotation (Line(points={{-110,70},{-62,70},{-62,-64},{-24,-64},{-24,-65.2}}, color={0,0,127}));
+  connect(pumpset, P201.in_omega) annotation (Line(points={{-110,70},{-62,70},{-62,-64},{-24,-64},{-24,-65.2}}, color={0,0,127}));
   connect(theta, FCV201.opening) annotation (Line(points={{-110,50},{-90,50},{-90,-60},{-82,-60}}, color={0,0,127}));
   connect(TT202.T, TTout) annotation (Line(points={{31.8,70},{38,70},{38,148},{94,148},{94,30},{110,30}},
                                                                                         color={0,0,127}));

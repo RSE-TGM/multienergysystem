@@ -145,8 +145,7 @@ equation
     Line(points = {{28.8, 8.4}, {52, 8.4}, {52, 9}, {64.8, 9}}, color = {0, 0, 127}));
   connect(P101_omega.y, lowPassomega.u) annotation (
     Line(points = {{-75.4, 32}, {-69.2, 32}}, color = {0, 0, 127}));
-  connect(lowPassomega.y, gasBoiler.omega) annotation (
-    Line(points = {{-55.4, 32}, {-48, 32}, {-48, 19.6}, {-32.8, 19.6}}, color = {0, 0, 127}));
+  connect(lowPassomega.y, gasBoiler.pumpset) annotation (Line(points={{-55.4,32},{-48,32},{-48,19.6},{-32.8,19.6}}, color={0,0,127}));
   connect(FCV101_theta.y, lowPasstheta.u) annotation (
     Line(points = {{-75.4, 14}, {-69.2, 14}}, color = {0, 0, 127}));
   connect(lowPasstheta.y, gasBoiler.theta) annotation (

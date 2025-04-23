@@ -4,7 +4,10 @@ model CirculationPumpPC "S900 - Main pump, pressure control"
   extends BaseClass.CirculationPumpBase;
 
 
-  DistrictHeatingNetwork.Sources.SourcePressure VE901(redeclare model Medium = Medium, p0=p_VE901, T0(displayUnit="K") = T_VE901)   annotation (Placement(transformation(
+  DistrictHeatingNetwork.Sources.SourcePressure VE901(
+    redeclare model Medium = Medium,
+    p0=p_VE901,
+    T0(displayUnit="K") = T_VE901)   annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={-61,-1})));
@@ -158,6 +161,20 @@ model CirculationPumpPC "S900 - Main pump, pressure control"
         rotation=90,
         origin={20,-80})));
   Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{100,-40},{120,-20}})));
+  DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
+    FCV901(
+    redeclare model Medium = Medium,
+    Kv=Kv,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV901.dp_nom,
+    openingChar=openingChar,
+    rho_nom=TestFacility.Data.ValveData.FCV901.rho_nom,
+    q_m3h_nom=TestFacility.Data.ValveData.FCV901.q_nom_m3h,
+    Tin_start(displayUnit="K") = T_hot_start,
+    pin_start=pout_start_S9,
+    q_m3h_start=q_m3h_S9)  annotation (Placement(transformation(
+        extent={{-6,-6},{6,6}},
+        rotation=90,
+        origin={20,15})));
 equation
   Pe = P901.W;
   connect(PT902.inlet,TT902. inlet) annotation (Line(
@@ -229,11 +246,16 @@ equation
       points={{-110,-70},{1,-70},{1,-59},{0.5,-59},{0.5,-59.5},{15.9,-59.5},{15.9,-60}},
       color={255,101,98},
       thickness=0.5));
-  connect(FT.inlet, PL_S900_P901_FCV901.outlet) annotation (Line(
-      points={{20.4,35.6},{20.4,17.8},{20,17.8},{20,0}},
+  connect(pumpset, P901.in_pout) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-32},{15.4,-32}}, color={0,0,127}));
+  connect(FCV901.inlet, PL_S900_P901_FCV901.outlet) annotation (Line(
+      points={{20,9},{20,0}},
       color={140,56,54},
       thickness=0.5));
-  connect(omega, P901.in_pout) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-32},{15.4,-32}}, color={0,0,127}));
+  connect(FT.inlet, FCV901.outlet) annotation (Line(
+      points={{20.4,35.6},{20.4,28.05},{20,28.05},{20,21}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(theta, FCV901.opening) annotation (Line(points={{-110,50},{-95,50},{-95,137},{6,137},{6,15},{15.2,15}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(grid={1,1}), graphics={
         Bitmap(
           extent={{-49.5,-61},{49.5,61}},

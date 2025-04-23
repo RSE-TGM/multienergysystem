@@ -110,8 +110,7 @@ equation
     Line(points = {{-77.4, 28}, {-69.2, 28}}, color = {0, 0, 127}));
   connect(FCV401_theta.y, lowPasstheta.u) annotation (
     Line(points = {{-77.4, 10}, {-69.2, 10}}, color = {0, 0, 127}));
-  connect(lowPassomega.y, electricBoiler.omega) annotation (
-    Line(points = {{-55.4, 28}, {-44, 28}, {-44, 18}, {-30.9, 18}, {-30.9, 17.3}}, color = {0, 0, 127}));
+  connect(lowPassomega.y, electricBoiler.pumpset) annotation (Line(points={{-55.4,28},{-44,28},{-44,18},{-30.9,18},{-30.9,17.3}}, color={0,0,127}));
   connect(lowPasstheta.y, electricBoiler.theta) annotation (
     Line(points = {{-55.4, 10}, {-44, 10}, {-44, 11.5}, {-30.9, 11.5}}, color = {0, 0, 127}));
   connect(electricBoiler.m_flow_, val_mflow.u_sim) annotation (

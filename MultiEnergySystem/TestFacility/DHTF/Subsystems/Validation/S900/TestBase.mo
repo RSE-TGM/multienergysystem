@@ -106,8 +106,7 @@ equation
     Line(points = {{35, 29}, {66, 29}, {66, 87}, {72.8, 87}}, color = {0, 0, 127}));
   connect(P901_omega.y, lowPassomega.u) annotation (
     Line(points = {{-59.4, 38}, {-55.2, 38}}, color = {0, 0, 127}));
-  connect(lowPassomega.y, circulationPump.omega) annotation (
-    Line(points = {{-41.4, 38}, {-38, 38}, {-38, 29}, {-31, 29}}, color = {0, 0, 127}));
+  connect(lowPassomega.y, circulationPump.pumpset) annotation (Line(points={{-41.4,38},{-38,38},{-38,29},{-31,29}}, color={0,0,127}));
   connect(FCV901_theta.y, lowPasstheta.u) annotation (
     Line(points = {{-59.4, 18}, {-55.2, 18}}, color = {0, 0, 127}));
   connect(lowPasstheta.y, circulationPump.theta) annotation (

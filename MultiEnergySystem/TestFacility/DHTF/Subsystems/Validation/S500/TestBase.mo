@@ -152,8 +152,7 @@ equation
     Line(points = {{-14, 50}, {-14, 38}, {-10.14, 38}, {-10.14, 29.9}}, color = {140, 56, 54}, thickness = 0.5));
   connect(sinkMassFlow.inlet, S500.outlet) annotation (
     Line(points = {{14, 50}, {14, 38}, {10.66, 38}, {10.66, 29.9}}, color = {140, 56, 54}, thickness = 0.5));
-  connect(lowPassomega.y, S500.omega) annotation (
-    Line(points = {{-55.4, 32}, {-44, 32}, {-44, 18.2}, {-28.6, 18.2}}, color = {0, 0, 127}));
+  connect(lowPassomega.y, S500.pumpset) annotation (Line(points={{-55.4,32},{-44,32},{-44,18.2},{-28.6,18.2}}, color={0,0,127}));
   connect(lowPasstheta.y, S500.theta) annotation (
     Line(points = {{-55.4, 14}, {-54, 13}, {-28.6, 13}}, color = {0, 0, 127}));
   connect(GB501_Status.y, S500.status) annotation (

@@ -61,7 +61,7 @@ equation
       index=-1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(controlSignalBus.omegaP201, S200.omega) annotation (Line(
+  connect(controlSignalBus.omegaP201, S200.pumpset) annotation (Line(
       points={{-290,-2},{-290,-116},{174,-116},{174,26.5},{187.5,26.5}},
       color={255,204,51},
       thickness=0.5), Text(

@@ -85,7 +85,7 @@ equation
       points={{-250,-366},{-250,-335.04}},
       color={182,109,49},
       thickness=0.5));
-  connect(controlSignalBus.omegaP901, S900.omega) annotation (Line(
+  connect(controlSignalBus.omegaP901, S900.pumpset) annotation (Line(
       points={{-339,399},{-339,362},{-876,362},{-876,158.7},{-845.1,158.7}},
       color={255,204,51},
       thickness=0.5), Text(
@@ -117,7 +117,7 @@ equation
       index=-1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
-  connect(controlSignalBus.omegaP101, S100.omega) annotation (Line(
+  connect(controlSignalBus.omegaP101, S100.pumpset) annotation (Line(
       points={{-339,399},{-339,340},{-308,340},{-308,-253.2},{-298.4,-253.2}},
       color={255,204,51},
       thickness=0.5), Text(

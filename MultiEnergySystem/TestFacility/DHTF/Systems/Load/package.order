@@ -3,5 +3,8 @@ LoadPlantBaseII
 LoadPlantBaseIII
 LoadPlantBaseSimplified
 LoadPlantFourHXBase
+LoadPlantFourHXBaseWithChiller
+LoadPlantFourHXBaseWithoutChiller
 LoadPlantFourHX
 LoadPlantFourHXControlled
+LoadPlantFourHXControlledWithoutChiller

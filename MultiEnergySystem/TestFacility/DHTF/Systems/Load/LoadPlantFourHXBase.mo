@@ -605,247 +605,6 @@ partial model LoadPlantFourHXBase
         extent={{-10,10},{10,-10}},
         rotation=0,
         origin={175,-192})));
-  DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCVR01(
-    redeclare model Medium = MediumCold,
-    Kv=Kvalve,
-    openingChar=TestFacility.Data.ValveData.FCVR01.openingChar,
-    dp_nom(displayUnit="Pa") = 1.09928e5,
-    rho_nom(displayUnit="kg/m3") = 1000,
-    Tin_start(displayUnit="K") = Tout_start_Cool,
-    pin_start(displayUnit="Pa") = TestFacility.Data.ValveData.FCVR01.pin_start,
-    N=10)                                    annotation (Placement(
-        transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={344,-152})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_VER901_FCVR01(
-    redeclare model Medium = MediumCold,
-    L=L_VER901_FCVR01,
-    h=h_VER901_FCVR01,
-    t=t_RR,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool - q_Users_total,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=0,
-        origin={314,-152})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FCVR01_FTR03(
-    redeclare model Medium = MediumCold,
-    L=L_FCVR01_FTR03,
-    h=h_FCVR01_FTR03,
-    t=t_RR,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool - q_Users_total,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=0,
-        origin={374,-152})));
-  DistrictHeatingNetwork.Sources.SinkPressure VER901(
-    p0=210000,
-    T0(displayUnit="K") = 15 + 273.15,
-    R=1e-3)
-         annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={265,-123})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR03(T_start=
-        Tout_start_Cool, p_start=pin_start_Cool)
-    "Flow Sensor at the outlet of valve FCVR01" annotation (Placement(
-        transformation(
-        extent={{-5,-5},{5,5}},
-        rotation=0,
-        origin={390,-150})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PTR01_FTR01(
-    redeclare model Medium = MediumCold,
-    L=L_PTR01_FTR01,
-    h=h_PTR01_FTR01,
-    t=t_RR,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_Cool_total,
-    pin_start=pin_start_Users,
-    Tin_start=Tin_start_Cool,
-    Tout_start=Tin_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=-90,
-        origin={404,-46})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TTR01(
-    redeclare model Medium = MediumCold,
-    T_start=Tin_start_Cool,
-    p_start=pin_start_Cool)
-    "Temperature sensor at the inlet of chiller RR01" annotation (Placement(
-        transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=-90,
-        origin={406,-91})));
-  DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTR01
-    "Pressure sensor at the inlet of chiller RR01" annotation (Placement(
-        transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=-90,
-        origin={406,-81})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTR01(
-    redeclare model Medium = MediumCold,
-    T_start=Tin_start_Cool,
-    p_start=pin_start_Cool)
-    "Flow Sensor at the inlet of chiller RR01" annotation (Placement(
-        transformation(
-        extent={{5,-5},{-5,5}},
-        rotation=-90,
-        origin={406,-21})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FTR01_RR01(
-    redeclare model Medium = MediumCold,
-    L=L_FTR01_RR01,
-    h=h_FTR01_RR01,
-    t=t_RR,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_Cool_total,
-    pin_start=pin_start_Users,
-    Tin_start=Tin_start_Cool,
-    Tout_start=Tin_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n)
-    "Pipeline connecting the outlet of the flow sensor and the inlet of the chiller"
-    annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=-90,
-        origin={404,4})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_FTR03_PTR01(
-    redeclare model Medium = MediumCold,
-    L=L_FTR03_PTR01,
-    h=h_FTR03_PTR01,
-    t=t_RR,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_Cool_total,
-    pin_start=pin_start_Users,
-    Tin_start=Tin_start_Cool,
-    Tout_start=Tin_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{10,-10},{-10,10}},
-        rotation=-90,
-        origin={404,-126})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TTR02(
-    redeclare model Medium = MediumCold,
-    T_start=Tout_start_Cool,
-    p_start=pin_start_Users)
-    "Temperature sensor at the outlet of chiller RR01" annotation (Placement(
-        transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=90,
-        origin={279,-78})));
-  DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTR02
-    "Pressure sensor at the outlet of chiller RR01" annotation (Placement(
-        transformation(
-        extent={{-6,-6},{6,6}},
-        rotation=90,
-        origin={279,-68})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_PR01_PTR02(
-    L=L_PR01_PTR02,
-    h=h_PR01_PTR02,
-    t=t_RR,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_Cool_total,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n)
-    "Pipeline connecting the outlet of pump PR01 and sensors PTR02 & TTR02"
-    annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=-90,
-        origin={282,-48})));
-  Pipe RR00_PL_TTR02_VER901(
-    L=L_TTR02_VER901,
-    h=h_TTR02_VER901,
-    t=t_RR,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_Cool_total,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n) annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=-90,
-        origin={282,-98})));
-  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump PR01(
-    redeclare model Medium = MediumCold,
-    Tin_start(displayUnit="K") = Tout_start_Cool,
-    Tout_start(displayUnit="K") = Tout_start_Cool,
-    a=TestFacility.Data.PumpData.PR01.a,
-    b=TestFacility.Data.PumpData.PR01.b,
-    m_flow_start=m_flow_Cool_total,
-    dpnom=TestFacility.Data.PumpData.PR01.dpnom,
-    etaelec=TestFacility.Data.PumpData.PR01.etaelec,
-    etamech=TestFacility.Data.PumpData.PR01.etamech,
-    etanom=TestFacility.Data.PumpData.PR01.etanom,
-    hin_start=TestFacility.Data.PumpData.PR01.hin_start,
-    m_flow_nom=TestFacility.Data.PumpData.PR01.m_flow_nom,
-    omeganom=TestFacility.Data.PumpData.PR01.omeganom,
-    pin_start(displayUnit="Pa") = 2e5,
-    pout_start(displayUnit="Pa") = 2.6e5,
-    qnom_inm3h=TestFacility.Data.PumpData.PR01.qnom_inm3h,
-    rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.PR01.rhonom,
-    headnom=TestFacility.Data.PumpData.PR01.headnom,
-    headmax=TestFacility.Data.PumpData.PR01.headnommax,
-    headmin=TestFacility.Data.PumpData.PR01.headnommin,
-    qnom_inm3h_min=TestFacility.Data.PumpData.PR01.qnommin_inm3h,
-    qnom_inm3h_max=TestFacility.Data.PumpData.PR01.qnommax_inm3h,
-    use_in_omega=true)                                                      annotation (Placement(transformation(
-        extent={{-13,-13},{13,13}},
-        rotation=-90,
-        origin={282,-5})));
-
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV RR00_PL_RR01_PR01(
-    redeclare model Medium = MediumCold,
-    L=L_RR01_PR01,
-    h=h_RR01_PR01,
-    t=t_RR,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_Cool_total,
-    pin_start=pin_start_Users,
-    Tin_start=Tout_start_Cool,
-    Tout_start=Tout_start_Cool,
-    Di=Di_RR,
-    q_m3h_start=q_Cool,
-    hctype=hctype,
-    n=n) "Pipeline connecting the outlet of Chiller and the inlet of pump PR01"
-    annotation (Placement(transformation(
-        extent={{-10,10},{10,-10}},
-        rotation=-90,
-        origin={282,30})));
-
-    DistrictHeatingNetwork.Components.ThermalMachines.ControlledChillerNoDynamics
-    RR01(
-    redeclare model Medium = MediumCold,
-    use_in_Tout_cold_set=true,
-    Tin_cold_start=Tin_start_Cool,
-    Tout_cold_nom(displayUnit="K") = Tout_start_Cool,
-    dp_cold_start=dp_RR01,
-    m_flow_cold_start=m_flow_Cool_total,
-    V=0.001) "Chiller"
-    annotation (Placement(transformation(extent={{310,54},{381,125}})));
 
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange                   suddenAreaChange(D_i=Di_Rack, D_o=Di_RR) annotation (Placement(transformation(extent={{246,-162},{226,-142}})));
   DistrictHeatingNetwork.Components.Fittings.SuddenAreaChange                   suddenAreaChange1(D_i=Di_RR, D_o=Di_Rack) annotation (Placement(transformation(extent={{224,-202},{244,-182}})));
@@ -853,14 +612,6 @@ partial model LoadPlantFourHXBase
     annotation (Placement(transformation(extent={{-136,-146},{-148,-158}})));
   DistrictHeatingNetwork.Components.Fittings.Junction juncEX711Going annotation (Placement(transformation(extent={{24,-146},{12,-158}})));
   DistrictHeatingNetwork.Components.Fittings.Junction juncEX721Going annotation (Placement(transformation(extent={{184,-146},{172,-158}})));
-  DistrictHeatingNetwork.Components.Fittings.Junction junction3
-    annotation (Placement(transformation(extent={{-6,6},{6,-6}},
-        rotation=-90,
-        origin={282,-152})));
-  DistrictHeatingNetwork.Components.Fittings.Junction2 junction4
-    annotation (Placement(transformation(extent={{6,-6},{-6,6}},
-        rotation=-90,
-        origin={404,-152})));
   DistrictHeatingNetwork.Components.Fittings.Junction2 juncEX721Return annotation (Placement(transformation(
         extent={{-6,6},{6,-6}},
         rotation=0,
@@ -1059,66 +810,6 @@ equation
       points={{-264,-192},{-342,-192},{-342,-180}},
       color={140,56,54},
       thickness=0.5));
-  connect(RR00_PL_VER901_FCVR01.outlet,FCVR01. inlet) annotation (Line(
-      points={{324,-152},{334,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FCVR01.outlet,RR00_PL_FCVR01_FTR03. inlet) annotation (Line(
-      points={{354,-152},{364,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FTR03.inlet,RR00_PL_FCVR01_FTR03. outlet) annotation (Line(
-      points={{387,-152},{384,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TTR01.inlet,PTR01. inlet) annotation (Line(
-      points={{403.6,-91},{403.6,-81}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PTR01.inlet,RR00_PL_PTR01_FTR01. inlet) annotation (Line(
-      points={{403.6,-81},{403.6,-63.5},{404,-63.5},{404,-56}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_PTR01_FTR01.outlet,FTR01. inlet) annotation (Line(
-      points={{404,-36},{404,-24}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FTR01.outlet,RR00_PL_FTR01_RR01. inlet) annotation (Line(
-      points={{404,-18},{404,-6}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TTR01.inlet,RR00_PL_FTR03_PTR01. outlet) annotation (Line(
-      points={{403.6,-91},{404,-91},{404,-116}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_PR01_PTR02.outlet,PTR02. inlet) annotation (Line(
-      points={{282,-58},{282,-63},{281.4,-63},{281.4,-68}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PTR02.inlet,TTR02. inlet) annotation (Line(
-      points={{281.4,-68},{282,-68},{282,-78},{281.4,-78}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(TTR02.inlet,RR00_PL_TTR02_VER901. inlet) annotation (Line(
-      points={{281.4,-78},{282,-78},{282,-88}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_RR01_PR01.outlet,PR01. inlet) annotation (Line(
-      points={{282,20},{282,5.4}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PR01.outlet,RR00_PL_PR01_PTR02. inlet) annotation (Line(
-      points={{282,-15.4},{282,-38}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_FTR01_RR01.outlet,RR01. incold) annotation (Line(
-      points={{404,14},{404,46},{368,46},{368,68.2},{366.8,68.2}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_RR01_PR01.inlet,RR01. outcold) annotation (Line(
-      points={{282,40},{284,40},{284,50},{326,50},{326,68.2},{324.2,68.2}},
-      color={140,56,54},
-      thickness=0.5));
   connect(suddenAreaChange1.inlet, PL_UsersOut_EX721.outlet) annotation (Line(
       points={{224,-192},{185,-192}},
       color={140,56,54},
@@ -1149,34 +840,6 @@ equation
       thickness=0.5));
   connect(juncEX721Going.outlet, PL_EX721_EX711_cold.inlet) annotation (Line(
       points={{172,-152},{74,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(RR00_PL_TTR02_VER901.outlet, junction3.inlet) annotation (Line(
-      points={{282,-108},{282,-146}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(junction3.outlet, suddenAreaChange.inlet) annotation (Line(
-      points={{282,-158},{282,-162},{274,-162},{274,-152},{246,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(junction3.inoutlet, RR00_PL_VER901_FCVR01.inlet) annotation (Line(
-      points={{288,-152},{304,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(VER901.inlet, suddenAreaChange.inlet) annotation (Line(
-      points={{265,-133},{265,-152},{246,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FTR03.outlet, junction4.inoutlet) annotation (Line(
-      points={{393,-152},{398,-152}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(junction4.outlet, RR00_PL_FTR03_PTR01.inlet) annotation (Line(
-      points={{404,-146},{404,-136}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(suddenAreaChange1.outlet, junction4.inlet) annotation (Line(
-      points={{244,-192},{404,-192},{404,-158}},
       color={140,56,54},
       thickness=0.5));
   connect(juncEX721Return.inoutlet, PL_TCV721_rackUsersOut.outlet) annotation (Line(
@@ -1311,22 +974,6 @@ equation
       points={{-142,160},{-142,196},{90,196},{90,263.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(controlSignalBus.thetaFCVR01, FCVR01.opening) annotation (Line(
-      points={{0,300},{2,300},{2,286},{236,286},{236,-136},{344,-136},{344,-144}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.omegaPR01, PR01.in_omega) annotation (Line(
-      points={{0,300},{122,300},{122,288},{242,288},{242,10},{288.5,10},{288.5,0.2}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.statusRR01, RR01.cold_on) annotation (Line(
-      points={{0,300},{2,300},{2,290},{290,290},{290,89.5},{306.45,89.5}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.ToutRR01, RR01.in_Tout_cold_set) annotation (Line(
-      points={{0,300},{10,300},{10,294},{345.5,294},{345.5,114.35}},
-      color={255,204,51},
-      thickness=0.5));
   annotation (                                                   Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-500,-300},{500,300}}), graphics={
         Line(
@@ -1399,13 +1046,6 @@ equation
           color={28,108,200},
           arrow={Arrow.None,Arrow.Filled},
           thickness=1),
-        Line(
-          points={{0,-14},{0,14}},
-          color={28,108,200},
-          arrow={Arrow.None,Arrow.Filled},
-          thickness=1,
-          origin={346,-166},
-          rotation=-90),
         Line(
           points={{188,108},{188,136}},
           color={162,29,33},

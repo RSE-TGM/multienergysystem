@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.Load;
 model LoadPlantFourHX
-  extends LoadPlantFourHXBase;
+  extends LoadPlantFourHXBaseWithChiller;
 
 
 equation

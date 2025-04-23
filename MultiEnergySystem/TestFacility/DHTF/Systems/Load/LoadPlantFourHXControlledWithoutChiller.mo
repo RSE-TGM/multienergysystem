@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.Load;
-model LoadPlantFourHXControlled
-  extends LoadPlantFourHXBaseWithChiller(
+model LoadPlantFourHXControlledWithoutChiller
+  extends LoadPlantFourHXBaseWithoutChiller(
     redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S701,
     redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S711,
     redeclare DHTF.Subsystems.Load.CoolingSingleLoadPowerControl S721,
@@ -85,4 +85,4 @@ equation
           color={162,29,33},
           arrow={Arrow.None,Arrow.Filled},
           thickness=1)}));
-end LoadPlantFourHXControlled;
+end LoadPlantFourHXControlledWithoutChiller;

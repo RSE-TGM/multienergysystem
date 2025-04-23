@@ -21,6 +21,5 @@ partial model SystemInterfaceBaseIV
   Modelica.Blocks.Interfaces.RealOutput m_flow_ "Mass flow rate" annotation (Placement(transformation(extent={{100,60},{120,80}}), iconTransformation(extent={{100,60},{120,80}})));
   Modelica.Blocks.Interfaces.BooleanInput status "On/Off status of the machine"
     annotation (Placement(transformation(extent={{-120,0},{-100,20}}), iconTransformation(extent={{-120,0},{-100,20}})));
-  Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}})));
   annotation (                                                   Diagram(coordinateSystem(preserveAspectRatio=false)));
 end SystemInterfaceBaseIV;

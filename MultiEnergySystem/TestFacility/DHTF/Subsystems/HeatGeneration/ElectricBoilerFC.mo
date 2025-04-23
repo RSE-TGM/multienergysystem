@@ -149,6 +149,7 @@ model ElectricBoilerFC "System 400 with ideal flow control"
         origin={-19,54.5})));
   ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-119.5,-65.5},{-99.5,-45.5}}),
                                                                                                                                 iconTransformation(extent={{-120,-60},{-100,-40}})));
+  Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{100,-40},{120,-20}})));
 equation
   Pe = P401.W;
   connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(

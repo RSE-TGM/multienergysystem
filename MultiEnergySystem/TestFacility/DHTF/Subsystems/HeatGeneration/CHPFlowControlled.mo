@@ -200,8 +200,7 @@ model CHPFlowControlled "Combined Heat and Power System Model ideal flow control
                          sourcePressure(
     p0=p_low_ref,
     T0=Tout_low_start,
-    R=0)                                           annotation (Placement(transformation(extent={{-29.25,
-            -70.5},{-20,-61.25}})));
+    R=0)                                           annotation (Placement(transformation(extent={{-29,-70.5},{-19.75,-61.25}})));
   DistrictHeatingNetwork.Sources.VariableMassFlowPump
                                CHPCWP_ "Water circulating pump for heating" annotation (Placement(transformation(extent={{-4.25,
             4.25},{4.25,-4.25}},
@@ -388,7 +387,9 @@ model CHPFlowControlled "Combined Heat and Power System Model ideal flow control
     u_nom_cold=TestFacility.Data.BPHEData.E501.u_nom_cold,
     u_nom_hot=TestFacility.Data.BPHEData.E501.u_nom_hot,
     UA_ext=750,
-    UA_int=750) annotation (Placement(transformation(
+    UA_int=750,
+    LMTD_nom=TestFacility.Data.BPHEData.E501.LMTD)
+                annotation (Placement(transformation(
         extent={{-11.875,-19.875},{11.875,19.875}},
         rotation=-90,
         origin={-28.625,12.125})));
@@ -468,7 +469,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(sourcePressure.outlet,variableDifferentialPressurePump. inlet) annotation (Line(
-      points={{-20,-65.875},{-13.75,-65.875},{-13.75,-74.75},{-3.25,-74.75}},
+      points={{-19.75,-65.875},{-13.75,-65.875},{-13.75,-74.75},{-3.25,-74.75}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_EX501_P501.outlet,P501. inlet) annotation (Line(

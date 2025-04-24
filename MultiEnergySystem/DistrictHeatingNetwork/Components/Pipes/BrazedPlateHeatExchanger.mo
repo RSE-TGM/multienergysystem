@@ -194,6 +194,7 @@ equation
   pout_cold = coldside.outlet.p;
   //LMTD = ((Tin_hot - Tout_cold) - (Tout_hot - Tin_cold))/log(abs((Tin_hot - Tout_cold)/(Tout_hot - Tin_cold)));
   Pt = inhot.m_flow*(hotside.fluid[1].h - hotside.fluid[n + 1].h);
+  //Pt = incold.m_flow*(coldside.fluid[n+1].h - coldside.fluid[1].h);
   //gamma_real = Pt/(hotside.Stot*LMTD);
 
   connect(coldside.outlet, outcold) annotation (Line(

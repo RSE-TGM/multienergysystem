@@ -36,7 +36,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
     Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Density rho_start_valve = TestFacility.Data.ValveData.FCV701.rho_nom "Start value fluid density at the inlet" annotation (
     Dialog(tab = "Valve", group = "FCV"));
-  parameter Real q_m3h_start_valve(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
+  parameter Real q_m3h_start_valve(unit = "m3/h") = EX7X1_q_m3h_hot "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "FCV"));
 
   // Sudden Area Change parameters
@@ -114,7 +114,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
     Dialog(tab = "Valve", group = "TCV"));
   parameter DistrictHeatingNetwork.Types.Density rho_start_valve_TCV = TestFacility.Data.ValveData.TCV701.rho_nom "Start value fluid density at the inlet" annotation (
     Dialog(tab = "Valve", group = "TCV"));
-  parameter Real q_m3h_start_valve_TCV(unit = "m3/h") = TestFacility.Data.ValveData.TCV701.q_nom_m3h "Start value volumetric flowrate in m3/h" annotation (
+  parameter Real q_m3h_start_valve_TCV(unit = "m3/h") = EX7X1_q_m3h_cold "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "TCV"));
 
   //-------------------------------

@@ -20,7 +20,7 @@ model TestCentralisedIII
 
   inner System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
-  replaceable Networks.Centralised.CentralizedSystem_LoadControlled plant    annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
+  replaceable Networks.Centralised.LoadControl.CentralSystemLoadControl_III plant    annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation
   connect(sourceVoltage.outlet, plant.electricPortInlet) annotation (Line(
       points={{-56,0},{-24,0}},

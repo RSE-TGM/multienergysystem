@@ -145,7 +145,7 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   Types.Pressure pin_cold;
   Types.Pressure pout_cold;
   //SI.TemperatureDifference LMTD(start = LMTD_nom);
-  Types.Power Pt;
+  Types.Power Pt(nominal = 100e3);
   Real dT2(start = Tout_start_hot - Tin_start_cold), dT1(start = Tin_start_hot - Tout_start_cold);
   //Types.CoefficientOfHeatTransfer gamma_real;
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inhot "Inlet of the hot fluid" annotation (
@@ -157,11 +157,15 @@ model BrazedPlateHeatExchanger "CounterCurrent Brazed Plate Heat Exchanger"
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outcold "Outlet of the cold fluid" annotation (
     Placement(transformation(origin = {-70, 70}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-2, 2}, extent = {{-48, 48}, {-8, 88}})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV hotside(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_start_hot,
     redeclare model HeatTransferModel =
         HeatTransferModel,                                                                                                               redeclare model Medium = Medium, Di = Di_hot, L = L_hot, q_m3h_start = m_flow_start_hot*3600/980, initOpt = initOpt, Stot = Stot_hot, Tin_start = Tin_start_hot, Tout_start = Tout_start_hot, cf = cf_hot, cm = cpm_hot, tIns = tIns_hot, t = t_hot, gamma_nom = gamma_nom_hot, h = h_hot, hctype = hctype_hot, k = k_hot, kc = kc_hot, lambdaIns = lambdaIns_hot, lambdam = lambdam_hot, n = n, nPipes = nPipes_hot, pin_start = pin_start_hot, pout_start = pout_start_hot, rho_nom = rho_nom_hot, rhom = rhom_hot, thermalInertia = thermalInertia, u_nom = u_nom_hot,
     alpha=alpha_hot)                                                                                                                                                                                                         annotation (
     Placement(transformation(origin = {70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV coldside(redeclare model HeatTransferModel =
+  MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV coldside(
+    set_m_flow_start=true,
+    m_flow_start=m_flow_start_cold,                                                redeclare model HeatTransferModel =
         HeatTransferModel,                                                                                                                redeclare model Medium = Medium, Di = Di_cold, L = L_cold, q_m3h_start = m_flow_start_cold*3600/995, initOpt = initOpt, Stot = Stot_cold, Tin_start = Tin_start_cold, Tout_start = Tout_start_cold, cf = cf_cold, cm = cpm_cold, tIns = tIns_cold, t = t_cold, gamma_nom = gamma_nom_cold, h = h_cold, hctype = hctype_cold, k = k_cold, kc = kc_cold, lambdaIns = lambdaIns_cold, lambdam = lambdam_cold, n = n, nPipes = nPipes_cold, pin_start = pin_start_cold, pout_start = pout_start_cold, rho_nom = rho_nom_cold, rhom = rhom_cold, thermalInertia = thermalInertia, u_nom = u_nom_cold,
     alpha=alpha_cold)                                                                                                                                                                                                         annotation (
     Placement(transformation(origin = {-70, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));

@@ -9,7 +9,7 @@ model DistributionLoadBase
     T_start_hot(displayUnit="K") = 80 + 273.15,
     pin_start_P901=200000,
     m_flow_S9=2.5)                                    annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
-  Systems.Load.LoadPlantFourHXControlled load(
+  Systems.Load.LoadPlantFourHXControlledWithoutChiller load(
     nHX=3,
     EX701_q_m3h_hot=2,
     EX701_Tin_hot=353.15,
@@ -43,19 +43,25 @@ model DistributionLoadBase
       y_start_PI_TT=0.4,
       y_start_PI_Pt=0.5,
       PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
-      PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
+      PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState),
+      I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S711(
       y_start_PI_TT=0.4,
       y_start_PI_Pt=0.5,
-         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState), PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
+         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+         PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState),
+         I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S731(
       y_start_PI_TT=0.4,
       y_start_PI_Pt=0.5,
-         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState), PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
+         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+         PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState),
+         I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S721(
       y_start_PI_TT=0.4,
       y_start_PI_Pt=0.5,
-         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState), PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
+         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+         PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
                                                              annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkPressure(

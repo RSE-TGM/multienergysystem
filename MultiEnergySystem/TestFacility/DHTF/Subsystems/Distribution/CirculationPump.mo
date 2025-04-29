@@ -85,7 +85,6 @@ model CirculationPump "S900 - Main pump"
     redeclare model Medium = Medium,
     Tin_start=TestFacility.Data.PumpData.P901.Tin_start,
     Tout_start=TestFacility.Data.PumpData.P901.Tout_start,
-    hin_start=TestFacility.Data.PumpData.P901.hin_start,
     pin_start=pin_start_S9,
     pout_start=pout_start_S9,
     a=TestFacility.Data.PumpData.P901.a,

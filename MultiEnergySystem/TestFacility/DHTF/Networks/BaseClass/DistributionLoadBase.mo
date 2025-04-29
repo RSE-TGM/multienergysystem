@@ -61,7 +61,8 @@ model DistributionLoadBase
       y_start_PI_TT=0.4,
       y_start_PI_Pt=0.5,
          PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
-         PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
+         PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState),
+         I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
                                                              annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkPressure(

@@ -58,8 +58,9 @@ model DistributionLoadBase
          PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState),
          I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S721(
-      y_start_PI_TT=0.4,
+      y_start_PI_TT=0.3,
       y_start_PI_Pt=0.5,
+      y_start_I_m_flow=0.6,
          PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
          PI_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState),
          I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
@@ -69,14 +70,14 @@ model DistributionLoadBase
     p0=210000,
     T0(displayUnit="K") = 60 + 273.15,
     R=1e-3) annotation (Placement(transformation(extent={{-38,2},{-58,22}})));
-  Modelica.Blocks.Sources.RealExpression omegaP901(y=2*pi*40)      annotation (Placement(transformation(extent={{-98,72},{-78,92}})));
+  Modelica.Blocks.Sources.RealExpression omegaP901(y=if time < 1E5 then 2*pi*30 else if time < 5e5 then 0.0001*pi*time + 50*pi else 2*pi*50)
+                                                                   annotation (Placement(transformation(extent={{-98,72},{-78,92}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-98,58},{-78,78}})));
   Modelica.Blocks.Sources.RealExpression Pt701SP(y=35e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=1)                             annotation (Placement(transformation(extent={{100,62},{80,82}})));
   Modelica.Blocks.Sources.RealExpression ToutSPRR01(y=15 + 273.15) annotation (Placement(transformation(extent={{100,48},{80,68}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVC0X(y=0.3)
-                                                          annotation (Placement(transformation(extent={{100,34},{80,54}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVC0X(y=0.01) annotation (Placement(transformation(extent={{100,34},{80,54}})));
   Modelica.Blocks.Sources.RealExpression omegaPR01sp(y=2*pi*40)       annotation (Placement(transformation(extent={{100,20},{80,40}})));
   Modelica.Blocks.Sources.BooleanExpression booleanExpression(y=true) annotation (Placement(transformation(extent={{-68,40},{-48,60}})));
   inner System system annotation (Placement(transformation(extent={{80,-80},{100,-60}})));
@@ -132,6 +133,8 @@ equation
       extent={{-3,6},{-3,6}},
       horizontalAlignment=TextAlignment.Right));
   annotation (experiment(
-      StopTime=100000,
-      Tolerance=1e-06, StartTime = 0, Interval = 200));
+      StopTime=600000,
+      Interval=200,
+      Tolerance=1e-06,
+      __Dymola_Algorithm="Dassl"));
 end DistributionLoadBase;

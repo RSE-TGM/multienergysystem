@@ -165,6 +165,8 @@ package BPHEData
     alpha_cold=0.67402256,
     gamma_nom_hot = 4314.9346,
     gamma_nom_cold = 11200.497,
+    k_hot = 4074.426185,
+    k_cold = 13965.82915,
     Rfoul=2.8e-4,
     Qnom=50e3,
     MWall=3.9);
@@ -210,6 +212,8 @@ package BPHEData
     alpha_cold=0.67402256,
     gamma_nom_hot = 4314.9346,
     gamma_nom_cold = 11200.497,
+    k_hot = 4074.426185,
+    k_cold = 13965.82915,
     Rfoul=2.8e-4,
     Qnom=50e3,
     MWall=3.9);
@@ -255,6 +259,8 @@ package BPHEData
     alpha_cold=0.67402256,
     gamma_nom_hot = 3666.84441,
     gamma_nom_cold = 9520.42245,
+    k_hot = 4074.426185,
+    k_cold = 13965.82915,
     Rfoul=2.8e-4,
     Qnom=50e3,
     MWall=3.9);
@@ -300,6 +306,8 @@ package BPHEData
     alpha_cold=0.67402256,
     gamma_nom_hot = 3666.84441,
     gamma_nom_cold = 9520.42245,
+    k_hot = 4074.426185,
+    k_cold = 13965.82915,
     Rfoul=2.8e-4,
     Qnom=50e3,
     MWall=3.9);

@@ -16,6 +16,7 @@ model RoundPipe1DFV
      choicesAllMatching = true, Dialog(group = "Base Settings"));
 
   constant Types.Acceleration g = Modelica.Constants.g_n;
+  parameter Boolean linearPressure = false;
 
 // Flow parameter
   parameter Types.Density rho_start = 985 "Density start/reference value" annotation (
@@ -78,7 +79,7 @@ model RoundPipe1DFV
   Real q_m3h[n + 1](each unit = "m3/h") "Volumetric flowrate in each section in m3/h";
   Types.Velocity u[n + 1](each start = u_start, each nominal = u_nom) "Velocity in each volume across the pipe";
   Types.Temperature Ttilde[n](start = T_start[2:n+1], each stateSelect = StateSelect.prefer) "State variable temperatures";
-  Types.Temperature Twall[n] "Pipe wall temperature";
+  Types.Temperature Twall[n](start = T_start[2:n+1]) "Pipe wall temperature";
   Types.Power Qtot "Total heat";
   Types.Temperature T[n + 1](start = T_start) "Volume boundary temperatures";
   Types.Pressure pin(nominal = p_nom) "Inlet pressure";
@@ -143,14 +144,25 @@ equation
   M = Vi*rhotilde;
   Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*cons);
 
-  if hctype == Choices.Pipe.HCtypes.Middle then
-    pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
-    ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+  if linearPressure then
+    if hctype == Choices.Pipe.HCtypes.Downstream then
+      ptilde = pout;
+      pin - pout = k*inlet.m_flow "Momentum Balance (linear friction)";
+    elseif hctype == Choices.Pipe.HCtypes.Middle then
+      pin - ptilde = k/2*inlet.m_flow;
+      ptilde - pout = -k/2*outlet.m_flow;
+    end if;
   else
-    pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
-    ptilde = pout;
+    if hctype == Choices.Pipe.HCtypes.Middle then
+//       pin - ptilde = (rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+//       ptilde - pout = (rho[end]*g*h + homotopy((cf/2)*rho[end]*omega*L/A*regSquare(u[end],u_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+      pin - ptilde = (rho[1]*g*h + homotopy((cf/2)/rho[1]*omega*L/(A^3)*regSquare(inlet.m_flow,m_flow_nom*0.05), dp_nom/m_flow_nom*m_flow[1]))/2;
+      ptilde - pout = (rho[end]*g*h + homotopy((cf/2)/rho[end]*omega*L/(A^3)*regSquare(-outlet.m_flow,m_flow_nom*0.05), dp_nom/m_flow_nom*m_flow[end]))/2;
+    else
+      pin - pout = rho[1]*g*h + homotopy((cf/2)*rho[1]*omega*L/A*regSquare(u[1],u_nom*0.05), dp_nom/m_flow_nom*m_flow[1]);
+      ptilde = pout;
+    end if;
   end if;
-
 
   // Equations to set the fluid properties
   fluid.T = T;

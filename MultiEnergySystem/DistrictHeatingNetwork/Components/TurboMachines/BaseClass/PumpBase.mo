@@ -86,7 +86,7 @@ partial model PumpBase "Base model to develop water pump models"
   Types.Pressure pin(start = pin_start) "Pressure of entering fluid";
   Modelica.Units.SI.Pressure pout "Pressure of outgoing fluid";
   Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start) "Enthalpy of entering fluid";
-  Modelica.Units.SI.SpecificEnthalpy hout(start = hin_start, nominal = 1e5) "Enthalpy of outgoing fluid";
+  Modelica.Units.SI.SpecificEnthalpy hout(start = hin_start, nominal = 1e6) "Enthalpy of outgoing fluid";
   Types.Density rhoin(nominal = 1e3) "Density of entering fluid";
   Types.Density rhoout(nominal = 1e3) "Density of outgoing fluid";
   Types.Temperature Tin(start = Tin_start) "Liquid inlet temperature";

@@ -24,10 +24,10 @@ model WaterTankSystemB "System of two tanks"
   parameter Real q_m3h_S2(unit = "m3/h") = 2;
   final parameter Types.VolumeFlowRate q = q_m3h_S2/3600;
   final parameter Types.MassFlowRate m_flow_S2 = q*985;
-  parameter Real P201omega[:,:] = [0, 2*pi*40; 100, 2*pi*40];
+  parameter Real P201omega[:,:] = [0, 2*pi*35; 100, 2*pi*35];
   parameter Real P201qm3h[:,:] = [0, 2.8289046; 100, 2.8289046];
 
-  parameter Real FCV201theta[:,:] = [0, 0.4; 100, 0.4; 105, 0.4; 200, 0.4];
+  parameter Real FCV201theta[:,:] = [0, 0.5; 100, 0.5; 105, 0.5; 200, 0.5];
 
   // Pipe length
   parameter Types.Length L_S2_PL0 = 24.5;

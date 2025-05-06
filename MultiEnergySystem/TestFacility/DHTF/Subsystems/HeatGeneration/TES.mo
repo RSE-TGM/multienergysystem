@@ -175,6 +175,7 @@ model TES "S200 - Thermal Energy Storage"
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(
     redeclare model Medium = Medium,
     Kv=TestFacility.Data.ValveData.FCV201.Kv,
+    openingChar=TestFacility.Data.ValveData.FCV201.openingChar,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start,
     pin_start=pout_start,

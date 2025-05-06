@@ -2,6 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Tests.Systems;
 model WaterTankSystemB "System of two tanks"
   extends Modelica.Icons.Example;
 
+  parameter Real pi = Modelica.Constants.pi;
   parameter Integer n = 3 "Number of volumes in each pipe";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = Choices.Pipe.HCtypes.Middle "Location of pressure state";
   DistrictHeatingNetwork.Choices.Storage.Status statusOp "Operating status";
@@ -23,7 +24,7 @@ model WaterTankSystemB "System of two tanks"
   parameter Real q_m3h_S2(unit = "m3/h") = 2;
   final parameter Types.VolumeFlowRate q = q_m3h_S2/3600;
   final parameter Types.MassFlowRate m_flow_S2 = q*985;
-  parameter Real P201omega[:,:] = [0, 2*3.141592654*35; 100, 2*3.141592654*35];
+  parameter Real P201omega[:,:] = [0, 2*pi*40; 100, 2*pi*40];
   parameter Real P201qm3h[:,:] = [0, 2.8289046; 100, 2.8289046];
 
   parameter Real FCV201theta[:,:] = [0, 0.4; 100, 0.4; 105, 0.4; 200, 0.4];
@@ -150,7 +151,7 @@ model WaterTankSystemB "System of two tanks"
         origin={-140,0})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(
     L=L_S2_PL3,
-    t=L_S2,
+    t=t_S2,
     pin_start=pin_start_S2,
     Tin_start=Tin_start_S2,
     Tout_start=Tin_start_S2,
@@ -451,7 +452,7 @@ model WaterTankSystemB "System of two tanks"
     duration=1500*0,
     offset=45 + 273.15,
     startTime=1000)
-    annotation (Placement(transformation(extent={{-158,220},{-138,240}})));
+    annotation (Placement(transformation(extent={{-158,222},{-138,242}})));
   Modelica.Blocks.Sources.BooleanExpression FV202_exp(y=FV202_state) annotation (Placement(transformation(extent={{-160,70},{-140,90}})));
   Modelica.Blocks.Sources.BooleanExpression FV201_exp(y=FV201_state) annotation (Placement(transformation(extent={{-126,28},{-106,48}})));
   Modelica.Blocks.Sources.BooleanExpression FV206_exp(y=FV206_state) annotation (Placement(transformation(extent={{-72,34},{-52,54}})));
@@ -659,7 +660,7 @@ equation
   connect(FV201_Status.activePort, FV201.u) annotation (Line(points={{-94.65,49},{-85.285,49},{
           -85.285,50},{-81.92,50}},
                             color={255,0,255}));
-  connect(ramp2.y, source.in_T0) annotation (Line(points={{-137,230},{-116,230},{-116,228},{-104,228},{-104,178.4}}, color={0,0,127}));
+  connect(ramp2.y, source.in_T0) annotation (Line(points={{-137,232},{-116,232},{-116,228},{-104,228},{-104,178.4}}, color={0,0,127}));
   connect(FV202_exp.y, FV202.u) annotation (Line(points={{-139,80},{-132,80},{-132,76},{-111,76},{-111,74},{-110,74},{-110,71.92}}, color={255,0,255}));
   connect(FV201_exp.y, FV201.u) annotation (Line(points={{-105,38},{-96,38},{-96,48},{-88,48},{-88,49},{-85.285,49},{-85.285,50},{-81.92,50}}, color={255,0,255}));
   connect(FV206_exp.y, FV206_Status.activePort) annotation (Line(points={{-51,44},{-46,44},{-46,18},{-52,18},{-52,18.46},{-49.35,18.46},{-49.35,23}}, color={255,0,255}));

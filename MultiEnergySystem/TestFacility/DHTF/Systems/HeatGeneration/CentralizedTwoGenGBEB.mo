@@ -77,7 +77,7 @@ model CentralizedTwoGenGBEB
     pin_start=pout_start_S400,
     q_m3h_start=q_m3h_start_S400)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin={-18,108})));
-  Subsystems.HeatGeneration.ElectricBoiler      S400(
+  replaceable Subsystems.HeatGeneration.ElectricBoiler      S400(
     redeclare model Medium = WaterHot,
     pin_start=pin_start_S400,
     pout_start=pout_start_S400,

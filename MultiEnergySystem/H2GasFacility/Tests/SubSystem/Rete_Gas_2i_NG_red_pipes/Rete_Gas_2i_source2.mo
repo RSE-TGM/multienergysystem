@@ -6,40 +6,16 @@ model Rete_Gas_2i_source2 "immissione 2"
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0});
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17e16(
     n=nV,
-    L=Data.PipelineData_2i.sds16.L,
-    H=Data.PipelineData_2i.sds16.h,
-    cm=Data.PipelineData_2i.sds16.cm,
-    rhom=Data.PipelineData_2i.sds16.rhom,
-    lambdam=Data.PipelineData_2i.sds16.lambdam,
-    m_flow_start=Data.PipelineData_2i.sds16.m_flow_start,
-    pin_start=Data.PipelineData_2i.sds16.pin_start,
-    pout_start=Data.PipelineData_2i.sds16.pout_start,
-    kappa=Data.PipelineData_2i.sds16.kappa,
-    k=Data.PipelineData_2i.sds16.k,
-    redeclare model Gas = Medium,
-    X_start=X_start,
-    Di=Data.PipelineData_2i.sds16.Di,
-    massFractionDynamicBalance=massFractionDynamicBalance,
-    constantFrictionFactor=constantFrictionFactor,
-    computeInertialTerm=computeInertialTerm,
-    hctype=hctype,
-    momentum=momentum,
-    rho_nom=rho_nom) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-200,220})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
-    n=nV,
-    L=Data.PipelineData_2i.sds17.L,
-    H=Data.PipelineData_2i.sds17.h,
+    L=Data.PipelineData_2i.sds17.L + Data.PipelineData_2i.sds16.L,
+    H=Data.PipelineData_2i.sds17.h + Data.PipelineData_2i.sds16.h,
     cm=Data.PipelineData_2i.sds17.cm,
     rhom=Data.PipelineData_2i.sds17.rhom,
     lambdam=Data.PipelineData_2i.sds17.lambdam,
     m_flow_start=Data.PipelineData_2i.sds17.m_flow_start,
     pin_start=Data.PipelineData_2i.sds17.pin_start,
-    pout_start=Data.PipelineData_2i.sds17.pout_start,
+    pout_start=Data.PipelineData_2i.sds16.pout_start,
     kappa=Data.PipelineData_2i.sds17.kappa,
     k=Data.PipelineData_2i.sds17.k,
     redeclare model Gas = Medium,
@@ -88,16 +64,13 @@ equation
   connect(add1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-337,250},
           {-312,250},{-312,238},{-316,238},{-316,225},{-318,225}},
                                              color={0,0,127}));
-  connect(sds17.inlet,Immissione_2. outlet) annotation (Line(
+  connect(sds17e16.inlet, Immissione_2.outlet) annotation (Line(
       points={{-268,220},{-302,220}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds17.outlet,sds16. inlet) annotation (Line(
-      points={{-248,220},{-210,220}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds16.outlet, sds13.inlet) annotation (Line(
-      points={{-190,220},{-54,220},{-54,202},{14,202}},
+  connect(sds17e16.outlet, sds13.inlet) annotation (Line(
+      points={{-248,220},{-184,220},{-184,218},{-118,218},{-116,220},{-54,220},
+          {-54,202},{14,202}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=28000, __Dymola_Algorithm="Dassl"));

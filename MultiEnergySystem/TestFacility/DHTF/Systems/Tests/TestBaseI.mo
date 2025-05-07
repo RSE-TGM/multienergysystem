@@ -14,7 +14,7 @@ model TestBaseI
     domegaP501_var(y=2*pi*30),
     bool_omegaP901(y=false),
     bool_domegaP401(y=false),
-    domegaP401(table=[0,2*pi*30; 250,2*pi*30; 500, 2*pi*30; 1e3, 2*pi*30]),
+    domegaP401(table=[0,2*pi*40; 250,2*pi*40; 500, 2*pi*40; 1e3, 2*pi*40]),
     bool_omegaP101(y=false),
     omegaP101(table=[0,2*pi*30; 1e3,2*pi*30]))
                               annotation (Placement(transformation(extent={{-56,48},{-10,94}})));
@@ -65,11 +65,11 @@ equation
       points={{10,14},{10,13.6},{-8,13.6}},
       color={140,56,54},
       thickness=0.5));
+  connect(ramp.y, sinkPressure.in_p0) annotation (Line(points={{63,-16},{50,-16},{50,-2},{18,-2},{18,-9.6}}, color={0,0,127}));
   connect(sinkPressure.inlet, heatGen.senthot) annotation (Line(
       points={{12,-18},{2,-18},{2,-17.6},{-8,-17.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(ramp.y, sinkPressure.in_p0) annotation (Line(points={{63,-16},{50,-16},{50,-2},{18,-2},{18,-9.6}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
     experiment(
       StopTime=1000,

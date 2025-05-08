@@ -7,6 +7,7 @@ model TestBase
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
 
   Systems.Distribution.CentralizedFourHX distribution(
+    redeclare TestFacility.DHTF.Subsystems.Distribution.CirculationPumpPC S900,
     T_start_cold(displayUnit="K") = 65 + 273.15,
     T_start_hot(displayUnit="K") = 80 + 273.15,
     pin_start_P901=200000,
@@ -64,7 +65,7 @@ model TestBase
     p0=210000,
     T0(displayUnit="K") = 60 + 273.15,
     R=1e-3) annotation (Placement(transformation(extent={{-4,-74},{-24,-54}})));
-  Modelica.Blocks.Sources.RealExpression omegaP901(y=2*pi*40)      annotation (Placement(transformation(extent={{-90,94},{-78,106}})));
+  Modelica.Blocks.Sources.RealExpression omegaP901(y=1.5e5)        annotation (Placement(transformation(extent={{-90,94},{-78,106}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-90,86},{-78,98}})));
   Modelica.Blocks.Sources.RealExpression Pt701SP(y=35e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));

@@ -11,7 +11,10 @@ model TestBase
     T_start_cold(displayUnit="K") = 65 + 273.15,
     T_start_hot(displayUnit="K") = 80 + 273.15,
     pin_start_P901=200000,
-    m_flow_S9=2.5)                                    annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
+    m_flow_S9=2.5,
+    FCVC02(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic),
+    FCVC01(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic))
+                                              annotation (Placement(transformation(extent={{-20,-20},{20,20}})));
   Systems.Load.LoadPlantFourHXControlledWithoutChiller load(
     nHX=3,
     EX701_q_m3h_hot=2,
@@ -45,27 +48,32 @@ model TestBase
     S701(
       y_start_PI_TT=0.3,
       y_start_PI_Pt=0.3,
-      PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState)),
+      PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+      I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S711(
       y_start_PI_TT=0.3,
       y_start_PI_Pt=0.3,
-         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState)),
+      y_start_I_m_flow=0.6,
+      PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+      I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S731(
       y_start_PI_TT=0.3,
       y_start_PI_Pt=0.3,
-         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState)),
+      PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+      I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)),
     S721(
       y_start_PI_TT=0.3,
       y_start_PI_Pt=0.3,
       y_start_I_m_flow=0.6,
-         PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState)))
+      PI_TT7X1(initType=Modelica.Blocks.Types.Init.SteadyState),
+      I_EX7X1Pt(initType=Modelica.Blocks.Types.Init.SteadyState)))
                                                              annotation (Placement(transformation(extent={{40,-20},{80,20}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-20,60},{20,100}}),  iconTransformation(extent={{-20,80},{20,120}})));
   DistrictHeatingNetwork.Sources.SinkPressure sinkPressure(
     p0=210000,
     T0(displayUnit="K") = 60 + 273.15,
     R=1e-3) annotation (Placement(transformation(extent={{-4,-74},{-24,-54}})));
-  Modelica.Blocks.Sources.RealExpression omegaP901(y=1.5e5)        annotation (Placement(transformation(extent={{-90,94},{-78,106}})));
+  Modelica.Blocks.Sources.RealExpression omegaP901(y=1.20e5)        annotation (Placement(transformation(extent={{-90,94},{-78,106}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-90,86},{-78,98}})));
   Modelica.Blocks.Sources.RealExpression Pt701SP(y=35e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
@@ -93,7 +101,7 @@ model TestBase
     computeEnergyVariables=true,
     computeTransport=false)                                                                                                                                   annotation (
     Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin={-56,-54})));
-  Modelica.Blocks.Sources.RealExpression m_flow_P101(y=1.3) annotation (Placement(transformation(extent={{-90,78},{-78,88}})));
+  Modelica.Blocks.Sources.RealExpression m_flow_P101(y=1.45) annotation (Placement(transformation(extent={{-90,78},{-78,88}})));
   Modelica.Blocks.Sources.RealExpression GB101_ToutSP(y=80 + 273.15) annotation (Placement(transformation(extent={{-90,42},{-78,52}})));
   Modelica.Blocks.Sources.BooleanExpression GB101status(y=true) annotation (Placement(transformation(extent={{-90,110},{-78,120}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVX01sp(y=1) annotation (Placement(transformation(extent={{-84,26},{-72,36}})));
@@ -105,8 +113,8 @@ model TestBase
   Modelica.Blocks.Sources.BooleanExpression CHP501status(y=true)   annotation (
     Placement(transformation(extent={{-90,118},{-78,128}})));
   Modelica.Blocks.Sources.RealExpression PeCHP_var(y=30e3) annotation (Placement(transformation(extent={{-89,130},{-79,140}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVC01(y=0.2)  annotation (Placement(transformation(extent={{48,50},{38,62}})));
-  Modelica.Blocks.Sources.TimeTable thetaFCVC02(table=[0,0.2; 400,0.2; 1000,0.4; 2000,0.4]) annotation (Placement(transformation(extent={{46,38},{40,44}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVC01(y=0.30)  annotation (Placement(transformation(extent={{48,50},{38,62}})));
+  Modelica.Blocks.Sources.TimeTable thetaFCVC02(table=[0,0.30; 400,0.30])                   annotation (Placement(transformation(extent={{46,38},{40,44}})));
 equation
   connect(distribution.fluidPortInlet, load.fluidPortOutlet) annotation (Line(
       points={{20,12},{40,12}},

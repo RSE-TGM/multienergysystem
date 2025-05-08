@@ -25,7 +25,7 @@ partial model PumpBase "Base model to develop water pump models"
     Dialog(tab = "Initialisation"));
   parameter Modelica.Units.SI.Pressure pin_start "Start value of the inlet pressure" annotation (
     Dialog(tab = "Initialisation"));
-  parameter Modelica.Units.SI.Pressure pout_start "Start value of the outlet pressure" annotation (
+  parameter Modelica.Units.SI.Pressure pout_start = pin_start + dpnom "Start value of the outlet pressure" annotation (
     Dialog(tab = "Initialisation"));
   parameter DistrictHeatingNetwork.Types.SpecificEnthalpy hin_start = fluidIn.h_start "Specific Enthalpy Start Value" annotation (
     Dialog(tab = "Initialisation"));
@@ -106,6 +106,7 @@ partial model PumpBase "Base model to develop water pump models"
 equation
   assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
+  assert(q > 0, "Flow is in the opposite direction", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
   m_flow = inlet.m_flow;

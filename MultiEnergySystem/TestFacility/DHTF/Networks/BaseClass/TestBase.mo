@@ -75,7 +75,8 @@ model TestBase
     R=1e-3) annotation (Placement(transformation(extent={{-4,-74},{-24,-54}})));
   Modelica.Blocks.Sources.RealExpression omegaP901(y=1.20e5)        annotation (Placement(transformation(extent={{-90,94},{-78,106}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-90,86},{-78,98}})));
-  Modelica.Blocks.Sources.RealExpression Pt701SP(y=35e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
+  Modelica.Blocks.Sources.RealExpression Pt701SP(y=if time < 2e5 then 35e3 elseif time < 3e5 then 37e3 else 35e3)
+                                                                                      annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=1)                             annotation (Placement(transformation(extent={{100,62},{80,82}})));
   Modelica.Blocks.Sources.RealExpression ToutSPRR01(y=15 + 273.15) annotation (Placement(transformation(extent={{100,48},{80,68}})));
@@ -113,7 +114,7 @@ model TestBase
   Modelica.Blocks.Sources.BooleanExpression CHP501status(y=true)   annotation (
     Placement(transformation(extent={{-90,118},{-78,128}})));
   Modelica.Blocks.Sources.RealExpression PeCHP_var(y=30e3) annotation (Placement(transformation(extent={{-89,130},{-79,140}})));
-  Modelica.Blocks.Sources.RealExpression thetaFCVC01(y=0.30)  annotation (Placement(transformation(extent={{48,50},{38,62}})));
+  Modelica.Blocks.Sources.RealExpression thetaFCVC01(y=0.25)  annotation (Placement(transformation(extent={{48,50},{38,62}})));
   Modelica.Blocks.Sources.TimeTable thetaFCVC02(table=[0,0.30; 400,0.30])                   annotation (Placement(transformation(extent={{46,38},{40,44}})));
 equation
   connect(distribution.fluidPortInlet, load.fluidPortOutlet) annotation (Line(

@@ -9,57 +9,9 @@ model RG2i_PID_source2_CH4H2
     massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.413, A_v=1.8*0.413/(sqrt(40.18*(60 - 4.93)*
           1e5))),
-    p_ref(height=-0.01*10^5, startTime=8000));
+    p_ref(height=0*10^5,     startTime=8000));
 
-    parameter Types.MassFraction X_inj[nX] = {0, 1};
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds16(
-    n=nV,
-    L=Data.PipelineData_2i.sds16.L,
-    H=Data.PipelineData_2i.sds16.h,
-    cm=Data.PipelineData_2i.sds16.cm,
-    rhom=Data.PipelineData_2i.sds16.rhom,
-    lambdam=Data.PipelineData_2i.sds16.lambdam,
-    m_flow_start=Data.PipelineData_2i.sds16.m_flow_start,
-    pin_start=Data.PipelineData_2i.sds16.pin_start,
-    pout_start=Data.PipelineData_2i.sds16.pout_start,
-    kappa=Data.PipelineData_2i.sds16.kappa,
-    k=Data.PipelineData_2i.sds16.k,
-    redeclare model Gas = Medium,
-    X_start=X_start,
-    Di=Data.PipelineData_2i.sds16.Di,
-    massFractionDynamicBalance=massFractionDynamicBalance,
-    constantFrictionFactor=constantFrictionFactor,
-    computeInertialTerm=computeInertialTerm,
-    hctype=hctype,
-    momentum=momentum,
-    rho_nom=rho_nom) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-190,220})));
-  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17(
-    n=nV,
-    L=Data.PipelineData_2i.sds17.L,
-    H=Data.PipelineData_2i.sds17.h,
-    cm=Data.PipelineData_2i.sds17.cm,
-    rhom=Data.PipelineData_2i.sds17.rhom,
-    lambdam=Data.PipelineData_2i.sds17.lambdam,
-    m_flow_start=Data.PipelineData_2i.sds17.m_flow_start,
-    pin_start=Data.PipelineData_2i.sds17.pin_start,
-    pout_start=Data.PipelineData_2i.sds17.pout_start,
-    kappa=Data.PipelineData_2i.sds17.kappa,
-    k=Data.PipelineData_2i.sds17.k,
-    redeclare model Gas = Medium,
-    X_start=X_start,
-    Di=Data.PipelineData_2i.sds17.Di,
-    massFractionDynamicBalance=massFractionDynamicBalance,
-    constantFrictionFactor=constantFrictionFactor,
-    computeInertialTerm=computeInertialTerm,
-    hctype=hctype,
-    momentum=momentum,
-    rho_nom=rho_nom) annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=0,
-        origin={-248,220})));
+    parameter Types.MassFraction X_inj[nX] = {1, 0};
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
     X0=X_inj,
     redeclare model Medium = Medium,
@@ -76,35 +28,55 @@ model RG2i_PID_source2_CH4H2
     height=25/3600,
     duration=300,
     offset=0.0001,
-    startTime=3600)                                                                                         annotation (
+    startTime=0*3600)                                                                                       annotation (
     Placement(visible = true, transformation(origin={-409,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
     height=-25/3600,
     duration=300,
-    startTime=18000,
+    startTime=26*18000,
     offset=0)                                                                                               annotation (
     Placement(visible = true, transformation(origin={-407,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add1
     annotation (Placement(transformation(extent={{-348,240},{-328,260}})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17e16(
+    n=6,
+    L=Data.PipelineData_2i.sds17.L + Data.PipelineData_2i.sds16.L,
+    H=Data.PipelineData_2i.sds17.h + Data.PipelineData_2i.sds16.h,
+    cm=Data.PipelineData_2i.sds17.cm,
+    rhom=Data.PipelineData_2i.sds17.rhom,
+    lambdam=Data.PipelineData_2i.sds17.lambdam,
+    m_flow_start=Data.PipelineData_2i.sds17.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds17.pin_start,
+    pout_start=Data.PipelineData_2i.sds16.pout_start,
+    kappa=Data.PipelineData_2i.sds17.kappa,
+    k=Data.PipelineData_2i.sds17.k,
+    redeclare model Gas = Medium,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds17.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-214,220})));
 equation
   connect(add1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-327,250},{
           -302,250},{-302,238},{-306,238},{-306,225},{-308,225}},
                                              color={0,0,127}));
-  connect(sds17.inlet,Immissione_2. outlet) annotation (Line(
-      points={{-258,220},{-292,220}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(sds17.outlet,sds16. inlet) annotation (Line(
-      points={{-238,220},{-200,220}},
-      color={182,109,49},
-      thickness=0.5));
   connect(m_flow_H5.y, add1.u1) annotation (Line(points={{-396,268},{-386,268},{
           -386,270},{-372,270},{-372,256},{-350,256}}, color={0,0,127}));
   connect(m_flow_H1.y, add1.u2) annotation (Line(points={{-398,232},{-388,232},
           {-388,230},{-350,230},{-350,244}}, color={0,0,127}));
-  connect(sds16.outlet, sds13.inlet) annotation (Line(
-      points={{-180,220},{-54,220},{-54,202},{14,202}},
+  connect(Immissione_2.outlet, sds17e16.inlet) annotation (Line(
+      points={{-292,220},{-224,220}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=28800, __Dymola_Algorithm="Dassl"));
+  connect(sds17e16.outlet, sds13.inlet) annotation (Line(
+      points={{-204,220},{-54,220},{-54,202},{14,202}},
+      color={182,109,49},
+      thickness=0.5));
+  annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
 end RG2i_PID_source2_CH4H2;

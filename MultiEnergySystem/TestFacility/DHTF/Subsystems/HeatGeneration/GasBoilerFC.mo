@@ -16,7 +16,6 @@ model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
     etaelec=TestFacility.Data.PumpData.P101.etaelec,
     etamech=TestFacility.Data.PumpData.P101.etamech,
     etanom=TestFacility.Data.PumpData.P101.etanom,
-    hin_start=TestFacility.Data.PumpData.P101.hin_start,
     m_flow_nom=TestFacility.Data.PumpData.P101.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.P101.omeganom,
     pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P101.pin_start,

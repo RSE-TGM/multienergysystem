@@ -73,7 +73,7 @@ model DistributionLoadBase
   Modelica.Blocks.Sources.RealExpression omegaP901(y=if time < 1E5 then 2*pi*30 else if time < 5e5 then 0.0001*pi*time + 50*pi else 2*pi*50)
                                                                    annotation (Placement(transformation(extent={{-98,72},{-78,92}})));
   Modelica.Blocks.Sources.RealExpression thetaFCV901(y=1) annotation (Placement(transformation(extent={{-98,58},{-78,78}})));
-  Modelica.Blocks.Sources.RealExpression Pt701SP(y=35e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
+  Modelica.Blocks.Sources.RealExpression Pt701SP(y=40e3)                              annotation (Placement(transformation(extent={{100,90},{80,110}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=65 + 273.15) annotation (Placement(transformation(extent={{100,76},{80,96}})));
   Modelica.Blocks.Sources.RealExpression thetaFCVR01(y=1)                             annotation (Placement(transformation(extent={{100,62},{80,82}})));
   Modelica.Blocks.Sources.RealExpression ToutSPRR01(y=15 + 273.15) annotation (Placement(transformation(extent={{100,48},{80,68}})));

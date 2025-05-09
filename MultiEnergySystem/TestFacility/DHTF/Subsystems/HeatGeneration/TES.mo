@@ -134,7 +134,7 @@ model TES "S200 - Thermal Energy Storage"
     etanom=TestFacility.Data.PumpData.P201.etanom,
     m_flow_nom=TestFacility.Data.PumpData.P201.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.P201.omeganom,
-    pin_start(displayUnit="Pa") = 1.8400803e5,
+    pin_start(displayUnit="Pa") = pin_start_pump,
     headnom=TestFacility.Data.PumpData.P201.headnom,
     qnom_inm3h=TestFacility.Data.PumpData.P201.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P201.rhonom,
@@ -158,20 +158,6 @@ model TES "S200 - Thermal Energy Storage"
     Placement(transformation(extent = {{-4.75, -4.75}, {4.75, 4.75}}, rotation = 90, origin={-19.75,71.25})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT201 "Pressure sensor at the inlet of pump 201" annotation (
     Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin={-20,51.5})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_TT201_FV201(
-    redeclare model Medium = Medium,
-    redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_FV201_P201,
-    t=t_S2,
-    pin_start=pin_start,
-    Tin_start=Tin_start,
-    Tout_start=Tin_start,
-    Di=Di_S2,
-    q_m3h_start=q_m3h_S2,
-    n=n,
-    hctype=hctype,
-    cf=cf)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,30})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV201(
     redeclare model Medium = Medium,
     Kv=TestFacility.Data.ValveData.FCV201.Kv,
@@ -181,53 +167,6 @@ model TES "S200 - Thermal Energy Storage"
     pin_start=pout_start,
     q_m3h_start=q_m3h_S2/2)                                                                                                                                                                                                       annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-60})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FCV201_FV202(
-    h=h_FCV201_FV202,
-    redeclare model Medium = Medium,
-    redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_FCV201_FV202,
-    t=t_S2,
-    pin_start=pin_start,
-    Tin_start=Tin_start,
-    Tout_start=Tin_start,
-    Di=Di_S2,
-    q_m3h_start=q_m3h_S2/2,
-    n=n,
-    hctype=hctype,
-    cf=cf)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent={{10,10},{-10,-10}},      rotation = 270, origin={-74,-30})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_P201_FV209(
-    h=h_P201_FV209,
-    set_m_flow_start=true,
-    m_flow_start=m_flow_S2,
-    redeclare model Medium = Medium,
-    redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_P201_FV209,
-    t=t_S2,
-    pin_start=pout_start_pump,
-    Tin_start=Tin_start,
-    Tout_start=Tin_start,
-    Di=Di_S2,
-    q_m3h_start=q_m3h_S2,
-    n=n,
-    hctype=hctype,
-    cf=cf)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,-106})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV209_FCV201(
-    h=h_FV209_FCV201,
-    redeclare model Medium = Medium,
-    redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_FV209_FCV201,
-    t=t_S2,
-    pin_start=pin_start,
-    Tin_start=Tin_start,
-    Tout_start=Tin_start,
-    Di=Di_S2,
-    q_m3h_start=q_m3h_S2/2,
-    n=n,
-    hctype=hctype,
-    cf=cf)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-90})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT202(redeclare model Medium = Medium, T_start=Tout_start, p_start=pout_start)     "Temperature sensor at the outlet of System 200" annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin={24,70})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT202 "Pressure sensor at the outlet of system S200" annotation (
@@ -268,7 +207,7 @@ model TES "S200 - Thermal Energy Storage"
     L=L_S2_S201_S202,
     h=h_S2_S201_S202,
     t=t_S2,
-    pin_start=pout_start_pump,
+    pin_start=pout_start_tank,
     Tin_start=Tout_start,
     Tout_start=Tout_start,
     Di=Di_S2,
@@ -312,7 +251,7 @@ model TES "S200 - Thermal Energy Storage"
     L=L_S2_D201_FT201,
     h=h_S2_D201_FT201,
     t=t_S2,
-    pin_start=pout_start_pump,
+    pin_start=pout_start_tank,
     Tin_start=Tout_start,
     Tout_start=Tout_start,
     Di=Di_S2,
@@ -321,21 +260,6 @@ model TES "S200 - Thermal Energy Storage"
     hctype=hctype,
     cf=cf)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent={{10,-10},{-10,10}},      rotation = 0, origin={-56,-302})));
-  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV201_P201(
-    h=h_FV201_P201,
-    redeclare model Medium = Medium,
-    redeclare model HeatTransferModel = HeatTransferModel,
-    L=L_FV201_P201,
-    t=t_S2,
-    pin_start=pin_start,
-    Tin_start=Tin_start,
-    Tout_start=Tin_start,
-    Di=Di_S2,
-    q_m3h_start=q_m3h_S2,
-    n=n,
-    hctype=hctype,
-    cf=cf)                                                                                                                                                                                                         annotation (
-    Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={-18,-32})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV201(
     redeclare model Medium = Medium,
     Kv=TestFacility.Data.ValveData.FCV101.Kv,
@@ -382,7 +306,8 @@ model TES "S200 - Thermal Energy Storage"
     Tin_start(displayUnit="K") = Tout_start,
     pin_start=pout_start)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-6, 6}, {6, -6}}, rotation = -90, origin={-18,-138})));
-  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT201(redeclare model Medium = Medium, T_start=Tout_start)   "Flow sensor at the outlet of system S200" annotation (
+  DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FT201(redeclare model Medium = Medium, T_start=Tout_start,
+    p_start=pout_start_tank)                                                                                      "Flow sensor at the outlet of system S200" annotation (
     Placement(transformation(extent = {{7, 7}, {-7, -7}}, rotation = 90, origin={25,-141})));
   Modelica.Blocks.Interfaces.RealOutput T_D201[ny] annotation (Placement(transformation(extent={{-106,-290},{-126,-270}}),
                                                                                                                        iconTransformation( origin={-6,248},               extent={{106,-290},{126,-270}})));
@@ -446,10 +371,6 @@ equation
 
   connect(PT201.inlet,TT201. inlet) annotation (
     Line(points={{-18,51.5},{-18,60.375},{-17.85,60.375},{-17.85,71.25}},                  color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_TT201_FV201.inlet,PT201. inlet) annotation (
-    Line(points={{-18,40},{-18,51.5}},           color = {140, 56, 54}, thickness = 0.5));
-  connect(P201.outlet,PL_S200_P201_FV209. inlet) annotation (
-    Line(points={{-18,-79.6},{-18,-96}},          color = {140, 56, 54}, thickness = 0.5));
   connect(TT202.inlet,PT202. inlet) annotation (
     Line(points={{21.6,70},{21.6,0}},              color = {140, 56, 54}, thickness = 0.5));
   connect(D201.outlet,PL_S200_D201_High. inlet) annotation (
@@ -466,24 +387,10 @@ equation
     Line(points={{56,-318},{60,-318},{60,-317},{76,-317}},                  color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S200_FV209_D201.outlet,D201. inlet) annotation (
     Line(points={{-36,-352},{28,-352},{28,-317},{14,-317}},                 color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_FV209_FCV201.outlet,FCV201. inlet) annotation (
-    Line(points={{-74,-80},{-74,-70}},          color = {140, 56, 54}, thickness = 0.5));
-  connect(FCV201.outlet,PL_S200_FCV201_FV202. inlet) annotation (
-    Line(points={{-74,-50},{-74,-40}},          color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_FV201_P201.outlet,P201. inlet) annotation (
-    Line(points={{-18,-42},{-18,-60.4}},          color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_FCV201_FV202.outlet,FV202. inlet) annotation (
-    Line(points={{-74,-20},{-74,10},{-54,10}},                color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_TT201_FV201.outlet,FV201. inlet) annotation (
-    Line(points={{-18,20},{-18,-4}},            color = {140, 56, 54}, thickness = 0.5));
-  connect(FV201.outlet,PL_S200_FV201_P201. inlet) annotation (
-    Line(points={{-18,-16},{-18,-22}},          color = {140, 56, 54}, thickness = 0.5));
   connect(FV202.outlet,FV201. inlet) annotation (
     Line(points={{-42,10},{-18,10},{-18,-4}},                 color = {140, 56, 54}, thickness = 0.5));
   connect(FV206.outlet,P201. inlet) annotation (
     Line(points={{-4,-48},{-18,-48},{-18,-60.4}},               color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_P201_FV209.outlet,FV209. inlet) annotation (
-    Line(points={{-18,-116},{-18,-132}},        color = {140, 56, 54}, thickness = 0.5));
   connect(FV207.inlet,FV209. inlet) annotation (
     Line(points={{-4,-120},{-18,-120},{-18,-132}},            color = {140, 56, 54}, thickness = 0.5));
   connect(FV207.outlet,FV203. inlet) annotation (
@@ -492,8 +399,6 @@ equation
     Line(points={{8,-48},{22,-48},{22,-74}},                  color = {140, 56, 54}, thickness = 0.5));
   connect(PT202.inlet,FV203. outlet) annotation (
     Line(points={{21.6,0},{22,0},{22,-74}},                     color = {140, 56, 54}, thickness = 0.5));
-  connect(PL_S200_FV209_FCV201.inlet,PL_S200_FV209_D201. inlet) annotation (
-    Line(points={{-74,-100},{-74,-352},{-56,-352}},           color = {140, 56, 54}, thickness = 0.5));
   connect(FV209.outlet,PL_S200_FV209_D201. inlet) annotation (
     Line(points={{-18,-144},{-18,-192},{-74,-192},{-74,-352},{-56,-352}},                 color = {140, 56, 54}, thickness = 0.5));
   connect(FT201.inlet,FV203. inlet) annotation (
@@ -531,18 +436,6 @@ equation
   connect(FV203_exp.y, FV203.u) annotation (Line(points={{31,-80},{23.92,-80}}, color={255,0,255}));
   connect(FV207_exp.y, FV207.u) annotation (Line(points={{2,-131},{2,-121.92}},                         color={255,0,255}));
   connect(FV209_exp.y, FV209.u) annotation (Line(points={{-27,-138},{-19.92,-138}}, color={255,0,255}));
-  connect(PL_S200_P201_FV209.wall, MultiPort) annotation (Line(
-      points={{-22.1,-106},{-96,-106},{-96,-70},{-110,-70}},
-      color={255,101,98},
-      thickness=0.5));
-  connect(PL_S200_FV209_FCV201.wall, MultiPort) annotation (Line(
-      points={{-78.1,-90},{-96,-90},{-96,-70},{-110,-70}},
-      color={255,101,98},
-      thickness=0.5));
-  connect(PL_S200_FCV201_FV202.wall, MultiPort) annotation (Line(
-      points={{-78.1,-30},{-96,-30},{-96,-70},{-110,-70}},
-      color={255,101,98},
-      thickness=0.5));
   connect(FV201_exp.y, FV201.u) annotation (Line(points={{-35,-10},{-19.92,-10}}, color={255,0,255}));
   connect(FV202_exp.y, FV202.u) annotation (Line(points={{-48,21},{-48,11.92}}, color={255,0,255}));
   connect(FV206_exp.y, FV206.u) annotation (Line(points={{2,-35},{2,-46.08}}, color={255,0,255}));
@@ -570,13 +463,25 @@ equation
       points={{46,-322.1},{46,-340},{-96,-340},{-96,-70},{-110,-70}},
       color={255,101,98},
       thickness=0.5));
-  connect(PL_S200_FV201_P201.wall, MultiPort) annotation (Line(
-      points={{-22.1,-32},{-28,-32},{-28,-106},{-96,-106},{-96,-70},{-110,-70}},
-      color={255,101,98},
+  connect(FCV201.outlet, FV202.inlet) annotation (Line(
+      points={{-74,-50},{-74,10},{-54,10}},
+      color={140,56,54},
       thickness=0.5));
-  connect(PL_S200_TT201_FV201.wall, MultiPort) annotation (Line(
-      points={{-22.1,30},{-28,30},{-28,-106},{-96,-106},{-96,-70},{-110,-70}},
-      color={255,101,98},
+  connect(FCV201.inlet, PL_S200_FV209_D201.inlet) annotation (Line(
+      points={{-74,-70},{-74,-352},{-56,-352}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(P201.outlet, FV209.inlet) annotation (Line(
+      points={{-18,-79.6},{-18,-132}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV201.outlet, P201.inlet) annotation (Line(
+      points={{-18,-16},{-18,-60.4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PT201.inlet, FV201.inlet) annotation (Line(
+      points={{-18,51.5},{-18,-4}},
+      color={140,56,54},
       thickness=0.5));
   annotation (Icon(                                             graphics={Bitmap(
           extent={{-48,-46},{48,46}},

@@ -150,7 +150,7 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     Placement(transformation(extent={{16,-11},{24,-19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07 "Pressure sensor at the outlet of valve FCVC01" annotation (
     Placement(transformation(extent={{26,19},{34,27}})));
-  TestFacility.DHTF.Subsystems.Distribution.CirculationPump S900(
+  replaceable TestFacility.DHTF.Subsystems.Distribution.CirculationPump S900(
     redeclare model Medium = MediumCP,
     hctype=hctype,
     n=n,

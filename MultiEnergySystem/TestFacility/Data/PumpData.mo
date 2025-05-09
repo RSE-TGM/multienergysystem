@@ -5,7 +5,7 @@ package PumpData
     Name="P101",
     Tin_start=80 + 273.15,
     Tout_start=82 + 273.15,
-    pin_start=3e5,
+    pin_start=2e5,
     hin_start=0.105e6,
     qnom_inm3h=15.60340167,
     qnommin_inm3h=3,
@@ -83,8 +83,8 @@ package PumpData
 
     constant MultiEnergySystem.TestFacility.Data.Pump P401(
     Name="P401",
-    Tin_start=45 + 273.15,
-    Tout_start=45.1 + 273.15,
+    Tin_start=80 + 273.15,
+    Tout_start=80.1 + 273.15,
     pin_start=2e5,
     hin_start=0.105e6,
     qnom_inm3h=8.8,
@@ -99,9 +99,9 @@ package PumpData
     etaelec=1,
     etamech=1,
     a={93.844686,30.594342,-1.033072},
-    b={7.021474846665770,0.399129517072184,0.192432000000000});
+    b = {8.868240, 0.186740, -0.041518});
+    //b={7.021474846665770,0.399129517072184,0.192432});
     //b = {6.5, 0.186740, -0.041518});
-    //b = {8.868240, 0.186740, -0.041518});
 
     constant MultiEnergySystem.TestFacility.Data.Pump P501(
     Name="P501",

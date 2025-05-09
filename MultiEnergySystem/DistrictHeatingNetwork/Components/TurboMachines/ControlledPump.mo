@@ -27,22 +27,50 @@ protected
   Modelica.Blocks.Interfaces.RealInput in_dp_int(unit="Pa") "Internal connector for outlet pressure";
 equation
 
-  W = homotopy((omega/omeganom)^3*(a[1] + q_m3h*(omeganom/omega)*(a[2] + a[3]*q_m3h*(omeganom/omega))),
-               ((dpnom*qnom/etanom)*(omega/omeganom)*(q_m3h/qnom_inm3h)))  "Power Characteristic equation";
-//   head = homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
-//                   (headnom*(omega/omeganom)*(q_m3h/qnom_inm3h))) "Head Characteristic equation";
+//   W = homotopy((omega/omeganom)^3*(a[1] + q_m3h*(omeganom/omega)*(a[2] + a[3]*q_m3h*(omeganom/omega))),
+//                ((dpnom*qnom/etanom)*(omega/omeganom)*(q_m3h/qnom_inm3h)))  "Power Characteristic equation";
+
+//   W = homotopy((omeganet/omeganom)^3*(a[1] + q_m3h*(omeganom/omeganet)*(a[2] + a[3]*q_m3h*(omeganom/omeganet))),
+//                ((dpnom*qnom/etanom)*(omeganet/omeganom)*(q_m3h/qnom_inm3h)))  "Power Characteristic equation";
+//   head = homotopy((omeganet/omeganom)^2*(b[1]+ q_m3h*(omeganom/omeganet)*(b[2] + b[3]*q_m3h*(omeganom/omeganet))),
+//                   (headnom*(omeganet/omeganom)*(q_m3h/qnom_inm3h))) "Head Characteristic equation";
+
+  W = homotopy((omega/omeganom)^3*(a[1] + q_m3h_net*(omeganom/omega)*(a[2] + a[3]*q_m3h_net*(omeganom/omega))),
+               ((dpnom*qnom/etanom)*(omega/omeganom)*(q_m3h_net/qnom_inm3h)))  "Power Characteristic equation";
+  headnet = homotopy((omega/omeganom)^2*(b[1]+ q_m3h_net*(omeganom/omega)*(b[2] + b[3]*q_m3h_net*(omeganom/omega))),
+                  (headnom*(omega/omeganom)*(q_m3h_net/qnom_inm3h))) "Head Characteristic equation";
+
+
+//   if omeganet < 2*pi*30 then
+//     omega = 2*pi*30;
+//   elseif omeganet < 2*pi*50 then
+//     f = fnet;
+//   else
+//     omega = 2*pi*50;
+//   end if;
+//   omega = omeganet;
+//
+//   if headnet < headmin then
+//     head = headmin;
+//   elseif omeganet < 2*pi*50 then
+//     dp = dpnet;
+//   else
+//     head = headmax;
+//   end if;
 
 //   head = min(max(homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
 //                   (headnom*(omega/omeganom)*(q_m3h/qnom_inm3h))),headmin), headmax)  "Head Characteristic equation";
 
-  if q_m3h < qnom_inm3h_min then
-    head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_min)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_min)*(omeganom/omega)));
-  elseif q_m3h < qnom_inm3h_max then
-    head = homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
-                    ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega)))));
-  else
-    head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_max)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_max)*(omeganom/omega)));
-  end if;
+
+
+//   if q_m3h < qnom_inm3h_min then
+//     head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_min)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_min)*(omeganom/omega)));
+//   elseif q_m3h < qnom_inm3h_max then
+//     head = homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
+//                     ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega)))));
+//   else
+//     head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_max)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_max)*(omeganom/omega)));
+//   end if;
 
 //   if f > 30 then
 //     head = homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
@@ -69,9 +97,33 @@ equation
   // Ideal control
   if control_m_flow then
     m_flow = in_m_flow_int;
+    //omega = omeganet;
+    m_flow_net = m_flow;
+    if dpnet < headmin*g*rhoin then
+      dp = headmin*g*rhoin;
+    elseif dpnet < headmax*g*rhoin then
+      head = headnet;
+    else
+      dp = headmax*g*rhoin;
+    end if;
+    //if headnet < headmin then
+    //  head = headmin;
+//     elseif headnet < headmax then
+//       dp = dpnet;
+//     else
+//       head = headmax;
+//    end if;
   else
     //dp = in_dp_int - pin;
     in_dp_int = pout - pin;
+    dpnet = dp;
+    if q_m3h_net < qnom_inm3h_min then
+      q_m3h = qnom_inm3h_min;
+    elseif q_m3h_net < qnom_inm3h_max then
+      m_flow = m_flow_net;
+    else
+      q_m3h = qnom_inm3h_max;
+    end if;
   end if;
   // Internal connector value when use_m_flow_set = false
   if not use_m_flow then

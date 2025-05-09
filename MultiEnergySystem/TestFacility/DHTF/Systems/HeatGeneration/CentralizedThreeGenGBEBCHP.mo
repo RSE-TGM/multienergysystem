@@ -37,7 +37,7 @@ model CentralizedThreeGenGBEBCHP
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_User_S5 = q_m3h_S5_User*985/3600 annotation (
     Dialog(group = "S500"));
 
-  Subsystems.HeatGeneration.CHP      S500(
+  replaceable Subsystems.HeatGeneration.CHP      S500(
     redeclare model Medium = WaterHot,
     redeclare model Gas = Gas,
     n=n,
@@ -45,7 +45,9 @@ model CentralizedThreeGenGBEBCHP
     Tout_low_start=Tout_Source_start_S5,
     Tin_high_start=Tin_User_start_S5,
     Tout_high_start=Tout_User_start_S5,
-    Pel_SP=PeCHP) annotation (Placement(transformation(extent={{56,-50},{146,40}})));
+    Pel_SP=PeCHP,
+    EX501(T1_wall_start=353.15, TN_wall_start=338.15))
+                  annotation (Placement(transformation(extent={{56,-50},{146,40}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_rCD_hot(
     redeclare model Medium = WaterHot,
     L=5,

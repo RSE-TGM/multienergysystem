@@ -1,70 +1,8 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model ElectricBoiler "System 400 - Electric Boiler"
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
-  extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
+  extends BaseClass.ElectricBoilerBase;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
-      constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
-
-  constant Real pi = Modelica.Constants.pi;
-
-
-  //-------------------------------
-  // Initialization
-  //-------------------------------
-  parameter DistrictHeatingNetwork.Types.Pressure pin_start = 1.695e5 "inlet pressure start value" annotation (
-    Dialog(group = "Initialization"));
-  parameter DistrictHeatingNetwork.Types.Pressure pout_start = 1.6e5 "outlet pressure start value" annotation (
-    Dialog(group = "Initialization"));
-  parameter DistrictHeatingNetwork.Types.Temperature Tin_start = 70 + 273.15 "inlet temperature start value" annotation (
-    Dialog(group = "Initialization"));
-  parameter DistrictHeatingNetwork.Types.Temperature Tout_start = 80 + 273.15 "outlet temperature start value" annotation (
-    Dialog(group = "Initialization"));
-  parameter Real q_m3h_S4(unit = "m3/h") = 5 annotation (
-    Dialog(group = "Initialization"));
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S4=q_m3h_S4*990/3600;
-
-  //-------------------------------
-  // Pipes
-  //-------------------------------
-  parameter Integer n = 3 "Number of volumes in each pipe" annotation (
-    Dialog(group = "Pipe settings"));
-  parameter DistrictHeatingNetwork.Types.Length Di_S4 = 51e-3 "inlet diameter" annotation (
-    Dialog(group = "Pipe settings"));
-  parameter DistrictHeatingNetwork.Types.Length t_S4 = 1.5e-3 "tickness" annotation (
-    Dialog(group = "Pipe settings"));
-  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient" annotation (
-    Dialog(group = "Pipe settings"));
-  parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
-      DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state" annotation (
-    Dialog(group = "Pipe settings"));
-  final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_nom = 2.4 "nominal mass flow rate" annotation (
-    Dialog(group = "Pipe settings"));
-
-  //-------------------------------
-  // Valve parameters
-  //-------------------------------
-  parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV401.Kv "Metric Flow Coefficient" annotation (
-    Dialog(group = "Valve settings"));
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar = TestFacility.Data.ValveData.FCV401.openingChar "opening characteristic" annotation (
-    Dialog(group = "Valve settings"));
-
-  //-------------------------------
-  // Boiler parameters
-  //-------------------------------
-  parameter Real nR = 5 "Number of resistors" annotation (
-    Dialog(group = "Boiler settings"));
-  parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Maximum thermal power per each resistor" annotation (
-    Dialog(group = "Boiler settings"));
-  parameter DistrictHeatingNetwork.Types.Power Pmaxnom = 50e3 "Maximum thermal power" annotation (
-    Dialog(group = "Boiler settings"));
-  parameter DistrictHeatingNetwork.Types.Power Pminnom = 0 "Minimum thermal power" annotation (
-    Dialog(group = "Boiler settings"));
-  parameter DistrictHeatingNetwork.Types.Length h = 1.25 "Height boiler" annotation (
-    Dialog(group = "Boiler settings"));
-  parameter DistrictHeatingNetwork.Types.Length D = 0.4 "Diameter boiler" annotation (
-    Dialog(group = "Boiler settings"));
 
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB(
     redeclare model Medium = Medium,
@@ -78,17 +16,18 @@ model ElectricBoiler "System 400 - Electric Boiler"
     h=h,
     m_flow_nom=m_flow_nom,
     pin_start=pin_start,
-    pout_start=pout_start,
     nR=nR,
-    Pmaxres=Pmaxres)   annotation (Placement(visible=true, transformation(
+    Pmaxres=Pmaxres,
+    m_flow_start=m_flow_S4)
+                       annotation (Placement(visible=true, transformation(
         origin={0,-107.5},
         extent={{-22,-22},{22,22}},
         rotation=0)));
   DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump
     P401(
     redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P401.Tin_start,
-    Tout_start(displayUnit="K") = TestFacility.Data.PumpData.P401.Tout_start,
+    Tin_start(displayUnit="K") = Tout_start,
+    Tout_start(displayUnit="K") = Tout_start,
     a=TestFacility.Data.PumpData.P401.a,
     b=TestFacility.Data.PumpData.P401.b,
     m_flow_start=m_flow_S4,
@@ -96,11 +35,10 @@ model ElectricBoiler "System 400 - Electric Boiler"
     etaelec=TestFacility.Data.PumpData.P401.etaelec,
     etamech=TestFacility.Data.PumpData.P401.etamech,
     etanom=TestFacility.Data.PumpData.P401.etanom,
-    hin_start=TestFacility.Data.PumpData.P401.hin_start,
     m_flow_nom=TestFacility.Data.PumpData.P401.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.P401.omeganom,
-    pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P401.pin_start,
-    pout_start(displayUnit="Pa") = TestFacility.Data.PumpData.P401.pout_start,
+    pin_start(displayUnit="Pa") = EB.pout_start,
+    pout_start(displayUnit="Pa"),
     headnom=TestFacility.Data.PumpData.P401.headnom,
     qnom_inm3h=TestFacility.Data.PumpData.P401.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P401.rhonom,
@@ -119,7 +57,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
     openingChar=openingChar,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV401.dp_nom,
     Tin_start(displayUnit="K") = Tout_start,
-    pin_start=pout_start,
+    pin_start=P401.pout_start,
     q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(
         extent={{-8,-8},{8,8}},
         rotation=90,
@@ -132,7 +70,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
     L=pipeData.PL_EB401_P401.L,
     h=pipeData.PL_EB401_P401.h,
     t=pipeData.PL_EB401_P401.t,
-    pin_start=pout_start,
+    pin_start=EB.pout_start,
     Tin_start=Tout_start,
     Tout_start=Tout_start,
     Di=pipeData.PL_EB401_P401.Di,
@@ -172,7 +110,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
     L=pipeData.PL_P401_FCV401.L,
     h=pipeData.PL_P401_FCV401.h,
     t=pipeData.PL_P401_FCV401.t,
-    pin_start=pout_start,
+    pin_start=P401.pout_start,
     Tin_start=Tout_start,
     Tout_start=Tout_start,
     Di=pipeData.PL_P401_FCV401.Di,
@@ -182,7 +120,7 @@ model ElectricBoiler "System 400 - Electric Boiler"
     cf=cf)                annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=90,
-        origin={20,10})));
+        origin={20,10.5})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor
     TT402(redeclare model Medium = Medium,T_start=Tout_start, p_start=pout_start)
     "Temperature sensor at the outlet of valve FCV401"       annotation (
@@ -233,11 +171,11 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FCV401.inlet,PL_S400_P401_FCV401. outlet) annotation (Line(
-      points={{20,32},{20,20}},
+      points={{20,32},{20,20.5}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S400_P401_FCV401.inlet,P401. outlet) annotation (Line(
-      points={{20,0},{20,-9.4}},
+      points={{20,0.5},{20,-9.4}},
       color={140,56,54},
       thickness=0.5));
   connect(PT402.inlet,FCV401. outlet) annotation (Line(
@@ -288,14 +226,14 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(PL_S400_P401_FCV401.wall, PL_S400_EB401_P401.wall) annotation (Line(
-      points={{15.9,10},{0,10},{0,-50},{15.9,-50}},
+      points={{15.9,10.5},{0,10.5},{0,-50},{15.9,-50}},
       color={255,101,98},
       thickness=0.5));
   connect(MultiPort, PL_S400_EB401_P401.wall) annotation (Line(
       points={{-110,-80},{0,-80},{0,-50},{15.9,-50}},
       color={255,101,98},
       thickness=0.5));
-                                                                                         annotation (
+    annotation (
     Dialog(group = "Initialization"),                            Diagram(coordinateSystem(
                                      extent={{-100,-140},{100,140}}, grid={0.5,0.5})),
                                                                        Icon(coordinateSystem(grid={

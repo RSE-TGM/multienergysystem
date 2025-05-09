@@ -33,7 +33,6 @@ model ElectricBoilerFC "System 400 with ideal flow control"
     etaelec=TestFacility.Data.PumpData.P401.etaelec,
     etamech=TestFacility.Data.PumpData.P401.etamech,
     etanom=TestFacility.Data.PumpData.P401.etanom,
-    hin_start=TestFacility.Data.PumpData.P401.hin_start,
     m_flow_nom=TestFacility.Data.PumpData.P401.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.P401.omeganom,
     pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P401.pin_start,
@@ -150,6 +149,18 @@ model ElectricBoilerFC "System 400 with ideal flow control"
   ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-119.5,-65.5},{-99.5,-45.5}}),
                                                                                                                                 iconTransformation(extent={{-120,-60},{-100,-40}})));
   Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}}), iconTransformation(extent={{100,-40},{120,-20}})));
+  DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve
+    FCV401(
+    redeclare model Medium = Medium,
+    Kv=Kv,
+    openingChar=openingChar,
+    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV401.dp_nom,
+    Tin_start(displayUnit="K") = Tout_start,
+    pin_start=pout_start,
+    q_m3h_start=q_m3h_S4)    annotation (Placement(transformation(
+        extent={{-8,-8},{8,8}},
+        rotation=90,
+        origin={24,43})));
 equation
   Pe = P401.W;
   connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(
@@ -221,11 +232,16 @@ equation
       points={{19.4,-106},{25.5,-106},{25.5,-105.5},{30,-105.5},{30,-137.5},{-94.5,-137.5},{-94.5,-55.5},{-109.5,-55.5}},
       color={56,93,138},
       thickness=1));
-  connect(PT402.inlet, PL_S400_P401_FCV401.outlet) annotation (Line(
-      points={{23.6,63.5},{23.5,63.5},{23.5,57},{23,57},{23,24.5},{24,24.5},{24,21.5}},
+  connect(pumpset, P401.in_m_flow) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-22.3},{18.48,-22.3}}, color={0,0,127}));
+  connect(theta,FCV401. opening) annotation (Line(points={{-110,50},{-93.5,50},{-93.5,140},{14.5,140},{14.5,43},{17.6,43}}, color={0,0,127}));
+  connect(FCV401.outlet, PT402.inlet) annotation (Line(
+      points={{24,51},{24,56},{19,56},{19,70},{23.6,70},{23.6,63.5}},
       color={140,56,54},
       thickness=0.5));
-  connect(pumpset, P401.in_m_flow) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-22.3},{18.48,-22.3}}, color={0,0,127}));
+  connect(FCV401.inlet, PL_S400_P401_FCV401.outlet) annotation (Line(
+      points={{24,35},{24,21.5}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (                                                   Diagram(coordinateSystem(
                                      extent={{-100,-140},{100,140}}, grid={0.5,0.5})),
                                                                        Icon(coordinateSystem(grid={

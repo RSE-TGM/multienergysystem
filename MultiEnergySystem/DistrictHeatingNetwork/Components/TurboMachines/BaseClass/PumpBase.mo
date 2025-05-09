@@ -80,7 +80,7 @@ partial model PumpBase "Base model to develop water pump models"
   //Variables
   Types.MassFlowRate m_flow(min = 0, start = m_flow_start) "Mass flow rate";
   Types.VolumeFlowRate q "Volume flow rate";
-  Real q_m3h(unit = "m3/h", start = m_flow_start*3600/1000) "Volumetric flow rate in m3/hr";
+  Real q_m3h(unit = "m3/h", start = m_flow_start*3600/1000, nominal = qnom_inm3h_max) "Volumetric flow rate in m3/hr";
   Types.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
   Types.Length head(nominal = headmax) "Pump head";
   Types.Pressure pin(start = pin_start) "Pressure of entering fluid";
@@ -91,25 +91,34 @@ partial model PumpBase "Base model to develop water pump models"
   Types.Density rhoout(nominal = 1e3) "Density of outgoing fluid";
   Types.Temperature Tin(start = Tin_start) "Liquid inlet temperature";
   Types.Temperature Tout "Liquid outlet temperature";
-  Modelica.Units.SI.AngularVelocity omega(min = 2*pi*30, nominal = 2*pi*50, start = omeganom) "Shaft rad/s.";
+  Modelica.Units.SI.AngularVelocity omega(nominal = 2*pi*50, start = omeganom) "Shaft rad/s.";
   Modelica.Units.SI.Power W "Power Consumption";
   Modelica.Units.SI.Power Qloss = 0 "Heat loss (single pump)";
   Modelica.Units.SI.Efficiency eta "Pump efficiency";
   Modelica.Units.SI.Power Pm "mechanical power";
   Modelica.Units.SI.Power Pe "electrical power";
   Modelica.Units.SI.Frequency f "frequency";
+
+//   Modelica.Units.SI.AngularVelocity omeganet(min = 2*pi*30, nominal = 2*pi*50, start = omeganom) "Shaft rad/s.";
+//   Modelica.Units.SI.Frequency fnet "frequency";
+  Types.Pressure dpnet(nominal = dpnom) "Outlet pressure minus inlet pressure";
+  Types.Length headnet(nominal = headmax) "Pump head";
+  Real q_m3h_net(unit = "m3/h", start = m_flow_start*3600/1000, nominal = qnom_inm3h_max) "Volumetric flow rate in m3/hr";
+  Types.MassFlowRate m_flow_net(min = 0, start = m_flow_start) "Mass flow rate";
+
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortInlet inlet annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{-100, 0}, {-60, 40}}, rotation = 0), iconTransformation(origin = {0, -20}, extent = {{-100, 0}, {-60, 40}}, rotation = 0)));
   MultiEnergySystem.DistrictHeatingNetwork.Interfaces.FluidPortOutlet outlet annotation (
     Placement(visible = true, transformation(origin = {0, 0}, extent = {{36, 58}, {76, 98}}, rotation = 0), iconTransformation(origin={24,-78},   extent = {{36, 58}, {76, 98}}, rotation = 0)));
 
 equation
-  assert(eta > 0, "Efficiency becomes negative", AssertionLevel.error);
+  assert(eta > 0, "Efficiency becomes negative", AssertionLevel.warning);
   assert(dp > 0, "Flow is in the opposite direction", AssertionLevel.error);
   assert(q > 0, "Flow is in the opposite direction", AssertionLevel.error);
 
   hin = inStream(inlet.h_out);
-  m_flow = inlet.m_flow;
+  //m_flow = inlet.m_flow;
+  m_flow_net = inlet.m_flow;
 
   // Boundary conditions
   inlet.p = pin;
@@ -128,13 +137,15 @@ equation
   rhoout = fluidOut.rho;
 
   // Additional variables
-  dp = pout - pin;
+  //dp = pout - pin;
+  dpnet = pout - pin;
+  //pout - pin = max(dpnet, 1e-3);
   q = m_flow/rhoin;
   q_m3h = q*3600;
   f = omega/(2*pi);
 
   head = correctionfactor*dp/(rhoin*g);
-  W = dp*q/eta;
+  //W = dp*q/eta;
 
   // Mass Balance
   inlet.m_flow + outlet.m_flow = 0;
@@ -143,6 +154,11 @@ equation
   0 = outlet.m_flow*hout + inlet.m_flow*hin + W - Qloss "Energy balance";
   Pm = W/etamech;
   Pe = Pm/etaelec;
+
+  //
+  W = dpnet*(q_m3h_net/3600)/eta;
+  q_m3h_net = (m_flow_net/rhoin)*3600;
+  headnet = dpnet/(rhoin*g);
 
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false)),

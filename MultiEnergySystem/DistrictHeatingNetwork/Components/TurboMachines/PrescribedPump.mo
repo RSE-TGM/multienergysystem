@@ -30,6 +30,9 @@ equation
     head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_max)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_max)*(omeganom/omega)));
   end if;
 
+  m_flow_net = m_flow;
+  dpnet = dp;
+
 //   if q_m3h_net < qnom_inm3h_min then
 //     q_m3h = qnom_inm3h_min;
 //   elseif q_m3h_net > qnom_inm3h_max then

@@ -34,8 +34,8 @@ model ControlledCHP "Model of an ideal controlled CHP"
   //-------------------------------
   // Variables
   //-------------------------------
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_ref(start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_ref(nominal = m_flow_fuel_nom, start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = m_flow_fuel_nom, start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
   DistrictHeatingNetwork.Types.Power Pth_ref "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   DistrictHeatingNetwork.Types.Temperature Tout_ref;
@@ -79,7 +79,8 @@ equation
   //-------------------------------
   // Momentum and energy balance
   //-------------------------------
-  inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
+  //inlet.p - outlet.p = homotopy(m_flow*(449.449473 + m_flow*(14.618729 + 2.739099*m_flow)), pin_start - pout_start)  "Momentum Balance";
+  inlet.p - outlet.p = 522.297008*m_flow;
   0 =inlet.m_flow*(-hout_ref + hin) + Pth_ref;
   fluidOut_ref.p = pout;
   fluidOut_ref.T = Tout_ref;

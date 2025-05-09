@@ -77,7 +77,8 @@ package ValveData
     rho_nom=0.9680155e3,
     Kv=33,
     Tin_start=60 + 273.15,
-    pin_start=2e5);
+    pin_start=2e5,
+    openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic);
   constant MultiEnergySystem.TestFacility.Data.Valve FCV401(
     Name="FCV401",
     Tin_nom=60 + 273.15,

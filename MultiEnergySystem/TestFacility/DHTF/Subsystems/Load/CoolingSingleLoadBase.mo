@@ -2,13 +2,13 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.Load;
 partial model CoolingSingleLoadBase "S900 - Base load model"
   extends DistrictHeatingNetwork.Icons.Water.LoadModel;
 
-  //-------------------------------
+//-------------------------------
   // Declaration of fluid
   //-------------------------------
   replaceable model MediumHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   replaceable model MediumCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
-  //-------------------------------
+//-------------------------------
   // Heat Exchanger heat transfer model
   //-------------------------------
   replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient  constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
@@ -19,10 +19,10 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.004 "Constant Fanning friction coefficient";
 
-  // Flow Control Valve parameters
+// Flow Control Valve parameters
   parameter Real Kv(unit = "m3/h") = TestFacility.Data.ValveData.FCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "FCV"));
-  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
+  parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_FCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic   "opening characteristic" annotation (
     Dialog(tab = "Valve", group = "FCV"));
   parameter DistrictHeatingNetwork.Types.Pressure dp_nom_valve = TestFacility.Data.ValveData.FCV701.dp_nom "Nominal pressure drop in the valve" annotation (
     Dialog(tab = "Valve", group = "FCV"));
@@ -39,7 +39,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   parameter Real q_m3h_start_valve(unit = "m3/h") = EX7X1_q_m3h_hot "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "FCV"));
 
-  // Sudden Area Change parameters
+// Sudden Area Change parameters
   parameter DistrictHeatingNetwork.Types.Length D_i = 0.1 "Input diameter" annotation (
     Dialog(tab = "Sudden Area Change", group = "Characteristics"));
   parameter DistrictHeatingNetwork.Types.Length D_o = 0.05 "Output diameter" annotation (
@@ -49,7 +49,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   parameter DistrictHeatingNetwork.Types.PerUnit beta_increase = 1 "Attrition coefficient for a diameter increase" annotation (
     Dialog(tab = "Sudden Area Change", group = "Characteristics"));
 
-  // EX7X1
+// EX7X1
   parameter Real EX7X1_q_m3h_hot(unit = "m3/h") = 2.5 "hot mass flow - start value" annotation(Dialog(tab = "Initialization", group= "Heat exchanger"));
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_EX7X1_hot = EX7X1_q_m3h_hot*980/3600  annotation(Dialog(tab = "Initialization", group= "Heat exchanger"));
   parameter DistrictHeatingNetwork.Types.Pressure EX7X1_pin_hot=2.5e5 annotation(Dialog(tab = "Initialization", group= "Heat exchanger"));
@@ -74,11 +74,9 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   parameter DistrictHeatingNetwork.Types.PerUnit alpha_hot = 0 "Exponent in the flow-dependency law" annotation(Dialog(group = "HX"));
   parameter DistrictHeatingNetwork.Types.PerUnit alpha_cold = 0 "Exponent in the flow-dependency law" annotation(Dialog(group = "HX"));
 
-  // Lengths of pipelines Cold Side
-
-//   parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
-//   parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
-
+// Lengths of pipelines Cold Side
+  //   parameter DistrictHeatingNetwork.Types.Length L_FT701_rackL2L3=5.2 + 5 + 1;
+  //   parameter DistrictHeatingNetwork.Types.Length h_FT701_rackL2L3=-1;
   // Lengths of pipelines Hot side
   parameter DistrictHeatingNetwork.Types.Length t_S700=1.5e-3 "Inlet diameter - hot side" annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
   parameter DistrictHeatingNetwork.Types.Length Di_S700=51e-3 "Tickness - hot side" annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
@@ -89,15 +87,15 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   parameter DistrictHeatingNetwork.Types.Length L_FCV7X1_FT7X1=2.5 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
   parameter DistrictHeatingNetwork.Types.Length h_FCV7X1_FT7X1=0 annotation(Dialog(tab = "Pipe", group = "Dimensions - hot side"));
 
-  // Length of pipelines Cooling side
+// Length of pipelines Cooling side
   parameter DistrictHeatingNetwork.Types.Length t_Users=1.5e-3 "Tickness - cold side" annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
-  parameter DistrictHeatingNetwork.Types.Length Di_Users=32e-3 "Inlet diameter - cold side" annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
+  parameter DistrictHeatingNetwork.Types.Length Di_Users=51e-3 "Inlet diameter - cold side" annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
   parameter DistrictHeatingNetwork.Types.Length L_rUsersIn_TT7X3=1.65 + 0.45 annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
   parameter DistrictHeatingNetwork.Types.Length h_rUsersIn_TT7X3=-1.65*0.1 annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
   parameter DistrictHeatingNetwork.Types.Length L_TT7X4_TCV7X1=0.65 annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
   parameter DistrictHeatingNetwork.Types.Length h_TT7X4_TCV7X1=0.65 annotation(Dialog(tab = "Pipe", group = "Dimensions - cold side"));
 
-  // Temperature Control Valve parameters
+// Temperature Control Valve parameters
   parameter Real Kv_TCV(unit = "m3/h") = TestFacility.Data.ValveData.TCV701.Kv "Metri Flow Coefficient" annotation (
     Dialog(tab = "Valve", group = "TCV"));
   parameter DistrictHeatingNetwork.Components.Types.valveOpeningChar openingChar_TCV = DistrictHeatingNetwork.Components.Types.valveOpeningChar.Quadratic "opening characteristic" annotation (
@@ -117,20 +115,19 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   parameter Real q_m3h_start_valve_TCV(unit = "m3/h") = EX7X1_q_m3h_cold "Start value volumetric flowrate in m3/h" annotation (
     Dialog(tab = "Valve", group = "TCV"));
 
-  //-------------------------------
+//-------------------------------
   // Controllers' parameters
   //-------------------------------
-//   parameter Real Kp_TT7X1 = -0.001 "proportional gain for temperature controller" annotation(Dialog(group="Controller Parameters"));
-//   parameter Real Ti_TT7X1 = 40 "integral time for temperature controller" annotation(Dialog(group="Controller Parameters"));
-//   parameter Real Kp_PtEX7X1 = 0.113 "proportional gain for thermal power controller" annotation(Dialog(group="Controller Parameters"));
-//   parameter Real Ti_PtEX7X1 = 0.268 "integral time for thermal power controller" annotation(Dialog(group="Controller Parameters"));
-//   parameter Real Ki_PtEX7X1 = 1 "integral gain for thermal power controller" annotation(Dialog(group="Controller Parameters"));
-//   parameter Real y_start_PI_TT(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
-//   parameter Real y_start_PI_Pt(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
-//   parameter Real y_start_I_m_flow(min = 0, max = 2) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
-//   parameter Modelica.Blocks.Types.Init initType_PI = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
-//   parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
-
+  //   parameter Real Kp_TT7X1 = -0.001 "proportional gain for temperature controller" annotation(Dialog(group="Controller Parameters"));
+  //   parameter Real Ti_TT7X1 = 40 "integral time for temperature controller" annotation(Dialog(group="Controller Parameters"));
+  //   parameter Real Kp_PtEX7X1 = 0.113 "proportional gain for thermal power controller" annotation(Dialog(group="Controller Parameters"));
+  //   parameter Real Ti_PtEX7X1 = 0.268 "integral time for thermal power controller" annotation(Dialog(group="Controller Parameters"));
+  //   parameter Real Ki_PtEX7X1 = 1 "integral gain for thermal power controller" annotation(Dialog(group="Controller Parameters"));
+  //   parameter Real y_start_PI_TT(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
+  //   parameter Real y_start_PI_Pt(min = 0, max = 1) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
+  //   parameter Real y_start_I_m_flow(min = 0, max = 2) = 0.5 "Nominal output" annotation(Dialog(group="Initialization"));
+  //   parameter Modelica.Blocks.Types.Init initType_PI = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
+  //   parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
     redeclare model Medium = MediumHot,
     Kv=TestFacility.Data.ValveData.FCV701.Kv,
@@ -198,7 +195,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
     u_nom_cold=TestFacility.Data.BPHEData.E701.u_nom_cold,
     u_nom_hot=TestFacility.Data.BPHEData.E701.u_nom_hot,
     T1_wall_start=T1_wall_start,
-    TN_wall_start=TN_wall_start)                         annotation (
+    TN_wall_start=TN_wall_start)        annotation (
       Placement(transformation(
         extent={{17.5,29},{-17.5,-29}},
         rotation=-90,
@@ -241,6 +238,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=90,
         origin={20,11.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X2_InHot(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = MediumHot,
@@ -254,7 +252,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
     n=np,
     hctype=hctype,
     nPipes=1,
-    cf=cf)    "Pipe connecting sensors 7x2 with the inlet of the hot side of the heat exchanger" annotation (Placement(transformation(
+    cf=cf, u_nom = 2.5)    "Pipe connecting sensors 7x2 with the inlet of the hot side of the heat exchanger" annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=-90,
         origin={-20,65.5})));

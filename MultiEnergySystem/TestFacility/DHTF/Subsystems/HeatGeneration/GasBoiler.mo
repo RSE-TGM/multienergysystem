@@ -72,8 +72,8 @@ model GasBoiler "System 100 - Gas Boiler"
 
   DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P101(
     redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P101.Tin_start,
-    Tout_start(displayUnit="K") = TestFacility.Data.PumpData.P101.Tout_start,
+    Tin_start(displayUnit="K") = Tout_start,
+    Tout_start(displayUnit="K") = Tout_start,
     a=TestFacility.Data.PumpData.P101.a,
     b=TestFacility.Data.PumpData.P101.b,
     m_flow_start=m_flow_S1,
@@ -81,7 +81,6 @@ model GasBoiler "System 100 - Gas Boiler"
     etaelec=TestFacility.Data.PumpData.P101.etaelec,
     etamech=TestFacility.Data.PumpData.P101.etamech,
     etanom=TestFacility.Data.PumpData.P101.etanom,
-    hin_start=TestFacility.Data.PumpData.P101.hin_start,
     m_flow_nom=TestFacility.Data.PumpData.P101.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.P101.omeganom,
     pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P101.pin_start,

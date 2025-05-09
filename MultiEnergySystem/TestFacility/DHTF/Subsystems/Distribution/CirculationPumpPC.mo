@@ -15,7 +15,6 @@ model CirculationPumpPC "S900 - Main pump, pressure control"
     redeclare model Medium = Medium,
     Tin_start=TestFacility.Data.PumpData.P901.Tin_start,
     Tout_start=TestFacility.Data.PumpData.P901.Tout_start,
-    hin_start=TestFacility.Data.PumpData.P901.hin_start,
     pin_start=pin_start_S9,
     pout_start=pout_start_S9,
     a=TestFacility.Data.PumpData.P901.a,
@@ -246,7 +245,7 @@ equation
       points={{-110,-70},{1,-70},{1,-59},{0.5,-59},{0.5,-59.5},{15.9,-59.5},{15.9,-60}},
       color={255,101,98},
       thickness=0.5));
-  connect(pumpset, P901.in_pout) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-32},{15.4,-32}}, color={0,0,127}));
+  connect(pumpset, P901.in_dp) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,138.5},{8.5,138.5},{8.5,-32},{15.4,-32}}, color={0,0,127}));
   connect(FCV901.inlet, PL_S900_P901_FCV901.outlet) annotation (Line(
       points={{20,9},{20,0}},
       color={140,56,54},

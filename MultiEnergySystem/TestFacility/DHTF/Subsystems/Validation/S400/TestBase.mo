@@ -38,11 +38,11 @@ model TestBase
   parameter String matrixFT = "FT401" "Matrix name in file";
   parameter String timenoscale = "time" "Matrix name in file";
   parameter Real Kv(unit = "m3/h") = 33 "Metri Flow Coefficient";
-  DHTF.Subsystems.HeatGeneration.ElectricBoiler electricBoiler(redeclare model Medium = Medium, n = n, hctype = hctype, pumpcorrectionfactor = pumpcorrectionfactor,
+  DHTF.Subsystems.HeatGeneration.ElectricBoiler electricBoiler(redeclare model Medium = Medium, n = n, hctype = hctype,
     pin_start=pin_start_S4,
     pout_start=pout_start_S4,
     Tin_start=Tin_start_S4,
-    Tout_start=Tout_start_S4,                                                                                                                                                                                                        Di_S4 = Di_S4, t_S4 = t_S4, L_PT401_EB401 = L_PT401_EB401, h_PT401_EB401 = h_PT401_EB401, L_EB401_P401 = L_EB401_P401, h_EB401_P401 = h_EB401_P401, L_P401_FCV401 = L_P401_FCV401, h_P401_FCV401 = h_P401_FCV401, q_m3h_S4 = q_m3h_S4, Kv = Kv, openingChar = openingChar, nR = nR, Pmaxres = Pmaxres, EB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
+    Tout_start=Tout_start_S4,                                                                                                                                                                                                        Di_S4 = Di_S4, t_S4 = t_S4,                                                                                                                                                                                       q_m3h_S4 = q_m3h_S4, Kv = Kv, openingChar = openingChar, nR = nR, Pmaxres = Pmaxres, EB(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.fixedState)) annotation (
     Placement(transformation(extent = {{-28, -32}, {30, 26}})));
   Modelica.Blocks.Sources.TimeTable FCV401_theta(table = [ts, thetav]) annotation (
     Placement(transformation(extent = {{-90, 4}, {-78, 16}})));
@@ -133,8 +133,10 @@ equation
     Line(points = {{40.6, 40}, {44, 40}, {44, 78}, {21, 78}}, color = {0, 0, 127}));
   connect(sourceVoltage.outlet, electricBoiler.inletPower) annotation (
     Line(points = {{-66, -64}, {-40, -64}, {-40, -17.5}, {-30.9, -17.5}}, color = {56, 93, 138}, thickness = 1));
-  connect(electricBoiler.outlet, sinkMassFlow.inlet) annotation (
-    Line(points = {{12.89, 30.35}, {12.89, 62}, {16, 62}, {16, 74}}, color = {140, 56, 54}, thickness = 0.5));
+  connect(sinkMassFlow.inlet, electricBoiler.outlet) annotation (Line(
+      points={{16,74},{12.89,74},{12.89,30.35}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = false)));

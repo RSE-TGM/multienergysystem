@@ -9,15 +9,16 @@ model TestBaseI
   replaceable HeatGeneration.CentralizedThreeGenGBEBCHP heatGen(
     redeclare model Gas = Gas, X_gas=X_gas,
     pin_start_S100=200000,
-    pin_start_S400=200000)     annotation (Placement(transformation(extent={{-60,-28},{-8,24}})));
+    pin_start_S400=200000,
+    S400(nR=3.5))              annotation (Placement(transformation(extent={{-60,-28},{-8,24}})));
   replaceable Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHP_II actuator(
     domegaP501_var(y=2*pi*30),
     bool_omegaP901(y=false),
     bool_domegaP401(y=false),
     domegaP401(table=[0,2*pi*40; 250,2*pi*40; 500, 2*pi*40; 1e3, 2*pi*40]),
     bool_omegaP101(y=false),
-    omegaP101(table=[0,2*pi*30; 1e3,2*pi*30]))
-                              annotation (Placement(transformation(extent={{-56,48},{-10,94}})));
+    omegaP101(table=[0,2*pi*30; 1e3,2*pi*30]),
+    dPeCHP_var(y=30e3))       annotation (Placement(transformation(extent={{-56,48},{-10,94}})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(extent={{-88,-10},{-68,10}})));
   H2GasFacility.Sources.SourcePressure sourceGas(

@@ -8,8 +8,6 @@ model CHPFC "S500 - Combined Heat and Power System Model"
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n)); //Base connectors
   //extends DistrictHeatingNetwork.Icons.Water.ThermalModel; //Icon
 
-
-
   H2GasFacility.Interfaces.FluidPortInlet inletFuel(nXi=fuel.nXi)   annotation (Placement(transformation(extent={{61.25,100},{81.25,120}}),
                                                                                                                                          iconTransformation(extent={{-16,-132},{16,-100}})));
   Modelica.Blocks.Interfaces.RealInput Pelset

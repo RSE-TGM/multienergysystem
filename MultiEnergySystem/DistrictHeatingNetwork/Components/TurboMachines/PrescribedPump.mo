@@ -15,9 +15,30 @@ equation
   connect(in_omega, in_omega_int);
   W = homotopy((omega/omeganom)^3*(a[1] + q_m3h*(omeganom/omega)*(a[2] + a[3]*q_m3h*(omeganom/omega))),
                ((a[1] + q_m3h*(omeganom/omega)*(a[2] + a[3]*q_m3h*(omeganom/omega)))))  "Power Characteristic equation";
-  head = if q_m3h >= qnom_inm3h_min then homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
-                  ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))))) else (omega/omeganom)^2*(b[1]+ (qnom_inm3h_min)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_min)*(omeganom/omega))) "Head Characteristic equation";
-  annotation (
+//   head = homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
+//                   ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega)))));
+
+//   head = if q_m3h >= qnom_inm3h_min then homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
+//                   ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))))) else (omega/omeganom)^2*(b[1]+ (qnom_inm3h_min)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_min)*(omeganom/omega))) "Head Characteristic equation";
+//
+  if q_m3h < qnom_inm3h_min then
+    head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_min)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_min)*(omeganom/omega)));
+  elseif q_m3h < qnom_inm3h_max then
+    head = homotopy((omega/omeganom)^2*(b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega))),
+                    ((b[1]+ q_m3h*(omeganom/omega)*(b[2] + b[3]*q_m3h*(omeganom/omega)))));
+  else
+    head = (omega/omeganom)^2*(b[1]+ (qnom_inm3h_max)*(omeganom/omega)*(b[2] + b[3]*(qnom_inm3h_max)*(omeganom/omega)));
+  end if;
+
+//   if q_m3h_net < qnom_inm3h_min then
+//     q_m3h = qnom_inm3h_min;
+//   elseif q_m3h_net > qnom_inm3h_max then
+//     q_m3h = qnom_inm3h_max;
+//   else
+//     m_flow = m_flow_net;
+//   end if;
+
+    annotation (
     Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}})), Documentation(info="<html>
 <h3>PrescribedPump</h3>
 

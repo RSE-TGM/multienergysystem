@@ -11,7 +11,7 @@ model SourcePressure "Pressure source for water/steam flows"
 
   // Nominal Parameters
   parameter Types.Pressure p0 = 1.01325e5 "Nominal pressure (Pa)";
-  parameter Types.Temperature T0 = 25 + 273.15 "Nominal temperature (Kelvin)";
+  parameter Types.Temperature T0 = 15 + 273.15 "Nominal temperature (Kelvin)";
   parameter Types.MassFraction X0[fluid.nX] "Nominal mass fraction";
   parameter HydraulicResistance R = 0 "Hydraulic resistance, 0 implies ideal pressure source";
 

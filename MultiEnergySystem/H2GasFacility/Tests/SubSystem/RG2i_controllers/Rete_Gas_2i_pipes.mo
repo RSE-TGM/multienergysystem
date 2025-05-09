@@ -1,4 +1,4 @@
-within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
 partial model Rete_Gas_2i_pipes
   "Base network with no sources and reduced number of pipes"
   extends Modelica.Icons.Example;

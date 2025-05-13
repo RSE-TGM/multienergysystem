@@ -28,7 +28,7 @@ partial model PartialValve
   //-------------------------------
   // Nominal Conditions
   //-------------------------------
-  parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump" annotation (
+  parameter Modelica.Units.SI.PressureDifference dp_nom = 0.5e5 "Pressure drop between supply and return, as imposed by the differential pump" annotation (
     Dialog(group = "Nominal Conditions"));
   parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply" annotation (
     Dialog(group = "Nominal Conditions"));
@@ -66,8 +66,8 @@ partial model PartialValve
   Real q_m3h(unit = "m3/h") "Volumetric flow rate in m3/h";
   Types.Temperature Tin(start = Tin_start);
   Types.Temperature Tout(start = Tout_start);
-  Types.Pressure pin(start = pin_start);
-  Types.Pressure pout;
+  Types.Pressure pin(start = pin_start, nominal = 5e5);
+  Types.Pressure pout(nominal = 5e5);
   Types.Pressure dp(start = dp_start);
   Types.Density rho(start = rho_start, nominal = rho_nom);
 
@@ -76,7 +76,7 @@ partial model PartialValve
   Medium fluidOut(T_start = Tout_start, p_start = pout_start);
 
   // Inputs
-  Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0) "Valve Displacement" annotation (
+  Modelica.Blocks.Interfaces.RealInput opening(max = 1, min = 0, nominal = 1) "Valve Displacement" annotation (
     Placement(visible = true, transformation(origin = {0, 90}, extent = {{-20, -20}, {20, 20}}, rotation = 270), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = 270)));
 equation
   // Mass balance

@@ -13,7 +13,7 @@ model TestCentralisedIV
   replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHPTES actuator annotation (Placement(transformation(extent={{-18,42},{18,78}})));
   inner System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
-  Networks.Centralised.CentralizedSystem_LoadControlledII plant annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
+  replaceable Networks.Centralised.LoadControl.CentralSystemLoadControl_IV plant annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation
   connect(sourceVoltage.outlet, plant.electricPortInlet) annotation (Line(
       points={{-56,0},{-24,0}},

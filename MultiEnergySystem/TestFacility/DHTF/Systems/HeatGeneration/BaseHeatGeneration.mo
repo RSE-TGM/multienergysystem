@@ -24,8 +24,8 @@ partial model BaseHeatGeneration
 
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-310,-22},{-270,18}}),
                                                                                                                          iconTransformation(extent={{-20,80},{20,120}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortOutlet senthot annotation (Placement(transformation(extent={{26,272},{46,292}}), iconTransformation(extent={{90,-70},{110,-50}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet returncold annotation (Placement(transformation(extent={{-26,272},{-6,292}}), iconTransformation(extent={{90,50},{110,70}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortOutlet senthot(m_flow(max = 0)) annotation (Placement(transformation(extent={{26,272},{46,292}}), iconTransformation(extent={{90,-70},{110,-50}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet returncold(m_flow(min = 0)) annotation (Placement(transformation(extent={{-26,272},{-6,292}}), iconTransformation(extent={{90,50},{110,70}})));
   H2GasFacility.Interfaces.FluidPortInlet inletGas                    annotation (Placement(transformation(extent={{-10,-292},{10,-272}}), iconTransformation(extent={{-10,-110},{10,-90}})));
   annotation (Diagram(coordinateSystem(extent={{-300,-300},{300,300}})), Icon(coordinateSystem(grid={1,1})));
 end BaseHeatGeneration;

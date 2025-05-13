@@ -20,7 +20,7 @@ model TestBaseI
     omegaP101(table=[0,2*pi*30; 1e3,2*pi*30]),
     dPeCHP_var(y=30e3))       annotation (Placement(transformation(extent={{-56,48},{-10,94}})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
-    Placement(transformation(extent={{-88,-10},{-68,10}})));
+    Placement(transformation(extent={{-92,-12},{-72,8}})));
   H2GasFacility.Sources.SourcePressure sourceGas(
     redeclare model Medium = Gas,
     X0=X_gas,
@@ -55,7 +55,7 @@ equation
       color={255,204,51},
       thickness=0.5));
   connect(sourceVoltage.outlet, heatGen.electricPortInlet) annotation (Line(
-      points={{-68,0},{-68,-2},{-60,-2}},
+      points={{-72,-2},{-60,-2}},
       color={56,93,138},
       thickness=1));
   connect(sourceGas.outlet, heatGen.inletGas) annotation (Line(
@@ -66,11 +66,11 @@ equation
       points={{10,14},{10,13.6},{-8,13.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(ramp.y, sinkPressure.in_p0) annotation (Line(points={{63,-16},{50,-16},{50,-2},{18,-2},{18,-9.6}}, color={0,0,127}));
   connect(sinkPressure.inlet, heatGen.senthot) annotation (Line(
       points={{12,-18},{2,-18},{2,-17.6},{-8,-17.6}},
       color={140,56,54},
       thickness=0.5));
+  connect(ramp.y, sinkPressure.in_p0) annotation (Line(points={{63,-16},{60,-16},{60,-6},{18,-6},{18,-9.6}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(coordinateSystem(preserveAspectRatio=false)),
     experiment(
       StopTime=1000,

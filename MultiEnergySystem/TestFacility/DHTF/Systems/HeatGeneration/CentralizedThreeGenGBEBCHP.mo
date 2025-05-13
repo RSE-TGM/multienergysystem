@@ -138,7 +138,7 @@ equation
       thickness=0.5));
   connect(const.y, S500.theta) annotation (Line(points={{37,48},{40,48},{40,17.5},{51.5,17.5}}, color={0,0,127}));
   connect(electricPortInlet, S500.outletPower) annotation (Line(
-      points={{30,-280},{30,-31.1},{51.5,-31.1}},
+      points={{30,-280},{26,-280},{26,-234},{32,-234},{32,-31.1},{51.5,-31.1}},
       color={56,93,138},
       thickness=1));
 end CentralizedThreeGenGBEBCHP;

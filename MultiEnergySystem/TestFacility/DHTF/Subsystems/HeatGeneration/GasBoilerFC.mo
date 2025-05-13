@@ -7,8 +7,8 @@ model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
 
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(
     redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P101.Tin_start,
-    Tout_start(displayUnit="K") = TestFacility.Data.PumpData.P101.Tout_start,
+    Tin_start(displayUnit="K") = Tout_start,
+    Tout_start(displayUnit="K") = Tout_start,
     a=TestFacility.Data.PumpData.P101.a,
     b=TestFacility.Data.PumpData.P101.b,
     m_flow_start=m_flow_S1,

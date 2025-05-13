@@ -12,5 +12,7 @@ model TestCentralisedIII_withoutChiller_FC
       bool_thetaFCVC01(y=false),
       thetaFCVC01(table=[0,0; 1e6,0]),
       bool_thetaFCVC02(y=false),
-      thetaFCVC02(table=[0,0.3; 1e6,0.3])));
+      thetaFCVC02(table=[0,0.3; 1e6,0.3]),
+      bool_omegaP901(y=false),
+      omegaP901(table=[0,1.2e5; 1e6,1.2e5])));
 end TestCentralisedIII_withoutChiller_FC;

@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration;
 model CentralizedThreeGenGBEBCHPTES "Three heat generators + thermal energy storage"
   extends CentralizedThreeGenGBEBCHP;
-  Subsystems.HeatGeneration.TES S200(q_m3h_S2=8) "Subsystem S200 - Thermal Storage System" annotation (Placement(transformation(extent={{192,-50},{282,40}})));
+  replaceable Subsystems.HeatGeneration.TES S200(q_m3h_S2=8) "Subsystem S200 - Thermal Storage System" annotation (Placement(transformation(extent={{192,-50},{282,40}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_cold(
     L=24.5,
     t=1.5e-3,

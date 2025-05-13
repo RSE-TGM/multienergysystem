@@ -1,5 +1,5 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
-model TES "S200 - Thermal Energy Storage"
+model TESFC "S200 - Thermal Energy Storage"
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIII(MultiPort(n=n));
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
@@ -42,7 +42,6 @@ model TES "S200 - Thermal Energy Storage"
     Dialog(group = "Initialization"));
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S2 = q*985 annotation (
     Dialog(group = "Initialization"));
-
 
   //-------------------------------
   // Pipes
@@ -90,10 +89,7 @@ model TES "S200 - Thermal Energy Storage"
   parameter DistrictHeatingNetwork.Types.Length L_S2_D201_FT201 = 2;
   parameter DistrictHeatingNetwork.Types.Length h_S2_D201_FT201 = 0;
 
-
   parameter DistrictHeatingNetwork.Types.Length L_S2_PL9 = 21.5;
-
-
 
   //-------------------------------
   // Valves' states
@@ -120,11 +116,11 @@ model TES "S200 - Thermal Energy Storage"
     pin_start=pin_start_tank,
     m_flow_start=m_flow_S2/2)                                                                                                                                                                                                         "Stratified tank 1" annotation (
     Placement(transformation(extent={{14,-338},{-42,-226}})));
-  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P201(
+  DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P201(
     redeclare model Medium = Medium,
     pout_start(displayUnit="Pa") = 3e5,
-    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P201.Tin_start,
-    Tout_start=TestFacility.Data.PumpData.P201.Tout_start,
+    Tin_start(displayUnit="K") = Tin_start,
+    Tout_start=Tout_start,
     a=TestFacility.Data.PumpData.P201.a,
     b=TestFacility.Data.PumpData.P201.b,
     m_flow_start=m_flow_S2,
@@ -141,8 +137,7 @@ model TES "S200 - Thermal Energy Storage"
     headmax=TestFacility.Data.PumpData.P201.headnommax,
     headmin=TestFacility.Data.PumpData.P201.headnommin,
     qnom_inm3h_min=TestFacility.Data.PumpData.P201.qnommin_inm3h,
-    qnom_inm3h_max=TestFacility.Data.PumpData.P201.qnommax_inm3h,
-    use_in_omega=true)                                                                                                                                                                                                         annotation (
+    qnom_inm3h_max=TestFacility.Data.PumpData.P201.qnommax_inm3h)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = -90, origin={-18,-70})));
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=H,
@@ -164,7 +159,7 @@ model TES "S200 - Thermal Energy Storage"
     openingChar=TestFacility.Data.ValveData.FCV201.openingChar,
     dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV201.dp_nom,
     Tin_start(displayUnit="K") = Tout_start,
-    pin_start=pout_start,
+    pin_start=pout_start_pump,
     q_m3h_start=q_m3h_S2/2)                                                                                                                                                                                                       annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-60})));
   DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT202(redeclare model Medium = Medium, T_start=Tout_start, p_start=pout_start)     "Temperature sensor at the outlet of System 200" annotation (
@@ -400,7 +395,7 @@ equation
   connect(PT202.inlet,FV203. outlet) annotation (
     Line(points={{21.6,0},{22,0},{22,-74}},                     color = {140, 56, 54}, thickness = 0.5));
   connect(FV209.outlet,PL_S200_FV209_D201. inlet) annotation (
-    Line(points={{-18,-144},{-18,-194},{-74,-194},{-74,-352},{-56,-352}},                 color = {140, 56, 54}, thickness = 0.5));
+    Line(points={{-18,-144},{-18,-192},{-74,-192},{-74,-352},{-56,-352}},                 color = {140, 56, 54}, thickness = 0.5));
   connect(FT201.inlet,FV203. inlet) annotation (
     Line(points={{22.2,-136.8},{22,-116},{22,-86}},               color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S200_D201_High.outlet,PL_S200_D201_FT201. inlet) annotation (
@@ -416,7 +411,6 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FT201.m_flow, m_flow_) annotation (Line(points={{29.2,-145.9},{29.2,-150},{90,-150},{90,70},{110,70}}, color={0,0,127}));
-  connect(pumpset, P201.in_omega) annotation (Line(points={{-110,70},{-62,70},{-62,-64},{-24,-64},{-24,-65.2}}, color={0,0,127}));
   connect(theta, FCV201.opening) annotation (Line(points={{-110,50},{-90,50},{-90,-60},{-82,-60}}, color={0,0,127}));
   connect(TT202.T, TTout) annotation (Line(points={{31.8,70},{38,70},{38,148},{94,148},{94,30},{110,30}},
                                                                                         color={0,0,127}));
@@ -483,9 +477,10 @@ equation
       points={{-18,51.5},{-18,-4}},
       color={140,56,54},
       thickness=0.5));
+  connect(pumpset, P201.in_m_flow) annotation (Line(points={{-110,70},{-90,70},{-90,154},{-30,154},{-30,-65.2},{-23.52,-65.2}}, color={0,0,127}));
   annotation (Icon(                                             graphics={Bitmap(
           extent={{-48,-46},{48,46}},
           imageSource="iVBORw0KGgoAAAANSUhEUgAAAHEAAAC8CAYAAABPCEG6AAAAAXNSR0IArs4c6QAAC+dJREFUeF7tnQnoL1UVxz+Wtmia7YXSamiZK2hWhJRlRWGbaVJYlraHmoVZlFFRVqagFpW9XvUo0wrayPSZiT2XFNQyzCWlQNQ2K8mytGW+P+6PxmHu/ObO/zfzO3PnHHi8x/vNnTlzPnNn7nLu926G2+gjsNno78BvAIeYwUPgEDOH+CDgcGAX4L4Z3OvYbuFfwPnAmcB/m5yP1UQBvDgAHNvN5+bvulCZovcVg3gUcHJu0Rjx/ewO/Dzmfwyi6L9hxDedm+uHAhtSIX4ZeF1ukRjx/RwGiEmtxWqiQ7RFfKkQbwQ22bq/rLw5ENiq5o6WCvErwOuzCputm/kN8DiHaAtKqjcOMTViBo93iAahpLrkEFMjZvB4h9gCynbA/YGbWhy7ikMcYkPUHwqcUYwH7x+O0RDWq4AbVkGq4ZoOMRKcLYCNwL6V368Gdls0QzAwZIcYCfjpDbMAOwHXDQyq6XIOsSY6RwMnNURtB0CjUFYsBrHsn+YW9RY5BjhPP6SOnY5pxOZFwPcbJrQ1X/osK/SCH20gzl3+J7AncE2uEJ8KXFLUwm0ikH4P7A38dsQQ5fongWNzhPgw4DLgiRFAeoKfEyAbY0hKTZTvmm06LDeIsZZoGdZrga9Zo9fhdaois89bbhCbWqK66Y8B7zcKUG6l1sTsIC5qiapVp++k/tYfdfQ/MZIuRuy5ywrifsA5HVIr7wgNHCt9xUnXxAtqRmTavjW/ALy57cE9HzdpiKk3X2bxI0B9SguWeh9ZvU6/ARzckcKHi2/k8R3LLrvYpCEqL+VC4LGJUdW3UJ1+fRst2KQhCsDWxZjiKwHNGarrpHHRptzZPwNPNzYdNXmI5Zq0LXBpMYe4Y6R63VP8/kLgxxaqX8kHhxiCoRVcZwPPbwD0VuBzxgB6Z78E5BTgnQ2ATlvw+yrZptbE9Vozk9uw25uAzzdQ0Ay/uhP/XiWphmunQjwOOCEniGrQaIJXiVB1ppboPsBfjAJMfZ1qGk3zibfnBPEQ4OsRQBZbonWuxmqiHsDbQgG9Ra4Kc4m/0//lBPEFRU3T6EvVrLZEUyBOZkGN5hKvBHauRMdqS9QhRl6bjy46/Z8uRm+eC/wBOLGY4f+q4W9g1TXPdhsRrJirDtEh3jsCseXeY0pZHCNTr4ljpFbx2SE6RH+dWngGBqmJdwJ/tHC3mfqwfSTZa6md/UxjZ/62HKJ5RIsddIiLY2T+CIdoHtFiBx3i4hiZP2KpEC8Cvmj+lsfroAbstTSvakuF6MNu/T4gg/QTHaJD7DcCGZzda6JD9LFTC8+A18QFFKSk8ZKQ0qgFqbdYoOZTUe0paEsCgXtkKPL3sBTuB+1PMciRXhMjYVby1OVF/1YzBGVTIpX+TzvBWDGHWEPiAYCWgmsJW51JoO8XVgg2qGdIIGKeU/sf4FpAgkozyyl5uI6FMsKVGV5nUtB4DDDLojZibddiKCFaK5w/kjtE6dV8tAHObEWREXhzN9pCnB+vNZbn5FoTXwF8q+FNI9kw6Z/eNXKInykyLd6RI8Q9wgYsW0YA3RzW6d9qDKDcSa2JWalnzHnEWqLz39W1eDZwhUGADrFYbLmoJaqGjHS/v20UoEMMaxNjLdE6br8uVgx/AJAGjhWb9Ov0bYA+8qmm2qkW3rmpBXs6ftIQtXJWHfcudtYa1Ki6XK+pzKQhXl8I0T65Y0SlE35Ax7LLLjZpiJ8C3t0xokcYyhuaNET1CTXE9tJEkN8rRAxeZmiDk0lDnLN7UpiZ0CCGGizHNkDVwLe2VPhbIvg+D3eIpehOZUuFLEdsxLHNlgoSZtDmJtbMayLQZksFyWdaVdRIhahE7iNyGwCXrpv03WI229HFWvUr+ZMKUVNp63OCuCugfRFjppboywHNjFu1FIiSA1X/9p6cIGrnmQ0ROhZbonWuxiB+N+i5qcxc201JXho2zCo9Y6+wR1Q1OFY390qBOKkFNWcWW9EdVIqO5g+lQGyxJeoQI69NSUfrYz/XdvtsyAyz+g2s+uUpi2Mh1eCnQ3SI946Aa7ut5onwmriauC/1qg5xqeFczckGgahMsa6Tr6sJy7iuuilsk1T1eqn9xHGFJB9vHWIGLB2iQ8wgAhncgtdEh5hBBDK4haXWRO9i9PtEDNLFcFmwfiEO0tl3iA6x3whkcHaviQ7Rp6IsPANeEyMUHiyFiWKZ9y5F/s01RYb4qYB2NrVoDrGGykNCktROpd+0zFuZcRb3FnaIFYibBymt/Wrgvq9QW/y4waroECtQlOmmrWjrTOknGgWxZm2Sh5XBfjWghOJZNntOGeBlIG8HTmsg9C7gZGsEE8WINhbqkS8G7s4RopKFf1jouul1Wmdq3OibqMRia5ayFkO+Hw6syw3ijsUK4UuBbSN0tOOcZDNvskYv+JMKMbulbWqJ/qxBRUPitM8DfmoUoNxKhZjVSuGmluic2RuBLxkGOHmITS1RBecnQeRV/5bQwpVhiZg1ppOtiYtaonWgbgzSJ780RnGSECV58quwVj+Vh3S0pbIxW6hpxCYJsasw35zZDoBqpRWbJEQpYWj0patJyP22roV7KDdJiJqh0GtRisOpJiGGVBmx1GukHj9JiAqSvmsaYpMsdGyUphpMzWSo0397apR7Pn6yEKtxfXwQYHhEJOB/LWY39jG6DNwhAluH+cOnRQBKPkSDxto3yqJNHuJ9wvSMdmaL2ZHAKRbpBZ8mD3GRcK0kw95iGKBcS4WY1eYmrwbOaACkYbf9JaGVGURNu52Xy1SUZL+UCFVnVluidb62rYl3F7P6Hyz2AjlBJ8kFovZCfHhNVCy3RFMglrfeU+NME9t/mp8gF4ha6KNNvspmvSWaAnGpq6KsrsVQ3/B84AkhMvr2aVz1dOPfwKp7k892e2DY+FmpGQJqaWC77bM0eYhtA2X5OIdomU5L3xxiy0BZPswhWqbT0jeH2DJQlg8bBOJFhjbHsgyjq28nhs1ZquWX2k/s6pyXW1sEHOLa4meitEM0gWFtTjjEtcXPRGmHaALD2pxYKsQ7CxEDLQ9z6ycC2wPa26PX1qnVWYx+Qjr8WQfpJzrEfsE6xH7jO8jZHeIgYe73Ig6x3/gOcnaHOEiY+72IQ4zEd09A2WJzbbfjgkBDvzi6nd0h1sRtZ+CSsEZj/rP0a/YAru8W515LOcRKeJWHelkpA678s6Z83tMrjm4nd4iluN1P6e1hzWJdONcFNaZuoe6vVAzidaUVzXNtN30ibpEruSQPV8MqSNqWNmYHF4tTz+qPReczt03j1wVuBnZXJniOEI8B9LqMmbLFD+wc5n4LpkCUJzPJz9wgagGp1uJrrWKdXRFesRbF+eRvKsT1euPkBLGuJVoGeWuhvrh3eA31W5+6nz0VYlbabk0tUYX0H4U02L7FUu/Lu8d3kJKThbioJaroq694bsAgbTep9t4wCJa0i0wWojQ/paCYYlqk+RrgmymFBjh2khCfCSgXtotJw0aKUtJBtWKThHjUGrW8n2JMz2aSECXr9Z2O1Ug1UIJFd3Qs30exSUJUUpHkoJ/RIaISLdCMhiWbJEQB2ArQKI203bYIRHYFpAkeM6n1H2BQfXiyEKugJNZ+9oItFVRzLb1G5/fgEIMSvxT5Y7VQsiEatcllS4WsRmz0JEtwQXtiaG+MOlPfULX0QksfwYovqTVxtl1SLmOnauDoFSqZrJjNdnMxDFCupULUnOJ7c4H4oUKQ/fgGQNoXSvtDWbcUiHeFNJNrc4HYdPNWW6J1D1QbiJrZvyq0yC/QSXKBqFnu7WqiIg00qy3RFIhLXRVldS2GXpcagiub9ZaoQ6xEQJJgmuU+KLxdJAl2yAjmD6sgPdsNeBSwTdB1m+3yOTJziCMD5q/TDIA5RIf4/wjk0sXIhal/EzMgOQhENd03ZRAsq7egzHTNj1ZtqZ19qzefu18OMQPCnSBqF2wVdLMRgUOBDTFXYq3To4uRj5Ns+O9eALsV+35oF55ai0HUx/ViQAlHbquNwMKNymIQ5bZAajZcIOv0xlZ7a/lfXZO+GwvBCK2nbLQmiIvK+u9GIuAQjYBYixv/A8Cp3eot+b2fAAAAAElFTkSuQmCC",
           fileName="modelica://MultiEnergySystem/../../../../../Users/muro/Downloads/2ppk0w6u.png")}),
                                                                  Diagram(coordinateSystem(extent={{-240,-360},{240,240}}, preserveAspectRatio=false)));
-end TES;
+end TESFC;

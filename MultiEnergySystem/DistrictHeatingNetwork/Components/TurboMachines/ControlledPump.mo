@@ -1,6 +1,6 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.TurboMachines;
 model ControlledPump
-  extends TurboMachines.BaseClass.PumpBase;
+  extends TurboMachines.BaseClass.PumpBase(omega(start = 2*pi*30, max = 2*pi*50));
   parameter Boolean control_m_flow = true "= false to control outlet pressure outlet.p instead of q_m3hr" annotation (
     Evaluate = true);
   parameter Boolean use_m_flow = true "= true to use input signal m_flow_set instead of m_flow_nominal" annotation (

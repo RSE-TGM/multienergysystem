@@ -26,11 +26,11 @@ model ControlledGasBoiler
   //-------------------------------
   // Variables
   //-------------------------------
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(nominal = 2e-3, start = 1e-3) "mass flowrate of the fuel";
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = 2e-3, start = 1e-3) "mass flowrate of the fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(nominal = 4e-3, start = 1e-3) "mass flowrate of the fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = 4e-3, start = 1e-3) "mass flowrate of the fuel";
   DistrictHeatingNetwork.Types.Power Pheat_ref(nominal = Pnom) "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
-  DistrictHeatingNetwork.Types.Pressure ploss(start = 0.0054827 + m_flow_nom*(0.00471 + 0.1417671*m_flow_nom));
+  DistrictHeatingNetwork.Types.Pressure ploss(start = m_flow_nom*(0.0159 +  0.0427*m_flow_nom)*1e5);
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
   Gas fuel(T_start = 15 + 273.15, p_start = 1.013e5) "Reference outlet fluid";
 
@@ -45,7 +45,7 @@ equation
   inletfuel.h_out = 0 "Dummy equation considering not fuel flow reversal";
   inletfuel.Xi = fuel.Xi_start "Dummy equation considering not fuel flow reversal";
   inlet.p - outlet.p = ploss;
-  ploss = m_flow*(0.0159 +  0.0427*m_flow)*1e5;
+  ploss = homotopy(m_flow*(0.0159 +  0.0427*m_flow)*1e5, 0.2508e5*m_flow);
   fluidOut_ref.p = pout;
   fluidOut_ref.T = Tout_ref;
   hout_ref = fluidOut_ref.h;

@@ -68,12 +68,6 @@ model TestBaseII_MFC
     use_in_p0=true,
     T0(displayUnit="K") = 80 + 273.15,
     R=1e-3)                                                annotation (Placement(transformation(extent={{208,44},{228,64}})));
-  DistrictHeatingNetwork.Components.Valves.FlowCoefficientOnOffValve FV933(
-    Kv=33,
-    dp_nom=50000,
-    Tin_start=338.15,
-    pin_start=200000)                                                                                                                                                                                annotation (
-    Placement(visible = true, transformation(origin={2,-1},       extent={{5,5},{-5,-5}},      rotation=90)));
   Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=false)         annotation (
     Placement(transformation(extent={{26,24},{17,33}})));
 equation
@@ -97,16 +91,6 @@ equation
       points={{196,44},{196,52},{186,52},{186,20},{42,20},{42,-4},{12,-4},{12,-18},{2,-18},{2,-17.6},{-8,-17.6}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV933.inlet, heatGen.returncold) annotation (Line(
-      points={{2,4},{2,13.6},{-8,13.6}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FV933.outlet, heatGen.senthot) annotation (Line(
-      points={{2,-6},{2,-17.6},{-8,-17.6}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FV933_OnOff.y, FV933.u) annotation (Line(points={{16.55,28.5},{12,28.5},{12,36},{34,36},{34,-1},{3.6,-1}},
-                                                                                                            color={255,0,255}));
   annotation (experiment(
       StopTime=5500,
       Tolerance=1e-06,

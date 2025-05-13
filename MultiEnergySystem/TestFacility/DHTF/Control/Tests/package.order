@@ -7,6 +7,7 @@ TestCentralisedII
 TestCentralisedIII
 TestCentralisedIV
 TestCentralisedIII_withoutChiller
+TestCentralisedIV_withoutChiller
 TestCentralisedV
 StepResponseBase
 SR_OneGen_CaseA

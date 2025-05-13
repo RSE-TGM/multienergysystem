@@ -34,8 +34,8 @@ model ControlledCHP "Model of an ideal controlled CHP"
   //-------------------------------
   // Variables
   //-------------------------------
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_ref(nominal = m_flow_fuel_nom, start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
-  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = m_flow_fuel_nom, start = m_flow_fuel_nom) "mass flowrate of the motor fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_ref(nominal = m_flow_fuel_nom, start = m_flow_fuel_nom/2) "mass flowrate of the motor fuel";
+  DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = m_flow_fuel_nom, start = m_flow_fuel_nom/2) "mass flowrate of the motor fuel";
   DistrictHeatingNetwork.Types.Power Pth_ref "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   DistrictHeatingNetwork.Types.Temperature Tout_ref;

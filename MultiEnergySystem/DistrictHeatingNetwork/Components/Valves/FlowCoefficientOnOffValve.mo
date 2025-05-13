@@ -23,7 +23,7 @@ model FlowCoefficientOnOffValve
   //-------------------------------
   // Nominal Conditions
   //-------------------------------
-  parameter Modelica.Units.SI.PressureDifference dp_nom = 2e5 "Pressure drop between supply and return, as imposed by the differential pump";
+  parameter Modelica.Units.SI.PressureDifference dp_nom = 0.5e5 "Pressure drop between supply and return, as imposed by the differential pump";
   parameter Types.Density rho_nom = 1000 "Nominal fluid density at supply";
   parameter Real q_m3h_nom = 6 "Nominal volumetric flowrate in m3h";
 

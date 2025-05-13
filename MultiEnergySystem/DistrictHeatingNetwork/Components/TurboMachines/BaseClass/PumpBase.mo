@@ -83,10 +83,10 @@ partial model PumpBase "Base model to develop water pump models"
   Real q_m3h(unit = "m3/h", start = m_flow_start*3600/1000, nominal = qnom_inm3h_max) "Volumetric flow rate in m3/hr";
   Types.Pressure dp(nominal = dpnom) "Outlet pressure minus inlet pressure";
   Types.Length head(nominal = headmax) "Pump head";
-  Types.Pressure pin(start = pin_start) "Pressure of entering fluid";
-  Modelica.Units.SI.Pressure pout "Pressure of outgoing fluid";
-  Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start) "Enthalpy of entering fluid";
-  Modelica.Units.SI.SpecificEnthalpy hout(start = hin_start, nominal = 1e6) "Enthalpy of outgoing fluid";
+  Types.Pressure pin(start = pin_start, nominal = 5e5) "Pressure of entering fluid";
+  Modelica.Units.SI.Pressure pout(nominal = 5e5) "Pressure of outgoing fluid";
+  Modelica.Units.SI.SpecificEnthalpy hin(start = hin_start, nominal = 2e6) "Enthalpy of entering fluid";
+  Modelica.Units.SI.SpecificEnthalpy hout(start = hin_start, nominal = 2e6) "Enthalpy of outgoing fluid";
   Types.Density rhoin(nominal = 1e3) "Density of entering fluid";
   Types.Density rhoout(nominal = 1e3) "Density of outgoing fluid";
   Types.Temperature Tin(start = Tin_start) "Liquid inlet temperature";

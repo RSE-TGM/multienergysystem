@@ -79,6 +79,8 @@ model CentralizedOneGenGB
     Pmaxnom=147.6e3*0.92) annotation (Placement(transformation(extent={{-220,-48},{-132,40}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (Placement(transformation(extent={{-310,-22},{-270,18}}),
                                                                                                                          iconTransformation(extent={{-20,80},{20,120}})));
+  Modelica.Blocks.Sources.BooleanConstant FV933_OnOff(k=false)         annotation (
+    Placement(transformation(extent={{22,266},{13,275}})));
 equation
   connect(PL_S100_rCD_cold.outlet,S100. inlet) annotation (Line(
       points={{-192,64},{-192,54.225},{-193.16,54.225},{-193.16,46.6}},
@@ -108,12 +110,12 @@ equation
       points={{0,-282},{-176,-282},{-176,-55.04}},
       color={182,109,49},
       thickness=0.5));
-  connect(PL_S100_rCD_cold.inlet, returncold) annotation (Line(
-      points={{-192,84},{-194,84},{-194,248},{-18,248},{-18,282},{-16,282}},
+  connect(PL_S100_rCD_cold.inlet, junction.outlet) annotation (Line(
+      points={{-192,84},{-192,222},{-16,222},{-16,234}},
       color={140,56,54},
       thickness=0.5));
-  connect(PL_S100_rCD_hot.outlet, senthot) annotation (Line(
-      points={{-158,84},{-158,238},{36,238},{36,282}},
+  connect(PL_S100_rCD_hot.outlet, junction2_1.inlet) annotation (Line(
+      points={{-158,84},{-158,214},{36,214},{36,234}},
       color={140,56,54},
       thickness=0.5));
   annotation (Diagram(coordinateSystem(extent={{-300,-300},{300,300}})), Icon(coordinateSystem(grid={1,1})));

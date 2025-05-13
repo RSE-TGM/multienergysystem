@@ -24,8 +24,8 @@ model ElectricBoilerFC "System 400 with ideal flow control"
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump
     P401(
     redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = TestFacility.Data.PumpData.P401.Tin_start,
-    Tout_start(displayUnit="K") = TestFacility.Data.PumpData.P401.Tout_start,
+    Tin_start(displayUnit="K") = Tout_start,
+    Tout_start(displayUnit="K") = Tout_start,
     a=TestFacility.Data.PumpData.P401.a,
     b=TestFacility.Data.PumpData.P401.b,
     m_flow_start=m_flow_S4,

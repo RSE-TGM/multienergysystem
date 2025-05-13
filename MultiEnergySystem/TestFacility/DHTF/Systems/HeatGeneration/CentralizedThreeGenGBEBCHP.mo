@@ -104,14 +104,6 @@ equation
       points={{120,61},{120,53.725},{119.45,53.725},{119.45,46.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(suddenAreaChange3.inlet, returncold) annotation (Line(
-      points={{84,112},{86,112},{86,198},{-16,198},{-16,282}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(suddenAreaChange2.inlet, senthot) annotation (Line(
-      points={{120,112},{120,214},{38,214},{38,282},{36,282}},
-      color={140,56,54},
-      thickness=0.5));
   connect(inletGas, S500.inletFuel) annotation (Line(
       points={{0,-282},{0,-298},{101,-298},{101,-57.2}},
       color={182,109,49},
@@ -141,4 +133,12 @@ equation
       points={{30,-280},{26,-280},{26,-234},{32,-234},{32,-31.1},{51.5,-31.1}},
       color={56,93,138},
       thickness=1));
+  connect(suddenAreaChange3.inlet, junction.outlet) annotation (Line(
+      points={{84,112},{86,112},{86,194},{-14,194},{-14,222},{-16,222},{-16,234}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(suddenAreaChange2.inlet, junction2_1.inlet) annotation (Line(
+      points={{120,112},{118,112},{118,210},{36,210},{36,234}},
+      color={140,56,54},
+      thickness=0.5));
 end CentralizedThreeGenGBEBCHP;

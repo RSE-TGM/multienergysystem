@@ -33,14 +33,6 @@ equation
       points={{220,60},{220,53.875},{219.45,53.875},{219.45,46.75}},
       color={140,56,54},
       thickness=0.5));
-  connect(returncold, PL_S200_rCD_cold.inlet) annotation (Line(
-      points={{-16,282},{-16,250},{220,250},{220,80}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(senthot, PL_S200_rCD_hot.outlet) annotation (Line(
-      points={{36,282},{36,254},{256,254},{256,80}},
-      color={140,56,54},
-      thickness=0.5));
   connect(PL_S200_rCD_hot.inlet, S200.outlet) annotation (Line(
       points={{256,60},{256,53.375},{255.45,53.375},{255.45,46.75}},
       color={140,56,54},
@@ -69,4 +61,12 @@ equation
       index=-1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
+  connect(PL_S200_rCD_cold.inlet, junction.outlet) annotation (Line(
+      points={{220,80},{220,220},{-16,220},{-16,234}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S200_rCD_hot.outlet, junction2_1.inlet) annotation (Line(
+      points={{256,80},{256,228},{36,228},{36,234}},
+      color={140,56,54},
+      thickness=0.5));
 end CentralizedThreeGenGBEBCHPTES;

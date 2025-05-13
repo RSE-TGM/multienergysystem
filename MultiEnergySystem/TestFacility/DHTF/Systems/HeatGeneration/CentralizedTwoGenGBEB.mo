@@ -97,6 +97,38 @@ model CentralizedTwoGenGBEB
   Modelica.Blocks.Sources.BooleanExpression FV402_Status(y=true) annotation (Placement(transformation(extent={{14,98},{-6,118}})));
   ElectricNetwork.Interfaces.ElectricPortInlet electricPortInlet annotation (
     Placement(transformation(extent={{20,-290},{40,-270}}),   iconTransformation(origin={-46,150},extent={{-64,-160},{-44,-140}})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Cold_S400_S100(
+    redeclare model Medium = WaterHot,
+    L=1,
+    h=0,
+    t=2e-3,
+    set_m_flow_start=true,
+    m_flow_start=1,
+    pin_start=pin_start_S100,
+    Tin_start=Tin_start_S100,
+    Tout_start=Tin_start_S100,
+    Di=72e-3,
+    nPipes=1,
+    n=n,
+    hctype=hctype,
+    cf=cf)                                                                                                                                                                                                         "Pipe connecting the system S400 and S100 cold side" annotation (
+    Placement(transformation(extent={{9.75,9.75},{-9.75,-9.75}},          rotation = 180, origin={-120.25,133.75})));
+  DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV rackCD_Hot_S100_S400(
+    redeclare model Medium = WaterHot,
+    L=1,
+    h=0,
+    t=2e-3,
+    set_m_flow_start=true,
+    m_flow_start=1,
+    pin_start=pout_start_S400,
+    Tin_start=Tout_start_S100,
+    Tout_start=Tout_start_S100,
+    Di=72e-3,
+    nPipes=1,
+    n=n,
+    hctype=hctype,
+    cf=cf)                                                                                                                                                                                                         "Pipe connecting the outlet of gas boiler and the outlet of electric boiler" annotation (
+    Placement(transformation(extent={{-10,10},{10,-10}},                  rotation = 180, origin={-94,150})));
 equation
   connect(PL_S400_rCD_cold.inlet,FV401. outlet) annotation (
     Line(points={{-54,84},{-54,98}},          color = {140, 56, 54}, thickness = 0.5));
@@ -108,14 +140,6 @@ equation
       thickness=0.5));
   connect(PL_S400_rCD_hot.inlet,S400. outlet) annotation (Line(
       points={{-18,64},{-18,57.3},{-18.55,57.3},{-18.55,46.75}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FV401.inlet, returncold) annotation (Line(
-      points={{-54,118},{-54,228},{-16,228},{-16,282}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FV402.outlet, senthot) annotation (Line(
-      points={{-18,118},{-18,220},{36,220},{36,282}},
       color={140,56,54},
       thickness=0.5));
   connect(FV401_Status.y, FV401.u) annotation (Line(points={{-71,108},{-57.2,108}}, color={255,0,255}));
@@ -140,4 +164,21 @@ equation
       points={{-290,-2},{-290,-74},{-106,-74},{-106,26.5},{-86.5,26.5}},
       color={255,204,51},
       thickness=0.5));
+  connect(rackCD_Cold_S400_S100.outlet, FV401.inlet) annotation (Line(
+      points={{-110.5,133.75},{-54,133.75},{-54,118}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV402.outlet, rackCD_Hot_S100_S400.inlet) annotation (Line(
+      points={{-18,118},{-18,150},{-84,150}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackCD_Cold_S400_S100.inlet, junction.outlet) annotation (Line(
+      points={{-130,133.75},{-162,133.75},{-162,134},{-192,134},{-192,222},{-16,222},{-16,234}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(rackCD_Hot_S100_S400.outlet, junction2_1.inlet) annotation (Line(
+      points={{-104,150},{-158,150},{-158,214},{36,214},{36,234}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FV933_OnOff.y, FV933.u) annotation (Line(points={{12.55,270.5},{8.25,270.5},{8.25,246.73}}, color={255,0,255}));
 end CentralizedTwoGenGBEB;

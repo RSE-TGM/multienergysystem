@@ -1,11 +1,9 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.Tests;
 model TestBaseII_MFC
-  extends TestBaseI(heatGen(
+  extends TestBaseI(
+    redeclare HeatGeneration.CentralizedThreeGenGBEBCHP_FC heatGen(
       pout_start_S100=220000,
-    redeclare TestFacility.DHTF.Subsystems.HeatGeneration.GasBoilerFC S100,
-      pout_start_S400=220000,
-    redeclare TestFacility.DHTF.Subsystems.HeatGeneration.ElectricBoilerFC S400,
-    redeclare TestFacility.DHTF.Subsystems.HeatGeneration.CHPFC S500),
+      pout_start_S400=220000),
     actuator(omegaP101(table=[0,1.6; 1e3,1.6]),
     domegaP401(table=[0,1; 1e3,1]),
       domegaP501_var(y=1.0)),

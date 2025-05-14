@@ -16,6 +16,8 @@ model CHPFC "S500 - Combined Heat and Power System Model"
 
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledCHP CHP(
     redeclare model Medium = Medium,
+    pin_start=200000,
+    pout_start=190000,
     redeclare model Gas = Gas,
     Tin_start=Tin_start_CHP,
     Tout_start=Tout_start_CHP,
@@ -66,11 +68,11 @@ model CHPFC "S500 - Combined Heat and Power System Model"
     annotation (Placement(transformation(extent={{-34,-69.75},{-24,-79.75}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S500_ReducerOut_FV501(
     t=t_S5,
+    pin_start=pout_low_start,
     Di=Di_CHP,
     redeclare model HeatTransferModel = HeatTransferModel,
     set_m_flow_start=true,
     m_flow_start=m_flow_low_start,
-    pout_start=pout_low_start,
     Tin_start=Tout_low_start,
     Tout_start=Tout_low_start,
     redeclare model Medium = Medium,
@@ -139,8 +141,7 @@ model CHPFC "S500 - Combined Heat and Power System Model"
                          sourcePressure(
     p0=p_low_ref,
     T0=Tout_low_start,
-    R=0)                                           annotation (Placement(transformation(extent={{-29.25,
-            -70.5},{-20,-61.25}})));
+    R=1e-4)                                        annotation (Placement(transformation(extent={{-29.25,-70.25},{-20,-61}})));
   DistrictHeatingNetwork.Sources.VariableMassFlowPump
                                CHPCWP_ "Water circulating pump for heating" annotation (Placement(transformation(extent={{-4.25,
             4.25},{4.25,-4.25}},
@@ -172,17 +173,17 @@ model CHPFC "S500 - Combined Heat and Power System Model"
     redeclare model Medium = Medium,
     Tin_start(displayUnit="K") = Tout_high_start,
     Tout_start(displayUnit="K") = Tout_high_start,
+    m_flow_start=m_flow_high_start,
     a=TestFacility.Data.PumpData.P501.a,
     b=TestFacility.Data.PumpData.P501.b,
     dpnom=TestFacility.Data.PumpData.P501.dpnom,
     etaelec=TestFacility.Data.PumpData.P501.etaelec,
     etamech=TestFacility.Data.PumpData.P501.etamech,
     etanom=TestFacility.Data.PumpData.P501.etanom,
-    hin_start=TestFacility.Data.PumpData.P501.hin_start,
     m_flow_nom=TestFacility.Data.PumpData.P501.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.P501.omeganom,
-    pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P501.pin_start,
-    pout_start(displayUnit="Pa") = TestFacility.Data.PumpData.P501.pout_start,
+    pin_start(displayUnit="Pa") = pin_high_start,
+    pout_start(displayUnit="Pa") = pout_high_start,
     qnom_inm3h=TestFacility.Data.PumpData.P501.qnom_inm3h,
     rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P501.rhonom,
     headnom=TestFacility.Data.PumpData.P501.headnom,
@@ -312,7 +313,7 @@ model CHPFC "S500 - Combined Heat and Power System Model"
     nPipes_cold=TestFacility.Data.BPHEData.E501.nPipes_cold,
     nPipes_hot=TestFacility.Data.BPHEData.E501.nPipes_hot,
     nPlates=TestFacility.Data.BPHEData.E501.nPlates,
-    pin_start_cold=TestFacility.Data.BPHEData.E501.pin_start_cold,
+    pin_start_cold=pin_high_start,
     pin_start_hot=TestFacility.Data.BPHEData.E501.pin_start_hot,
     pout_start_cold=TestFacility.Data.BPHEData.E501.pout_start_cold,
     pout_start_hot=TestFacility.Data.BPHEData.E501.pout_start_hot,
@@ -326,7 +327,9 @@ model CHPFC "S500 - Combined Heat and Power System Model"
     u_nom_cold=TestFacility.Data.BPHEData.E501.u_nom_cold,
     u_nom_hot=TestFacility.Data.BPHEData.E501.u_nom_hot,
     UA_ext=750,
-    UA_int=750) annotation (Placement(transformation(
+    UA_int=750,
+    LMTD_nom=TestFacility.Data.BPHEData.E501.LMTD)
+                annotation (Placement(transformation(
         extent={{-11.875,-19.875},{11.875,19.875}},
         rotation=-90,
         origin={-28.625,12.125})));
@@ -402,7 +405,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(sourcePressure.outlet,variableDifferentialPressurePump. inlet) annotation (Line(
-      points={{-20,-65.875},{-13.75,-65.875},{-13.75,-74.75},{-3.25,-74.75}},
+      points={{-20,-65.625},{-13.75,-65.625},{-13.75,-74.75},{-3.25,-74.75}},
       color={140,56,54},
       thickness=0.5));
   connect(PL_S500_EX501_P501.outlet,P501. inlet) annotation (Line(

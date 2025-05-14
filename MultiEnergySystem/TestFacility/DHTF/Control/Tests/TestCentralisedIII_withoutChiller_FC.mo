@@ -1,7 +1,33 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.Tests;
 model TestCentralisedIII_withoutChiller_FC
   extends TestCentralisedIII_withoutChiller(
-    redeclare DHTF.Networks.Centralised.LoadControl.CSLC_III_withoutChiller_FC plant(heatGeneration(X_gas={1})), openLoopActuatorBase_III(
+    redeclare DHTF.Networks.Centralised.LoadControl.CSLC_III_withoutChiller_FC plant(heatGeneration(X_gas={1}), load(
+        EX701_Tin_hot=353.15,
+        EX701_Tout_hot=338.15,
+        EX711_Tin_hot=353.15,
+        EX711_Tout_hot=338.15,
+        EX721_Tin_hot=353.15,
+        EX721_Tout_hot=338.15,
+        EX731_Tin_hot=353.15,
+        EX731_Tout_hot=338.15,
+        EX701_Tin_cold=288.15,
+        EX701_Tout_cold=313.15,
+        EX711_Tin_cold=288.15,
+        EX711_Tout_cold=313.15,
+        EX721_Tin_cold=288.15,
+        EX721_Tout_cold=313.15,
+        EX731_Tin_cold=288.15,
+        EX731_Tout_cold=313.15,
+        S701(y_start_PI_TT=0.4,
+             y_start_PI_Pt=0.6),
+        S711(y_start_PI_TT=0.4,
+             y_start_PI_Pt=0.6),
+        S721(y_start_PI_TT=0.4,
+             y_start_PI_Pt=0.6),
+        S731(y_start_PI_TT=0.4,
+             y_start_PI_Pt=0.6)),
+      distribution(S900(P901(omega(start = 2*pi*40))))),
+    openLoopActuatorBase_III(
       omegaP101(table=[0,1.4; 1E6,1.4]),
       domegaP401(table=[0,1.88; 1E6,1.88]),
       domegaP501_var(y=0.95764),

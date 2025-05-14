@@ -51,12 +51,8 @@ model RG2i_source2_CH4H2_demand
           0.0083; 83640,0.0083; 83700,0.0085; 84540,0.0085; 84600,0.0083; 85440,
           0.0083; 85500,0.0083; 86340,0.0083; 86400,0.0107; 87240,0.0107; 90000,
           0.0107]),
-    m_flow_H1(
-      height=0,
-      offset=0*0.0001,
-      startTime=0*7*3600),
+    m_flow_H1(offset=0.0001, startTime=7*3600),
     Immissione_2(G=1e-10, use_in_X0=true),
-    m_flow_H5(height=0, startTime=26*3600),
     GRM_1(massflowratedemand=[0,0.0443; 840,0.0443; 900,0.0441; 1740,0.0441;
           1800,0.0558; 2640,0.0558; 2700,0.0552; 3540,0.0552; 3600,0.0445; 4440,
           0.0445; 4500,0.0552; 5340,0.0552; 5400,0.056; 6240,0.056; 6300,0.0443;
@@ -293,7 +289,8 @@ model RG2i_source2_CH4H2_demand
           0.0492; 81840,0.0492; 81900,0.039; 82740,0.039; 82800,0.0388; 83640,
           0.0388; 83700,0.0396; 84540,0.0396; 84600,0.0388; 85440,0.0388; 85500,
           0.039; 86340,0.039; 86400,0.0492; 87240,0.0492; 90000,0.0492]),
-    sds17e16(n=6));
+    sds17e16(n=6),
+    m_flow_H5(startTime=10*3600));
 
     //X_inj = {0, 0, 0, 0, 0, 0, 1},
     // X_start= {0.9, 0.04, 0.04, 0.005, 0.005, 0.01, 0.0},
@@ -301,7 +298,7 @@ model RG2i_source2_CH4H2_demand
     //parameter Types.MassFraction X_inj[nX] = {0, 0, 0, 0, 0, 0, 1};
     //parameter Types.MassFraction X_algeria[nX] = {0.87, 0.09, 0.009, 0.001, 0.02, 0.01, 0};
   Modelica.Blocks.Sources.RealExpression realExpression[2](y=if (time > (7*3600)
-         and time < (10*3600 + 300)) then {1,0} else {1,0})
+         and time < (10*3600 + 300)) then {0,1} else {1,0})
     annotation (Placement(transformation(extent={{-354,274},{-334,294}})));
   Modelica.Blocks.Sources.Ramp p_ref(
     offset=4.93*10^5,
@@ -332,8 +329,5 @@ equation
           -104,18},{-102,18}}, color={0,0,127}));
   annotation (Documentation(info="<html>
 <p>The 2 injection sources model is extended redeclaring the medium with CH4+H2 fluid. </p>
-</html>"), experiment(
-      StopTime=86400,
-      Tolerance=0.01,
-      __Dymola_Algorithm="Dassl"));
+</html>"), experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
 end RG2i_source2_CH4H2_demand;

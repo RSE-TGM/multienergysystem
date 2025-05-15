@@ -10,16 +10,16 @@ model TestCentralisedIII
     Placement(transformation(extent = {{-14, -14}, {14, 14}}, rotation = 180, origin={58,0})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(extent = {{-76, -10}, {-56, 10}})));
-  replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHP_II openLoopActuatorBase_III(
+  replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHP_II actuator(
     bool_omegaP101(y=false),
     omegaP101(table=[0,2*pi*30; 1e3,2*pi*30]),
     PtEX7X1SP(table=[0,20000,30000,30000,30000; 3600,20000,30000,30000,30000; 7200,20000,30000,30000,30000; 10800,30000,30000,35000,35000; 14400,36000,36000,40000,40000; 18000,40000,40000,42000,42000; 21600,38000,38000,38000,38000; 25200,35000,35000,
-          35000,35000; 28800,30000,30000,25000,25000; 32400,30000,30000,25000,25000; 36000,30000,30000,25000,25000; 39600,30000,30000,25000,25000; 43200,30000,30000,25000,25000; 46800,30000,30000,28000,28000; 50400,30000,30000,35000,35000; 54000,32000,
-          32000,35000,35000; 57600,34000,34000,35000,35000; 61200,40000,40000,40000,40000; 64800,42000,42000,42000,42000; 68400,43000,43000,43000,43000; 72000,45000,45000,45000,45000; 75600,48000,48000,48000,48000; 79200,48000,48000,48000,48000; 82800,
-          48000,48000,48000,48000; 86400,48000,48000,48000,48000]),
+          35000,35000; 28800,30000,30000,25000,25000; 32400,30000,30000,25000,25000; 36000,30000,30000,25000,25000; 39600,30000,30000,25000,25000; 43200,30000,30000,25000,25000; 46800,30000,30000,28000,28000; 50400,30000,30000,35000,35000; 54000,
+          32000,32000,35000,35000; 57600,34000,34000,35000,35000; 61200,40000,40000,40000,40000; 64800,42000,42000,42000,42000; 68400,43000,43000,43000,43000; 72000,45000,45000,45000,45000; 75600,48000,48000,48000,48000; 79200,48000,48000,48000,
+          48000; 82800,48000,48000,48000,48000; 86400,48000,48000,48000,48000]),
     bool_domegaP401(y=false),
     domegaP401(table=[0,2*pi*45; 1e3,2*pi*45]),
-    domegaP501_var(y=2*pi*30))                                                                                                         annotation (Placement(transformation(extent={{-18,42},{18,78}})));
+    domegaP501_var(y=2*pi*30)) annotation (Placement(transformation(extent={{-18,42},{18,78}})));
 
   inner System system annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
@@ -33,7 +33,7 @@ equation
       points={{44,3.55271e-15},{34,3.55271e-15},{34,0},{24,0}},
       color={182,109,49},
       thickness=0.5));
-  connect(openLoopActuatorBase_III.controlSignalBus, plant.controlSignalBus) annotation (Line(
+  connect(actuator.controlSignalBus, plant.controlSignalBus) annotation (Line(
       points={{0,42},{0,24}},
       color={255,204,51},
       thickness=0.5));

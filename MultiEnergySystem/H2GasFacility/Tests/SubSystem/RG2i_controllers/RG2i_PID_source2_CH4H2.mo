@@ -25,7 +25,7 @@ model RG2i_PID_source2_CH4H2
   Modelica.Blocks.Sources.Ramp m_flow_H1(
     height=25/3600,
     duration=300,
-    offset=0.0001,
+    offset=0.001,
     startTime=0*3600)                                                                                       annotation (
     Placement(visible = true, transformation(origin={-409,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(

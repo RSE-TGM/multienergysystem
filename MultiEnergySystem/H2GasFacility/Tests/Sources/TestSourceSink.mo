@@ -9,4 +9,5 @@ model TestSourceSink
 equation
   connect(source.outlet, sink.inlet) annotation (
     Line(points = {{-24, -6}, {14, -6}}, color = {182, 109, 49}));
+  annotation (experiment(StopTime=10, __Dymola_Algorithm="Dassl"));
 end TestSourceSink;

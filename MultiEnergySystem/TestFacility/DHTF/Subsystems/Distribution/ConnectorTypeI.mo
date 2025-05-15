@@ -79,7 +79,7 @@ model ConnectorTypeI "Model to be used for connecting one source or one load to 
     hctype=hctype,
     nPipes=nPipes,
     cf=cf)         "Pipeline receiving water from the inletHot"
-    annotation (Placement(transformation(extent={{-94,-54},{-66,-26}})));
+    annotation (Placement(transformation(extent={{-80,-54},{-52,-26}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV pipeOutletCold(
     L=L_outcold,
     h=h_outcold,
@@ -139,15 +139,15 @@ model ConnectorTypeI "Model to be used for connecting one source or one load to 
         origin={50,0})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FThot(redeclare model Medium = Medium,T_start=T_start_hot, p_start=pin_start_hot) annotation (Placement(transformation(extent={{24,-44},{38,-30}})));
   DistrictHeatingNetwork.Sensors.IdealMassFlowSensor FTcold(redeclare model Medium = Medium,T_start=T_start_cold, p_start=pin_start_cold) annotation (Placement(transformation(extent={{-26,36},{-40,50}})));
-  DistrictHeatingNetwork.Components.Fittings.Junction junctionHotSide "Junction in the hot line of a two-line connector" annotation (Placement(transformation(extent={{-56,-46},{-44,-34}})));
+  DistrictHeatingNetwork.Components.Fittings.Junction junctionHotSide "Junction in the hot line of a two-line connector" annotation (Placement(transformation(extent={{-46,-46},{-34,-34}})));
   DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdSide "Junction in the cold line of a two-line connector" annotation (Placement(transformation(extent={{56,34},{44,46}})));
 equation
   connect(pipeInletHot.inlet, inletHot) annotation (Line(
-      points={{-94,-40},{-114,-40}},
+      points={{-80,-40},{-100,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletHot.outlet, outletComp) annotation (Line(
-      points={{-50,-84},{-50,-114}},
+      points={{-50,-84},{-50,-100}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeInletCold.wall, MultiPort) annotation (Line(
@@ -155,7 +155,7 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(pipeInletHot.wall, MultiPort) annotation (Line(
-      points={{-80,-34.26},{-80,-20},{0,-20},{0,110}},
+      points={{-66,-34.26},{-66,-20},{0,-20},{0,110}},
       color={255,101,98},
       thickness=0.5));
   connect(pipeOutletHot.wall, MultiPort) annotation (Line(
@@ -163,11 +163,11 @@ equation
       color={255,101,98},
       thickness=0.5));
   connect(inletComp, pipeInletCold.inlet) annotation (Line(
-      points={{51,-113},{50,-113},{50,-14}},
+      points={{50,-100},{50,-100},{50,-14}},
       color={140,56,54},
       thickness=0.5));
   connect(FThot.outlet, outletHot) annotation (Line(
-      points={{35.2,-39.8},{68,-39.8},{68,-40},{114,-40}},
+      points={{35.2,-39.8},{68,-39.8},{68,-40},{100,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeOutletCold.outlet, FTcold.inlet) annotation (Line(
@@ -175,7 +175,7 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(FTcold.outlet, outletCold) annotation (Line(
-      points={{-37.2,40.2},{-78,40.2},{-78,40},{-114,40}},
+      points={{-37.2,40.2},{-78,40.2},{-78,40},{-100,40}},
       color={140,56,54},
       thickness=0.5));
   connect(FTcold.m_flow, m_flow_outletCold) annotation (Line(points={{-37.9,47.2},{-48,47.2},{-48,110}},
@@ -183,19 +183,19 @@ equation
   connect(FThot.m_flow, m_flow_outletHot) annotation (Line(points={{35.9,-32.8},{50,-32.8},{50,-32},{66,-32},{66,94},{52,94},{52,110}},
                                                                                                                                   color={0,0,127}));
   connect(junctionHotSide.inlet, pipeInletHot.outlet) annotation (Line(
-      points={{-56,-40},{-66,-40}},
+      points={{-46,-40},{-52,-40}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionHotSide.inoutlet, pipeOutletHot.inlet) annotation (Line(
-      points={{-50,-46},{-50,-56}},
+      points={{-40,-46},{-40,-52},{-50,-52},{-50,-56}},
       color={140,56,54},
       thickness=0.5));
   connect(junctionHotSide.outlet, FThot.inlet) annotation (Line(
-      points={{-44,-40},{-6.6,-40},{-6.6,-39.8},{26.8,-39.8}},
+      points={{-34,-40},{-6.6,-40},{-6.6,-39.8},{26.8,-39.8}},
       color={140,56,54},
       thickness=0.5));
   connect(inletCold, junctionColdSide.inlet) annotation (Line(
-      points={{114,40},{56,40}},
+      points={{100,40},{56,40}},
       color={140,56,54},
       thickness=0.5));
   connect(pipeInletCold.outlet, junctionColdSide.inoutlet) annotation (Line(
@@ -210,7 +210,7 @@ equation
       points={{20,45.74},{20,52},{0,52},{0,110}},
       color={255,101,98},
       thickness=0.5));
-  annotation (Icon(                                             graphics={
+  annotation (Icon(coordinateSystem(grid={1,1}),                graphics={
                           Bitmap(
           extent={{-38,-50},{38,50}},
           imageSource=
@@ -219,11 +219,11 @@ equation
               "modelica://MultiEnergySystem/../../../Lavoro/6. Rapporti RdS/Figure/pipelineicon.png")}),
                                                                  Diagram(coordinateSystem(preserveAspectRatio=false), graphics={
         Text(
-          extent={{-94,50},{-64,42}},
+          extent={{-82,50},{-52,42}},
           textColor={28,108,200},
           textString="Cold/Return line"),
         Text(
-          extent={{68,-32},{98,-40}},
+          extent={{54,-32},{84,-40}},
           textColor={140,56,64},
           textString="Hot/Going Line"),
         Line(
@@ -233,7 +233,7 @@ equation
           thickness=0.5,
           pattern=LinePattern.Dash),
         Line(
-          points={{62,-44},{98,-44}},
+          points={{50,-44},{86,-44}},
           color={140,56,64},
           arrow={Arrow.None,Arrow.Filled},
           thickness=0.5,
@@ -244,16 +244,16 @@ equation
           arrow={Arrow.None,Arrow.Filled},
           thickness=0.5,
           pattern=LinePattern.Dash,
-          origin={-60,-72},
+          origin={-60,-68},
           rotation=-90),
         Text(
           extent={{-17,4},{17,-4}},
           textColor={140,56,64},
           textString="To Comp./Load",
-          origin={-67,-72},
+          origin={-67,-66},
           rotation=90),
         Line(
-          points={{-58,36},{-94,36}},
+          points={{-46,36},{-82,36}},
           color={28,108,200},
           arrow={Arrow.None,Arrow.Filled},
           thickness=0.5,
@@ -264,12 +264,12 @@ equation
           arrow={Arrow.None,Arrow.Filled},
           thickness=0.5,
           pattern=LinePattern.Dash,
-          origin={54,-76},
+          origin={54,-68},
           rotation=-90),
         Text(
           extent={{-17,4},{17,-4}},
           textColor={28,108,200},
-          origin={61,-76},
+          origin={61,-70},
           rotation=-90,
           textString="From Comp./Load"),
         Line(

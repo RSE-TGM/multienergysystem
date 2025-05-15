@@ -11,7 +11,7 @@ model Test3Pipes_B
 
   parameter Types.MassFraction Xref[:] = {0.972, 0.018, 0.003, 0.001, 0.001, 0.005, 0};
   parameter Types.MassFlowRate m_flow_start = 0.1 "Initial mass flowrate in the sink";
-  parameter Integer n = 5 "Number of volumes in Flow1DFV";
+  parameter Integer n = 9 "Number of volumes in Flow1DFV";
   parameter Types.Pressure pin_start = 1.5e5 "Initial pressure at the inlet";
   parameter Types.Temperature Tin_start = 15+273 "Initial temperature at the inlet";
   parameter Types.Length kappa = 0.045e-3;
@@ -39,7 +39,7 @@ model Test3Pipes_B
   inner MultiEnergySystem.System system(initOpt = MultiEnergySystem.DistrictHeatingNetwork.Choices.Init.Options.steadyState) annotation (
     Placement(visible = true, transformation(origin = {90, 90}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp m_flow(duration = 50,
-    height=0.1*m_flow_start,                                                     offset = m_flow_start, startTime = 50) annotation (
+    height=0.5*m_flow_start,                                                     offset = m_flow_start, startTime = 50) annotation (
     Placement(visible = true, transformation(origin={68,26},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Blocks.Sources.Ramp p_in(duration = 50,
     height=0.1*pin_start,                                           offset = pin_start, startTime = 200) annotation (

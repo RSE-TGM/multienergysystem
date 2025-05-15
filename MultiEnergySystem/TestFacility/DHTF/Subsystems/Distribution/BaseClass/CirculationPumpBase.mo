@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.Distribution.BaseClass;
 partial model CirculationPumpBase "S900 - Main pump"
- //extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseII(MultiPort(n=n));
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseII(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
 
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;

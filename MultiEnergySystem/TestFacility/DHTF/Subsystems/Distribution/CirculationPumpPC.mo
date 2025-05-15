@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.Distribution;
 model CirculationPumpPC "S900 - Main pump, pressure control"
-  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseII(MultiPort(n=n));
+  //extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseII(MultiPort(n=n));
   extends BaseClass.CirculationPumpBase;
 
 
@@ -13,8 +13,8 @@ model CirculationPumpPC "S900 - Main pump, pressure control"
         origin={-61,-1})));
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P901(
     redeclare model Medium = Medium,
-    Tin_start=TestFacility.Data.PumpData.P901.Tin_start,
-    Tout_start=TestFacility.Data.PumpData.P901.Tout_start,
+    Tin_start=T_hot_start,
+    Tout_start=T_hot_start,
     pin_start=pin_start_S9,
     pout_start=pout_start_S9,
     a=TestFacility.Data.PumpData.P901.a,

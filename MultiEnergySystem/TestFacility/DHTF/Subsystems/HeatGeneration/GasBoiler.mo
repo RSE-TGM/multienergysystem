@@ -256,6 +256,6 @@ equation
 <strong>Summary:</strong><br>
 This model includes the main components that represents system S100 in RSE&apos;s Test Facility. 
 It takes as base model <a href=\"modelica://MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.BaseClass.GasBoilerBase\">GasBoilerBase</a>. 
-In this model the pump is controlled by acting in the rotational speed of the pump.</p>
+In this model the pump is controlled by acting in the rotational speed of the pump <code>omega</code>.</p>
 </html>"));
 end GasBoiler;

@@ -197,7 +197,6 @@ partial model LoadPlantFourHXBaseWithChiller
     etaelec=TestFacility.Data.PumpData.PR01.etaelec,
     etamech=TestFacility.Data.PumpData.PR01.etamech,
     etanom=TestFacility.Data.PumpData.PR01.etanom,
-    hin_start=TestFacility.Data.PumpData.PR01.hin_start,
     m_flow_nom=TestFacility.Data.PumpData.PR01.m_flow_nom,
     omeganom=TestFacility.Data.PumpData.PR01.omeganom,
     pin_start(displayUnit="Pa") = 2e5,

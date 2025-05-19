@@ -230,5 +230,12 @@ equation
       thickness=0.5));
   connect(pumpset, P101.in_m_flow) annotation (Line(points={{-110,70},{-96.5,70},{-96.5,139},{8,139},{8,0.2},{14.48,0.2}}, color={0,0,127}));
   annotation (                                                   Diagram(coordinateSystem(
-                                     extent={{-100,-140},{100,140}}, grid={0.5,0.5})));
+                                     extent={{-100,-140},{100,140}}, grid={0.5,0.5})), Documentation(info="<html>
+<h3>GasBoilerFC</h3>
+<p>
+<strong>Summary:</strong><br>
+This model includes the main components that represents system S100 in RSE's Test Facility. 
+It takes as base model <a href=\"modelica://MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.BaseClass.GasBoilerBase\">GasBoilerBase</a>. 
+In this model the pump is controlled by setting the mass flow rate of the pump <code>m_flow</code>, then one can said that this is an ideal flow controlled pump.</p>
+</html>"));
 end GasBoilerFC;

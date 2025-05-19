@@ -79,5 +79,15 @@ equation
 
 
   annotation (                                                   Diagram(coordinateSystem(
-                                     extent={{-100,-140},{100,140}}, grid={0.5,0.5})));
+                                     extent={{-100,-140},{100,140}}, grid={0.5,0.5})), Documentation(info="<html>
+<h3>GasBoilerBase</h3>
+<p>
+<strong>Summary:</strong><br>
+This model includes the main parameters from system S100 in RSE's Test Facility. 
+This base model is used to built two other main models to simulate system 100: <a href=\"modelica://MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.GasBoiler\">GasBoiler</a> and 
+<a href=\"modelica://MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.GasBoilerFC\">GasBoilerFC</a>. The main difference between these two models is that the pump 
+is controlled by manipulating the rotational speed <code>omega</code> or by setting directly the mass flow rate <code>m_flow</code>, respectively, acting in connector input
+<code>pumpset</code>.
+</p>
+</html>"));
 end GasBoilerBase;

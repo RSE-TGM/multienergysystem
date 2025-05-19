@@ -180,5 +180,4 @@ equation
       points={{-104,150},{-158,150},{-158,214},{36,214},{36,234}},
       color={140,56,54},
       thickness=0.5));
-  connect(FV933_OnOff.y, FV933.u) annotation (Line(points={{12.55,270.5},{8.25,270.5},{8.25,246.73}}, color={255,0,255}));
 end CentralizedTwoGenGBEB;

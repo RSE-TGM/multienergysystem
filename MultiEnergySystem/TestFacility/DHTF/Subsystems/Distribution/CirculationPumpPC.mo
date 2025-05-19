@@ -1,8 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.Distribution;
 model CirculationPumpPC "S900 - Main pump, pressure control"
-  //extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseII(MultiPort(n=n));
   extends BaseClass.CirculationPumpBase;
-
 
   DistrictHeatingNetwork.Sources.SourcePressure VE901(
     redeclare model Medium = Medium,

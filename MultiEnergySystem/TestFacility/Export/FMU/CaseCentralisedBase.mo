@@ -161,7 +161,7 @@ partial model CaseCentralisedBase
         origin={105,95})));
   Modelica.Blocks.Sources.RealExpression FT701_exp(y=facility.load.S701.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-80},{-30,-70}})));
   Modelica.Blocks.Sources.RealExpression FT711_exp(y=facility.load.S711.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-87.5},{-30,-77.5}})));
-  Modelica.Blocks.Sources.RealExpression FT721_exp(y=facility.load.S721.EX7X1.Pt) annotation (Placement(transformation(extent={{-40,-95},{-30,-85}})));
+  Modelica.Blocks.Sources.RealExpression FT721_exp(y=facility.load.S721.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-95},{-30,-85}})));
   Modelica.Blocks.Sources.RealExpression FT731_exp(y=facility.load.S731.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-102.5},{-30,-92.5}})));
   Modelica.Blocks.Routing.Multiplex4 multiplexFT7X1 annotation (Placement(transformation(extent={{-25,-88},{-20,-83}})));
   Modelica.Blocks.Interfaces.RealVectorOutput FT7X1[4] annotation (

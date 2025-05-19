@@ -11,11 +11,11 @@ model CaseCentralisedII
         extent={{5,-5},{-5,5}},
         rotation=180,
         origin={-100,1.5}), iconTransformation(extent={{-110,-50},{-100,-40}})));
-  Modelica.Blocks.Interfaces.RealInput FCV401theta annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCV401theta(start = theta_start) annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
         rotation=180,
         origin={-100,-6}),iconTransformation(extent={{-110,-60},{-100,-50}})));
-  Modelica.Blocks.Interfaces.RealOutput TT402 annotation (Placement(transformation(extent={{5,-95},{15,-85}}),    iconTransformation(
+  Modelica.Blocks.Interfaces.RealOutput TT402(start = ToutGen_start) annotation (Placement(transformation(extent={{5,-95},{15,-85}}),    iconTransformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={105,60})));

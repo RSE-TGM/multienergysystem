@@ -2,14 +2,15 @@ within MultiEnergySystem.TestFacility.Export.FMU;
 model CaseCentralisedIV_FC
   extends CaseCentralisedIII(
     redeclare DHTF.Networks.Centralised.LoadControl.CSLC_IV_withoutChiller_FC facility(load(
-        EX701_Tin_hot=353.15,
-        EX711_Tin_hot=353.15,
-        EX721_Tin_hot=353.15,
-        EX731_Tin_hot=353.15,
+        EX701_Tin_hot=ToutGen_start,
+        EX711_Tin_hot=ToutGen_start,
+        EX721_Tin_hot=ToutGen_start,
+        EX731_Tin_hot=ToutGen_start,
         S701(y_start_PI_TT=0.25, y_start_PI_Pt=0.3),
         S711(y_start_PI_TT=0.25, y_start_PI_Pt=0.3),
         S721(y_start_PI_TT=0.25, y_start_PI_Pt=0.3),
-        S731(y_start_PI_TT=0.25, y_start_PI_Pt=0.3)), distribution(T_start_cold=338.15, T_start_hot=353.15)),
+        S731(y_start_PI_TT=0.25, y_start_PI_Pt=0.3)), distribution(T_start_cold=338.15, T_start_hot=ToutGen_start),
+      heatGeneration(S500(EX501(T1_wall_start(displayUnit="K") = 90 + 273.15, TN_wall_start(displayUnit="K") = 80 + 273.15)))),
     redeclare DHTF.Control.OpenLoopActuators.FMUActuator_IV actuator,
     multiplexFT7X1(
       n1=1,
@@ -26,7 +27,7 @@ model CaseCentralisedIV_FC
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,-75})));
-  Modelica.Blocks.Interfaces.IntegerInput S200_status annotation (
+  Modelica.Blocks.Interfaces.IntegerInput S200_status(start = 1) annotation (
     Placement(transformation(
         extent={{-105,-44},{-95,-34}},
         rotation=0),
@@ -34,7 +35,7 @@ model CaseCentralisedIV_FC
         extent={{105.004,29.5001},{95.0038,39.5001}},
         rotation=180,
         origin={-4.99621,-60.4999})));
-  Modelica.Blocks.Interfaces.RealInput FCV201theta annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCV201theta(start = 0.5) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,-31}),  iconTransformation(extent={{-110,-90},{-100,-80}})));

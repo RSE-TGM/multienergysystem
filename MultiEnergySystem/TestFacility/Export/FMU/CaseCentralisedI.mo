@@ -1,7 +1,7 @@
 within MultiEnergySystem.TestFacility.Export.FMU;
 model CaseCentralisedI
   extends CaseCentralisedBase(redeclare DHTF.Control.OpenLoopActuators.FMUActuator_I actuator);
-  Modelica.Blocks.Interfaces.RealInput FCV101theta annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCV101theta(start = theta_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,22.5}),
@@ -14,7 +14,7 @@ model CaseCentralisedI
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,36.5}),iconTransformation(extent={{-110,0},{-100,10}})));
-  Modelica.Blocks.Interfaces.RealOutput TT102 annotation (Placement(transformation(extent={{5,-80},{15,-70}}),    iconTransformation(
+  Modelica.Blocks.Interfaces.RealOutput TT102(start = ToutGen_start) annotation (Placement(transformation(extent={{5,-80},{15,-70}}),    iconTransformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={105,85})));

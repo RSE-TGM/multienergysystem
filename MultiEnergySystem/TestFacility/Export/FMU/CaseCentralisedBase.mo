@@ -5,6 +5,12 @@ partial model CaseCentralisedBase
   // Gas composition
   parameter Integer nX = 1 "Number of components in gas";
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
+  parameter DistrictHeatingNetwork.Types.Power EX7X1SP_start = 25e3;
+  parameter DistrictHeatingNetwork.Types.Temperature TT7X1SP_start = 65+273.15;
+  parameter DistrictHeatingNetwork.Types.Temperature ToutGen_start = 80+273.15;
+  parameter DistrictHeatingNetwork.Types.PerUnit theta_start = 1;
+  parameter Boolean ss_Start = true;
+
 
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
     Placement(transformation(extent={{10,10},{-10,-10}},      rotation=180,   origin={21.5,-45.5})));
@@ -13,57 +19,55 @@ partial model CaseCentralisedBase
   inner System system annotation (
     Placement(transformation(extent={{80,-100},{100,-80}})));
   replaceable DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_I facility annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
-  Modelica.Blocks.Interfaces.RealInput TT701_SP
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput TT701_SP(start = TT7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-35,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-90,-105})));
-  Modelica.Blocks.Interfaces.RealInput TT711_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput TT711_SP(start = TT7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-25,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-80,-105})));
-  Modelica.Blocks.Interfaces.RealInput TT721_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput TT721_SP(start = TT7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-15,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-70,-105})));
-  Modelica.Blocks.Interfaces.RealInput TT731_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput TT731_SP(start = TT7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-5,100}),  iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={-60,-105})));
-  Modelica.Blocks.Interfaces.RealInput EX701Pt_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput EX701Pt_SP(start = EX7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={5,100}),  iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={10,-105})));
-  Modelica.Blocks.Interfaces.RealInput EX711Pt_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput EX711Pt_SP(start = EX7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={15,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={20,-105})));
-  Modelica.Blocks.Interfaces.RealInput EX721Pt_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput EX721Pt_SP(start = EX7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={25,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={30,-105})));
-  Modelica.Blocks.Interfaces.RealInput EX731Pt_SP annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput EX731Pt_SP(start = EX7X1SP_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={35,100}), iconTransformation(extent={{5,-5},{-5,5}},
         rotation=-90,
         origin={40,-105})));
-  Modelica.Blocks.Interfaces.RealInput FCVC01theta
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCVC01theta annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-55.5,100}),
@@ -71,8 +75,7 @@ partial model CaseCentralisedBase
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,95})));
-  Modelica.Blocks.Interfaces.RealInput FCVC02theta
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCVC02theta annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-65,100}), iconTransformation(
@@ -84,21 +87,19 @@ partial model CaseCentralisedBase
         rotation=0,
         origin={-100,42.5}),
                           iconTransformation(extent={{-110,15.5},{-100,25.5}})));
-  Modelica.Blocks.Interfaces.RealInput FCV901theta annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCV901theta(start = theta_start) annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,49.5}),
                           iconTransformation(extent={{-110,25},{-100,35}})));
-  Modelica.Blocks.Interfaces.RealInput RR01Tout_SP
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput RR01Tout_SP annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,75}), iconTransformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,65})));
-  Modelica.Blocks.Interfaces.RealInput FCVR01theta
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput FCVR01theta annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,67.5}),
@@ -106,8 +107,7 @@ partial model CaseCentralisedBase
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-105,55})));
-  Modelica.Blocks.Interfaces.RealInput PR01omega
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.RealInput PR01omega annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
         origin={-100,60}), iconTransformation(
@@ -122,33 +122,32 @@ partial model CaseCentralisedBase
   Modelica.Blocks.Sources.RealExpression EX711Pt_exp(y=facility.load.S711.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-87.5},{-60,-77.5}})));
   Modelica.Blocks.Sources.RealExpression EX721Pt_exp(y=facility.load.S721.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-95},{-60,-85}})));
   Modelica.Blocks.Sources.RealExpression EX731Pt_exp(y=facility.load.S731.EX7X1.Pt) annotation (Placement(transformation(extent={{-70,-102.5},{-60,-92.5}})));
-  Modelica.Blocks.Interfaces.RealOutput EX701Pt annotation (Placement(transformation(extent={{-55,-80},{-45,-70}}),   iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput EX701Pt(start = EX7X1SP_start) annotation (Placement(transformation(extent={{-55,-80},{-45,-70}}),   iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={60,-105})));
-  Modelica.Blocks.Interfaces.RealOutput EX711Pt annotation (Placement(transformation(extent={{-55,-87.5},{-45,-77.5}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput EX711Pt(start = EX7X1SP_start) annotation (Placement(transformation(extent={{-55,-87.5},{-45,-77.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={70,-105})));
-  Modelica.Blocks.Interfaces.RealOutput EX721Pt annotation (Placement(transformation(extent={{-55,-95},{-45,-85}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput EX721Pt(start = EX7X1SP_start) annotation (Placement(transformation(extent={{-55,-95},{-45,-85}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={80,-105})));
-  Modelica.Blocks.Interfaces.RealOutput EX731Pt annotation (Placement(transformation(extent={{-55,-102.5},{-45,-92.5}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput EX731Pt(start = EX7X1SP_start) annotation (Placement(transformation(extent={{-55,-102.5},{-45,-92.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=270,
         origin={90,-105})));
-  Modelica.Blocks.Interfaces.RealOutput TT701 annotation (Placement(transformation(extent={{-85,-80},{-75,-70}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput TT701(start = TT7X1SP_start) annotation (Placement(transformation(extent={{-85,-80},{-75,-70}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-40,-105})));
-  Modelica.Blocks.Interfaces.RealOutput TT711 annotation (Placement(transformation(extent={{-85,-87.5},{-75,-77.5}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput TT711(start = TT7X1SP_start) annotation (Placement(transformation(extent={{-85,-87.5},{-75,-77.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-30,-105})));
-  Modelica.Blocks.Interfaces.RealOutput TT721 annotation (Placement(transformation(extent={{-85,-95},{-75,-85}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput TT721(start = TT7X1SP_start) annotation (Placement(transformation(extent={{-85,-95},{-75,-85}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-20,-105})));
-  Modelica.Blocks.Interfaces.RealOutput TT731 annotation (Placement(transformation(extent={{-85,-102.5},{-75,-92.5}}), iconTransformation(extent={{-5,-5},{5,5}},
+  Modelica.Blocks.Interfaces.RealOutput TT731(start = TT7X1SP_start) annotation (Placement(transformation(extent={{-85,-102.5},{-75,-92.5}}), iconTransformation(extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-10,-105})));
   replaceable DHTF.Control.OpenLoopActuators.BaseClass.FMUActuatorBase actuator annotation (Placement(transformation(extent={{-20,42},{20.5,82.5}})));
-  Modelica.Blocks.Interfaces.BooleanInput FV933status
-    annotation (Placement(transformation(
+  Modelica.Blocks.Interfaces.BooleanInput FV933status annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
         origin={-45,100}), iconTransformation(

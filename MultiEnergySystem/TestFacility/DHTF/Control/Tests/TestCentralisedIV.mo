@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Control.Tests;
 model TestCentralisedIV
+  extends Modelica.Icons.Example;
   replaceable model Gas = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
   // Gas composition
   parameter Integer nX = 1 "Number of components in gas";

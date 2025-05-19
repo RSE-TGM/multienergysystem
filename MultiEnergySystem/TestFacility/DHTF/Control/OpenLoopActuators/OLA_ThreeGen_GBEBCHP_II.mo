@@ -4,7 +4,7 @@ model OLA_ThreeGen_GBEBCHP_II
   Modelica.Blocks.Sources.RealExpression domegaP501_var(y=2*pi*40)   annotation (
     Placement(transformation(extent = {{55, -95}, {65, -85}})));
   Modelica.Blocks.Sources.BooleanExpression CHP501status(y = true) annotation (
-    Placement(transformation(extent = {{52, -170}, {72, -150}})));
+    Placement(transformation(extent={{46,-126},{66,-106}})));
   Modelica.Blocks.Sources.RealExpression dToutCHP_var(y = 80 + 273.15) annotation (
     Placement(transformation(extent = {{51, -70}, {61, -60}})));
   Modelica.Blocks.Sources.RealExpression dPeCHP_var(y = 40e3) annotation (
@@ -15,7 +15,7 @@ equation
     Line(points = {{65.5, -90}, {160, -90}, {160, 0}}, color = {0, 0, 127}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
   connect(CHP501status.y, controlSignalBus.statusCHP501) annotation (
-    Line(points = {{73, -160}, {160, -160}, {160, 0}}, color = {255, 0, 255}),
+    Line(points={{67,-116},{160,-116},{160,0}},        color = {255, 0, 255}),
     Text(string = "%second", index = 1, extent = {{6, 3}, {6, 3}}, horizontalAlignment = TextAlignment.Left));
   connect(dToutCHP_var.y, controlSignalBus.ToutCHP501) annotation (
     Line(points = {{61.5, -65}, {160, -65}, {160, 0}}, color = {0, 0, 127}),

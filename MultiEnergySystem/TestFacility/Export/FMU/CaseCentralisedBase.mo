@@ -7,9 +7,9 @@ partial model CaseCentralisedBase
   parameter DistrictHeatingNetwork.Types.MassFraction X_gas[nX] = {1} "Mass composition";
 
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true, computeTransport = false) annotation (
-    Placement(transformation(extent={{-10,10},{10,-10}},      rotation=180,   origin={60,-51})));
+    Placement(transformation(extent={{10,10},{-10,-10}},      rotation=180,   origin={21.5,-45.5})));
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
-    Placement(transformation(extent={{-69,-60},{-49,-40}})));
+    Placement(transformation(extent={{-9.5,-55},{-29.5,-35}})));
   inner System system annotation (
     Placement(transformation(extent={{80,-100},{100,-80}})));
   replaceable DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_I facility annotation (Placement(transformation(extent={{-30,-30},{30,30}})));
@@ -66,19 +66,19 @@ partial model CaseCentralisedBase
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
-        origin={-55,100}), iconTransformation(
+        origin={-55.5,100}),
+                           iconTransformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
-        origin={-105,90})));
+        origin={-105,95})));
   Modelica.Blocks.Interfaces.RealInput FCVC02theta
     annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=-90,
-        origin={-45.5,100}),
-                           iconTransformation(
+        origin={-65,100}), iconTransformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
-        origin={-105,80})));
+        origin={-105,85})));
   Modelica.Blocks.Interfaces.RealInput P901input annotation (Placement(transformation(
         extent={{-5,-5},{5,5}},
         rotation=0,
@@ -147,9 +147,31 @@ partial model CaseCentralisedBase
         rotation=-90,
         origin={-10,-105})));
   replaceable DHTF.Control.OpenLoopActuators.BaseClass.FMUActuatorBase actuator annotation (Placement(transformation(extent={{-20,42},{20.5,82.5}})));
+  Modelica.Blocks.Interfaces.BooleanInput FV933status
+    annotation (Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=-90,
+        origin={-45,100}), iconTransformation(
+        extent={{-5,-5},{5,5}},
+        rotation=0,
+        origin={-105,75})));
+  Modelica.Blocks.Sources.RealExpression m_flow_S900_exp(y=facility.distribution.S900.m_flow_)     annotation (Placement(transformation(extent={{-100,-70},{-90,-60}})));
+  Modelica.Blocks.Interfaces.RealOutput FT901 annotation (Placement(transformation(extent={{-85,-70},{-75,-60}}),     iconTransformation(
+        extent={{5,-5},{-5,5}},
+        rotation=180,
+        origin={105,95})));
+  Modelica.Blocks.Sources.RealExpression FT701_exp(y=facility.load.S701.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-80},{-30,-70}})));
+  Modelica.Blocks.Sources.RealExpression FT711_exp(y=facility.load.S711.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-87.5},{-30,-77.5}})));
+  Modelica.Blocks.Sources.RealExpression FT721_exp(y=facility.load.S721.EX7X1.Pt) annotation (Placement(transformation(extent={{-40,-95},{-30,-85}})));
+  Modelica.Blocks.Sources.RealExpression FT731_exp(y=facility.load.S731.FT7X1_FT) annotation (Placement(transformation(extent={{-40,-102.5},{-30,-92.5}})));
+  Modelica.Blocks.Routing.Multiplex4 multiplexFT7X1 annotation (Placement(transformation(extent={{-25,-88},{-20,-83}})));
+  Modelica.Blocks.Interfaces.RealVectorOutput FT7X1[4] annotation (
+    Placement(
+      transformation(extent={{30,-60},{40,-50}}, origin={-50.5,-30.1667}),
+      iconTransformation(extent={{100.5,-5.5},{110.5,4.5}}, origin={-0.5,0.5})));
 equation
   connect(facility.inletGas, sourceGas.outlet) annotation (Line(
-      points={{30,0},{40,0},{40,-51},{50,-51}},
+      points={{30,0},{37,0},{37,-45.5},{31.5,-45.5}},
       color={182,109,49},
       thickness=0.5));
   connect(EX711Pt_exp.y, EX711Pt) annotation (Line(points={{-59.5,-82.5},{-50,-82.5}}, color={0,0,127}));
@@ -172,13 +194,22 @@ equation
   connect(EX711Pt_SP, actuator.EX711Pt_SP) annotation (Line(points={{15,100},{14.5,100},{14.5,90},{3.49,90},{3.49,83.5125}}, color={0,0,127}));
   connect(EX721Pt_SP, actuator.EX721Pt_SP) annotation (Line(points={{25,100},{25,88.5},{5.515,88.5},{5.515,83.5125}}, color={0,0,127}));
   connect(EX731Pt_SP, actuator.EX731Pt_SP) annotation (Line(points={{35,100},{35,87},{7.54,87},{7.54,83.5125}}, color={0,0,127}));
-  connect(FCVC01theta, actuator.FCVC01theta) annotation (Line(points={{-55,100},{-55,80.475},{-21.0125,80.475}}, color={0,0,127}));
-  connect(FCVC02theta, actuator.FCVC02theta) annotation (Line(points={{-45.5,100},{-46,100},{-46,78.45},{-21.0125,78.45}}, color={0,0,127}));
+  connect(FCVC01theta, actuator.FCVC01theta) annotation (Line(points={{-55.5,100},{-55.5,80.475},{-21.0125,80.475}},
+                                                                                                                 color={0,0,127}));
+  connect(FCVC02theta, actuator.FCVC02theta) annotation (Line(points={{-65,100},{-65,78.45},{-21.0125,78.45}},             color={0,0,127}));
   connect(RR01Tout_SP, actuator.RR01Tout_SP) annotation (Line(points={{-100,75},{-93,75},{-93,75.5},{-86,75.5},{-86,75.4125},{-21.0125,75.4125}}, color={0,0,127}));
   connect(FCVR01theta, actuator.FCVR01theta) annotation (Line(points={{-100,67.5},{-90,67.5},{-90,73.3875},{-21.0125,73.3875}}, color={0,0,127}));
   connect(PR01omega, actuator.PR01omega) annotation (Line(points={{-100,60},{-88.5,60},{-88.5,71.3625},{-21.0125,71.3625}}, color={0,0,127}));
   connect(FCV901theta, actuator.FCV901theta) annotation (Line(points={{-100,49.5},{-70,49.5},{-70,68.325},{-21.0125,68.325}}, color={0,0,127}));
   connect(P901input,actuator.P901input)  annotation (Line(points={{-100,42.5},{-67.5,42.5},{-67.5,66.4013},{-21.0125,66.4013}}, color={0,0,127}));
+  connect(FV933status, actuator.FV933status) annotation (Line(points={{-45,100},{-45,88},{-17.3675,88},{-17.3675,83.5125}},      color={255,0,255}));
+  connect(m_flow_S900_exp.y,FT901)  annotation (Line(points={{-89.5,-65},{-80,-65}},     color={0,0,127}));
+  connect(FT701_exp.y, multiplexFT7X1.u1[1]) annotation (Line(points={{-29.5,-75},{-27.5,-75},{-27.5,-83.25},{-25.5,-83.25}}, color={0,0,127}));
+  connect(FT711_exp.y, multiplexFT7X1.u2[1]) annotation (Line(points={{-29.5,-82.5},{-28.5,-82.5},{-28.5,-84.75},{-25.5,-84.75}}, color={0,0,127}));
+  connect(FT721_exp.y, multiplexFT7X1.u3[1]) annotation (Line(points={{-29.5,-90},{-28.5,-90},{-28.5,-86.25},{-25.5,-86.25}}, color={0,0,127}));
+  connect(FT731_exp.y, multiplexFT7X1.u4[1]) annotation (Line(points={{-29.5,-97.5},{-27.5,-97.5},{-27.5,-87.75},{-25.5,-87.75}}, color={0,0,127}));
+  connect(FT7X1, multiplexFT7X1.y) annotation (Line(points={{-15.5,-85.1667},{-17.625,-85.1667},{-17.625,-85.5},{-19.75,-85.5}},
+                                                                                                                           color={0,0,127}));
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5}, preserveAspectRatio = false), graphics={
                   Text(

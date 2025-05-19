@@ -22,6 +22,11 @@ model CaseCentralisedIII
         rotation=180,
         origin={100,65}), iconTransformation(extent={{110,-40},{100,-30}})));
   Modelica.Blocks.Interfaces.BooleanInput CHP501status annotation (Placement(transformation(extent={{5,5},{-5,-5}}, origin={100,35}), iconTransformation(extent={{5,-5},{-5,5}}, origin={105,-75})));
+  Modelica.Blocks.Sources.RealExpression m_flow_S500_exp(y=facility.heatGeneration.S500.FT.m_flow) annotation (Placement(transformation(extent={{20,-102.5},{30,-92.5}})));
+  Modelica.Blocks.Interfaces.RealOutput FT501 annotation (Placement(transformation(extent={{35,-102.5},{45,-92.5}}), iconTransformation(
+        extent={{5,-5},{-5,5}},
+        rotation=180,
+        origin={105,35})));
 equation
   connect(CHP501Tout_SP, actuator.CHP501Tout_SP) annotation (Line(points={{100,57.5},{100,57},{91,57},{91,53},{25,53},{25,53.1375},{21.5125,53.1375}},
                                                                                                                             color={0,0,127}));
@@ -29,6 +34,7 @@ equation
   connect(P501input,actuator.P501input)  annotation (Line(points={{100,42.5},{91,42.5},{91,49.0875},{21.5125,49.0875}},                         color={0,0,127}));
   connect(CHP501status, actuator.CHP501_status) annotation (Line(points={{100,35},{90,35},{90,46.86},{21.5125,46.86}}, color={255,0,255}));
   connect(CHP501Pel_SP, actuator.CHP501Pel_SP) annotation (Line(points={{100,65},{90,65},{90,55},{56,55},{56,55.1625},{21.5125,55.1625}}, color={0,0,127}));
+  connect(m_flow_S500_exp.y, FT501) annotation (Line(points={{30.5,-97.5},{40,-97.5}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5})),
   Diagram(coordinateSystem(grid={0.5,0.5})));

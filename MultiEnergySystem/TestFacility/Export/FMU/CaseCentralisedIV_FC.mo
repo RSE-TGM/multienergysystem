@@ -1,8 +1,21 @@
 within MultiEnergySystem.TestFacility.Export.FMU;
 model CaseCentralisedIV_FC
   extends CaseCentralisedIII(
-    redeclare DHTF.Networks.Centralised.LoadControl.CSLC_IV_withoutChiller_FC facility,
-    redeclare DHTF.Control.OpenLoopActuators.FMUActuator_IV actuator);
+    redeclare DHTF.Networks.Centralised.LoadControl.CSLC_IV_withoutChiller_FC facility(load(
+        EX701_Tin_hot=353.15,
+        EX711_Tin_hot=353.15,
+        EX721_Tin_hot=353.15,
+        EX731_Tin_hot=353.15,
+        S701(y_start_PI_TT=0.25, y_start_PI_Pt=0.3),
+        S711(y_start_PI_TT=0.25, y_start_PI_Pt=0.3),
+        S721(y_start_PI_TT=0.25, y_start_PI_Pt=0.3),
+        S731(y_start_PI_TT=0.25, y_start_PI_Pt=0.3)), distribution(T_start_cold=338.15, T_start_hot=353.15)),
+    redeclare DHTF.Control.OpenLoopActuators.FMUActuator_IV actuator,
+    multiplexFT7X1(
+      n1=1,
+      n2=1,
+      n3=1,
+      n4=1));
   Modelica.Blocks.Interfaces.RealInput P201input
     annotation (
     Placement(transformation(

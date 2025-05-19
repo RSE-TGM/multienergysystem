@@ -109,6 +109,16 @@ model FMUActuatorBase
   Modelica.Blocks.Sources.BooleanExpression RR01_status(y=true) annotation (Placement(transformation(extent={{80,10},{100,30}})));
   Export.Interfaces.ControlSignalBus controlSignalBus annotation (
     Placement(visible = true, transformation(origin = {160, 0}, extent = {{-51, -42}, {51, 42}}, rotation = -90), iconTransformation(origin={0,-96},   extent = {{-30, -30}, {30, 30}}, rotation=180)));
+  Modelica.Blocks.Interfaces.BooleanInput FV933status
+    annotation (Placement(transformation(
+        extent={{-5,-5},{5,5}},
+        rotation=-90,
+        origin={-87,105}), iconTransformation(
+        extent={{-5,-5},{5,5}},
+        rotation=-90,
+        origin={-87,105})));
+  Modelica.Blocks.Sources.BooleanExpression FV933_status(y=false)
+                                                                annotation (Placement(transformation(extent={{64,-21},{84,-1}})));
 equation
   connect(FCV901theta, controlSignalBus.thetaFCV901) annotation (Line(points={{55,100},{55,93},{160,93},{160,0}}, color={0,0,127}), Text(
       string="%second",
@@ -190,6 +200,11 @@ equation
       horizontalAlignment=TextAlignment.Left));
   connect(RR01_status.y, controlSignalBus.statusRR01)
     annotation (Line(points={{101,20},{122,20},{122,19},{141,19},{141,0},{160,0}}, color={255,0,255}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(FV933_status.y, controlSignalBus.statusFV933) annotation (Line(points={{85,-11},{112,-11},{112,0},{160,0}}, color={255,0,255}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

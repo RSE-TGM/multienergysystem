@@ -200,6 +200,7 @@ partial model OpenLoopActuatorBase_III
   Modelica.Blocks.Sources.BooleanExpression RR01status(y=true)   annotation (
     Placement(transformation(extent={{49,22},{69,42}})));
   Modelica.Blocks.Sources.RealExpression omegaPR01_var(y=2*3.14159*45) annotation (Placement(transformation(extent={{49,7},{70,27}})));
+  Modelica.Blocks.Sources.BooleanExpression FV933status annotation (Placement(transformation(extent={{-77,10},{-57,30}})));
 equation
   connect(omegaP901_var.y, switch_omegaP901.u1) annotation (Line(points={{-133.5,163},{-130,163},{-130,157},{-126,157}}, color={0,0,127}));
   connect(bool_omegaP901.y, switch_omegaP901.u2) annotation (Line(points={{-133.5,153},{-126,153}}, color={255,0,255}));
@@ -372,6 +373,11 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(omegaPR01_var.y, controlSignalBus.omegaPR01) annotation (Line(points={{71.05,17},{102,17},{102,0},{160,0}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(FV933status.y, controlSignalBus.statusFV933) annotation (Line(points={{-56,20},{33.5,20},{33.5,0},{160,0}}, color={255,0,255}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

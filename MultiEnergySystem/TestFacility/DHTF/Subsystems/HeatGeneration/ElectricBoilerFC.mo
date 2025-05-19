@@ -1,6 +1,5 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model ElectricBoilerFC "System 400 with ideal flow control"
-  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends BaseClass.ElectricBoilerBase;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB(
@@ -162,6 +161,9 @@ model ElectricBoilerFC "System 400 with ideal flow control"
         rotation=90,
         origin={24,43})));
 equation
+  //-------------------------------
+  // Total pump consumed electric power
+  //-------------------------------
   Pe = P401.W;
   connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(
       points={{24,-27.1},{24,-38.5}},

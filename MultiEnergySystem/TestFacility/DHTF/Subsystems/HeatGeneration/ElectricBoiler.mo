@@ -1,9 +1,7 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model ElectricBoiler "System 400 - Electric Boiler"
-  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends BaseClass.ElectricBoilerBase;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
-
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledElectricBoiler EB(
     redeclare model Medium = Medium,
     Tout_start=Tout_start,
@@ -157,6 +155,9 @@ model ElectricBoiler "System 400 - Electric Boiler"
   Modelica.Blocks.Interfaces.RealOutput Pe annotation (Placement(transformation(extent={{100,-40},{120,-20}})));
   ElectricNetwork.Interfaces.ElectricPortInlet inletPower annotation (Placement(transformation(extent={{-120,-60},{-100,-40}}), iconTransformation(extent={{-120,-60},{-100,-40}})));
 equation
+  //-------------------------------
+  // Total pump consumed electric power
+  //-------------------------------
   Pe = P401.W;
   connect(P401.inlet,PL_S400_EB401_P401. outlet) annotation (Line(
       points={{20,-28.6},{20,-40}},

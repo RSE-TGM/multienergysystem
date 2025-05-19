@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.BaseClass;
-partial model GasBoilerBase "System 100 - Gas Boiler"
-  //extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
+partial model GasBoilerBase "Partial System 100 - Gas Boiler Base model, including the main parameters"
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   //extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   extends DistrictHeatingNetwork.Icons.Water.GasBoiler;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S100;
@@ -25,9 +25,6 @@ partial model GasBoilerBase "System 100 - Gas Boiler"
   parameter Real q_m3h_S1(unit = "m3/h") = 9 "volumetric flow rate start value" annotation (
     Dialog(group = "Initialization"));
   final parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_S1 = q_m3h_S1*985/3600;
-
-//  parameter DistrictHeatingNetwork.Types.Velocity u_nom = 5;
-//  parameter DistrictHeatingNetwork.Types.PerUnit cf = 0.005 "Constant Fanning friction coefficient";
 
   //-------------------------------
   // Pipes

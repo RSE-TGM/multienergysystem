@@ -1,6 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.BaseClass;
-model ElectricBoilerBase "System 400 - Electric Boiler Base Model"
-  //extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
+model ElectricBoilerBase "Partial System 400 - Electric Boiler Base Model"
+  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;

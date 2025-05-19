@@ -1,8 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
 model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
-  extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends BaseClass.GasBoilerBase;
-  //extends DistrictHeatingNetwork.Icons.Water.GasBoiler;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S100;
 
   DistrictHeatingNetwork.Components.TurboMachines.ControlledPump P101(
@@ -149,10 +147,16 @@ model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
   H2GasFacility.Interfaces.FluidPortInlet inletFuel(nXi = fuel.nXi) annotation (Placement(transformation(extent={{38,-138},{70,-106}}),  iconTransformation(extent={{-16,-132},{16,-100}})));
 equation
 
+  //-------------------------------
+  // Fuel definition
+  //-------------------------------
   fuel.h = inStream(inletFuel.h_out);
   fuel.Xi = inStream(inletFuel.Xi);
   fuel.p = 1.013e5;
 
+  //-------------------------------
+  // Total pump consumed electric power
+  //-------------------------------
   Pe = P101.W;
   connect(P101.inlet,PL_S100_GB101_P101. outlet) annotation (Line(
       points={{20,-4.6},{20,-14}},

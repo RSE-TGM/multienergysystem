@@ -134,15 +134,20 @@ equation
 
 // Mass & Energy Balance
   for i in 1:n loop
-    //m_flow[i] - m_flow[i+1] = Vi*(regStep(inlet.m_flow, fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*der(Ttilde[i]) +  4.4e-7*der(ptilde));
     m_flow[i] - m_flow[i+1] = 0;
     //(Vi*regStep(inlet.m_flow,fluid[i+1].drho_dT, fluid[i].drho_dT, m_flow_nom*cons)*regStep(inlet.m_flow,fluid[i+1].u,fluid[i].u, m_flow_nom*cons) + M[i]*regStep(inlet.m_flow,fluid[i+1].cp,fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
-    (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
+    if allowFlowReversal then
+      (M[i]*regStep(inlet.m_flow, fluid[i+1].cp, fluid[i].cp))*der(Ttilde[i]) = m_flow[i]*fluid[i].h - m_flow[i+1]*fluid[i+1].h + wall.Q_flow[i] "Energy Balance";
+    else
+      M[i]*fluid[i+1].cp*der(Ttilde[i]) = m_flow[i]*(fluid[i].h - fluid[i+1].h) + wall.Q_flow[i] "Energy Balance";
+    end if;
   end for;
 
-  rhotilde = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*cons);
+  rhotilde = if allowFlowReversal then regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*cons) else rho[2:n+1];
+  Ttilde = if allowFlowReversal then regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*cons) else T[2:n+1];
+
   M = Vi*rhotilde;
-  Ttilde = regStep(inlet.m_flow, T[2:n+1], T[1:n], m_flow_nom*cons);
+
 
   if linearPressure then
     if hctype == Choices.Pipe.HCtypes.Downstream then
@@ -179,14 +184,18 @@ equation
 
   dp = pin-pout;
 
-  if noEvent(inlet.m_flow > 0) then
-    T[1] = fluid_temp.T;
+  if allowFlowReversal then
+    if noEvent(inlet.m_flow > 0) then
+      T[1] = fluid_temp.T;
+    else
+      T[end] = fluid_temp.T;
+    end if;
   else
-    T[end] = fluid_temp.T;
+    T[1] = fluid_temp.T;
   end if;
 
   fluid_temp.p = ptilde;
-  fluid_temp.h = homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*cons), hin_start);
+  fluid_temp.h = if allowFlowReversal then homotopy(regStep(inlet.m_flow, inStream(inlet.h_out), inStream(outlet.h_out), m_flow_nom*cons), hin_start) else homotopy(inStream(inlet.h_out), hin_start);
 
   // Boundary conditions
   inlet.m_flow = m_flow[1];

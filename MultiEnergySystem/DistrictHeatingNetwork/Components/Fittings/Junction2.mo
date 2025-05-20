@@ -2,7 +2,7 @@ within MultiEnergySystem.DistrictHeatingNetwork.Components.Fittings;
 model Junction2
   Interfaces.FluidPortInlet inlet "First Inlet" annotation (Placement(transformation(
           extent={{-120,-20},{-80,20}}), iconTransformation(extent={{-120,-20},{-80,20}})));
-  Interfaces.FluidPortOutlet outlet(m_flow(max = 0)) "first outlet" annotation (Placement(transformation(
+  Interfaces.FluidPortOutlet outlet "first outlet" annotation (Placement(transformation(
           extent={{80,-20},{120,20}}), iconTransformation(extent={{80,-20},{120,20}})));
   Interfaces.FluidPortInlet inoutlet "Second Inlet" annotation (Placement(transformation(extent={{-20,
             -120},{20,-80}}), iconTransformation(extent={{-20,-120},{20,-80}})));

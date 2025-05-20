@@ -3,6 +3,7 @@ model CentralizedThreeGenGBEBCHPTES "Three heat generators + thermal energy stor
   extends CentralizedThreeGenGBEBCHP;
   replaceable Subsystems.HeatGeneration.TES S200(q_m3h_S2=8) "Subsystem S200 - Thermal Storage System" annotation (Placement(transformation(extent={{192,-50},{282,40}})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_cold(
+    allowFlowReversal=true,
     L=24.5,
     t=1.5e-3,
     pin_start(displayUnit="Pa") = 2e5,
@@ -16,6 +17,7 @@ model CentralizedThreeGenGBEBCHPTES "Three heat generators + thermal energy stor
         rotation=90,
         origin={220,70})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_rCD_hot(
+    allowFlowReversal=true,
     L=21.5,
     t=t_S5,
     pin_start(displayUnit="Pa") = 2.1e5,

@@ -112,6 +112,7 @@ model TES "S200 - Thermal Energy Storage"
 
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D201(
     H=H,
+    allowFlowReversal=true,
     Tin_start=Tin_start,
     Tout_start=Tout_start,
     n=nTank,
@@ -146,6 +147,7 @@ model TES "S200 - Thermal Energy Storage"
     Placement(transformation(extent = {{-12, 12}, {12, -12}}, rotation = -90, origin={-18,-70})));
   DistrictHeatingNetwork.Components.Storage.StratifiedStorage D202(
     H=H,
+    allowFlowReversal=true,
     Tin_start=Tin_start,
     Tout_start=Tout_start,
     n=nTank,
@@ -172,6 +174,7 @@ model TES "S200 - Thermal Energy Storage"
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT202 "Pressure sensor at the outlet of system S200" annotation (
     Placement(transformation(extent = {{6, 6}, {-6, -6}}, rotation = 90, origin={24,0})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D202_High(
+    allowFlowReversal=true,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_Tanks_High,
@@ -187,6 +190,7 @@ model TES "S200 - Thermal Energy Storage"
     cf=cf)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 90, origin={62,-274})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_High(
+    allowFlowReversal=true,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_Tanks_High,
@@ -202,6 +206,7 @@ model TES "S200 - Thermal Energy Storage"
     cf=cf)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{10, 10}, {-10, -10}}, rotation = 90, origin={28,-274})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_D202_High(
+    allowFlowReversal=true,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_S201_S202,
@@ -216,6 +221,7 @@ model TES "S200 - Thermal Energy Storage"
     cf=cf)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{10, -10}, {-10, 10}}, rotation = 0, origin={46,-302})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_D202_Low(
+    allowFlowReversal=true,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_S201_S202,
@@ -231,6 +237,7 @@ model TES "S200 - Thermal Energy Storage"
     cf=cf)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={46,-318})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_FV209_D201(
+    allowFlowReversal=true,
     h=h_FV209_D201,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
@@ -246,6 +253,7 @@ model TES "S200 - Thermal Energy Storage"
     cf=cf)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent={{-10,-10},{10,10}},      rotation = 0, origin={-46,-352})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S200_D201_FT201(
+    allowFlowReversal=true,
     redeclare model Medium = Medium,
     redeclare model HeatTransferModel = HeatTransferModel,
     L=L_S2_D201_FT201,
@@ -325,6 +333,10 @@ model TES "S200 - Thermal Energy Storage"
   Modelica.Blocks.Sources.BooleanExpression FV206_exp(y=FV206_state) annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=-90,
         origin={2,-24})));
+  DistrictHeatingNetwork.Components.Fittings.Junction2 junction2_2 annotation (Placement(transformation(
+        extent={{-6,-6},{6,6}},
+        rotation=90,
+        origin={-74,-182})));
 equation
 
   //-------------------------------
@@ -399,8 +411,6 @@ equation
     Line(points={{8,-48},{22,-48},{22,-74}},                  color = {140, 56, 54}, thickness = 0.5));
   connect(PT202.inlet,FV203. outlet) annotation (
     Line(points={{21.6,0},{22,0},{22,-74}},                     color = {140, 56, 54}, thickness = 0.5));
-  connect(FV209.outlet,PL_S200_FV209_D201. inlet) annotation (
-    Line(points={{-18,-144},{-18,-194},{-74,-194},{-74,-352},{-56,-352}},                 color = {140, 56, 54}, thickness = 0.5));
   connect(FT201.inlet,FV203. inlet) annotation (
     Line(points={{22.2,-136.8},{22,-116},{22,-86}},               color = {140, 56, 54}, thickness = 0.5));
   connect(PL_S200_D201_High.outlet,PL_S200_D201_FT201. inlet) annotation (
@@ -467,10 +477,6 @@ equation
       points={{-74,-50},{-74,10},{-54,10}},
       color={140,56,54},
       thickness=0.5));
-  connect(FCV201.inlet, PL_S200_FV209_D201.inlet) annotation (Line(
-      points={{-74,-70},{-74,-352},{-56,-352}},
-      color={140,56,54},
-      thickness=0.5));
   connect(P201.outlet, FV209.inlet) annotation (Line(
       points={{-18,-79.6},{-18,-132}},
       color={140,56,54},
@@ -481,6 +487,18 @@ equation
       thickness=0.5));
   connect(PT201.inlet, FV201.inlet) annotation (Line(
       points={{-18,51.5},{-18,-4}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(junction2_2.inoutlet, FV209.outlet) annotation (Line(
+      points={{-68,-182},{-18,-182},{-18,-144}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(FCV201.inlet, junction2_2.outlet) annotation (Line(
+      points={{-74,-70},{-74,-176}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S200_FV209_D201.inlet, junction2_2.inlet) annotation (Line(
+      points={{-56,-352},{-74,-352},{-74,-188}},
       color={140,56,54},
       thickness=0.5));
   annotation (Icon(                                             graphics={Bitmap(

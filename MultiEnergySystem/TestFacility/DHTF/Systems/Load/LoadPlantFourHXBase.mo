@@ -242,6 +242,7 @@ partial model LoadPlantFourHXBase
   parameter DistrictHeatingNetwork.Types.Length h_RR_UsersOut=0;
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_FT701_rackL2L3(
+    allowFlowReversal=false,
     redeclare model Medium = MediumHot,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX701_hot,
@@ -259,6 +260,7 @@ partial model LoadPlantFourHXBase
         rotation=90,
         origin={-302,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL701_rackL2L3_TT702(
+    allowFlowReversal=false,
     redeclare model Medium = MediumHot,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX701_hot,
@@ -277,6 +279,7 @@ partial model LoadPlantFourHXBase
         origin={-342,150})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_FT711_rackL3L4(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX711_hot,
     redeclare model Medium = MediumHot,
@@ -294,6 +297,7 @@ partial model LoadPlantFourHXBase
         rotation=90,
         origin={18,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL711_rackL3L4_TT712(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX711_hot,
     redeclare model Medium = MediumHot,
@@ -311,6 +315,7 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-22,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_FT721_rackL4L5(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX721_hot,
     redeclare model Medium = MediumHot,
@@ -328,6 +333,7 @@ partial model LoadPlantFourHXBase
         rotation=90,
         origin={178,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL721_rackL4L5_TT722(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX721_hot,
     redeclare model Medium = MediumHot,
@@ -346,6 +352,7 @@ partial model LoadPlantFourHXBase
         origin={138,150})));
 
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_FT731_rackL6L7(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX731_hot,
     redeclare model Medium = MediumHot,
@@ -363,6 +370,7 @@ partial model LoadPlantFourHXBase
         rotation=90,
         origin={-142,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL731_rackL6L7_TT732(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX731_hot,
     redeclare model Medium = MediumHot,
@@ -380,6 +388,7 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-182,150})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX721_EX711_cold(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_EX721_EX711_cold,
     h=h_EX721_EX711_cold,
@@ -399,6 +408,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={64,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_cold(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_EX701_EX731_cold,
     h=h_EX701_EX731_cold,
@@ -418,6 +428,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-64,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX711_EX701_cold(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_EX711_EX701_cold,
     h=h_EX711_EX701_cold,
@@ -437,6 +448,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-222,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV701_rackUsersOut(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_TCV701_rUsersOut,
     h=h_TCV701_rUsersOut,
@@ -456,6 +468,7 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-342,-170})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV731_rackUsersOut(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_TCV731_rUsersOut,
     h=h_TCV731_rUsersOut,
@@ -475,6 +488,7 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-182,-170})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX711_EX701_hot(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_EX711_EX701_hot,
     h=h_EX711_EX701_hot,
@@ -494,6 +508,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-104,-192})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV711_rackUsersOut(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_TCV711_rUsersOut,
     h=h_TCV711_rUsersOut,
@@ -513,6 +528,7 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={-22,-170})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX721_EX711_hot(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_EX721_EX711_hot,
     h=h_EX721_EX711_hot,
@@ -532,6 +548,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={56,-192})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_EX701_EX731_hot(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_EX701_EX731_hot,
     h=h_EX701_EX731_hot,
@@ -551,6 +568,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={-254,-192})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_TCV721_rackUsersOut(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_TCV721_rUsersOut,
     h=h_TCV721_rUsersOut,
@@ -570,6 +588,7 @@ partial model LoadPlantFourHXBase
         rotation=-90,
         origin={138,-171})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_UsersIn_EX721(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_UsersIn_EX721,
     h=h_UsersIn_EX721,
@@ -589,6 +608,7 @@ partial model LoadPlantFourHXBase
         rotation=0,
         origin={206,-152})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_UsersOut_EX721(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     L=L_UsersOut_EX721,
     h=h_UsersOut_EX721,

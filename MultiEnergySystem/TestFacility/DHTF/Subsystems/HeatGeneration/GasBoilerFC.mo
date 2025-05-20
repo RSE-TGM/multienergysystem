@@ -47,6 +47,7 @@ model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
         extent={{-36,-36},{36,36}},
         rotation=0)));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_GB101_P101(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_S1,
     redeclare model Medium = Medium,
@@ -68,6 +69,7 @@ model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
         rotation=90,
         origin={20,-24})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_FT101_GB101(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_S1,
     redeclare model Medium = Medium,
@@ -89,6 +91,7 @@ model GasBoilerFC "System 100 - Gas Boiler Flow controlled"
         rotation=90,
         origin={-20,-23.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S100_P101_FCV101(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_S1,
     redeclare model Medium = Medium,

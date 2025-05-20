@@ -22,7 +22,8 @@ model TestCentralisedIII
     domegaP401(table=[0,2*pi*45; 1e3,2*pi*45]),
     domegaP501_var(y=2*pi*30)) annotation (Placement(transformation(extent={{-18,42},{18,78}})));
 
-  inner System system annotation (
+  inner System system(allowFlowReversal=false)
+                      annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
   replaceable Networks.Centralised.LoadControl.CentralSystemLoadControl_III plant    annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation

@@ -12,7 +12,8 @@ model TestCentralisedIV
   ElectricNetwork.Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(extent = {{-76, -10}, {-56, 10}})));
   replaceable DHTF.Control.OpenLoopActuators.OLA_ThreeGen_GBEBCHPTES actuator annotation (Placement(transformation(extent={{-18,42},{18,78}})));
-  inner System system annotation (
+  inner System system(allowFlowReversal=false)
+                      annotation (
     Placement(transformation(extent = {{80, 80}, {100, 100}})));
   replaceable Networks.Centralised.LoadControl.CentralSystemLoadControl_IV plant annotation (Placement(transformation(extent={{-24,-24},{24,24}})));
 equation
@@ -32,7 +33,7 @@ equation
     Icon(coordinateSystem(preserveAspectRatio = false)),
     Diagram(coordinateSystem(preserveAspectRatio = false)),
     experiment(
-      StopTime= 86400,
+      StopTime=86400,
       Interval=17.28,
-      Tolerance=1e-06, StartTime = 0));
+      __Dymola_Algorithm="Dassl"));
 end TestCentralisedIV;

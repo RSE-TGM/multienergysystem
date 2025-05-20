@@ -85,7 +85,8 @@ equation
   Mtot = sum(M) "Total mass";
 
   // Mass Balance
-  M = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*1e-5)*(V/n);
+  //M = regStep(inlet.m_flow, rho[2:n+1], rho[1:n], m_flow_nom*1e-5)*(V/n);
+  M = (rho[2:n+1] + rho[1:n])*V/(2*n);
 
   // Energy balance
   for i in 1:n loop

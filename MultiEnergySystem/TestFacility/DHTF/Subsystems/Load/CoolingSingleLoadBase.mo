@@ -201,6 +201,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=-90,
         origin={1,-21.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_FCV7X1_FT7X1(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = MediumHot,
@@ -219,6 +220,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=90,
         origin={20,64.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_OutHot_FCV7X1(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_hot,
     redeclare model Medium = MediumHot,
@@ -257,6 +259,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=-90,
         origin={-20,65.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X4_TCV7X1(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
     redeclare model Medium = MediumCold,
@@ -274,6 +277,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
         rotation=-90,
         origin={-20.5,-73.5})));
   DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV PL_S700_TT7X3_InCold(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_EX7X1_cold,
     redeclare model Medium = MediumCold,

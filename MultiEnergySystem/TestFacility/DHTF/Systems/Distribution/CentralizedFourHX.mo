@@ -118,6 +118,7 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     pin_start=350000)                                                                                                                                                                                                         annotation (
     Placement(transformation(extent={{9,9},{-9,-9}},          rotation = -90, origin={45,5})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL3L4_hot(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_S9,                                                                 redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pin_start_Users + 0.01e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
     Placement(transformation(extent={{-11,11},{11,-11}},      rotation = 0, origin={-219,-13})));
@@ -136,6 +137,7 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     m_flow_start=m_flow_S9/4,                                                                 redeclare model Medium = MediumCP, L = L_rL6L7_FCVC02_H, h = h_rL6L7_FCVC02_H, t = t_rL_H, pin_start = pin_start_Users - 0.02e5, Tin_start = T_start_hot, Tout_start = T_start_hot, Di = Di_rL_H, q_m3h_start = q_m3h_rackHot, n = n, hctype = hctype) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 0, origin={372,-13})));
   MultiEnergySystem.DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV S900_rackL2L3_cold(
+    allowFlowReversal=false,
     set_m_flow_start=true,
     m_flow_start=m_flow_S9,                                                                  redeclare model Medium = MediumCP, L = L_S9, t = t_S9, pin_start = pout_start_Users - 0.03e5, Tin_start = T_start_cold, Tout_start = T_start_cold, Di = Di_S9, q_m3h_start = q_m3h_S9, n = n, hctype = hctype) annotation (
     Placement(transformation(extent={{11,-11},{-11,11}},      rotation = 0, origin={-219,23})));
@@ -198,7 +200,10 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     h_incold=0,
     h_outcold=0,
     t=t,
-    Di=Di) annotation (Placement(transformation(extent={{-134,-40},{-44,50}})));
+    Di=Di,
+    pipeOutletCold(allowFlowReversal=false),
+    pipeInletHot(allowFlowReversal=false))
+           annotation (Placement(transformation(extent={{-134,-40},{-44,50}})));
   DistrictHeatingNetwork.Components.Fittings.Junction junctionHotFCVC01 annotation (Placement(transformation(extent={{40,-8},{50,-18}})));
   DistrictHeatingNetwork.Components.Fittings.Junction2 junctionColdFCVC01 annotation (Placement(transformation(extent={{50,18},{40,28}})));
   DHTF.Subsystems.Distribution.ConnectorTypeI rackL4L5(

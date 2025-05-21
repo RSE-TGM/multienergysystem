@@ -9,7 +9,7 @@ model RG2i_PI_controller
     annotation (Placement(transformation(extent={{88,200},{122,234}})));
   Modelica.Blocks.Sources.Ramp p_ref(
     offset=4.93*10^5,
-    height=0.2*10^5,
+    height=0*0.2*10^5,
     duration=0,
     startTime=1000) annotation (Placement(visible=true, transformation(
         origin={-155,-8},

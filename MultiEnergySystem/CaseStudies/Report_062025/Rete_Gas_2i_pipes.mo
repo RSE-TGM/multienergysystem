@@ -669,6 +669,8 @@ partial model Rete_Gas_2i_pipes
     L=100,
     H=0,
     m_flow_start=0.098,
+    pin_start=Data.PipelineData_2i.sds8.pout_start,
+    pout_start=Data.PipelineData_2i.sds8.pout_start,
     redeclare model Gas = Medium,
     redeclare model Medium = Medium,
     X_start=X_start,

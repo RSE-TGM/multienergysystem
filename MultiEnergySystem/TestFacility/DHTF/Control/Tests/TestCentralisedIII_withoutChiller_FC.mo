@@ -43,7 +43,8 @@ model TestCentralisedIII_withoutChiller_FC
         S731(
           y_start_PI_TT = 0.4,
           y_start_PI_Pt = 0.6)),
-        distribution(S900(P901(omega(start = 2*pi*40))))));
+        distribution(S900(P901(omega(start = 2*pi*40))))),
+    system(allowFlowReversal=false));
   annotation (
     experiment(StartTime = 0, StopTime = 86400, Tolerance = 1e-06, Interval = 1.728));
 end TestCentralisedIII_withoutChiller_FC;

@@ -129,6 +129,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   //   parameter Modelica.Blocks.Types.Init initType_PI = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
   //   parameter Modelica.Blocks.Types.Init initType_I = Modelica.Blocks.Types.Init.InitialOutput "Initialization of PI integral" annotation(Evaluate=true, Dialog(group="Initialization"));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV7X1(
+    allowFlowReversal=false,
     redeclare model Medium = MediumHot,
     Kv=TestFacility.Data.ValveData.FCV701.Kv,
     openingChar=openingChar_FCV,
@@ -363,6 +364,7 @@ partial model CoolingSingleLoadBase "S900 - Base load model"
   Modelica.Blocks.Interfaces.RealOutput PT7X2_PT annotation (Placement(transformation(extent={{100,80},{120,100}}),  iconTransformation(extent={{100,-60},{120,-40}})));
   Modelica.Blocks.Interfaces.RealOutput PT7X1_PT annotation (Placement(transformation(extent={{100,65},{120,85}}),  iconTransformation(extent={{100,-40},{120,-20}})));
   DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve TCV7X1(
+    allowFlowReversal=false,
     redeclare model Medium = MediumCold,
     Kv=TestFacility.Data.ValveData.TCV701.Kv,
     openingChar=openingChar_TCV,

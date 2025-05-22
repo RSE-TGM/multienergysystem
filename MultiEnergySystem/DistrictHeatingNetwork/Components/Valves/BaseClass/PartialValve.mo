@@ -100,9 +100,9 @@ equation
 
   // Definition of fluids
   fluidIn.p = inlet.p;
-  fluidIn.h = regStep(m_flow, inStream(inlet.h_out), inlet.h_out, m_flow_nom*1e-6);
+  fluidIn.h = if allowFlowReversal then regStep(m_flow, inStream(inlet.h_out), inlet.h_out, m_flow_nom*1e-6) else inStream(inlet.h_out);
   fluidOut.p = outlet.p;
-  fluidOut.h = regStep(m_flow, outlet.h_out, inStream(outlet.h_out), m_flow_nom*1e-6);
+  fluidOut.h = if allowFlowReversal then regStep(m_flow, outlet.h_out, inStream(outlet.h_out), m_flow_nom*1e-6) else outlet.h_out;
 
   Tin = fluidIn.T;
   Tout = fluidOut.T;

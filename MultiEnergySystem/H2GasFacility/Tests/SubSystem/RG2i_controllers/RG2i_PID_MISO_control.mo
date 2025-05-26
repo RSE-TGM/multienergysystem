@@ -7,7 +7,8 @@ model RG2i_PID_MISO_control
     nX=1,
     X_start = {1},
     constantFrictionFactor = false,
-    massFractionDynamicBalance = false);
+    massFractionDynamicBalance = false,
+   system(allowFlowReversal=false));
   extends DistrictHeatingNetwork.Icons.Generic.InProgress;
 
   Sensors.IdealPressureSensor idealPressureSensor(
@@ -147,50 +148,48 @@ model RG2i_PID_MISO_control
     m_flow0=0.119588,
     X0=X_start)                                                                                     "Via Lioni"
     annotation (Placement(transformation(extent={{126,-280},{170,-236}})));
-  Modelica.Blocks.Sources.Constant const_4(k=4.632)
+  Modelica.Blocks.Sources.Constant const_4(k=4.632*10^5)
     annotation (Placement(transformation(extent={{-230,132},{-214,148}})));
   Modelica.Blocks.Math.Feedback feedback_4 annotation (Placement(visible=true,
         transformation(
         origin={-196,140},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_5(k=4.603)
+  Modelica.Blocks.Sources.Constant const_5(k=4.603*10^5)
     annotation (Placement(transformation(extent={{2,284},{18,300}})));
   Modelica.Blocks.Math.Feedback feedback_5 annotation (Placement(visible=true,
         transformation(
         origin={36,292},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_7(k=4.371)
+  Modelica.Blocks.Sources.Constant const_7(k=4.371*10^5)
     annotation (Placement(transformation(extent={{196,264},{212,280}})));
   Modelica.Blocks.Math.Feedback feedback_7 annotation (Placement(visible=true,
         transformation(
         origin={234,272},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_3(k=4.591)
+  Modelica.Blocks.Sources.Constant const_3(k=4.591*10^5)
     annotation (Placement(transformation(extent={{-6,-154},{10,-138}})));
   Modelica.Blocks.Math.Feedback feedback_3 annotation (Placement(visible=true,
         transformation(
         origin={32,-146},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_1(k=4.595)
+  Modelica.Blocks.Sources.Constant const_1(k=4.595*10^5)
     annotation (Placement(transformation(extent={{260,-64},{244,-48}})));
   Modelica.Blocks.Math.Feedback feedback_1 annotation (Placement(visible=true,
         transformation(
         origin={222,-56},
         extent={{10,-10},{-10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_2(k=4.547)
+  Modelica.Blocks.Sources.Constant const_2(k=4.547*10^5)
     annotation (Placement(transformation(extent={{174,-294},{190,-278}})));
   Modelica.Blocks.Math.Feedback feedback_2 annotation (Placement(visible=true,
         transformation(
         origin={212,-286},
         extent={{-10,10},{10,-10}},
         rotation=0)));
-  Modelica.Blocks.Math.Gain gain(k=1e-16) annotation (
-        Placement(visible = true, transformation(origin={-138,4},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   MultiEnergySystem.H2GasFacility.Sources.REMI_station REMI_station(redeclare
       model Medium =                                                                         Medium,
     nX=nX,
@@ -201,10 +200,13 @@ model RG2i_PID_MISO_control
         origin={104,250},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Modelica.Blocks.Sources.Constant const_6(k=4.619)
+  Modelica.Blocks.Sources.Constant const_6(k=4.619*10^5)
     annotation (Placement(transformation(extent={{72,242},{88,258}})));
   Controllers.MultiplMax multiplMax
     annotation (Placement(transformation(extent={{-258,-6},{-238,14}})));
+  Modelica.Blocks.Math.Gain gain1(k=0.8e-4)
+                                          annotation (
+        Placement(visible = true, transformation(origin={-156,-2},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(sds14.outlet, idealPressureSensor2.inlet) annotation (Line(
       points={{80,216},{92,216}},
@@ -287,14 +289,10 @@ equation
       points={{-162,26},{-114,26}},
       color={182,109,49},
       thickness=0.5));
-  connect(gain.y, REMI_station.in_opening) annotation (Line(points={{-127,4},{
-          -84,4},{-84,44},{-98.4,44},{-98.4,34.4}},              color={0,0,127}));
   connect(idealPressureSensor2.p_meas, feedback_6.u2) annotation (Line(points={
           {105.8,223.4},{104,223.4},{104,242}}, color={0,0,127}));
   connect(feedback_6.u1, const_6.y)
     annotation (Line(points={{96,250},{88.8,250}}, color={0,0,127}));
-  connect(multiplMax.y, gain.u)
-    annotation (Line(points={{-237.4,4},{-150,4}}, color={0,0,127}));
   connect(feedback_1.y, multiplMax.u5) annotation (Line(points={{213,-56},{204,
           -56},{204,-52},{198,-52},{198,-32},{316,-32},{316,-336},{-292,-336},{
           -292,1.3},{-257.9,1.3}}, color={0,0,127}));
@@ -318,7 +316,11 @@ equation
       points={{232,-258},{234,-258},{234,-204}},
       color={182,109,49},
       thickness=0.5));
+  connect(gain1.y, REMI_station.in_opening) annotation (Line(points={{-145,-2},
+          {-82,-2},{-82,48},{-98.4,48},{-98.4,34.4}}, color={0,0,127}));
+  connect(multiplMax.y, gain1.u)
+    annotation (Line(points={{-237.4,4},{-168,4},{-168,-2}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
-    experiment(StopTime=100, __Dymola_Algorithm="Dassl"));
+    experiment(StopTime=7500, __Dymola_Algorithm="Dassl"));
 end RG2i_PID_MISO_control;

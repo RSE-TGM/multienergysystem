@@ -26,6 +26,8 @@ model REMI_station
     Tin_start=Tin_start,
     Tout_start=Tout_start,
     X_start=X_start,
+    m_flow_nom=0.413,
+    A_v=1.9*0.413/(sqrt(40.18*(60 - 4.93)*1e5)),
     rho_in_nom=rho_in_nom,
     PressureDropLinear=PressureDropLinear)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},

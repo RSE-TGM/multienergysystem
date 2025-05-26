@@ -50,9 +50,12 @@ model RG2i_source2_CH4H2_demand
           0.0107; 81900,0.0083; 82740,0.0083; 82800,0.0083; 83640,0.0083; 83700,
           0.0085; 84540,0.0085; 84600,0.0083; 85440,0.0083; 85500,0.0083; 86340,
           0.0083; 86400,0.0107; 87240,0.0107; 90000,0.0107]),
-    m_flow_H1(offset=0.0001, startTime=7*3600),
+    m_flow_H1(
+      height=0,
+              offset=0.0001, startTime=7*3600),
     Immissione_2(G=1e-10, use_in_X0=true),
-    m_flow_H5(startTime=10*3600),
+    m_flow_H5(height=0,
+              startTime=10*3600),
     GRM_1(massflowratedemand=[0,0.0443; 840,0.0443; 900,0.0441; 1740,0.0441; 1800,
           0.0558; 2640,0.0558; 2700,0.0552; 3540,0.0552; 3600,0.0445; 4440,0.0445;
           4500,0.0552; 5340,0.0552; 5400,0.056; 6240,0.056; 6300,0.0443; 7140,0.0443;
@@ -291,7 +294,7 @@ model RG2i_source2_CH4H2_demand
     //parameter Types.MassFraction X_inj[nX] = {0, 0, 0, 0, 0, 0, 1};
     //parameter Types.MassFraction X_algeria[nX] = {0.87, 0.09, 0.009, 0.001, 0.02, 0.01, 0};
   Modelica.Blocks.Sources.RealExpression realExpression[2](y=if (time > (7*3600)
-         and time < (10*3600 + 300)) then {0,1} else {1,0})
+         and time < (10*3600 + 300)) then {1,0} else {1,0})
     annotation (Placement(transformation(extent={{-354,274},{-334,294}})));
 equation
   connect(realExpression.y, Immissione_2.in_X0) annotation (Line(points={{-333,

@@ -38,7 +38,10 @@ package Controllers
 Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false)));
   end Valve_controller;
 
-  block MultiplMax "Pass through the largest signal."
+  block MultiplMax "Pass through the signal with the largest absolute value."
+
+  Real u[7] = {u1, u2, u3, u4, u5, u6, u7};
+  Integer maxIndex;
 
     Modelica.Blocks.Interfaces.RealInput
               u1 "Connector of Real input signal 1" annotation (Placement(
@@ -71,9 +74,14 @@ Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false))
               u7 "Connector of Real input signal 1" annotation (Placement(
           transformation(extent={{-112,-100},{-86,-74}}), iconTransformation(
             extent={{-112,-100},{-86,-74}})));
-
-  equation
-    y = max([u1, u2, u3, u4, u5, u6, u7]);
+  algorithm
+    maxIndex := 1;
+    for i in 2:7 loop
+      if abs(u[i]) > abs(u[maxIndex]) then
+        maxIndex := i;
+      end if;
+    end for;
+    y := u[maxIndex];
     annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
             Rectangle(
             extent={{-100,100},{100,-100}},

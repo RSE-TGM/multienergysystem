@@ -143,10 +143,8 @@ equation
       points={{236,-264},{234,-264},{234,-204}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(
-      StopTime=10000,
-      Tolerance=0.001,
-      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+  annotation (experiment(StopTime=10000, __Dymola_Algorithm="Dassl"),
+                                   Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));
 end RG2i_AWPI;

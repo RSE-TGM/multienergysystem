@@ -148,8 +148,6 @@ model RG2i_PID_MISO_control
     m_flow0=0.119588,
     X0=X_start)                                                                                     "Via Lioni"
     annotation (Placement(transformation(extent={{126,-280},{170,-236}})));
-  Modelica.Blocks.Sources.Constant const_4(k=4.632*10^5)
-    annotation (Placement(transformation(extent={{-230,132},{-214,148}})));
   Modelica.Blocks.Math.Feedback feedback_4 annotation (Placement(visible=true,
         transformation(
         origin={-196,140},
@@ -204,9 +202,23 @@ model RG2i_PID_MISO_control
     annotation (Placement(transformation(extent={{72,242},{88,258}})));
   Controllers.MultiplMax multiplMax
     annotation (Placement(transformation(extent={{-258,-6},{-238,14}})));
-  Modelica.Blocks.Math.Gain gain1(k=0.8e-4)
-                                          annotation (
-        Placement(visible = true, transformation(origin={-156,-2},   extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Blocks.Sources.Ramp p_ref(
+    offset=4.632*10^5,
+    height=0*0.07*10^5,
+    duration=0,
+    startTime=1800) annotation (Placement(visible=true, transformation(
+        origin={-247,140},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Controllers.AWPID_error_in aWPID_error_in(
+    Kp=0.7e-4,
+    Ki=1e-5,
+    Ti=1,
+    Td=1,
+    Umax=1,
+    Umin=0,
+    y_start=0.5)
+    annotation (Placement(transformation(extent={{-162,-10},{-142,10}})));
 equation
   connect(sds14.outlet, idealPressureSensor2.inlet) annotation (Line(
       points={{80,216},{92,216}},
@@ -260,8 +272,6 @@ equation
       points={{135,217},{136,216},{112,216}},
       color={182,109,49},
       thickness=0.5));
-  connect(feedback_4.u1, const_4.y)
-    annotation (Line(points={{-204,140},{-213.2,140}}, color={0,0,127}));
   connect(idealPressureSensor.p_meas, feedback_4.u2) annotation (Line(points={{-189.8,
           172.6},{-188,172.6},{-188,160},{-196,160},{-196,148}}, color={0,0,127}));
   connect(feedback_5.u1,const_5. y)
@@ -316,10 +326,13 @@ equation
       points={{232,-258},{234,-258},{234,-204}},
       color={182,109,49},
       thickness=0.5));
-  connect(gain1.y, REMI_station.in_opening) annotation (Line(points={{-145,-2},
-          {-82,-2},{-82,48},{-98.4,48},{-98.4,34.4}}, color={0,0,127}));
-  connect(multiplMax.y, gain1.u)
-    annotation (Line(points={{-237.4,4},{-168,4},{-168,-2}}, color={0,0,127}));
+  connect(p_ref.y, feedback_4.u1)
+    annotation (Line(points={{-236,140},{-204,140}}, color={0,0,127}));
+  connect(aWPID_error_in.controlAction, REMI_station.in_opening) annotation (
+      Line(points={{-141,0},{-78,0},{-78,46},{-98.4,46},{-98.4,34.4}}, color={0,
+          0,127}));
+  connect(multiplMax.y, aWPID_error_in.error)
+    annotation (Line(points={{-237.4,4},{-160,4},{-160,4}}, color={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     experiment(StopTime=7500, __Dymola_Algorithm="Dassl"));

@@ -169,4 +169,80 @@ Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false))
             textString="PID
 AW")}), Diagram(coordinateSystem(extent={{-120,-120},{120,120}})));
   end AWPIDContinuous;
+
+  model AWPID_error_in "AWPID with error (ref-meas) as input"
+
+    parameter Real Kp = 1 "Proportional gain";
+    parameter Real Kd = 0 "Derivative gain";
+    parameter Real Ki = 0 "Integer gain";
+    parameter Real Ti = 1 "Integral Time";
+    parameter Real Td = 1 "Derivative Time";
+    parameter Real Umax = 1 "Maximum control action";
+    parameter Real Umin = 0 "Minimum control action";
+    parameter Real y_start = 1 "Nominal output";
+    Modelica.Blocks.Interfaces.RealInput error annotation (Placement(
+        visible=true,
+        transformation(
+          origin={-110,40},
+          extent={{-20,-20},{20,20}},
+          rotation=0),
+        iconTransformation(
+          origin={-80,40},
+          extent={{-20,-20},{20,20}},
+          rotation=0)));
+    Modelica.Blocks.Interfaces.RealOutput controlAction annotation (
+          Placement(visible = true, transformation(origin={118,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin={110,0},   extent={{-10,-10},{10,10}},      rotation = 0)));
+    Modelica.Blocks.Math.Gain gain(k = Kp)  annotation (
+          Placement(visible = true, transformation(origin={-10,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica.Blocks.Nonlinear.Limiter limiter(uMax = Umax, uMin = Umin)  annotation (
+          Placement(visible = true, transformation(origin={70,40},    extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    Modelica.Blocks.Continuous.FirstOrder firstOrder(T = Ti,
+    initType=Modelica.Blocks.Types.Init.SteadyState,
+      k=Ki,
+      y_start=y_start)                                                                                                          annotation (
+          Placement(visible = true, transformation(origin={-10,4},     extent={{10,-10},
+              {-10,10}},                                                                                rotation = 180)));
+    Modelica.Blocks.Continuous.Derivative derivative(k=Kd,
+                                                     T=Td)
+      annotation (Placement(transformation(extent={{-22,90},{-2,110}})));
+    Modelica.Blocks.Math.Add3 add3_1
+      annotation (Placement(transformation(extent={{24,30},{44,50}})));
+    Modelica.Blocks.Math.Add add(k2=-1)
+      annotation (Placement(transformation(extent={{-38,-2},{-28,8}})));
+    Modelica.Blocks.Math.Add add1(k1=-1) annotation (Placement(transformation(
+          extent={{-5,-5},{5,5}},
+          rotation=270,
+          origin={67,7})));
+  equation
+    connect(limiter.y, controlAction) annotation (
+          Line(points={{81,40},{118,40}},      color = {0, 0, 127}));
+    connect(add3_1.y, limiter.u)
+      annotation (Line(points={{45,40},{58,40}},         color={0,0,127}));
+    connect(gain.y, add3_1.u2) annotation (Line(points={{1,40},{22,40}},
+                    color={0,0,127}));
+    connect(derivative.y, add3_1.u1) annotation (Line(points={{-1,100},{14,100},
+            {14,48},{22,48}},
+                         color={0,0,127}));
+    connect(add.y, firstOrder.u)
+      annotation (Line(points={{-27.5,3},{-27.5,4},{-22,4}}, color={0,0,127}));
+    connect(add1.u2, add3_1.y) annotation (Line(points={{64,13},{64,20},{52,20},
+            {52,40},{45,40}}, color={0,0,127}));
+    connect(add1.u1, limiter.y) annotation (Line(points={{70,13},{72,13},{72,20},
+            {90,20},{90,40},{81,40}}, color={0,0,127}));
+    connect(add1.y, add.u2) annotation (Line(points={{67,1.5},{67,-24},{-44,-24},
+            {-44,0},{-39,0}}, color={0,0,127}));
+    connect(firstOrder.y, add3_1.u3) annotation (Line(points={{1,4},{16,4},{16,
+            32},{22,32}}, color={0,0,127}));
+    connect(error, gain.u)
+      annotation (Line(points={{-110,40},{-22,40}}, color={0,0,127}));
+    connect(add.u1, error) annotation (Line(points={{-39,6},{-46,6},{-46,40},{
+            -110,40}}, color={0,0,127}));
+    connect(derivative.u, error) annotation (Line(points={{-24,100},{-46,100},{
+            -46,40},{-110,40}}, color={0,0,127}));
+    annotation (
+        Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-100}}),    Text(extent={{-100,100},{100,-100}},
+            textColor={0,0,0},
+            textString="PID
+AW")}), Diagram(coordinateSystem(extent={{-120,-120},{120,120}})));
+  end AWPID_error_in;
 end Controllers;

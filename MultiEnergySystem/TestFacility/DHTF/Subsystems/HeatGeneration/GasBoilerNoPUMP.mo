@@ -1,48 +1,8 @@
 within MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration;
-model GasBoiler "System 100 - Gas Boiler"
+model GasBoilerNoPUMP "System 100 - Gas Boiler Flow controlled"
   extends BaseClass.GasBoilerBase;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S100;
 
-  DistrictHeatingNetwork.Components.TurboMachines.PrescribedPump P101(
-    redeclare model Medium = Medium,
-    Tin_start(displayUnit="K") = Tout_start,
-    Tout_start(displayUnit="K") = Tout_start,
-    a=TestFacility.Data.PumpData.P101.a,
-    b=TestFacility.Data.PumpData.P101.b,
-    m_flow_start=m_flow_S1,
-    dpnom=TestFacility.Data.PumpData.P101.dpnom,
-    etaelec=TestFacility.Data.PumpData.P101.etaelec,
-    etamech=TestFacility.Data.PumpData.P101.etamech,
-    etanom=TestFacility.Data.PumpData.P101.etanom,
-    m_flow_nom=TestFacility.Data.PumpData.P101.m_flow_nom,
-    omeganom=TestFacility.Data.PumpData.P101.omeganom,
-    pin_start(displayUnit="Pa") = TestFacility.Data.PumpData.P101.pin_start,
-    pout_start(displayUnit="Pa") = TestFacility.Data.PumpData.P101.pout_start,
-    qnom_inm3h=TestFacility.Data.PumpData.P101.qnom_inm3h,
-    rhonom(displayUnit="kg/m3") = TestFacility.Data.PumpData.P101.rhonom,
-    headnom=TestFacility.Data.PumpData.P101.headnom,
-    headmax=TestFacility.Data.PumpData.P101.headnommax,
-    headmin=TestFacility.Data.PumpData.P101.headnommin,
-    qnom_inm3h_min=TestFacility.Data.PumpData.P101.qnommin_inm3h,
-    qnom_inm3h_max=TestFacility.Data.PumpData.P101.qnommax_inm3h,
-    use_in_omega=true)                                                      annotation (Placement(transformation(
-        extent={{-12,-12},{12,12}},
-        rotation=90,
-        origin={20,5})));
-  DistrictHeatingNetwork.Components.Valves.FlowCoefficientValve FCV101(
-    redeclare model Medium = Medium,
-    Kv=Kv,
-    openingChar=openingChar,
-    dp_nom(displayUnit="Pa") = TestFacility.Data.ValveData.FCV101.dp_nom,
-    rho_nom=TestFacility.Data.ValveData.FCV101.rho_nom,
-    q_m3h_nom=TestFacility.Data.ValveData.FCV101.q_nom_m3h,
-    Tin_start(displayUnit="K") = Tout_start,
-    pin_start=pout_start,
-    q_m3h_start=q_m3h_S1)
-    annotation (Placement(transformation(
-        extent={{-10,-10},{10,10}},
-        rotation=90,
-        origin={20,62})));
   DistrictHeatingNetwork.Components.ThermalMachines.ControlledGasBoiler GB(
     redeclare model Medium = Medium,
     etanom=eta_combustion,
@@ -175,33 +135,9 @@ equation
   //-------------------------------
   // Total pump consumed electric power
   //-------------------------------
-  Pe = P101.W;
-
-
-
-
-  connect(P101.inlet,PL_S100_GB101_P101. outlet) annotation (Line(
-      points={{20,-4.6},{20,-14}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(PL_S100_P101_FCV101.inlet,P101. outlet) annotation (Line(
-      points={{20,24},{20,14.6}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FCV101.inlet,PL_S100_P101_FCV101. outlet) annotation (Line(
-      points={{20,52},{20,44}},
-      color={140,56,54},
-      thickness=0.5));
+  Pe = 0;
   connect(FT.outlet, PL_S100_FT101_GB101.inlet) annotation (Line(
       points={{-20,38},{-20,-13.5}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FCV101.outlet, PT102.inlet) annotation (Line(
-      points={{20,72},{20,77},{19.6,77},{19.6,82}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(FCV101.outlet, TT102.inlet) annotation (Line(
-      points={{20,72},{20,82},{19.6,82},{19.6,92}},
       color={140,56,54},
       thickness=0.5));
   connect(FT.inlet, PT101.inlet) annotation (Line(
@@ -234,8 +170,6 @@ equation
       points={{21.6,-96.5},{30,-96.5},{30,-125},{54,-125},{54,-122}},
       color={182,109,49},
       thickness=0.5));
-  connect(pumpset, P101.in_omega) annotation (Line(points={{-110,70},{-103.5,70},{-103.5,70.5},{-95,70.5},{-95,137},{7,137},{7,0},{10.5,0},{10.5,0.2},{14,0.2}}, color={0,0,127}));
-  connect(theta, FCV101.opening) annotation (Line(points={{-110,50},{-97.5,50},{-97.5,138},{8,138},{8,62},{12,62}}, color={0,0,127}));
   connect(GB.inlet, PL_S100_FT101_GB101.outlet) annotation (Line(
       points={{-10.8,-67.7},{-10.8,-55},{-20,-55},{-20,-33.5}},
       color={140,56,54},
@@ -256,13 +190,26 @@ equation
       points={{-110,-80},{-29.5,-80},{-29.5,-45},{0,-45},{0,-24},{15.9,-24}},
       color={255,101,98},
       thickness=0.5));
+  connect(PL_S100_P101_FCV101.outlet, PT102.inlet) annotation (Line(
+      points={{20,44},{20,73},{19.5,73},{19.5,82},{19.6,82}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(TT102.inlet, PT102.inlet) annotation (Line(
+      points={{19.6,92},{19.6,82}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(PL_S100_GB101_P101.outlet, PL_S100_P101_FCV101.inlet) annotation (
+      Line(
+      points={{20,-14},{20,24}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (                                                   Diagram(coordinateSystem(
                                      extent={{-100,-140},{100,140}}, grid={0.5,0.5})), Documentation(info="<html>
-<h3>GasBoiler</h3>
+<h3>GasBoilerFC</h3>
 <p>
 <strong>Summary:</strong><br>
-This model includes the main components that represents system S100 in RSE&apos;s Test Facility. 
+This model includes the main components that represents system S100 in RSE's Test Facility. 
 It takes as base model <a href=\"modelica://MultiEnergySystem.TestFacility.DHTF.Subsystems.HeatGeneration.BaseClass.GasBoilerBase\">GasBoilerBase</a>. 
-In this model the pump is controlled by acting in the rotational speed of the pump <code>omega</code>.</p>
+In this model the pump is controlled by setting the mass flow rate of the pump <code>m_flow</code>, then one can said that this is an ideal flow controlled pump.</p>
 </html>"));
-end GasBoiler;
+end GasBoilerNoPUMP;

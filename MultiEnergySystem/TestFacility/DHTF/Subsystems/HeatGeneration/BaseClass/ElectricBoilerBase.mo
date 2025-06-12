@@ -3,8 +3,10 @@ model ElectricBoilerBase "Partial System 400 - Electric Boiler Base Model"
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseI(MultiPort(n=n));
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S400;
-  replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+  replaceable model Medium =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity                        constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
 
   constant Real pi = Modelica.Constants.pi;

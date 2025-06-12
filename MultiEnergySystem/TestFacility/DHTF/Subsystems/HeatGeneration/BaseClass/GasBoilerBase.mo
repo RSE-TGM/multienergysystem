@@ -5,7 +5,8 @@ partial model GasBoilerBase "Partial System 100 - Gas Boiler Base model, includi
   extends DistrictHeatingNetwork.Icons.Water.GasBoiler;
   import pipeData = MultiEnergySystem.TestFacility.Data.PipelineData.S100;
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 

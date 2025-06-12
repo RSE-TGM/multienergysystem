@@ -2,7 +2,8 @@ within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration;
 partial model BaseHeatGeneration
   extends DistrictHeatingNetwork.Icons.Water.HeatGeneration;
   replaceable model Gas = H2GasFacility.Media.IdealGases.NG_4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
-  replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
+  replaceable model WaterHot =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp
     constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
   //Constants

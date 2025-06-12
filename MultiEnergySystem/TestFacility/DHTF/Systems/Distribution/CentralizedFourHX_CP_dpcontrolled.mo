@@ -1,0 +1,4 @@
+within MultiEnergySystem.TestFacility.DHTF.Systems.Distribution;
+model CentralizedFourHX_CP_dpcontrolled
+  extends CentralizedFourHX(redeclare TestFacility.DHTF.Subsystems.Distribution.CirculationPumpPC S900);
+end CentralizedFourHX_CP_dpcontrolled;

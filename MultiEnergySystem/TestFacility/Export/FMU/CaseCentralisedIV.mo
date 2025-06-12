@@ -29,7 +29,8 @@ equation
   connect(P201input, actuator.P201omega) annotation (Line(points={{-100,-23.5},{-50,-23.5},{-50,47.0625},{-21.0125,47.0625}},
                                                                                                                             color={0,0,127}));
   connect(FCV201theta, actuator.FCV201theta) annotation (Line(points={{-100,-31},{-48.5,-31},{-48.5,45.0375},{-21.0125,45.0375}},       color={0,0,127}));
-  connect(S200_status, actuator.S200_status) annotation (Line(points={{-100,-39},{-47,-39},{-47,43.0125},{-21.0125,43.0125}},       color={255,127,0}));
+  connect(S200_status, actuator.S200_status) annotation (Line(points={{-100,-39},
+          {-47,-39},{-47,43.0125},{-21.0125,43.0125}},                                                                              color={255,127,0}));
   annotation (
     Icon(coordinateSystem(grid={0.5,0.5})),
     Diagram(coordinateSystem(grid={0.5,0.5})));

@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.DHTF.Systems.Distribution;
-model CentralizedFourHX "Base Case considering rack CD and the pipelines connecting to the loads"
+model CentralizedFourHX_PoliMi
+  "Base Case considering rack CD and the pipelines connecting to the loads"
   extends DistrictHeatingNetwork.Icons.Water.Distribution;
   //Fluids
   replaceable model MediumCP =
@@ -179,21 +180,6 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
     Placement(transformation(extent={{16,-11},{24,-19}})));
   MultiEnergySystem.DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PTA07 "Pressure sensor at the outlet of valve FCVC01" annotation (
     Placement(transformation(extent={{26,19},{34,27}})));
-  replaceable TestFacility.DHTF.Subsystems.Distribution.CirculationPump S900(
-    redeclare model Medium = MediumCP,
-    hctype=hctype,
-    n=n,
-    pumpcorrectionfactor=pumpcorrectionfactor,
-    Kv=Kv,
-    openingChar=openingChar,
-    cf=cf,
-    q_m3h_S9=q_m3h_S9,
-    b=b,
-    P901(pin_start=pin_start_P901))
-         "Pumping Circulation System"
-    annotation (Placement(transformation(extent={{-48,-48},{48,48}},
-        rotation=-90,
-        origin={-314,4})));
   DHTF.Subsystems.Distribution.ConnectorTypeI rackL3L4(
     redeclare model Medium = MediumCP,
     hctype=hctype,
@@ -264,9 +250,15 @@ model CentralizedFourHX "Base Case considering rack CD and the pipelines connect
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet[4] fluidPortOutlet annotation (Placement(transformation(extent={{-14,-168},{6,-148}}),
                                                                                                                                        iconTransformation(extent={{90,-70},{110,-50}})));
   DistrictHeatingNetwork.Interfaces.FluidPortOutlet returncold annotation (Placement(transformation(extent={{-422,14},{-402,34}}), iconTransformation(extent={{-110,50},{-90,70}})));
-  DistrictHeatingNetwork.Interfaces.FluidPortInlet senthot annotation (Placement(transformation(extent={{-422,-28},{-402,-8}}), iconTransformation(extent={{-110,-70},{-90,-50}})));
+  DistrictHeatingNetwork.Interfaces.FluidPortInlet senthot annotation (Placement(transformation(extent={{-422,
+            -22},{-402,-2}}),                                                                                                   iconTransformation(extent={{-110,-70},{-90,-50}})));
   DistrictHeatingNetwork.Components.Fittings.Junction2 junctionReturn annotation (Placement(transformation(extent={{-164,16},{-178,30}})));
   DistrictHeatingNetwork.Components.Fittings.Junction junctionSent annotation (Placement(transformation(extent={{-198,-20},{-184,-6}})));
+  Subsystems.Distribution.CirculationPumpPC circulationPumpPC annotation (
+      Placement(transformation(
+        extent={{-47,-47},{47,47}},
+        rotation=270,
+        origin={-313,5})));
 equation
   connect(rackL6L7_FCVC02_hot.outlet, FTA12.inlet) annotation (
     Line(points={{382,-13},{388,-13},{388,-13.4},{389.6,-13.4}},          color = {140, 56, 54}, thickness = 0.5));
@@ -346,18 +338,6 @@ equation
       points={{406,29.4},{406,24},{412,24},{412,13}},
       color={140,56,54},
       thickness=0.5));
-  connect(S900_rackL2L3_cold.outlet, S900.inletcold) annotation (Line(
-      points={{-230,23},{-241.175,23},{-241.175,22.72},{-258.8,22.72}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(controlSignalBus.thetaFCV901, S900.theta) annotation (Line(
-      points={{0,190},{-2,190},{-2,168},{-290,168},{-290,56.8}},
-      color={255,204,51},
-      thickness=0.5));
-  connect(controlSignalBus.omegaP901, S900.pumpset) annotation (Line(
-      points={{0,190},{-2,190},{-2,162},{-280.4,162},{-280.4,56.8}},
-      color={255,204,51},
-      thickness=0.5));
   connect(controlSignalBus.thetaFCVC01, FCVC01.opening) annotation (Line(
       points={{0,190},{0,164},{24,164},{24,5},{37.8,5}},
       color={255,204,51},
@@ -390,18 +370,6 @@ equation
       points={{272.5,-40},{272.5,-140},{-4,-140},{-4,-154.25}},
       color={140,56,54},
       thickness=0.5));
-  connect(S900.outletcold, returncold) annotation (Line(
-      points={{-369.2,22.72},{-369.2,20},{-392,20},{-392,24},{-412,24}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(S900.inlethot, senthot) annotation (Line(
-      points={{-369.2,-14.72},{-390.825,-14.72},{-390.825,-18},{-412,-18}},
-      color={140,56,54},
-      thickness=0.5));
-  connect(S900_rackL3L4_hot.inlet, S900.outlethot) annotation (Line(
-      points={{-230,-13},{-258.8,-13},{-258.8,-14.72}},
-      color={140,56,54},
-      thickness=0.5));
   connect(junctionReturn.outlet, S900_rackL2L3_cold.inlet) annotation (Line(
       points={{-178,23},{-208,23}},
       color={140,56,54},
@@ -426,8 +394,30 @@ equation
       points={{-191,-20},{-190,-20},{-190,-138},{-10,-138},{-10,-161.75},{-4,-161.75}},
       color={140,56,54},
       thickness=0.5));
+  connect(returncold, circulationPumpPC.outletcold) annotation (Line(
+      points={{-412,24},{-412,23.33},{-367.05,23.33}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(circulationPumpPC.inletcold, S900_rackL2L3_cold.outlet) annotation (
+      Line(
+      points={{-258.95,23.33},{-230,23.33},{-230,23}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(S900_rackL3L4_hot.inlet, circulationPumpPC.outlethot) annotation (
+      Line(
+      points={{-230,-13},{-232,-13.33},{-258.95,-13.33}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(senthot, senthot) annotation (Line(
+      points={{-412,-12},{-412,-12}},
+      color={140,56,54},
+      thickness=0.5));
+  connect(circulationPumpPC.inlethot, senthot) annotation (Line(
+      points={{-367.05,-13.33},{-392,-13.33},{-392,-12},{-412,-12}},
+      color={140,56,54},
+      thickness=0.5));
   annotation (
     Diagram(coordinateSystem(extent={{-420,-200},{420,200}})),
     Icon(coordinateSystem(grid={1,1})),
     experiment(StopTime = 500, __Dymola_Algorithm = "Dassl"));
-end CentralizedFourHX;
+end CentralizedFourHX_PoliMi;

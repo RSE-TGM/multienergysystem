@@ -200,7 +200,8 @@ equation
   connect(FCVR01theta, actuator.FCVR01theta) annotation (Line(points={{-100,67.5},{-90,67.5},{-90,73.3875},{-21.0125,73.3875}}, color={0,0,127}));
   connect(PR01omega, actuator.PR01omega) annotation (Line(points={{-100,60},{-88.5,60},{-88.5,71.3625},{-21.0125,71.3625}}, color={0,0,127}));
   connect(FCV901theta, actuator.FCV901theta) annotation (Line(points={{-100,49.5},{-70,49.5},{-70,68.325},{-21.0125,68.325}}, color={0,0,127}));
-  connect(P901input,actuator.P901input)  annotation (Line(points={{-100,42.5},{-67.5,42.5},{-67.5,66.4013},{-21.0125,66.4013}}, color={0,0,127}));
+  connect(P901input,actuator.P901input)  annotation (Line(points={{-100,42.5},{
+          -67.5,42.5},{-67.5,66.4013},{-21.0125,66.4013}},                                                                      color={0,0,127}));
   connect(FV933status, actuator.FV933status) annotation (Line(points={{-45,100},{-45,88},{-17.3675,88},{-17.3675,83.5125}},      color={255,0,255}));
   connect(m_flow_S900_exp.y,FT901)  annotation (Line(points={{-89.5,-65},{-80,-65}},     color={0,0,127}));
   connect(FT701_exp.y, multiplexFT7X1.u1[1]) annotation (Line(points={{-29.5,-75},{-27.5,-75},{-27.5,-83.25},{-25.5,-83.25}}, color={0,0,127}));

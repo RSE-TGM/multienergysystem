@@ -91,6 +91,7 @@ model Configuration1 "Centralised configuration"
   parameter String timenoscale = "time" "Matrix name in file";
 
   Real Tcoolsin;
+  inner System system(allowFlowReversal=false) annotation (Placement(transformation(extent={{848,98},{868,118}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixTTo) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";

@@ -91,6 +91,7 @@ model CEN_231204_SequenceI "Sequence 1 done on 04/12/23"
   parameter String timenoscale = "time" "Matrix name in file";
 
   Real Tcoolsin;
+  inner System system(allowFlowReversal=false) annotation (Placement(transformation(extent={{846,0},{866,20}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixTTo) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";

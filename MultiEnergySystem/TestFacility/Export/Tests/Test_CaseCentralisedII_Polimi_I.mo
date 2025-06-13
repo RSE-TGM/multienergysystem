@@ -14,7 +14,8 @@ model Test_CaseCentralisedII_Polimi_I
   Modelica.Blocks.Sources.RealExpression omegaP101SP(y=2*3.14159*30) annotation (Placement(transformation(extent={{-90,-16},{-70,4}})));
   Modelica.Blocks.Sources.RealExpression m_flow_P101SP(y=0.9) annotation (Placement(transformation(extent={{-90,-58},{-70,-38}})));
   Modelica.Blocks.Sources.RealExpression TT7X1SP(y=60 + 273.15) annotation (Placement(transformation(extent={{-90,-86},{-70,-66}})));
-  Modelica.Blocks.Sources.RealExpression EX7X1SP(y=30e3) annotation (Placement(transformation(extent={{-90,-100},{-70,-80}})));
+  Modelica.Blocks.Sources.RealExpression EX7X1SP(y=if time < 2e3 then 30e3 else 28e3)
+                                                         annotation (Placement(transformation(extent={{-90,-100},{-70,-80}})));
 equation
   connect(thetaFCVC01SP.y, facility.FCVC01theta) annotation (Line(points={{-69,88},{-2,88},{-2,26.25},{10.25,26.25}}, color={0,0,127}));
   connect(thetaFCVC02SP.y, facility.FCVC02theta) annotation (Line(points={{-69,74},{-4,74},{-4,22.75},{10.25,22.75}}, color={0,0,127}));
@@ -43,5 +44,5 @@ equation
   annotation (
     Icon(coordinateSystem(preserveAspectRatio=false)),
     Diagram(coordinateSystem(preserveAspectRatio=false)),
-    experiment(StopTime=1000, __Dymola_Algorithm="Dassl"));
+    experiment(StopTime=4000, __Dymola_Algorithm="Dassl"));
 end Test_CaseCentralisedII_Polimi_I;

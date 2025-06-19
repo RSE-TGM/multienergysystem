@@ -1,5 +1,0 @@
-within MultiEnergySystem.TestFacility.DHTF.Systems.HeatGeneration;
-model CentralizedThreeGenStorage
-  extends CentralizedThreeGenGBEBCHP;
-  Subsystems.HeatGeneration.TES tES annotation (Placement(transformation(extent={{192,-50},{282,40}})));
-end CentralizedThreeGenStorage;

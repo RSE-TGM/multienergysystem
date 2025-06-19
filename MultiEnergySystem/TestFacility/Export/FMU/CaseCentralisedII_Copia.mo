@@ -2,8 +2,7 @@ within MultiEnergySystem.TestFacility.Export.FMU;
 model CaseCentralisedII_Copia
   extends CaseCentralisedI(
     redeclare DHTF.Networks.Centralised.LoadControl.CentralSystemLoadControl_II_PC facility,
-    redeclare DHTF.Control.OpenLoopActuators.FMUActuator_II actuator,
-    break connect(facility.inletGas, sourceGas.outlet));
+    redeclare DHTF.Control.OpenLoopActuators.FMUActuator_II actuator);
   Modelica.Blocks.Interfaces.RealInput EB401Tout_SP annotation (Placement(transformation(
         extent={{5,-5},{-5,5}},
         rotation=180,

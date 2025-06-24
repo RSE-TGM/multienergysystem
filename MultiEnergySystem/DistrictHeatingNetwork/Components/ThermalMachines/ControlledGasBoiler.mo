@@ -29,6 +29,7 @@ model ControlledGasBoiler
   DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
   DistrictHeatingNetwork.Types.MassFlowRate m_flow_fuel_actual(nominal = 1e-3, start = 1e-3) "mass flowrate of the fuel";
   DistrictHeatingNetwork.Types.Power Pheat_ref(nominal = Pnom) "Reference value for computed Heat Power required";
+  DistrictHeatingNetwork.Types.Power Pcomb "Estimated Combustion power";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   DistrictHeatingNetwork.Types.Pressure ploss(start = 0.0054827 + m_flow_nom*(0.00471 + 0.1417671*m_flow_nom));
   Medium fluidOut_ref(T_start = Tout_start, p_start = pout_start) "Reference outlet fluid";
@@ -52,7 +53,8 @@ equation
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref;
 
   Pheat = if heat_on then max(min(Pheat_ref, Pmaxnom),0) else 0;
-  Pheat = m_flow_fuel*fuel.HHV_mix/etanom;
+  Pheat = Pcomb;
+  Pcomb = m_flow_fuel*fuel.HHV_mix*etanom;
   m_flow_fuel_actual = delay(m_flow_fuel, tdelay);
   m_flow_fuel_actual = inletfuel.m_flow;
 

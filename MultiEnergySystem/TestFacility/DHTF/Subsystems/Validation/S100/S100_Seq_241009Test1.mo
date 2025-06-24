@@ -3,7 +3,7 @@ model S100_Seq_241009Test1
   extends DHTF.Subsystems.Validation.S100.TestBase(
     MeasuredData=Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241009_Test1.mat"),
     Pmaxnom=147.6e3*0.92,
-    eta_combustion=0.83,
+    eta_combustion=0.98,
     tdelay=0,
     GB101_ToutSP(table=[0,80 + 273.15; 3400,80 + 273.15; 1e6,80 + 273.15]),
     realExpression(y=1e-5));

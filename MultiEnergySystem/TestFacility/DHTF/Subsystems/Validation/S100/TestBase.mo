@@ -77,10 +77,11 @@ model TestBase "Base test for S100 validation"
   DistrictHeatingNetwork.Utilities.ASHRAEIndex val_m_flow annotation (
     Placement(transformation(extent = {{66, 26}, {78, 38}})));
   DistrictHeatingNetwork.Utilities.ASHRAEIndex valT annotation (
-    Placement(transformation(extent = {{66, 12}, {78, 0}})));
+    Placement(transformation(extent={{84,20},{96,8}})));
   Modelica.Blocks.Sources.TimeTable Tout_ref(table = [ts, TTo]) annotation (
-    Placement(transformation(extent = {{42, -18}, {54, -6}})));
-  inner MultiEnergySystem.System system annotation (
+    Placement(transformation(extent={{70,-10},{82,2}})));
+  inner MultiEnergySystem.System system(allowFlowReversal=false)
+                                        annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
   Modelica.Blocks.Continuous.FirstOrder lowPassomega(k = 1, T = 1, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = omega[1, 1]) annotation (
     Placement(transformation(extent = {{-68, 26}, {-56, 38}})));
@@ -93,26 +94,31 @@ model TestBase "Base test for S100 validation"
   H2GasFacility.Sources.SourcePressure sourceGas(redeclare model Medium = Gas, X0 = X_gas, R = 1e-3, computeEnergyVariables = true) annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin = {-2, -60})));
   Modelica.Blocks.Sources.TimeTable m_flowgas_ref(table = [ts, m_flow_Gas]) annotation (
-    Placement(transformation(extent = {{40, -46}, {52, -34}})));
+    Placement(transformation(extent={{48,-100},{60,-88}})));
   DistrictHeatingNetwork.Utilities.ASHRAEIndex val_m_flow_fuel annotation (
-    Placement(transformation(extent = {{66, -56}, {78, -44}})));
+    Placement(transformation(extent={{70,-116},{82,-104}})));
   Modelica.Blocks.Sources.RealExpression m_flow_gas_sim(y = gasBoiler.inletFuel.m_flow) annotation (
-    Placement(transformation(extent = {{34, -70}, {54, -50}})));
+    Placement(transformation(extent={{-12,-110},{8,-90}})));
   Modelica.Blocks.Math.Max max1 annotation (
-    Placement(transformation(extent = {{30, -94}, {50, -74}})));
+    Placement(transformation(extent={{28,-122},{48,-102}})));
   Modelica.Blocks.Sources.RealExpression realExpression(y = 1e-6) annotation (
-    Placement(transformation(extent = {{-10, -102}, {10, -82}})));
+    Placement(transformation(extent={{-12,-126},{8,-106}})));
+  DistrictHeatingNetwork.Utilities.ASHRAEIndex valdT
+                                                    annotation (
+    Placement(transformation(extent={{64,-18},{76,-30}})));
+  Modelica.Blocks.Math.Add minusdT_sim(k1=-1) annotation (Placement(transformation(extent={{44,-26},{56,-14}})));
+  Modelica.Blocks.Math.Add minusdT_sim1(k1=-1) annotation (Placement(transformation(extent={{42,-52},{54,-40}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
   final parameter Real PTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTi, dim[1], dim[2]);
   final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
-  final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
-  final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
+  final parameter DistrictHeatingNetwork.Types.Temperature TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
+  final parameter DistrictHeatingNetwork.Types.Temperature TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
   final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
   final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
   final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
-  final parameter Real m_flow_Gas[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
+  final parameter Real m_flow_Gas[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/2900;
   final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
   final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
   final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1, 1];
@@ -134,9 +140,9 @@ equation
   connect(gasBoiler.m_flow_, val_m_flow.u_sim) annotation (
     Line(points = {{28.8, 19.6}, {52, 19.6}, {52, 29}, {64.8, 29}}, color = {0, 0, 127}));
   connect(Tout_ref.y, valT.u_meas) annotation (
-    Line(points = {{54.6, -12}, {60, -12}, {60, 3}, {64.8, 3}}, color = {0, 0, 127}));
+    Line(points={{82.6,-4},{82.6,3.5},{82.8,3.5},{82.8,11}},    color = {0, 0, 127}));
   connect(gasBoiler.TTout, valT.u_sim) annotation (
-    Line(points = {{28.8, 8.4}, {52, 8.4}, {52, 9}, {64.8, 9}}, color = {0, 0, 127}));
+    Line(points={{28.8,8.4},{74,8.4},{74,17},{82.8,17}},        color = {0, 0, 127}));
   connect(P101_omega.y, lowPassomega.u) annotation (
     Line(points = {{-75.4, 32}, {-69.2, 32}}, color = {0, 0, 127}));
   connect(lowPassomega.y, gasBoiler.omega) annotation (
@@ -154,17 +160,24 @@ equation
   connect(sourceGas.outlet, gasBoiler.inletFuel) annotation (
     Line(points = {{-2, -50}, {-2, -41.24}, {-2, -41.24}, {-2, -32.48}}, color = {182, 109, 49}, thickness = 0.5));
   connect(m_flowgas_ref.y, val_m_flow_fuel.u_meas) annotation (
-    Line(points = {{52.6, -40}, {60, -40}, {60, -47}, {64.8, -47}}, color = {0, 0, 127}));
+    Line(points={{60.6,-94},{60.6,-100},{68.8,-100},{68.8,-107}},   color = {0, 0, 127}));
   connect(m_flow_gas_sim.y, max1.u1) annotation (
-    Line(points = {{55, -60}, {58, -60}, {58, -64}, {22, -64}, {22, -78}, {28, -78}}, color = {0, 0, 127}));
+    Line(points={{9,-100},{20,-100},{20,-106},{26,-106}},                             color = {0, 0, 127}));
   connect(max1.y, val_m_flow_fuel.u_sim) annotation (
-    Line(points = {{51, -84}, {64.8, -84}, {64.8, -53}}, color = {0, 0, 127}));
+    Line(points={{49,-112},{58.9,-112},{58.9,-113},{68.8,-113}},
+                                                         color = {0, 0, 127}));
   connect(realExpression.y, max1.u2) annotation (
-    Line(points = {{11, -92}, {11, -90}, {28, -90}}, color = {0, 0, 127}));
+    Line(points={{9,-116},{9,-118},{26,-118}},       color = {0, 0, 127}));
   connect(m_flow_ref.y, sinkMassFlow.in_m_flow) annotation (
     Line(points = {{56.6, 56}, {58, 56}, {58, 58}, {60, 58}, {60, 72}, {20, 72}, {20, 56}, {15, 56}}, color = {0, 0, 127}));
   connect(val_m_flow.u_meas, val_m_flow.u_sim) annotation (
     Line(points = {{64.8, 35}, {54, 35}, {54, 29}, {64.8, 29}}, color = {0, 0, 127}));
+  connect(minusdT_sim.u1, gasBoiler.TTin) annotation (Line(points={{42.8,-16.4},{36,-16.4},{36,14},{28.8,14}}, color={0,0,127}));
+  connect(minusdT_sim.u2, valT.u_sim) annotation (Line(points={{42.8,-23.6},{34,-23.6},{34,8.4},{74,8.4},{74,17},{82.8,17}}, color={0,0,127}));
+  connect(minusdT_sim.y, valdT.u_sim) annotation (Line(points={{56.6,-20},{59.7,-20},{59.7,-21},{62.8,-21}}, color={0,0,127}));
+  connect(minusdT_sim1.u1, source.in_T0) annotation (Line(points={{40.8,-42.4},{34,-42.4},{34,44},{-30,44},{-30,56},{-22.4,56}}, color={0,0,127}));
+  connect(Tout_ref.y, minusdT_sim1.u2) annotation (Line(points={{82.6,-4},{84,-4},{84,-6},{86,-6},{86,-58},{32,-58},{32,-49.6},{40.8,-49.6}}, color={0,0,127}));
+  connect(minusdT_sim1.y, valdT.u_meas) annotation (Line(points={{54.6,-46},{62.8,-46},{62.8,-27}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     experiment(StopTime = 4000, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));

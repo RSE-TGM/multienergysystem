@@ -74,7 +74,8 @@ model TestBase
     Placement(transformation(extent = {{-88, 26}, {-76, 38}})));
   Modelica.Blocks.Sources.TimeTable m_flow_ref(table = [ts, m_flow_approx]) annotation (
     Placement(transformation(extent = {{40, 48}, {28, 60}})));
-  inner MultiEnergySystem.System system annotation (
+  inner MultiEnergySystem.System system(allowFlowReversal=false)
+                                        annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
   Modelica.Blocks.Continuous.FirstOrder lowPassomega(k = 1, T = 1, initType = Modelica.Blocks.Types.Init.SteadyState, y_start = omega[1, 1]) annotation (
     Placement(transformation(extent = {{-68, 26}, {-56, 38}})));
@@ -94,20 +95,7 @@ model TestBase
     Placement(transformation(extent = {{-68, -46}, {-56, -34}})));
   Modelica.Blocks.Sources.TimeTable m_flow_ref_CHP(table = [ts, m_flow_CHP_approx]) annotation (
     Placement(transformation(extent = {{-68, -66}, {-56, -54}})));
-protected
-  final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
-  final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
-  final parameter Real PTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTi, dim[1], dim[2]);
-  final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
-  final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
-  final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
-  final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
-  final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
-  final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
-  final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
-  final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
-  final parameter Real FTCHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFTCHP, dim[1], dim[2]);
-  //final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
+
   DistrictHeatingNetwork.Utilities.ASHRAEIndex val_TT502 "Validation of outlet temperature TT502" annotation (
     Placement(transformation(extent = {{60, 2}, {80, 22}})));
   Modelica.Blocks.Sources.TimeTable TT502_ref(table = [ts, TTo]) annotation (
@@ -130,6 +118,22 @@ protected
     Placement(transformation(extent = {{80, 30}, {92, 42}})));
   Modelica.Blocks.Sources.RealExpression realExpression3(y = S500.PTout) annotation (
     Placement(transformation(extent = {{48, 24}, {68, 44}})));
+
+protected
+  final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
+  final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
+  final parameter Real PTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTi, dim[1], dim[2]);
+  final parameter Real PTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixPTo, dim[1], dim[2]);
+  final parameter Real TTi[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi, dim[1], dim[2]);
+  final parameter Real TTo[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo, dim[1], dim[2]);
+  final parameter Real TTi_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTi_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+  final parameter Real TTo_CHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixTTo_CHP, dim[1], dim[2]) + 273.15*ones(dim[1], dim[2]);
+  final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
+  final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
+  final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
+  final parameter Real FTCHP[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFTCHP, dim[1], dim[2]);
+  //final parameter Real m_flow_Gas[dim[1], dim[2]]= Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
+
 protected
   final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
   final parameter Real m_flow_CHP_approx[dim[1], dim[2]] = FTCHP*(rhohotref/1000)/60;

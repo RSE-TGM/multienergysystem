@@ -1,10 +1,12 @@
 ﻿within MultiEnergySystem.DistrictHeatingNetwork.Components.ThermalMachines;
 model ControlledElectricBoiler
-  extends DistrictHeatingNetwork.Components.ThermalMachines.BaseClass.PartialBoiler;
+  extends DistrictHeatingNetwork.Components.ThermalMachines.BaseClass.PartialBoiler(
+    pout_start = pin_start - (0.038260644702251 +   0.083541856733188*m_flow_start)*1e5);
   parameter Real nR = 5 "Total number of resistors";
   parameter DistrictHeatingNetwork.Types.Power Pmaxres = 10e3 "Electric power of each resistor";
   parameter SI.Resistance R = 47.56 "Nominal resistance of each resistor";
-
+  parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_start = 1.2 "Start value outlet density of the fluid" annotation (
+    Dialog(tab = "Initialisation"));
   DistrictHeatingNetwork.Types.Power Pheat_ref "Reference value for computed Heat Power required";
   DistrictHeatingNetwork.Types.SpecificEnthalpy hout_ref "Reference required temperature";
   DistrictHeatingNetwork.Types.Pressure ploss "Pressure loss in boiler";
@@ -22,7 +24,9 @@ equation
   hout_ref = fluidOut_ref.h;
   0 = inlet.m_flow*(-hout_ref + hin) + Pheat_ref "Ideal power/temperature control";
   inlet.p - outlet.p = ploss;
-  ploss = 990*9.81*h*0 + (m_flow*(0.199135 + 0.290023*m_flow))*1e5;
+  //ploss = 990*9.81*h*0 + (m_flow*(0.199135 + 0.290023*m_flow))*1e5;
+  //ploss = (0.4677 + m_flow.*(-0.797 + 0.5156*m_flow))*1e5;
+  ploss = (0.038260644702251 + 0.0577 +   0.083541856733188*m_flow)*1e5;
   Pheat = if heat_on then max(min(Pheat_ref, Pmaxres*nR),0) else 0;
 
   inletPower.P = Pheat;

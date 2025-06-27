@@ -63,9 +63,9 @@ model TestBase "Base test for S100 validation"
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e6}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
     Placement(transformation(extent = {{-68, -30}, {-56, -18}})));
   Modelica.Blocks.Sources.TimeTable TT101_profile(table = [ts, TTi]) annotation (
-    Placement(transformation(extent={{-80,60},{-68,72}})));
+    Placement(transformation(extent={{-86,60},{-74,72}})));
   Modelica.Blocks.Sources.TimeTable PT101_profile(table = [ts, PTi]) annotation (
-    Placement(transformation(extent={{-46,66},{-34,78}})));
+    Placement(transformation(extent={{-44,66},{-32,78}})));
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table = [ts, thetav]) annotation (
     Placement(transformation(extent = {{-88, 8}, {-76, 20}})));
   Modelica.Blocks.Sources.TimeTable P101_omega(table = [ts, omega]) annotation (
@@ -79,7 +79,7 @@ model TestBase "Base test for S100 validation"
   DistrictHeatingNetwork.Utilities.ASHRAEIndex valT annotation (
     Placement(transformation(extent={{84,20},{96,8}})));
   Modelica.Blocks.Sources.TimeTable Tout_ref(table = [ts, TTo]) annotation (
-    Placement(transformation(extent={{58,-8},{70,4}})));
+    Placement(transformation(extent={{58,-10},{70,2}})));
   inner MultiEnergySystem.System system(allowFlowReversal=false)
                                         annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
@@ -108,13 +108,18 @@ model TestBase "Base test for S100 validation"
     Placement(transformation(extent={{64,-18},{76,-30}})));
   Modelica.Blocks.Math.Add minusdT_sim(k1=-1) annotation (Placement(transformation(extent={{44,-26},{56,-14}})));
   Modelica.Blocks.Math.Add minusdT_sim1(k1=-1) annotation (Placement(transformation(extent={{42,-52},{54,-40}})));
-  Modelica.Blocks.Math.Gain gain(k=1.034125) annotation (Placement(transformation(extent={{78,-6},{86,2}})));
+  Modelica.Blocks.Math.Gain gain(k=1.034125) annotation (Placement(transformation(extent={{78,-8},{86,0}})));
   Modelica.Blocks.Math.Add add(k2=+1) annotation (Placement(transformation(extent={{104,-12},{114,-2}})));
-  Modelica.Blocks.Sources.RealExpression realExpression1(y=-9.228524) annotation (Placement(transformation(extent={{78,-52},{98,-32}})));
-  Modelica.Blocks.Math.Gain gain1(k=1.0392)  annotation (Placement(transformation(extent={{-64,62},{-56,70}})));
+  Modelica.Blocks.Sources.RealExpression realExpression1(y=-9.228524) annotation (Placement(transformation(extent={{84,-22},{96,-8}})));
+  Modelica.Blocks.Math.Gain gain1(k=1.0392)  annotation (Placement(transformation(extent={{-68,62},{-60,70}})));
   Modelica.Blocks.Math.Add add1(k2=+1)
                                       annotation (Placement(transformation(extent={{-50,46},{-40,56}})));
-  Modelica.Blocks.Sources.RealExpression realExpression2(y=-9.0412)   annotation (Placement(transformation(extent={{-80,42},{-68,54}})));
+  Modelica.Blocks.Sources.RealExpression realExpression2(y=-9.0412)   annotation (Placement(transformation(extent={{-70,42},{-58,54}})));
+  Modelica.Blocks.Math.Gain gain2(k=1.351754)
+                                             annotation (Placement(transformation(extent={{-44,-110},{-36,-102}})));
+  Modelica.Blocks.Math.Add add2(k2=+1)
+                                      annotation (Placement(transformation(extent={{-30,-126},{-20,-116}})));
+  Modelica.Blocks.Sources.RealExpression realExpression3(y=-0.000559) annotation (Placement(transformation(extent={{-60,-130},{-48,-118}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -125,7 +130,7 @@ protected
   final parameter Real thetav[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixtheta, dim[1], dim[2]);
   final parameter Real freq[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixfreq, dim[1], dim[2]);
   final parameter Real FT[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixFT, dim[1], dim[2]);
-  final parameter Real m_flow_Gas[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/2900;
+  final parameter Real m_flow_Gas[dim[1], dim[2]] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, matrixmflowGas, dim[1], dim[2])/3600;
   final parameter Real m_flow_approx[dim[1], dim[2]] = FT*rhohotref/3600;
   final parameter Real omega[dim[1], dim[2]] = 2*Modelica.Constants.pi*freq;
   final parameter DistrictHeatingNetwork.Types.Temperature Tin_start = TTi[1, 1];
@@ -160,10 +165,6 @@ equation
     Line(points = {{9.48, 32.2}, {9.48, 42.1}, {10, 42.1}, {10, 52}}, color = {140, 56, 54}, thickness = 0.5));
   connect(sourceGas.outlet, gasBoiler.inletFuel) annotation (
     Line(points = {{-2, -50}, {-2, -41.24}, {-2, -41.24}, {-2, -32.48}}, color = {182, 109, 49}, thickness = 0.5));
-  connect(m_flowgas_ref.y, val_m_flow_fuel.u_meas) annotation (
-    Line(points={{60.6,-94},{60.6,-100},{68.8,-100},{68.8,-107}},   color = {0, 0, 127}));
-  connect(m_flow_gas_sim.y, max1.u1) annotation (
-    Line(points={{9,-100},{20,-100},{20,-106},{26,-106}},                             color = {0, 0, 127}));
   connect(max1.y, val_m_flow_fuel.u_sim) annotation (
     Line(points={{49,-112},{58.9,-112},{58.9,-113},{68.8,-113}},
                                                          color = {0, 0, 127}));
@@ -178,16 +179,23 @@ equation
   connect(minusdT_sim.y, valdT.u_sim) annotation (Line(points={{56.6,-20},{59.7,-20},{59.7,-21},{62.8,-21}}, color={0,0,127}));
   connect(minusdT_sim1.u1, source.in_T0) annotation (Line(points={{40.8,-42.4},{34,-42.4},{34,44},{-30,44},{-30,56},{-22.4,56}}, color={0,0,127}));
   connect(minusdT_sim1.y, valdT.u_meas) annotation (Line(points={{54.6,-46},{62.8,-46},{62.8,-27}}, color={0,0,127}));
-  connect(gain.u, Tout_ref.y) annotation (Line(points={{77.2,-2},{70.6,-2}}, color={0,0,127}));
-  connect(realExpression1.y, add.u2) annotation (Line(points={{99,-42},{102,-42},{102,-10},{103,-10}}, color={0,0,127}));
-  connect(gain.y, add.u1) annotation (Line(points={{86.4,-2},{92,-2},{92,0},{96,0},{96,-4},{103,-4}}, color={0,0,127}));
+  connect(gain.u, Tout_ref.y) annotation (Line(points={{77.2,-4},{70.6,-4}}, color={0,0,127}));
+  connect(gain.y, add.u1) annotation (Line(points={{86.4,-4},{103,-4}},                               color={0,0,127}));
   connect(add.y, minusdT_sim1.u2) annotation (Line(points={{114.5,-7},{124,-7},{124,-62},{42,-62},{42,-54},{40.8,-54},{40.8,-49.6}}, color={0,0,127}));
   connect(add.y, valT.u_meas) annotation (Line(points={{114.5,-7},{120,-7},{120,6},{78,6},{78,11},{82.8,11}}, color={0,0,127}));
-  connect(PT101_profile.y, source.in_p0) annotation (Line(points={{-33.4,72},{-30,72},{-30,64},{-22.4,64}}, color={0,0,127}));
-  connect(gain1.u, TT101_profile.y) annotation (Line(points={{-64.8,66},{-67.4,66}}, color={0,0,127}));
-  connect(realExpression2.y, add1.u2) annotation (Line(points={{-67.4,48},{-51,48}}, color={0,0,127}));
-  connect(gain1.y, add1.u1) annotation (Line(points={{-55.6,66},{-54,66},{-54,54},{-51,54}}, color={0,0,127}));
+  connect(PT101_profile.y, source.in_p0) annotation (Line(points={{-31.4,72},{-30,72},{-30,64},{-22.4,64}}, color={0,0,127}));
+  connect(gain1.u, TT101_profile.y) annotation (Line(points={{-68.8,66},{-73.4,66}}, color={0,0,127}));
+  connect(realExpression2.y, add1.u2) annotation (Line(points={{-57.4,48},{-51,48}}, color={0,0,127}));
+  connect(gain1.y, add1.u1) annotation (Line(points={{-59.6,66},{-54,66},{-54,54},{-51,54}}, color={0,0,127}));
   connect(add1.y, source.in_T0) annotation (Line(points={{-39.5,51},{-34,51},{-34,56},{-22.4,56}}, color={0,0,127}));
+  connect(realExpression3.y,add2. u2) annotation (Line(points={{-47.4,-124},{-31,-124}},
+                                                                                     color={0,0,127}));
+  connect(gain2.y,add2. u1) annotation (Line(points={{-35.6,-106},{-34,-106},{-34,-118},{-31,-118}},
+                                                                                             color={0,0,127}));
+  connect(m_flow_gas_sim.y, max1.u1) annotation (Line(points={{9,-100},{20,-100},{20,-106},{26,-106}}, color={0,0,127}));
+  connect(gain2.u, m_flowgas_ref.y) annotation (Line(points={{-44.8,-106},{-52,-106},{-52,-80},{66,-80},{66,-94},{60.6,-94}}, color={0,0,127}));
+  connect(add2.y, val_m_flow_fuel.u_meas) annotation (Line(points={{-19.5,-121},{-14,-121},{-14,-128},{64,-128},{64,-107},{68.8,-107}}, color={0,0,127}));
+  connect(realExpression1.y, add.u2) annotation (Line(points={{96.6,-15},{100,-15},{100,-10},{103,-10}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     experiment(StopTime = 4000, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));

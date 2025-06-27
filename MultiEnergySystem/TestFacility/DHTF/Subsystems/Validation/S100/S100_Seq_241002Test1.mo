@@ -2,11 +2,12 @@ within MultiEnergySystem.TestFacility.DHTF.Subsystems.Validation.S100;
 model S100_Seq_241002Test1
   extends DHTF.Subsystems.Validation.S100.TestBase(
     MeasuredData=Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241002_Test1.mat"),
-    Pmaxnom=147.6e3*0.92,
-    eta_combustion=0.98,
+    Tout_start_S1 = 19.162 + 273.15,
+    Pmaxnom=147.6e3*0.87,
+    eta_combustion=0.90,
     tdelay=5,
     GB101_ToutSP(table=[0,80 + 273.15; 3400,80 + 273.15; 1e6,80 + 273.15]),
-    GB101_Status(table={1350}, startValue=false),
+    GB101_Status(table={1360}, startValue=false),
     realExpression(y=1e-5));
   //GB101_ToutSP(table=[0, 77.3 + 273.15; 3400, 77.3 + 273.15; 1e6, 77.3 + 273.15]),
   //Tout_start_S1 = 29.71 + 273.15);

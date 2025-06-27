@@ -63,9 +63,9 @@ model TestBase "Base test for S100 validation"
   Modelica.Blocks.Sources.BooleanTable GB101_Status(table = {1e6}, startValue = true) "Input to decide whether or nor the gas boiler is working" annotation (
     Placement(transformation(extent = {{-68, -30}, {-56, -18}})));
   Modelica.Blocks.Sources.TimeTable TT101_profile(table = [ts, TTi]) annotation (
-    Placement(transformation(extent = {{-46, 48}, {-34, 60}})));
+    Placement(transformation(extent={{-80,60},{-68,72}})));
   Modelica.Blocks.Sources.TimeTable PT101_profile(table = [ts, PTi]) annotation (
-    Placement(transformation(extent = {{-46, 66}, {-34, 78}})));
+    Placement(transformation(extent={{-46,66},{-34,78}})));
   Modelica.Blocks.Sources.TimeTable FCV101_theta(table = [ts, thetav]) annotation (
     Placement(transformation(extent = {{-88, 8}, {-76, 20}})));
   Modelica.Blocks.Sources.TimeTable P101_omega(table = [ts, omega]) annotation (
@@ -79,7 +79,7 @@ model TestBase "Base test for S100 validation"
   DistrictHeatingNetwork.Utilities.ASHRAEIndex valT annotation (
     Placement(transformation(extent={{84,20},{96,8}})));
   Modelica.Blocks.Sources.TimeTable Tout_ref(table = [ts, TTo]) annotation (
-    Placement(transformation(extent={{70,-10},{82,2}})));
+    Placement(transformation(extent={{58,-8},{70,4}})));
   inner MultiEnergySystem.System system(allowFlowReversal=false)
                                         annotation (
     Placement(transformation(extent = {{-100, 80}, {-80, 100}})));
@@ -108,6 +108,13 @@ model TestBase "Base test for S100 validation"
     Placement(transformation(extent={{64,-18},{76,-30}})));
   Modelica.Blocks.Math.Add minusdT_sim(k1=-1) annotation (Placement(transformation(extent={{44,-26},{56,-14}})));
   Modelica.Blocks.Math.Add minusdT_sim1(k1=-1) annotation (Placement(transformation(extent={{42,-52},{54,-40}})));
+  Modelica.Blocks.Math.Gain gain(k=1.034125) annotation (Placement(transformation(extent={{78,-6},{86,2}})));
+  Modelica.Blocks.Math.Add add(k2=+1) annotation (Placement(transformation(extent={{104,-12},{114,-2}})));
+  Modelica.Blocks.Sources.RealExpression realExpression1(y=-9.228524) annotation (Placement(transformation(extent={{78,-52},{98,-32}})));
+  Modelica.Blocks.Math.Gain gain1(k=1.0392)  annotation (Placement(transformation(extent={{-64,62},{-56,70}})));
+  Modelica.Blocks.Math.Add add1(k2=+1)
+                                      annotation (Placement(transformation(extent={{-50,46},{-40,56}})));
+  Modelica.Blocks.Sources.RealExpression realExpression2(y=-9.0412)   annotation (Placement(transformation(extent={{-80,42},{-68,54}})));
 protected
   final parameter Integer dim[2] = Modelica.Utilities.Streams.readMatrixSize(MeasuredData, matrixPTi) "dimension of matrix";
   final parameter Real ts[:, :] = Modelica.Utilities.Streams.readRealMatrix(MeasuredData, timenoscale, dim[1], dim[2]) "Matrix data";
@@ -129,18 +136,12 @@ equation
     Line(points = {{-14, 50}, {-12.92, 50}, {-12.92, 32.2}}, color = {140, 56, 54}, thickness = 0.5));
   connect(PT102_profile.y, sink.in_p0) annotation (
     Line(points = {{79.4, 84}, {72.4, 84}}, color = {0, 0, 127}));
-  connect(TT101_profile.y, source.in_T0) annotation (
-    Line(points = {{-33.4, 54}, {-30, 54}, {-30, 56}, {-22.4, 56}}, color = {0, 0, 127}));
-  connect(PT101_profile.y, source.in_p0) annotation (
-    Line(points = {{-33.4, 72}, {-30, 72}, {-30, 64}, {-22.4, 64}}, color = {0, 0, 127}));
   connect(GB101_ToutSP.y, gasBoiler.Toutset) annotation (
     Line(points = {{-55.4, -6}, {-48, -6}, {-48, 8.4}, {-32.8, 8.4}}, color = {0, 0, 127}));
   connect(GB101_Status.y, gasBoiler.status) annotation (
     Line(points = {{-55.4, -24}, {-44, -24}, {-44, 2.8}, {-32.8, 2.8}}, color = {255, 0, 255}));
   connect(gasBoiler.m_flow_, val_m_flow.u_sim) annotation (
     Line(points = {{28.8, 19.6}, {52, 19.6}, {52, 29}, {64.8, 29}}, color = {0, 0, 127}));
-  connect(Tout_ref.y, valT.u_meas) annotation (
-    Line(points={{82.6,-4},{82.6,3.5},{82.8,3.5},{82.8,11}},    color = {0, 0, 127}));
   connect(gasBoiler.TTout, valT.u_sim) annotation (
     Line(points={{28.8,8.4},{74,8.4},{74,17},{82.8,17}},        color = {0, 0, 127}));
   connect(P101_omega.y, lowPassomega.u) annotation (
@@ -176,8 +177,17 @@ equation
   connect(minusdT_sim.u2, valT.u_sim) annotation (Line(points={{42.8,-23.6},{34,-23.6},{34,8.4},{74,8.4},{74,17},{82.8,17}}, color={0,0,127}));
   connect(minusdT_sim.y, valdT.u_sim) annotation (Line(points={{56.6,-20},{59.7,-20},{59.7,-21},{62.8,-21}}, color={0,0,127}));
   connect(minusdT_sim1.u1, source.in_T0) annotation (Line(points={{40.8,-42.4},{34,-42.4},{34,44},{-30,44},{-30,56},{-22.4,56}}, color={0,0,127}));
-  connect(Tout_ref.y, minusdT_sim1.u2) annotation (Line(points={{82.6,-4},{84,-4},{84,-6},{86,-6},{86,-58},{32,-58},{32,-49.6},{40.8,-49.6}}, color={0,0,127}));
   connect(minusdT_sim1.y, valdT.u_meas) annotation (Line(points={{54.6,-46},{62.8,-46},{62.8,-27}}, color={0,0,127}));
+  connect(gain.u, Tout_ref.y) annotation (Line(points={{77.2,-2},{70.6,-2}}, color={0,0,127}));
+  connect(realExpression1.y, add.u2) annotation (Line(points={{99,-42},{102,-42},{102,-10},{103,-10}}, color={0,0,127}));
+  connect(gain.y, add.u1) annotation (Line(points={{86.4,-2},{92,-2},{92,0},{96,0},{96,-4},{103,-4}}, color={0,0,127}));
+  connect(add.y, minusdT_sim1.u2) annotation (Line(points={{114.5,-7},{124,-7},{124,-62},{42,-62},{42,-54},{40.8,-54},{40.8,-49.6}}, color={0,0,127}));
+  connect(add.y, valT.u_meas) annotation (Line(points={{114.5,-7},{120,-7},{120,6},{78,6},{78,11},{82.8,11}}, color={0,0,127}));
+  connect(PT101_profile.y, source.in_p0) annotation (Line(points={{-33.4,72},{-30,72},{-30,64},{-22.4,64}}, color={0,0,127}));
+  connect(gain1.u, TT101_profile.y) annotation (Line(points={{-64.8,66},{-67.4,66}}, color={0,0,127}));
+  connect(realExpression2.y, add1.u2) annotation (Line(points={{-67.4,48},{-51,48}}, color={0,0,127}));
+  connect(gain1.y, add1.u1) annotation (Line(points={{-55.6,66},{-54,66},{-54,54},{-51,54}}, color={0,0,127}));
+  connect(add1.y, source.in_T0) annotation (Line(points={{-39.5,51},{-34,51},{-34,56},{-22.4,56}}, color={0,0,127}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false)),
     experiment(StopTime = 4000, Tolerance = 1e-06, __Dymola_Algorithm = "Dassl"));

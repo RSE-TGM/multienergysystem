@@ -3,8 +3,8 @@ model S100_Seq_241002Test1
   extends DHTF.Subsystems.Validation.S100.TestBase(
     MeasuredData=Modelica.Utilities.Files.loadResource("modelica://MultiEnergySystem/TestFacility/Resources/Centralised/241002_Test1.mat"),
     Tout_start_S1 = 19.162 + 273.15,
-    Pmaxnom=147.6e3*0.87,
-    eta_combustion=0.90,
+    Pmaxnom=147.6e3*0.77,
+    eta_combustion=0.95,
     tdelay=5,
     GB101_ToutSP(table=[0,80 + 273.15; 3400,80 + 273.15; 1e6,80 + 273.15]),
     GB101_Status(table={1360}, startValue=false),

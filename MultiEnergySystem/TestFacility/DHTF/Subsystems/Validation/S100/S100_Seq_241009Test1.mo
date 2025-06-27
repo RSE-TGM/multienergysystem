@@ -11,5 +11,5 @@ model S100_Seq_241009Test1
   //   eta_combustion = 0.90,
   //   tdelay = 180,
   annotation (
-    experiment(StartTime = 0, StopTime = 13000, __Dymola_Algorithm = "Dassl"));
+    experiment(StartTime = 0, StopTime = 13000, __Dymola_Algorithm = "Dassl"), __Dymola_Commands(file="../../../../../Users/muro/OneDrive - RSE S.p.A/Documenti/Dymola/Dymola_Scripts/S100_validation.mos" "S100_validation"));
 end S100_Seq_241009Test1;

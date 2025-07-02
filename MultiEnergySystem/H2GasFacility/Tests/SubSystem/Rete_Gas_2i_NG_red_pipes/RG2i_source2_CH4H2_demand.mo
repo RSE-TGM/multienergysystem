@@ -10,7 +10,7 @@ model RG2i_source2_CH4H2_demand
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.413, A_v=1.9*0.413/(sqrt(40.18*(60 - 4.93)*1e5))),
-    valve_controller(P_rng=(6 - 2.5)*10^5),
+    valve_controller(P_rng=(6 - 4.93)*10^5),
     GRM_5(massflowratedemand=[0,0.0083; 840,0.0083; 900,0.0083; 1740,0.0083; 1800,
           0.0105; 2640,0.0105; 2700,0.0105; 3540,0.0105; 3600,0.0085; 4440,0.0085;
           4500,0.0105; 5340,0.0105; 5400,0.0107; 6240,0.0107; 6300,0.0083; 7140,
@@ -52,7 +52,7 @@ model RG2i_source2_CH4H2_demand
           0.0083; 86400,0.0107; 87240,0.0107; 90000,0.0107]),
     m_flow_H1(
       height=0,
-              offset=0.0001, startTime=7*3600),
+      offset=0*0.0001,       startTime=7*3600),
     Immissione_2(G=1e-10, use_in_X0=true),
     m_flow_H5(height=0,
               startTime=10*3600),
@@ -303,6 +303,6 @@ equation
 <p>The 2 injection sources model is extended redeclaring the medium with CH4+H2 fluid. </p>
 </html>"), experiment(
       StopTime=86400,
-      Tolerance=0.01,
+      Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end RG2i_source2_CH4H2_demand;

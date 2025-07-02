@@ -4,7 +4,7 @@ package Controllers
   extends DistrictHeatingNetwork.Icons.Generic.Control;
   model Valve_controller
     "Proportional controller for the REMI station valve"
-    parameter Real P_rng = (6-4.93)*10^5 "Tunable parameter to get the right valve opening";
+    parameter Real P_rng = (6-2.5)*10^5 "Tunable parameter to get the right valve opening";
     parameter Real P_max = 6.0e5 "Maximum pressure of the network";
     Real ACT_comp(start=1) "Computed valve actuation";
 

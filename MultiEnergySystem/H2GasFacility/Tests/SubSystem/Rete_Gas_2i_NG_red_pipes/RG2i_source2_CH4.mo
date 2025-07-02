@@ -15,7 +15,7 @@ model RG2i_source2_CH4
       offset=0*0.0001,
       startTime=3600),
     m_flow_H5(
-      height=-25/3600,
+      height=(-25/3600),
       duration=300,
       startTime=18000));
     //X_start = MultiEnergySystem.H2GasFacility.Data.MassMolFractionData.NG_Guzzo_Algerian.X,

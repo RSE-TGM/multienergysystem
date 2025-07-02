@@ -35,8 +35,10 @@ equation
         color={0,0,127}));
   connect(aWPIDContinuous.controlAction, valveLinearOpening.opening)
     annotation (Line(points={{-107,-16},{-102,-16},{-102,18}}, color={0,0,127}));
-  annotation (experiment(StopTime=6000, __Dymola_Algorithm="Dassl"),
-                                   Documentation(info="<html>
+  annotation (experiment(
+      StopTime=6000,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));
 end RG2i_PI_controller;

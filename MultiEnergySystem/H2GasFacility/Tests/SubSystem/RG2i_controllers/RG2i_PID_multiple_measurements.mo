@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
 model RG2i_PID_multiple_measurements
   "Multiple Input Single Output pressure controller for REMI station"
   extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),

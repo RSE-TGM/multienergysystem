@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
 model Rete_Gas_2i_pipes_users
   extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
   constantFrictionFactor = false,
@@ -128,10 +128,8 @@ equation
       points={{236,-264},{234,-264},{234,-204}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(
-      StopTime=100,
-      Tolerance=1e-05,
-      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+  annotation (experiment(StopTime=6000, __Dymola_Algorithm="Dassl"),
+                                   Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));
 end Rete_Gas_2i_pipes_users;

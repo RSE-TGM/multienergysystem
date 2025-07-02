@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
 model RG2i_PI_controller
   extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
@@ -81,7 +81,7 @@ model RG2i_PI_controller
         origin={-132,26})));
   Modelica.Blocks.Sources.Ramp p_ref(
     offset=4.93*10^5,
-    height=0.2*10^5,
+    height=0*0.2*10^5,
     duration=0,
     startTime=1000) annotation (Placement(visible=true, transformation(
         origin={-155,-8},

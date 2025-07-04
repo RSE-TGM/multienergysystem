@@ -23,15 +23,15 @@ model RG2i_PID_source2
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
-    height=0*25/3600,
+    height=25/3600,
     duration=300,
     offset=0*0.001,
-    startTime=0*3600)                                                                                       annotation (
+    startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-409,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
-    height=0*(-25/3600),
+    height=(-25/3600),
     duration=300,
-    startTime=26*18000,
+    startTime=18000,
     offset=0)                                                                                               annotation (
     Placement(visible = true, transformation(origin={-407,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add1

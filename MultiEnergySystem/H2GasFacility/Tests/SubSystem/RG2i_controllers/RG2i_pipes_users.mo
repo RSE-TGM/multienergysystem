@@ -1,6 +1,6 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
-model Rete_Gas_2i_pipes_users
-  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
+model RG2i_pipes_users
+  extends RG2i_pipes(       raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
   constantFrictionFactor = false,
     massFractionDynamicBalance = false);
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
@@ -127,4 +127,4 @@ equation
       __Dymola_Algorithm="Dassl"), Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));
-end Rete_Gas_2i_pipes_users;
+end RG2i_pipes_users;

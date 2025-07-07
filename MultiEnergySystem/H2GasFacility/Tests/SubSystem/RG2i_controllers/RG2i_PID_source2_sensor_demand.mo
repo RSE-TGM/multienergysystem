@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
-model RG2i_PID_demand_source2_sensor
-  extends Rete_Gas_2i_pipes_users(redeclare model Medium =
+model RG2i_PID_source2_sensor_demand
+  extends RG2i_pipes_users(       redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,
     X_start={1,0},
@@ -395,4 +395,4 @@ equation
       StopTime=86400,
       Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
-end RG2i_PID_demand_source2_sensor;
+end RG2i_PID_source2_sensor_demand;

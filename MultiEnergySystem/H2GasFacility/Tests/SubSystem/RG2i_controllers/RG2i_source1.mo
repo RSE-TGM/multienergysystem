@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
-model Rete_Gas_2i_1sources "immissione 1"
-  extends Rete_Gas_2i_pipes_users(
+model RG2i_source1 "immissione 1"
+  extends RG2i_pipes_users(
     constantFrictionFactor=false,
     massFractionDynamicBalance=false,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
@@ -73,4 +73,4 @@ equation
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-12,32},{24,32},{24,44},
           {34,44}},     color={0,0,127}));
   annotation (experiment(StopTime=28000, __Dymola_Algorithm="Dassl"));
-end Rete_Gas_2i_1sources;
+end RG2i_source1;

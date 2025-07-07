@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
 model RG2i_source2_PID
-  extends Rete_Gas_2i_source2(
+  extends RG2i_source2(
   redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,

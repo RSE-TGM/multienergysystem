@@ -1,6 +1,6 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
 model RG2i_AWPI
-  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
+  extends RG2i_pipes(       raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
     redeclare model Medium = Medium,
     p0=463200,

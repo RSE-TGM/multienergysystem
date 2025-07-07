@@ -859,7 +859,7 @@ package Report_122025
   end Rete_Gas_2i_pipes;
 
   model Rete_Gas_2i_pipes_users
-    extends H2GasFacility.Tests.SubSystem.RG2i_controllers.Rete_Gas_2i_pipes(
+    extends H2GasFacility.Tests.SubSystem.RG2i_controllers.RG2i_pipes(
       raccordo2(pin_start=H2GasFacility.Data.PipelineData_2i.sds8.pout_start,
           pout_start=H2GasFacility.Data.PipelineData_2i.sds8.pout_start),
       constantFrictionFactor=false,

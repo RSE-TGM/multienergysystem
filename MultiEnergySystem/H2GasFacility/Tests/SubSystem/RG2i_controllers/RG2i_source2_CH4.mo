@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
 model RG2i_source2_CH4
   "Test using a fluid with components CH4H2(100%,0%) and immission 2 of CH4"
-  extends Rete_Gas_2i_source2(
+  extends RG2i_source2(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,

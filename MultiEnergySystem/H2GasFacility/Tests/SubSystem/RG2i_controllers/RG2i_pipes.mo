@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
-partial model Rete_Gas_2i_pipes
+partial model RG2i_pipes
   "Base network with no sources and reduced number of pipes"
   extends Modelica.Icons.Example;
   //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
@@ -827,4 +827,4 @@ equation
     Documentation(info="<html>
 <p>Structure of the network with only pipes and connections. </p>
 </html>"));
-end Rete_Gas_2i_pipes;
+end RG2i_pipes;

@@ -1,7 +1,7 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
 model RG2i_PID_multiple_measurements
   "Multiple Input Single Output pressure controller for REMI station"
-  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
+  extends RG2i_pipes(       raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
   redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
     nX=2,

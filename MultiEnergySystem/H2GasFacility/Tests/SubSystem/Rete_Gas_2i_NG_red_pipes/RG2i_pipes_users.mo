@@ -1,5 +1,5 @@
 ﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
-model Rete_Gas_2i_pipes_users
+model RG2i_pipes_users
   extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
   constantFrictionFactor = false,
     massFractionDynamicBalance = false);
@@ -132,4 +132,4 @@ equation
                                    Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));
-end Rete_Gas_2i_pipes_users;
+end RG2i_pipes_users;

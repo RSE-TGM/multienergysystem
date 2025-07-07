@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
-model Rete_Gas_2i_3sources
+model RG2i_3sources
   //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
-  extends Rete_Gas_2i_2sources(FrictionFactor = 0.02,
+  extends RG2i_2sources(       FrictionFactor = 0.02,
     m_flow_H1(height=0.01),
     m_flow_H5(height=-0.01));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_3(
@@ -69,4 +69,4 @@ equation
       Documentation(info="<html>
 <p>The third injection source is introduced. This is the complete model. </p>
 </html>"));
-end Rete_Gas_2i_3sources;
+end RG2i_3sources;

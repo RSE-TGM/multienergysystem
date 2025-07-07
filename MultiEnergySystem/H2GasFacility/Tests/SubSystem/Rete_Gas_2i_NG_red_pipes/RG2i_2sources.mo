@@ -1,6 +1,6 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
-model Rete_Gas_2i_2sources
-  extends Rete_Gas_2i_1sources(
+model RG2i_2sources
+  extends RG2i_1sources(
   valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5))),
   X_start = {1, 0},
   Immissione_1(X0={0,1}), massFractionDynamicBalance = true,
@@ -105,4 +105,4 @@ equation
       Documentation(info="<html>
 <p>The 2 injedction sources are introduced in the model.</p>
 </html>"));
-end Rete_Gas_2i_2sources;
+end RG2i_2sources;

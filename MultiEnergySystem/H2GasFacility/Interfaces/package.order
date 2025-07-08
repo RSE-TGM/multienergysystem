@@ -6,3 +6,6 @@ PartialHorizontalTwoPort
 PartialOnePort
 HeatPort
 MultiHeatPort
+Flange
+Flange_a
+Flange_b

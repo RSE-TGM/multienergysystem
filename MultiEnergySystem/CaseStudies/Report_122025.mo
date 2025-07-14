@@ -1,4 +1,4 @@
-﻿within MultiEnergySystem.CaseStudies;
+within MultiEnergySystem.CaseStudies;
 package Report_122025
   "Set of tests which have been developed for the study of the hydrogen injection in a local italian natural gas distribution network"
   extends Modelica.Icons.ExamplesPackage;
@@ -869,46 +869,42 @@ package Report_122025
       p0=463200,
       m_flow0=0.021261,
       X0=X_start)
-      "Viale Berlinguer"
       annotation (Placement(transformation(extent={{-212,154},{-168,198}})));
     MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(
       redeclare model Medium = Medium,
       p0=460300,
       m_flow0=0.007765,
       X0=X_start)
-      "Via 25 Aprile"
       annotation (Placement(transformation(extent={{28,262},{66,300}})));
     MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(
       redeclare model Medium = Medium,
       p0=461900,
       m_flow0=0.019358,
-      X0=X_start)                                                                                     "Via Marx"
+      X0=X_start)
       annotation (Placement(transformation(extent={{88,200},{122,234}})));
     MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(
       redeclare model Medium = Medium,
       p0=437100,
       m_flow0=0.098685,
       X0=X_start)
-      "Contessa Entellina Ingresso paese SP.12 "
       annotation (Placement(transformation(extent={{222,234},{262,274}})));
     MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_3(
       redeclare model Medium = Medium,
       p0=459100,
       m_flow0=0.034069,
       X0=X_start)
-      "C.so Marsiglia"
       annotation (Placement(transformation(extent={{40,-128},{76,-92}})));
     MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_1(
       redeclare model Medium = Medium,
       p0=459500,
       m_flow0=0.112338,
-      X0=X_start)                                                                                     "Osèedaòe"
+      X0=X_start)
       annotation (Placement(transformation(extent={{188,-102},{228,-62}})));
     MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(
       redeclare model Medium = Medium,
       p0=454700,
       m_flow0=0.119588,
-      X0=X_start)                                                                                     "Via Lioni"
+      X0=X_start)
       annotation (Placement(transformation(extent={{214,-286},{258,-242}})));
     MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
       valveLinearOpening(

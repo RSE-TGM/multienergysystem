@@ -311,7 +311,7 @@ model RG2i_inj2_ProdDemand_profiles "Profiles of both injection and demand"
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
     redeclare model Medium = Medium,
     p0=480000,
-    G=1e-8,
+    G=1e-15,
     T0=288.15,
     X0={0,1},
     computeEnthalpyWithFixedPressure=true,

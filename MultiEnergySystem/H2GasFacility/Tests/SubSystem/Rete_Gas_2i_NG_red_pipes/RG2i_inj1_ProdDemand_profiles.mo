@@ -282,7 +282,7 @@ model RG2i_inj1_ProdDemand_profiles "Profiles of both injection and demand"
           0.0492; 81840,0.0492; 81900,0.039; 82740,0.039; 82800,0.0388; 83640,
           0.0388; 83700,0.0396; 84540,0.0396; 84600,0.0388; 85440,0.0388; 85500,
           0.039; 86340,0.039; 86400,0.0492; 87240,0.0492; 90000,0.0492]),
-    valve_controller(P_rng=(5.5 - 4.93)*10^5, P_max=5.5e5));
+    s36_Stadio(n=21));
   parameter Types.MassFlowRate H2Production[:, 2] = [0, 0; 1*3600, 0; 2*3600, 0.00007490; 3*3600, 0.00129827; 4*3600, 0.00129827; 5*3600, 0.00007490; 6*3600, 0; 12*3600, 0; 13*3600, 0.00099867; 14*3600, 0.0008655; 15*3600, 0.0003956; 16*3600, 0.0003956; 17*3600, 0; 24*3600, 0] "Hydrogen production profile over a day.";
 
   Modelica.Blocks.Sources.TimeTable H2_Production(table=H2Production)

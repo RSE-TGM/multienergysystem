@@ -7,6 +7,7 @@ RG2i_3sources
 RG2i_source2_CH4
 RG2i_source2_CH4H2_demand
 RG2i_source2_CH4H2_demand_init
+RG2i_noinj_ProdDemand_profiles
 RG2i_inj2_ProdDemand_profiles
 RG2i_source1_demand
 RG2i_inj1_ProdDemand_profiles

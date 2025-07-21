@@ -324,6 +324,10 @@ model RG2i_inj1_ProdDemand_profiles "Profiles of both injection and demand"
         origin={-90,-28},
         extent={{-10,10},{10,-10}},
         rotation=180)));
+  Modelica.Blocks.Math.Gain gain(k=5) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-70,4})));
 equation
   connect(s3.outlet, s2.outlet) annotation (Line(
       points={{-158,-56},{-178,-56},{-178,-58},{-198,-58},{-198,-44}},
@@ -333,7 +337,9 @@ equation
       points={{-138,-56},{-112,-56},{-112,-28},{-100,-28}},
       color={182,109,49},
       thickness=0.5));
-  connect(H2_Production.y, Immissione_1.in_m_flow0) annotation (Line(points={{
-          -32.15,19},{-44,19},{-44,4},{-84,4},{-84,-23}}, color={0,0,127}));
+  connect(gain.u, H2_Production.y) annotation (Line(points={{-58,4},{-44,4},{
+          -44,19},{-32.15,19}}, color={0,0,127}));
+  connect(Immissione_1.in_m_flow0, gain.y)
+    annotation (Line(points={{-84,-23},{-81,-24},{-81,4}}, color={0,0,127}));
   annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
 end RG2i_inj1_ProdDemand_profiles;

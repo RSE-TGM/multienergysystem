@@ -322,6 +322,10 @@ model RG2i_inj2_ProdDemand_profiles "Profiles of both injection and demand"
         rotation=0)));
   Modelica.Blocks.Sources.TimeTable H2_Production(table=H2Production)
     annotation (Placement(visible = true, transformation(origin={-197,290},extent = {{-180, -70}, {-160, -50}}, rotation = 0)));
+  Modelica.Blocks.Math.Gain gain(k=1) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-332,236})));
 equation
   connect(sds17e16.inlet, Immissione_2.outlet) annotation (Line(
       points={{-268,220},{-302,220}},
@@ -332,7 +336,9 @@ equation
           {-54,202},{14,202}},
       color={182,109,49},
       thickness=0.5));
-  connect(H2_Production.y, Immissione_2.in_m_flow0) annotation (Line(points={{-356,
-          230},{-334,230},{-334,228},{-318,228},{-318,225}}, color={0,0,127}));
+  connect(H2_Production.y, gain.u) annotation (Line(points={{-356,230},{-356,
+          236},{-344,236}}, color={0,0,127}));
+  connect(gain.y, Immissione_2.in_m_flow0) annotation (Line(points={{-321,236},
+          {-318,236},{-318,225}}, color={0,0,127}));
   annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
 end RG2i_inj2_ProdDemand_profiles;

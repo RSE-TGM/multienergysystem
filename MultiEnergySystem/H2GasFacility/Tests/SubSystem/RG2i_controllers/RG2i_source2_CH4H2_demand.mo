@@ -304,7 +304,7 @@ model RG2i_source2_CH4H2_demand
          and time < (10*3600 + 300)) then {1,0} else {1,0})
     annotation (Placement(transformation(extent={{-354,274},{-334,294}})));
   Modelica.Blocks.Sources.Ramp p_ref(
-    offset=5.5*10^5,
+    offset=4.93*10^5,
     height=0*0.2*10^5,
     duration=0,
     startTime=1000) annotation (Placement(visible=true, transformation(

@@ -65,6 +65,8 @@ model SourceMassFlow
 
   // Variables
   Types.MassFlowRate m_flow(start = m_flow0) "Actual mass flow rate";
+  Types.VolumeFlowRate V_flow;
+  Types.VolumeFlowRate V_flow0;
   Types.Temperature T(start = T0) "Actual temperature";
   Types.Pressure p(start = p0) "Actual pressure";
   Types.MassFraction X[fluid.nX](start = X0) "Actual mass fraction";
@@ -85,6 +87,8 @@ equation
   end if;
 
   m_flow = in_m_flow0_internal;
+  V_flow = m_flow / fluid.rho;
+  V_flow0 = m_flow / fluid.rho0;
 
   // Use external temperature input if enabled; otherwise, default to T0
   T = in_T0_internal;

@@ -44,13 +44,13 @@ model RG2i_1sources "immissione 1"
         rotation=180)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     offset=1e-3,
-    duration=60,
-    height=0.03,
+    duration=300,
+    height=25/3600,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-23,32},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
-    duration=60,
-    height=-0.03,
+    duration=300,
+    height=-25/3600,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-23,68},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
@@ -72,5 +72,5 @@ equation
           {34,56}},     color={0,0,127}));
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-12,32},{24,32},{24,44},
           {34,44}},     color={0,0,127}));
-  annotation (experiment(StopTime=28000, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=36000, __Dymola_Algorithm="Dassl"));
 end RG2i_1sources;

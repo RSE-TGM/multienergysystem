@@ -1471,7 +1471,7 @@ package Report_122025
           origin={-90,-28},
           extent={{-10,10},{10,-10}},
           rotation=180)));
-    Modelica.Blocks.Math.Gain gain(k=5) annotation (Placement(transformation(
+    Modelica.Blocks.Math.Gain gain(k=1) annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
           rotation=180,
           origin={-70,4})));

@@ -1503,11 +1503,11 @@ package Report_122025
   model RG2i_inj1_ProdDemand_profiles_NG4
     extends RG2i_inj1_ProdDemand_profiles(
       redeclare model Medium =
-          MultiEnergySystem.H2GasFacility.Media.IdealGases.NG4_H2,
-      nX=5,
-      X_start={0.922,0.065,0.011,0.002,0},
-      Immissione_1(X0={0,0,0,0,1}),
-      gain(k=1));
+          MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
+      nX=7,
+      X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
+      Immissione_1(X0={0,0,0,0,0,0,1}));
+      //X_start={0.922,0.065,0.011,0.002,0},
       //  X_start = {0.922, 0.065, 0.011, 0.002, 0} Algerian Natural Gas
 
     annotation (experiment(

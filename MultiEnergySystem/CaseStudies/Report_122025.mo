@@ -1507,14 +1507,7 @@ package Report_122025
       nX=5,
       X_start={0.922,0.065,0.011,0.002,0},
       Immissione_1(X0={0,0,0,0,1}),
-      gain(k=1),
-      GRM_1(m_flow0=2*0.112338),
-      GRM_3(m_flow0=2*0.034069),
-      GRM_2(m_flow0=2*0.119588),
-      GRM_4(m_flow0=2*0.02162),
-      GRM_5(m_flow0=2*0.007765),
-      GRM_6(m_flow0=2*0.019358),
-      GRM_7(m_flow0=2*0.098685));
+      gain(k=1));
       //  X_start = {0.922, 0.065, 0.011, 0.002, 0} Algerian Natural Gas
 
     annotation (experiment(

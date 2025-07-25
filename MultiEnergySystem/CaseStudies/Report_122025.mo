@@ -1500,7 +1500,7 @@ package Report_122025
     annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
   end RG2i_inj1_ProdDemand_profiles;
 
-  model RG2i_inj1_ProdDemand_profiles_NG4
+  model RG2i_inj1_ProdDemand_profiles_NG6
     extends RG2i_inj1_ProdDemand_profiles(
       redeclare model Medium =
           MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
@@ -1514,7 +1514,7 @@ package Report_122025
         StopTime=86400,
         Tolerance=1e-05,
         __Dymola_Algorithm="Dassl"));
-  end RG2i_inj1_ProdDemand_profiles_NG4;
+  end RG2i_inj1_ProdDemand_profiles_NG6;
 
   package PipelineData_2i "Data of Rete Gas 2i"
       constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s1(

@@ -1506,9 +1506,13 @@ package Report_122025
           MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
       nX=7,
       X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
-      Immissione_1(X0={0,0,0,0,0,0,1}));
+      Immissione_1(X0={0,0,0,0,0,0,1}),
+      gain(k=1),
+      massFractionDynamicBalance = true);
       //X_start={0.922,0.065,0.011,0.002,0},
       //  X_start = {0.922, 0.065, 0.011, 0.002, 0} Algerian Natural Gas
+      // MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2
+      // MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay_ND
 
     annotation (experiment(
         StopTime=86400,

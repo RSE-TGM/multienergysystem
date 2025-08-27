@@ -8,16 +8,18 @@ model RG2i_source2_CH4
     X_start={1,0},
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
-    Immissione_2(X0=X_inj),
+    Immissione_2(X0={1,0}),
     m_flow_H1(
       height=25/3600,
       duration=300,
-      offset=0*0.0001,
+      offset=0.0001,
       startTime=3600),
     m_flow_H5(
       height=-25/3600,
       duration=300,
-      startTime=18000));
+      startTime=18000),
+    valve_controller(P_rng=(6 - 4.93)*10^5),
+    valveLinearOpening(A_v=3.3274406e-05));
 
     parameter H2GasFacility.Types.MassFraction X_inj[nX]={1,0};
                                                     //Biomethane composition

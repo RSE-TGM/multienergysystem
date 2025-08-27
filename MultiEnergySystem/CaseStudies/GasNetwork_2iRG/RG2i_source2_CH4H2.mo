@@ -12,5 +12,8 @@ model RG2i_source2_CH4H2
 
   annotation (Documentation(info="<html>
 <p>The 2 injection sources model is extended redeclaring the medium with CH4+H2 fluid. </p>
-</html>"), experiment(StopTime=28800, __Dymola_Algorithm="Dassl"));
+</html>"), experiment(
+      StopTime=28800,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
 end RG2i_source2_CH4H2;

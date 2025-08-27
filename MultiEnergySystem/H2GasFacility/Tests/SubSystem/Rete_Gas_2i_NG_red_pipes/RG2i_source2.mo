@@ -73,5 +73,8 @@ equation
           {-54,202},{14,202}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=28000, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(
+      StopTime=28000,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
 end RG2i_source2;

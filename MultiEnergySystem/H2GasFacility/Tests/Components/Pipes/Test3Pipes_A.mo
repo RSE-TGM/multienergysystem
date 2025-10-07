@@ -9,14 +9,18 @@ model Test3Pipes_A "Base test model of a two pipes (Flow1DFV) in series with a p
     MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
 
 
-  parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X "Nominal mass fraction";
+  parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X
+    "Nominal mass fraction";
   //parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
   parameter Types.MassFraction Xref_2[:] = {0.972, 0.018, 0.003, 0.001, 0.001, 0.005, 0};
   //parameter Types.MassFraction Xref_2[:] = H2GasFacility.Data.MassMolFractionData.NG_Guzzo_Russian.X;
-  parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start "Initial mass flowrate in the sink";
+  parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start
+    "Initial mass flowrate in the sink";
   parameter Integer n = 5 "Number of volumes in Flow1DFV";
-  parameter Types.Pressure pin_start = Pipe.pipe1.pin_start "Initial pressure at the inlet";
-  parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start "Initial temperature at the inlet";
+  parameter Types.Pressure pin_start = Pipe.pipe1.pin_start
+    "Initial pressure at the inlet";
+  parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start
+    "Initial temperature at the inlet";
   parameter Types.Length kappa = 0.045e-3;
   parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;

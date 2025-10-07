@@ -1433,8 +1433,8 @@ package Report_122025
         *rho0_h2/3600] "Hydrogen production profile over a day.";
 
     Modelica.Blocks.Sources.TimeTable H2_Production(table=H2Production)
-      annotation (Placement(visible = true, transformation(origin={-215,85}, extent={{207,-77},
-              {184,-55}},                                                                                         rotation = 0)));
+      annotation (Placement(visible = true, transformation(origin={-194,157},extent={{342,
+              -133},{304,-95}},                                                                                   rotation = 0)));
     MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
       n=nV,
       H=H2GasFacility.Data.PipelineData_2i.s3.h,
@@ -1474,10 +1474,10 @@ package Report_122025
     Modelica.Blocks.Math.Gain gain(k=1) annotation (Placement(transformation(
           extent={{-10,-10},{10,10}},
           rotation=180,
-          origin={-70,4})));
+          origin={84,44})));
     H2GasFacility.Controllers.Valve_controller
                                  valve_controller
-      annotation (Placement(transformation(extent={{-130,-12},{-110,8}})));
+      annotation (Placement(transformation(extent={{-140,-22},{-110,8}})));
   equation
     connect(s3.outlet, s2.outlet) annotation (Line(
         points={{-158,-56},{-178,-56},{-178,-58},{-198,-58},{-198,-44}},
@@ -1487,16 +1487,18 @@ package Report_122025
         points={{-138,-56},{-112,-56},{-112,-28},{-100,-28}},
         color={182,109,49},
         thickness=0.5));
-    connect(gain.u, H2_Production.y) annotation (Line(points={{-58,4},{-44,4},{
-            -44,19},{-32.15,19}}, color={0,0,127}));
+    connect(gain.u, H2_Production.y) annotation (Line(points={{96,44},{100,44},
+            {100,43},{108.1,43}}, color={0,0,127}));
     connect(Immissione_1.in_m_flow0, gain.y)
-      annotation (Line(points={{-84,-23},{-81,-24},{-81,4}}, color={0,0,127}));
+      annotation (Line(points={{-84,-23},{-84,8},{42,8},{42,44},{73,44}},
+                                                             color={0,0,127}));
     connect(valve_controller.P_meas,idealPressureSensor. p_meas) annotation (Line(
-          points={{-130.8,-2},{-130.8,8},{-135.8,8},{-135.8,18.6}},         color=
+          points={{-141.2,-7},{-141.2,-8},{-146,-8},{-146,18},{-135.8,18},{
+            -135.8,18.6}},                                                  color=
            {0,0,127}));
     connect(valve_controller.ACT_x,valveLinearOpening. opening)
-      annotation (Line(points={{-108.6,-2},{-108.6,8},{-102,8},{-102,18}},
-                                                               color={0,0,127}));
+      annotation (Line(points={{-107.9,-7},{-100,-7},{-100,8},{-104,8},{-104,18},
+            {-102,18}},                                        color={0,0,127}));
     annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
   end RG2i_inj1_ProdDemand_profiles;
 
@@ -1508,7 +1510,7 @@ package Report_122025
       X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
       Immissione_1(X0={0,0,0,0,0,0,1}),
       gain(k=1),
-      massFractionDynamicBalance = true);
+      massFractionDynamicBalance = false);
       //X_start={0.922,0.065,0.011,0.002,0},
       //  X_start = {0.922, 0.065, 0.011, 0.002, 0} Algerian Natural Gas
       // MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2
@@ -1519,6 +1521,28 @@ package Report_122025
         Tolerance=1e-05,
         __Dymola_Algorithm="Dassl"));
   end RG2i_inj1_ProdDemand_profiles_NG6;
+
+  model RG2i_inj1_ProdDemand_profiles_NG6_offset
+    extends RG2i_inj1_ProdDemand_profiles(
+      redeclare model Medium =
+          MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
+      nX=7,
+      X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
+      Immissione_1(X0={0,0,0,0,0,0,1}),
+      gain(k=1),
+      massFractionDynamicBalance = false,
+      H2Production=[0,40*rho0_h2/3600; 24*3600,40*rho0_h2/3600]);
+
+      // [0,16*rho0_h2/3600; 1*3600,5*rho0_h2/3600; 9*3600,5*rho0_h2/3600; 10*3600,5*rho0_h2/3600; 11*3600,52*rho0_h2/3600; 12*3600,
+      //  52*rho0_h2/3600; 13*3600,5*rho0_h2/3600; 14*3600,5*rho0_h2/3600; 20*3600,5*rho0_h2/3600; 21*3600,40*
+      //  rho0_h2/3600; 22*3600,35*rho0_h2/3600; 23*3600,16*rho0_h2/3600; 24*3600,16
+      //  *rho0_h2/3600]
+
+    annotation (experiment(
+        StopTime=86400,
+        Tolerance=1e-05,
+        __Dymola_Algorithm="Dassl"));
+  end RG2i_inj1_ProdDemand_profiles_NG6_offset;
 
   package PipelineData_2i "Data of Rete Gas 2i"
       constant MultiEnergySystem.H2GasFacility.Data.RoundPipeLine s1(
@@ -2403,6 +2427,213 @@ package Report_122025
         //rho_nom = 0.657,
 
   end PipelineData_2i;
+
+  model BaseFluid "Fluid test"
+    extends Modelica.Icons.Example;
+    replaceable model Medium1 = H2GasFacility.Media.IdealGases.NG6_H2 constrainedby
+      H2GasFacility.Media.BaseClasses.PartialMixture                                                                               "Fluid reference";
+
+    constant Real p0(unit = "s") = 1 "Reference value for units";
+
+    parameter H2GasFacility.Types.Temperature T_ref=15 + 273.15
+      "Reference temperature";
+    parameter H2GasFacility.Types.Pressure p_ref=p_min "Reference pressure";
+    parameter H2GasFacility.Types.MassFraction X_ref[:]=M/Mt
+      "Mass Fraction of the real gas";
+    parameter H2GasFacility.Types.MoleFraction Y[:]=H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.Y;
+    parameter H2GasFacility.Types.MolarMass M[:]=Y .* medium1.MM;
+    parameter H2GasFacility.Types.MolarMass Mt=sum(M);
+    parameter H2GasFacility.Types.Pressure p_min=0.05e6 "Reference pressure";
+    parameter H2GasFacility.Types.Pressure p_max=1.2e6 "Reference pressure";
+
+    H2GasFacility.Types.MassFraction Xh2 "Hydrogen Fraction";
+
+    Medium1 medium1(T_start = T_ref, p_start = p_ref, X_start = X_ref);
+
+  equation
+    Xh2 = 0 + (0.01 - 0)*time/p0;
+
+    medium1.T = T_ref;
+    medium1.p = p_ref;
+    medium1.Xi[1:6] = X_ref[1:6];
+    medium1.Xi[7] = Xh2;
+
+
+    annotation (experiment(StopTime=10, __Dymola_Algorithm="Dassl"));
+  end BaseFluid;
+
+  model RG2i_H2_limit_test
+    extends Rete_Gas_2i_pipes_users(
+    constantFrictionFactor=false,
+      valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)
+            *1e5))),
+    redeclare model Medium =
+          MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
+      nX=7,
+      X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
+      massFractionDynamicBalance = false);
+    H2GasFacility.Components.Pipes.Round1DFV                   s3(
+      n=nV,
+      H=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.h,
+      cm=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.cm,
+      rhom=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.rhom,
+      lambdam=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.lambdam,
+      m_flow_start=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.m_flow_start,
+      pin_start=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.pin_start,
+      pout_start=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.pout_start,
+      kappa=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.kappa,
+      k=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.k,
+      redeclare model Gas = Medium,
+      L=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.L,
+      X_start=X_start,
+      Di=CaseStudies.GasNetwork_2iRG.PipelineData_2i.s3.Di,
+      massFractionDynamicBalance=massFractionDynamicBalance,
+      constantFrictionFactor=constantFrictionFactor,
+      computeInertialTerm=computeInertialTerm,
+      hctype=hctype,
+      momentum=momentum,
+      rho_nom=rho_nom) annotation (Placement(transformation(
+          extent={{10,-10},{-10,10}},
+          rotation=0,
+          origin={-92,-60})));
+    H2GasFacility.Sources.SourceMassFlow                   Immissione_1(
+      X0={0,0,0,0,0,0,1},
+      m_flow0=0.01,
+      redeclare model Medium = Medium,
+      p0=480000,
+      G=1e-12,
+      T0=288.15,
+      computeEnthalpyWithFixedPressure=true,
+      use_in_m_flow0=true,
+      use_in_X0=false)     annotation (Placement(visible=true, transformation(
+          origin={-2,24},
+          extent={{-10,-10},{10,10}},
+          rotation=180)));
+    H2GasFacility.Controllers.Valve_controller
+                                 valve_controller(P_rng=(6 - 4.93)*10^5)
+      annotation (Placement(transformation(extent={{-140,-32},{-110,-2}})));
+    Modelica.Blocks.Sources.Ramp m_flow_H2(
+      offset=0.001*0,
+      duration=300,
+      height=0.0042,
+      startTime=1000)                                                                                         annotation (
+      Placement(visible = true, transformation(origin={33,60},       extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  equation
+    connect(s3.inlet,Immissione_1. outlet) annotation (Line(
+        points={{-82,-60},{-56,-60},{-56,8},{-36,8},{-36,24},{-12,24}},
+        color={182,109,49},
+        thickness=0.5));
+    connect(s3.outlet, s2.outlet) annotation (Line(
+        points={{-102,-60},{-198,-60},{-198,-44}},
+        color={182,109,49},
+        thickness=0.5));
+    connect(valve_controller.P_meas,idealPressureSensor. p_meas) annotation (Line(
+          points={{-141.2,-17},{-148,-17},{-148,8},{-135.8,8},{-135.8,18.6}},
+                                                                            color=
+           {0,0,127}));
+    connect(valve_controller.ACT_x,valveLinearOpening. opening)
+      annotation (Line(points={{-107.9,-17},{-100,-17},{-100,8},{-104,8},{-104,18},
+            {-102,18}},                                        color={0,0,127}));
+    connect(m_flow_H2.y, Immissione_1.in_m_flow0) annotation (Line(points={{44,60},
+            {60,60},{60,10},{4,10},{4,19}}, color={0,0,127}));
+    annotation (experiment(
+        StopTime=20000,
+        Tolerance=1e-05,
+        __Dymola_Algorithm="Dassl"));
+  end RG2i_H2_limit_test;
+
+  model RG2i_source2_H2_limits
+    extends Rete_Gas_2i_pipes_users(
+    constantFrictionFactor=false,
+      valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)
+            *1e5))),
+    redeclare model Medium =
+          MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
+      nX=7,
+      X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
+      massFractionDynamicBalance = false);
+    H2GasFacility.Components.Pipes.Round1DFV                   sds17e16(
+      n=nV,
+      L=Report_122025.PipelineData_2i.sds17.L +Report_122025.PipelineData_2i.sds16.L,
+      H=Report_122025.PipelineData_2i.sds17.h +Report_122025.PipelineData_2i.sds16.h,
+      cm=Report_122025.PipelineData_2i.sds17.cm,
+      rhom=Report_122025.PipelineData_2i.sds17.rhom,
+      lambdam=Report_122025.PipelineData_2i.sds17.lambdam,
+      m_flow_start=Report_122025.PipelineData_2i.sds17.m_flow_start,
+      pin_start=Report_122025.PipelineData_2i.sds17.pin_start,
+      pout_start=Report_122025.PipelineData_2i.sds16.pout_start,
+      kappa=Report_122025.PipelineData_2i.sds17.kappa,
+      k=Report_122025.PipelineData_2i.sds17.k,
+      redeclare model Gas = Medium,
+      X_start=X_start,
+      Di=Report_122025.PipelineData_2i.sds17.Di,
+      massFractionDynamicBalance=massFractionDynamicBalance,
+      constantFrictionFactor=constantFrictionFactor,
+      computeInertialTerm=computeInertialTerm,
+      hctype=hctype,
+      momentum=momentum,
+      rho_nom=rho_nom) annotation (Placement(transformation(
+          extent={{-10,-10},{10,10}},
+          rotation=0,
+          origin={-248,222})));
+
+    H2GasFacility.Sources.SourceMassFlow                   Immissione_2(
+      redeclare model Medium = Medium,
+      p0=480000,
+      T0=288.15,
+      X0={0,0,0,0,0,0,1},
+      G=1e-15,
+      computeEnthalpyWithFixedPressure=true,
+      m_flow0=0,
+      use_in_m_flow0=true,
+      use_in_X0=false)     annotation (Placement(visible=true, transformation(
+          origin={-302,222},
+          extent={{-10,-10},{10,10}},
+          rotation=0)));
+    H2GasFacility.Controllers.Valve_controller
+                                 valve_controller(P_rng=(6 - 2.5)*10^5)
+      annotation (Placement(transformation(extent={{-134,-38},{-104,-8}})));
+    Modelica.Blocks.Sources.Ramp m_flow_H2(
+      offset=0.001*0,
+      duration=5000,
+      height=10/3600,
+      startTime=1000)                                                                                         annotation (
+      Placement(visible = true, transformation(origin={-387,256},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  equation
+    connect(sds17e16.inlet,Immissione_2. outlet) annotation (Line(
+        points={{-258,222},{-292,222}},
+        color={182,109,49},
+        thickness=0.5));
+    connect(sds17e16.outlet, sds13.inlet) annotation (Line(
+        points={{-238,222},{-202,222},{-202,218},{-164,218},{-164,220},{-54,220},
+            {-54,202},{14,202}},
+        color={182,109,49},
+        thickness=0.5));
+    connect(valve_controller.P_meas,idealPressureSensor. p_meas) annotation (Line(
+          points={{-135.2,-23},{-148,-23},{-148,8},{-135.8,8},{-135.8,18.6}},
+                                                                            color=
+           {0,0,127}));
+    connect(valve_controller.ACT_x,valveLinearOpening. opening)
+      annotation (Line(points={{-101.9,-23},{-92,-23},{-92,8},{-104,8},{-104,18},{
+            -102,18}},                                         color={0,0,127}));
+    connect(m_flow_H2.y, Immissione_2.in_m_flow0) annotation (Line(points={{-376,256},
+            {-308,256},{-308,227}}, color={0,0,127}));
+    annotation (experiment(
+        StopTime=10000,
+        Tolerance=1e-05,
+        __Dymola_Algorithm="Dassl"));
+  end RG2i_source2_H2_limits;
+
+  model RG2i_inj1_MaxH2Inj
+    "Maximu injection of point 1 in order to respect quality indices."
+    extends RG2i_inj1_ProdDemand_profiles_NG6(H2_Production(table=H2MaxProd));
+
+    parameter H2GasFacility.Types.MassFlowRate H2MaxProd[:,2] = [0,0.001221; 347,0.001221; 694,0.001221; 1041,0.001214; 1388,0.001214; 1735,0.001298; 2082,0.001534; 2429,0.001534; 2776,0.001518; 3123,0.001518; 3470,0.001498; 3817,0.001226; 4164,0.001226; 4511,0.001366; 4858,0.001518; 5205,0.001518; 5552,0.001541; 5899,0.001541; 6246,0.001502; 6593,0.001221; 6940,0.001221; 7287,0.001215; 7634,0.001214; 7981,0.001215; 8328,0.001233; 8675,0.001233; 9022,0.001229; 9369,0.001214; 9716,0.001216; 10063,0.001529; 10410,0.001529; 10757,0.001513; 11104,0.001237; 11451,0.001237; 11798,0.001099; 12145,0.000904; 12492,0.000908; 12839,0.001221; 13186,0.001221; 13533,0.001223; 13880,0.001237; 14227,0.001237; 14573,0.001220; 14920,0.001214; 15267,0.001214; 15614,0.001226; 15961,0.001226; 16308,0.001227; 16655,0.001233; 17002,0.001233; 17349,0.001214; 17696,0.001214; 18043,0.001215; 18390,0.001233; 18737,0.001233; 19084,0.001229; 19431,0.001221; 19778,0.001225; 20125,0.001525; 20472,0.001525; 20819,0.001525; 21166,0.001529; 21513,0.001529; 21860,0.001529; 22207,0.001518; 22554,0.001518; 22901,0.001600; 23248,0.001832; 23595,0.001834; 23942,0.002122; 24289,0.002122; 24636,0.002103; 24983,0.001827; 25330,0.001827; 25677,0.001827; 26024,0.001827; 26371,0.001837; 26718,0.002428; 27065,0.002428; 27412,0.002424; 27759,0.002134; 28106,0.002134; 28453,0.002133; 28800,0.002122; 29147,0.002123; 29494,0.002243; 29841,0.002428; 30188,0.002424; 30535,0.002122; 30882,0.002122; 31229,0.002123; 31576,0.002127; 31923,0.002128; 32270,0.002339; 32617,0.002428; 32964,0.002421; 33311,0.002134; 33658,0.002134; 34005,0.002131; 34352,0.001827; 34699,0.001827; 35046,0.001827; 35393,0.001836; 35740,0.001836; 36087,0.001834; 36434,0.001827; 36781,0.001827; 37128,0.001827; 37475,0.001813; 37822,0.001534; 38169,0.001534; 38516,0.001531; 38863,0.001525; 39210,0.001525; 39557,0.001541; 39904,0.001541; 40251,0.001513; 40598,0.001214; 40945,0.001215; 41292,0.001410; 41639,0.001546; 41986,0.001532; 42333,0.000920; 42680,0.000920; 43027,0.000919; 43373,0.000913; 43720,0.000914; 44067,0.001237; 44414,0.001237; 44761,0.001225; 45108,0.000925; 45455,0.000925; 45802,0.000921; 46149,0.000913; 46496,0.000916; 46843,0.001237; 47190,0.001237; 47537,0.001195; 47884,0.000613; 48231,0.000613; 48578,0.000758; 48925,0.000913; 49272,0.000918; 49619,0.001233; 49966,0.001233; 50313,0.001196; 50660,0.000936; 51007,0.000935; 51354,0.000645; 51701,0.000605; 52048,0.000614; 52395,0.000920; 52742,0.000920; 53089,0.000994; 53436,0.001244; 53783,0.001240; 54130,0.000609; 54477,0.000609; 54824,0.000627; 55171,0.000920; 55518,0.000920; 55865,0.000922; 56212,0.000925; 56559,0.000925; 56906,0.000932; 57253,0.000932; 57600,0.000930; 57947,0.000913; 58294,0.000913; 58641,0.000922; 58988,0.000925; 59335,0.000925; 59682,0.000932; 60029,0.000932; 60376,0.000929; 60723,0.000920; 61070,0.000920; 61417,0.000921; 61764,0.000932; 62111,0.000932; 62458,0.001098; 62805,0.001214; 63152,0.001208; 63499,0.000925; 63846,0.000925; 64193,0.000970; 64540,0.001226; 64887,0.001224; 65234,0.000913; 65581,0.000913; 65928,0.000925; 66275,0.001233; 66622,0.001233; 66969,0.001230; 67316,0.001221; 67663,0.001221; 68010,0.001222; 68357,0.001226; 68704,0.001227; 69051,0.001478; 69398,0.001525; 69745,0.001516; 70092,0.001233; 70439,0.001233; 70786,0.001293; 71133,0.001508; 71480,0.001509; 71827,0.001541; 72173,0.001541; 72520,0.001523; 72867,0.001208; 73214,0.001209; 73561,0.001336; 73908,0.001529; 74255,0.001529; 74602,0.001525; 74949,0.001525; 75296,0.001494; 75643,0.001226; 75990,0.001227; 76337,0.001442; 76684,0.001529; 77031,0.001529; 77378,0.001508; 77725,0.001508; 78072,0.001456; 78419,0.001226; 78766,0.001228; 79113,0.001541; 79460,0.001541; 79807,0.001525; 80154,0.001208; 80501,0.001209; 80848,0.001318; 81195,0.001541; 81542,0.001537; 81889,0.001221; 82236,0.001221; 82583,0.001220; 82930,0.001214; 83277,0.001214; 83624,0.001228; 83971,0.001237; 84318,0.001237; 84665,0.001214; 85012,0.001214; 85359,0.001215; 85706,0.001221; 86053,0.001223; 86400,0.001541] "Hydrogen production profile over a day.";
+    annotation (experiment(
+        StopTime=86400,
+        Tolerance=1e-05,
+        __Dymola_Algorithm="Dassl"));
+  end RG2i_inj1_MaxH2Inj;
   annotation (Documentation(info="<html>
 <p>This package includes the models that have been used to generate the results of the following article:</p>
 <p>Sassaroli G., Casamassima V. &amp; Muro Alvarado M.</p>

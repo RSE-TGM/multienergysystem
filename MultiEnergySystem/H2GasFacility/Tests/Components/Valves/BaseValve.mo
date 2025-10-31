@@ -27,7 +27,7 @@ equation
   connect(source.outlet, valve2.inlet) annotation (
     Line(points = {{-60, 0}, {-40, 0}, {-40, -40}, {-10, -40}}, color = {182, 109, 49}));
   connect(opening2.y, valve2.opening) annotation (
-    Line(points = {{-18, -70}, {0, -70}, {0, -48}}, color = {0, 0, 127}));
+    Line(points={{-19,-70},{0,-70},{0,-48}},        color = {0, 0, 127}));
   connect(opening1.y, valve1.opening) annotation (
     Line(points = {{-19, 70}, {0, 70}, {0, 48}}, color = {0, 0, 127}));
   connect(valve2.outlet, sink.inlet) annotation (

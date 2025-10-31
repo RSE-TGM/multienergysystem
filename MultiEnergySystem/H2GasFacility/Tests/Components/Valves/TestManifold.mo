@@ -25,9 +25,9 @@ equation
   connect(valve1.outlet, sink.inlet) annotation (
     Line(points = {{10, 0}, {50, 0}}, color = {182, 109, 49}));
   connect(opening2.y, valve1.opening) annotation (
-    Line(points = {{20, 50}, {0, 50}, {0, 8}}, color = {0, 0, 127}));
+    Line(points={{19,50},{0,50},{0,8}},        color = {0, 0, 127}));
   connect(X_valve1.y, source1.in_X0) annotation (
-    Line(points = {{-84, 38}, {-66, 38}, {-66, 8}}, color = {0, 0, 127}, thickness = 0.5));
+    Line(points={{-85,38},{-66,38},{-66,8.4}},      color = {0, 0, 127}, thickness = 0.5));
   annotation (
     experiment(StartTime = 0, StopTime = 400, Tolerance = 1e-06, Interval = 0.2),
     Diagram);

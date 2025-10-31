@@ -16,7 +16,7 @@ package PaperCase
 
     // General parameters for system behavior and configuration
     parameter Boolean useEnergyDemand = false "Flag to determine if energy demand is used.";
-    parameter Boolean massFractionDynamicBalance = false "Enable quasi-static assumptions for calculations.";
+    parameter Boolean massFractionDynamicBalance = true "Enable quasi-static assumptions for calculations.";
     parameter Boolean constantFrictionFactor = true "Assume constant friction factor in calculations.";
     parameter Boolean computeInertialTerm = false "Whether to include inertial effects in calculations.";
 
@@ -630,7 +630,9 @@ package PaperCase
       m_flow_H2(
         duration=0,
         offset=0,
-        startTime=3*3600));
+        startTime=3*3600),
+      sourceP18(p0=200000),
+      sourceP1(p0=200000));
   equation
     connect(sourceH2_A.outlet, pipe7.inlet) annotation (Line(
         points={{-94,-40},{-86,-40},{-86,-59},{-57,-59},{-57,-6},{-20,-6},{-20,-10}},

@@ -10,3 +10,7 @@ RG2i_PID_source2_sensor_demand
 RG2i_source2_PID
 RG2i_PID_MISO_control
 RG2i_PID_multiple_measurements
+RG2i_source1_PID
+RG2i_source1_doubleControl
+RG2i_source1_doubleControl_NG6
+RG2i_source1_doubleControl_NG6_PID

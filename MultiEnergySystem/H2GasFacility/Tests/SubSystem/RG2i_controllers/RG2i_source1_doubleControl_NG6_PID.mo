@@ -6,7 +6,7 @@ model RG2i_source1_doubleControl_NG6_PID
     nX=7,
     X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
     constantFrictionFactor=false,
-    massFractionDynamicBalance=false,
+    massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     break connect(GRM_1.inlet, s21.outlet));
@@ -77,7 +77,7 @@ model RG2i_source1_doubleControl_NG6_PID
     height=-(0.630 - 0.555),
     offset=0.630,
     duration=10,
-    startTime=500)  annotation (Placement(visible=true, transformation(
+    startTime=50)   annotation (Placement(visible=true, transformation(
         origin={-161,-70},
         extent={{-10,-10},{10,10}},
         rotation=0)));
@@ -133,7 +133,7 @@ equation
           {-124,-76},{-124,-74},{-132,-74},{-132,-92},{88,-92},{88,-16},{192,-16},
           {192,-24.6},{195.8,-24.6}}, color={0,0,127}));
   annotation (experiment(
-      StopTime=2500,
+      StopTime=200,
       Tolerance=1e-06,
       __Dymola_Algorithm="Dassl"));
 end RG2i_source1_doubleControl_NG6_PID;

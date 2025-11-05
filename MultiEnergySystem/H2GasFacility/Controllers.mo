@@ -133,11 +133,6 @@ Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false))
           extent={{-5,-5},{5,5}},
           rotation=270,
           origin={67,7})));
-    Modelica.Blocks.Math.Gain feedback_correction(k=-1) annotation (Placement(
-          visible=true, transformation(
-          origin={-65,41},
-          extent={{-5,-5},{5,5}},
-          rotation=0)));
   equation
     connect(REF, feedback.u1) annotation (
           Line(points={{-130,40},{-100,40}},     color = {0, 0, 127}));
@@ -161,15 +156,12 @@ Controller")}),             Diagram(coordinateSystem(preserveAspectRatio=false))
             -24},{-44,-24},{-44,0},{-39,0}}, color={0,0,127}));
     connect(firstOrder.y, add_PID.u3) annotation (Line(points={{1,4},{16,4},{16,
             32},{22,32}}, color={0,0,127}));
-    connect(feedback.y, feedback_correction.u)
-      annotation (Line(points={{-83,40},{-82,41},{-71,41}}, color={0,0,127}));
-    connect(feedback_correction.y, gain.u) annotation (Line(points={{-59.5,41},
-            {-30,41},{-30,40},{-22,40}}, color={0,0,127}));
-    connect(add_AW_Integer.u1, feedback_correction.y) annotation (Line(points={
-            {-39,6},{-50,6},{-50,42},{-48,42},{-48,41},{-59.5,41}}, color={0,0,
-            127}));
-    connect(derivative.u, feedback_correction.y) annotation (Line(points={{-24,
-            100},{-48,100},{-48,41},{-59.5,41}}, color={0,0,127}));
+    connect(feedback.y, gain.u)
+      annotation (Line(points={{-83,40},{-22,40}}, color={0,0,127}));
+    connect(add_AW_Integer.u1, feedback.y) annotation (Line(points={{-39,6},{
+            -56,6},{-56,40},{-83,40}}, color={0,0,127}));
+    connect(derivative.u, feedback.y) annotation (Line(points={{-24,100},{-42,
+            100},{-42,102},{-54,102},{-54,40},{-83,40}}, color={0,0,127}));
     annotation (
         Icon(graphics={  Rectangle(lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent={{-100,100},{100,-100}}),    Text(extent={{-100,100},{100,-100}},
             textColor={0,0,0},

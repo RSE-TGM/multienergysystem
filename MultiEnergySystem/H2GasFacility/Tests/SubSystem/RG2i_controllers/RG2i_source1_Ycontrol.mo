@@ -76,11 +76,6 @@ model RG2i_source1_Ycontrol
         origin={-161,-70},
         extent={{-10,-10},{10,10}},
         rotation=0)));
-  Controllers.AWPIDContinuous aWPIDContinuous1(
-    Kp=0.65,
-    Ki=1.4,
-    y_start=0)
-    annotation (Placement(transformation(extent={{-116,-84},{-96,-64}})));
   Sensors.IdealYSensor idealYSensor(
     redeclare model Medium = Medium,
     pin_start=Data.PipelineData_2i.s21.pin_start,
@@ -92,6 +87,13 @@ model RG2i_source1_Ycontrol
     element=2,
     m_flow_start=Data.PipelineData_2i.s21.m_flow_start)
     annotation (Placement(transformation(extent={{186,-52},{206,-32}})));
+  Modelica.Blocks.Continuous.LimPID PID(
+    controllerType=Modelica.Blocks.Types.SimpleController.P,
+    k=4,
+    Ti=15000000,
+    yMax=1,
+    yMin=0)
+    annotation (Placement(transformation(extent={{-132,-78},{-112,-58}})));
 equation
   connect(s3.outlet, s2.outlet) annotation (Line(
       points={{-182,-44},{-198,-44}},
@@ -109,10 +111,6 @@ equation
   connect(aWPIDContinuous.controlAction, valveLinearOpening.opening)
     annotation (Line(points={{-95,0},{-90,0},{-90,2},{-88,2},{-88,18},{-102,18}},
         color={0,0,127}));
-  connect(SG_ref.y, aWPIDContinuous1.REF)
-    annotation (Line(points={{-150,-70},{-114,-70}}, color={0,0,127}));
-  connect(aWPIDContinuous1.controlAction, vlave_immissione.opening) annotation (
-     Line(points={{-95,-74},{-98,-74},{-98,-52},{-106,-52}}, color={0,0,127}));
   connect(s3.inlet, vlave_immissione.outlet) annotation (Line(
       points={{-162,-44},{-116,-44}},
       color={182,109,49},
@@ -125,8 +123,12 @@ equation
       points={{182,-82},{186,-82},{186,-42}},
       color={182,109,49},
       thickness=0.5));
-  connect(idealYSensor.Y_meas, aWPIDContinuous1.FeedBack) annotation (Line(
-        points={{199.8,-34.6},{210,-34.6},{210,4},{-64,4},{-64,-94},{-130,-94},{
-          -130,-78},{-114,-78}}, color={0,0,127}));
+  connect(SG_ref.y, PID.u_s) annotation (Line(points={{-150,-70},{-142,-70},{
+          -142,-68},{-134,-68}}, color={0,0,127}));
+  connect(PID.y, vlave_immissione.opening) annotation (Line(points={{-111,-68},
+          {-108,-68},{-108,-56},{-106,-56},{-106,-52}}, color={0,0,127}));
+  connect(PID.u_m, idealYSensor.Y_meas) annotation (Line(points={{-122,-80},{
+          -122,-88},{40,-88},{40,-18},{199.8,-18},{199.8,-34.6}}, color={0,0,
+          127}));
   annotation (experiment(StopTime=20000, __Dymola_Algorithm="Dassl"));
 end RG2i_source1_Ycontrol;

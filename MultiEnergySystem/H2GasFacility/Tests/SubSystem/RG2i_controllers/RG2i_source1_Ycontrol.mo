@@ -88,9 +88,9 @@ model RG2i_source1_Ycontrol
     m_flow_start=Data.PipelineData_2i.s21.m_flow_start)
     annotation (Placement(transformation(extent={{186,-52},{206,-32}})));
   Modelica.Blocks.Continuous.LimPID PID(
-    controllerType=Modelica.Blocks.Types.SimpleController.P,
-    k=4,
-    Ti=15000000,
+    controllerType=Modelica.Blocks.Types.SimpleController.PI,
+    k=1.5,
+    Ti=0.7e3,
     yMax=1,
     yMin=0)
     annotation (Placement(transformation(extent={{-132,-78},{-112,-58}})));

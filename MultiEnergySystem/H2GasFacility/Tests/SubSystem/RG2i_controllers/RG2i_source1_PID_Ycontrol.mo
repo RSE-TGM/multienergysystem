@@ -90,9 +90,9 @@ model RG2i_source1_PID_Ycontrol
     annotation (Placement(transformation(extent={{-190,-120},{-170,-100}})));
   Modelica.Blocks.Continuous.LimPID PID(
     controllerType=Modelica.Blocks.Types.SimpleController.PID,
-    k=3.5,
-    Ti=0.7e3,
-    Td=3e2,
+    k=6,
+    Ti=0.6e3,
+    Td=1.6e2,
     yMax=1,
     yMin=0)
     annotation (Placement(transformation(extent={{-130,-80},{-110,-60}})));
@@ -136,7 +136,7 @@ equation
   connect(idealYSensor.Y_meas, PID.u_m) annotation (Line(points={{-176.2,-102.6},
           {-120,-102.6},{-120,-82}}, color={0,0,127}));
   annotation (experiment(
-      StopTime=20000,
+      StopTime=4000,
       Tolerance=0.001,
       __Dymola_Algorithm="Dassl"));
 end RG2i_source1_PID_Ycontrol;

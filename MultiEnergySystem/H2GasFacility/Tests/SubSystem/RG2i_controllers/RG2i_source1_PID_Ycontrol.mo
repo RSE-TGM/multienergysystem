@@ -33,7 +33,7 @@ model RG2i_source1_PID_Ycontrol
         extent={{10,-10},{-10,10}},
         rotation=0,
         origin={-172,-44})));
-  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening vlave_immissione(
+  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve_immissione(
     m_flow_nom=0.4138,
     A_v=0.1*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5)),
     redeclare model Medium = Medium,
@@ -101,7 +101,7 @@ equation
       points={{-182,-44},{-198,-44}},
       color={182,109,49},
       thickness=0.5));
-  connect(Immissione.outlet, vlave_immissione.inlet) annotation (Line(
+  connect(Immissione.outlet,valve_immissione. inlet) annotation (Line(
       points={{-82,-44},{-96,-44}},
       color={182,109,49},
       thickness=0.5));
@@ -113,7 +113,7 @@ equation
   connect(aWPIDContinuous.controlAction, valveLinearOpening.opening)
     annotation (Line(points={{-95,0},{-90,0},{-90,2},{-88,2},{-88,18},{-102,18}},
         color={0,0,127}));
-  connect(s3.inlet, vlave_immissione.outlet) annotation (Line(
+  connect(s3.inlet,valve_immissione. outlet) annotation (Line(
       points={{-162,-44},{-116,-44}},
       color={182,109,49},
       thickness=0.5));
@@ -129,7 +129,7 @@ equation
       points={{-190,-110},{-200,-110},{-200,-92}},
       color={182,109,49},
       thickness=0.5));
-  connect(PID.y, vlave_immissione.opening) annotation (Line(points={{-109,-70},
+  connect(PID.y,valve_immissione. opening) annotation (Line(points={{-109,-70},
           {-106,-70},{-106,-52}}, color={0,0,127}));
   connect(SG_ref.y, PID.u_s)
     annotation (Line(points={{-158,-70},{-132,-70}}, color={0,0,127}));

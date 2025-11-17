@@ -1,14 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
-model RG2i_source1_PID_Ycontrol
-  "Immission is modeled as the REMI station, considering valve opening with respect to H2 mass composition fraction."
+model RG2i_source1_VC_PID_GRMmeas
+  "Valve Controller in REMI and PID in the injection point."
   extends RG2i_pipes_users(
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0},
-    break connect(GRM_1.inlet, s21.outlet),
-    break connect(s4e8.outlet, s9e11.inlet));
+    break connect(GRM_1.inlet, s21.outlet));
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
     n=nV,
     H=Data.PipelineData_2i.s3.h,
@@ -53,28 +52,12 @@ model RG2i_source1_PID_Ycontrol
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-72,-44})));
-  Modelica.Blocks.Sources.Ramp p_ref(
-    offset=4.93*10^5,
-    height=0*0.2*10^5,
-    duration=0,
-    startTime=1000) annotation (Placement(visible=true, transformation(
-        origin={-161,4},
-        extent={{-10,-10},{10,10}},
-        rotation=0)));
-  Controllers.AWPIDContinuous aWPIDContinuous(
-    Kp=1e-3,
-    Kd=0,
-    Ki=1,
-    Ti=1e6,
-    Td=1,
-    y_start=0.5)
-    annotation (Placement(transformation(extent={{-116,-10},{-96,10}})));
   Modelica.Blocks.Sources.Ramp SG_ref(
     offset=0,
     height=0.1,
     duration=0,
     startTime=50)   annotation (Placement(visible=true, transformation(
-        origin={-169,-70},
+        origin={-161,-70},
         extent={{-10,-10},{10,10}},
         rotation=0)));
   Sensors.IdealYSensor idealYSensor(
@@ -87,15 +70,18 @@ model RG2i_source1_PID_Ycontrol
     p_start=Data.PipelineData_2i.s21.pin_start,
     element=2,
     m_flow_start=Data.PipelineData_2i.s21.m_flow_start)
-    annotation (Placement(transformation(extent={{-190,-120},{-170,-100}})));
+    annotation (Placement(transformation(extent={{186,-52},{206,-32}})));
   Modelica.Blocks.Continuous.LimPID PID(
     controllerType=Modelica.Blocks.Types.SimpleController.PID,
-    k=6,
+    k=1,
     Ti=0.6e3,
-    Td=1.6e2,
+    Td=1.2e2,
     yMax=1,
     yMin=0)
-    annotation (Placement(transformation(extent={{-130,-80},{-110,-60}})));
+    annotation (Placement(transformation(extent={{-132,-78},{-112,-58}})));
+  Controllers.Valve_controller valve_controller(P_rng=(5.5 - 3.5)*10^5, P_max=
+        5.5e5)
+    annotation (Placement(transformation(extent={{-128,-14},{-108,6}})));
 equation
   connect(s3.outlet, s2.outlet) annotation (Line(
       points={{-182,-44},{-198,-44}},
@@ -105,38 +91,29 @@ equation
       points={{-82,-44},{-96,-44}},
       color={182,109,49},
       thickness=0.5));
-  connect(p_ref.y,aWPIDContinuous. REF) annotation (Line(points={{-150,4},{-114,
-          4}},                   color={0,0,127}));
-  connect(idealPressureSensor.p_meas,aWPIDContinuous. FeedBack) annotation (
-      Line(points={{-135.8,18.6},{-135.8,-4},{-114,-4}},
-                                 color={0,0,127}));
-  connect(aWPIDContinuous.controlAction, valveLinearOpening.opening)
-    annotation (Line(points={{-95,0},{-90,0},{-90,2},{-88,2},{-88,18},{-102,18}},
-        color={0,0,127}));
   connect(s3.inlet, vlave_immissione.outlet) annotation (Line(
       points={{-162,-44},{-116,-44}},
       color={182,109,49},
       thickness=0.5));
-  connect(s21.outlet, GRM_1.inlet) annotation (Line(
-      points={{182,-82},{208,-82}},
+  connect(GRM_1.inlet, idealYSensor.outlet) annotation (Line(
+      points={{208,-82},{206,-82},{206,-42}},
       color={182,109,49},
       thickness=0.5));
-  connect(s9e11.inlet, idealYSensor.outlet) annotation (Line(
-      points={{-152,-110},{-170,-110}},
+  connect(s21.outlet, idealYSensor.inlet) annotation (Line(
+      points={{182,-82},{186,-82},{186,-42}},
       color={182,109,49},
       thickness=0.5));
-  connect(idealYSensor.inlet, s4e8.outlet) annotation (Line(
-      points={{-190,-110},{-200,-110},{-200,-92}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(PID.y, vlave_immissione.opening) annotation (Line(points={{-109,-70},
-          {-106,-70},{-106,-52}}, color={0,0,127}));
-  connect(SG_ref.y, PID.u_s)
-    annotation (Line(points={{-158,-70},{-132,-70}}, color={0,0,127}));
-  connect(idealYSensor.Y_meas, PID.u_m) annotation (Line(points={{-176.2,-102.6},
-          {-120,-102.6},{-120,-82}}, color={0,0,127}));
-  annotation (experiment(
-      StopTime=10800,
-      Tolerance=0.001,
-      __Dymola_Algorithm="Dassl"));
-end RG2i_source1_PID_Ycontrol;
+  connect(SG_ref.y, PID.u_s) annotation (Line(points={{-150,-70},{-142,-70},{
+          -142,-68},{-134,-68}}, color={0,0,127}));
+  connect(PID.y, vlave_immissione.opening) annotation (Line(points={{-111,-68},
+          {-108,-68},{-108,-56},{-106,-56},{-106,-52}}, color={0,0,127}));
+  connect(PID.u_m, idealYSensor.Y_meas) annotation (Line(points={{-122,-80},{
+          -122,-88},{40,-88},{40,-18},{199.8,-18},{199.8,-34.6}}, color={0,0,
+          127}));
+  connect(idealPressureSensor.p_meas, valve_controller.P_meas) annotation (Line(
+        points={{-135.8,18.6},{-144,18.6},{-144,-4},{-128.8,-4}}, color={0,0,
+          127}));
+  connect(valve_controller.ACT_x, valveLinearOpening.opening) annotation (Line(
+        points={{-106.6,-4},{-102,-4},{-102,18}}, color={0,0,127}));
+  annotation (experiment(StopTime=10800, __Dymola_Algorithm="Dassl"));
+end RG2i_source1_VC_PID_GRMmeas;

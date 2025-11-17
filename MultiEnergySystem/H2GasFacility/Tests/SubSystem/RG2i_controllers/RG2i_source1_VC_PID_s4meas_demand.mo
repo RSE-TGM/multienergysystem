@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RG2i_controllers;
-model RG2i_source1_PID_Y_control_demand
-  extends RG2i_source1_PID_Ycontrol(GRM_1(massflowratedemand=[0,0.0443; 840,0.0443; 900,0.0441; 1740,0.0441;
+model RG2i_source1_VC_PID_s4meas_demand
+  "Adding variable demand with daily profile."
+  extends RG2i_source1_VC_PID_s4meas(GRM_1(massflowratedemand=[0,0.0443; 840,0.0443; 900,0.0441; 1740,0.0441;
           1800,0.0558; 2640,0.0558; 2700,0.0552; 3540,0.0552; 3600,0.0445; 4440,
           0.0445; 4500,0.0552; 5340,0.0552; 5400,0.056; 6240,0.056; 6300,0.0443;
           7140,0.0443; 7200,0.0441; 8040,0.0441; 8100,0.0447; 8940,0.0447; 9000,
@@ -277,5 +278,8 @@ model RG2i_source1_PID_Y_control_demand
           0.0388; 83700,0.0396; 84540,0.0396; 84600,0.0388; 85440,0.0388; 85500,
           0.039; 86340,0.039; 86400,0.0492; 87240,0.0492; 90000,0.0492]),
     SG_ref(duration=1800));
-  annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
-end RG2i_source1_PID_Y_control_demand;
+  annotation (experiment(
+      StopTime=86400,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
+end RG2i_source1_VC_PID_s4meas_demand;

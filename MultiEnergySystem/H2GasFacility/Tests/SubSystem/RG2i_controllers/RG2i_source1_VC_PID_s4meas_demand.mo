@@ -277,7 +277,11 @@ model RG2i_source1_VC_PID_s4meas_demand
           0.0492; 81840,0.0492; 81900,0.039; 82740,0.039; 82800,0.0388; 83640,
           0.0388; 83700,0.0396; 84540,0.0396; 84600,0.0388; 85440,0.0388; 85500,
           0.039; 86340,0.039; 86400,0.0492; 87240,0.0492; 90000,0.0492]),
-    SG_ref(duration=1800));
+    SG_ref(height=0.11,
+           duration=1800),
+    Immissione(p0=1500000),
+    valve_immissione(A_v=0.5*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5))),
+    valve_controller(P_rng=(6 - 3.5)*10^5));
   annotation (experiment(
       StopTime=86400,
       Tolerance=1e-05,

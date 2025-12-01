@@ -35,7 +35,7 @@ model RG2i_source1_VC_PID_s4meas
         origin={-172,-44})));
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening valve_immissione(
     m_flow_nom=0.4138,
-    A_v=0.1*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5)),
+    A_v=0.4138/(sqrt(40.17625*(60 - 4.93)*1e5)),
     redeclare model Medium = Medium,
     pin_start=6000000,
     Tin_start=288.15,
@@ -46,7 +46,7 @@ model RG2i_source1_VC_PID_s4meas
         rotation=180,
         origin={-106,-44})));
   MultiEnergySystem.H2GasFacility.Sources.SourcePressure Immissione(
-    p0=6000000,
+    p0=600000,
     redeclare model Medium = Medium,
     T0=288.15,
     X0={0,1}) annotation (Placement(transformation(
@@ -80,8 +80,7 @@ model RG2i_source1_VC_PID_s4meas
     yMax=1,
     yMin=0)
     annotation (Placement(transformation(extent={{-130,-80},{-110,-60}})));
-  Controllers.Valve_controller valve_controller(P_rng=(5.5 - 3.5)*10^5, P_max=
-        5.5e5)
+  Controllers.Valve_controller valve_controller(P_rng=(6 - 3.5)*10^5, P_max=6e5)
     annotation (Placement(transformation(extent={{-128,-12},{-108,8}})));
 equation
   connect(s3.outlet, s2.outlet) annotation (Line(

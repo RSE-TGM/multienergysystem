@@ -2,7 +2,7 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
 model RG2i_1sources "immissione 1"
   extends RG2i_pipes_users(
     constantFrictionFactor=false,
-    massFractionDynamicBalance=false,
+    massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0});

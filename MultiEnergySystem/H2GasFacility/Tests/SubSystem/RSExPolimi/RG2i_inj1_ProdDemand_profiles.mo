@@ -2,7 +2,7 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
 model RG2i_inj1_ProdDemand_profiles "Profiles of both injection and demand"
   extends RG2i_pipes_users(
     constantFrictionFactor=false,
-    massFractionDynamicBalance=false,
+    massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0},
@@ -321,9 +321,9 @@ model RG2i_inj1_ProdDemand_profiles "Profiles of both injection and demand"
     m_flow0=0,
     redeclare model Medium = Medium,
     p0=480000,
-    G=1e-15,
     T0=288.15,
     X0={0,1},
+    G=1e-15,
     computeEnthalpyWithFixedPressure=true,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={-90,-28},
@@ -333,7 +333,7 @@ model RG2i_inj1_ProdDemand_profiles "Profiles of both injection and demand"
                                       annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
-        origin={-70,4})));
+        origin={-72,4})));
 equation
   connect(s3.outlet, s2.outlet) annotation (Line(
       points={{-158,-56},{-178,-56},{-178,-58},{-198,-58},{-198,-44}},
@@ -343,9 +343,12 @@ equation
       points={{-138,-56},{-112,-56},{-112,-28},{-100,-28}},
       color={182,109,49},
       thickness=0.5));
-  connect(gain.u, H2_Production.y) annotation (Line(points={{-58,4},{-44,4},{
-          -44,19},{-32.15,19}}, color={0,0,127}));
+  connect(gain.u, H2_Production.y) annotation (Line(points={{-60,4},{-44,4},{-44,
+          19},{-32.15,19}},     color={0,0,127}));
   connect(Immissione_1.in_m_flow0, gain.y)
-    annotation (Line(points={{-84,-23},{-81,-24},{-81,4}}, color={0,0,127}));
-  annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
+    annotation (Line(points={{-84,-23},{-83,-23},{-83,4}}, color={0,0,127}));
+  annotation (experiment(
+      StopTime=86400,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
 end RG2i_inj1_ProdDemand_profiles;

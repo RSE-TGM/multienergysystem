@@ -3,6 +3,7 @@ model RG2i_inj1_ProdDemand_profiles_NG4
   extends RG2i_inj1_ProdDemand_profiles(
   redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG4_H2,
+        massFractionDynamicBalance=false,
   nX = 5,
   X_start = {0.922, 0.065, 0.011, 0.002, 0},
     Immissione_1(X0={0,0,0,0,1}),

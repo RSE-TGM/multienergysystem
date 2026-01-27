@@ -1,7 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
 model RG2i_source2_CH4H2_demand
   "Test using a fluid with components CH4H2(100%,0%) and immission 2 of H2 with Demand Profile"
-  //extends DistrictHeatingNetwork.Icons.Generic.InProgress;
+  extends DistrictHeatingNetwork.Icons.Generic.InProgress;
   extends RG2i_source2_CH4(
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,

@@ -1,0 +1,23 @@
+within MultiEnergySystem.ElectricNetwork.Icons;
+partial model Battery "Battery icon"
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
+        Rectangle(
+          extent={{-88,50},{82,-50}},
+          lineColor={28,108,200},
+          lineThickness=1),
+        Rectangle(
+          extent={{-88,50},{40,-50}},
+          lineColor={28,108,200},
+          lineThickness=1,
+          fillColor={128,255,0},
+          fillPattern=FillPattern.Solid),
+        Text(
+          extent={{-52,28},{10,-26}},
+          textColor={28,108,200},
+          textString="Battery"),
+        Rectangle(
+          extent={{82,14},{88,-14}},
+          lineColor={0,128,255},
+          lineThickness=1)}), Diagram(coordinateSystem(preserveAspectRatio=
+            false)));
+end Battery;

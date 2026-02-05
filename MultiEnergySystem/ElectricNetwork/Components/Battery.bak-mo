@@ -1,0 +1,5 @@
+within MultiEnergySystem.ElectricNetwork.Components;
+model Battery
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end Battery;

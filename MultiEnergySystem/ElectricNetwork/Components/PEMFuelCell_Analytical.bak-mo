@@ -1,8 +1,7 @@
 ﻿within MultiEnergySystem.ElectricNetwork.Components;
 model PEMFuelCell_Analytical "PEM Fuel Cell with analytical polarization curve"
   // Based on: Czarnigowski et al. "Simple dynamic model of a PEM-type fuel cell"
-  // This version uses analytical equations for the polarization curve
-  // instead of experimental data tables
+  // This version uses analytical equations for the polarization curve instead of experimental data tables
 
   import Modelica.Electrical.Analog.Interfaces;
 

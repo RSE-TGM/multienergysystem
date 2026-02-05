@@ -1,0 +1,65 @@
+within MultiEnergySystem.ElectricNetwork.Components;
+model BatteryECM_1RC_PowerPort
+  import Modelica.Units.SI;
+
+  // Your connectors
+  Interfaces.ElectricPortInlet  inlet  "Electrical inlet (power-flow port)";
+  Interfaces.ElectricPortOutlet outlet "Electrical outlet (power-flow port)";
+
+  // Parameters (example values)
+  parameter SI.Resistance R0 = 0.015 "Ohmic resistance";
+  parameter SI.Resistance R1 = 0.010 "Polarization resistance";
+  parameter SI.Capacitance C1 = 2400 "Polarization capacitance";
+  parameter SI.Charge Qnom = 3.2*3600 "Capacity [C] (3.2Ah)";
+  parameter Real SOC0(min=0,max=1) = 0.8 "Initial SOC";
+
+  // Numerical guard
+  parameter SI.Voltage v_eps = 1e-3 "Voltage floor to avoid division by zero";
+
+  // States
+  Real SOC(min=0,max=1) "State of charge";
+  SI.Voltage V1 "Polarization voltage";
+
+  // Variables
+  SI.Voltage v "Terminal voltage (inlet.v - outlet.v)";
+  SI.Voltage Voc "Open circuit voltage";
+  SI.Current i "Equivalent current (positive = discharge)";
+  DistrictHeatingNetwork.Types.Power P "Power from inlet into component (see sign)";
+
+equation
+  // Across variable
+  v = inlet.v - outlet.v;
+
+  // Flow variable balance (since P is declared as flow)
+  // This is the analog of i_p + i_n = 0
+  inlet.P + outlet.P = 0;
+
+  // Choose sign convention:
+  // Let P = inlet.P be power flowing *into* the battery component at the inlet connector.
+  // Then battery discharge (delivering power to outside) typically means P < 0 at inlet.
+  P = inlet.P;
+
+  // Map power+voltage to an equivalent current.
+  // i is defined positive for discharge current from battery to the network.
+  // If v > 0 and the network absorbs power from battery, P will be negative -> i positive.
+  i = -P / max(v_eps, abs(v)) * (if v >= 0 then 1 else -1);
+
+  // SOC dynamics: dSOC/dt = - i / Qnom (i>0 discharging reduces SOC)
+  der(SOC) = -i / Qnom;
+
+  assert(SOC >= -1e-6 and SOC <= 1 + 1e-6, "SOC out of bounds");
+
+  // OCV curve (replace with your measured lookup table)
+  Voc = 3.0 + 1.2*SOC - 0.1*SOC*SOC;
+
+  // 1-RC Thevenin polarization branch
+  der(V1) = (i*R1 - V1) / (R1*C1);
+
+  // Terminal voltage relation
+  v = Voc - i*R0 - V1;
+
+initial equation
+  SOC = SOC0;
+  V1  = 0;
+
+end BatteryECM_1RC_PowerPort;

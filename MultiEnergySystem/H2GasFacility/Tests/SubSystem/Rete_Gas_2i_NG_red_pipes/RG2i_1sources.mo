@@ -1,6 +1,8 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
 model RG2i_1sources "immissione 1"
   extends RG2i_pipes_users(
+  redeclare model Medium =
+        MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
     constantFrictionFactor=false,
     massFractionDynamicBalance=false,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
@@ -31,10 +33,10 @@ model RG2i_1sources "immissione 1"
         rotation=0,
         origin={-136,-52})));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
-    m_flow0=0.0001,
+    m_flow0=0*0.0001,
     redeclare model Medium = Medium,
     p0=480000,
-    G=1e-8,
+    G=1e-12,
     T0=288.15,
     X0={0,1},
     computeEnthalpyWithFixedPressure=true,
@@ -43,13 +45,13 @@ model RG2i_1sources "immissione 1"
         extent={{-10,-10},{10,10}},
         rotation=180)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    offset=1e-3,
-    duration=300,
+    offset=0*1e-3,
+    duration=10,
     height=25/3600,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-23,32},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
-    duration=300,
+    duration=10,
     height=-25/3600,
     offset=0,
     startTime=18000)                                                                                        annotation (

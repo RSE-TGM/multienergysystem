@@ -52,6 +52,8 @@ model RG2i_pipes_users
     Tin_start=288.15,
     Tout_start=288.15,
     X_start=X_start,
+    m_flow_nom=0.4138,
+    A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5)),
     PressureDropLinear=false)
     annotation (Placement(transformation(extent={{-10,-10},{10,10}},
         rotation=180,

@@ -19,5 +19,7 @@ model RG2i_inj1_ProdDemand_profiles_NG4
   annotation (experiment(
       StopTime=86400,
       Tolerance=1e-05,
-      __Dymola_Algorithm="Dassl"));
+      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+<p><span style=\"font-size: 9pt;\">Doubled demand profile</span></p>
+</html>"));
 end RG2i_inj1_ProdDemand_profiles_NG4;

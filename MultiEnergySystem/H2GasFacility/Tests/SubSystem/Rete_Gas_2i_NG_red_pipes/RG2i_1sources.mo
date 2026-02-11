@@ -4,10 +4,12 @@ model RG2i_1sources "immissione 1"
   redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
     constantFrictionFactor=false,
-    massFractionDynamicBalance=false,
+    massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0});
+
+    // redeclare model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
     n=nV,
     H=Data.PipelineData_2i.s3.h,
@@ -47,12 +49,12 @@ model RG2i_1sources "immissione 1"
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     offset=0*1e-3,
     duration=10,
-    height=25/3600,
+    height=10/3600,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-23,32},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
     duration=10,
-    height=-25/3600,
+    height=-10/3600,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-23,68},      extent = {{-10, -10}, {10, 10}}, rotation=0)));

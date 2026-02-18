@@ -331,14 +331,14 @@ equation
       points={{-268,220},{-302,220}},
       color={182,109,49},
       thickness=0.5));
+  connect(sds17e16.outlet, sds13.inlet) annotation (Line(
+      points={{-248,220},{-184,220},{-184,218},{-118,218},{-116,220},{-54,220},
+          {-54,202},{14,202}},
+      color={182,109,49},
+      thickness=0.5));
   connect(H2_Production.y, gain.u) annotation (Line(points={{-356,230},{-356,
           236},{-344,236}}, color={0,0,127}));
   connect(gain.y, Immissione_2.in_m_flow0) annotation (Line(points={{-321,236},
           {-318,236},{-318,225}}, color={0,0,127}));
-  connect(sds17e16.outlet, sdsr12.inlet) annotation (Line(
-      points={{-248,220},{-206,220},{-206,226},{-162,226},{-162,230},{-32,230},
-          {-32,202}},
-      color={182,109,49},
-      thickness=0.5));
   annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));
 end RG2i_inj2_ProdDemand_profiles;

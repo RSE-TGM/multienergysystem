@@ -2,7 +2,7 @@ within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
 model RG2i_source2 "immissione 2"
   extends RG2i_pipes_users(
     constantFrictionFactor=false,
-    massFractionDynamicBalance=false,
+    massFractionDynamicBalance=true,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0});
@@ -33,7 +33,7 @@ model RG2i_source2 "immissione 2"
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
     redeclare model Medium = Medium,
     p0=480000,
-    G=1e-8,
+    G=1e-12,
     T0=288.15,
     X0={0,1},
     computeEnthalpyWithFixedPressure=true,
@@ -44,13 +44,13 @@ model RG2i_source2 "immissione 2"
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
     duration=60,
-    height=0.03,
-    offset=0.001,
+    height=0.0262628*0.01,
+    offset=0*0.001,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-419,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
     duration=60,
-    height=-0.03,
+    height=-0.0262628*0.01,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-417,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
@@ -68,9 +68,8 @@ equation
       points={{-268,220},{-302,220}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds17e16.outlet, sdsr12.inlet) annotation (Line(
-      points={{-248,220},{-196,220},{-196,232},{-144,232},{-118,230},{-32,230},
-          {-32,202}},
+  connect(sds17e16.outlet, sds11.outlet) annotation (Line(
+      points={{-248,220},{-188,220},{-188,224},{-119,224},{-119,222}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(

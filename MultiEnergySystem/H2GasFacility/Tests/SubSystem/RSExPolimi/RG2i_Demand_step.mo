@@ -1,8 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
-model RG2i_pipes_users
+model RG2i_Demand_step
   extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
   constantFrictionFactor = false,
-    massFractionDynamicBalance = false);
+    massFractionDynamicBalance = true);
+
+  parameter Types.MassFlowRate massflowratedemand_1[:,2] = [0, 0.112338; 1*3600, 0.112338; 3650, 0.5*0.112338; 5*3600, 0.5*0.112338; (5*3600+50), 0.112338; 24*3600, 0.112338] "Table for demand";
+  parameter Types.MassFlowRate massflowratedemand_2[:,2] = [0, 0.119588; 1*3600, 0.119588; 3650, 0.5*0.119588; 5*3600, 0.5*0.119588; (5*3600+50), 0.119588; 24*3600, 0.119588] "Table for demand";
+  parameter Types.MassFlowRate massflowratedemand_3[:,2] = [0, 0.034069; 1*3600, 0.034069; 3650, 0.5*0.034069; 5*3600, 0.5*0.034069; (5*3600+50), 0.034069; 24*3600, 0.034069] "Table for demand";
+
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
     redeclare model Medium = Medium,
     p0=463200,
@@ -31,19 +36,22 @@ model RG2i_pipes_users
     redeclare model Medium = Medium,
     p0=459100,
     m_flow0=0.034069,
-    X0=X_start)
+    X0=X_start,
+    massflowratedemand=massflowratedemand_3)
     annotation (Placement(transformation(extent={{40,-128},{76,-92}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_1(
     redeclare model Medium = Medium,
     p0=459500,
     m_flow0=0.112338,
-    X0=X_start)
+    X0=X_start,
+    massflowratedemand=massflowratedemand_1)
     annotation (Placement(transformation(extent={{188,-102},{228,-62}})));
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(
     redeclare model Medium = Medium,
     p0=454700,
     m_flow0=0.119588,
-    X0=X_start)
+    X0=X_start,
+    massflowratedemand=massflowratedemand_2)
     annotation (Placement(transformation(extent={{214,-286},{258,-242}})));
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
     valveLinearOpening(
@@ -126,8 +134,8 @@ equation
       points={{236,-264},{234,-264},{234,-204}},
       color={182,109,49},
       thickness=0.5));
-  annotation (experiment(StopTime=6000, __Dymola_Algorithm="Dassl"),
+  annotation (experiment(StopTime=36000, __Dymola_Algorithm="Dassl"),
                                    Documentation(info="<html>
 <p>The pipes model is extended and users and REMI station are included in the model. </p>
 </html>"));
-end RG2i_pipes_users;
+end RG2i_Demand_step;

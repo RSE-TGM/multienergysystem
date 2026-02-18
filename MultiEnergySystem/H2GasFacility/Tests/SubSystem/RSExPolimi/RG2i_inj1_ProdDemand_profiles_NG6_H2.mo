@@ -5,7 +5,7 @@ model RG2i_inj1_ProdDemand_profiles_NG6_H2
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG6_H2,
     nX=7,
     X_start = H2GasFacility.Data.MassMolFractionData.NG_Paolini_Algerian.X,
-    constantFrictionFactor = false,
+    constantFrictionFactor = true,
     computeInertialTerm = false,
     massFractionDynamicBalance=false,
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -

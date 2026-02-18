@@ -96,9 +96,9 @@ equation
       points={{-214,220},{-176,220}},
       color={182,109,49},
       thickness=0.5));
-  connect(sds16.outlet, sdsr12.inlet) annotation (Line(
-      points={{-156,220},{-150,220},{-150,228},{-116,228},{-116,232},{-110,232},
-          {-110,230},{-32,230},{-32,202}},
+  connect(sds16.outlet, sds13.inlet) annotation (Line(
+      points={{-156,220},{-148,220},{-148,222},{-134,222},{-134,220},{-54,220},
+          {-54,202},{14,202}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=54000, __Dymola_Algorithm="Dassl"),

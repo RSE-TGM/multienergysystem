@@ -33,7 +33,7 @@ model RG2i_source2 "immissione 2"
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
     redeclare model Medium = Medium,
     p0=480000,
-    G=1e-8,
+    G=1e-12,
     T0=288.15,
     X0={0,1},
     computeEnthalpyWithFixedPressure=true,
@@ -44,13 +44,13 @@ model RG2i_source2 "immissione 2"
         rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H1(
     duration=60,
-    height=0.03,
+    height=0.0262628*0.01,
     offset=0*0.001,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-419,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H5(
     duration=60,
-    height=-0.03,
+    height=-0.0262628*0.01,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-417,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));

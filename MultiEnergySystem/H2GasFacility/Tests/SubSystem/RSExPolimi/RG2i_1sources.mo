@@ -6,6 +6,8 @@ model RG2i_1sources "immissione 1"
     valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
           4.93)*1e5))),
     X_start={1,0});
+
+    // redeclare model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
     n=nV,
     H=Data.PipelineData_2i.s3.h,
@@ -31,10 +33,10 @@ model RG2i_1sources "immissione 1"
         rotation=0,
         origin={-136,-52})));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
-    m_flow0=0.0001,
+    m_flow0=0*0.0001,
     redeclare model Medium = Medium,
     p0=480000,
-    G=1e-8,
+    G=1e-12,
     T0=288.15,
     X0={0,1},
     computeEnthalpyWithFixedPressure=true,
@@ -43,14 +45,14 @@ model RG2i_1sources "immissione 1"
         extent={{-10,-10},{10,10}},
         rotation=180)));
   Modelica.Blocks.Sources.Ramp m_flow_H2(
-    offset=1e-3,
-    duration=300,
-    height=25/3600,
+    offset=0*1e-3,
+    duration=10,
+    height=2*5*10/3600,
     startTime=3600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-23,32},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
-    duration=300,
-    height=-25/3600,
+    duration=10,
+    height=-2*5*10/3600,
     offset=0,
     startTime=18000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-23,68},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
@@ -60,6 +62,10 @@ equation
   connect(add.y,Immissione_1. in_m_flow0) annotation (Line(points={{57,50},{70,
           50},{70,16},{-42,16},{-42,0},{-70,0},{-70,-25},{-80,-25}},
                                                                  color={0,0,127}));
+  connect(s3.outlet, s2.outlet) annotation (Line(
+      points={{-146,-52},{-198,-52},{-198,-44}},
+      color={182,109,49},
+      thickness=0.5));
   connect(s3.inlet,Immissione_1. outlet) annotation (Line(
       points={{-126,-52},{-114,-52},{-114,-50},{-110,-50},{-110,-20},{-96,-20}},
       color={182,109,49},
@@ -68,9 +74,5 @@ equation
           {34,56}},     color={0,0,127}));
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-12,32},{24,32},{24,44},
           {34,44}},     color={0,0,127}));
-  connect(s3.outlet, sr4.inlet) annotation (Line(
-      points={{-146,-52},{-196,-52},{-196,-76},{-138,-76},{-138,-74}},
-      color={182,109,49},
-      thickness=0.5));
   annotation (experiment(StopTime=36000, __Dymola_Algorithm="Dassl"));
 end RG2i_1sources;

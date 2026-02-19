@@ -859,7 +859,7 @@ package Report_122025
   end Rete_Gas_2i_pipes;
 
   model Rete_Gas_2i_pipes_users
-    extends H2GasFacility.Tests.SubSystem.RG2i_controllers.RG2i_pipes(
+    extends MultiEnergySystem.CaseStudies.Report_122025.Rete_Gas_2i_pipes(
       raccordo2(pin_start=H2GasFacility.Data.PipelineData_2i.sds8.pout_start,
           pout_start=H2GasFacility.Data.PipelineData_2i.sds8.pout_start),
       constantFrictionFactor=false,
@@ -3395,9 +3395,9 @@ package Report_122025
       annotation (Line(points={{-84,-23},{-84,8},{42,8},{42,44},{73,44}},
                                                              color={0,0,127}));
     connect(p_ref.y, aWPID_deadzone.REF)
-      annotation (Line(points={{-162,2},{-132,2}}, color={0,0,127}));
+      annotation (Line(points={{-162,2},{-134,2}}, color={0,0,127}));
     connect(idealPressureSensor.p_meas, aWPID_deadzone.FeedBack) annotation (Line(
-          points={{-135.8,18.6},{-146,18.6},{-146,-6},{-132,-6}}, color={0,0,127}));
+          points={{-135.8,18.6},{-146,18.6},{-146,-6},{-134,-6}}, color={0,0,127}));
     connect(aWPID_deadzone.controlAction, valveLinearOpening.opening)
       annotation (Line(points={{-113,-2},{-102,-2},{-102,18}}, color={0,0,127}));
     annotation (experiment(StopTime=86400, __Dymola_Algorithm="Dassl"));

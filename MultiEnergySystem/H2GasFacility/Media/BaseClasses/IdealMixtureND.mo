@@ -1,6 +1,6 @@
 ﻿within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model IdealMixtureND
-  extends PartialMixture(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start), computeDerivatives = false);
+  extends PartialMixture(Xi_start = X_start[1:nXi], rho(start = rho_start), cp(start = cp_id_start));
   import Modelica.Fluid.Utilities.regStep;
 
   // Parameters

@@ -1,26 +1,33 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Pipes;
-model TestSinglePipe_A "Base test model of a single pipe (Flow1DFV) with a pressure source & mass flowrate sink"
+
+model TestSinglePipe_Polimi
   extends Modelica.Icons.Example;
+  
   replaceable model Medium =
-      MultiEnergySystem.H2GasFacility.Media.RealGases.NG6_H2_Papay constrainedby
-    MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
-  parameter Boolean useEnergyDemand = false;
-  parameter Boolean massFractionDynamicBalance = true;
-  parameter Boolean constantFrictionFactor = false;
-  parameter Boolean computeInertialTerm = false;
+        MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2;
+        //MultiEnergySystem.H2GasFacility.Media.IdealGases.NG_4 constrainedby MultiEnergySystem.H2GasFacility.Media.BaseClasses.PartialMixture;
+    parameter Boolean useEnergyDemand = false;
+    parameter Boolean massFractionDynamicBalance = false;
+    parameter Boolean constantFrictionFactor = false;
+    parameter Real FrictionFactor = 0.009;
+    parameter Boolean computeInertialTerm = false;
+    parameter Integer n = 3 "Number of volumes in each pipeline";
+    parameter Integer nX = 2 "Number of components in the gas fluid";
+    parameter Types.MassFraction X_start[nX] = {1, 0};
+    parameter Types.MassFraction Xref[nX] = X_start;
+    parameter Types.MassFraction Xref_2[nX] = X_start;
+
+    //parameter Types.MassFraction X_start[nX] = {1, 0, 0, 0};
+    parameter Types.MassFlowRate m_flow_H2_ref = 0.005;
+    parameter Types.Density rho_nom = 0.657;
+    parameter Types.Length kappa = 0.045e-3;
+    parameter Types.Pressure pin_start = Pipe.pipe1.pin_start;
+    parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start;
+
+
+
+
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Downstream;
-  parameter Types.MassFraction Xref[:] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X
-    "Nominal mass fraction";
-  parameter Types.MassFraction Xref_2[:] = {0.97201, 0.01862, 0.00393, 0, 0, 0.00544, 0};
-  parameter Types.MassFlowRate m_flow_start = Pipe.pipe1.m_flow_start
-    "Initial mass flowrate in the sink";
-  parameter Integer n = 3 "Number of volumes in Flow1DFV";
-  parameter Types.Pressure pin_start = Pipe.pipe1.pin_start
-    "Initial pressure at the inlet";
-  parameter Types.Temperature Tin_start = Pipe.pipe1.Tin_start
-    "Initial temperature at the inlet";
-  parameter Types.Length kappa = 0.045e-3;
-  parameter Types.MassFraction X_start[7] = H2GasFacility.Data.MassMolFractionData.NG_Cheli.X;
   parameter DistrictHeatingNetwork.Choices.Pipe.Momentum momentum = DistrictHeatingNetwork.Choices.Pipe.Momentum.MediumPressure;
   // Components
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV roundPipe(Di = Pipe.pipe1.Di, H = 0, L = Pipe.pipe1.L, massFractionDynamicBalance = massFractionDynamicBalance, constantFrictionFactor = constantFrictionFactor, hctype = hctype, redeclare model Medium = Medium, Tin_start = Pipe.pipe1.Tin_start, Tout_start = Pipe.pipe1.Tout_start, X_start = X_start, allowFlowReversal = true, hin_start = Pipe.pipe1.hin_start, k = Pipe.pipe1.k, kappa = kappa, kc = 1, m_flow_start = Pipe.pipe1.m_flow_start, n = n, pin_start = Pipe.pipe1.pin_start, pout_start = Pipe.pipe1.pout_start, rho_nom = Pipe.pipe1.rho_nom) annotation(
@@ -60,4 +67,4 @@ equation
   annotation (
     experiment(StopTime = 250, Interval = 0.0350042, Tolerance = 1e-06, StartTime = 0),
     Diagram);
-end TestSinglePipe_A;
+end TestSinglePipe_Polimi;

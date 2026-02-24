@@ -5,48 +5,6 @@ model RG2i_pipes_users
     constantFrictionFactor=false,
     massFractionDynamicBalance=false);
 
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
-    redeclare model Medium = Medium,
-    p0=463200,
-    m_flow0=0.021261,
-    X0=X_start)
-    annotation (Placement(transformation(extent={{-212,154},{-168,198}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(
-    redeclare model Medium = Medium,
-    p0=460300,
-    m_flow0=0.007765,
-    X0=X_start)
-    annotation (Placement(transformation(extent={{28,262},{66,300}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(
-    redeclare model Medium = Medium,
-    p0=461900,
-    m_flow0=0.019358,
-    X0=X_start)                                                                                     "Via Marx"
-    annotation (Placement(transformation(extent={{88,200},{122,234}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(
-    redeclare model Medium = Medium,
-    p0=437100,
-    m_flow0=0.098685,
-    X0=X_start)
-    annotation (Placement(transformation(extent={{222,234},{262,274}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_3(
-    redeclare model Medium = Medium,
-    p0=459100,
-    m_flow0=0.034069,
-    X0=X_start)
-    annotation (Placement(transformation(extent={{40,-128},{76,-92}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_1(
-    redeclare model Medium = Medium,
-    p0=459500,
-    m_flow0=0.112338,
-    X0=X_start)
-    annotation (Placement(transformation(extent={{188,-102},{228,-62}})));
-  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(
-    redeclare model Medium = Medium,
-    p0=454700,
-    m_flow0=0.119588,
-    X0=X_start)
-    annotation (Placement(transformation(extent={{214,-286},{258,-242}})));
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
     valveLinearOpening(
     redeclare model Medium = Medium,
@@ -81,31 +39,84 @@ model RG2i_pipes_users
         origin={-132,26})));
   Controllers.Valve_controller valve_controller
     annotation (Placement(transformation(extent={{-128,-10},{-108,10}})));
+  Sources.SinkMassFlow demand_1(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.112338,
+    p0=459500,
+    pin_start=459500,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={217,-81},
+        extent={{-13,-13},{13,13}},
+        rotation=0)));
+  Sources.SinkMassFlow demand_2(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.119588,
+    p0=454700,
+    pin_start=454700,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={235,-257},
+        extent={{-19,-19},{19,19}},
+        rotation=270)));
+  Sources.SinkMassFlow demand_3(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.034069,
+    p0=459100,
+    pin_start=459100,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={39,-111},
+        extent={{-15,-15},{15,15}},
+        rotation=180)));
+  Sources.SinkMassFlow demand_4(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.021261,
+    p0=463200,
+    pin_start=463200,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={-199,181},
+        extent={{-15,-15},{15,15}},
+        rotation=180)));
+  Sources.SinkMassFlow demand_5(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.007765,
+    p0=460300,
+    pin_start=460300,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={27,273},
+        extent={{-15,-15},{15,15}},
+        rotation=180)));
+  Sources.SinkMassFlow demand_7(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.098685,
+    p0=437100,
+    pin_start=437100,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={221,259},
+        extent={{-15,-15},{15,15}},
+        rotation=180)));
+  Sources.SinkMassFlow demand_6(
+    G=1e-10,
+    redeclare model Medium = Medium,
+    X0=X_start,
+    m_flow0=0.019358,
+    p0=461900,
+    pin_start=461900,
+    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+        origin={117,215},
+        extent={{-15,-15},{15,15}},
+        rotation=0)));
 equation
-  connect(GRM_4.inlet, sds10.outlet) annotation (Line(
-      points={{-190,176},{-178,176},{-178,180},{-164,180}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_5.inlet, sds15.outlet) annotation (Line(
-      points={{47,281},{46,281},{46,252}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_6.inlet, sds14.outlet) annotation (Line(
-      points={{105,217},{104,216},{80,216}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_7.inlet, raccordo2.outlet) annotation (Line(
-      points={{242,254},{242,220}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
-      points={{58,-110},{72,-110}},
-      color={182,109,49},
-      thickness=0.5));
-  connect(GRM_1.inlet, s21.outlet) annotation (Line(
-      points={{208,-82},{182,-82}},
-      color={182,109,49},
-      thickness=0.5));
   connect(sourcePressure.outlet,valveLinearOpening. inlet) annotation (Line(
       points={{-78,26},{-92,26}},
       color={182,109,49},
@@ -124,8 +135,32 @@ equation
          {0,0,127}));
   connect(valve_controller.ACT_x,valveLinearOpening. opening)
     annotation (Line(points={{-106.6,0},{-102,0},{-102,18}}, color={0,0,127}));
-  connect(GRM_2.inlet, s28e30.outlet) annotation (Line(
-      points={{236,-264},{234,-264},{234,-204}},
+  connect(s21.outlet, demand_1.inlet) annotation (Line(
+      points={{182,-82},{192,-82},{192,-81},{204,-81}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s28e30.outlet, demand_2.inlet) annotation (Line(
+      points={{234,-204},{234,-228},{235,-228},{235,-238}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s36_Stadio.outlet, demand_3.inlet) annotation (Line(
+      points={{72,-110},{72,-111},{54,-111}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds10.outlet, demand_4.inlet) annotation (Line(
+      points={{-164,180},{-164,181},{-184,181}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(demand_5.inlet, sds15.outlet) annotation (Line(
+      points={{42,273},{46,273},{46,252}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(raccordo2.outlet, demand_7.inlet) annotation (Line(
+      points={{242,220},{242,259},{236,259}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds14.outlet, demand_6.inlet) annotation (Line(
+      points={{80,216},{80,215},{102,215}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=6000, __Dymola_Algorithm="Dassl"),

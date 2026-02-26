@@ -46,7 +46,7 @@ model RG2i_pipes_users
     m_flow0=0.112338,
     p0=459500,
     pin_start=459500,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={217,-81},
         extent={{-13,-13},{13,13}},
         rotation=0)));
@@ -57,7 +57,7 @@ model RG2i_pipes_users
     m_flow0=0.119588,
     p0=454700,
     pin_start=454700,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={235,-257},
         extent={{-19,-19},{19,19}},
         rotation=270)));
@@ -68,7 +68,7 @@ model RG2i_pipes_users
     m_flow0=0.034069,
     p0=459100,
     pin_start=459100,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={39,-111},
         extent={{-15,-15},{15,15}},
         rotation=180)));
@@ -79,7 +79,7 @@ model RG2i_pipes_users
     m_flow0=0.021261,
     p0=463200,
     pin_start=463200,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={-199,181},
         extent={{-15,-15},{15,15}},
         rotation=180)));
@@ -90,7 +90,7 @@ model RG2i_pipes_users
     m_flow0=0.007765,
     p0=460300,
     pin_start=460300,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={27,273},
         extent={{-15,-15},{15,15}},
         rotation=180)));
@@ -101,7 +101,7 @@ model RG2i_pipes_users
     m_flow0=0.098685,
     p0=437100,
     pin_start=437100,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
         origin={221,259},
         extent={{-15,-15},{15,15}},
         rotation=180)));
@@ -112,10 +112,22 @@ model RG2i_pipes_users
     m_flow0=0.019358,
     p0=461900,
     pin_start=461900,
-    use_in_m_flow0=false) annotation (Placement(visible=true, transformation(
+    use_in_m_flow0=true)  annotation (Placement(visible=true, transformation(
         origin={117,215},
         extent={{-15,-15},{15,15}},
         rotation=0)));
+  Sensors.IdealPressureSensor idealPressureSensor1(
+    redeclare model Medium = Medium,
+    pin_start=454700,
+    pout_start=454700,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.119588)
+                          annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={242,-218})));
 equation
   connect(sourcePressure.outlet,valveLinearOpening. inlet) annotation (Line(
       points={{-78,26},{-92,26}},
@@ -139,10 +151,6 @@ equation
       points={{182,-82},{192,-82},{192,-81},{204,-81}},
       color={182,109,49},
       thickness=0.5));
-  connect(s28e30.outlet, demand_2.inlet) annotation (Line(
-      points={{234,-204},{234,-228},{235,-228},{235,-238}},
-      color={182,109,49},
-      thickness=0.5));
   connect(s36_Stadio.outlet, demand_3.inlet) annotation (Line(
       points={{72,-110},{72,-111},{54,-111}},
       color={182,109,49},
@@ -161,6 +169,14 @@ equation
       thickness=0.5));
   connect(sds14.outlet, demand_6.inlet) annotation (Line(
       points={{80,216},{80,215},{102,215}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(demand_2.inlet, idealPressureSensor1.outlet) annotation (Line(
+      points={{235,-238},{235,-236},{242,-236},{242,-228}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s28e30.outlet, idealPressureSensor1.inlet) annotation (Line(
+      points={{234,-204},{236,-204},{236,-208},{242,-208}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=6000, __Dymola_Algorithm="Dassl"),

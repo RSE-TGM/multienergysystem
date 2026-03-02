@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.Export.Linearization;
+within MultiEnergySystem.TestFacility.Export.Configurations;
 model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffset/OutputOffset blocks"
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;

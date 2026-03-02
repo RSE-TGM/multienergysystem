@@ -1,4 +1,4 @@
-within MultiEnergySystem.TestFacility.Export.Linearization;
+within MultiEnergySystem.TestFacility.Export.Configurations;
 model CentralisedSystemI_B_InitForward
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;

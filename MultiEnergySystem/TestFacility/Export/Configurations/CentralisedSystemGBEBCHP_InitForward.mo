@@ -9,8 +9,6 @@ model CentralisedSystemGBEBCHP_InitForward
     h_PTR01_FTR01=-1.9*0,
     h_FTR01_RR01=-0.72*0,
     sourceGas(computeEnergyVariables=true),
-    FCVC02Dynamics(k=1*0),
-    FCVC01Dynamics(k=0),
     S701(TCV7X1(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage)),
 
     S711(TCV7X1(openingChar=MultiEnergySystem.DistrictHeatingNetwork.Components.Types.valveOpeningChar.EqualPercentage)),
@@ -100,17 +98,6 @@ model CentralisedSystemGBEBCHP_InitForward
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-588,-176})));
   Modelica.Blocks.Sources.BooleanConstant CHP501Status
                                                       annotation (Placement(transformation(extent={{-682,-288},{-662,-268}})));
-  Export.Utilities.InputOffset omegaP501Offset(
-    fixInput=fixomegaP501,
-    u_norm=omegaP501_nom,
-    u_start=omegaP501_nom) annotation (Placement(visible=true, transformation(
-        origin={-706,-210},
-        extent={{-10,-10},{10,10}},
-        rotation=0)));
-  Modelica.Blocks.Continuous.FirstOrder P501Dynamics(
-    T=1,
-    initType=Modelica.Blocks.Types.Init.SteadyState,
-    y_start=2*Modelica.Constants.pi*30) annotation (Placement(transformation(extent={{-680,-220},{-660,-200}})));
   Modelica.Blocks.Sources.Ramp FCV501theta(
     height=0,
     duration=0,
@@ -122,27 +109,6 @@ model CentralisedSystemGBEBCHP_InitForward
     startTime=1000)
                  annotation (Placement(transformation(extent={{-680,-320},{-660,-300}})));
   Modelica.Blocks.Sources.TimeTable m_flow_ref_CHP(table=[0,2.5; 1e6,2.5])       annotation (Placement(transformation(extent={{-680,-350},{-660,-330}})));
-  Export.Utilities.InputOffset ToutCHP501Offset(
-    fixInput=fixToutTT502,
-    u_norm=TT502_nom,
-    u_start=TT502_des) annotation (Placement(visible=true, transformation(
-        origin={-706,-256},
-        extent={{-10,-10},{10,10}},
-        rotation=0)));
-  Export.Utilities.OutputOffset FT501Offset(
-    fixOutput=fixFT501,
-    y_fixed=FT501_des,
-    y_norm=FT501_nom) annotation (Placement(visible=true, transformation(
-        origin={-505,-251},
-        extent={{-5,-5},{5,5}},
-        rotation=0)));
-  Export.Utilities.OutputOffset TT502Offset(
-    fixOutput=fixTT502,
-    y_fixed=TT502_des,
-    y_norm=TT502_nom) annotation (Placement(visible=true, transformation(
-        origin={-505,-268},
-        extent={{-5,-5},{5,5}},
-        rotation=0)));
 equation
   connect(PL_S500_rCD_hot.outlet, suddenAreaChange2.outlet) annotation (Line(
       points={{-552,-197},{-552,-186}},
@@ -169,41 +135,9 @@ equation
       color={140,56,54},
       thickness=0.5));
   connect(CHP501Status.y, S500.status) annotation (Line(points={{-661,-278},{-620,-278},{-620,-276.7},{-618.3,-276.7}}, color={255,0,255}));
-  connect(P501Dynamics.y, S500.pumpset) annotation (Line(points={{-659,-210},{-640,-210},{-640,-250.9},{-618.3,-250.9}}, color={0,0,127}));
-  connect(P501Dynamics.u, omegaP501Offset.u) annotation (Line(points={{-682,-210},{-697,-210}}, color={0,0,127}));
   connect(m_flow_ref_CHP.y, S500.m_flow_CHP) annotation (Line(points={{-659,-340},{-638,-340},{-638,-293.9},{-618.3,-293.9}}, color={0,0,127}));
   connect(PelSP.y, S500.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));
-  connect(ToutCHP501Offset.u, S500.Toutset) annotation (Line(points={{-697,-256},{-646,-256},{-646,-268.1},{-618.3,-268.1}}, color={0,0,127}));
   connect(FCV501theta.y, S500.theta) annotation (Line(points={{-659,-236},{-642,-236},{-642,-259.5},{-618.3,-259.5}}, color={0,0,127}));
-  connect(S500.m_flow_, FT501Offset.y) annotation (Line(points={{-523.7,-250.9},{-516.35,-250.9},{-516.35,-251},{-509,-251}},
-                                                                                                                        color={0,0,127}));
-  connect(S500.TTout, TT502Offset.y) annotation (Line(points={{-523.7,-268.1},{-523.7,-268},{-509,-268}},                   color={0,0,127}));
-  connect(omegaP501Offset.deltaUnorm, controlSignalBus.domegaP501)
-    annotation (Line(points={{-714,-210},{-786,-210},{-786,-212},{-897,-212},{-897,-3}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(ToutCHP501Offset.deltaUnorm, controlSignalBus.dToutCHP501)
-    annotation (Line(points={{-714,-256},{-897,-256},{-897,-3}}, color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
-  connect(FT501Offset.deltaYnorm, processVariableBus.dFT501)
-    annotation (Line(points={{-500.5,-251},{-496,-251},{-496,-151},{-468,-151},{-468,-3},{896,-3}},
-                                                                                                color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
-  connect(TT502Offset.deltaYnorm, processVariableBus.dTT502)
-    annotation (Line(points={{-500.5,-268},{-480,-268},{-480,-158},{-462,-158},{-462,-3},{896,-3}},
-                                                                                                color={0,0,127}), Text(
-      string="%second",
-      index=1,
-      extent={{6,3},{6,3}},
-      horizontalAlignment=TextAlignment.Left));
   connect(sourceGas.outlet, S500.inletFuel) annotation (Line(
       points={{-250,-362},{-506,-362},{-506,-330.88},{-571,-330.88}},
       color={182,109,49},
@@ -212,5 +146,33 @@ equation
       points={{-618.3,-305.94},{-630,-305.94},{-630,-454},{-400,-454}},
       color={56,93,138},
       thickness=1));
+  connect(S500.Toutset, controlSignalBus.ToutCHP501) annotation (Line(points={{
+          -618.3,-268.1},{-874,-268.1},{-874,-3},{-897,-3}}, color={0,0,127}),
+      Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(S500.pumpset, controlSignalBus.omegaP501) annotation (Line(points={{
+          -618.3,-250.9},{-645,-250.9},{-645,-204},{-865,-204},{-865,-3},{-897,
+          -3}}, color={0,0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
+  connect(S500.m_flow_, processVariableBus.FT501) annotation (Line(points={{
+          -523.7,-250.9},{-456,-250.9},{-456,-60},{896,-60},{896,-3}}, color={0,
+          0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
+  connect(S500.TTout, processVariableBus.TT502) annotation (Line(points={{
+          -523.7,-268.1},{-458,-268.1},{-458,-74},{896,-74},{896,-3}}, color={0,
+          0,127}), Text(
+      string="%second",
+      index=1,
+      extent={{6,3},{6,3}},
+      horizontalAlignment=TextAlignment.Left));
   annotation (experiment(StopTime=2000, __Dymola_Algorithm="Dassl"),  Diagram(coordinateSystem(extent={{-900,-540},{900,320}}, grid={1,1})));
 end CentralisedSystemGBEBCHP_InitForward;

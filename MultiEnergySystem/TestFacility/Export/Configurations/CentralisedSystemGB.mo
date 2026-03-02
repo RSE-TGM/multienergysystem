@@ -342,75 +342,77 @@ equation
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S100.pumpset, controlSignalBus.omegaP101) annotation (Line(points={{
-          -298.4,-253.2},{-897,-253.2},{-897,-3}}, color={0,0,127}), Text(
+          -298.4,-253.2},{-596,-253.2},{-596,-254},{-894,-254},{-894,-18},{-898,
+          -18},{-898,-10},{-897,-10},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S100.theta, controlSignalBus.thetaFCV101) annotation (Line(points={{
-          -298.4,-262},{-410,-262},{-410,-258},{-894,-258},{-894,-50},{-897,-50},
-          {-897,-3}}, color={0,0,127}), Text(
+          -298.4,-262},{-894,-262},{-894,-12},{-898,-12},{-898,-8},{-897,-8},{
+          -897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S100.Toutset, controlSignalBus.ToutGB101) annotation (Line(points={{
-          -298.4,-270.8},{-897,-270.8},{-897,-3}}, color={0,0,127}), Text(
+          -298.4,-270.8},{-596,-270.8},{-596,-270},{-894,-270},{-894,-10},{-898,
+          -10},{-898,-6},{-897,-6},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S701.theta_TCV7X1, controlSignalBus.thetaTCV701) annotation (Line(
-        points={{56,-186},{-238,-186},{-238,-174},{-897,-174},{-897,-3}}, color
-        ={0,0,127}), Text(
+        points={{56,-186},{-238,-186},{-238,-174},{-894,-174},{-894,-4},{-896,
+          -4},{-896,-8},{-897,-8},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S701.theta_FCV7X1, controlSignalBus.thetaFCV701) annotation (Line(
-        points={{56,-178},{-152,-178},{-152,-172},{-882,-172},{-882,-3},{-897,
+        points={{56,-178},{-152,-178},{-152,-174},{-894,-174},{-894,-3},{-897,
           -3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S731.theta_TCV7X1, controlSignalBus.thetaTCV731) annotation (Line(
-        points={{216,-186},{204,-186},{204,-330},{-897,-330},{-897,-3}}, color=
-          {0,0,127}), Text(
+        points={{216,-186},{198,-186},{198,-524},{-920,-524},{-920,-2},{-898,-2},
+          {-898,-3},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S731.theta_FCV7X1, controlSignalBus.thetaFCV731) annotation (Line(
-        points={{216,-178},{212,-178},{212,-338},{-897,-338},{-897,-3}}, color=
-          {0,0,127}), Text(
+        points={{216,-178},{198,-178},{198,-522},{-920,-522},{-920,-4},{-898,-4},
+          {-898,-3},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S711.theta_TCV7X1, controlSignalBus.thetaTCV711) annotation (Line(
-        points={{376,-186},{364,-186},{364,-348},{-897,-348},{-897,-3}}, color=
-          {0,0,127}), Text(
+        points={{376,-186},{352,-186},{352,-522},{-920,-522},{-920,-4},{-898,-4},
+          {-898,-3},{-897,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S711.theta_FCV7X1, controlSignalBus.thetaFCV711) annotation (Line(
-        points={{376,-178},{360,-178},{360,-340},{-914,-340},{-914,-3},{-897,-3}},
+        points={{376,-178},{352,-178},{352,-522},{-920,-522},{-920,-3},{-897,-3}},
         color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S721.theta_TCV7X1, controlSignalBus.thetaTCV721) annotation (Line(
-        points={{536,-186},{520,-186},{520,-326},{-922,-326},{-922,-3},{-897,-3}},
+        points={{536,-186},{514,-186},{514,-522},{-920,-522},{-920,-3},{-897,-3}},
         color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{-6,3},{-6,3}},
       horizontalAlignment=TextAlignment.Right));
   connect(S721.theta_FCV7X1, controlSignalBus.thetaFCV721) annotation (Line(
-        points={{536,-178},{518,-178},{518,-334},{-932,-334},{-932,-3},{-897,-3}},
+        points={{536,-178},{514,-178},{514,-522},{-920,-522},{-920,-3},{-897,-3}},
         color={0,0,127}), Text(
       string="%second",
       index=1,
@@ -511,28 +513,27 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S100.TTout, processVariableBus.TT102) annotation (Line(points={{
-          -201.6,-270.8},{-68,-270.8},{-68,-2},{896,-2},{896,-3}}, color={0,0,
+          -201.6,-270.8},{-78,-270.8},{-78,-4},{896,-4},{896,-3}}, color={0,0,
           127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S100.m_flow_, processVariableBus.FT101) annotation (Line(points={{
-          -201.6,-253.2},{-68,-253.2},{-68,-3},{896,-3}}, color={0,0,127}),
+          -201.6,-253.2},{-78,-253.2},{-78,-3},{896,-3}}, color={0,0,127}),
       Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S701.TT7X1_TT, processVariableBus.TT701) annotation (Line(points={{
-          144,-178},{184,-178},{184,-3},{896,-3}}, color={0,0,127}), Text(
+          144,-178},{182,-178},{182,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S701.TT7X2_TT, processVariableBus.TT702) annotation (Line(points={{
-          144,-186},{164,-186},{164,-188},{184,-188},{184,-3},{896,-3}}, color=
-          {0,0,127}), Text(
+          144,-186},{182,-186},{182,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -544,44 +545,43 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S701.FT7X1_FT, processVariableBus.FT701) annotation (Line(points={{
-          144,-210},{184,-210},{184,-3},{896,-3}}, color={0,0,127}), Text(
+          144,-210},{182,-210},{182,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S701.PT7X1_PT, processVariableBus.PT701) annotation (Line(points={{
-          144,-218},{186,-218},{186,-3},{896,-3}}, color={0,0,127}), Text(
+          144,-218},{182,-218},{182,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S701.PT7X2_PT, processVariableBus.PT702) annotation (Line(points={{
-          144,-226},{184,-226},{184,-3},{896,-3}}, color={0,0,127}), Text(
+          144,-226},{182,-226},{182,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S731.TT7X1_TT, processVariableBus.TT731) annotation (Line(points={{
-          304,-178},{334,-178},{334,-3},{896,-3}}, color={0,0,127}), Text(
+          304,-178},{332,-178},{332,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S731.TT7X2_TT, processVariableBus.TT732) annotation (Line(points={{
-          304,-186},{334,-186},{334,-3},{896,-3}}, color={0,0,127}), Text(
+          304,-186},{332,-186},{332,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S731.TT7X4_TT, processVariableBus.TT734) annotation (Line(points={{
-          304,-202},{322,-202},{322,-200},{332,-200},{332,-3},{896,-3}}, color=
-          {0,0,127}), Text(
+          304,-202},{332,-202},{332,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S731.FT7X1_FT, processVariableBus.FT731) annotation (Line(points={{
-          304,-210},{334,-210},{334,-3},{896,-3}}, color={0,0,127}), Text(
+          304,-210},{332,-210},{332,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -593,8 +593,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S731.PT7X2_PT, processVariableBus.PT732) annotation (Line(points={{
-          304,-226},{324,-226},{324,-228},{332,-228},{332,-3},{896,-3}}, color=
-          {0,0,127}), Text(
+          304,-226},{332,-226},{332,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -606,33 +605,31 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S711.TT7X2_TT, processVariableBus.TT712) annotation (Line(points={{
-          464,-186},{476,-186},{476,-188},{484,-188},{484,-3},{896,-3}}, color=
-          {0,0,127}), Text(
+          464,-186},{484,-186},{484,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S711.TT7X4_TT, processVariableBus.TT714) annotation (Line(points={{
-          464,-202},{488,-202},{488,-3},{896,-3}}, color={0,0,127}), Text(
+          464,-202},{484,-202},{484,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S711.FT7X1_FT, processVariableBus.FT711) annotation (Line(points={{
-          464,-210},{488,-210},{488,-3},{896,-3}}, color={0,0,127}), Text(
+          464,-210},{484,-210},{484,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S711.PT7X1_PT, processVariableBus.PT711) annotation (Line(points={{
-          464,-218},{476,-218},{476,-220},{484,-220},{484,-3},{896,-3}}, color=
-          {0,0,127}), Text(
+          464,-218},{484,-218},{484,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S711.PT7X2_PT, processVariableBus.PT712) annotation (Line(points={{
-          464,-226},{486,-226},{486,-3},{896,-3}}, color={0,0,127}), Text(
+          464,-226},{484,-226},{484,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
@@ -644,27 +641,26 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S721.TT7X2_TT, processVariableBus.TT722) annotation (Line(points={{
-          624,-186},{636,-186},{636,-188},{648,-188},{648,-3},{896,-3}}, color=
+          624,-186},{636,-186},{636,-184},{648,-184},{648,-3},{896,-3}}, color=
           {0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S721.TT7X4_TT, processVariableBus.TT724) annotation (Line(points={{
-          624,-202},{650,-202},{650,-3},{896,-3}}, color={0,0,127}), Text(
+          624,-202},{648,-202},{648,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S721.FT7X1_FT, processVariableBus.FT721) annotation (Line(points={{
-          624,-210},{634,-210},{634,-212},{652,-212},{652,-3},{896,-3}}, color=
-          {0,0,127}), Text(
+          624,-210},{648,-210},{648,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(S721.PT7X1_PT, processVariableBus.PT721) annotation (Line(points={{
-          624,-218},{654,-218},{654,-4},{896,-4},{896,-3}}, color={0,0,127}),
+          624,-218},{648,-218},{648,-4},{896,-4},{896,-3}}, color={0,0,127}),
       Text(
       string="%second",
       index=1,
@@ -707,8 +703,7 @@ equation
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
   connect(diffPTS100.y, processVariableBus.diffPTS100) annotation (Line(points=
-          {{-147,-310},{-106,-310},{-106,-306},{-78,-306},{-78,-3},{896,-3}},
-        color={0,0,127}), Text(
+          {{-147,-310},{-78,-310},{-78,-3},{896,-3}}, color={0,0,127}), Text(
       string="%second",
       index=1,
       extent={{6,3},{6,3}},

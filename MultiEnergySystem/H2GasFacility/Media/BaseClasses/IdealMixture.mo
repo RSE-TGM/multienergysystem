@@ -1,6 +1,7 @@
 within MultiEnergySystem.H2GasFacility.Media.BaseClasses;
 partial model IdealMixture
-  extends IdealMixtureND(final computeDerivatives = true);
+  extends IdealMixtureND();
+  // final computeDerivatives = true
   import Modelica.Fluid.Utilities.regStep;
 
   //Variables

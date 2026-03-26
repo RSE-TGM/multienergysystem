@@ -1,0 +1,10 @@
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
+model prova2
+  extends MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi.PROVA;
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(G = 1e-12, redeclare
+      model                                                                                      Medium = Medium, T0 = 288.15, X0 = {0, 1}, computeEnthalpyWithFixedPressure = true, m_flow0 = 0*0.0001, p0 = 480000, use_in_m_flow0 = false) annotation (
+    Placement(transformation(origin = {-184, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+equation
+  connect(Immissione_1.outlet, s1.outlet) annotation (
+    Line(points = {{-194, 58}, {-198, 58}, {-198, 26}, {-184, 26}}, color = {182, 109, 49}));
+end prova2;

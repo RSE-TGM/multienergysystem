@@ -32,7 +32,7 @@ model Round1DFV "Model of a 1D flow in a circular rigid pipe. Finite Volume (FV)
     Dialog(group = "Choices"));
   parameter Boolean noInitialPressure = false "Used to remove initial equation for pressure, to be used in case of solver failure" annotation (
     Dialog(group = "Choices"));
-  parameter Boolean massFractionDynamicBalance = true "Used to remove composition dynamic equation" annotation (
+  parameter Boolean massFractionDynamicBalance = false "Used to remove composition dynamic equation" annotation (
     Dialog(group = "Choices"));
   parameter Boolean constantFrictionFactor = false "Used to set a constant value for the friction factor" annotation (
     Dialog(group = "Choices"));
@@ -339,7 +339,8 @@ equation
 
   if noEvent(inlet.m_flow > 0) then
     T[1] = homotopy(fluid_temp.T, Tin_start);
-    Xi[1,:] = homotopy(fluid_temp.Xi, X_start[1:nXi]);
+    //Xi[1,:] = homotopy(fluid_temp.Xi, X_start[1:nXi]);
+    Xi[1,:] = fluid_temp.Xi;
   else
     T[end] = fluid_temp.T;
     Xi[end,:] = fluid_temp.Xi;

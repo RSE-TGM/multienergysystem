@@ -3,7 +3,7 @@ model IdealUser
   replaceable model Medium = H2GasFacility.Media.IdealGases.CH4 constrainedby H2GasFacility.Media.BaseClasses.PartialMixture;
 
 // Parameters
-  parameter Boolean useEnergyDemand = false "True if the demand approach uses energy instead of mass flowrate";
+  //parameter Boolean useEnergyDemand = false "True if the demand approach uses energy instead of mass flowrate";
   parameter Types.Pressure p0(nominal = 1e6) = 0.5e5 "Nominal pressure";
   parameter Types.MassFlowRate m_flow0(nominal = 0.01) = 0.04 "Nominal mass flowrate";
   parameter Types.Power E0 = 1e6 "Nominal energy demand";
@@ -34,6 +34,7 @@ model IdealUser
         origin={-50,70},
         extent={{-10,-10},{10,10}},
         rotation=0)));
+
 equation
   Xi = inStream(inlet.Xi);
   h = inStream(inlet.h_out);
@@ -42,8 +43,15 @@ equation
   fluid.h = h;
   fluid.Xi = Xi;
   E = inlet.m_flow*fluid.HHV_mix;
-  sink_demand.in_m_flow0 =if useEnergyDemand then energyDemandProfile.y*fluid.rho0/fluid.HHV_SCM_mix else mfrDemandProfile.y "depends on the approach";
-  m_flow_demand = sink_demand.in_m_flow0;
+
+  // Drive the sink's conditional input via a connect-equation
+  connect(mfrDemandProfile.y, sink_demand.in_m_flow0);
+
+  // Local variable for "demanded" mass flow (for plotting, etc.)
+  m_flow_demand = mfrDemandProfile.y;
+  // In the future, if you switch to energy-based demand:
+  // m_flow_demand = energyDemandProfile.y*fluid.rho0/fluid.HHV_SCM_mix;
+
 
   connect(inlet, sink_demand.inlet) annotation (
     Line(points = {{-100, 0}, {-10, 0}}));

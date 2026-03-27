@@ -1,5 +1,5 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
-model inj_validation
+model inj_validation_exportable "Export FMU Version"
   extends
     MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi.two_pipes_validation(
     GRM_4(
@@ -29,35 +29,13 @@ model inj_validation
     p0=460000,
     use_in_m_flow0=true)                                                                                                                                                                                                         annotation (
     Placement(transformation(origin = {-184, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
-  Modelica.Blocks.Sources.Ramp m_flow_H2(
-    offset=0*1e-3,
-    duration=10,
-    height=0.0015,
-    startTime=7500)                                                                                         annotation (
-    Placement(visible = true, transformation(origin={-231,90},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
-  Modelica.Blocks.Sources.Ramp m_flow_H3(
-    duration=10,
-    height=-0.0015,
-    offset=0,
-    startTime=20000)                                                                                        annotation (
-    Placement(visible = true, transformation(origin={-231,126},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
-  Modelica.Blocks.Math.Add add
-    annotation (Placement(transformation(extent={{-172,98},{-152,118}})));
 equation
-  connect(m_flow_H3.y,add. u1) annotation (Line(points={{-220,126},{-184,126},{
-          -184,114},{-174,114}},
-                        color={0,0,127}));
-  connect(m_flow_H2.y,add. u2) annotation (Line(points={{-220,90},{-184,90},{
-          -184,102},{-174,102}},
-                        color={0,0,127}));
-  connect(add.y, Immissione_1.in_m_flow0) annotation (Line(points={{-151,108},{
-          -148,108},{-148,53},{-178,53}}, color={0,0,127}));
   connect(Immissione_1.outlet, s1.outlet) annotation (Line(
       points={{-194,58},{-202,58},{-202,26},{-184,26}},
       color={182,109,49},
       thickness=0.5));
-  annotation (uses(Modelica(version="4.0.0")), experiment(
+  annotation (                                 experiment(
       StopTime=30000,
       Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
-end inj_validation;
+end inj_validation_exportable;

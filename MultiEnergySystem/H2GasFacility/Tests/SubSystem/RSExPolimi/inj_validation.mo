@@ -9,17 +9,18 @@ model inj_validation
     idealPressureSensor(X_start={1,0}, m_flow_start=0.03),
     sourcePressure(X0={1,0}),
     valveLinearOpening(
-      X_start={1,0}, m_flow_nom=0.09),
+      X_start={1,0}, m_flow_nom=0.09,
+      A_v=6.05e-6),
     sds1(
-      L=1500,
+      L=150,
       H=0,
       Di=0.13,
-      n=15),
+      n=3),
     s1(
-      L=1500,
+      L=150,
       H=0,
       Di=0.13,
-      n=15));
+      n=3));
   MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(G = 1e-12,
     redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.CH4H2,
@@ -32,14 +33,14 @@ model inj_validation
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     offset=0*1e-3,
     duration=10,
-    height=0.0015,
-    startTime=7500)                                                                                         annotation (
+    height=0.003,
+    startTime=4000)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-231,90},     extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
     duration=10,
-    height=-0.0015,
+    height=-0.003,
     offset=0,
-    startTime=20000)                                                                                        annotation (
+    startTime=5600)                                                                                         annotation (
     Placement(visible = true, transformation(origin={-231,126},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{-172,98},{-152,118}})));
@@ -57,7 +58,7 @@ equation
       color={182,109,49},
       thickness=0.5));
   annotation (uses(Modelica(version="4.0.0")), experiment(
-      StopTime=30000,
+      StopTime=10000,
       Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
 end inj_validation;

@@ -238,6 +238,84 @@ partial model Rete_Gas_2i_low_pipes
         extent={{4,-4},{-4,4}},
         rotation=90,
         origin={-200,0})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s19(
+    L=Data.PipelineData_2i.s19.L,
+    H=Data.PipelineData_2i.s19.h,
+    m_flow_start=Data.PipelineData_2i.s19.m_flow_start,
+    pin_start=Data.PipelineData_2i.s19.pin_start,
+    redeclare model Gas = Medium,
+    pout_start=Data.PipelineData_2i.s19.pout_start,
+    n=nV,
+    kappa=Data.PipelineData_2i.s19.kappa,
+    k=Data.PipelineData_2i.s19.k,
+    cm=Data.PipelineData_2i.s19.cm,
+    rhom=Data.PipelineData_2i.s19.rhom,
+    lambdam=Data.PipelineData_2i.s19.lambdam,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s19.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    ff_nom=FrictionFactor,
+    momentum=momentum,
+    rho_nom=Data.PipelineData_2i.s19.rho_nom)
+                     "Polyester" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={170,-76})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s20(
+    L=Data.PipelineData_2i.s20.L,
+    H=Data.PipelineData_2i.s20.h,
+    cm=Data.PipelineData_2i.s20.cm,
+    redeclare model Gas = Medium,
+    rhom=Data.PipelineData_2i.s20.rhom,
+    lambdam=Data.PipelineData_2i.s20.lambdam,
+    m_flow_start=Data.PipelineData_2i.s20.m_flow_start,
+    pin_start=Data.PipelineData_2i.s20.pin_start,
+    pout_start=Data.PipelineData_2i.s20.pout_start,
+    n=nV,
+    kappa=Data.PipelineData_2i.s20.kappa,
+    k=Data.PipelineData_2i.s20.k,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s20.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    ff_nom=FrictionFactor,
+    momentum=momentum,
+    rho_nom=Data.PipelineData_2i.s20.rho_nom)
+                     annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={170,-106})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s21(
+    L=Data.PipelineData_2i.s21.L,
+    H=Data.PipelineData_2i.s21.h,
+    cm=Data.PipelineData_2i.s21.cm,
+    redeclare model Gas = Medium,
+    rhom=Data.PipelineData_2i.s21.rhom,
+    lambdam=Data.PipelineData_2i.s21.lambdam,
+    m_flow_start=Data.PipelineData_2i.s21.m_flow_start,
+    pin_start=Data.PipelineData_2i.s21.pin_start,
+    pout_start=Data.PipelineData_2i.s21.pout_start,
+    n=nV,
+    kappa=Data.PipelineData_2i.s21.kappa,
+    k=Data.PipelineData_2i.s21.k,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s21.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    ff_nom=FrictionFactor,
+    momentum=momentum,
+    rho_nom=Data.PipelineData_2i.s21.rho_nom)
+                     annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={196,-124})));
 equation
   connect(s4e8.inlet, s2.outlet) annotation (Line(
       points={{-200,-72},{-198,-72},{-198,-44}},
@@ -270,6 +348,18 @@ equation
       thickness=0.5));
   connect(homotopyInitializer1.inlet, s1.outlet) annotation (Line(
       points={{-200,4},{-200,24},{-182,24},{-182,26}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s19.outlet,s20. inlet) annotation (Line(
+      points={{170,-86},{170,-96}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s20.outlet,s21. inlet) annotation (Line(
+      points={{170,-116},{170,-124},{186,-124}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s19.inlet, s31.inlet) annotation (Line(
+      points={{170,-66},{172,-66},{172,-6},{110,-6},{110,-74}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

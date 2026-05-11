@@ -6,7 +6,7 @@ model RG2i_pipes_users_low
   MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_3(
     redeclare model Medium = Medium,
     p0=459100,
-    m_flow0=0.03,
+    m_flow0=0.25,
     X0=X_start)
     annotation (Placement(transformation(extent={{40,-128},{76,-92}})));
   MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
@@ -49,6 +49,12 @@ model RG2i_pipes_users_low
     m_flow0=0.03,
     X0=X_start)
     annotation (Placement(transformation(extent={{218,-142},{258,-102}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(
+    redeclare model Medium = Medium,
+    p0=454700,
+    m_flow0=0.03,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{210,-286},{254,-242}})));
 equation
   connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
       points={{58,-110},{72,-110}},
@@ -74,6 +80,10 @@ equation
     annotation (Line(points={{-106.6,0},{-102,0},{-102,18}}, color={0,0,127}));
   connect(GRM_1.inlet, s21.outlet) annotation (Line(
       points={{238,-122},{240,-122},{240,-96},{206,-96},{206,-124}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_2.inlet, s28e30.outlet) annotation (Line(
+      points={{232,-264},{232,-232},{230,-232}},
       color={182,109,49},
       thickness=0.5));
   annotation (experiment(StopTime=6000, __Dymola_Algorithm="Dassl"),

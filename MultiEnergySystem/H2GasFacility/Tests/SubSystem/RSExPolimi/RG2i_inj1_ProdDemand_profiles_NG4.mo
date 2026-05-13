@@ -1,14 +1,13 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
 model RG2i_inj1_ProdDemand_profiles_NG4
   extends RG2i_inj1_ProdDemand_profiles(
-  redeclare model Medium =
+    redeclare model Medium =
         MultiEnergySystem.H2GasFacility.Media.IdealGases.NG4_H2,
-  nX = 5,
-  X_start = {0.922, 0.065, 0.011, 0.002, 0},
+    nX=5,
+    X_start={0.922,0.065,0.011,0.002,0},
     Immissione_1(X0={0,0,0,0,1}),
     gain(k=1),
     GRM_1(m_flow0=2*0.112338),
-    GRM_3(m_flow0=2*0.034069),
     GRM_2(m_flow0=2*0.119588),
     GRM_4(m_flow0=2*0.02162),
     GRM_5(m_flow0=2*0.007765),

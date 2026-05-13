@@ -316,6 +316,84 @@ partial model Rete_Gas_2i_low_pipes
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={196,-124})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s22e24(
+    L=Data.PipelineData_2i.s22.L + Data.PipelineData_2i.s24.L,
+    cm=Data.PipelineData_2i.s22.cm,
+    rhom=Data.PipelineData_2i.s22.rhom,
+    lambdam=Data.PipelineData_2i.s22.lambdam,
+    redeclare model Gas = Medium,
+    m_flow_start=Data.PipelineData_2i.s22.m_flow_start,
+    pin_start=Data.PipelineData_2i.s22.pin_start,
+    pout_start=Data.PipelineData_2i.s24.pout_start,
+    n=nV,
+    kappa=Data.PipelineData_2i.s22.kappa,
+    k=Data.PipelineData_2i.s22.k,
+    H=Data.PipelineData_2i.s22.h + Data.PipelineData_2i.s24.h,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s22.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    ff_nom=FrictionFactor,
+    momentum=momentum,
+    rho_nom=Data.PipelineData_2i.s22.rho_nom) annotation (Placement(
+        transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={170,-154})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s26(
+    L=Data.PipelineData_2i.s26.L,
+    H=Data.PipelineData_2i.s26.h,
+    cm=Data.PipelineData_2i.s26.cm,
+    rhom=Data.PipelineData_2i.s26.rhom,
+    redeclare model Gas = Medium,
+    lambdam=Data.PipelineData_2i.s26.lambdam,
+    m_flow_start=Data.PipelineData_2i.s26.m_flow_start,
+    pin_start=Data.PipelineData_2i.s26.pin_start,
+    pout_start=Data.PipelineData_2i.s26.pout_start,
+    n=nV,
+    kappa=Data.PipelineData_2i.s26.kappa,
+    k=Data.PipelineData_2i.s26.k,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s26.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    ff_nom=FrictionFactor,
+    momentum=momentum,
+    rho_nom=Data.PipelineData_2i.s26.rho_nom)
+                     "Viale Siena" annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={188,-196})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s28e30(
+    L=Data.PipelineData_2i.s28.L + Data.PipelineData_2i.s30.L,
+    H=Data.PipelineData_2i.s28.h + Data.PipelineData_2i.s30.h,
+    cm=Data.PipelineData_2i.s28.cm,
+    redeclare model Gas = Medium,
+    rhom=Data.PipelineData_2i.s28.rhom,
+    lambdam=Data.PipelineData_2i.s28.lambdam,
+    m_flow_start=Data.PipelineData_2i.s28.m_flow_start,
+    pin_start=Data.PipelineData_2i.s28.pin_start,
+    pout_start=Data.PipelineData_2i.s30.pout_start,
+    n=nV,
+    kappa=Data.PipelineData_2i.s28.kappa,
+    k=Data.PipelineData_2i.s28.k,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s28.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    ff_nom=FrictionFactor,
+    momentum=momentum,
+    rho_nom=Data.PipelineData_2i.s28.rho_nom) annotation (Placement(
+        transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={230,-222})));
 equation
   connect(s4e8.inlet, s2.outlet) annotation (Line(
       points={{-200,-72},{-198,-72},{-198,-44}},
@@ -360,6 +438,18 @@ equation
       thickness=0.5));
   connect(s19.inlet, s31.inlet) annotation (Line(
       points={{170,-66},{172,-66},{172,-6},{110,-6},{110,-74}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s26.outlet,s28e30. inlet) annotation (Line(
+      points={{198,-196},{230,-196},{230,-212}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s22e24.outlet,s26. inlet) annotation (Line(
+      points={{170,-164},{170,-196},{178,-196}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s22e24.inlet, s20.outlet) annotation (Line(
+      points={{170,-144},{170,-116}},
       color={182,109,49},
       thickness=0.5));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

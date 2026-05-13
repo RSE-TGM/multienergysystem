@@ -1,13 +1,14 @@
 within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
-model RG2i_1sources_low "immissione 1"
-  extends RG2i_pipes_users_low(
+model RG2i_1sources_low_GRM1 "immissione 1"
+  extends RG2i_low_GRM1(
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
-    valveLinearOpening(m_flow_nom=0.4138, A_v=2.65e-5),
     X_start={1,0},
-    GRM_3(m_flow0=0.034069),
+    valveLinearOpening(A_v=5.5e-5),
+    GRM_1(m_flow0=0.112338),
     GRM_2(m_flow0=0.119588),
-    GRM_1(m_flow0=0.112338));
+    GRM_3(m_flow0=0.034069),
+    sds7e8(n=11));
 
     // redeclare model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
   MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
@@ -49,7 +50,7 @@ model RG2i_1sources_low "immissione 1"
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     offset=0*1e-3,
     duration=10,
-    height=0*0.0035,
+    height=0.0035*0,
     startTime=10000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-23,32},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
@@ -80,4 +81,4 @@ equation
       StopTime=50000,
       Tolerance=1e-05,
       __Dymola_Algorithm="Dassl"));
-end RG2i_1sources_low;
+end RG2i_1sources_low_GRM1;

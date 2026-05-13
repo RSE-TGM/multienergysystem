@@ -3,8 +3,7 @@ model RG2i_1sources "immissione 1"
   extends RG2i_pipes_users(
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
-    valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
-          4.93)*1e5))),
+    valveLinearOpening(m_flow_nom=0.4138, A_v=5.5e-5),
     X_start={1,0});
 
     // redeclare model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
@@ -47,14 +46,14 @@ model RG2i_1sources "immissione 1"
   Modelica.Blocks.Sources.Ramp m_flow_H2(
     offset=0*1e-3,
     duration=10,
-    height=2*5*10/3600,
-    startTime=3600)                                                                                         annotation (
+    height=0.0035*0,
+    startTime=10000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-23,32},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Sources.Ramp m_flow_H3(
     duration=10,
-    height=-2*5*10/3600,
+    height=-0.0035*0,
     offset=0,
-    startTime=18000)                                                                                        annotation (
+    startTime=25000)                                                                                        annotation (
     Placement(visible = true, transformation(origin={-23,68},      extent = {{-10, -10}, {10, 10}}, rotation=0)));
   Modelica.Blocks.Math.Add add
     annotation (Placement(transformation(extent={{36,40},{56,60}})));
@@ -74,5 +73,5 @@ equation
           {34,56}},     color={0,0,127}));
   connect(m_flow_H2.y,add. u2) annotation (Line(points={{-12,32},{24,32},{24,44},
           {34,44}},     color={0,0,127}));
-  annotation (experiment(StopTime=36000, __Dymola_Algorithm="Dassl"));
+  annotation (experiment(StopTime=50000, __Dymola_Algorithm="Dassl"));
 end RG2i_1sources;

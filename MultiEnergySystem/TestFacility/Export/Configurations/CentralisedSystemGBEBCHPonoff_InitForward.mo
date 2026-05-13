@@ -1,5 +1,6 @@
 within MultiEnergySystem.TestFacility.Export.Configurations;
-model CentralisedSystemGBEBCHP_InitForward
+model CentralisedSystemGBEBCHPonoff_InitForward
+  "Switch on and off of the CHF with a valve"
   extends CentralisedSystemGBEB_InitForward(
     h_FT701_rackL2L3=-0.85,
     h_FT711_rackL3L4=-1,
@@ -56,7 +57,7 @@ model CentralisedSystemGBEBCHP_InitForward
   parameter DistrictHeatingNetwork.Types.Temperature TT502_des = 80 + 273.15 "Desired temperature at the outlet of S500";
   parameter DistrictHeatingNetwork.Types.MassFlowRate FT501_des= TestFacility.Data.PumpData.P501.qnom_inm3h*980/3600;
   parameter Real b_PR01[3] = TestFacility.Data.PumpData.PR01.b;
-  DHTF.Subsystems.HeatGeneration.CHP S500(
+  DHTF.Subsystems.HeatGeneration.CHP_on_off S500(
     n=n,
     Tin_low_start=Tin_Source_start_S5,
     Tout_low_start=Tout_Source_start_S5,
@@ -95,10 +96,6 @@ model CentralisedSystemGBEBCHP_InitForward
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = -90, origin={-588,-176})));
   Modelica.Blocks.Sources.BooleanConstant CHP501Status
                                                       annotation (Placement(transformation(extent={{-682,-288},{-662,-268}})));
-  Modelica.Blocks.Sources.Ramp FCV501theta(
-    height=0,
-    duration=0,
-    offset=0) annotation (Placement(transformation(extent={{-680,-246},{-660,-226}})));
   Modelica.Blocks.Sources.Ramp PelSP(
     height=5e3*0,
     duration=0,
@@ -134,7 +131,6 @@ equation
   connect(CHP501Status.y, S500.status) annotation (Line(points={{-661,-278},{-620,-278},{-620,-276.7},{-618.3,-276.7}}, color={255,0,255}));
   connect(m_flow_ref_CHP.y, S500.m_flow_CHP) annotation (Line(points={{-659,-340},{-638,-340},{-638,-293.9},{-618.3,-293.9}}, color={0,0,127}));
   connect(PelSP.y, S500.Pelset) annotation (Line(points={{-659,-310},{-644,-310},{-644,-285.3},{-618.3,-285.3}}, color={0,0,127}));
-  connect(FCV501theta.y, S500.theta) annotation (Line(points={{-659,-236},{-642,-236},{-642,-259.5},{-618.3,-259.5}}, color={0,0,127}));
   connect(sourceGas.outlet, S500.inletFuel) annotation (Line(
       points={{-250,-362},{-506,-362},{-506,-330.88},{-571,-330.88}},
       color={182,109,49},
@@ -171,5 +167,12 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
+  connect(S500.theta, controlSignalBus.thetaS500) annotation (Line(points={{
+          -618.3,-259.5},{-836,-259.5},{-836,-3},{-897,-3}}, color={0,0,127}),
+      Text(
+      string="%second",
+      index=1,
+      extent={{-6,3},{-6,3}},
+      horizontalAlignment=TextAlignment.Right));
   annotation (experiment(StopTime=2000, __Dymola_Algorithm="Dassl"),  Diagram(coordinateSystem(extent={{-900,-540},{900,320}}, grid={1,1})));
-end CentralisedSystemGBEBCHP_InitForward;
+end CentralisedSystemGBEBCHPonoff_InitForward;

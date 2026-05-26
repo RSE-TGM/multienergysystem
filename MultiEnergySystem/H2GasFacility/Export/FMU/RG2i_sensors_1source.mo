@@ -1,0 +1,64 @@
+within MultiEnergySystem.H2GasFacility.Export.FMU;
+model RG2i_sensors_1source "immissione 1"
+  extends MultiEnergySystem.H2GasFacility.Export.FMU.RG2i_sensors(
+    constantFrictionFactor=false,
+    massFractionDynamicBalance=true,
+    valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)
+          *1e5))),
+    X_start={1,0},
+    idealYSensor(redeclare model Medium = Medium, X_start=X_start),
+    idealYSensor1(redeclare model Medium = Medium, X_start=X_start),
+    idealYSensor2(redeclare model Medium = Medium, X_start=X_start),
+    idealYSensor3(redeclare model Medium = Medium, X_start=X_start),
+    idealYSensor4(redeclare model Medium = Medium, X_start=X_start),
+    idealYSensor5(redeclare model Medium = Medium, X_start=X_start),
+    idealYSensor6(redeclare model Medium = Medium, X_start=X_start));
+
+    // redeclare model Medium = MultiEnergySystem.H2GasFacility.Media.RealGases.CH4H2Papay,
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
+    n=nV,
+    H=Data.PipelineData_2i.s3.h,
+    cm=Data.PipelineData_2i.s3.cm,
+    rhom=Data.PipelineData_2i.s3.rhom,
+    lambdam=Data.PipelineData_2i.s3.lambdam,
+    m_flow_start=Data.PipelineData_2i.s3.m_flow_start,
+    pin_start=Data.PipelineData_2i.s3.pin_start,
+    pout_start=Data.PipelineData_2i.s3.pout_start,
+    kappa=Data.PipelineData_2i.s3.kappa,
+    k=Data.PipelineData_2i.s3.k,
+    redeclare model Gas = Medium,
+    L=Data.PipelineData_2i.s3.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s3.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=0,
+        origin={-136,-52})));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
+    m_flow0=0*0.0001,
+    redeclare model Medium = Medium,
+    p0=480000,
+    G=1e-12,
+    T0=288.15,
+    X0={0,1},
+    computeEnthalpyWithFixedPressure=true,
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
+        origin={-86,-20},
+        extent={{-10,-10},{10,10}},
+        rotation=180)));
+equation
+  connect(s3.outlet, s2.outlet) annotation (Line(
+      points={{-146,-52},{-198,-52},{-198,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s3.inlet,Immissione_1. outlet) annotation (Line(
+      points={{-126,-52},{-114,-52},{-114,-50},{-110,-50},{-110,-20},{-96,-20}},
+      color={182,109,49},
+      thickness=0.5));
+  annotation (experiment(StopTime=36000, __Dymola_Algorithm="Dassl"));
+end RG2i_sensors_1source;

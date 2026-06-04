@@ -46,10 +46,10 @@ model CentralisedSystemGBEB_InitForward
   parameter Boolean fixthetaFCV711 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCV721 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaFCV731 = ForwardInit "True if forward, False if backward";
-//   parameter Boolean fixmflowcoolEX701 = ForwardInit "True if forward, False if backward";
-//   parameter Boolean fixmflowcoolEX711 = ForwardInit "True if forward, False if backward";
-//   parameter Boolean fixmflowcoolEX721 = ForwardInit "True if forward, False if backward";
-//   parameter Boolean fixmflowcoolEX731 = ForwardInit "True if forward, False if backward";
+  //   parameter Boolean fixmflowcoolEX701 = ForwardInit "True if forward, False if backward";
+  //   parameter Boolean fixmflowcoolEX711 = ForwardInit "True if forward, False if backward";
+  //   parameter Boolean fixmflowcoolEX721 = ForwardInit "True if forward, False if backward";
+  //   parameter Boolean fixmflowcoolEX731 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixToutGB101 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixToutEB401 = ForwardInit "True if forward, False if backward";
   parameter Boolean fixthetaTCV701 = ForwardInit "True if forward, False if backward";
@@ -69,14 +69,14 @@ model CentralisedSystemGBEB_InitForward
   final parameter Boolean fixFT401 = not fixthetaFCV401;
   final parameter Boolean fixdPTA1 = not fixthetaFCVC01;
   final parameter Boolean fixFTA12 = not fixthetaFCVC02;
-//   final parameter Boolean fixdTT701 = not fixthetaFCV701;
-//   final parameter Boolean fixdTT711 = not fixthetaFCV711;
-//   final parameter Boolean fixdTT721 = not fixthetaFCV721;
-//   final parameter Boolean fixdTT731 = not fixthetaFCV731;
-//   final parameter Boolean fixTT701 = not fixmflowcoolEX701;
-//   final parameter Boolean fixTT711 = not fixmflowcoolEX711;
-//   final parameter Boolean fixTT721 = not fixmflowcoolEX721;
-//   final parameter Boolean fixTT731 = not fixmflowcoolEX731;
+  //   final parameter Boolean fixdTT701 = not fixthetaFCV701;
+  //   final parameter Boolean fixdTT711 = not fixthetaFCV711;
+  //   final parameter Boolean fixdTT721 = not fixthetaFCV721;
+  //   final parameter Boolean fixdTT731 = not fixthetaFCV731;
+  //   final parameter Boolean fixTT701 = not fixmflowcoolEX701;
+  //   final parameter Boolean fixTT711 = not fixmflowcoolEX711;
+  //   final parameter Boolean fixTT721 = not fixmflowcoolEX721;
+  //   final parameter Boolean fixTT731 = not fixmflowcoolEX731;
   final parameter Boolean fixTT102 = not fixToutGB101;
   final parameter Boolean fixTT402 = not fixToutEB401;
   final parameter Boolean fixEX701Pt = not fixthetaFCV701;
@@ -110,10 +110,10 @@ model CentralisedSystemGBEB_InitForward
   final parameter Boolean fixTT714 = false;
   final parameter Boolean fixTT724 = false;
   final parameter Boolean fixTT734 = false;
-//   final parameter Boolean fixTT701 = false;
-//   final parameter Boolean fixTT711 = false;
-//   final parameter Boolean fixTT721 = false;
-//   final parameter Boolean fixTT731 = false;
+  //   final parameter Boolean fixTT701 = false;
+  //   final parameter Boolean fixTT711 = false;
+  //   final parameter Boolean fixTT721 = false;
+  //   final parameter Boolean fixTT731 = false;
   final parameter Boolean fixdTT701 = false;
   final parameter Boolean fixdTT711 = false;
   final parameter Boolean fixdTT721 = false;
@@ -196,7 +196,7 @@ model CentralisedSystemGBEB_InitForward
   parameter DistrictHeatingNetwork.Types.Temperature TT732_nom = 80 + 273.15 "Desired temperature at the oinlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
 
-  //  Desired Outputs values
+//  Desired Outputs values
   parameter DistrictHeatingNetwork.Types.Temperature ToutLoad_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
     Dialog(tab = "Nominal and Desired values", group = "Temperature"));
   parameter DistrictHeatingNetwork.Types.Temperature TT901_des = 65 + 273.15 "Desired temperature at the outlet of the loads" annotation (
@@ -446,10 +446,7 @@ model CentralisedSystemGBEB_InitForward
   OffSetBlocks.OutputOffset FT101Offset(
     fixOutput=fixFT101,
     y_fixed=FT101_des,
-    y_norm=FT101_nom) annotation (Placement(visible=true, transformation(
-        origin={-185,-245},
-        extent={{-5,-5},{5,5}},
-        rotation=0)));
+    y_norm=FT101_nom) annotation (Placement(transformation(origin = {-185, -245}, extent = {{-5, -5}, {5, 5}})));
   OffSetBlocks.OutputOffset PT102Offset(
     fixOutput=fixPT102,
     y_fixed=PT102_des,
@@ -1045,12 +1042,7 @@ equation
       index=1,
       extent={{6,3},{6,3}},
       horizontalAlignment=TextAlignment.Left));
-  connect(FT101Offset.deltaYnorm, processVariableBus.dFT101) annotation (Line(points={{-180.5,-245},{-46,-245},{-46,-390},{889,-390},{889,-3},{896,-3}}, pattern=LinePattern.None),
-                                                                             Text(
-      string="%second",
-      index=1,
-      extent={{-6,3},{-6,3}},
-      horizontalAlignment=TextAlignment.Right));
+  connect(FT101Offset.deltaYnorm, processVariableBus.dFT101) annotation (Line(points = {{-180.5, -245}, {-46, -245}, {-46, -390}, {889, -390}, {889, -3}, {896, -3}}, pattern = LinePattern.None));
   connect(FT401Offset.deltaYnorm, processVariableBus.dFT401) annotation (Line(points={{-270.5,-85},{40,-85},{40,0},{456,0},{456,-3},{896,-3}},
                                                                                                                                              pattern=LinePattern.None),
                                                                              Text(

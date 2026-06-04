@@ -1,0 +1,53 @@
+within MultiEnergySystem.ElectricNetwork.Components;
+
+model LineResistive "Physical line model with Joule losses and voltage drop"
+
+  // Parameters
+  parameter Modelica.Units.SI.Lenght L = 0.1 "Lenght of the line";
+  parameter Modelica.Units.SI.Area A = 0.1 "Section of the line";
+  parameter Modelica.Units.SI.Resistivity rho "Electrical resistivity of the conductor";
+  parameter Modelica.Units.SI.Resistance R = rho*L/A "Line resistance";
+  parameter Modelica.Units.SI.Power eps = 1e-6 "Regularization";
+
+  // Variables
+  Modelica.Units.SI.Power P_in;
+  Modelica.Units.SI.Power P_out;
+  Modelica.Units.SI.Power P_loss;
+
+  Modelica.Units.SI.Voltage v_in;
+  Modelica.Units.SI.Voltage v_out;
+
+  Real I_equiv "Equivalent current";
+
+  // Ports
+  Interfaces.ElectricPortInlet electricPortInlet;
+  Interfaces.ElectricPortOutlet electricPortOutlet;
+
+  Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a thermalPort;
+
+equation
+
+  // Read ports
+  v_in = electricPortInlet.v;
+  P_in = electricPortInlet.P;
+
+  // Equivalent current (regularized)
+  I_equiv = smooth(1, P_in / sqrt(v_in^2 + eps));
+
+  // Joule losses
+  P_loss = R * I_equiv^2;
+
+  // Voltage drop
+  v_out = v_in - R * I_equiv;
+
+  // Power balance
+  P_out = P_in - P_loss;
+
+  // Set ports
+  electricPortOutlet.v = v_out;
+  electricPortOutlet.P = P_out;
+
+  // Thermal port
+  thermalPort.Q_flow = -P_loss;
+
+end LineResistive;

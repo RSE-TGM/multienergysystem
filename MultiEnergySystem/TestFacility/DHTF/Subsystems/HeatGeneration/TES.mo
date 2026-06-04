@@ -3,7 +3,8 @@ model TES "S200 - Thermal Energy Storage"
   extends DistrictHeatingNetwork.Icons.Water.ThermalModel;
   extends TestFacility.DHTF.Interfaces.SystemInterfaceBaseIII(MultiPort(n=n));
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient
       constrainedby DistrictHeatingNetwork.Components.Thermal.BaseClasses.BaseConvectiveHeatTransfer;
   constant Real pi = Modelica.Constants.pi;
 
@@ -119,7 +120,8 @@ model TES "S200 - Thermal Energy Storage"
     pin_start=pin_start_S2_tank,
     m_flow_start=m_flow_S2/2)                                                                                                                                                                                                         "Stratified tank 2" annotation (
     Placement(transformation(extent={{76,-338},{132,-226}})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT201(redeclare model Medium = Medium, T_start=Tin_start_S2, p_start=pin_start_S2)     "Temperature sensor at the inlet of pump 201" annotation (
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT201(redeclare
+      model                                                                           Medium = Medium, T_start=Tin_start_S2, p_start=pin_start_S2)     "Temperature sensor at the inlet of pump 201" annotation (
     Placement(transformation(extent = {{-4.75, -4.75}, {4.75, 4.75}}, rotation = 90, origin={-19.75,71.25})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT201 "Pressure sensor at the inlet of pump 201" annotation (
     Placement(transformation(extent = {{-5, -5}, {5, 5}}, rotation = 90, origin={-20,51.5})));
@@ -182,7 +184,8 @@ model TES "S200 - Thermal Energy Storage"
     n=n,
     hctype=hctype)                                                                                                                                                                                                      annotation (
     Placement(transformation(extent = {{-10, -10}, {10, 10}}, rotation = 90, origin={-74,-90})));
-  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT202(redeclare model Medium = Medium, T_start=Tout_start_S2, p_start=pout_start_S2)     "Temperature sensor at the outlet of System 200" annotation (
+  DistrictHeatingNetwork.Sensors.IdealAbsoluteTemperatureSensor TT202(redeclare
+      model                                                                           Medium = Medium, T_start=Tout_start_S2, p_start=pout_start_S2)     "Temperature sensor at the outlet of System 200" annotation (
     Placement(transformation(extent = {{-6, -6}, {6, 6}}, rotation = -90, origin={24,70})));
   DistrictHeatingNetwork.Sensors.IdealAbsolutePressureSensor PT202 "Pressure sensor at the outlet of system S200" annotation (
     Placement(transformation(extent = {{6, 6}, {-6, -6}}, rotation = 90, origin={24,0})));

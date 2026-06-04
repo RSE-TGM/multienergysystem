@@ -1,0 +1,454 @@
+================================================================================
+                MULTIENERGYSYSTEM MODELICA LIBRARY
+                          USER GUIDE
+================================================================================
+
+Version: 1.0
+Date: January 2026
+Authors: Marcelo Andre Muro Alvarado, Guido Sassaroli et al.
+Institution: Ricerca sul Sistema Energetico - RSE S.p.A.
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+
+1. INTRODUCTION
+   1.1 Overview
+   1.2 Features
+   1.3 License and Citation
+
+2. LIBRARY STRUCTURE
+   2.1 Main Packages
+   2.2 Dependencies
+
+3. DISTRICT HEATING NETWORK (DHN) PACKAGE
+   3.1 Overview
+   3.2 Components
+      3.2.1 Thermal Machines
+      3.2.2 Turbo Machines
+      3.2.3 Pipes
+      3.2.4 Valves
+      3.2.5 Storage
+      3.2.6 Loads
+      3.2.7 Fittings
+   3.3 Media Models
+   3.4 Controllers and Sensors
+
+4. H2 GAS FACILITY PACKAGE
+   4.1 Overview
+   4.2 Components
+      4.2.1 Pipes
+      4.2.2 Valves
+      4.2.3 Compressors
+      4.2.4 Storage
+      4.2.5 Manifold Components
+      4.2.6 Users
+   4.3 Media Models
+      4.3.1 Real Gas Models
+      4.3.2 Ideal Gas Models
+   4.4 Sensors and Controllers
+
+5. ELECTRIC NETWORK PACKAGE
+   5.1 Overview
+   5.2 Components
+   5.3 Interfaces
+
+6. TEST FACILITY PACKAGE
+   6.1 Overview
+   6.2 Sub-packages
+      6.2.1 DHTF (District Heating Test Facility)
+      6.2.2 Export Utilities
+   6.3 Data Models
+
+7. CASE STUDIES
+   7.1 Available Case Studies
+   7.2 Research Applications
+
+8. GETTING STARTED
+   8.1 Installation
+   8.2 Basic Usage
+   8.3 Example Models
+
+9. MODELING GUIDELINES
+   9.1 Best Practices
+   9.2 Initialization
+   9.3 Parameterization
+
+10. TROUBLESHOOTING
+    10.1 Common Issues
+    10.2 Performance Tips
+
+================================================================================
+1. INTRODUCTION
+================================================================================
+
+1.1 Overview
+------------
+The MultiEnergySystem (MES) is a comprehensive Modelica library designed for the
+study and analysis of interactions between different energy domains. The library
+provides essential models for systems such as district heating networks and gas
+distribution networks, including capabilities for modeling specific fluids like
+real gases (hydrogen blending in natural gas).
+
+The library was developed by researchers at Ricerca sul Sistema Energetico - RSE
+S.p.A., with contributions from Marcelo Andre Muro Alvarado, Claudio Anderis,
+Riccardo Lazzari, Lorenzo Nigro, and Alessio La Bella.
+
+1.2 Features
+-----------
+- District Heating Networks (DHN): Models for thermal systems including pumps,
+  boilers, heat exchangers, pipes, valves, and storage systems
+- Gas Distribution Networks: Models for natural gas/hydrogen distribution with
+  real gas modeling capabilities
+- Multi-Energy System Integration: Coupling between thermal, gas, and electric
+  domains
+- Real Gas Modeling: Two equations of state (Papay and Peng-Robinson) for accurate
+  gas property calculations
+- Experimental Facility Models: Specific models for RSE's district heating
+  facility validation
+- Comprehensive Test Suite: Extensive validation models and case studies
+
+1.3 License and Citation
+-----------------------
+This project is licensed under the MIT License. For academic use, please cite:
+
+M. A. Muro Alvarado, C. Anderis, R. Lazzari, L. Nigro and A. La Bella,
+"Development and Experimental Validation of an Open-Source Model Library for
+District Heating Network Simulation," 2024 Open Source Modelling and Simulation
+of Energy Systems (OSMSES), Vienna, 2024.
+
+================================================================================
+2. LIBRARY STRUCTURE
+================================================================================
+
+2.1 Main Packages
+----------------
+The library is organized into the following main packages:
+
+- MultiEnergySystem.CaseStudies: Example applications and research case studies
+- MultiEnergySystem.DistrictHeatingNetwork: Thermal system components and models
+- MultiEnergySystem.ElectricNetwork: Electric power system components
+- MultiEnergySystem.H2GasFacility: Gas distribution and hydrogen blending models
+- MultiEnergySystem.TestFacility: Specific models for RSE experimental facility
+- MultiEnergySystem.System: System-level models and configurations
+
+2.2 Dependencies
+---------------
+- Modelica Standard Library (version 4.0.0 or higher)
+- External libraries for specific fluid property calculations
+
+================================================================================
+3. DISTRICT HEATING NETWORK (DHN) PACKAGE
+================================================================================
+
+3.1 Overview
+-----------
+The DistrictHeatingNetwork package contains components for modeling thermal
+systems including water-based heating and cooling networks. It includes models
+for pipes, pumps, valves, heat exchangers, boilers, chillers, and storage systems.
+
+3.2 Components
+-------------
+
+3.2.1 Thermal Machines
+- ControlledPump: Variable speed pump with flow or pressure control
+- PrescribedPump: Pump with prescribed operating conditions
+- ControlledElectricBoiler: Electric boiler with temperature control
+- ControlledGasBoiler: Gas-fired boiler with temperature control
+- ControlledCHP: Combined heat and power unit
+- ControlledHeatPump: Heat pump with temperature control
+- ChillerNoDynamics: Chiller model without thermal inertia
+- ControlledChillerNoDynamics: Chiller with setpoint control
+
+3.2.2 Turbo Machines
+- ControlledPump: Main pump model with various control options
+- PrescribedPump: Pump with fixed operating conditions
+
+3.2.3 Pipes
+- RoundPipe1DFV: 1D finite volume pipe model
+- RoundPipeFV: Finite volume pipe with heat transfer
+- BrazedPlateHeatExchanger: Plate heat exchanger model
+- HeatExchangerIdealTemperatureControl: Ideal temperature-controlled HEX
+
+3.2.4 Valves
+- FlowCoefficientValve: Valve based on flow coefficient (Kv)
+- ThreeWayValve: Three-way mixing/diverting valve
+- FlowCoefficientOnOffValve: On/off valve with flow coefficient
+- ClosedLoopInitializer: Valve with initialization support
+- HomotopyInitializer: Valve with homotopy initialization
+
+3.2.5 Storage
+- LumpedStorage: Simple lumped thermal storage
+- LumpedStorageConstantMass: Constant mass storage model
+- Stratified1DStorage: 1D stratified storage tank
+- StratifiedStorage: Multi-node stratified storage
+
+3.2.6 Loads
+- FixedReturnPowerLoad: Load with fixed return temperature
+
+3.2.7 Fittings
+- Junction: Pipe junction component
+- Junction2: Two-way junction
+- SuddenAreaChange: Area change fitting
+
+3.3 Media Models
+---------------
+- StandardWater: Standard water properties
+- WaterLiquid: Liquid water model
+- WaterLiquidIdeal: Ideal liquid water
+- WaterLiquidVaryingcp: Water with temperature-dependent specific heat
+- WaterLiquidVaryingDensity: Water with temperature-dependent density
+
+3.4 Controllers and Sensors
+--------------------------
+- PID controllers for various control applications
+- Temperature, pressure, and flow sensors
+- System-level controllers for network operation
+
+================================================================================
+4. H2 GAS FACILITY PACKAGE
+================================================================================
+
+4.1 Overview
+-----------
+The H2GasFacility package provides models for natural gas distribution networks
+with hydrogen blending capabilities. It includes real gas modeling using Papay
+and Peng-Robinson equations of state for accurate property calculations.
+
+4.2 Components
+-------------
+
+4.2.1 Pipes
+- PipePF: Plug flow pipe model with heat transfer
+- PipePF_Discretized: Discretized plug flow pipe
+- Round1DFV: 1D finite volume round pipe
+- RoundPF: Round plug flow pipe
+
+4.2.2 Valves
+- PressureDrop: Simple pressure drop component
+- ValveLinearOpening: Linear opening characteristic valve
+- ValveQuadraticOpening: Quadratic opening characteristic valve
+
+4.2.3 Compressors
+- Compressor: Gas compressor model
+- CompressorBase: Base compressor class
+
+4.2.4 Storage
+- LumpedStorageConstantMass: Constant mass gas storage
+
+4.2.5 Manifold Components
+- Junction: Simple junction
+- Junction2: Two-port junction
+- Junction3: Three-port junction
+- Manifold2I1O: 2-inlet, 1-outlet manifold
+- Manifold2I2O: 2-inlet, 2-outlet manifold
+- GManifold2I1O: Gas-specific manifold
+
+4.2.6 Users
+- IdealUser: Ideal gas consumer model
+
+4.3 Media Models
+---------------
+
+4.3.1 Real Gas Models (Peng-Robinson)
+- CH4H2PR: Methane-hydrogen mixture
+- CH4PR: Pure methane
+- H2PR: Pure hydrogen
+- NaturalGasPR: Natural gas
+- NaturalGasH2PR: Natural gas with hydrogen
+- NG4_H2_Papay: 4-component natural gas + H2
+
+4.3.2 Real Gas Models (Papay)
+- CH4H2Papay: Methane-hydrogen mixture
+- CH4Papay: Pure methane
+- H2Papay: Pure hydrogen
+- NaturalGasPapay: Natural gas
+- NG6_H2_Papay: 6-component natural gas + H2
+- NG6_H2_Papay_ND: Non-dissociating version
+
+4.3.3 Ideal Gas Models
+- CH4: Pure methane (ideal)
+- H2: Pure hydrogen (ideal)
+- CH4H2: Methane-hydrogen mixture (ideal)
+- NG6_H2: 6-component natural gas + H2 (ideal)
+- CO_H2_CH4: Carbon monoxide, hydrogen, methane mixture
+
+4.4 Sensors and Controllers
+--------------------------
+- Pressure sensors
+- Temperature sensors
+- Flow sensors
+- Mass flow controllers
+- PID controllers for pressure and flow control
+
+================================================================================
+5. ELECTRIC NETWORK PACKAGE
+================================================================================
+
+5.1 Overview
+-----------
+The ElectricNetwork package provides basic components for modeling medium/low
+voltage electric networks, primarily for coupling with thermal and gas systems.
+
+5.2 Components
+-------------
+- Electrolyzer: Hydrogen production from electricity
+- SourceVoltage: Electric voltage source
+
+5.3 Interfaces
+-------------
+- ElectricPort: Basic electric port
+- ElectricPortInlet: Inlet electric port
+- ElectricPortOutlet: Outlet electric port
+
+================================================================================
+6. TEST FACILITY PACKAGE
+================================================================================
+
+6.1 Overview
+-----------
+The TestFacility package contains specific models developed for the RSE district
+heating experimental facility. These models are validated against real operational
+data and include detailed parameter sets.
+
+6.2 Sub-packages
+---------------
+
+6.2.1 DHTF (District Heating Test Facility)
+- Control: PID controllers and actuators
+- Examples: Working examples of the facility
+- Interfaces: System interfaces and connectors
+- Networks: Complete network models
+- Subsystems: Subsystem models (generation, distribution, load)
+- Systems: Complete system models
+
+6.2.2 Export Utilities
+- FMU: Functional Mock-up Unit export utilities
+- Interfaces: External interface models
+- Linearization: System linearization tools
+- Utilities: General utility functions
+
+6.3 Data Models
+-------------
+- PumpData: Pump characteristic data
+- ValveData: Valve characteristic data
+- PipelineData: Pipe network data
+- BPHEData: Brazed plate heat exchanger data
+
+================================================================================
+7. CASE STUDIES
+================================================================================
+
+7.1 Available Case Studies
+-------------------------
+- DHNetwork_CentralisedConfig: Centralized district heating configuration
+- GasNetwork_2iRG: Two-source gas network with real gas modeling
+- Report_062024: Research paper case studies (June 2024)
+- Report_062025: Research paper case studies (June 2025)
+- Report_122025: Research paper case studies (December 2025)
+
+7.2 Research Applications
+------------------------
+- District heating network optimization
+- Hydrogen blending in gas networks
+- Multi-energy system integration
+- Real gas property validation
+- Control system development
+
+================================================================================
+8. GETTING STARTED
+================================================================================
+
+8.1 Installation
+---------------
+1. Clone the repository with submodules:
+   git clone --recurse-submodules https://github.com/RSE-TGM/multienergysystem.git
+
+2. If already cloned, update submodules:
+   git submodule update --init --recursive
+
+3. Open in Modelica environment (Dymola, OpenModelica, etc.)
+4. Load the MultiEnergySystem package
+
+8.2 Basic Usage
+-------------
+1. Import required packages:
+   import MultiEnergySystem.DistrictHeatingNetwork.*;
+   import MultiEnergySystem.H2GasFacility.*;
+
+2. Select appropriate media model
+3. Choose components from the library
+4. Connect components using standard Modelica connectors
+5. Set parameters and initial conditions
+6. Run simulation
+
+8.3 Example Models
+-----------------
+See the CaseStudies package for complete working examples:
+- DistrictHeatingNetwork.TestFacility.DHTF.Examples.*
+- H2GasFacility.Tests.*
+- CaseStudies.*
+
+================================================================================
+9. MODELING GUIDELINES
+================================================================================
+
+9.1 Best Practices
+-----------------
+- Use appropriate media models for your application
+- Set realistic initial conditions
+- Use homotopy initialization for complex systems
+- Validate models against known data when possible
+- Start with simple models and gradually increase complexity
+
+9.2 Initialization
+-----------------
+- Set consistent initial temperatures, pressures, and flows
+- Use homotopy transformations for smooth initialization
+- Check mass and energy balances
+- Validate against steady-state conditions
+
+9.3 Parameterization
+-------------------
+- Use manufacturer data when available
+- Consider operating ranges and design conditions
+- Include safety margins for control systems
+- Document assumptions and data sources
+
+================================================================================
+10. TROUBLESHOOTING
+================================================================================
+
+10.1 Common Issues
+-----------------
+- Initialization failures: Check initial conditions and homotopy settings
+- Convergence problems: Reduce time steps or use more robust solvers
+- Mass balance errors: Verify component connections and boundary conditions
+- Media property issues: Ensure correct media model selection
+
+10.2 Performance Tips
+--------------------
+- Use finite volume methods for distributed parameter models
+- Apply appropriate discretization
+- Use efficient solvers (DASSL, Radau) for stiff systems
+- Consider model simplification for parameter studies
+
+================================================================================
+CONTACT INFORMATION
+================================================================================
+
+For questions, bug reports, or contributions:
+- GitHub Repository: https://github.com/RSE-TGM/multienergysystem
+- Main Developers:
+  - Marcelo Andre Muro Alvarado (@marcelo-muro)
+  - Guido Sassaroli (@guidosassaroli)
+- Institution: Ricerca sul Sistema Energetico - RSE S.p.A.
+
+================================================================================
+VERSION HISTORY
+================================================================================
+
+- v1.0 (2024): Initial public release with DHN, gas network, and validation models
+- Ongoing: Continuous development with new features and case studies
+
+================================================================================

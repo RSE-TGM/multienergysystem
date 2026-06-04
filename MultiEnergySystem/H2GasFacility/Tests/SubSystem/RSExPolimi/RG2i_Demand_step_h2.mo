@@ -1,0 +1,206 @@
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.RSExPolimi;
+model RG2i_Demand_step_h2 "Stepdown with hydrogen in the network"
+  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start),
+  constantFrictionFactor = false,
+    massFractionDynamicBalance = true);
+
+  parameter Types.MassFlowRate massflowratedemand_1[:,2] = [0, 0.112338; 1*3600, 0.112338; 3650, 0.5*0.112338; 5*3600, 0.5*0.112338; (5*3600+50), 0.112338; 24*3600, 0.112338] "Table for demand";
+  parameter Types.MassFlowRate massflowratedemand_2[:,2] = [0, 0.119588; 1*3600, 0.119588; 3650, 0.5*0.119588; 5*3600, 0.5*0.119588; (5*3600+50), 0.119588; 24*3600, 0.119588] "Table for demand";
+  parameter Types.MassFlowRate massflowratedemand_3[:,2] = [0, 0.034069; 1*3600, 0.034069; 3650, 0.5*0.034069; 5*3600, 0.5*0.034069; (5*3600+50), 0.034069; 24*3600, 0.034069] "Table for demand";
+
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
+    redeclare model Medium = Medium,
+    p0=463200,
+    m_flow0=0.021261,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{-212,154},{-168,198}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(
+    redeclare model Medium = Medium,
+    p0=460300,
+    m_flow0=0.007765,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{28,262},{66,300}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(
+    redeclare model Medium = Medium,
+    p0=461900,
+    m_flow0=0.019358,
+    X0=X_start)                                                                                     "Via Marx"
+    annotation (Placement(transformation(extent={{88,200},{122,234}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(
+    redeclare model Medium = Medium,
+    p0=437100,
+    m_flow0=0.098685,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{222,234},{262,274}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_3(
+    redeclare model Medium = Medium,
+    p0=459100,
+    m_flow0=0.034069,
+    X0=X_start,
+    massflowratedemand=massflowratedemand_3)
+    annotation (Placement(transformation(extent={{42,-128},{78,-92}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_1(
+    redeclare model Medium = Medium,
+    p0=459500,
+    m_flow0=0.112338,
+    X0=X_start,
+    massflowratedemand=massflowratedemand_1)
+    annotation (Placement(transformation(extent={{188,-102},{228,-62}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(
+    redeclare model Medium = Medium,
+    p0=454700,
+    m_flow0=0.119588,
+    X0=X_start,
+    massflowratedemand=massflowratedemand_2)
+    annotation (Placement(transformation(extent={{214,-286},{258,-242}})));
+  MultiEnergySystem.H2GasFacility.Components.Valves.ValveLinearOpening
+    valveLinearOpening(
+    redeclare model Medium = Medium,
+    pin_start=6000000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_nom=0.4138,
+    A_v=2*0.4138/(sqrt(40.17625*(60 - 4.93)*1e5)),
+    PressureDropLinear=false)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-102,26})));
+  MultiEnergySystem.H2GasFacility.Sources.SourcePressure sourcePressure(
+    p0=6000000,
+    redeclare model Medium = Medium,
+    T0=288.15,
+    X0=X_start)
+    annotation (Placement(transformation(extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-68,26})));
+  Sensors.IdealPressureSensor idealPressureSensor(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-132,26})));
+  Controllers.Valve_controller valve_controller
+    annotation (Placement(transformation(extent={{-128,-10},{-108,10}})));
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV s3(
+    n=nV,
+    H=Data.PipelineData_2i.s3.h,
+    cm=Data.PipelineData_2i.s3.cm,
+    rhom=Data.PipelineData_2i.s3.rhom,
+    lambdam=Data.PipelineData_2i.s3.lambdam,
+    m_flow_start=Data.PipelineData_2i.s3.m_flow_start,
+    pin_start=Data.PipelineData_2i.s3.pin_start,
+    pout_start=Data.PipelineData_2i.s3.pout_start,
+    kappa=Data.PipelineData_2i.s3.kappa,
+    k=Data.PipelineData_2i.s3.k,
+    redeclare model Gas = Medium,
+    L=Data.PipelineData_2i.s3.L,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.s3.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=0,
+        origin={-138,-56})));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_1(
+    m_flow0=0*0.0001,
+    redeclare model Medium = Medium,
+    p0=480000,
+    G=1e-12,
+    T0=288.15,
+    X0={0,1},
+    computeEnthalpyWithFixedPressure=true,
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
+        origin={-88,-24},
+        extent={{-10,-10},{10,10}},
+        rotation=180)));
+  Modelica.Blocks.Sources.Ramp m_flow_H2(
+    offset=0*1e-3,
+    duration=0,
+    height=0.01*0.265972,
+    startTime=0)                                                                                            annotation (
+    Placement(visible = true, transformation(origin={-9,40},       extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H3(
+    duration=10,
+    height=0,
+    offset=0,
+    startTime=18000)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-9,76},       extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Math.Add add
+    annotation (Placement(transformation(extent={{50,48},{70,68}})));
+equation
+  connect(GRM_4.inlet, sds10.outlet) annotation (Line(
+      points={{-190,176},{-178,176},{-178,180},{-164,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_5.inlet, sds15.outlet) annotation (Line(
+      points={{47,281},{46,281},{46,252}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_6.inlet, sds14.outlet) annotation (Line(
+      points={{105,217},{104,216},{80,216}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_7.inlet, raccordo2.outlet) annotation (Line(
+      points={{242,254},{242,220}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_3.inlet, s36_Stadio.outlet) annotation (Line(
+      points={{60,-110},{72,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_1.inlet, s21.outlet) annotation (Line(
+      points={{208,-82},{182,-82}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sourcePressure.outlet,valveLinearOpening. inlet) annotation (Line(
+      points={{-78,26},{-92,26}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s1.inlet,idealPressureSensor. outlet) annotation (Line(
+      points={{-162,26},{-142,26}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(idealPressureSensor.inlet,valveLinearOpening. outlet) annotation (
+      Line(
+      points={{-122,26},{-112,26}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(valve_controller.P_meas,idealPressureSensor. p_meas) annotation (Line(
+        points={{-128.8,0},{-138,0},{-138,18},{-135.8,18},{-135.8,18.6}}, color=
+         {0,0,127}));
+  connect(valve_controller.ACT_x,valveLinearOpening. opening)
+    annotation (Line(points={{-106.6,0},{-102,0},{-102,18}}, color={0,0,127}));
+  connect(GRM_2.inlet, s28e30.outlet) annotation (Line(
+      points={{236,-264},{234,-264},{234,-204}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s3.outlet, s2.outlet) annotation (Line(
+      points={{-148,-56},{-198,-56},{-198,-44}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s3.inlet,Immissione_1. outlet) annotation (Line(
+      points={{-128,-56},{-116,-56},{-116,-54},{-112,-54},{-112,-24},{-98,-24}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(add.y,Immissione_1. in_m_flow0) annotation (Line(points={{71,58},{80,
+          58},{80,12},{-52,12},{-52,-4},{-72,-4},{-72,-29},{-82,-29}},
+                                                                 color={0,0,127}));
+  connect(m_flow_H3.y,add. u1) annotation (Line(points={{2,76},{38,76},{38,64},
+          {48,64}},     color={0,0,127}));
+  connect(m_flow_H2.y,add. u2) annotation (Line(points={{2,40},{38,40},{38,52},
+          {48,52}},     color={0,0,127}));
+  annotation (experiment(StopTime=36000, __Dymola_Algorithm="Dassl"),
+                                   Documentation(info="<html>
+<p>The pipes model is extended and users and REMI station are included in the model. </p>
+</html>"));
+end RG2i_Demand_step_h2;

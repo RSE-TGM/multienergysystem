@@ -1,3 +1,5 @@
 BaseClass
 IdealMassFlowSensor
 IdealPressureSensor
+IdealSGSensor
+IdealYSensor

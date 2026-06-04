@@ -1,9 +1,12 @@
 within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 partial model CentralizedNetworkBase
   extends DHTF.Systems.Distribution.CentralPlantBase(redeclare model MediumCP = WaterHot);
-  extends DHTF.Systems.Load.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold);
-  replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  extends DHTF.Systems.Load.LoadPlantBase(redeclare model MediumLPHot = WaterHot, redeclare
+      model                                                                                       MediumLPCold = WaterCold);
+  replaceable model WaterHot =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                          constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model WaterCold =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                           constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
 
 equation
   connect(PL701_rackL2L3_TT702.inlet, rackL2L3_rackL3L4_hot.inlet) annotation (

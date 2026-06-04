@@ -2,9 +2,12 @@ within MultiEnergySystem.TestFacility.DHTF.Networks.BaseClass;
 partial model CentralisedNetworkBaseIII "New version of centralised configuration"
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends DHTF.Systems.Distribution.CentralPlantBaseII(redeclare model MediumCP = WaterHot, cf = cfp, n = np);
-  extends DHTF.Systems.Load.LoadPlantBaseIII(redeclare model MediumLPHot = WaterHot, redeclare model MediumLPCold = WaterCold, cf = cfp, n = np);
-  replaceable model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  extends DHTF.Systems.Load.LoadPlantBaseIII(redeclare model MediumLPHot = WaterHot, redeclare
+      model                                                                                          MediumLPCold = WaterCold, cf = cfp, n = np);
+  replaceable model WaterHot =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                          constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model WaterCold =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                           constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
   parameter DistrictHeatingNetwork.Types.PerUnit cfp = 5e-3;
   parameter Integer np = 3 "Number of volumes in each pipe";
 equation

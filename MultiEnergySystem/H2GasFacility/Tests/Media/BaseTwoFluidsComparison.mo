@@ -38,4 +38,5 @@ equation
   Z_err = abs(medium1.Z - medium2.Z)*100/medium1.Z;
 
 
+  annotation (experiment(StopTime=10, __Dymola_Algorithm="Dassl"));
 end BaseTwoFluidsComparison;

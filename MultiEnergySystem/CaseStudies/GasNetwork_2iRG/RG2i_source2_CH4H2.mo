@@ -8,9 +8,13 @@ model RG2i_source2_CH4H2
     X_inj={0,1},
     constantFrictionFactor=false,
     massFractionDynamicBalance=true,
-    m_flow_H1(offset=0.0001));
+    m_flow_H1(offset=0.0001),
+    Immissione_2(X0={0,1}));
 
   annotation (Documentation(info="<html>
 <p>The 2 injection sources model is extended redeclaring the medium with CH4+H2 fluid. </p>
-</html>"), experiment(StopTime=28800, __Dymola_Algorithm="Dassl"));
+</html>"), experiment(
+      StopTime=28800,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
 end RG2i_source2_CH4H2;

@@ -1,7 +1,8 @@
 within MultiEnergySystem.DistrictHeatingNetwork.Components.Storage;
 model StratifiedStorage
   "Model a perfectly mixed thermal storage with insulation all around"
-  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.BaseClass.PartialLumpedVolume(redeclare model Medium =
+  extends MultiEnergySystem.DistrictHeatingNetwork.Components.Storage.BaseClass.PartialLumpedVolume(redeclare
+      model                                                                                                         Medium =
         DistrictHeatingNetwork.Media.WaterLiquidVaryingDensity);
 
   import Modelica.Fluid.Utilities.regStep;

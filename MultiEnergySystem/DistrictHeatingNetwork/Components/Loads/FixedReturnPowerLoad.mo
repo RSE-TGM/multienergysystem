@@ -42,7 +42,8 @@ model FixedReturnPowerLoad
   Modelica.Blocks.Interfaces.RealInput loadConsumptionRef annotation (
     Placement(visible = true, transformation(origin={-10,40},    extent = {{-20, -20}, {20, 20}}, rotation = -90), iconTransformation(origin = {0, 80}, extent = {{-20, -20}, {20, 20}}, rotation = -90)));
 
-  Sensors.IdealAbsoluteTemperatureSensor loadReturnTemperatureSensor(redeclare model Medium = Medium) annotation (Placement(transformation(extent={{20,-6},{40,14}})));
+  Sensors.IdealAbsoluteTemperatureSensor loadReturnTemperatureSensor(redeclare
+      model                                                                          Medium = Medium) annotation (Placement(transformation(extent={{20,-6},{40,14}})));
 equation
 
   Tin = loadValve.Tin;

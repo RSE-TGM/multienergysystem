@@ -1,0 +1,187 @@
+﻿within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG;
+model RG2i_PID_MI_control
+  "Multiple Input Single Output pressure controller for REMI station"
+  extends Rete_Gas_2i_pipes(raccordo2(pin_start=Data.PipelineData_2i.sds8.pout_start, pout_start=Data.PipelineData_2i.sds8.pout_start));
+  Sensors.IdealPressureSensor idealPressureSensor(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={-186,180})));
+  Sensors.IdealPressureSensor idealPressureSensor1(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={36,268})));
+  Sensors.IdealPressureSensor idealPressureSensor2(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={102,216})));
+  Sensors.IdealPressureSensor idealPressureSensor3(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={234,238})));
+  Sensors.IdealPressureSensor idealPressureSensor5(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={42,-110})));
+  Sensors.IdealPressureSensor idealPressureSensor6(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={206,-82})));
+  Sensors.IdealPressureSensor idealPressureSensor7(
+    redeclare model Medium = Medium,
+    pin_start=493000,
+    pout_start=493000,
+    Tin_start=288.15,
+    Tout_start=288.15,
+    X_start=X_start,
+    m_flow_start=0.4110)  annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=180,
+        origin={222,-258})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_4(
+    redeclare model Medium = Medium,
+    p0=463200,
+    m_flow0=0.021261,
+    X0=X_start)
+    "Viale Berlinguer"
+    annotation (Placement(transformation(extent={{-258,164},{-214,208}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_5(
+    redeclare model Medium = Medium,
+    p0=460300,
+    m_flow0=0.007765,
+    X0=X_start)
+    "Via 25 Aprile"
+    annotation (Placement(transformation(extent={{-20,248},{18,286}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_6(
+    redeclare model Medium = Medium,
+    p0=461900,
+    m_flow0=0.019358,
+    X0=X_start)                                                                                     "Via Marx"
+    annotation (Placement(transformation(extent={{118,200},{152,234}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_7(
+    redeclare model Medium = Medium,
+    p0=437100,
+    m_flow0=0.098685,
+    X0=X_start)
+    "Contessa Entellina Ingresso paese SP.12 "
+    annotation (Placement(transformation(extent={{182,224},{222,264}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_3(
+    redeclare model Medium = Medium,
+    p0=459100,
+    m_flow0=0.034069,
+    X0=X_start)
+    "C.so Marsiglia"
+    annotation (Placement(transformation(extent={{-10,-126},{26,-90}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_1(
+    redeclare model Medium = Medium,
+    p0=459500,
+    m_flow0=0.112338,
+    X0=X_start)                                                                                     "Osèedaòe"
+    annotation (Placement(transformation(extent={{220,-104},{260,-64}})));
+  MultiEnergySystem.H2GasFacility.Components.Users.IdealUser GRM_2(
+    redeclare model Medium = Medium,
+    p0=454700,
+    m_flow0=0.119588,
+    X0=X_start)                                                                                     "Via Lioni"
+    annotation (Placement(transformation(extent={{160,-278},{204,-234}})));
+equation
+  connect(sds14.outlet, idealPressureSensor2.inlet) annotation (Line(
+      points={{80,216},{92,216}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds10.outlet, idealPressureSensor.inlet) annotation (Line(
+      points={{-164,180},{-176,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds15.outlet, idealPressureSensor1.inlet) annotation (Line(
+      points={{46,252},{46,268}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(raccordo2.outlet, idealPressureSensor3.inlet) annotation (Line(
+      points={{242,220},{244,220},{244,238}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s36_Stadio.outlet, idealPressureSensor5.inlet) annotation (Line(
+      points={{72,-110},{52,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s21.outlet, idealPressureSensor6.inlet) annotation (Line(
+      points={{182,-82},{196,-82}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(s30.outlet, idealPressureSensor7.inlet) annotation (Line(
+      points={{234,-242},{236,-242},{236,-248},{232,-248},{232,-258}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_4.inlet, idealPressureSensor.outlet) annotation (Line(
+      points={{-236,186},{-236,188},{-204,188},{-204,180},{-196,180}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_5.inlet, idealPressureSensor1.outlet) annotation (Line(
+      points={{-1,267},{0,268},{26,268}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_7.inlet, idealPressureSensor3.outlet) annotation (Line(
+      points={{202,244},{216,244},{216,238},{224,238}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_3.inlet, idealPressureSensor5.outlet) annotation (Line(
+      points={{8,-108},{8,-110},{32,-110}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_1.inlet, idealPressureSensor6.outlet) annotation (Line(
+      points={{240,-84},{240,-82},{216,-82}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_2.inlet, idealPressureSensor7.outlet) annotation (Line(
+      points={{182,-256},{184,-258},{212,-258}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(GRM_6.inlet, idealPressureSensor2.outlet) annotation (Line(
+      points={{135,217},{136,216},{112,216}},
+      color={182,109,49},
+      thickness=0.5));
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+        coordinateSystem(preserveAspectRatio=false)));
+end RG2i_PID_MI_control;

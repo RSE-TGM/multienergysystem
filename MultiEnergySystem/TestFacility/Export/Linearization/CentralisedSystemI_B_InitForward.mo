@@ -3,8 +3,10 @@ model CentralisedSystemI_B_InitForward
   extends Export.Interfaces.TwoSignalBusConnector;
   extends DistrictHeatingNetwork.Icons.Water.ThermalPlant;
   extends DHTF.Networks.Centralised.CentralizedSystemI_B(
-    redeclare model WaterHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
-    redeclare model WaterCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
+    redeclare model WaterHot =
+        DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
+    redeclare model WaterCold =
+        DistrictHeatingNetwork.Media.WaterLiquidVaryingcp,
     T_start_hot = 80 +273.15,
     T_start_cold = 70 + 273.15,
     EX701_Tin_hot = T_start_hot,

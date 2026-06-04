@@ -1,0 +1,79 @@
+within MultiEnergySystem.H2GasFacility.Tests.SubSystem.Rete_Gas_2i_NG_red_pipes;
+model RG2i_source2 "immissione 2"
+  extends RG2i_pipes_users(
+    constantFrictionFactor=false,
+    massFractionDynamicBalance=true,
+    valveLinearOpening(m_flow_nom=0.4138, A_v=2*0.4138/(sqrt(40.17625*(60 -
+          4.93)*1e5))),
+    X_start={1,0});
+  MultiEnergySystem.H2GasFacility.Components.Pipes.Round1DFV sds17e16(
+    n=nV,
+    L=Data.PipelineData_2i.sds17.L + Data.PipelineData_2i.sds16.L,
+    H=Data.PipelineData_2i.sds17.h + Data.PipelineData_2i.sds16.h,
+    cm=Data.PipelineData_2i.sds17.cm,
+    rhom=Data.PipelineData_2i.sds17.rhom,
+    lambdam=Data.PipelineData_2i.sds17.lambdam,
+    m_flow_start=Data.PipelineData_2i.sds17.m_flow_start,
+    pin_start=Data.PipelineData_2i.sds17.pin_start,
+    pout_start=Data.PipelineData_2i.sds16.pout_start,
+    kappa=Data.PipelineData_2i.sds17.kappa,
+    k=Data.PipelineData_2i.sds17.k,
+    redeclare model Gas = Medium,
+    X_start=X_start,
+    Di=Data.PipelineData_2i.sds17.Di,
+    massFractionDynamicBalance=massFractionDynamicBalance,
+    constantFrictionFactor=constantFrictionFactor,
+    computeInertialTerm=computeInertialTerm,
+    hctype=hctype,
+    momentum=momentum,
+    rho_nom=rho_nom) annotation (Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=0,
+        origin={-258,220})));
+  MultiEnergySystem.H2GasFacility.Sources.SourceMassFlow Immissione_2(
+    redeclare model Medium = Medium,
+    p0=480000,
+    G=1e-12,
+    T0=288.15,
+    X0={0,1},
+    computeEnthalpyWithFixedPressure=true,
+    m_flow0=0,
+    use_in_m_flow0=true) annotation (Placement(visible=true, transformation(
+        origin={-312,220},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H1(
+    duration=60,
+    height=0.0262628*0.01,
+    offset=0*0.001,
+    startTime=3600)                                                                                         annotation (
+    Placement(visible = true, transformation(origin={-419,232},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Sources.Ramp m_flow_H5(
+    duration=60,
+    height=-0.0262628*0.01,
+    offset=0,
+    startTime=18000)                                                                                        annotation (
+    Placement(visible = true, transformation(origin={-417,268},    extent = {{-10, -10}, {10, 10}}, rotation=0)));
+  Modelica.Blocks.Math.Add add1
+    annotation (Placement(transformation(extent={{-358,240},{-338,260}})));
+equation
+  connect(m_flow_H5.y,add1. u1) annotation (Line(points={{-406,268},{-370,268},
+          {-370,256},{-360,256}}, color={0,0,127}));
+  connect(m_flow_H1.y,add1. u2) annotation (Line(points={{-408,232},{-360,232},
+          {-360,244}},            color={0,0,127}));
+  connect(add1.y,Immissione_2. in_m_flow0) annotation (Line(points={{-337,250},
+          {-312,250},{-312,238},{-316,238},{-316,225},{-318,225}},
+                                             color={0,0,127}));
+  connect(sds17e16.inlet, Immissione_2.outlet) annotation (Line(
+      points={{-268,220},{-302,220}},
+      color={182,109,49},
+      thickness=0.5));
+  connect(sds17e16.outlet, sds11.outlet) annotation (Line(
+      points={{-248,220},{-188,220},{-188,224},{-119,224},{-119,222}},
+      color={182,109,49},
+      thickness=0.5));
+  annotation (experiment(
+      StopTime=28000,
+      Tolerance=1e-05,
+      __Dymola_Algorithm="Dassl"));
+end RG2i_source2;

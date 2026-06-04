@@ -62,9 +62,11 @@ model TestBase
     Placement(transformation(extent = {{28, 34}, {40, 46}})));
   DistrictHeatingNetwork.Utilities.ASHRAEIndex val_mflow annotation (
     Placement(transformation(extent = {{64, 18}, {76, 30}})));
-  DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = true, use_in_T0 = true, redeclare model Medium = Medium, p0 = pin_start_S4, T0 = Tin_start_S4, R = 1e-3) annotation (
+  DistrictHeatingNetwork.Sources.SourcePressure source(use_in_p0 = true, use_in_T0 = true, redeclare
+      model                                                                                                Medium = Medium, p0 = pin_start_S4, T0 = Tin_start_S4, R = 1e-3) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = -90, origin = {-12, 62})));
-  DistrictHeatingNetwork.Sources.SinkPressure sinkP(use_in_p0 = true, redeclare model Medium = Medium, p0 = pout_start_S4, T0 = Tout_start_S4, R = 1e-3) annotation (
+  DistrictHeatingNetwork.Sources.SinkPressure sinkP(use_in_p0 = true, redeclare
+      model                                                                           Medium = Medium, p0 = pout_start_S4, T0 = Tout_start_S4, R = 1e-3) annotation (
     Placement(transformation(extent = {{-10, 10}, {10, -10}}, rotation = 90, origin = {64, 78})));
   Modelica.Blocks.Sources.BooleanTable EB401_Status1(table = {1e6}, startValue = true) "Input to decide whether or nor the electric boiler is working" annotation (
     Placement(transformation(extent = {{-70, -40}, {-58, -28}})));

@@ -754,7 +754,8 @@ model LoadColdSideOpenLoop
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
   parameter Types.Density rhohotref = 985 "Reference hot water density";
   parameter Types.Density rhocoldref = 999 "Reference cold water density";

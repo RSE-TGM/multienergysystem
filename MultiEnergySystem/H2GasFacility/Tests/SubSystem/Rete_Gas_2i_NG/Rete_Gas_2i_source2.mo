@@ -58,7 +58,7 @@ model Rete_Gas_2i_source2 "immissione 2"
     p0=480000,
     G=1e-8,
     T0=288.15,
-    X0={0,1},
+    X0={1,0},
     computeEnthalpyWithFixedPressure=true,
     m_flow0=0,
     use_in_m_flow0=true) annotation (Placement(visible=true, transformation(

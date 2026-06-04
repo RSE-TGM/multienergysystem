@@ -26,7 +26,7 @@ model CH4H2Papay "Methane & Hydrogen model using Papay equation for compressibil
       LHV_SCM = {50e6, 119.96e6},
       cp_coeff = {{-2.0604948457659e-05,0.02738991794621,-8.523906729998,2877.5194077417},
                   {8.3022149358563e-05,-0.099563690420583,40.70928347186,8817.1836822808}},
-      mu_start = 0);
+      mu_start = 0.00001);
 equation
 
 end CH4H2Papay;

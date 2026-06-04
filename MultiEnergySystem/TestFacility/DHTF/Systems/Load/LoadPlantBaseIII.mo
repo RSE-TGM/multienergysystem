@@ -6,11 +6,15 @@ partial model LoadPlantBaseIII
   parameter Integer nHX = 5 "Number of volumes in each heat exchanger";
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype=
       DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
-  replaceable model MediumLPHot = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model MediumLPCold = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+  replaceable model MediumLPHot =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                             constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model MediumLPCold =
+      DistrictHeatingNetwork.Media.WaterLiquidVaryingcp                              constrainedby DistrictHeatingNetwork.Media.BaseClasses.PartialSubstance;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
   //replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.ConstantHeatTransferCoefficient;
-  replaceable model Pipe = DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV;
+  replaceable model Pipe =
+      DistrictHeatingNetwork.Components.Pipes.RoundPipe1DFV;
 
   // EX701
   parameter Real EX701_q_m3h_hot(unit = "m3/h") = 2.5;

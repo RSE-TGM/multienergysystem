@@ -93,7 +93,8 @@ model CoolingSystemI_InitForward "Analysis of the cooling system using InputOffs
   parameter DistrictHeatingNetwork.Types.MassFlowRate m_flow_total = 2.4;
   parameter DistrictHeatingNetwork.Choices.Pipe.HCtypes hctype = DistrictHeatingNetwork.Choices.Pipe.HCtypes.Middle "Location of pressure state";
   replaceable model Medium = DistrictHeatingNetwork.Media.WaterLiquidVaryingcp;
-  replaceable model HeatTransferModel = DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
+  replaceable model HeatTransferModel =
+      DistrictHeatingNetwork.Components.Thermal.HeatTransfer.FlowDependentHeatTransferCoefficient;
 
   // EX701
   parameter Real EX701_q_m3h_hot = 2.5;

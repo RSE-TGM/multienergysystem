@@ -1,11 +1,12 @@
 within MultiEnergySystem.H2GasFacility.Tests.Components.Manifold;
 model Manifold_NG4H2
-  extends MultiEnergySystem.H2GasFacility.Tests.Components.Manifold.TestGManifold(redeclare model
+  extends MultiEnergySystem.H2GasFacility.Tests.Components.Manifold.TestGManifold(redeclare
+      model
       MediumIn1 =
-        H2GasFacility.Media.IdealGases.NG4_H2,                                                                                                      redeclare model
-            MediumIn2 =
-        H2GasFacility.Media.IdealGases.NG4_H2,                                                                                                                                                                         redeclare model
-            MediumOut =
+        H2GasFacility.Media.IdealGases.NG4_H2,                                                                                                      redeclare
+      model MediumIn2 =
+        H2GasFacility.Media.IdealGases.NG4_H2,                                                                                                                                                                         redeclare
+      model MediumOut =
         H2GasFacility.Media.IdealGases.NG4_H2,
     source1(                                                                                                                                                                                                        X0 =         {0.90, 0.034, 0.011, 0.001, 0.054}),manifold(Xin_start1 = {0.90, 0.034, 0.011, 0.001, 0.054}, Xin_start2 = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477}, Xout_start = {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477}),
     source2(                                                                                                                                                                                                        X0 =         {0.94626, 0.0339757, 0.0105162, 0.0001, 0.0092477}),

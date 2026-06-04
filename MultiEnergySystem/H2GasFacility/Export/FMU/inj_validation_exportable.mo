@@ -29,11 +29,20 @@ model inj_validation_exportable "Export FMU Version"
     p0=460000,
     use_in_m_flow0=true)                                                                                                                                                                                                         annotation (
     Placement(transformation(origin = {-184, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 180)));
+  Modelica.Blocks.Interfaces.RealInput u annotation (Placement(transformation(
+        extent={{-8,-8},{8,8}},
+        rotation=180,
+        origin={-148,46}), iconTransformation(
+        extent={{-8,-8},{8,8}},
+        rotation=180,
+        origin={-148,46})));
 equation
   connect(Immissione_1.outlet, s1.outlet) annotation (Line(
       points={{-194,58},{-202,58},{-202,26},{-184,26}},
       color={182,109,49},
       thickness=0.5));
+  connect(Immissione_1.in_m_flow0, u) annotation (Line(points={{-178,53},{-178,
+          48},{-148,48},{-148,46}}, color={0,0,127}));
   annotation (                                 experiment(
       StopTime=30000,
       Tolerance=1e-05,

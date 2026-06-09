@@ -22,7 +22,7 @@ model Transformer "Transformer defined by number of spires"
     Placement(transformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, 0}, extent = {{-10, -10}, {10, 10}})));
   Interfaces.ElectricPortOutlet electricPortOutlet annotation(
     Placement(transformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}})));
-  DistrictHeatingNetwork.Interfaces.HeatPort thermalPort annotation(
+  DistrictHeatingNetwork.Interfaces.HeatPort thermalPort if useThermalPort annotation(
     Placement(transformation(origin = {0, 100}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {0, 78}, extent = {{-10, -10}, {10, 10}})));
 
 equation
@@ -49,11 +49,8 @@ equation
   electricPortOutlet.P = P_out;
   
 // Set thermal losses
-  thermalPort.Q_flow = if useThermalPort then -P_loss else 0;
-  
-// Fixed temperature if not accounting thermal dispersions  
-  if not useThermalPort then
-    thermalPort.T = 293.15;
+    if useThermalPort then
+    thermalPort.Q_flow = -P_loss;
   end if;
 
   

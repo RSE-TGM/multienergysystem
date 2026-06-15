@@ -1,6 +1,6 @@
 within MultiEnergySystem.ElectricNetwork.Components;
 
-model Battery_powerdriven "Battery sink/source with a single port. Imposed and costant power request"
+model Battery_powerinput "Battery sink/source with a single port. Imposed and variable power request"
   extends Icons.BatteryIcon
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), 
               Diagram(coordinateSystem(preserveAspectRatio=false)));
@@ -24,8 +24,8 @@ model Battery_powerdriven "Battery sink/source with a single port. Imposed and c
   parameter Real SOC_eps = 1e-4 "Smoothing band near SOC limits";
 
   // Power request (bidirectional)
-  parameter Modelica.Units.SI.Power P_request = 5e3 
-    "Requested power (>0 charge, <0 discharge)";
+  Modelica.Blocks.Interfaces.RealInput P_request
+    annotation (Placement(transformation(extent = {{-120, -20}, {-80, 20}}), iconTransformation(origin = {-8, 0}, extent = {{-120, -20}, {-80, 20}})));
 
   // Variables
   Modelica.Units.SI.Voltage v "Bus voltage";
@@ -51,8 +51,8 @@ equation
       min(P_request, P_chg_max) * aChg
     else
       max(P_request, -P_dis_max) * aDis;
-
-  // Port power 
+      
+  // Port power
   inlet.P = P;
 
   // SOC dynamics
@@ -65,4 +65,4 @@ equation
 initial equation
   SOC = SOC0;
 
-end Battery_powerdriven;
+end Battery_powerinput;

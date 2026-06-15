@@ -27,6 +27,7 @@ model Battery "Battery sink with single port"
   Real aChg(min=0, max=1) "Charge availability factor";
 
 equation
+
   // Read the bus voltage (do NOT impose it)
   v = inlet.v;
 

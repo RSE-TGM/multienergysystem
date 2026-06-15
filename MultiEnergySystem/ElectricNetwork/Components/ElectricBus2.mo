@@ -7,6 +7,7 @@ model ElectricBus2 "Electric bus with 2 input terminals"
     Placement(transformation(origin = {-102, -62}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-100, -60}, extent = {{-10, -10}, {10, 10}})));
   Interfaces.ElectricPortOutlet electricPortOutlet annotation(
     Placement(transformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}))); 
+    
 equation
   connect(electricPortInlet, electricPortOutlet) annotation(
     Line(points = {{-100, 60}, {0, 60}, {0, 0}, {100, 0}}));

@@ -8,9 +8,8 @@ model Transformer "Transformer defined by number of spires"
   parameter Real n = N1/N2 "Spires ratio";
   parameter Real eta = 0.98 "Transformer efficiency";
   parameter Modelica.Units.SI.Power eps = 1e-6 "Regularization power";
-  parameter Boolean useThermalPort = true "Enable thermal losses reporting";
+  parameter Boolean useThermalPort = false "Enable thermal losses reporting";
 
-  
   // Variables
   Modelica.Units.SI.Power P_in "Entering power in the primary circuit";
   Modelica.Units.SI.Power P_out "Output power in the secoondary circuit";
@@ -52,7 +51,6 @@ equation
     if useThermalPort then
     thermalPort.Q_flow = -P_loss;
   end if;
-
   
   annotation(
     Icon(graphics = {Rectangle(fillColor = {166, 166, 166}, fillPattern = FillPattern.Solid, extent = {{-80, 80}, {80, -80}}), Rectangle(fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-40, 40}, {40, -40}}), Line(origin = {-65, 0}, points = {{-25, 0}, {25, 0}, {25, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {-60, 10}, points = {{-20, 0}, {20, 0}, {20, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {-60, 20}, points = {{-20, 0}, {20, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {-60, 30}, points = {{-20, 0}, {20, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {65, 0}, points = {{25, 0}, {-25, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {60, -10}, points = {{20, 0}, {-20, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {60, -20}, points = {{20, 0}, {-20, 0}, {-20, 0}}, color = {79, 129, 189}, thickness = 0.75), Line(origin = {60, -30}, points = {{20, 0}, {-20, 0}}, color = {79, 129, 189}, thickness = 0.75)}));

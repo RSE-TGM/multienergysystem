@@ -1,0 +1,22 @@
+within MultiEnergySystem.ElectricNetwork.Tests;
+model Test_Battery_powerinput
+ extends Modelica.Icons.Example;
+  Components.Battery_powerinput battery_powerinput(E_nom = 1e6, SOC0 = 0.2)  annotation(
+    Placement(transformation(origin = {56, 0}, extent = {{12, -12}, {-12, 12}}, rotation = -0)));
+  Sources.SourceVoltage sourceVoltage annotation(
+    Placement(transformation(origin = {-96, 0}, extent = {{-10, -10}, {10, 10}})));
+  Components.ResistiveLine resistiveLine(L = 10, A = 0.001, rho = 1.68e-8)  annotation(
+    Placement(transformation(origin = {-28, 0}, extent = {{-16, -16}, {16, 16}})));
+  Modelica.Blocks.Sources.Ramp ramp(height = 300, duration = 500, offset = 500, startTime = 200)  annotation(
+    Placement(transformation(origin = {112, 0}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+equation
+  connect(sourceVoltage.outlet, resistiveLine.electricPortInlet) annotation(
+    Line(points = {{-86, 0}, {-44, 0}}, color = {56, 93, 138}));
+  connect(resistiveLine.electricPortOutlet, battery_powerinput.inlet) annotation(
+    Line(points = {{-12, 0}, {45, 0}}, color = {56, 93, 138}));
+  connect(ramp.y, battery_powerinput.P_request) annotation(
+    Line(points = {{102, 0}, {68, 0}}, color = {0, 0, 127}));
+
+annotation(
+    Diagram(coordinateSystem(extent = {{-120, 20}, {140, -20}})));
+end Test_Battery_powerinput;

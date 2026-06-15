@@ -1,4 +1,9 @@
 Test_Battery
 Test_transformer
-Test_line
-TestBattery_powerdriven
+Test_SimpleLine
+Test_ResistiveLine
+Test_Battery_powerdriven
+Test_Battery_powerdriven_user
+Test_Battery_user
+Test_Battery_powerinput_user
+Test_Battery_powerinput

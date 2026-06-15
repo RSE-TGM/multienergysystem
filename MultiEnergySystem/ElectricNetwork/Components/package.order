@@ -1,6 +1,8 @@
-Battery
-ElectricBus2
 Transformer
 SimpleLine
 ResistiveLine
+IdealUser
+ElectricBus2
+Battery_powerinput
 Battery_powerdriven
+Battery

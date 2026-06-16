@@ -1,3 +1,7 @@
 ElectricPort
 ElectricPortInlet
 ElectricPortOutlet
+ElectricPort_i
+ElectricPortInlet_i
+ElectricPortOutlet_i
+PartialTwoPin

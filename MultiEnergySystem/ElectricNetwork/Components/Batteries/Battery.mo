@@ -1,4 +1,4 @@
-within MultiEnergySystem.ElectricNetwork.Components;
+within MultiEnergySystem.ElectricNetwork.Components.Batteries;
 model Battery "Battery sink with single port"
   extends Icons.BatteryIcon
   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(

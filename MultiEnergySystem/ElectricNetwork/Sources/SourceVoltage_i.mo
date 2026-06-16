@@ -1,5 +1,5 @@
 within MultiEnergySystem.ElectricNetwork.Sources;
-model SourceVoltage "Voltage source"
+model SourceVoltage_i "Voltage source"
   extends Icons.SourceV;
 
   // Definition of System
@@ -20,7 +20,7 @@ model SourceVoltage "Voltage source"
   Modelica.Units.SI.Voltage v;
 
   // Outlet connector
-  Interfaces.ElectricPortOutlet outlet annotation (Placement(
+  Interfaces.ElectricPortOutlet_i outlet annotation (Placement(
     transformation(extent={{80,-20},{120,20}}, rotation=0)));
 
   // Input connector
@@ -41,7 +41,7 @@ equation
 
   v = in_v0_internal;
   if not use_in_v0 then
-    in_v0_internal = v0 ;
+    in_v0_internal = v0;
   end if;
 
   // Connect protected connectors to public conditional connectors
@@ -64,4 +64,4 @@ equation
        First release.</li>
 </ul>
 </html>"));
-end SourceVoltage;
+end SourceVoltage_i;

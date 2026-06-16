@@ -1,0 +1,8 @@
+within MultiEnergySystem.ElectricNetwork.Tests;
+model Test_Resistor
+  extends Modelica.Icons.Example;
+  Sources.SourceVoltage_i sourceVoltage_i annotation(
+    Placement(transformation(origin = {-90, 0}, extent = {{-10, -10}, {10, 10}})));
+equation
+
+end Test_Resistor;

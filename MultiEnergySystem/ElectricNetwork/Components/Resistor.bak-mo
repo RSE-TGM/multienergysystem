@@ -1,0 +1,36 @@
+within MultiEnergySystem.ElectricNetwork.Components;
+
+model Resistor
+
+  extends MultiEnergySystem.ElectricNetwork.Interfaces.PartialTwoPin;
+
+  // Parameter
+  parameter Modelica.Units.SI.Resistance R = 1;
+
+  // Variables
+  Modelica.Units.SI.Power P_loss;
+
+  // Thermal port
+  MultiEnergySystem.DistrictHeatingNetwork.Interfaces.HeatPort
+    thermalPort if useThermalPort annotation (
+      Placement(transformation(origin = {0, 100}, extent = {{-10, -10}, {10, 10}}),
+                iconTransformation(origin = {0, 40}, extent = {{-6, -6}, {6, 6}})));
+
+  parameter Boolean useThermalPort = false;
+
+equation
+
+
+  v = R * i;
+
+  // Joule losses
+  P_loss = v * i;
+
+  // Thermal port
+  if useThermalPort then
+    thermalPort.Q_flow = -P_loss;
+  end if;
+
+annotation(
+    Icon(graphics = {Line(origin = {1, 0}, points = {{-91, 0}, {-61, 0}, {-51, 40}, {-31, -40}, {-11, 40}, {9, -40}, {29, 40}, {49, -40}, {59, 0}, {91, 0}})}));
+end Resistor;

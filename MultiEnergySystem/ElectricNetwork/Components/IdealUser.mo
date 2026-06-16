@@ -1,6 +1,5 @@
 within MultiEnergySystem.ElectricNetwork.Components;
-
-model IdealUser 
+model IdealUser
   "Ideal electrical user with time-varying power demand"
 
   Interfaces.ElectricPortInlet inlet annotation (
@@ -8,7 +7,7 @@ model IdealUser
               iconTransformation(origin = {-10, 0}, extent = {{82, -10}, {102, 10}})));
 
   // Inputs
-  Modelica.Blocks.Interfaces.RealInput P_in 
+  Modelica.Blocks.Interfaces.RealInput P_in
     annotation (Placement(transformation(extent = {{-120, -20}, {-80, 20}}), iconTransformation(origin = {20, 0}, extent = {{-120, -20}, {-80, 20}})));
 
   // Variables
@@ -26,6 +25,6 @@ equation
   // Flow convention
   inlet.P = P;
 
-annotation(
-    Icon(graphics = {Ellipse(extent = {{-80, 80}, {80, -80}}), Ellipse(fillColor = {79, 129, 189}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -20}})}));
+annotation (
+    Icon(graphics={  Ellipse(extent = {{-80, 80}, {80, -80}}), Ellipse(fillColor = {79, 129, 189}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -20}})}));
 end IdealUser;

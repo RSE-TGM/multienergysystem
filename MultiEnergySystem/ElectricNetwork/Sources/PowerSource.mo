@@ -1,5 +1,4 @@
-within MultiEnergySystem.ElectricNetwork.Sources;
-
+﻿within MultiEnergySystem.ElectricNetwork.Sources;
 model PowerSource "Ideal power source"
 
   // System
@@ -26,7 +25,6 @@ model PowerSource "Ideal power source"
 
 protected
   Modelica.Blocks.Interfaces.RealInput in_P0_internal;
-public
 equation
 
   // Power assignment
@@ -42,7 +40,7 @@ equation
 
   connect(in_P0, in_P0_internal);
 
-annotation(
+annotation (
     Diagram(graphics),
     Icon(graphics = {Rectangle(fillColor = {79, 129, 189}, fillPattern = FillPattern.Solid, extent = {{-80, 40}, {80, -40}}), Text(origin = {3, 5}, textColor = {255, 255, 255}, extent = {{-43, 29}, {43, -29}}, textString = "P")}));
 end PowerSource;

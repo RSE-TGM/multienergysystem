@@ -1,0 +1,15 @@
+within MultiEnergySystem.ElectricNetwork.Components;
+model ResistiveLine_i
+
+  //Parameters
+  parameter Modelica.Units.SI.Length L;
+  parameter Modelica.Units.SI.Area A;
+  parameter Modelica.Units.SI.Resistivity rho;
+  
+  extends Resistor(
+final R = rho * L / A
+  );annotation(
+    Icon(graphics = {Rectangle(lineThickness = 0.5, extent = {{-60, 40}, {60, -40}})}));
+
+
+end ResistiveLine_i;

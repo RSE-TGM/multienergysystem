@@ -1,0 +1,14 @@
+within MultiEnergySystem.ElectricNetwork.Components;
+model Condenser
+extends Interfaces.PartialTwoPin;
+
+  //Parameters
+  parameter Modelica.Units.SI.Capacitance C = 1 "Capacitance of the condenser";
+  
+equation
+
+ i - C * der(v) = 0 "Consistutive equation";
+
+annotation(
+    Icon(graphics = {Line(origin = {-55, 0}, points = {{-35, 0}, {35, 0}, {35, 0}}, thickness = 0.5), Line(origin = {55, 0}, points = {{-35, 0}, {35, 0}}, thickness = 0.5), Line(origin = {-20, 0}, points = {{0, 60}, {0, -60}}, thickness = 0.5), Line(origin = {20, 0}, points = {{0, 60}, {0, -60}}, thickness = 0.5)}));
+end Condenser;

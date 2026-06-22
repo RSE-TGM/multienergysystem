@@ -1,5 +1,6 @@
 within MultiEnergySystem.ElectricNetwork.Tests;
-model Test_Battery_powerinput_user "Test with battery (charge/discharge) and a user both with prescribed power absoprtion"
+model Test_Battery_powerinput_user 
+"Test with battery (charge/discharge)and a user both with prescribed power absoprtion"
   extends Modelica.Icons.Example;
   Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));

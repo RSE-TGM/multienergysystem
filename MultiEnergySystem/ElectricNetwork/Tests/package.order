@@ -1,9 +1,10 @@
-Test_Battery
 Test_transformer
 Test_SimpleLine
 Test_ResistiveLine
-Test_Battery_powerdriven
-Test_Battery_powerdriven_user
-Test_Battery_user
-Test_Battery_powerinput_user
-Test_Battery_powerinput
+Resistive_circuit
+Test_powerload
+Test_RC
+Test_RL
+Test_RL_charge_discharge
+Test_RC_charge_discharge
+Batteries

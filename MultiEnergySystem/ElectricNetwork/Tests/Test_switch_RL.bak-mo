@@ -1,0 +1,39 @@
+within MultiEnergySystem.ElectricNetwork.Tests;
+model Test_switch_RL
+ extends Modelica.Icons.Example;
+  Sources.SourceVoltage_i sourceVoltage_i annotation(
+    Placement(transformation(origin = {0, 40}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+  Components.Lines.Resistor resistor(R = 10)  annotation(
+    Placement(transformation(origin = {60, -14}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Components.Switch sw annotation(
+    Placement(transformation(origin = {60, 24}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Components.Inductance inductance(L = 5)  annotation(
+    Placement(transformation(origin = {-2, -26}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+  Components.Switch sw1 annotation(
+    Placement(transformation(origin = {62, -54}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Components.Ground ground annotation(
+    Placement(transformation(origin = {-28, 70}, extent = {{-10, -10}, {10, 10}})));
+  Components.Lines.Resistor resistor1(R = 10)  annotation(
+    Placement(transformation(origin = {4, -68}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+equation
+
+  sw.closed = time < 3;
+  sw1.closed = time >= 3;
+  
+  connect(sourceVoltage_i.p, sw.p) annotation(
+    Line(points = {{10, 40}, {60, 40}, {60, 34}}, color = {56, 93, 138}));
+  connect(sw.n, resistor.p) annotation(
+    Line(points = {{60, 14}, {60, -4}}, color = {56, 93, 138}));
+  connect(resistor.n, inductance.p) annotation(
+    Line(points = {{60, -24}, {60, -26}, {8, -26}}, color = {56, 93, 138}));
+  connect(inductance.n, sourceVoltage_i.n) annotation(
+    Line(points = {{-12, -26}, {-46, -26}, {-46, 40}, {-10, 40}}, color = {56, 93, 138}));
+  connect(resistor.n, sw1.p) annotation(
+    Line(points = {{60, -24}, {60, -34}, {62, -34}, {62, -44}}, color = {56, 93, 138}));
+  connect(sw1.n, resistor1.p) annotation(
+    Line(points = {{62, -64}, {62, -68}, {14, -68}}, color = {56, 93, 138}));
+  connect(resistor1.n, inductance.n) annotation(
+    Line(points = {{-6, -68}, {-46, -68}, {-46, -26}, {-12, -26}}, color = {56, 93, 138}));
+  connect(sourceVoltage_i.n, ground.electricPortInlet_i) annotation(
+    Line(points = {{-10, 40}, {-40, 40}, {-40, 84}, {-28, 84}, {-28, 80}}, color = {56, 93, 138}));
+end Test_switch_RL;

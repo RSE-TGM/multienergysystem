@@ -1,0 +1,40 @@
+within MultiEnergySystem.ElectricNetwork.Tests;
+model Test_switch
+"Test of an electrical circuit with time-controlled switches that alternately connect and disconnect components, enabling analysis of dynamic switching behavior in an RC network"
+ extends Modelica.Icons.Example;
+  Sources.SourceVoltage_i sourceVoltage_i annotation(
+    Placement(transformation(origin = {-64, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
+  Components.Switch sw annotation(
+    Placement(transformation(origin = {-6, 28}, extent = {{-10, -10}, {10, 10}})));
+  Components.Lines.Resistor resistor(R = 10)  annotation(
+    Placement(transformation(origin = {64, 2}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Components.Capacitance capacitance(C = 5)  annotation(
+    Placement(transformation(origin = {-8, -38}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+  Components.Ground ground annotation(
+    Placement(transformation(origin = {-32, 66}, extent = {{-10, -10}, {10, 10}})));
+  Components.Switch sw1 annotation(
+    Placement(transformation(origin = {64, -66}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Components.Lines.Resistor resistor1(R = 10)  annotation(
+    Placement(transformation(origin = {0, -78}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+equation
+
+  sw.closed = time < 500;
+  sw1.closed = time >= 500;
+  
+  connect(resistor.n, capacitance.p) annotation(
+    Line(points = {{64, -8}, {64, -38}, {2, -38}}, color = {56, 93, 138}));
+  connect(capacitance.n, sourceVoltage_i.n) annotation(
+    Line(points = {{-18, -38}, {-64, -38}, {-64, -10}}, color = {56, 93, 138}));
+  connect(sourceVoltage_i.n, ground.electricPortInlet_i) annotation(
+    Line(points = {{-64, -10}, {-86, -10}, {-86, 76}, {-32, 76}}, color = {56, 93, 138}));
+  connect(sourceVoltage_i.p, sw.p) annotation(
+    Line(points = {{-64, 10}, {-64, 28}, {-16, 28}}, color = {56, 93, 138}));
+  connect(sw.n, resistor.p) annotation(
+    Line(points = {{4, 28}, {64, 28}, {64, 12}}, color = {56, 93, 138}));
+  connect(capacitance.p, sw1.p) annotation(
+    Line(points = {{2, -38}, {64, -38}, {64, -56}}, color = {56, 93, 138}));
+  connect(sw1.n, resistor1.p) annotation(
+    Line(points = {{64, -76}, {64, -78}, {10, -78}}, color = {56, 93, 138}));
+  connect(resistor1.n, capacitance.n) annotation(
+    Line(points = {{-10, -78}, {-64, -78}, {-64, -38}, {-18, -38}}, color = {56, 93, 138}));
+end Test_switch;

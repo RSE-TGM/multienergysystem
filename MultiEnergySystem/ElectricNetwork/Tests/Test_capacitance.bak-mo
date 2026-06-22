@@ -1,0 +1,20 @@
+within MultiEnergySystem.ElectricNetwork.Tests;
+model Test_capacitance
+ extends Modelica.Icons.Example;
+  Sources.SourceVoltage_i sourceVoltage_i annotation(
+    Placement(transformation(origin = {-78, 24}, extent = {{-10, -10}, {10, 10}})));
+  Components.Capacitance capacitance(C = 5)  annotation(
+    Placement(transformation(origin = {18, 24}, extent = {{10, -10}, {-10, 10}}, rotation = -0)));
+  Components.Ground ground annotation(
+    Placement(transformation(origin = {-126, 64}, extent = {{-10, -10}, {10, 10}})));
+equation
+  connect(sourceVoltage_i.n, capacitance.n) annotation(
+    Line(points = {{-68, 24}, {8, 24}}, color = {56, 93, 138}));
+  connect(capacitance.p, sourceVoltage_i.p) annotation(
+    Line(points = {{28, 24}, {44, 24}, {44, -10}, {-122, -10}, {-122, 24}, {-88, 24}}, color = {56, 93, 138}));
+  connect(ground.electricPortInlet_i, sourceVoltage_i.n) annotation(
+    Line(points = {{-126, 74}, {-44, 74}, {-44, 24}, {-68, 24}}, color = {56, 93, 138}));
+
+annotation(
+    Diagram(coordinateSystem(extent = {{-140, 80}, {60, -20}})));
+end Test_capacitance;

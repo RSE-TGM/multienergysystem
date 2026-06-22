@@ -116,7 +116,7 @@ package Lines
   end ResistiveLine;
 
   model Resistor
-
+  "A resistive element that models voltage drop proportional to current, with optional heat dissipation through a thermal port due to Joule losses"
     extends MultiEnergySystem.ElectricNetwork.Interfaces.PartialTwoPin;
 
     // Parameter
@@ -150,7 +150,8 @@ package Lines
   end Resistor;
 
   model ResistiveLine_i
-
+"A resistive electrical line model that computes its resistance from material properties and geometry, representing power dissipation along a conductor"
+  
     //Parameters
     parameter Modelica.Units.SI.Length L;
     parameter Modelica.Units.SI.Area A;

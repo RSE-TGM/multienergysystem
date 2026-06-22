@@ -1,5 +1,6 @@
 within MultiEnergySystem.ElectricNetwork.Tests;
-model Test_Battery_powerdriven_user "Test of a battery (charge/discharge) with imposed power and a user with prescribed electric absortion"
+model Test_Battery_powerdriven_user 
+"Test of a battery (charge/discharge) with imposed power and a user with prescribed electric absortion"
   extends Modelica.Icons.Example;
   Sources.SourceVoltage sourceVoltage annotation (
     Placement(transformation(origin = {-96, 22}, extent = {{-10, -10}, {10, 10}})));

@@ -1,5 +1,6 @@
 within MultiEnergySystem.ElectricNetwork.Tests;
 model Test_Battery_powerinput
+"Test with battery (charge/discharge) with prescribed power exchange with network"
  extends Modelica.Icons.Example;
   Components.Batteries.Battery_powerinput battery_powerinput(E_nom=1e6, SOC0=
         0.2) annotation (Placement(transformation(
